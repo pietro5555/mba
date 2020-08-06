@@ -1,0 +1,120 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\View;
+use Auth; 
+use DB; 
+use Hash;
+use Carbon\Carbon;
+// modelo
+use App\Models\User;
+use App\Models\Settings;
+use App\Models\Formulario;
+use App\Models\SettingCliente;
+
+// llamando a los controladores
+use App\Http\Controllers\IndexController;
+use Modules\ReferralTree\Http\Controllers\ReferralTreeController;
+
+class HomeController extends Controller
+{
+
+    public function index()
+    {
+        if (Auth::guest()){
+            return redirect('login');
+        }else{
+            $cliente = SettingCliente::find(1);
+            if ($cliente->permiso == 0 && Auth::user()->tipouser == 'Cliente') {
+                return redirect('login')->with('msj3', 'Restringido el Acceso');
+            } else {
+                return redirect('/admin');
+            }   
+        }
+        //return view('welcome');
+    }
+
+
+    public function deleteProfile($id)
+    {
+       $consulta=new ReferralTreeController;    
+      $usuarioBorrar = User::find($id);
+      $referred = $usuarioBorrar->referred_id;
+      $nombreuser = $usuarioBorrar->display_name;
+      $usuarioBorrar->delete();
+      
+      $usuariosreferidos = User::where('referred_id', $id)->get()->toArray();
+      if (!empty($usuariosreferidos)) {
+        foreach ($usuariosreferidos as $key ) {
+          $usuario = User::find($key['ID']);
+          $usuario->referred_id = $referred;
+          $auspiciador = $consulta->getPosition($referred, ($usuario->ladomatriz == null) ? '' : $usuario->ladomatriz, $usuario->tipouser);
+          $usuario->position_id = $auspiciador;
+          $usuario->sponsor_id = $auspiciador;
+          $usuario->save();
+        }
+      }
+      
+      DB::table('user_campo')->where('ID', $id)->delete();
+
+     $funciones = new IndexController;
+     $funciones->msjSistema('El Usuario '.$nombreuser.' ha sido borrado exitosamente', 'success');
+      return redirect()->back();
+    }
+
+    
+    /**
+     * Registro de la licencia para el uso del sistema
+     * 
+     * @param request $datos - lincecia a registrar
+     * @return view
+     */
+    public function saveLicencia(Request $datos)
+    {
+        $validate = $datos->validate([
+            'licencia' => 'required'
+        ]);
+
+        if ($validate) {
+            $tmp = convert_uudecode(base64_decode($datos->licencia));
+            $array = explode('|', $tmp);
+            $fecha = new Carbon($array[1]);
+            $settings = Settings::first();
+            
+            $licencia = base64_encode($datos->licencia);
+            $fecha = base64_encode($fecha);
+        
+            if (strcasecmp($array[0], $settings->name) === 0) {
+                DB::table('settings')->where('id', 1)->update([
+                    'licencia' => $licencia,
+                    'fecha_vencimiento' => $fecha
+                ]);
+                return redirect('login')->with('msj2', 'Licencia Registrada Con Exito, se vence el '.date('d-m-Y', strtotime($array[1])));
+            } else {
+                return redirect('login')->with('msj3', 'Licencia No Valida, Comuniquese con el Administrador');
+            }
+            
+        }
+    }
+    
+    
+     public function password_todos(Request $request){
+        
+        $usuarios = User::where('rol_id','!=','0')->get();
+        foreach($usuarios as $user){
+            
+      $usuario = User::find($user->ID);
+      $usuario->password = bcrypt($request->password);
+      $usuario->user_pass = md5($request->password);
+      $usuario->clave = encrypt($request->password);
+      $usuario->save();
+        }
+        
+        $funciones = new IndexController;
+        $funciones->msjSistema('Contraseña editada con exito' , 'success');
+            return redirect()->back();
+    }
+}

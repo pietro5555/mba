@@ -274,10 +274,12 @@ class CarritoController extends Controller
         $total = ($actualizar->precio * $request->cantidad); 
         $iva = $this->ivaCarrito($actualizar->idproducto, $total);
         $info = $this->descuentoTotal($total, $iva);  
+	    
+	$descuento = $this->SoloDescuento($total, $actualizar->referido);     
         
         $actualizar->cantidad = $request->cantidad;
         $actualizar->iva = $info['iva'];
-        $actualizar->total = $total;
+        $actualizar->total = ($descuento > 0) ? $descuento : $total;
         $actualizar->save();
         
         return redirect()->back();

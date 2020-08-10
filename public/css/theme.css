@@ -1,0 +1,32 @@
+.bg-dark-gray{
+    background-color: #1C1D21;
+}
+.items-header{
+    font-weight: 500;
+    color: white !important;
+    font-size: 17px;
+}
+.section-landing{
+    padding: 20px 40px; 
+    background-color: #222326;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+}
+.section-title-landing{
+    font-weight: bold;
+    color: #2A91FF;
+    font-size: 30px;
+}
+.list-group-item:hover{
+    text-decoration: none;
+    background-color: #222326;
+}
+.carousel-caption{
+    width: 30%;
+    left: 10% !important;
+    right: 0 !important;
+    top: 5% !important;
+    bottom: 0 !important;
+    text-align: left;
+}

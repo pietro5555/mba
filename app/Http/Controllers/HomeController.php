@@ -25,7 +25,8 @@ class HomeController extends Controller
     public function index()
     {
         if (Auth::guest()){
-            return redirect('login');
+            //return redirect('login');
+            return view('layouts.landing');
         }else{
             $cliente = SettingCliente::find(1);
             if ($cliente->permiso == 0 && Auth::user()->tipouser == 'Cliente') {

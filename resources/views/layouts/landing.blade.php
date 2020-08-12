@@ -90,7 +90,7 @@
                             </li>
                         </ul>
                         <div style="padding-left: 20px;">
-                            <button type="button" class="btn btn-primary" style="border-radius: 25px !important; font-weight: bold; width: 180px;">REGISTRARME</button>
+                            <a type="button" class="btn btn-primary" href="{{ route('login') }}" style="border-radius: 25px !important; font-weight: bold; width: 180px;">REGISTRARME</a>
                         </div>
                     </div>
                 </nav>
@@ -179,23 +179,80 @@
                     </div><BR><BR>
                 @endif
                 
-                <div class="section-landing">
-                    <div class="section-title-landing" style="padding-bottom: 35px;">LOS MÁS NUEVOS</div>
+                <div class="section-landing" style="background: linear-gradient(to bottom, #222326 50%, #1C1D21 50.1%);">
+                    <div class="row">
+                        <div class="col">
+                            <div class="section-title-landing" style="padding-bottom: 35px;">LOS MÁS NUEVOS</div>
+                        </div>
+                        <div class="col text-right">
+                            <button type="button" class="btn btn-outline-light" style="border-radius: 0px;"><i class="fas fa-chevron-left"></i></button>
+                            <button type="button" class="btn btn-outline-success" style="border-radius: 0px; border-color: #6AB742; color: #6AB742;"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                    
 
                     <div class="row" style="padding: 10px 30px;">
                         <div class="col">
-                            <div class="card" style="width: 18rem;">
-                                <img src="{{ asset('images/curso1.jpg') }}" class="card-img-top" alt="...">
+                            <div class="card" >
+                                <img src="{{ asset('images/curso1.jpg') }}" class="card-img-top" alt="..." style="filter: brightness(80%);">
+                                <div class="card-img-overlay d-flex flex-column">
+                                    <div class="mt-auto">
+                                        <div style="font-size: 20px; font-weight: bold;">Nombre del Curso 1</div>
+                                        <div class="row">
+                                            <div class="col-12 col-xl-6" style="font-size: 16px; font-weight: bold;">Categoría</div>
+                                            <div class="col-12 col-xl-6" style="font-size: 16px;">
+                                                <div class="row row-cols-3">
+                                                    <div class="col text-right" style="padding-right: 0 !important; padding-left: 0 !important;"><i class="far fa-user-circle"></i><br><span style="font-size: 10px;">1310</span></div>
+                                                    <div class="col text-center" style="padding-right: 0 !important; padding-left: 0 !important;"><i class="fas fa-share-alt"></i><br><span style="font-size: 10px;">869</span></div>
+                                                    <div class="col text-left" style="padding-right: 0 !important; padding-left: 0 !important;"><i class="far fa-thumbs-up"></i><br><span style="font-size: 10px;">1242</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="col">
-                            <div class="card" style="width: 18rem;">
-                                <img src="{{ asset('images/curso2.jpg') }}" class="card-img-top" alt="...">
+                            <div class="card" >
+                                <img src="{{ asset('images/curso2.jpg') }}" class="card-img-top" alt="..." style="filter: brightness(80%);">
+                                <div class="card-img-overlay d-flex flex-column">
+                                    <div class="mt-auto">
+                                        <div style="font-size: 20px; font-weight: bold;">Nombre del Curso 2</div>
+                                        <div class="row">
+                                            <div class="col-12 col-xl-6" style="font-size: 16px; font-weight: bold;">Categoría</div>
+                                            <div class="col-12 col-xl-6" style="font-size: 16px;">
+                                                <div class="row row-cols-3">
+                                                    <div class="col text-right" style="padding-right: 0 !important; padding-left: 0 !important;"><i class="far fa-user-circle"></i><br><span style="font-size: 10px;">1310</span></div>
+                                                    <div class="col text-center" style="padding-right: 0 !important; padding-left: 0 !important;"><i class="fas fa-share-alt"></i><br><span style="font-size: 10px;">869</span></div>
+                                                    <div class="col text-left" style="padding-right: 0 !important; padding-left: 0 !important;"><i class="far fa-thumbs-up"></i><br><span style="font-size: 10px;">1242</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="col">
-                            <div class="card" style="width: 18rem;">
-                                <img src="{{ asset('images/curso3.jpg') }}" class="card-img-top" alt="...">
+                            <div class="card" >
+                                <img src="{{ asset('images/curso3.jpg') }}" class="card-img-top" alt="..." style="filter: brightness(80%);">
+                                <div class="card-img-overlay d-flex flex-column">
+                                    <div class="mt-auto">
+                                        <div style="font-size: 20px; font-weight: bold;">Nombre del Curso 3</div>
+                                        <div class="row">
+                                            <div class="col-12 col-xl-6" style="font-size: 16px; font-weight: bold;">Categoría</div>
+                                            <div class="col-12 col-xl-6" style="font-size: 16px;">
+                                                <div class="row row-cols-3">
+                                                    <div class="col text-right" style="padding-right: 0 !important; padding-left: 0 !important;"><i class="far fa-user-circle"></i><br><span style="font-size: 10px;">1310</span></div>
+                                                    <div class="col text-center" style="padding-right: 0 !important; padding-left: 0 !important;"><i class="fas fa-share-alt"></i><br><span style="font-size: 10px;">869</span></div>
+                                                    <div class="col text-left" style="padding-right: 0 !important; padding-left: 0 !important;"><i class="far fa-thumbs-up"></i><br><span style="font-size: 10px;">1242</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -215,7 +272,7 @@
                                 <i class="fa fa-clock"></i> 6:00 pm
                             </div>
                             <div style="font-size: 35px; padding-top: 60px;">
-                                <a href="">Reservar Plaza ></a>
+                                <a href="">Reservar Plaza <i class="fas fa-chevron-right"></i></a>
                             </div>
                         </div>
                     </div>

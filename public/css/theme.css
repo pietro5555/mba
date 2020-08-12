@@ -30,3 +30,8 @@
     bottom: 0 !important;
     text-align: left;
 }
+.btn-outline-success:hover {
+    color: #fff !important;
+    background-color: #6AB742;;
+    border-color: #6AB742;;
+}

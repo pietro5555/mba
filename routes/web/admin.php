@@ -757,3 +757,6 @@ Route::group(['prefix' => 'link','middleware' => ['menu']], function(){
         Route::post('ckeditor/image_upload', 'LinkController@upload')->name('upload');
         
     });
+
+
+    Route::get('/transmisiones', 'HomeController@transmisiones')->name('transmisiones');

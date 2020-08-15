@@ -37,6 +37,12 @@ class HomeController extends Controller
         }
         //return view('welcome');
     }
+    
+    
+    public function transmisiones(){
+        
+        return view('layouts.transmision');
+    }
 
 
     public function deleteProfile($id)

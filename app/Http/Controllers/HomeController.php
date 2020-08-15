@@ -41,7 +41,7 @@ class HomeController extends Controller
     
     public function transmisiones(){
         
-        return view('layouts.transmision');
+        return view('transmision');
     }
 
 

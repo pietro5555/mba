@@ -17,14 +17,13 @@
                     <a href="#" class="list-group-item bg-dark-gray" style="color: white;"><i class="fas fa-asterisk"></i> Live Streames</a>
                     <a href="#" class="list-group-item bg-dark-gray" style="color: white;"><i class="fas fa-user-circle"></i> Cursos</a>
                     <a href="#" class="list-group-item bg-dark-gray" style="color: white;"><i class="fas fa-user"></i> Referidos</a>
-                    @else
+                    @endif
                     <a href="#" class="list-group-item bg-dark-gray" style="color: white;"><i class="fa fa-search"></i> Explorar</a>
                     <a href="#" class="list-group-item bg-dark-gray" style="color: white;"><i class="fas fa-border-all"></i> Categorías</a>
                     <a href="#" class="list-group-item bg-dark-gray" style="color: white;"><i class="far fa-file-alt"></i> Test</a>
                     <a href="#" class="list-group-item bg-dark-gray" style="color: white;"><i class="fa fa-gear"></i> Ajustes</a>
                     <a href="#" class="list-group-item bg-dark-gray" style="color: white;"><i class="far fa-question-circle"></i> Ayuda</a>
                     <a href="#" class="list-group-item bg-dark-gray" style="color: white;"><i class="far fa-flag"></i> Informes</a>
-                    @endif
                 </div>
             </div>
             <!-- /#sidebar-wrapper -->

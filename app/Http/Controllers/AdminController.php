@@ -55,7 +55,9 @@ class AdminController extends Controller
 
     public function index()
     {  
-        
+        $fechaProxActivacion = NULL;
+        $desde = NULL;
+        $binario = NULL;
         $moneda = Monedas::where('principal', 1)->get()->first();
         session(['tienda' => '0']);
         $settings = Settings::first();
@@ -200,7 +202,7 @@ class AdminController extends Controller
             }else{
              view()->share('title', 'Panel de administración');     
             }
-            
+  
         return view('dashboard.index')->with(compact('cantReferidosDirectos', 'cantReferidosIndirectos', 'cantReferidosActivos', 'fechaProxActivacion', 'new_member',
                     'cantventas', 'cantventasmont', 'fullname', 'rangos', 'cantAllUsers', 'rankingComisiones', 'rankingVentas', 'permiso','noticias', 'contTicket', 'moneda',
                     'nombreRol','desde', 'ordenesView', 'productosnuevos','settingPuntos','totalventas','totalcobrado','anuncios','noticias','materiales','binario',

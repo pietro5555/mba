@@ -1,0 +1,71 @@
+html,body {
+	height: 100%;
+}
+
+body.my-login-page {
+	background-color: #1b1e21;
+	font-size: 16px;
+}
+
+.my-login-page .brand {
+	width: 190px;
+	height: 190px;
+	overflow: hidden;
+	border-radius: 50%;
+	margin: 0 auto;
+	margin: 10px auto;
+	box-shadow: 0 0 40px rgba(0,0,0,.05);
+}
+
+.my-login-page .brand img {
+	width: 100%;
+}
+
+.my-login-page .card-wrapper {
+	width: 500px;
+	margin: 1 auto;
+}
+
+.my-login-page .card {
+	border-color: transparent;
+	box-shadow: 50 0 40px rgba(0,0,0,.05);
+}
+
+.my-login-page .card.fat {
+	padding: 0px;
+}
+
+.my-login-page .card .card-title {
+	margin-bottom: 20px;
+}
+
+.my-login-page .form-control {
+	border-width: 2.3px;
+}
+
+.my-login-page .form-group label {
+	width: 100%;
+}
+
+.my-login-page .footer {
+
+	color: blue;
+	text-align: center;
+}
+
+@media screen and (max-width: 425px) {
+	.my-login-page .card-wrapper {
+		width: 90%;
+		margin: 0 auto;
+	}
+}
+
+@media screen and (max-width: 320px) {
+	.my-login-page .card.fat {
+		padding: 0;
+	}
+
+	.my-login-page .card.fat .card-body {
+		padding: 15px;
+	}
+}

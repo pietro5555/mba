@@ -1,0 +1,66 @@
+li{
+    font-size: 16px;
+}
+.blanco-claro{
+    color:white;
+}
+
+  .black{
+      color:black;
+  }
+   .claro{
+       color:white;
+       margin-left: 10px;
+       margin-top:5px;
+   }
+    .negro{
+        background-color:#333;
+        margin-bottom: 20px;
+    }
+    
+    
+    input.con, select.con {
+    background-color:transparent;
+    width: 96%;
+    height: 30px;
+    border:none;
+    margin-left: 10px;
+    
+     }
+     
+    
+    Input:Focus.con {
+     background-color: #e8e8e8;
+     height: 30px;
+    }
+    
+    .pag{
+    padding-left: 30px;
+    padding-right: 30px;
+    }
+    
+    .page{
+    margin-top: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+    color: #cec8c8;
+    }
+    
+    .linea-borderlan {
+    border-bottom: 1px solid #333;
+    }
+     
+  
+  .nuevo-info {
+    background-color: #00c0ef;
+    border-color: #00acd6;
+    color: white;
+    padding: 10px;
+    
+    }
+    
+    @media only screen and (max-width: 420px) {
+    #bajoselect {
+    margin-bottom:30px;
+     }
+  }

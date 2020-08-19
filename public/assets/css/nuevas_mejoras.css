@@ -1,0 +1,160 @@
+/*para redes sociales*/
+.centroc{
+        text-align:center;
+    }
+    
+.ampliar{
+        font-size: 50px;
+    }
+
+.border-redes{
+    border-radius: 50%;
+}    
+
+/* logo y mas */
+
+
+img.logo-default {
+    max-height: 40px;
+}
+
+img.circular-log{
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+}
+
+/* avatares del settings*/
+img.circular-avatar{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+/* tienda */
+img.circular{
+    width: 200px;
+    height: 200px; 
+    border-radius: 50%;
+    margin-top: 20px;
+}
+
+/* tickets */
+img.circular-tick{
+    border-radius: 50%;
+    margin-left: -20px;
+    width: 150px;
+    height: 150px;
+    box-shadow: 0 0px 2px rgba(0, 0, 0, 1);
+    float: left;
+}
+
+/* herramientas */
+img.circular-herramienta{
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    float: left;
+}
+
+.margin-herramienta{
+    margin-bottom: 0;
+    margin-top:-3px;
+}
+
+/* gestion de noticias titulo */
+.titulo-herramienta{
+    margin-bottom: -10px; 
+    margin-top:-3px;
+}
+
+.otros-herramienta{
+ margin: 0 0 10px;
+ margin-top:-3px;
+}
+
+/* para la tabla de abajo del varrito */
+ .mitable {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom:30px;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+/*para redondear el footer en el home*/
+.border-radius{
+    border-radius:20px;
+}
+
+/*para los iframe de los videos*/
+ @media (max-width: 420px) {
+
+  iframe {
+    width: 280px;
+    height: 200px;
+  } 
+
+}
+
+
+/* aumentar el tamano
+* del texto de los botones
+*/
+.btn-agn{
+    font-size: 16px;
+}
+
+/*colores del propover para cambiar el color del sistema*/
+   .text-azul {
+    color: #3c8dbc;
+   }
+   
+   .text-azul-claro {
+    color: #00c0ef;
+   }
+   
+   .text-purpura {
+    color: #605ca8;
+   }
+   
+   .text-purpura-claro {
+    color: #6c67c5;
+    }
+    
+    .text-verde {
+    color: #00a65a;
+   }
+   
+   .text-verde-claro {
+    color: #2ed689;
+    }
+    
+    .text-rojo {
+    color: #d73925;
+   }
+   
+   .text-rojo-claro {
+    color: #dd4b39;
+    }
+    
+   .text-amarillo {
+    color: #f39c12;
+   }
+   
+   .text-amarillo-claro {
+    color: #e08e0b;
+    }
+    
+    .text-negro {
+    color: #333;
+   }
+   
+   .text-negro-claro {
+    color: #2c3b41;
+    }

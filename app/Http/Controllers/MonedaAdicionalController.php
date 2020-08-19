@@ -53,7 +53,7 @@ class MonedaAdicionalController extends Controller
             
                 
                 array_push($stringJson, [
-                     'cont' => $i.Carbon::now()->format('His').$i+1,
+                     'cont' => $i.Carbon::now()->format('His').($i+1),
                      'nombre' => $datos['nombre'.$i],
                      'moneda' => $datos['moneda'.$i],
                      'simbolo' => $datos['simbolo'.$i],

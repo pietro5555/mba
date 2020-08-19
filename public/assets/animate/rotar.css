@@ -1,0 +1,18 @@
+.rotar{
+    -webkit-transition-duration: 0.8s;
+    -moz-transition-duration: 0.8s;
+    -o-transition-duration: 0.8s;
+    transition-duration: 0.8s;
+      
+    -webkit-transition-property: -webkit-transform;
+
+      
+    overflow:hidden;
+  
+    }   
+  
+.rotar:hover   
+{ 
+    -webkit-transform:rotate(360deg);
+
+}

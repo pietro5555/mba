@@ -951,6 +951,33 @@ class Menu
                 'permisoAdmin' => 1,
                 'activo' => 0,
             ],
+            'Cursos' => [
+                'submenu' => 1,
+                'ruta' => 'javascript:;',
+                'icono' => 'fas fa-sitemap',
+                'permisoAdmin' => (!empty($permiso)) ? $permiso->cursos : 0,
+                'activo' => 0,
+                'menus' => [
+                    'Listado de Cursos' => [
+                        'ruta' => 'admin.courses.index',
+                        'complementoruta' => '',
+                        'black'=> '0',
+                        'oculto'=> 'activo',
+                    ],
+                    'Slider de Cursos' => [
+                        'ruta' => 'referraltree',
+                        'complementoruta' => '?user=Cliente',
+                        'black'=> '0',
+                        'oculto'=> 'activo',
+                    ],
+                    'Gestionar Categorías' => [
+                        'ruta' => 'admin.courses.categories',
+                        'complementoruta' => '',
+                        'black'=> '0',
+                        'oculto'=> 'activo',
+                    ],
+                ]
+            ],
             'Actualizar' => [
                 'submenu' => 0,
                 'ruta' => 'admin-update-all',

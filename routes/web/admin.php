@@ -17,6 +17,9 @@ Route::group(['prefix' => 'installer'], function (){
   
 });
 
+
+Route::get('load-more-courses-new/{ultimoId}/{accion}', 'CourseController@load_more_courses_new')->name('landing.load-more-courses-new');
+
 //nuevo inicio a traves de un nuevo login
 Route::group(['prefix' => 'inicio','middleware' => ['auth']], function(){
     
@@ -123,6 +126,30 @@ Route::group(['prefix' => 'tienda', 'middleware' => ['auth', 'licencia', 'menu']
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu']], function() {
+   Route::group(['prefix' => 'courses'], function(){
+      Route::get('', 'CourseController@index')->name('admin.courses.index');
+      Route::post('store', 'CourseController@store')->name('admin.courses.store');
+      Route::get('edit/{id}', 'CourseController@edit')->name('admin.courses.edit');
+      Route::post('update', 'CourseController@update')->name('admin.courses.update');
+      Route::get('change-status/{id}/{status}', 'CourseController@change_status')->name('admin.courses.change-status');
+
+      Route::group(['prefix' => 'categories'], function(){
+         Route::get('', 'CategoryController@index')->name('admin.courses.categories');
+         Route::post('add', 'CategoryController@add_category')->name('admin.courses.add-category');
+         Route::get('edit/{id}', 'CategoryController@edit_category')->name('admin.courses.edit-category');
+         Route::post('update', 'CategoryController@update_category')->name('admin.courses.update-category');
+         Route::get('delete/{id}', 'CategoryController@delete_category')->name('admin.courses.delete-category');
+         Route::get('load-subcategories/{category_id}', 'CategoryController@load_subcategories')->name('admin.courses.load-subcategories');
+      });
+
+      Route::group(['prefix' => 'subcategories'], function(){
+         Route::post('add', 'CategoryController@add_subcategory')->name('admin.courses.add-subcategory');
+         Route::get('edit/{id}', 'CategoryController@edit_subcategory')->name('admin.courses.edit-subcategory');
+         Route::post('update', 'CategoryController@update_subcategory')->name('admin.courses.update-subcategory');
+         Route::get('delete/{id}', 'CategoryController@delete_subcategory')->name('admin.courses.delete-subcategory');
+         Route::get('/{category_slug}/{category_id}', 'CategoryController@subcategories')->name('admin.courses.subcategories');
+      });
+   });
     // Actualiza todos la informacion para los usuarios
     Route::get('updateall', 'AdminController@ActualizarTodo')->name('admin-update-all');
 

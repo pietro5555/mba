@@ -14,7 +14,9 @@
         <link rel="stylesheet" href="{{ asset('bootstrap-4.5.1/css/bootstrap.min.css') }}">
         <link href="{{ asset('css/simple-sidebar.css') }}" rel="stylesheet">
         <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
-
+        
+        @stack('styles')
+        
         <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
 
         <script>
@@ -59,5 +61,7 @@
                 $("#wrapper").toggleClass("toggled");
             });
         </script>
+
+        @stack('scripts')
     </body>
 </html>

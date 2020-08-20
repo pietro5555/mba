@@ -26,7 +26,7 @@
     text-decoration: none;
     background-color: #222326;
 }
-.new-courses-slider{
+.courses-slider{
     padding-right: 0 !important; 
     padding-left: 0 !important; 
     padding-bottom: 30px;
@@ -39,25 +39,25 @@
     bottom: 0 !important;
     text-align: left;
 }
-.new-course-label{
+.course-label{
     color: #2A91FF;
     font-weight: bold; 
     padding-bottom: 30px; 
     font-size: 24px;
 }
-.new-course-autor{
+.course-autor{
     color: #727272; 
     font-weight: bold; 
     font-size: 35px;
 }
-.new-course-title{
+.course-title{
     color: #FFFFFF; 
     font-weight: bold; 
     font-size: 60px; 
     line-height: 60px; 
     padding: 20px 0;
 }
-.new-course-category{
+.course-category{
     color: #727272; 
     font-weight: bold; 
     font-size: 22px;
@@ -74,6 +74,39 @@
     border-radius: 25px !important; 
     font-weight: bold; 
     width: 180px;
+}
+.new-courses-section{
+    background: linear-gradient(to bottom, #222326 50%, #1C1D21 50.1%);
+}
+.new-courses-section-title{
+    padding-bottom: 35px;
+}
+.btn-arrow-previous{
+    border-radius: 0px;
+}
+.btn-arrow-next{
+    border-radius: 0px; 
+    border-color: #6AB742; 
+    color: #6AB742;
+}
+.new-course-img{
+    filter: brightness(80%);
+    height: 450px;
+}
+.new-course-title{
+    font-size: 20px; 
+    font-weight: bold;
+}
+.new-course-category{
+    font-size: 16px; 
+    font-weight: bold;
+}
+.no-padding-sides{
+    padding-right: 0 !important; 
+    padding-left: 0 !important;
+}
+.new-course-items-text{
+    font-size: 10px;
 }
 .next-streaming{
     width: 100%; 
@@ -125,18 +158,18 @@
         padding-left: 10px;
         padding-bottom: 20px;
     }
-    .new-course-label{
+    .course-label{
         padding-bottom: 15px; 
     }
-    .new-course-autor{
+    .course-autor{
         font-size: 30px;
     }
-    .new-course-title{ 
+    .course-title{ 
         font-size: 45px; 
         line-height: 45px; 
         padding: 15px 0;
     }
-    .new-course-category{
+    .course-category{
         font-size: 20px;
     }
     .next-streaming-title{
@@ -152,19 +185,19 @@
     .carousel-caption{
         width: 50%;
     }
-    .new-course-label{
+    .course-label{
         padding-bottom: 10px; 
         font-size: 20px;
     }
-    .new-course-autor{
+    .course-autor{
         font-size: 25px;
     }
-    .new-course-title{ 
+    .course-title{ 
         font-size: 30px; 
         line-height: 30px; 
         padding: 10px 0;
     }
-    .new-course-category{
+    .course-category{
         font-size: 17px;
     }
     .next-streaming-title{ 
@@ -179,19 +212,19 @@
     .carousel-caption{
         width: 50%;
     }
-    .new-course-label{
+    .course-label{
         padding-bottom: 5px; 
         font-size: 16px;
     }
-    .new-course-autor{
+    .course-autor{
         font-size: 20px;
     }
-    .new-course-title{ 
+    .course-title{ 
         font-size: 25px; 
         line-height: 25px; 
         padding: 10px 0;
     }
-    .new-course-category{
+    .course-category{
         font-size: 14px;
     }
     .next-streaming-title{

@@ -9,8 +9,9 @@ use DB;
 
 class CourseController extends Controller{
     /**
-     * Landing / Mostrar Cursos en la Sección de Cursos Nuevos
-     */
+    * Landing / Mostrar Cursos en la Sección de Cursos Nuevos
+    *Consulta Ajax para actualizar los cursos (Previous y Next)
+    */
     public function load_more_courses_new($ultimoId, $accion){
         if ($accion == 'next'){
             $cursosNuevos = Course::where('id', '<', $ultimoId)
@@ -151,6 +152,59 @@ class CourseController extends Controller{
         }else{
             return redirect('admin/courses')->with('msj-exitoso', 'El curso '.$curso->title.' ha sido habilitado con éxito.');
         }
-        
+    }
+
+    /**
+     * Admin / Cursos / Cursos Destacados (Slider Principal)
+     */
+    public function featured(){
+        // TITLE
+        view()->share('title', 'Gestionar Cursos Destacados');
+
+        $cursos = Course::where('status', '=', 1)
+                    ->orderBy('featured', 'DESC')
+                    ->get();
+
+        return view('admin.courses.featured')->with(compact('cursos'));
+    }
+
+    /**
+     * Admin / Cursos / Cursos Destacados (Slider Principal)
+     * Destacar Curso y cargar su imagen destacada
+     */
+    public function add_featured(Request $request){
+        $curso = Course::find($request->course_id);
+
+        if ($request->hasFile('featured_cover')){
+            $file = $request->file('featured_cover');
+            $name = $curso->id.".".$file->getClientOriginalExtension();
+            $file->move(public_path().'/uploads/images/courses/featured_covers', $name);
+            $curso->featured_cover = $name;
+            $curso->featured_cover_name = $file->getClientOriginalName();
+        }
+        $curso->featured = 1;
+        $curso->save();
+
+        return redirect('admin/courses/featured')->with('msj-exitoso', 'El curso ha sido destacado con éxito.');
+    }
+
+     /**
+     * Admin / Cursos / Cursos Destacados (Slider Principal)
+     * Quitar Curso Destacado
+     */
+    public function quit_featured($id){
+        $curso = Course::find($id);
+
+        $imagen = public_path().'/uploads/images/courses/featured_covers/'.$curso->featured_cover;
+        if (getimagesize($imagen)) {
+            unlink($imagen);
+        }
+        $curso->featured_cover = NULL;
+        $curso->featured_cover_name = NULL;
+        $curso->featured = 0;
+        $curso->save();
+
+        return redirect('admin/courses/featured')->with('msj-exitoso', 'El curso ha sido quitado de destacados con éxito.');
     }
 }
+

@@ -24,6 +24,12 @@ class HomeController extends Controller{
 
    public function index(){
       if (Auth::guest()){
+         $cursosDestacados = Course::where('featured', '=', 1)
+                                 ->where('status', '=', 1)
+                                 ->orderBy('id', 'DESC')
+                                 ->take(3)
+                                 ->get();
+
          $cursosNuevos = Course::where('status', '=', 1)
                            ->orderBy('id', 'DESC')
                            ->take(3)
@@ -58,7 +64,7 @@ class HomeController extends Controller{
             $next = 0;
          }
 
-         return view('index')->with(compact('cursosNuevos', 'idStart', 'idEnd', 'previous', 'next'));
+         return view('index')->with(compact('cursosDestacados', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next'));
       }else{
          $cliente = SettingCliente::find(1);
          if ($cliente->permiso == 0 && Auth::user()->tipouser == 'Cliente') {

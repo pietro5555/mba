@@ -200,3 +200,48 @@
         line-height: 30px;
     }
 }
+
+.title-page-course{
+    color: #FFFF;
+    font-weight: bold; 
+    padding-bottom: 30px; 
+    font-size: 24px;
+    margin-top:30px;
+}
+.banner-course{
+    padding-right: 0 !important; 
+    padding-left: 0 !important; 
+    padding-bottom: 30px;
+}
+.course-banner-img{
+    background: transparent linear-gradient(178deg, #00000000 0%, #000000 100%) 0% 0% no-repeat padding-box;
+    opacity: 0.74;
+}
+
+.course-banner-caption{
+    position: absolute;
+    top: 60%;
+}
+.title-course{
+    color: #FFFF;
+    font-weight: bold; 
+    font-size: 24px;
+}
+
+.description-course{
+    color: #DEDADA;
+    letter-spacing: 0.75px;
+    color: #DEDADA;
+    opacity: 1;
+}
+
+.play-course-button{
+    border: 1px;
+    border-radius: 10px;
+}
+
+.section-title-courses{
+    font-weight: bold;
+    color: #2A91FF;
+    font-size: 24px;
+}

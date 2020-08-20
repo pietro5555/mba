@@ -760,3 +760,6 @@ Route::group(['prefix' => 'link','middleware' => ['menu']], function(){
     
     
     Route::get('/transmisiones', 'HomeController@transmisiones')->name('transmisiones');
+
+//Cursos
+Route::get('cursos', 'CursosController@index')->name('cursos');

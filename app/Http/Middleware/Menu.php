@@ -964,9 +964,9 @@ class Menu
                         'black'=> '0',
                         'oculto'=> 'activo',
                     ],
-                    'Slider de Cursos' => [
-                        'ruta' => 'referraltree',
-                        'complementoruta' => '?user=Cliente',
+                    'Gestionar Destacados' => [
+                        'ruta' => 'admin.courses.featured',
+                        'complementoruta' => '',
                         'black'=> '0',
                         'oculto'=> 'activo',
                     ],

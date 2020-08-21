@@ -12,7 +12,7 @@
 }
 .section-landing{
     padding: 20px 40px; 
-    background-color: #222326;
+    background-color: #1C1D21;
     color: white;
     font-size: 24px;
     font-weight: bold;
@@ -383,4 +383,53 @@ border-radius: 0px;
     font-weight: bold;
     color: #FFFF;
     font-size: 24px;
+}
+
+/*Carousel*/
+.carousel-image{
+background: transparent linear-gradient(180deg, #00000000 0%, #000000 100%) 0% 0% no-repeat padding-box;
+opacity: 8;
+max-height: 320px
+}
+.bg-carousel{
+
+}
+.card-carousel-text{
+position: absolute;
+bottom: 0;      
+}
+
+.subtitle-cat
+{
+    color: #8E8E8E;
+}
+
+.btn-next
+{
+    border-radius: 0px;
+    border-color: #2A91FF;
+    color: #2A91FF;
+}
+
+.btn-prev{
+
+    border-radius: 0px;
+}
+
+/* Botones de entradas de estilos utilizados en páginas de descripción de películas.*/
+
+.button-container{
+display:inline-block;
+position:relative;
+}
+
+.button-container button{
+position: absolute;
+bottom:4em;
+right:4em;
+text-transform:uppercase;
+}
+
+.progress-course-bar{
+    top: 80%;
 }

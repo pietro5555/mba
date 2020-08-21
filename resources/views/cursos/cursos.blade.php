@@ -2,36 +2,28 @@
 
 @section('content')
     
-    <div class="title-page-course col-md"> Hola <a class="text-primary">Jhon.</a>&nbsp¡Nos alegra verte hoy!
+    <div class="title-page-course col-md"><span class="text-white">
+        <h3><span class="text-white">Hola</span><span class="text-primary"> Jhon</span><span class="text-white"> ¡Nos alegra verte hoy!</span></h3>
     </div>
 
     {{-- BANNER --}}
-    <div class="container-fluid banner-course">
-            <div class="carousel-inner">
-                <div class="">
-                    <img src="{{ asset('images/banner_cursos.png') }}" class="course-banner-img" alt="...">
-
-                    <div class="course-banner-caption">
-                        <div class="title-course col-xl">NOMBRE DEL CURSO</div>
-                        <div class="description-course col-sm-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus maximus eros malesuada arcu sagittis, et lobortis.</div>
-                        <br>
-                        <div class="col-md">
-                             <button type="button" class="btn btn-primary play-course-button"><i class="fa fa-play"></i> CONTINUAR CURSO</button>
-                        </div>
-                        <br>
-                         <div class="progress">
-                            <div class="progress-bar" role="progressbar" aria-valuenow="70"
-                            aria-valuemin="0" aria-valuemax="100" style="width:70%">
-                            </div>
-                         </div> 
-                    </div> 
-                                  
-
-                </div>
-               
-            </div>
-            
+<div class="container-fluid banner-course">
+<div class="button-container">
+    <img src="{{ asset('images/banner_cursos.png') }}" class="course-banner-img img-fluid" alt="..."/>
+     <button type="button" class="btn btn-primary play-course-button col-xs"><i class="fa fa-play"></i> CONTINUAR CURSO</button>
+     <div class="progress col-xs">
+        <div class="progress-bar progress-course-bar" role="progressbar" aria-valuenow="70"
+                aria-valuemin="0" aria-valuemax="100" style="width:70%">
+        </div>
     </div>
+</div>
+ 
+<div class="course-banner-caption">
+    <div class="title-course col-xl">NOMBRE DEL CURSO</div>
+    <div class="description-course col-sm-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus maximus eros malesuada arcu sagittis, et lobortis.</div>
+    <br>
+</div> 
+</div>
     {{-- FIN DEL BANNER --}}
 
      {{-- SECCIÓN TUS CURSOS--}}
@@ -98,99 +90,179 @@
      </div>
     {{-- FIN SECCIÓN TUS CURSOS--}}
 {{-- SECCIÓN RECOMENDACIONES--}}
-<div class="section-landing" style="background: linear-gradient(to bottom, #222326 50%, #1C1D21 50.1%);">
+<div class="section-landing">
         
-            <div class="col">
-                <div class=""> 
-                    <a class="text-primary">Recomendados,</a>
-                    según tus intereses.                    
-                </div>
-            </div>
+<div class="col">
+        <h3><span class="text-primary">Recomendados,</span><span class="text-white"> según tus intereses.</span></h3>                   
+</div>
 
-            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+<div class="row">
+  <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
 
-         <div class="carousel-inner">
+<div class="carousel-inner">
 
-           <div class="carousel-item active">
-             <div class="row">
+<div class="carousel-item active">
+<div class="row">
 
-               <div class="col-md-4" style="margin-top: 20px;">
-                 <img src="{{ asset('images/img-recommended1.png') }}" class="card-img-top" alt="..." style="height: 320px;">
-                 <div class="card-img-overlay" style="margin-left: 10px; margin-right: 10px;">
-                  <h5 class="card-title">Nombre Apellido</h5>
-                  </div>
-                 </div>
-
-                <div class="col-md-4" style="margin-top: 20px;">
-                 <img src="{{ asset('images/img-recommended2.png') }}" class="card-img-top" alt="..." style="height: 320px;">
-                 <div class="card-img-overlay" style="margin-left: 10px; margin-right: 10px;">
-                    <h5 class="card-title">Nombre Apellido</h5>
-                  </div>
-                 </div>
-
-                <div class="col-md-4" style="margin-top: 20px;">
-                 <img src="{{ asset('images/img-recommended3.png') }}" class="card-img-top" alt="..." style="height: 320px;">
-                 <div class="card-img-overlay" style="margin-left: 10px; margin-right: 10px;">
-                    <h5 class="card-title">Nombre Apellido</h5>
-                  </div>
-                 </div>
-
-          </div>
-       </div>
-       
-       
-       
-       <div class="carousel-item">
-             <div class="row">
-
-               <div class="col-md-4" style="margin-top: 20px;">
-                 <img src="{{ asset('images/img-recommended4.png') }}" class="card-img-top" alt="..." style="height: 320px;">
-                 <div class="card-img-overlay" style="margin-left: 10px; margin-right: 10px;">
-                    <h5 class="card-title">Nombre Apellido</h5>
-                  </div>
-                 </div>
-
-                <div class="col-md-4" style="margin-top: 20px;">
-                 <img src="{{ asset('images/img-recommended5.png') }}" class="card-img-top" alt="..." style="height: 320px;">
-                 <div class="card-img-overlay" style="margin-left: 10px; margin-right: 10px;">
-                    <h5 class="card-title">Nombre Apellido</h5>
-                  </div>
-                 </div>
-
-                <div class="col-md-4" style="margin-top: 20px;">
-                 <img src="{{ asset('images/img-recommended6.png') }}" class="card-img-top" alt="..." style="height: 320px;">
-                 <div class="card-img-overlay" style="margin-left: 10px; margin-right: 10px;">
-                    <h5 class="card-title">Nombre Apellido</h5>
-                  </div>
-                 </div>
-
-          </div>
-       </div>
+ <div class="col-md-4 mt-1">
+   <img src="{{ asset('images/img-recommended1.png') }}" class="card-img-top carousel-image" alt="...">
+   <div class="card-img-overlay">
+    <div><h5 class="card-title">Nombre Apellido</h5></div>
+    <div class="row card-carousel-text">
+        <div class="col-xl-auto">
+            <h6><i class="text-success fa fa-play-circle"></i>  Nombre del curso</h6>
+            <h6 class="ml-4 subtitle-cat">Categoría</h6>
+         </div>
+        <div class="col-xl-auto">
+            <h6>
+                <i class="far fa-user-circle"><p style="font-size: 10px;">346</p></i>
+                <i class="fas fa-share-alt"><p style="font-size: 10px;">862</p></i>
+                <i class="far fa-thumbs-up"><p style="font-size: 10px;">1243</p></i>
+            </h6>           
+        </div>
     </div>
-
-      <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-       <i class="fas fa-chevron-circle-left"></i>
-      <span class="sr-only">Previous</span>
-      </a>
-       <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-       <i class="fas fa-chevron-circle-right"></i>
-       <span class="sr-only">Next</span>
-       </a>
+    </div>
    </div>
+
+  <div class="col-md-4 mt-1">
+   <img src="{{ asset('images/img-recommended2.png') }}" class="card-img-top" alt="..." style="height: 320px;">
+   <div class="card-img-overlay">
+    <div><h5 class="card-title">Nombre Apellido</h5></div>
+      <div class="row card-carousel-text">
+        <div class="col-xl-auto">
+            <h6><i class="text-success fa fa-play-circle"></i>  Nombre del curso</h6>
+            <h6 class="ml-4 subtitle-cat">Categoría</h6>
+         </div>
+        <div class="col-xl-auto">
+            <h6>
+                <i class="far fa-user-circle"><p style="font-size: 10px;">346</p></i>
+                <i class="fas fa-share-alt"><p style="font-size: 10px;">862</p></i>
+                <i class="far fa-thumbs-up"><p style="font-size: 10px;">1243</p></i>
+            </h6>           
+        </div>
+    </div>
+    </div>
+   </div>
+
+  <div class="col-md-4 mt-1">
+   <img src="{{ asset('images/img-recommended3.png') }}" class="card-img-top" alt="..." style="height: 320px;">
+   <div class="card-img-overlay">
+      <div><h5 class="card-title">Nombre Apellido</h5></div>
+      <div class="row card-carousel-text">
+        <div class="col-xl-auto">
+            <h6><i class="text-success fa fa-play-circle"></i>  Nombre del curso</h6>
+            <h6 class="ml-4 subtitle-cat">Categoría</h6>
+         </div>
+        <div class="col-xl-auto">
+            <h6>
+                <i class="far fa-user-circle"><p style="font-size: 10px;">346</p></i>
+                <i class="fas fa-share-alt"><p style="font-size: 10px;">862</p></i>
+                <i class="far fa-thumbs-up"><p style="font-size: 10px;">1243</p></i>
+            </h6>           
+        </div>
+    </div>
+    </div>
+   </div>
+
+</div>
+</div>
+
+
+
+<div class="carousel-item">
+<div class="row">
+
+ <div class="col-md-4 mt-1">
+   <img src="{{ asset('images/img-recommended4.png') }}" class="card-img-top" alt="..." style="height: 320px;">
+   <div class="card-img-overlay">
+      <div><h5 class="card-title">Nombre Apellido</h5></div>
+      <div class="row card-carousel-text">
+        <div class="col-xl-auto">
+            <h6><i class="text-success fa fa-play-circle"></i>  Nombre del curso</h6>
+            <h6 class="ml-4 subtitle-cat">Categoría</h6>
+         </div>
+        <div class="col-xl-auto">
+            <h6>
+                <i class="far fa-user-circle"><p style="font-size: 10px;">346</p></i>
+                <i class="fas fa-share-alt"><p style="font-size: 10px;">862</p></i>
+                <i class="far fa-thumbs-up"><p style="font-size: 10px;">1243</p></i>
+            </h6>           
+        </div>
+    </div>
+    </div>
+  </div>
+
+  <div class="col-md-4 mt-1">
+   <img src="{{ asset('images/img-recommended5.png') }}" class="card-img-top" alt="..." style="height: 320px;">
+   <div class="card-img-overlay">
+      <div><h5 class="card-title">Nombre Apellido</h5></div>
+      <div class="row card-carousel-text">
+        <div class="col-xl-auto">
+            <h6><i class="text-success fa fa-play-circle"></i>  Nombre del curso</h6>
+            <h6 class="ml-4 subtitle-cat">Categoría</h6>
+         </div>
+        <div class="col-xl-auto">
+            <h6>
+                <i class="far fa-user-circle"><p style="font-size: 10px;">346</p></i>
+                <i class="fas fa-share-alt"><p style="font-size: 10px;">862</p></i>
+                <i class="far fa-thumbs-up"><p style="font-size: 10px;">1243</p></i>
+            </h6>           
+        </div>
+    </div>
+    </div>
+   </div>
+
+  <div class="col-md-4 mt-1">
+   <img src="{{ asset('images/img-recommended6.png') }}" class="card-img-top" alt="..." style="height: 320px;">
+   <div class="card-img-overlay">
+      <div><h5 class="card-title">Nombre Apellido</h5></div>
+      <div class="row card-carousel-text">
+        <div class="col-xl-auto">
+            <h6><i class="text-success fa fa-play-circle"></i>  Nombre del curso</h6>
+            <h6 class="ml-4 subtitle-cat">Categoría</h6>
+         </div>
+        <div class="col-xl-auto">
+            <h6>
+                <i class="far fa-user-circle"><p style="font-size: 10px;">346</p></i>
+                <i class="fas fa-share-alt"><p style="font-size: 10px;">862</p></i>
+                <i class="far fa-thumbs-up"><p style="font-size: 10px;">1243</p></i>
+            </h6>           
+        </div>
+    </div>
+    </div>
+   </div>
+
+</div>
+</div>
+</div>
+
+<a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+<i class="fas fa-chevron-circle-left"></i>
+<span class="sr-only">Previous</span>
+</a>
+<a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+<i class="fas fa-chevron-circle-right"></i>
+<span class="sr-only">Next</span>
+</a>
+</div>
+
+</div>
+
+
 </div>   
 {{--FIN SECCIÓN RECOMENDACIONES--}}
 <div>
         <hr style="border: 1px solid #707070;opacity: 1;" />
     </div>
     {{-- SECCIÓN CURSOS MAS NUEVOS --}}
-    <div class="section-landing">
+    <div class="section-landing" style="background: linear-gradient(to bottom, #222326 50%, #1C1D21 50.1%);">
         <div class="row">
             <div class="col">
                 <div class="section-title-landing" style="padding-bottom: 35px;">LOS MÁS NUEVOS</div>
             </div>
             <div class="col text-right">
-                <button type="button" class="btn btn-outline-light" style="border-radius: 0px;"><i class="fas fa-chevron-left"></i></button>
-                <button type="button" class="btn btn-outline-success" style="border-radius: 0px; border-color: #6AB742; color: #6AB742;"><i class="fas fa-chevron-right"></i></button>
+                <button type="button" class="btn btn-outline-light btn-prev"><i class="fas fa-chevron-left"></i></button>
+                <button type="button" class="btn btn-outline-primary btn-next"><i class="fas fa-chevron-right"></i></button>
             </div>
         </div>
                
@@ -341,12 +413,12 @@
 
  {{-- SECCIÓN TUS MENTORES--}}
 <div class="section-landing">
-    <div>
+    <div class="col-lg-6 offset-lg-3">
         <h4 class=" section-title-landing text-primary text-center">TUS MENTORES</h4>
     </div>
     <div class="container-fluid">
         <div class="row d-flex flex-row p-2">
-            <div class="col-xs-12 col-sm-4">
+            <div class="col-xs-12 col-sm-4 mt-2">
                 <div class="card mentors-card">
                     <div class="row no-gutters">
                         <div class="col-auto">
@@ -365,7 +437,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-4">
+            <div class="col-xs-12 col-sm-4 mt-2">
                 <div class="card mentors-card">
                     <div class="row no-gutters">
                         <div class="col-auto">
@@ -382,7 +454,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-4">
+            <div class="col-xs-12 col-sm-4 mt-2">
                 <div class="card mentors-card">
                     <div class="row no-gutters">
                         <div class="col-auto">
@@ -401,7 +473,7 @@
             </div>
         </div>
          <div class="row d-flex flex-row p-2">
-            <div class="col-xs-12 col-sm-4">
+            <div class="col-xs-12 col-sm-4 mt-2">
                 <div class="card mentors-card">
                     <div class="row no-gutters">
                         <div class="col-auto">
@@ -418,7 +490,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-4">
+            <div class="col-xs-12 col-sm-4 mt-2">
                 <div class="card mentors-card">
                     <div class="row no-gutters">
                         <div class="col-auto">
@@ -435,7 +507,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-4">
+            <div class="col-xs-12 col-sm-4 mt-2">
                 <div class="card mentors-card">
                     <div class="row no-gutters">
                         <div class="col-auto">
@@ -454,7 +526,7 @@
             </div>
         </div>
         <div class="row d-flex flex-row p-2">
-            <div class="col-xs-12 col-sm-4">
+            <div class="col-xs-12 col-sm-4 mt-2">
                 <div class="card mentors-card">
                     <div class="row no-gutters">
                         <div class="col-auto">
@@ -473,7 +545,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-4">
+            <div class="col-xs-12 col-sm-4 mt-2">
                 <div class="card mentors-card">
                     <div class="row no-gutters">
                         <div class="col-auto">
@@ -490,7 +562,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-4">
+            <div class="col-xs-12 col-sm-4 mt-2">
                 <div class="card mentors-card">
                     <div class="row no-gutters">
                         <div class="col-auto">
@@ -509,7 +581,7 @@
             </div>
         </div>
         <div class="row d-flex flex-row p-2">
-            <div class="col-xs-12 col-sm-4">
+            <div class="col-xs-12 col-sm-4 mt-2">
                 <div class="card mentors-card">
                     <div class="row no-gutters">
                         <div class="col-auto">
@@ -528,7 +600,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-4">
+            <div class="col-xs-12 col-sm-4 mt-2">
                 <div class="card mentors-card">
                     <div class="row no-gutters">
                         <div class="col-auto">
@@ -545,7 +617,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-4">
+            <div class="col-xs-12 col-sm-4 mt-2">
                 <div class="card mentors-card">
                     <div class="row no-gutters">
                         <div class="col-auto">

@@ -75,6 +75,11 @@
     font-weight: bold; 
     width: 180px;
 }
+.btn-language{
+    border-radius: 25px !important; 
+    font-weight: bold; 
+    width: 120px;
+}
 .new-courses-section{
     background: linear-gradient(to bottom, #222326 50%, #1C1D21 50.1%);
 }

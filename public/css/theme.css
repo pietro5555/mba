@@ -200,7 +200,6 @@
         line-height: 30px;
     }
 }
-
 .title-page-course{
     color: #FFFF;
     font-weight: bold; 
@@ -243,5 +242,107 @@
 .section-title-courses{
     font-weight: bold;
     color: #2A91FF;
+    font-size: 24px;
+}
+
+.card-deck .card {
+    background-color: #212529;
+   border-bottom-color: #707070;
+   color: #868686;
+}
+
+.show-more-courses{
+    height: 100%;
+}
+.card-deck .card {
+    background-color: #212529;
+   border-bottom-color: #707070;
+   color: #868686;
+}
+.section-mentors
+{
+   padding: 20px 40px; 
+    background-color: #222326;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+}
+.mentors-card
+{
+    background-color: #292929;
+}
+.mentors-card .card-title{
+font-size: 16px;
+}
+.mentors-card .card-text{
+font-size: 12px;
+color: #CCC6C6;
+}
+
+.course-category1
+{
+background: transparent linear-gradient(180deg, #00000083 0%, #000000 100%) 0% 0% no-repeat padding-box;
+opacity: 0.75;
+height: 100%; 
+-webkit-box-shadow: none; 
+box-shadow: none; 
+border: 0px; 
+border-radius: 0px; 
+}
+.course-category2
+{
+background: transparent linear-gradient(180deg, #00000083 0%, #000000 100%) 0% 0% no-repeat padding-box;
+opacity: 0.75;
+height: 100%;
+-webkit-box-shadow: none; 
+box-shadow: none; 
+border: 0px; 
+border-radius: 0px; 
+}
+
+.course-category3
+{
+background: transparent linear-gradient(180deg, #00000083 0%, #000000 100%) 0% 0% no-repeat padding-box;
+opacity: 0.75;
+height: 100%;
+-webkit-box-shadow: none; 
+box-shadow: none; 
+border: 0px; 
+border-radius: 0px;  
+}
+.course-category4
+{ 
+background: transparent linear-gradient(180deg, #00000083 0%, #000000 100%) 0% 0% no-repeat padding-box;
+opacity: 0.75;
+height: 100%;
+-webkit-box-shadow: none; 
+box-shadow: none; 
+border: 0px; 
+border-radius: 0px; 
+}
+.course-category5
+{
+background: transparent linear-gradient(180deg, #00000083 0%, #000000 100%) 0% 0% no-repeat padding-box;
+opacity: 0.75;
+height: 100%;  
+-webkit-box-shadow: none; 
+box-shadow: none; 
+border: 0px; 
+border-radius: 0px; 
+}
+.course-category6
+{ 
+background: transparent linear-gradient(180deg, #00000083 0%, #000000 100%) 0% 0% no-repeat padding-box;
+opacity: 0.75;
+height: 100%;
+-webkit-box-shadow: none; 
+box-shadow: none; 
+border: 0px; 
+border-radius: 0px; 
+}
+
+.section-title-category{
+    font-weight: bold;
+    color: #FFFF;
     font-size: 24px;
 }

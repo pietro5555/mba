@@ -28,37 +28,7 @@
             <li class="nav-item">
                 <a class="nav-link items-header" href="#">FXT LIVE</a>
             </li>
-            <li class="nav-item dropdown" style="padding-left: 10px; padding-right: 20px;">
-                <div class="btn-group">
-                    <button type="button" class="btn btn-primary btn-language dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        IDIOMA
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Español</a>
-                        <a class="dropdown-item" href="#">Inglés</a>
-                    </div>
-                </div>
-            </li>
-            <li class="nav-item" style="padding-right: 10px;">
-                <a class="nav-link items-header" href="#"><i class="fa fa-search"></i></a>
-            </li>
-            <li class="nav-item" style="padding-right: 10px;">
-                <a class="nav-link items-header" href="#"><i class="fa fa-home"></i></a>
-            </li>
-             <li class="nav-item" style="padding-right: 10px;">
-                <a class="nav-link items-header" href="#"><i class="fa fa-envelope"></i></a>
-            </li>
-             <li class="nav-item" style="padding-right: 10px;">
-                <a class="nav-link items-header" href="#"><i class="fa fa-bell"></i></a>
-            </li>
-            <li class="nav-item dropdown dropleft" style="padding-right: 20px;">
-                <img class="dropdown-toggle items-header" id="navbarDropdown2" role="button" data-toggle="dropdown" src="{{ asset('images/logo.png') }}" alt="" width="40" height="40">
-               
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Salir</a>
-                </div>
-            </li>
-            {{--@if (Auth::guest())
+            @if (Auth::guest())
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle items-header" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         IDIOMA
@@ -69,7 +39,7 @@
                     </div>
                 </li>
             @else
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown" style="padding-left: 10px; padding-right: 20px;">
                     <div class="btn-group">
                         <button type="button" class="btn btn-primary btn-language dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             IDIOMA
@@ -80,12 +50,31 @@
                         </div>
                     </div>
                 </li>
-            @endif--}}
+                <li class="nav-item" style="padding-right: 10px;">
+                    <a class="nav-link items-header" href="#"><i class="fa fa-search"></i></a>
+                </li>
+                <li class="nav-item" style="padding-right: 10px;">
+                    <a class="nav-link items-header" href="#"><i class="fa fa-home"></i></a>
+                </li>
+                <li class="nav-item" style="padding-right: 10px;">
+                    <a class="nav-link items-header" href="#"><i class="fa fa-envelope"></i></a>
+                </li>
+                <li class="nav-item" style="padding-right: 10px;">
+                    <a class="nav-link items-header" href="#"><i class="fa fa-bell"></i></a>
+                </li>
+                <li class="nav-item dropdown dropleft" style="padding-right: 20px;">
+                    <img class="dropdown-toggle items-header" id="navbarDropdown2" role="button" data-toggle="dropdown" src="{{ asset('images/logo.png') }}" alt="" width="40" height="40">
+                
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Salir</a>
+                    </div>
+                </li>
+            @endif-
         </ul>
-        {{--@if (Auth::guest())
+        @if (Auth::guest())
             <div class="btn-register-header-div">
                 <a type="button" class="btn btn-primary btn-register-header" href="{{ route('login') }}">REGISTRARME</a>
             </div>
-        @endif--}}
+        @endif
     </div>
 </nav>

@@ -259,6 +259,10 @@
     position: absolute;
     top: 60%;
 }
+.bar-progress-banner{
+    position: absolute;
+    top: 80%;
+}
 .title-course{
     color: #FFFF;
     font-weight: bold; 
@@ -315,6 +319,10 @@ font-size: 16px;
 .mentors-card .card-text{
 font-size: 12px;
 color: #CCC6C6;
+}
+
+.text-course-category{
+font-size: 2vw;
 }
 
 .course-category1
@@ -431,5 +439,6 @@ text-transform:uppercase;
 }
 
 .progress-course-bar{
-    top: 80%;
+    position: relative;
+    height: .5rem;
 }

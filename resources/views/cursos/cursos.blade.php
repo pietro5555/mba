@@ -11,11 +11,11 @@
 <div class="button-container">
     <img src="{{ asset('images/banner_cursos.png') }}" class="course-banner-img img-fluid" alt="..."/>
      <button type="button" class="btn btn-primary play-course-button col-xs"><i class="fa fa-play"></i> CONTINUAR CURSO</button>
-     <div class="progress col-xs">
-        <div class="progress-bar progress-course-bar" role="progressbar" aria-valuenow="70"
+</div>
+<div class="progress col-xs progress-course-bar">
+        <div class="progress-bar" role="progressbar" aria-valuenow="70"
                 aria-valuemin="0" aria-valuemax="100" style="width:70%">
         </div>
-    </div>
 </div>
  
 <div class="course-banner-caption">

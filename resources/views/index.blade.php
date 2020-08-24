@@ -25,10 +25,15 @@
     @if ($cursosDestacados->count() > 0)
     	<div class="container-fluid courses-slider">
     		<div id="mainSlider" class="carousel slide" data-ride="carousel">
-    	        <ol class="carousel-indicators">
-    	            <li data-target="#mainSlider" data-slide-to="0" class="active"></li>
-    	            <li data-target="#mainSlider" data-slide-to="1"></li>
-    	        </ol>
+                @if ($cursosDestacados->count() > 1)
+                    @php $contCD = 0; @endphp
+                    <ol class="carousel-indicators">
+                        @foreach ($cursosDestacados as $cd)
+                            <li data-target="#mainSlider" data-slide-to="{{ $contCD }}" @if ($contCD == 0) class="active" @endif></li>
+                            @php $contCD++; @endphp
+                        @endforeach
+                    </ol>
+                @endif
     	        <div class="carousel-inner">
                     @php $cont = 0; @endphp
                     @foreach ($cursosDestacados as $cursoDestacado)
@@ -43,15 +48,17 @@
         	                </div>
         	            </div>
                     @endforeach
-    	        </div>
-    	        <a class="carousel-control-prev" href="#mainSlider" role="button" data-slide="prev">
-    	            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    	            <span class="sr-only">Previous</span>
-    	        </a>
-    	        <a class="carousel-control-next" href="#mainSlider" role="button" data-slide="next">
-    	            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    	            <span class="sr-only">Next</span>
-    	        </a>
+                </div>
+                @if ($cursosDestacados->count() > 1)
+                    <a class="carousel-control-prev" href="#mainSlider" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#mainSlider" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                @endif
     	    </div>
     	</div>
     @endif

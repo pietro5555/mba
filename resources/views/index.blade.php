@@ -1,43 +1,67 @@
 @extends('layouts.landing')
 
+@push('scripts')
+    <script>
+        function loadMoreCoursesNew($accion){
+            if ($accion == 'next'){
+                var route = $(".btn-arrow-next").attr('data-route');
+            }else{
+                var route = $(".btn-arrow-previous").attr('data-route');
+            }
+            
+            $.ajax({
+                url:route,
+                type:'GET',
+                success:function(ans){
+                    $("#new-courses-section").html(ans); 
+                }
+            });
+        }
+    </script>
+@endpush
+
 @section('content')
 	{{-- SLIDER --}}
-	<div class="container-fluid new-courses-slider">
-		<div id="mainSlider" class="carousel slide" data-ride="carousel">
-	        <ol class="carousel-indicators">
-	            <li data-target="#mainSlider" data-slide-to="0" class="active"></li>
-	            <li data-target="#mainSlider" data-slide-to="1"></li>
-	        </ol>
-	        <div class="carousel-inner">
-	            <div class="carousel-item active">
-	                <img src="{{ asset('images/slider1.png') }}" class="d-block w-100" alt="...">
-	                <div class="carousel-caption">
-	                    <div class="new-course-label">NUEVO CURSO</div>
-						<div class="new-course-autor">John Doe</div>
-						<div class="new-course-title">LEYES DEL ÉXITO FINANCIERO</div>
-	                    <div class="new-course-category">FINANZAS | NEGOCIOS</div>
-	                </div>
-	            </div>
-	            <div class="carousel-item">
-	                <img src="{{ asset('images/slider1.png') }}" class="d-block w-100" alt="...">
-	                <div class="carousel-caption">
-	                    <div class="new-course-label">NUEVO CURSO</div>
-	                    <div class="new-course-autor">John Doe</div>
-	                    <div class="new-course-title">LEYES DEL ÉXITO FINANCIERO</div>
-	                    <div class="new-course-category">FINANZAS | NEGOCIOS</div>
-	                </div>
-	            </div>
-	        </div>
-	        <a class="carousel-control-prev" href="#mainSlider" role="button" data-slide="prev">
-	            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-	            <span class="sr-only">Previous</span>
-	        </a>
-	        <a class="carousel-control-next" href="#mainSlider" role="button" data-slide="next">
-	            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-	            <span class="sr-only">Next</span>
-	        </a>
-	    </div>
-	</div>
+    @if ($cursosDestacados->count() > 0)
+    	<div class="container-fluid courses-slider">
+    		<div id="mainSlider" class="carousel slide" data-ride="carousel">
+                @if ($cursosDestacados->count() > 1)
+                    @php $contCD = 0; @endphp
+                    <ol class="carousel-indicators">
+                        @foreach ($cursosDestacados as $cd)
+                            <li data-target="#mainSlider" data-slide-to="{{ $contCD }}" @if ($contCD == 0) class="active" @endif></li>
+                            @php $contCD++; @endphp
+                        @endforeach
+                    </ol>
+                @endif
+    	        <div class="carousel-inner">
+                    @php $cont = 0; @endphp
+                    @foreach ($cursosDestacados as $cursoDestacado)
+                        @php $cont++; @endphp
+        	            <div class="carousel-item @if ($cont == 1) active @endif">
+        	                <img src="{{ asset('uploads/images/courses/featured_covers/'.$cursoDestacado->featured_cover) }}" class="d-block w-100" alt="..." style="height: 550px;">
+        	                <div class="carousel-caption">
+        	                    <div class="course-label">NUEVO CURSO</div>
+        						<div class="course-autor">John Doe</div>
+        						<div class="course-title">{{ $cursoDestacado->title }}</div>
+        	                    <div class="course-category">{{ $cursoDestacado->category->title }} | {{ $cursoDestacado->subcategory->title }}</div>
+        	                </div>
+        	            </div>
+                    @endforeach
+                </div>
+                @if ($cursosDestacados->count() > 1)
+                    <a class="carousel-control-prev" href="#mainSlider" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#mainSlider" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                @endif
+    	    </div>
+    	</div>
+    @endif
     {{-- FIN DEL SLIDER --}}
 
 	{{-- SECCIÓN TU AVANCE (USUARIOS LOGGUEADOS) --}}
@@ -64,80 +88,57 @@
    {{-- FIN DE SECCIÓN TU AVANCE (USUARIOS LOGGUEADOS) --}}
 
     {{-- SECCIÓN CURSOS MAS NUEVOS --}}
-    <div class="section-landing" style="background: linear-gradient(to bottom, #222326 50%, #1C1D21 50.1%);">
-        <div class="row">
-            <div class="col">
-                <div class="section-title-landing" style="padding-bottom: 35px;">LOS MÁS NUEVOS</div>
+    @if ($cursosNuevos->count() > 0)
+        <div class="section-landing new-courses-section" id="new-courses-section">
+            <div class="row">
+                <div class="col">
+                    <div class="section-title-landing new-courses-section-title">LOS MÁS NUEVOS</div>
+                </div>
+                <div class="col text-right">
+                    <button type="button" class="btn btn-outline-light btn-arrow btn-arrow-previous" @if ($previous == 0) disabled @endif data-route="{{ route('landing.load-more-courses-new', [$idStart, 'previous'] ) }}"  onclick="loadMoreCoursesNew('previous');"><i class="fas fa-chevron-left"></i></button>
+                    <button type="button" class="btn btn-outline-success btn-arrow btn-arrow-next" @if ($next == 0) disabled @endif data-route="{{ route('landing.load-more-courses-new', [$idEnd, 'next'] ) }}"  onclick="loadMoreCoursesNew('next');"><i class="fas fa-chevron-right"></i></button>
+                </div>
             </div>
-            <div class="col text-right">
-                <button type="button" class="btn btn-outline-light" style="border-radius: 0px;"><i class="fas fa-chevron-left"></i></button>
-                <button type="button" class="btn btn-outline-success" style="border-radius: 0px; border-color: #6AB742; color: #6AB742;"><i class="fas fa-chevron-right"></i></button>
+                   
+            <div class="row" style="padding: 10px 30px;">
+                @foreach ($cursosNuevos as $cursoNuevo)
+                    <div class="col-xl-4 col-lg-4 col-12" style="padding-bottom: 10px;">
+                        <div class="card" >
+                            @if (!is_null($cursoNuevo->cover))
+                                <img src="{{ asset('uploads/images/courses/covers/'.$cursoNuevo->cover) }}" class="card-img-top new-course-img" alt="...">
+                            @else
+                                <img src="{{ asset('uploads/images/courses/covers/default.jpg') }}" class="card-img-top new-course-img" alt="...">
+                            @endif
+                            <div class="card-img-overlay d-flex flex-column">
+                                <div class="mt-auto">
+                                    <div class="new-course-title">{{ $cursoNuevo->title }}</div>
+                                    <div class="row">
+                                        <div class="col-12 col-xl-6 new-course-category">{{ $cursoNuevo->category->title }}</div>
+                                        <div class="col-12 col-xl-6" style="font-size: 16px;">
+                                            <div class="row row-cols-3">
+                                                <div class="col text-right no-padding-sides">
+                                                    <i class="far fa-user-circle"></i><br>
+                                                    <span class="new-course-items-text">1310</span>
+                                                </div>
+                                                <div class="col text-center no-padding-sides">
+                                                    <i class="fas fa-share-alt"></i><br>
+                                                    <span class="new-course-items-text">869</span>
+                                                </div>
+                                                <div class="col text-left no-padding-sides">
+                                                    <i class="far fa-thumbs-up"></i><br>
+                                                    <span class="new-course-items-text">1242</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
             </div>
         </div>
-               
-        <div class="row" style="padding: 10px 30px;">
-            <div class="col">
-                <div class="card" >
-                    <img src="{{ asset('images/curso1.jpg') }}" class="card-img-top" alt="..." style="filter: brightness(80%);">
-                    <div class="card-img-overlay d-flex flex-column">
-                        <div class="mt-auto">
-                            <div style="font-size: 20px; font-weight: bold;">Nombre del Curso 1</div>
-                            <div class="row">
-                                <div class="col-12 col-xl-6" style="font-size: 16px; font-weight: bold;">Categoría</div>
-                                <div class="col-12 col-xl-6" style="font-size: 16px;">
-                                    <div class="row row-cols-3">
-                                        <div class="col text-right" style="padding-right: 0 !important; padding-left: 0 !important;"><i class="far fa-user-circle"></i><br><span style="font-size: 10px;">1310</span></div>
-                                        <div class="col text-center" style="padding-right: 0 !important; padding-left: 0 !important;"><i class="fas fa-share-alt"></i><br><span style="font-size: 10px;">869</span></div>
-                                        <div class="col text-left" style="padding-right: 0 !important; padding-left: 0 !important;"><i class="far fa-thumbs-up"></i><br><span style="font-size: 10px;">1242</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card">
-                    <img src="{{ asset('images/curso2.jpg') }}" class="card-img-top" alt="..." style="filter: brightness(80%);">
-                    <div class="card-img-overlay d-flex flex-column">
-                        <div class="mt-auto">
-                            <div style="font-size: 20px; font-weight: bold;">Nombre del Curso 2</div>
-                            <div class="row">
-                                <div class="col-12 col-xl-6" style="font-size: 16px; font-weight: bold;">Categoría</div>
-                                <div class="col-12 col-xl-6" style="font-size: 16px;">
-                                    <div class="row row-cols-3">
-                                        <div class="col text-right" style="padding-right: 0 !important; padding-left: 0 !important;"><i class="far fa-user-circle"></i><br><span style="font-size: 10px;">1310</span></div>
-                                        <div class="col text-center" style="padding-right: 0 !important; padding-left: 0 !important;"><i class="fas fa-share-alt"></i><br><span style="font-size: 10px;">869</span></div>
-                                        <div class="col text-left" style="padding-right: 0 !important; padding-left: 0 !important;"><i class="far fa-thumbs-up"></i><br><span style="font-size: 10px;">1242</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-            	<div class="card" >
-            		<img src="{{ asset('images/curso3.jpg') }}" class="card-img-top" alt="..." style="filter: brightness(80%);">
-            		<div class="card-img-overlay d-flex flex-column">
-            			<div class="mt-auto">
-            				<div style="font-size: 20px; font-weight: bold;">Nombre del Curso 3</div>
-                            <div class="row">
-                                <div class="col-12 col-xl-6" style="font-size: 16px; font-weight: bold;">Categoría</div>
-                                <div class="col-12 col-xl-6" style="font-size: 16px;">
-                                    <div class="row row-cols-3">
-                                        <div class="col text-right" style="padding-right: 0 !important; padding-left: 0 !important;"><i class="far fa-user-circle"></i><br><span style="font-size: 10px;">1310</span></div>
-                                        <div class="col text-center" style="padding-right: 0 !important; padding-left: 0 !important;"><i class="fas fa-share-alt"></i><br><span style="font-size: 10px;">869</span></div>
-                                        <div class="col text-left" style="padding-right: 0 !important; padding-left: 0 !important;"><i class="far fa-thumbs-up"></i><br><span style="font-size: 10px;">1242</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div><br><br>
+    @endif
     {{-- FIN DE SECCIÓN CURSOS MÁS NUEVOS--}}
 
     {{-- SECCIÓN PRÓXIMO STREAMING--}}

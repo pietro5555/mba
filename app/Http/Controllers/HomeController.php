@@ -14,29 +14,70 @@ use App\Models\User;
 use App\Models\Settings;
 use App\Models\Formulario;
 use App\Models\SettingCliente;
+use App\Models\Course;
 
 // llamando a los controladores
 use App\Http\Controllers\IndexController;
 use Modules\ReferralTree\Http\Controllers\ReferralTreeController;
 
-class HomeController extends Controller
-{
+class HomeController extends Controller{
 
-    public function index()
-    {
-        if (Auth::guest()){
-            //return redirect('login');
-            return view('index');
-        }else{
-            $cliente = SettingCliente::find(1);
-            if ($cliente->permiso == 0 && Auth::user()->tipouser == 'Cliente') {
-                return redirect('login')->with('msj3', 'Restringido el Acceso');
-            } else {
-                return redirect('/admin');
-            }   
-        }
-        //return view('welcome');
-    }
+   public function index(){
+      if (Auth::guest()){
+         $cursosDestacados = Course::where('featured', '=', 1)
+                                 ->where('status', '=', 1)
+                                 ->orderBy('id', 'DESC')
+                                 ->take(3)
+                                 ->get();
+
+         $cursosNuevos = Course::where('status', '=', 1)
+                           ->orderBy('id', 'DESC')
+                           ->take(3)
+                           ->get();
+
+         $ultCurso = Course::select('id')
+                        ->where('status', '=', 1)
+                        ->orderBy('id', 'DESC')
+                        ->first();
+
+         $primerCurso = Course::select('id')
+                           ->where('status', '=', 1)
+                           ->orderBy('id', 'ASC')
+                           ->first();
+         $idStart = 0;
+         $idEnd = 0;
+         $cont = 1;
+         $previous = 1;
+         $next = 1;
+
+         foreach ($cursosNuevos as $curso){
+            if ($cont == 1){
+               $idStart = $curso->id;
+            }
+            $idEnd = $curso->id;
+            $cont++;
+         }
+         
+         if ($cursosNuevos->count() > 0){
+            if ($idStart == $ultCurso->id){
+               $previous = 0;
+            }
+            if ($idEnd == $primerCurso->id){
+               $next = 0;
+            }
+         }
+
+         return view('index')->with(compact('cursosDestacados', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next'));
+      }else{
+         $cliente = SettingCliente::find(1);
+         if ($cliente->permiso == 0 && Auth::user()->tipouser == 'Cliente') {
+            return redirect('login')->with('msj3', 'Restringido el Acceso');
+         } else {
+            return redirect('/admin');
+         }   
+      }
+      //return view('welcome');
+   }
     
     public function transmisiones(){
         

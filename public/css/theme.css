@@ -531,7 +531,6 @@ bottom: 0;
     border-radius: 0px;
 }
 
-/* Botones de entradas de estilos utilizados en páginas de descripción de películas.*/
 
 .button-container{
 display:inline-block;
@@ -548,4 +547,48 @@ text-transform:uppercase;
 .progress-course-bar{
     position: relative;
     height: .5rem;
+}
+
+.title-page-one_course{
+    color: #8E8E8E;
+    font-weight: bold; 
+    padding-bottom: 30px; 
+    font-size: 26px;
+    margin-top:30px;
+}
+
+.about-course-text{
+    color: #838181;
+}
+
+.circle {
+  height: 90px;
+  width: 90px;
+  background-color: #8E8E8E;
+  display: block;
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+  border-radius: 50%;
+}
+
+.img-val-mentor{
+    background-color: red;
+}
+
+.cuadrado {
+  height: 50px;
+  width: 50px;
+  background-color: #2A91FF;
+  display: block;
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.accordion-leccion{
+border-top: 1px solid #707070;
+border-right: 1px solid #707070;
+border-bottom: 1px solid #707070;
+border-left: 1px solid #707070;
 }

@@ -14,7 +14,7 @@
                 <a class="nav-link items-header" href="#">NOSOTROS</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link items-header" href="#">CURSOS</a>
+                <a class="nav-link items-header" href="{{ route('cursos') }}">CURSOS</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link items-header" href="#">STREAMING</a>

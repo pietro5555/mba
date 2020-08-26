@@ -1,14 +1,51 @@
 .bg-dark-gray{
     background-color: #1C1D21;
 }
-#navbar-items{
-    z-index: 1000; 
-    background-color: #1C1D21;
-}
 .items-header{
     font-weight: 500;
     color: white !important;
     font-size: 17px;
+}
+.badge-header{
+    padding-left: 0.4em; 
+    padding-right: 0.4em; 
+    vertical-align: top; 
+    font-size: 10px;
+    position:relative; 
+    left: -10px;
+}
+.dropdown-notifications{
+    top: 40px;
+    right: 0px;
+    left: unset;
+    width: 460px;
+    box-shadow: 0px 5px 7px -1px #c1c1c1;
+    padding-bottom: 0px;
+    padding: 0px;
+}
+.dropdown-notifications:before{
+    content: "";
+    position: absolute;
+    top: -20px;
+    right: 12px;
+    border:10px solid #1C1D21;
+    border-color: transparent transparent #1C1D21 transparent;
+}
+.head{
+    padding:5px 15px;
+    border-radius: 3px 3px 0px 0px;
+    background-color: #1C1D21;
+}
+.footer{
+    padding:5px 15px;
+    border-radius: 0px 0px 3px 3px; 
+    background-color: #1C1D21;
+}
+.notification-box{
+    padding: 10px 0px; 
+}
+.bg-gray{
+    background-color: #eee;
 }
 .section-landing{
     padding: 20px 40px; 
@@ -27,6 +64,7 @@
     background-color: #222326;
 }
 .courses-slider{
+    z-index: 0;
     padding-right: 0 !important; 
     padding-left: 0 !important; 
     padding-bottom: 30px;
@@ -66,9 +104,6 @@
     color: #fff !important;
     background-color: #6AB742;;
     border-color: #6AB742;
-}
-.btn-register-header-div{
-    padding-left: 20px;
 }
 .btn-register-header{
     border-radius: 25px !important; 
@@ -147,21 +182,49 @@
     font-size: 35px; 
     padding-top: 60px;
 }
-@media (min-width: 981px) and (max-width: 1250px) {
+.li-language{
+    padding-left: 10px; 
+    padding-right: 10px;
+}
+.li-register-button{
+    padding-left: 20px;
+}
+@media (max-width: 1350px) {
     .items-header{
         font-size: 14px;
     }
     .header-list{
-        padding: 20px;
+        padding: 5px;
     }
     .btn-register-header{
         border-radius: 25px !important; 
         font-weight: bold; 
         width: 140px;
     }
-    .btn-register-header-div{
-        padding-left: 10px;
-        padding-bottom: 20px;
+    .li-language{
+        padding-left: 5px; 
+        padding-right: 5px;
+    }
+    .btn-language{
+        width: 100px;
+        font-size: 12px;
+    }
+}
+@media (min-width: 981px) and (max-width: 1250px) {
+    .items-header{
+        font-size: 12px;
+    }
+    .li-language{
+        padding-left: 0; 
+        padding-right: 0;
+    }
+    .btn-language{
+        width: 70px;
+        font-size: 10px;
+    }
+    .btn-register-header{
+        font-size: 12px;
+        width: 120px;
     }
     .course-label{
         padding-bottom: 15px; 
@@ -187,6 +250,50 @@
     }
 }
 @media (min-width: 451px) and (max-width: 980px) {
+    #navbarItems{
+        background-color: #1C1D21 !important;
+        padding: 15px 30px 15px 30px;
+    }
+    .li-register-button{
+        padding-left: 0 !important;
+    }
+    #li-notifications-larger{
+        display: none;
+    }
+    #li-notifications-small{
+        display: block !important;
+    }
+    #li-language-larger{
+        display: none;
+    }
+    #li-language-small{
+        display: block !important;
+    }
+    #li-search-larger{
+        display: none;
+    }
+    #li-search-small{
+        display: block !important;
+    }
+    #li-home-larger{
+        display: none;
+    }
+    #li-messages-larger{
+        display: none;
+    }
+    #li-messages-small{
+        display: block !important;
+    }
+    #li-user-larger{
+        display: none;
+    }
+    #li-user-small{
+        display: block !important;
+    }
+    .li-language{
+        padding-left: 0; 
+        padding-right: 0;
+    }
     .carousel-caption{
         width: 50%;
     }
@@ -424,7 +531,6 @@ bottom: 0;
     border-radius: 0px;
 }
 
-/* Botones de entradas de estilos utilizados en páginas de descripción de películas.*/
 
 .button-container{
 display:inline-block;
@@ -441,4 +547,52 @@ text-transform:uppercase;
 .progress-course-bar{
     position: relative;
     height: .5rem;
+}
+
+.title-page-one_course{
+    color: #8E8E8E;
+    font-weight: bold; 
+    padding-bottom: 30px; 
+    font-size: 26px;
+    margin-top:30px;
+}
+
+.about-course-text{
+    color: #838181;
+}
+
+.circle {
+  height: 90px;
+  width: 90px;
+  background-color: #8E8E8E;
+  display: block;
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+  border-radius: 50%;
+}
+
+.img-val-mentor{
+    background-color: red;
+}
+
+.cuadrado {
+  height: 50px;
+  width: 50px;
+  background-color: #2A91FF;
+  display: block;
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.accordion-leccion{
+border-top: 1px solid #707070;
+border-right: 1px solid #707070;
+border-bottom: 1px solid #707070;
+border-left: 1px solid #707070;
+}
+
+.course_video{
+    max-width: 1150px;
 }

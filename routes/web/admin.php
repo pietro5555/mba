@@ -795,3 +795,4 @@ Route::group(['prefix' => 'link','middleware' => ['menu']], function(){
 
 //Cursos
 Route::get('cursos', 'CursosController@index')->name('cursos');
+Route::get('cursos/curso', 'CursosController@show_one_course')->name('curso');

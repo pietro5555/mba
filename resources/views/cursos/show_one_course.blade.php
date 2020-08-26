@@ -7,11 +7,51 @@
         <hr style="border: 1px solid #707070;opacity: 1;" />
     </div>
 
-    {{-- BANNER --}}
-<div class="container-fluid banner-course">
-<div class="button-container">
-    <img src="{{ asset('images/banner_cursos.png') }}" class="course-banner-img img-fluid" alt="..."/>
-</div>
+{{-- BANNER --}}
+<div class="container-fluid">
+<video
+    controls
+    crossorigin
+    playsinline
+    poster="{{ asset('images/banner_cursos.png') }}"
+    id="player"
+  >
+    <!-- Video files -->
+    <source
+      src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4"
+      type="video/mp4"
+      size="576"
+    />
+    <source
+      src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-720p.mp4"
+      type="video/mp4"
+      size="720"
+    />
+    <source
+      src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-1080p.mp4"
+      type="video/mp4"
+      size="1080"
+    />
+
+    <!-- Caption files -->
+    <track
+      kind="captions"
+      label="English"
+      srclang="en"
+      src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.en.vtt"
+      default
+    />
+    <track
+      kind="captions"
+      label="Français"
+      srclang="fr"
+      src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.fr.vtt"
+    />
+
+    <!-- Fallback for browsers that don't support the <video> element -->
+    <a href="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4" download>Download</a>
+  </video>
+
 </div>
     {{-- FIN DEL BANNER --}}
 <hr style="border: 1px solid #707070;opacity: 1;" />

@@ -572,10 +572,6 @@ text-transform:uppercase;
   border-radius: 50%;
 }
 
-.img-val-mentor{
-    background-color: red;
-}
-
 .cuadrado {
   height: 50px;
   width: 50px;
@@ -596,3 +592,138 @@ border-left: 1px solid #707070;
 .course_video{
     max-width: 1150px;
 }
+
+.leccion-icon
+{
+    max-width: 30px;
+    min-width: 30px;
+}
+
+.title-level {
+  max-height: 84px;
+  max-width: 100%;
+  background-color: #363840;
+  display: block;
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.btn.btn-social-icon {
+     width: 30px;
+     height: 30px;
+     padding: 0
+ }
+
+ .icon-social-media>.btn {
+     margin-right: 0.5rem !important
+ }
+
+ .icon-social-media {
+     margin-top: 0.5rem !important
+ }
+
+ .btn.btn-rounded {
+     border-radius: 30px
+ }
+
+  .btn-facebook {
+     background: #2A91FF;
+     color: #1C1D21
+ }
+
+ .btn-twitter {
+     background: #2A91FF;
+     color: #1C1D21
+ }
+
+ .btn-instagram {
+     background: #2A91FF;
+     color: #1C1D21
+ }
+
+ /*TABS*/
+ nav > .nav.nav-tabs{
+
+  border: none;
+    color:#fff;
+    background:#363840;
+    border-radius:0;
+
+}
+nav > div a.nav-item.nav-link,
+nav > div a.nav-item.nav-link.active
+{
+  border: none;
+    padding: 18px 25px;
+    color:#fff;
+    background:#363840;
+    border-radius:0;
+}
+
+/*nav > div a.nav-item.nav-link.active:after
+ {
+  content: "";
+  position: relative;
+  bottom: -60px;
+  left: -10%;
+  border: 15px solid transparent;
+  border-top-color: #6AB742;
+}*/
+.tab-content{
+  background: #1C1D21;
+    padding:30px 25px;
+    color: #fff;
+}
+
+nav > div a.nav-item.nav-link:hover,
+nav > div a.nav-item.nav-link:focus
+{
+  border: none;
+    background: #6AB742;
+    color:#fff;
+    border-radius:0;
+    transition:background 0.20s linear;
+}
+
+.perfil-comments{
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  background-color: #8E8E8E;
+  vertical-align: middle;
+}
+
+.box-comments .form-inline .form-control{
+    height: 80px;
+    width:  580px;
+    background: #363840;
+     border: none;
+    line-height: 1;
+}
+
+
+.btn-cont-course{
+height: 124px;
+}
+
+.accordion-leccion-content{
+    border-top: 1px solid #707070;
+border-right: 1px solid #707070;
+border-bottom: 1px solid #707070;
+border-left: 1px solid #707070;
+}
+
+
+.accordion .panel-collapse .panel-body{
+background: #363840 0% 0% no-repeat padding-box;
+border: 1px solid #707070;
+opacity: 1;
+
+}
+
+.panel-default

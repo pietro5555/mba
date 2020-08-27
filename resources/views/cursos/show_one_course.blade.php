@@ -149,21 +149,16 @@
 <div class="section-landing">
      <div class="col-md-12 section-title-category">
         <h3 class="ml-4">LECCIONES</h3>
-
     </div>
-</div>
-<hr style="border: 1px solid #707070;opacity: 1;" />
-
-<div class="container-fluid pb-5">
-    <div class="row">
-    <div class="col-md-8">
+    <hr style="border: 1px solid #707070;opacity: 1;" />
+    <div class="col-md-10">
         <div class="full margin_bottom_30">
           <div class="accordion border_circle">
             <div class="bs-example">
               <div class="panel-group" id="accordion">
                 <div class="panel panel-default">
                   <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                    <div class="col-md-12 p-2 accordion-leccion">
+                    <div class="col-md-12 p-2 accordion-leccion align-items-center">
                         <div class="row">
                             <div class="col-md-2">
                                 <div class="cuadrado"><h2 class="text-white"> 01</h2></div>
@@ -172,7 +167,7 @@
                                 <p class="panel-title about-course-text"> <h5 class="about-course-text"> Introducción</h5></p>
                             </div>
                             <div class="col-md-2">
-                                <img src="{{ asset('images/icons/chevron.svg') }}" height="30px" width="30px"> 
+                                <img src="{{ asset('images/icons/chevron.svg') }}" class="leccion-icon float-right"> 
                             </div>
                         </div>
                     </div>
@@ -196,7 +191,7 @@
                                 <p class="panel-title about-course-text"> <h5 class="about-course-text"> Lección 1</h5></p>
                             </div>
                             <div class="col-md-2">
-                                <img src="{{ asset('images/icons/chevron.svg') }}" height="30px" width="30px"> 
+                                <img src="{{ asset('images/icons/chevron.svg') }}" class="leccion-icon float-right"> 
                             </div>
                         </div>
                     </div>
@@ -217,10 +212,10 @@
                                 <div class="cuadrado"><h2 class="text-white"> 03</h2></div>
                             </div>
                             <div class="col-md-8">
-                                <p class="panel-title about-course-text"> <h5 class="about-course-text"> Lección 02</h5></p>
+                                <p class="panel-title about-course-text"> <h5 class="about-course-text"> Lección 2</h5></p>
                             </div>
                             <div class="col-md-2">
-                                <img src="{{ asset('images/icons/chevron.svg') }}" height="30px" width="30px"> 
+                                <img src="{{ asset('images/icons/chevron.svg') }}" class="leccion-icon float-right"> 
                             </div>
                         </div>
                     </div>
@@ -241,10 +236,10 @@
                                 <div class="cuadrado"><h2 class="text-white"> 04</h2></div>
                             </div>
                             <div class="col-md-8">
-                                <p class="panel-title about-course-text"> <h5 class="about-course-text"> Lección 03</h5></p>
+                                <p class="panel-title about-course-text"> <h5 class="about-course-text"> Lección 3</h5></p>
                             </div>
                             <div class="col-md-2">
-                                <img src="{{ asset('images/icons/chevron.svg') }}" height="30px" width="30px"> 
+                                <img src="{{ asset('images/icons/chevron.svg') }}" class="leccion-icon float-right"> 
                             </div>
                         </div>
                     </div>
@@ -265,10 +260,10 @@
                                 <div class="cuadrado"><h2 class="text-white"> 05</h2></div>
                             </div>
                             <div class="col-md-8">
-                                <p class="panel-title about-course-text"> <h5 class="about-course-text"> Lección 04</h5></p>
+                                <p class="panel-title about-course-text"> <h5 class="about-course-text"> Lección 4</h5></p>
                             </div>
                             <div class="col-md-2">
-                                <img src="{{ asset('images/icons/chevron.svg') }}" height="30px" width="30px"> 
+                                <img src="{{ asset('images/icons/chevron.svg') }}" class="leccion-icon float-right"> 
                             </div>
                         </div>
                     </div>
@@ -289,10 +284,10 @@
                                 <div class="cuadrado"><h2 class="text-white"> 06</h2></div>
                             </div>
                             <div class="col-md-8">
-                                <p class="panel-title"> <h5 class="about-course-text"> Lección 05</h5></p>
+                                <p class="panel-title"> <h5 class="about-course-text"> Lección 5</h5></p>
                             </div>
                             <div class="col-md-2">
-                                <img src="{{ asset('images/icons/chevron.svg') }}" height="30px" width="30px"> 
+                                <img src="{{ asset('images/icons/chevron.svg') }}" class="leccion-icon float-right"> 
                             </div>
                         </div>
                     </div>
@@ -313,10 +308,10 @@
                                 <div class="cuadrado"><h2 class="text-white"> 07</h2></div>
                             </div>
                             <div class="col-md-8">
-                                <p class="panel-title about-course-text"> <h5 class="about-course-text"> Lección 06</h5></p>
+                                <p class="panel-title about-course-text"> <h5 class="about-course-text"> Lección 6</h5></p>
                             </div>
                             <div class="col-md-2">
-                                <img src="{{ asset('images/icons/chevron.svg') }}" height="30px" width="30px"> 
+                                <img src="{{ asset('images/icons/chevron.svg') }}" class="leccion-icon float-right"> 
                             </div>
                         </div>
                     </div>
@@ -334,9 +329,8 @@
           </div>
         </div>
       </div>
-    
 </div>
-</div>
+
 
 
 {{-- FIN SECCIÓN LECCIONES--}}

@@ -10,6 +10,7 @@
 {{-- BANNER --}}
 <div class="container-fluid">
 <video
+class="d-flex w-100"
     controls
     crossorigin
     playsinline
@@ -146,7 +147,7 @@
 
 {{-- FIN SECCIÓN ACERCA DEL CURSO--}}
 {{-- SECCIÓN LECCIONES--}}
-<div class="section-landing">
+<div class="container-fluid">
      <div class="col-md-12 section-title-category">
         <h3 class="ml-4">LECCIONES</h3>
     </div>
@@ -158,7 +159,7 @@
               <div class="panel-group" id="accordion">
                 <div class="panel panel-default">
                   <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                    <div class="col-md-12 p-2 accordion-leccion align-items-center">
+                    <div class="col-md-12 p-2 accordion-seccion-leccion align-items-center">
                         <div class="row">
                             <div class="col-md-2">
                                 <div class="cuadrado"><h2 class="text-white"> 01</h2></div>
@@ -174,15 +175,19 @@
                   </div>
                   <div id="collapseOne" class="panel-collapse collapse in">
                     <div class="panel-body">
-                      <p class="text-white">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it 
-                        over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, 
-                        consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. </p>
+                      <div class="row">
+                        <div class="col-md-12 m-2">
+                        <p class="about-course-text panel-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus maximus eros malesuada arcu sagittis, et lobortis lacus hendrerit.</p>
+                        </div>
+                        
+                      </div>
+               
                     </div>
                   </div>
                 </div>
                 <div class="panel panel-default">
                   <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-                   <div class="col-md-12 p-2 mt-2 accordion-leccion">
+                   <div class="col-md-12 p-2 mt-2 accordion-seccion-leccion">
                         <div class="row">
                             <div class="col-md-2">
                                 <div class="cuadrado"><h2 class="text-white"> 02</h2></div>
@@ -198,15 +203,13 @@
                   </div>
                   <div id="collapseTwo" class="panel-collapse collapse">
                     <div class="panel-body">
-                      <p class="text-white">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it 
-                        over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, 
-                        consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. </p>
+                      <p class="about-course-text panel-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus maximus eros malesuada arcu sagittis, et lobortis lacus hendrerit.</p>
                     </div>
                   </div>
                 </div>
                 <div class="panel panel-default">
                   <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-                    <div class="col-md-12 p-2 mt-2  accordion-leccion">
+                    <div class="col-md-12 p-2 mt-2  accordion-seccion-leccion">
                         <div class="row">
                             <div class="col-md-2">
                                 <div class="cuadrado"><h2 class="text-white"> 03</h2></div>
@@ -222,15 +225,13 @@
                   </div>
                   <div id="collapseThree" class="panel-collapse collapse">
                     <div class="panel-body">
-                      <p class="text-white">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it 
-                        over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, 
-                        consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. </p>
+                      <p class="about-course-text panel-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus maximus eros malesuada arcu sagittis, et lobortis lacus hendrerit.</p>
                     </div>
                   </div>
                 </div>
                 <div class="panel panel-default">
                   <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
-                    <div class="col-md-12 p-2 mt-2  accordion-leccion">
+                    <div class="col-md-12 p-2 mt-2  accordion-seccion-leccion">
                         <div class="row">
                             <div class="col-md-2">
                                 <div class="cuadrado"><h2 class="text-white"> 04</h2></div>
@@ -246,15 +247,13 @@
                   </div>
                   <div id="collapseFour" class="panel-collapse collapse in">
                     <div class="panel-body">
-                      <p class="text-white">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it 
-                        over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, 
-                        consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. </p>
+                      <p class="about-course-text panel-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus maximus eros malesuada arcu sagittis, et lobortis lacus hendrerit.</p>
                     </div>
                   </div>
                 </div>
                 <div class="panel panel-default">
                   <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
-                    <div class="col-md-12 p-2 mt-2 accordion-leccion">
+                    <div class="col-md-12 p-2 mt-2 accordion-seccion-leccion">
                         <div class="row">
                             <div class="col-md-2">
                                 <div class="cuadrado"><h2 class="text-white"> 05</h2></div>
@@ -270,15 +269,13 @@
                   </div>
                   <div id="collapseFive" class="panel-collapse collapse">
                     <div class="panel-body">
-                      <p class="text-white">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it 
-                        over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, 
-                        consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. </p>
+                      <p class="about-course-text panel-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus maximus eros malesuada arcu sagittis, et lobortis lacus hendrerit.</p>
                     </div>
                   </div>
                 </div>
                 <div class="panel panel-default">
                   <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapseSix">
-                    <div class="col-md-12 p-2 mt-2 accordion-leccion">
+                    <div class="col-md-12 p-2 mt-2 accordion-seccion-leccion">
                         <div class="row">
                             <div class="col-md-2">
                                 <div class="cuadrado"><h2 class="text-white"> 06</h2></div>
@@ -294,15 +291,13 @@
                   </div>
                   <div id="collapseSix" class="panel-collapse collapse">
                     <div class="panel-body">
-                      <p class="text-white">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it 
-                        over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, 
-                        consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. </p>
+                      <p class="about-course-text panel-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus maximus eros malesuada arcu sagittis, et lobortis lacus hendrerit.</p>
                     </div>
                   </div>
                 </div>
                 <div class="panel panel-default">
                   <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven">
-                    <div class="col-md-12 p-2 mt-2 accordion-leccion">
+                    <div class="col-md-12 p-2 mt-2 accordion-seccion-leccion">
                         <div class="row">
                             <div class="col-md-2">
                                 <div class="cuadrado"><h2 class="text-white"> 07</h2></div>
@@ -318,9 +313,7 @@
                   </div>
                   <div id="collapseSeven" class="panel-collapse collapse">
                     <div class="panel-body">
-                      <p class="text-white">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it 
-                        over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, 
-                        consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. </p>
+                      <p class="about-course-text panel-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus maximus eros malesuada arcu sagittis, et lobortis lacus hendrerit.</p>
                     </div>
                   </div>
                 </div>
@@ -341,6 +334,7 @@
         <div class="col-md-10">
             <h3 class="text-white ml-5">VALORACIONES
             </h3>
+            <hr style="border: 1px solid #707070;opacity: 1;" />
             <div class="row m-4 pt-4 border-bottom">
                 <div class="col-md-2">
                     <div class="circle"><h2 class="text-white"> JD</h2></div>

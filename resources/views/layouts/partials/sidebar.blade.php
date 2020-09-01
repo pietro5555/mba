@@ -12,14 +12,31 @@
                     </div>
                 </div>
                 <div class="list-group list-group-flush">
-                    <a href="#" class="list-group-item bg-dark-gray" style="color: white;"><i class="fa fa-home"></i> Home</a>
+                    <a href="{{ route('index') }}" class="list-group-item bg-dark-gray" style="color: white;"><i class="fa fa-home"></i> Home</a>
                     @if(Auth::user())
-                    <a href="#" class="list-group-item bg-dark-gray" style="color: white;"><i class="fas fa-asterisk"></i> Live Streames</a>
-                    <a href="#" class="list-group-item bg-dark-gray" style="color: white;"><i class="fas fa-user-circle"></i> Cursos</a>
-                    <a href="#" class="list-group-item bg-dark-gray" style="color: white;"><i class="fas fa-user"></i> Referidos</a>
+                        <a href="#" class="list-group-item bg-dark-gray" style="color: white;"><i class="fas fa-asterisk"></i> Live Streames</a>
+                        <a href="#" class="list-group-item bg-dark-gray" style="color: white;"><i class="fas fa-user-circle"></i> Cursos</a>
+                        <a href="#" class="list-group-item bg-dark-gray" style="color: white;"><i class="fas fa-user"></i> Referidos</a>
                     @endif
-                    <a href="#" class="list-group-item bg-dark-gray" style="color: white;"><i class="fa fa-search"></i> Explorar</a>
-                    <a href="#" class="list-group-item bg-dark-gray" style="color: white;"><i class="fas fa-border-all"></i> Categorías</a>
+                    <a class="list-group-item bg-dark-gray" data-toggle="collapse" href="#searchDiv" style="color: white;"><i class="fa fa-search"></i> Explorar</a>
+                    <div class="collapse" id="searchDiv" style="padding-left: 10px; padding-right: 10px;">
+                        <form>
+                            <div class="form-group">
+                                <input type="email" class="form-control" id="search" placeholder="Buscar...">
+                            </div>
+                        </form>
+                    </div>
+                    <a class="list-group-item bg-dark-gray" data-toggle="collapse" href="#categoriesDiv" style="color: white;"><i class="fas fa-border-all"></i> Categorías <i class="fas fa-angle-down"></i></a>
+                    <div class="collapse" id="categoriesDiv" style="padding-left: 15px;">
+                        @foreach ($categoriasSidebar as $categoria)
+                            <a class="list-group-item bg-dark-gray" data-toggle="collapse" href="#subcategories-{{$categoria->id}}" style="color: white;"><i class="{{ $categoria->icon }}"></i> {{ $categoria->title }} </a>
+                            <div class="collapse" id="subcategories-{{$categoria->id}}" style="padding-left: 15px;">
+                                @foreach ($subcategoriasSidebar as $subcategoria)
+                                    <a class="list-group-item bg-dark-gray" href="{{ route('search-by-category', [$categoria->slug, $categoria->id, $subcategoria->slug, $subcategoria->id]) }}" style="color: white;"><i class="far fa-circle"></i> {{ $subcategoria->title }} </a>
+                                @endforeach
+                            </div>
+                        @endforeach
+                    </div>
                     <a href="#" class="list-group-item bg-dark-gray" style="color: white;"><i class="far fa-file-alt"></i> Test</a>
                     <a href="#" class="list-group-item bg-dark-gray" style="color: white;"><i class="fa fa-gear"></i> Ajustes</a>
                     <a href="#" class="list-group-item bg-dark-gray" style="color: white;"><i class="far fa-question-circle"></i> Ayuda</a>

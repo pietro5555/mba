@@ -10,11 +10,8 @@ use DB;
 use Hash;
 use Carbon\Carbon;
 // modelo
-use App\Models\User;
-use App\Models\Settings;
-use App\Models\Formulario;
-use App\Models\SettingCliente;
-use App\Models\Course;
+use App\Models\User; use App\Models\Settings; use App\Models\Formulario; use App\Models\SettingCliente;
+use App\Models\Course; use App\Models\Category;
 
 // llamando a los controladores
 use App\Http\Controllers\IndexController;
@@ -76,7 +73,51 @@ class HomeController extends Controller{
             return redirect('/admin');
          }   
       }
-      //return view('welcome');
+   }
+
+   public function search($busqueda){
+      $cursosIds = [];
+
+      $cursos = Course::where(function ($query) use ($busqueda){
+                     $query->where('title', 'LIKE', '%'.$busqueda.'%')
+                           ->orWhere('description', 'LIKE', '%'.$busqueda.'%');
+                  })->where('status', '=', 1)
+                  ->get();
+      
+      foreach ($cursos as $curso){
+         array_push($cursosIds, $curso->id);
+      }
+      
+      $categorias = Category::with(['courses' => function($query) use ($cursosIds){
+                              $query->whereNotIn('id', $cursosIds)
+                                 ->where('status', '=', 1);
+                        }])->where('title', 'LIKE', '%'.$busqueda.'%')
+                        ->get();
+
+      foreach ($categorias as $categoria){
+         foreach ($categoria->courses as $cursoCat){
+            array_push($cursosIds, $cursoCat->id);
+            $cursos->push($cursoCat);
+         }
+      }      
+
+      $page = 'search';
+
+      return view('search')->with(compact('cursos', 'page'));
+   }
+
+   public function search_by_category($category_slug, $category_id, $subcategory_slug, $subcategory_id){
+      $categoria = Category::with(['courses' => function($query) use ($subcategory_id){
+                              $query->where('status', '=', 1)
+                                 ->where('subcategory_id', '=', $subcategory_id);
+                        }])->where('id', '=', $category_id)
+                        ->first();
+
+      $cursos = $categoria->courses;
+      
+      $page = 'category';
+   
+      return view('search')->with(compact('categoria', 'cursos', 'page'));
    }
     
     public function transmisiones(){

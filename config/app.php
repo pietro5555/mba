@@ -182,6 +182,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         Chumper\Zipper\ZipperServiceProvider::class,
+        App\Providers\ViewServiceProvider::class,
 
     ],
 

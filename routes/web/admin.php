@@ -795,3 +795,6 @@ Route::group(['prefix' => 'link','middleware' => ['menu']], function(){
 
 //Cursos
 Route::get('cursos', 'CursosController@index')->name('cursos');
+
+//Streaming
+Route::get('streaming', 'StreamingController@index')->name('streaming.index');

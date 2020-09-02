@@ -84,6 +84,10 @@ class HomeController extends Controller{
         return view('transmision');
     }
 
+    public function anotaciones(){
+        
+        return view('live.live');
+    }
 
     public function deleteProfile($id)
     {

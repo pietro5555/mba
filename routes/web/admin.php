@@ -793,6 +793,8 @@ Route::group(['prefix' => 'link','middleware' => ['menu']], function(){
     
     Route::get('/transmisiones', 'HomeController@transmisiones')->name('transmisiones');
 
+//vista de anotaciones
+    Route::get('/anotaciones', 'HomeController@anotaciones')->name('anotaciones');
 //Cursos
 Route::get('cursos', 'CursosController@index')->name('cursos');
 Route::get('cursos/curso', 'CursosController@show_one_course')->name('curso');

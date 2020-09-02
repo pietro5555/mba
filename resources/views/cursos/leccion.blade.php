@@ -1,19 +1,17 @@
 @extends('layouts.landing')
 
 @section('content')
-   <div class="container-fluid text-white">
+   <div class="container-fluid">
   <div class="row justify-content-end">
-    <div class="col-4 text-white title-level m-1">
-      <h5 class="">Nivel: Principiante</h5>
+    <div class="title-level col-xs-1 col-md-4">
+      <h5>Nivel: Principiante</h5>
     </div>
-    <div class="col-4">
+    <div class="col-xs-1 col-md-4 text-center ">
       <div class="icon-social-media">
-
-        <button type="button" class="btn btn-social-icon btn-facebook btn-rounded float-right"><i class="fa fa-facebook"></i></button>
-
-        <button type="button" class="btn btn-social-icon btn-twitter btn-rounded float-right"><i class="fa fa-twitter"></i></button>
-
-        <button type="button" class="btn btn-social-icon btn-instagram btn-rounded float-right"><i class="fa fa-instagram"></i></button> </div>
+        <a href="" class="btn btn-social-icon btn-facebook btn-rounded"><img src="{{ asset('images/icons/facebook.svg') }}" height="20px" width="20px"></a>
+        <a href="" class="btn btn-social-icon btn-twitter btn-rounded"><img src="{{ asset('images/icons/twitter.svg') }}" height="20px" width="20px"></a>
+        <a href="" class="btn btn-social-icon btn-instagram btn-rounded"><img src="{{ asset('images/icons/instagram.svg') }}" height="20px" width="20px"></a>
+      </div>
     </div>
   </div>
 </div>

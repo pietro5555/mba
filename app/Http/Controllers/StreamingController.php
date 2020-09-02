@@ -24,6 +24,17 @@ class StreamingController extends Controller
     public function index()
     {
 
+        // events
+
+        //     id,
+        //     title,
+        //     fecha,
+        //     type,
+        //     link,
+        //     id_
+
+        // configurar evento
+
         // "channel": {
         //     "id": "23955144",
         //     "title": "Vargas test 1",
@@ -40,27 +51,29 @@ class StreamingController extends Controller
         // https://authentication.video.ibm.com/authorize?response_type=token&client_id=f462391e32e1374ceebeac9e840dc94c1c3c71d5&client_secret=5216193d16334f15908940d518d2adf1546dc752&redirect_uri=https://metalinks.com.ve/prueba&state=XYZ
 
 
-        // $client = new Client([
-        //     // El base_uri se utiliza para peticiones relativas
-        //     'base_uri' => 'https://authentication.video.ibm.com'
-        //   ]);
+        $client = new Client([
+            // El base_uri se utiliza para peticiones relativas
+            'base_uri' => 'https://authentication.video.ibm.com'
+          ]);
 
-        // // $response = $client->post("https://authentication.video.ibm.com/authorize");
-        // $response = $client->request('POST', '/authorize', [
+        // $response = $client->post("https://authentication.video.ibm.com/authorize");
+        // $response = $client->request('GET', '/authorize', [
         //     'form_params' => [
         //         'response_type' => 'token',
-        //         'client_id' => 'f462391e32e1374ceebeac9e840dc94c1c3c71d5',
-        //         'client_secret' => '5216193d16334f15908940d518d2adf1546dc752',
-        //         'redirect_uri' => 'http://localhost:8000/streaming',
+        //         'client_id' => 'ca361d98cfa63255356b644e83130e919e62085e',
+        //         'client_secret' => 'ea6b8144deeec575c3d327faa8015b5729d43ddf',
+        //         'redirect_uri' => 'http://localhost:8000/',
+        //         'state' => 'XYZ',
+                
         //     ]
         //   ]);
 
-        $client = new \GuzzleHttp\Client();
-        $response = $client->request('GET', 'https://api.github.com/repos/guzzle/guzzle');
+        // $client = new \GuzzleHttp\Client();
+        // $response = $client->request('GET', 'https://api.github.com/repos/guzzle/guzzle');
 
-        echo $response->getStatusCode(); // 200
-        echo $response->getHeaderLine('content-type'); // 'application/json; charset=utf8'
-        echo $response->getBody(); // '{"id": 1420053, "name": "guzzle", ...}'
+        // echo $response->getStatusCode();
+        // echo $response->getHeaderLine('content-type'); // 'application/json; charset=utf8'
+        // echo $response->getBody(); // '{"id": 1420053, "name": "guzzle", ...}'
 
         
         // $response = $client->post('https://authentication.video.ibm.com/authorize', 

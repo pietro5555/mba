@@ -813,3 +813,7 @@ Route::group(['prefix' => 'link','middleware' => ['menu']], function(){
 Route::get('cursos', 'CursosController@index')->name('cursos');
 Route::get('cursos/curso', 'CursosController@show_one_course')->name('curso');
 Route::get('cursos/leccion', 'CursosController@leccion')->name('leccion');
+
+//Streaming
+Route::get('streaming', 'StreamingController@index')->name('streaming.index');
+Route::get('getaccesstoken', 'StreamingController@getAccessToken')->name('streaming.getaccesstoken');

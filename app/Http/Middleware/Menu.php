@@ -976,6 +976,18 @@ class Menu
                         'black'=> '0',
                         'oculto'=> 'activo',
                     ],
+                    'Gestionar Subcategorías' => [
+                        'ruta' => 'admin.courses.subcategories',
+                        'complementoruta' => '',
+                        'black'=> '0',
+                        'oculto'=> 'activo',
+                    ],
+                    'Gestionar Etiquetas' => [
+                        'ruta' => 'admin.courses.tags',
+                        'complementoruta' => '',
+                        'black'=> '0',
+                        'oculto'=> 'activo',
+                    ],
                 ]
             ],
             'Actualizar' => [

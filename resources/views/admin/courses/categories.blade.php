@@ -7,25 +7,6 @@
 				responsive: true,
 			});
 
-			$("#category_id").change(function() {
-				var categoria = document.getElementById("category_id").value;
-				//var route = "https://www.transformatepro.com/ajax/cargar-subcategorias/"+categoria;
-	            var route = "http://localhost:8000/admin/courses/categories/load-subcategories/"+categoria;
-	                        
-	            $.ajax({
-	                url:route,
-	                type:'GET',
-	                success:function(ans){
-	                    document.getElementById("subcategory_id").innerHTML = "";
-	                    document.getElementById("subcategory_id").innerHTML  += '<option value="" selected disabled>Seleccione una subcategoría...</option>';
-	                    for (var i = 0; i < ans.length; i++){
-	                        document.getElementById("subcategory_id").innerHTML += '<option value="'+ans[i].id+'">'+ans[i].title+'</option>';
-	                    }
-	                    document.getElementById("subcategory_id").disabled = false;
-	                }
-	            });
-			});
-
 			$('.editar').on('click',function(e){
  				e.preventDefault();
 
@@ -36,6 +17,7 @@
 	                success:function(ans){
 	                	document.getElementById("category_id").value = ans.id;
 	                    document.getElementById("category_title").value = ans.title;
+	                    document.getElementById("category_icon").value = ans.icon;
 	                    $("#modal-edit").modal("show");
 	                }
 	            });
@@ -70,7 +52,7 @@
 					<thead>
 						<tr>
 							<th class="text-center">Título</th>
-							<th class="text-center">Subcategorías</th>
+							<th class="text-center">Icono</th>
 							<th class="text-center">Cursos Asociados</th>
 							<th class="text-center">Acción</th>
 						</tr>
@@ -79,11 +61,10 @@
 						@foreach($categorias as $categoria)
 							<tr>
 								<td class="text-center">{{ $categoria->title }}</td>
-								<td class="text-center">{{ $categoria->subcategories_count }}</td>
+								<td class="text-center"><i class="{{ $categoria->icon }}"></i></td>
 								<td class="text-center">{{ $categoria->courses_count }}</td>
 								<td class="text-center">
 									<a class="btn btn-info editar" data-route="{{ route('admin.courses.edit-category', $categoria->id) }}"><i class="fa fa-edit"></i></a>
-									<a class="btn btn-primary" href="{{ route('admin.courses.subcategories', [$categoria->slug, $categoria->id]) }}" title="Ver Subcategorías"><i class="fa fa-search"></i></a>
 									@if ($categoria->courses_count == 0)
 										<a class="btn btn-danger" href="{{ route('admin.courses.delete-category', $categoria->id) }}"><i class="fa fa-trash"></i></a>
 									@endif
@@ -114,6 +95,12 @@
 						            	<input type="text" class="form-control" name="title" required>
 						            </div>
 						        </div>
+						        <div class="col-md-12">
+						            <div class="form-group">
+						                <label>Icono de la Categoría</label>
+						            	<input type="text" class="form-control" name="icon" required>
+						            </div>
+						        </div>
 						    </div>
 						</div>
 				        
@@ -142,8 +129,14 @@
 	    					<div class="row">
 						        <div class="col-md-12">
 						            <div class="form-group">
-						                <label>Categoría</label>
+						                <label>Título</label>
 						            	<input type="text" class="form-control" name="title" id="category_title" required>
+						            </div>
+						        </div>
+						        <div class="col-md-12">
+						            <div class="form-group">
+						                <label>Icono</label>
+						            	<input type="text" class="form-control" name="icon" id="category_icon" required>
 						            </div>
 						        </div>
 						    </div>

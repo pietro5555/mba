@@ -53,18 +53,6 @@ class StreamingController extends Controller
             // respueta
             // user_id
 
-        
-
-        // "channel": {
-        //     "id": "23955144",
-        //     "title": "Vargas test 1",
-        //     "url": "http://www.ustream.tv/channel/emv74tKDXUV",
-        //     "tiny_url": "http://www.ustream.tv/channel/id/23955144"
-        // }
-
-        // curl \
-        // ftp://1_23955144_127744603:RvbQ7QfhPh@sjc03-vod-upload02.services.video.ibm.com/1_23955144_1599064233142 \
-        // -v -T testFirst.mov
     
         // http://localhost:8000/?access_token=234357c92534a1238561fd35dbf36eb15b4b1bc6&token_type=bearer&expires_in=86400&state=XYZ
         // https://authentication.video.ibm.com/authorize?response_type=token&client_id=f462391e32e1374ceebeac9e840dc94c1c3c71d5&client_secret=5216193d16334f15908940d518d2adf1546dc752&redirect_uri=https://metalinks.com.ve/prueba&state=XYZ
@@ -93,24 +81,6 @@ class StreamingController extends Controller
         // echo $response->getStatusCode();
         // echo $response->getHeaderLine('content-type'); // 'application/json; charset=utf8'
         // echo $response->getBody(); // '{"id": 1420053, "name": "guzzle", ...}'
-
-        
-        // $response = $client->post('https://authentication.video.ibm.com/authorize', 
-        //     [
-        //         'body' => [
-        //             'response_type' => 'token',
-        //             'client_id' => 'f462391e32e1374ceebeac9e840dc94c1c3c71d5',
-        //             'client_secret' => '5216193d16334f15908940d518d2adf1546dc752',
-        //             'redirect_uri' => 'http://localhost:8000/streaming',
-        //         ]
-        //     ]
-        // );
-
-        
-        // dump($response->getStatusCode()); 
-        // echo $response->getBody(); 
-
-
 
 	   	return view('streaming.indexstreaming')->with(compact('hola'));
     }

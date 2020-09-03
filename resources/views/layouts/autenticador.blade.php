@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="{{ asset('bootstrap-4.5.1/css/bootstrap.min.css') }}">
         <link href="{{ asset('css/simple-sidebar.css') }}" rel="stylesheet">
         <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
-
+        
         <!-- css para la vista de anotaciones y mas -->
         <link rel="stylesheet" href="{{asset('css/anotaciones-simple.css')}}">
         
@@ -31,39 +31,18 @@
             var assetsPath = base_url + '/assets';
         </script>
     </head>
-    <body>
-        <div class="d-flex" id="wrapper">
-            @include('layouts.partials.sidebar')
-
-            <!-- Page Content -->
-            <div class="bg-dark-gray" id="page-content-wrapper">
-                @include('layouts.partials.header')
+    <body style="background-color:#1C1D21;">
+        
                 
                 @yield('content')
 
-                <div>
-                    <img src="{{ asset('images/grupo-371.png') }}" alt="" style="width:100%;">
-                </div>
-                
-                @include('layouts.partials.footer')
-            </div>
-            <!-- /#page-content-wrapper -->
-        </div>
-        <!-- /#wrapper -->
+    
 
         <!-- Bootstrap core JavaScript -->
         <script src="https://kit.fontawesome.com/d6f2727f64.js" crossorigin="anonymous"></script>
 		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 		<script src="{{ asset('bootstrap-4.5.1/js/bootstrap.min.js') }}"></script>
         <script src="{{ asset('bootstrap-4.5.1/js/bootstrap.bundle.min.js') }}"></script>
-
-        <!-- Menu Toggle Script -->
-        <script>
-            $("#menu-toggle").click(function(e) {
-                e.preventDefault();
-                $("#wrapper").toggleClass("toggled");
-            });
-        </script>
 
         @stack('scripts')
     </body>

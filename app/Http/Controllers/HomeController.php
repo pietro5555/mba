@@ -23,7 +23,7 @@ use Modules\ReferralTree\Http\Controllers\ReferralTreeController;
 class HomeController extends Controller{
 
    public function index(){
-      if (Auth::guest()){
+      //if (Auth::guest()){
          $cursosDestacados = Course::where('featured', '=', 1)
                                  ->where('status', '=', 1)
                                  ->orderBy('id', 'DESC')
@@ -66,8 +66,17 @@ class HomeController extends Controller{
                $next = 0;
             }
          }
+         
+         
+         //linea de referidos Directos
+         $refeDirec =0;
+         if(Auth::user()){
+         $refeDirec = User::where('referred_id', Auth::user()->ID)->count('ID');
+         }
 
-         return view('index')->with(compact('cursosDestacados', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next'));
+         return view('index')->with(compact('cursosDestacados', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next', 'refeDirec'));
+         
+         /*
       }else{
          $cliente = SettingCliente::find(1);
          if ($cliente->permiso == 0 && Auth::user()->tipouser == 'Cliente') {
@@ -76,12 +85,25 @@ class HomeController extends Controller{
             return redirect('/admin');
          }   
       }
-      //return view('welcome');
+      */
    }
     
+    
+    //vista de transmisiones
     public function transmisiones(){
         
         return view('transmision');
+    }
+    
+    public function anotaciones(){
+        
+        return view('anotaciones');
+    }
+    
+    
+    public function timelive(){
+        
+        return view('timelive');
     }
 
 
@@ -161,7 +183,7 @@ class HomeController extends Controller{
         }
         
         $funciones = new IndexController;
-        $funciones->msjSistema('Contraseña editada con exito' , 'success');
+        $funciones->msjSistema('Contrase単a editada con exito' , 'success');
             return redirect()->back();
     }
 }

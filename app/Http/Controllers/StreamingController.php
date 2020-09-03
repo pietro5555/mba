@@ -22,18 +22,38 @@ class StreamingController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-
+    { 
+       
         // events
 
         //     id,
         //     title,
         //     fecha,
         //     type,
-        //     link,
-        //     id_
+        //     url_streaming,
+        //     url_video,
+        //     user_id
 
-        // configurar evento
+        // event_content
+
+            // id 
+            // title
+            // type
+            // url
+            // event_id
+
+        // survey_options
+            // id
+            // pregunta
+            // content_event_id
+
+        // survey_options_response
+            // id
+            // survey_options_id
+            // respueta
+            // user_id
+
+        
 
         // "channel": {
         //     "id": "23955144",
@@ -46,8 +66,7 @@ class StreamingController extends Controller
         // ftp://1_23955144_127744603:RvbQ7QfhPh@sjc03-vod-upload02.services.video.ibm.com/1_23955144_1599064233142 \
         // -v -T testFirst.mov
     
-        // http://localhost:8000/?access_token=ea2a1e5e4ca4a2d779874e6ff3eff08fa03b0b00&token_type=bearer&expires_in=86400&state=XYZ
-
+        // http://localhost:8000/?access_token=234357c92534a1238561fd35dbf36eb15b4b1bc6&token_type=bearer&expires_in=86400&state=XYZ
         // https://authentication.video.ibm.com/authorize?response_type=token&client_id=f462391e32e1374ceebeac9e840dc94c1c3c71d5&client_secret=5216193d16334f15908940d518d2adf1546dc752&redirect_uri=https://metalinks.com.ve/prueba&state=XYZ
 
 
@@ -92,7 +111,37 @@ class StreamingController extends Controller
         // echo $response->getBody(); 
 
 
+
 	   	return view('streaming.indexstreaming')->with(compact('hola'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getAccessToken()
+    {
+
+        $client = new Client();
+        $response = $client->request('POST', 'https://video.ibm.com/oauth2/token', [
+            'Authorization' => '1be2f4beeb416fa024d2ba4107e389e857d90deb',
+            'form_params' => [
+                'grant_type' => 'authorization_code',
+                'client_id' => 'f462391e32e1374ceebeac9e840dc94c1c3c71d5',
+                'client_secret' => 'ea6b8144deeec575c3d327faa8015b5729d43ddf',
+                'redirect_uri' => 'http://localhost:8000/',
+                'code' => '1be2f4beeb416fa024d2ba4107e389e857d90deb',
+            ]
+        ]);
+
+        $result =  json_decode( $response->getBody() );
+
+        dd($result);
+
+        
+	   	return view('streaming.indexstreaming')->with(compact('hola'));
+
     }
 
     /**

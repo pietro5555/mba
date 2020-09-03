@@ -798,3 +798,4 @@ Route::get('cursos', 'CursosController@index')->name('cursos');
 
 //Streaming
 Route::get('streaming', 'StreamingController@index')->name('streaming.index');
+Route::get('getaccesstoken', 'StreamingController@getAccessToken')->name('streaming.getaccesstoken');

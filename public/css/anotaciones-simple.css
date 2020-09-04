@@ -1,0 +1,136 @@
+/* informacion de la vista del temporizador*/
+.gris-boton{
+    color: #fff;
+    background-color: #aab4bd;
+    border-color: #aab4bd;
+    }
+
+    .gris-boton:hover{
+    color: #fff;
+    background-color: #939aa0;
+    border-color: #939aa0;
+    }
+
+
+  /*informacion de la vista del chat*/
+   .botonlineal{
+    color: #fff;
+    background-color: #363840;
+    border-color: #363840;
+    width: 157px;
+    height: 35px;
+    text-align: center;
+    margin-bottom: 5px;
+    margin-right: 3px;
+    line-height: 30px;
+    cursor: pointer;
+}    
+
+   .botonlineal:hover{
+    color: #fff;
+    background-color: #6AB742;
+    border-color: #6AB742;
+    }
+
+    
+    .botonvertical{
+    background-color: #383941;
+    color: #8E8E8E;
+    border-color: #363840;
+    height: 75px;
+    width: 100px;
+    text-align: center;
+    line-height: 30px;
+    cursor: pointer;
+    }
+
+    .botonvertical:hover{
+    color: #fff;
+    background-color: #25262B;
+    border-color: #25262B;
+    }
+
+
+
+    .iconos-redes{
+     margin: 0 10px; background-color: #2A91FF; border-radius: 50%; text-align: center; padding: 5px 5px 5px 5px;
+    }
+
+    .place::placeholder {
+     color:white;
+     }
+
+     .place:focus, .place:focus{
+       outline: 0;
+      }
+
+     *:focus {
+       outline: 0;
+      }
+
+      .anfitrion{
+    background-color: #6AB742;
+    color: #fff;
+    border-radius: 50%;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+      }
+
+      .jhon{
+    background-color: #2A91FF;
+    color: #fff;
+    border-radius: 50%;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+      }
+
+      .nombre-jd{
+       color:#2A91FF; 
+       margin-left:7px; 
+       font-weight: bold;
+      }
+
+      .chat-list{
+      width: 100%; 
+      height: 70%; 
+      overflow-y: visible; 
+      overflow-x: hidden;
+      }
+
+      .nombre-anfitrion{
+        color:#6AB742; 
+        margin-left:7px; 
+        font-weight: bold;
+      }
+
+      .mensaje{
+        background-color: #545762; 
+        color: #CECECE; 
+        border-radius: 10px;
+        width: 100%;
+      }
+
+      .contenido-anfitrion{
+        margin-left: 15px; 
+        margin-right: 15px;
+      }
+
+
+
+    @media only screen and (max-width: 440px) {
+        .botonlineal{
+            width: 182px;
+        }
+
+        .botonlineal{
+            width: 182px;
+        }
+
+       .iconos-redes{
+         margin: 0 40px;
+        } 
+    } 

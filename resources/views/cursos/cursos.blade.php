@@ -12,17 +12,24 @@
     <img src="{{ asset('images/banner_cursos.png') }}" class="course-banner-img img-fluid" alt="..."/>
      <button type="button" class="btn btn-primary play-course-button col-xs"><i class="fa fa-play"></i> CONTINUAR CURSO</button>
 </div>
+<div class="course-banner-caption">
+    <div class="row">
+        <div class="col">
+        <div class="title-course col-xl">NOMBRE DEL CURSO</div>
+        <div class="description-course col-sm-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus maximus eros malesuada arcu sagittis, et lobortis.</div>
+        </div>
+        
+    </div>
+   
+    <br>
+</div> 
 <div class="progress col-xs progress-course-bar">
         <div class="progress-bar" role="progressbar" aria-valuenow="70"
                 aria-valuemin="0" aria-valuemax="100" style="width:70%">
         </div>
 </div>
  
-<div class="course-banner-caption">
-    <div class="title-course col-xl">NOMBRE DEL CURSO</div>
-    <div class="description-course col-sm-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus maximus eros malesuada arcu sagittis, et lobortis.</div>
-    <br>
-</div> 
+
 </div>
     {{-- FIN DEL BANNER --}}
 
@@ -424,7 +431,7 @@
                         <div class="col-auto">
                             <img src="{{ asset('images/img-mentor1.png') }}" class="img-fluid" alt="">
                         </div>
-                        <div class="col-md-6">
+                        <div class="col">
                             <div class="card-block px-2">
                                 <h4 class="card-title mt-4">Nombre Apellido</h4>
                                 <p class="card-text">Categoría</p>
@@ -443,7 +450,7 @@
                         <div class="col-auto">
                             <img src="{{ asset('images/img-mentor2.png') }}" class="img-fluid" alt="">
                         </div>
-                        <div class="col-md-6">
+                        <div class="col">
                             <div class="card-block px-2">
                                 <h4 class="card-title mt-4">Nombre Apellido</h4>
                                 <p class="card-text">Categoría</p>
@@ -460,7 +467,7 @@
                         <div class="col-auto">
                             <img src="{{ asset('images/img-mentor3.png') }}" class="img-fluid" alt="">
                         </div>
-                        <div class="col-md-6">
+                        <div class="col">
                             <div class="card-block px-2">
                                 <h4 class="card-title mt-4">Nombre Apellido</h4>
                                 <p class="card-text">Categoría</p>
@@ -479,7 +486,7 @@
                         <div class="col-auto">
                             <img src="{{ asset('images/img-mentor4.png') }}" class="img-fluid" alt="">
                         </div>
-                        <div class="col-md-6">
+                        <div class="col">
                             <div class="card-block px-2">
                                 <h4 class="card-title mt-4">Nombre Apellido</h4>
                                 <p class="card-text">Categoría</p>
@@ -496,7 +503,7 @@
                         <div class="col-auto">
                             <img src="{{ asset('images/img-mentor5.png') }}" class="img-fluid" alt="">
                         </div>
-                        <div class="col-md-6">
+                        <div class="col">
                             <div class="card-block px-2">
                                 <h4 class="card-title mt-4">Nombre Apellido</h4>
                                 <p class="card-text">Categoría</p>
@@ -513,7 +520,7 @@
                         <div class="col-auto">
                             <img src="{{ asset('images/img-mentor6.png') }}" class="img-fluid" alt="">
                         </div>
-                        <div class="col-md-6">
+                        <div class="col">
                             <div class="card-block px-2">
                                 <h4 class="card-title mt-4">Nombre Apellido</h4>
                                 <p class="card-text">Categoría</p>
@@ -532,7 +539,7 @@
                         <div class="col-auto">
                             <img src="{{ asset('images/img-mentor7.png') }}" class="img-fluid" alt="">
                         </div>
-                        <div class="col-md-6">
+                        <div class="col">
                             <div class="card-block px-2">
                                 <h4 class="card-title mt-4">Nombre Apellido</h4>
                                 <p class="card-text">Categoría</p>
@@ -551,7 +558,7 @@
                         <div class="col-auto">
                             <img src="{{ asset('images/img-mentor8.png') }}" class="img-fluid" alt="">
                         </div>
-                        <div class="col-md-6">
+                        <div class="col">
                             <div class="card-block px-2">
                                 <h4 class="card-title mt-4">Nombre Apellido</h4>
                                 <p class="card-text">Categoría</p>
@@ -568,7 +575,7 @@
                         <div class="col-auto">
                             <img src="{{ asset('images/img-mentor9.png') }}" class="img-fluid" alt="">
                         </div>
-                        <div class="col-md-6">
+                        <div class="col">
                             <div class="card-block px-2">
                                 <h4 class="card-title mt-4">Nombre Apellido</h4>
                                 <p class="card-text">Categoría</p>
@@ -587,7 +594,7 @@
                         <div class="col-auto">
                             <img src="{{ asset('images/img-mentor10.png') }}" class="img-fluid" alt="">
                         </div>
-                        <div class="col-md-6">
+                        <div class="col">
                             <div class="card-block px-2">
                                 <h4 class="card-title mt-4">Nombre Apellido</h4>
                                 <p class="card-text">Categoría</p>
@@ -606,7 +613,7 @@
                         <div class="col-auto">
                             <img src="{{ asset('images/img-mentor11.png') }}" class="img-fluid" alt="">
                         </div>
-                        <div class="col-md-6">
+                        <div class="col">
                             <div class="card-block px-2">
                                 <h4 class="card-title mt-4">Nombre Apellido</h4>
                                 <p class="card-text">Categoría</p>
@@ -623,7 +630,7 @@
                         <div class="col-auto">
                             <img src="{{ asset('images/img-mentor12.png') }}" class="img-fluid" alt="">
                         </div>
-                        <div class="col-md-6">
+                        <div class="col">
                             <div class="card-block px-2">
                                 <h4 class="card-title mt-4">Nombre Apellido</h4>
                                 <p class="card-text">Categoría</p>

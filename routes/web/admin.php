@@ -18,6 +18,13 @@ Route::group(['prefix' => 'installer'], function (){
 });
 
 
+Route::get('/clear-cache', function() {
+    $exitCode = Artisan::call('config:clear');
+    $exitCode = Artisan::call('cache:clear');
+    $exitCode = Artisan::call('config:cache');
+    return 'DONE'; //Return anything
+});
+
 Route::get('load-more-courses-new/{ultimoId}/{accion}', 'CourseController@load_more_courses_new')->name('landing.load-more-courses-new');
 
 //nuevo inicio a traves de un nuevo login
@@ -142,15 +149,22 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu']]
          Route::get('edit/{id}', 'CategoryController@edit_category')->name('admin.courses.edit-category');
          Route::post('update', 'CategoryController@update_category')->name('admin.courses.update-category');
          Route::get('delete/{id}', 'CategoryController@delete_category')->name('admin.courses.delete-category');
-         Route::get('load-subcategories/{category_id}', 'CategoryController@load_subcategories')->name('admin.courses.load-subcategories');
       });
 
       Route::group(['prefix' => 'subcategories'], function(){
-         Route::post('add', 'CategoryController@add_subcategory')->name('admin.courses.add-subcategory');
+        Route::get('/', 'CategoryController@subcategories')->name('admin.courses.subcategories');
+        Route::post('add', 'CategoryController@add_subcategory')->name('admin.courses.add-subcategory');
          Route::get('edit/{id}', 'CategoryController@edit_subcategory')->name('admin.courses.edit-subcategory');
          Route::post('update', 'CategoryController@update_subcategory')->name('admin.courses.update-subcategory');
          Route::get('delete/{id}', 'CategoryController@delete_subcategory')->name('admin.courses.delete-subcategory');
-         Route::get('/{category_slug}/{category_id}', 'CategoryController@subcategories')->name('admin.courses.subcategories');
+      });
+
+      Route::group(['prefix' => 'tags'], function(){
+        Route::get('/', 'TagController@index')->name('admin.courses.tags');
+        Route::post('store', 'TagController@store')->name('admin.courses.add-tag');
+        Route::get('edit/{id}', 'TagController@edit')->name('admin.courses.edit-tag');
+        Route::post('update', 'TagController@update')->name('admin.courses.update-tag');
+        Route::get('delete/{id}', 'TagController@delete')->name('admin.courses.delete-tag');
       });
    });
 
@@ -793,5 +807,13 @@ Route::group(['prefix' => 'link','middleware' => ['menu']], function(){
     
     Route::get('/transmisiones', 'HomeController@transmisiones')->name('transmisiones');
 
+//vista de anotaciones
+    Route::get('/anotaciones', 'HomeController@anotaciones')->name('anotaciones');
 //Cursos
 Route::get('cursos', 'CursosController@index')->name('cursos');
+Route::get('cursos/curso', 'CursosController@show_one_course')->name('curso');
+Route::get('cursos/leccion', 'CursosController@leccion')->name('leccion');
+
+//Streaming
+Route::get('streaming', 'StreamingController@index')->name('streaming.index');
+Route::get('getaccesstoken', 'StreamingController@getAccessToken')->name('streaming.getaccesstoken');

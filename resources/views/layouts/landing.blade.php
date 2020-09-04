@@ -41,8 +41,53 @@
                 
                 @yield('content')
 
-                <div>
-                    <img src="{{ asset('images/grupo-371.png') }}" alt="" style="width:100%;">
+                <div class="section-paises">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12 py-5">
+                                <div class="mb-2 text-center">
+                                    <img src="{{ asset('images/50impact.png')}}" alt="" height="32px" class="mr-md-2 mr-3">
+                                    <img src="{{ asset('images/icf.png')}}" alt="" height="32px" class="mr-md-2 mr-3">
+                                    <img src="{{ asset('images/no_work_no_money.png')}}" alt="" height="32px" class="mr-md-2 mr-3">
+                                    <img src="{{ asset('images/fenttix.png')}}" alt="" height="32px" class="mr-md-2 mr-3">
+                                    <img src="{{ asset('images/platinum.png')}}" alt="" height="32px" class="mr-md-2 mr-3">
+
+                                </div>
+                                <div class="mb-2 text-center text-white">
+                                    PAISES EN DONDE ESTAMOS PRESENTES
+                                </div>
+                                <div class="mb-2 text-center">
+                                    <img src="{{ asset('images/usa.png')}}" height="40px" class="mr-md-2 mr-3">
+                                    <img src="{{ asset('images/españa.png')}}" height="40px" class="mr-md-2 mr-3">
+                                    <img src="{{ asset('images/rusia.png')}}" height="40px" width="40px" class="mr-md-2 mr-3">
+                                    <img src="{{ asset('images/marruecos.png')}}" height="40px" width="40px" class="mr-md-2 mr-3">
+                                    <img src="{{ asset('images/japon.png')}}" height="40px" width="40px" class="mr-md-2 mr-3">
+                                    <img src="{{ asset('images/cuba.png')}}" height="40px" width="40px" class="mr-md-2 mr-3">
+                                    <img src="{{ asset('images/colombia.png')}}" height="40px" width="40px" class="mr-md-2 mr-3">
+                                    <img src="{{ asset('images/ecuador.png')}}" height="40px" width="40px" class="mr-md-2 mr-3">
+                                    <img src="{{ asset('images/mexico.png')}}" height="40px" width="40px" class="mr-md-2 mr-3">
+                                    <img src="{{ asset('images/peru.png')}}" height="40px" width="40px" class="mr-md-2 mr-3">
+                                    <img src="{{ asset('images/venezuela.png')}}" height="40px" width="40px" class="mr-md-2 mr-3">
+                                    <img src="{{ asset('images/paraguay.png')}}" height="40px" width="40px" class="mr-md-2 mr-3">
+                                    <img src="{{ asset('images/vietnam.png')}}" height="40px" width="40px" class="mr-md-2 mr-3">
+                                </div>
+                                <div class="mb-2 text-center text-white">
+                                    Próximamente aceptaremos
+                                    <img src="{{ asset('images/visa.png')}}" height="15px" class="mr-md-2 mr-3">
+                                    <img src="{{ asset('images/mastercard.png')}}" height="15px" class="mr-md-2 mr-3">
+                                    <img src="{{ asset('images/american.png')}}" height="15px" class="mr-md-2 mr-3">
+                                    <img src="{{ asset('images/stripe.png')}}" height="15px"class="mr-md-2 mr-3">
+                                    <img src="{{ asset('images/square.png')}}" height="15px"class="mr-md-2 mr-3">
+                                    <img src="{{ asset('images/apple_pay.png')}}" height="15px" class="mr-md-2 mr-3">
+                                    <img src="{{ asset('images/bitpay.png')}}" height="15px" class="mr-md-2 mr-3">
+                                    <img src="{{ asset('images/g_pay.png')}}" height="15px" class="mr-md-2 mr-3">
+                                    <img src="{{ asset('images/amazon_pay.png')}}" height="15px" class="mr-md-2 mr-3">
+                                </div>
+                                
+                            </div>
+                        </div>
+                        
+                    </div>
                 </div>
                 
                 @include('layouts.partials.footer')

@@ -16,7 +16,7 @@ class CategoryController extends Controller{
        // TITLE
         view()->share('title', 'Listado de Categorías');
 
-        $categorias = Category::withCount('subcategories', 'courses')
+        $categorias = Category::withCount('courses')
                         ->orderBy('title', 'ASC')
                         ->get();
 
@@ -68,39 +68,17 @@ class CategoryController extends Controller{
     }
 
     /**
-     * Admin / Cursos / Listado de Cursos 
-     * Crear Curso -> Cargar Subcategorías
-     * Petición AJAX
-     */
-    public function load_subcategories($categoria){
-        $subcategorias = DB::table('subcategories')
-                            ->select('id', 'title')
-                            ->where('category_id', '=', $categoria)
-                            ->orderBy('title', 'ASC')
-                            ->get();
-
-        return response()->json(
-            $subcategorias
-        );
-    }
-
-    /**
      * Admin / Cursos / Gestionar Categorías / Listado de Subcategorías de una Categoría
      */
-    public function subcategories($slug, $id){
-        $subcategorias = Subcategory::where('category_id', '=', $id)
-                            ->withCount('courses')
+    public function subcategories(){
+        // TITLE
+        view()->share('title', 'Subcategorías');
+
+        $subcategorias = Subcategory::withCount('courses')
                             ->orderBy('title', 'ASC')
                             ->get();
-
-        $datosCategoria = DB::table('categories')
-                            ->select('id', 'title')
-                            ->first();
-
-        // TITLE
-        view()->share('title', 'Listado de Subcategorías de '.$datosCategoria->title);
-
-        return view('admin.courses.subcategories')->with(compact('subcategorias', 'datosCategoria'));
+        
+        return view('admin.courses.subcategories')->with(compact('subcategorias'));
     }
 
     /**
@@ -111,12 +89,7 @@ class CategoryController extends Controller{
         $subcategoria->slug = Str::slug($subcategoria->title);
         $subcategoria->save();
 
-        $datosCategoria = DB::table('categories')
-                            ->select('id', 'slug')
-                            ->where('id', '=', $request->category_id)
-                            ->first();
-
-        return redirect('admin/courses/subcategories/'.$datosCategoria->slug.'/'.$datosCategoria->id)->with('msj-exitoso', 'La subcategoría '.$subcategoria->title.' ha sido agregada con éxito.');
+        return redirect('admin/courses/subcategories')->with('msj-exitoso', 'La subcategoría '.$subcategoria->title.' ha sido agregada con éxito.');
     }
 
     /**
@@ -139,7 +112,7 @@ class CategoryController extends Controller{
         $subcategoria->slug = Str::slug($subcategoria->title);
         $subcategoria->save();
         
-        return redirect('admin/courses/subcategories/'.$subcategoria->category->slug.'/'.$subcategoria->category_id)->with('msj-exitoso', 'La subcategoría '.$subcategoria->title.' ha sido modificada con éxito.');
+        return redirect('admin/courses/subcategories')->with('msj-exitoso', 'La subcategoría '.$subcategoria->title.' ha sido modificada con éxito.');
     }
 
 
@@ -150,6 +123,6 @@ class CategoryController extends Controller{
         $subcategoria = Subcategory::find($id);
         $subcategoria->delete();
 
-        return redirect('admin/courses/subcategories/'.$subcategoria->category->slug.'/'.$subcategoria->category_id)->with('msj-exitoso', 'La subcategoría '.$subcategoria->title.' ha sido eliminada con éxito.');
+        return redirect('admin/courses/subcategories')->with('msj-exitoso', 'La subcategoría '.$subcategoria->title.' ha sido eliminada con éxito.');
     }
 }

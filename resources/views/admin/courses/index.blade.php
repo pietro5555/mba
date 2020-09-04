@@ -21,38 +21,6 @@
 	            });
 			});
 		});
-
-		function loadSubcategories($metodo){
-			if ($metodo == 'add'){
-				var categoria = document.getElementById("category_id").value;
-			}else{
-				var categoria = document.getElementById("category_id2").value;
-			}
-			
-			//var route = "https://www.transformatepro.com/ajax/cargar-subcategorias/"+categoria;
-	        var route = "http://localhost:8000/admin/courses/categories/load-subcategories/"+categoria;
-	                        
-	        $.ajax({
-	            url:route,
-	            type:'GET',
-	            success:function(ans){
-	            	if ($metodo == 'add'){
-		                document.getElementById("subcategory_id").innerHTML = "";
-		                document.getElementById("subcategory_id").innerHTML  += '<option value="" selected disabled>Seleccione una subcategoría...</option>';
-		                for (var i = 0; i < ans.length; i++){
-		                    document.getElementById("subcategory_id").innerHTML += '<option value="'+ans[i].id+'">'+ans[i].title+'</option>';
-		                }
-		              	document.getElementById("subcategory_id").disabled = false;
-		            }else{
-		            	document.getElementById("subcategory_id2").innerHTML = "";
-		                document.getElementById("subcategory_id2").innerHTML  += '<option value="" selected disabled>Seleccione una subcategoría...</option>';
-		                for (var i = 0; i < ans.length; i++){
-		                    document.getElementById("subcategory_id2").innerHTML += '<option value="'+ans[i].id+'">'+ans[i].title+'</option>';
-		                }
-		            }
-	            }
-	        });
-		}
 	</script>
 @endpush
 
@@ -129,10 +97,10 @@
 						            	<input type="text" class="form-control" name="title" required>
 						            </div>
 						        </div>
-						         <div class="col-md-12">
+						        <div class="col-md-12">
 						            <div class="form-group">
 						                <label>Categoría</label>
-						                <select class="form-control category" name="category_id" id="category_id" onchange="loadSubcategories('add');" required>
+						                <select class="form-control category" name="category_id" required>
 						                	<option value="" selected disabled>Seleccione una categoría..</option>
 						                	@foreach ($categorias as $categoria)
 						                		<option value="{{ $categoria->id }}">{{ $categoria->title }}</option>
@@ -143,8 +111,22 @@
 						        <div class="col-md-12">
 						            <div class="form-group">
 						                <label>Subcategoría</label>
-						            	<select class="form-control" name="subcategory_id" id="subcategory_id" disabled required>
+						            	<select class="form-control" name="subcategory_id" required>
 						                	<option value="" selected disabled>Seleccione una subcategoría..</option>
+						                	@foreach ($subcategorias as $subcategoria)
+						                		<option value="{{ $subcategoria->id }}">{{ $subcategoria->title }}</option>
+						                	@endforeach
+						                </select>
+						            </div>
+						        </div>
+						        <div class="col-md-12">
+						            <div class="form-group">
+						                <label>Mentor</label>
+						                <select class="form-control" name="mentor_id" required>
+						                	<option value="" selected disabled>Seleccione un mentor..</option>
+						                	@foreach ($mentores as $mentor)
+						                		<option value="{{ $mentor->ID }}">{{ $mentor->user_email }}</option>
+						                	@endforeach
 						                </select>
 						            </div>
 						        </div>
@@ -158,6 +140,20 @@
 						            <div class="form-group">
 						                <label>Imagen de Cover</label>
 						            	<input type="file" class="form-control" name="cover" >
+						            </div>
+						        </div>
+						        <div class="col-md-12">
+						            <div class="form-group">
+						                <label>Etiquetas Disponibles</label>
+						                <div class="row">
+						                	@foreach ($etiquetas as $etiqueta)
+							            		<div class="col-sm-6 col-md-3">
+												    <input type="checkbox" class="form-check-input" value="{{ $etiqueta->id }}" name="tags[]">
+												    <label class="form-check-label">{{ $etiqueta->tag }}</label>
+												</div>
+							            	@endforeach
+						                </div>
+						            	
 						            </div>
 						        </div>
 						    </div>
@@ -186,7 +182,6 @@
 				        <div class="container-fluid" id="content-modal">
 	    					
 						</div>
-				        
 				    </div>
 	      			<div class="modal-footer">
 	        			<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>

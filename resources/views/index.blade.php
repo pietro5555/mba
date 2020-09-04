@@ -166,7 +166,7 @@
                 <div class="col-4 " style="padding-left: 30px;">
                     <div style="text-align: center; font-size: 34px; color: white; font-weight: bold; border: solid #919191 1px; background-color: #222326; margin-bottom: 10px; height: 330px; padding: 120px 15px;">
                         <i class="fa fa-user"></i><br>
-                        739 Referidos
+                        {{$refeDirec}} Referidos
                     </div>
                     <div style="text-align: center; font-size: 25px; color: white; font-weight: bold; background-color: #6AB742; height: 60px; padding: 10px 10px;">
                     	Panel de referidos

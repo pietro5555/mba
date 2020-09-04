@@ -35,7 +35,7 @@ class StreamingController extends Controller
         //  CREATE TABLE `mba`.`survey_options_response` ( `id` INT NOT NULL AUTO_INCREMENT ,  `response` TEXT NOT NULL ,  `survey_options_id` INT NOT NULL ,  `user_id` INT NOT NULL ,  `created_at` TIMESTAMP NULL ,  `updated_at` TIMESTAMP NULL ,    PRIMARY KEY  (`id`)) ENGINE = InnoDB;
 
     
-        // http://localhost:8000/?access_token=234357c92534a1238561fd35dbf36eb15b4b1bc6&token_type=bearer&expires_in=86400&state=XYZ
+        // http://localhost:8000/?access_token=54644cedbc4818a28a2001e41ea8570fab520e4b&token_type=bearer&expires_in=86400&state=XYZ
         // https://authentication.video.ibm.com/authorize?response_type=token&client_id=f462391e32e1374ceebeac9e840dc94c1c3c71d5&client_secret=5216193d16334f15908940d518d2adf1546dc752&redirect_uri=https://metalinks.com.ve/prueba&state=XYZ
 
 

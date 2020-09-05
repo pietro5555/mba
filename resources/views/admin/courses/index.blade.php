@@ -53,6 +53,7 @@
 							<th class="text-center">Título</th>
 							<th class="text-center">Categoría</th>
 							<th class="text-center">Subcategoría</th>
+							<th class="text-center">Lecciones</th>
 							<th class="text-center">Acción</th>
 						</tr>
 					</thead>
@@ -63,8 +64,10 @@
 								<td class="text-center">{{ $curso->title }}</td>
 								<td class="text-center">{{ $curso->category->title }}</td>
 								<td class="text-center">{{ $curso->subcategory->title }}</td>
+								<td class="text-center">{{ $curso->lessons_count }}</td>
 								<td class="text-center">
 									<a class="btn btn-info editar" data-route="{{ route('admin.courses.edit', $curso->id) }}"><i class="fa fa-edit"></i></a>
+									<a class="btn btn-warning" href="{{ route('admin.courses.lessons.index', [$curso->slug, $curso->id]) }}" title="Ver Lecciones"><i class="fa fa-search"></i></a>
 									@if ($curso->status == 1)
 										<a class="btn btn-danger" href="{{ route('admin.courses.change-status', [$curso->id, 0]) }}" title="Deshabilitar"><i class="fa fa-ban"></i></a>
 									@else

@@ -67,7 +67,8 @@ class CourseController extends Controller{
         // TITLE
         view()->share('title', 'Listado de Cursos');
 
-        $cursos = Course::orderBy('id', 'DESC')->get();
+        $cursos = Course::withCount('lessons')
+                    ->orderBy('id', 'DESC')->get();
 
         $mentores = DB::table('wp98_users')
                         ->select('ID', 'user_email')

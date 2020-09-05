@@ -150,10 +150,10 @@ class HomeController extends Controller{
         return view('timelive');
     }
 
-    public function anotaciones(){
+    /*public function anotaciones(){
         
         return view('live.live');
-    }
+    }*/
 
     public function deleteProfile($id)
     {

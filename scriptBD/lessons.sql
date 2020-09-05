@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-09-2020 a las 21:41:12
+-- Tiempo de generación: 05-09-2020 a las 17:44:04
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.4.4
 
@@ -24,23 +24,16 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `courses`
+-- Estructura de tabla para la tabla `lessons`
 --
 
-CREATE TABLE `courses` (
+CREATE TABLE `lessons` (
   `id` int(11) NOT NULL,
-  `mentor_id` int(11) NOT NULL,
+  `course_id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `slug` varchar(255) NOT NULL,
-  `category_id` int(11) NOT NULL,
-  `subcategory_id` int(11) NOT NULL,
   `description` text DEFAULT NULL,
-  `cover` varchar(255) DEFAULT NULL,
-  `cover_name` varchar(255) DEFAULT NULL,
-  `featured` tinyint(1) NOT NULL DEFAULT 0,
-  `featured_cover` varchar(255) DEFAULT NULL,
-  `featured_cover_name` varchar(255) DEFAULT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '0 = No Disponible. 1 = Disponible',
+  `url` varchar(255) NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -50,9 +43,9 @@ CREATE TABLE `courses` (
 --
 
 --
--- Indices de la tabla `courses`
+-- Indices de la tabla `lessons`
 --
-ALTER TABLE `courses`
+ALTER TABLE `lessons`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -60,9 +53,9 @@ ALTER TABLE `courses`
 --
 
 --
--- AUTO_INCREMENT de la tabla `courses`
+-- AUTO_INCREMENT de la tabla `lessons`
 --
-ALTER TABLE `courses`
+ALTER TABLE `lessons`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 

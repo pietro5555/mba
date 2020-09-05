@@ -79,4 +79,9 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Comentario');
         
     }
+
+    //Relación Mentor - Cursos
+    public function courses(){
+        return $this->hasMany('App\Models\Course', 'mentor_id', 'ID');
+    }
 }

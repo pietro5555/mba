@@ -15,8 +15,8 @@
 	                url:route,
 	                type:'GET',
 	                success:function(ans){
-	                	document.getElementById("subcategory_id").value = ans.id;
-	                    document.getElementById("subcategory_title").value = ans.title;
+	                	document.getElementById("tag_id").value = ans.id;
+	                    document.getElementById("tag_name").value = ans.tag;
 	                    $("#modal-edit").modal("show");
 	                }
 	            });
@@ -42,7 +42,7 @@
 		<div class="box">
 			<div class="box-body">
 				<div style="text-align: right;">
-					<a data-toggle="modal" data-target="#modal-new" class="btn btn-info"><i class="fa fa-plus-circle"></i> Nueva Subcategoría</a>
+					<a data-toggle="modal" data-target="#modal-new" class="btn btn-info"><i class="fa fa-plus-circle"></i> Nueva Etiqueta</a>
 				</div>
 				
 				<br class="col-xs-12">
@@ -50,23 +50,19 @@
 				<table id="mytable" class="table table-bordered table-striped">
 					<thead>
 						<tr>
-							<th class="text-center">#</th>
-							<th class="text-center">Título</th>
+							<th class="text-center">Etiqueta</th>
 							<th class="text-center">Cursos Asociados</th>
 							<th class="text-center">Acción</th>
 						</tr>
 					</thead>
 					<tbody>
-						@foreach($subcategorias as $subcategoria)
+						@foreach($etiquetas as $etiqueta)
 							<tr>
-								<td class="text-center">{{ $subcategoria->id }}</td>
-								<td class="text-center">{{ $subcategoria->title }}</td>
-								<td class="text-center">{{ $subcategoria->courses_count }}</td>
+								<td class="text-center">{{ $etiqueta->tag }}</td>
+								<td class="text-center">{{ $etiqueta->courses_count }}</td>
 								<td class="text-center">
-									<a class="btn btn-info editar" data-route="{{ route('admin.courses.edit-subcategory', $subcategoria->id) }}"><i class="fa fa-edit"></i></a>
-									@if ($subcategoria->courses_count == 0)
-										<a class="btn btn-danger" href="{{ route('admin.courses.delete-subcategory', $subcategoria->id) }}"><i class="fa fa-trash"></i></a>
-									@endif
+									<a class="btn btn-info editar" data-route="{{ route('admin.courses.edit-tag', $etiqueta->id) }}"><i class="fa fa-edit"></i></a>
+									<a class="btn btn-danger" href="{{ route('admin.courses.delete-tag', $etiqueta->id) }}"><i class="fa fa-trash"></i></a>
 								</td>
 							</tr>
 						@endforeach
@@ -81,17 +77,17 @@
   		<div class="modal-dialog" role="document">
     		<div class="modal-content">
       			<div class="modal-header">
-        			<h5 class="modal-title" id="exampleModalLabel">Crear Subcategoría</h5>
+        			<h5 class="modal-title" id="exampleModalLabel">Crear Etiqueta</h5>
       			</div>
-      			<form action="{{ route('admin.courses.add-subcategory') }}" method="POST">
-			        {{ csrf_field() }} 
+      			<form action="{{ route('admin.courses.add-tag') }}" method="POST">
+			        {{ csrf_field() }}
 				    <div class="modal-body">
 				        <div class="container-fluid">
 	    					<div class="row">
 						        <div class="col-md-12">
 						            <div class="form-group">
-						                <label>Título de la Subcategoría</label>
-						            	<input type="text" class="form-control" name="title" required>
+						                <label>Etiqueta</label>
+						            	<input type="text" class="form-control" name="tag" required>
 						            </div>
 						        </div>
 						    </div>
@@ -100,7 +96,7 @@
 				    </div>
 	      			<div class="modal-footer">
 	        			<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-	        			<button type="submit" class="btn btn-primary">Crear Subcategoría</button>
+	        			<button type="submit" class="btn btn-primary">Crear Etiqueta</button>
 	      			</div>
 	      		</form>
     		</div>
@@ -112,18 +108,18 @@
   		<div class="modal-dialog" role="document">
     		<div class="modal-content">
       			<div class="modal-header">
-        			<h5 class="modal-title" id="exampleModalLabel">Editar Subcategoría</h5>
+        			<h5 class="modal-title" id="exampleModalLabel">Editar Etiqueta</h5>
       			</div>
-      			<form action="{{ route('admin.courses.update-subcategory') }}" method="POST">
+      			<form action="{{ route('admin.courses.update-tag') }}" method="POST">
 			        {{ csrf_field() }}
-			        <input type="hidden" name="subcategory_id" id="subcategory_id">
+			        <input type="hidden" name="tag_id" id="tag_id">
 				    <div class="modal-body">
 				        <div class="container-fluid">
 	    					<div class="row">
 						        <div class="col-md-12">
 						            <div class="form-group">
-						                <label>Subcategoría</label>
-						            	<input type="text" class="form-control" name="title" id="subcategory_title" required>
+						                <label>Etiqueta</label>
+						            	<input type="text" class="form-control" name="tag" id="tag_name" required>
 						            </div>
 						        </div>
 						    </div>

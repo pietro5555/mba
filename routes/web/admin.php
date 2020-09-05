@@ -805,10 +805,13 @@ Route::group(['prefix' => 'link','middleware' => ['menu']], function(){
     });
     
     
+    //vista del login
+    Route::get('/login', 'LoginController@login')->name('login');
+    //vista de transmisiones
     Route::get('/transmisiones', 'HomeController@transmisiones')->name('transmisiones');
+    //vista de timelive
+    Route::get('/timelive', 'HomeController@timelive')->name('timelive');
 
-//vista de anotaciones
-    Route::get('/anotaciones', 'HomeController@anotaciones')->name('anotaciones');
 //Cursos
 Route::get('cursos', 'CursosController@index')->name('cursos');
 Route::get('cursos/curso', 'CursosController@show_one_course')->name('curso');

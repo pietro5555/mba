@@ -990,6 +990,22 @@ class Menu
                     ],
                 ]
             ],
+            'Eventos' => [
+                'submenu' => 1,
+                'ruta' => 'javascript:;',
+                'icono' => 'fas fa-calendar-day',
+                'permisoAdmin' => (!empty($permiso)) ? $permiso->cursos : 0,
+                'activo' => 0,
+                'menus' => [
+                    'Listado de Eventos' => [
+                        'ruta' => 'admin.events.index',
+                        'complementoruta' => '',
+                        'black'=> '0',
+                        'oculto'=> 'activo',
+                    ],
+                   
+                ]
+            ],
             'Actualizar' => [
                 'submenu' => 0,
                 'ruta' => 'admin-update-all',

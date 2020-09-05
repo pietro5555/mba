@@ -63,6 +63,7 @@ class Menu
             'registro' =>  json_decode($date->registro),
             'registro_cliente' => json_decode($date->registro_cliente),
             'red' => json_decode($date->red_usuario),
+            'eventos' => json_decode($date->eventos),
             'transacciones' => json_decode($date->transacciones),
             'billetera' => json_decode($date->billetera),
             'calendario' =>  json_decode($date->calendario),
@@ -85,6 +86,7 @@ class Menu
             'registro' =>  json_decode($date->registro),
             'registro_cliente' => json_decode($date->registro_cliente),
             'red' => json_decode($date->red_usuario),
+            'eventos' => json_decode($date->eventos),
             'transacciones' => json_decode($date->transacciones),
             'billetera' => json_decode($date->billetera),
             'calendario' =>  json_decode($date->calendario),
@@ -994,8 +996,8 @@ class Menu
                 'submenu' => 1,
                 'ruta' => 'javascript:;',
                 'icono' => 'fas fa-calendar-day',
-                'permisoAdmin' => (!empty($permiso)) ? $permiso->cursos : 0,
-                'activo' => 0,
+                'permisoAdmin' => (!empty($permiso)) ? $permiso->red_usuario : 0,
+                'activo' => request()->is('admin/events') ? 'active' : 0,
                 'menus' => [
                     'Listado de Eventos' => [
                         'ruta' => 'admin.events.index',

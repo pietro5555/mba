@@ -15,6 +15,7 @@ class EventsController extends Controller
 
     function __construct()
 	{
+        // ALTER TABLE `menu` ADD `eventos` TEXT NULL DEFAULT NULL AFTER `herramientas`;
         // TITLE
 		view()->share('title', 'Eventos');
 		
@@ -70,7 +71,7 @@ class EventsController extends Controller
             'user_id' => $request->input('mentor_id')
         ]);
 
-        return redirect('admin/courses/events')->with('msj-exitoso', 'El evento '.$data->title.' ha sido creado con éxito.');
+        return redirect('admin/events')->with('msj-exitoso', 'El evento '.$data->title.' ha sido creado con éxito.');
         
     }
 

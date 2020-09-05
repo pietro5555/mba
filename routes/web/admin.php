@@ -811,6 +811,8 @@ Route::group(['prefix' => 'link','middleware' => ['menu']], function(){
     Route::get('/transmisiones', 'HomeController@transmisiones')->name('transmisiones');
     //vista de timelive
     Route::get('/timelive', 'HomeController@timelive')->name('timelive');
+    //vista de anotaciones
+    Route::get('/anotaciones', 'HomeController@anotaciones')->name('anotaciones');
 
 //Cursos
 Route::get('cursos', 'CursosController@index')->name('cursos');

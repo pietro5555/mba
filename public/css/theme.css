@@ -336,6 +336,12 @@
     .course-banner-caption{
         top: 40%;
     }
+
+
+    .vertical-menu p
+    {
+        font-size: 2vh;
+    }
 }
 @media (max-width: 450px) {
     .carousel-caption{
@@ -361,6 +367,13 @@
         font-size: 30px;
         line-height: 30px;
     }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .vertical-menu h6 {
+    font-size: 2vh;
+    }
+
 }
 .title-page-course{
     color: #FFFF;
@@ -683,7 +696,6 @@ border-left: 1px solid #707070;
 
   border: none;
     color:#fff;
-    background:#363840;
     border-radius:0;
 
 }
@@ -691,10 +703,11 @@ nav > div a.nav-item.nav-link,
 nav > div a.nav-item.nav-link.active
 {
   border: none;
-    padding: 18px 25px;
+    padding: 5px 25px;
     color:#fff;
     background:#363840;
     border-radius:0;
+    background:#363840;
 }
 
 /*nav > div a.nav-item.nav-link.active:after
@@ -707,8 +720,8 @@ nav > div a.nav-item.nav-link.active
   border-top-color: #6AB742;
 }*/
 .tab-content{
-  background: #1C1D21;
-    padding:30px 25px;
+  /*background: #1C1D21;*/
+    /*padding:30px 25px;*/
     color: #fff;
 }
 
@@ -908,3 +921,123 @@ font-size: 1em;
     font-size: 5em;
 }
 
+.card-anotaciones{
+    background: #545762;
+    max-width: 100%;
+    border-radius: 0rem;
+}
+
+.card-anotaciones .card-title input
+{
+    border-radius: 0rem;
+    background-color: transparent;
+    border: none;
+    color:white;
+}
+
+
+.card-anotaciones .card-text textarea{
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    color:white;
+}
+
+.title-note{
+color: #8E8E8E;
+margin-top: 50px;
+border-bottom: 1px solid #707070;
+}
+
+.accordionNotes .card
+{
+    border-radius: 0rem;
+    border: none;
+    background: #545762; 
+    color: #fff;
+}
+.accordionNotes .card-header{
+    border-radius: 0rem;
+    border: none;
+    padding: .175rem 1.25rem;
+}
+
+
+/*Nav vertical*/
+.vertical-menu {
+  padding-left: 15px;
+  padding-right: 0px;
+}
+
+.vertical-menu a {
+  background: #383941 0% 0% no-repeat padding-box;
+  opacity: 1;
+  color: #838181;
+  display: block;
+  text-decoration: none;
+
+}
+
+.vertical-menu h6{
+    font-size: 12px;
+}
+
+.vertical-menu nav > div a.nav-item.nav-link:hover,
+.vertical-menu nav > div a.nav-item.nav-link:focus
+{
+  border: none;
+    background:#1C1D21;
+    color:#fff;
+    border-radius:0;
+    transition:background 0.20s linear;
+}
+
+
+ .logo-username-green{
+    background-color: #6AB742;
+    color: #fff;
+    border-radius: 50%;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+      }
+
+      .logo-username-blue{
+    background-color: #2A91FF;
+    color: #fff;
+    border-radius: 50%;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+      }
+
+      .nombre-jd{
+       color:#2A91FF; 
+       font-weight: bold;
+      }
+
+     
+      .nombre-anfitrion{
+        color:#6AB742; 
+        font-weight: bold;
+      }
+
+      .mensaje{
+        background-color: #545762; 
+        color: #CECECE; 
+        border-radius: 10px;
+        width: 100%;
+      }
+
+      .contenido-anfitrion{
+        background-color: #545762; 
+        color: #CECECE; 
+        border-radius: 10px;
+        width: 100%;
+      }
+    .logo-user{
+        flex-basis: 0;
+        flex-grow: 0;
+    }

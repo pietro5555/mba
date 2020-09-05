@@ -141,7 +141,7 @@ class HomeController extends Controller{
     
     public function anotaciones(){
         
-        return view('anotaciones');
+        return view('live.live');
     }
     
     

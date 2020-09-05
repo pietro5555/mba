@@ -785,8 +785,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu']]
         Route::post('/cambioestado','ProspeccionController@cambioestado')->name('prospeccion-cambioestado');
         
     });
-});
-
+    
 Route::group(['prefix' => 'link','middleware' => ['menu']], function(){
     
         //link para ver los productos    

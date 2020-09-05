@@ -176,6 +176,19 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu']]
       });
    });
 
+      
+    });
+    
+    //Eventos
+    Route::group(['prefix' => 'events'], function(){
+      Route::get('/', 'EventsController@index')->name('admin.events.index');
+      Route::get('show/{id}', 'EventsController@show')->name('admin.events.show');
+      Route::post('store', 'EventsController@store')->name('admin.events.store');
+      Route::put('edit/{id}', 'EventsController@edit')->name('admin.events.edit');
+      Route::delete('delete/{id}', 'EventsController@delete')->name('admin.events.delete');
+    });
+
+
 
     // Actualiza todos la informacion para los usuarios
     Route::get('updateall', 'AdminController@ActualizarTodo')->name('admin-update-all');
@@ -817,10 +830,13 @@ Route::group(['prefix' => 'link','middleware' => ['menu']], function(){
 
 //vista de anotaciones
     Route::get('/anotaciones', 'HomeController@anotaciones')->name('anotaciones');
+
 //Cursos
 Route::get('cursos', 'CursosController@index')->name('cursos');
 Route::get('cursos/curso', 'CursosController@show_one_course')->name('curso');
 Route::get('cursos/leccion', 'CursosController@leccion')->name('leccion');
+
+
 
 //Streaming
 Route::get('streaming', 'StreamingController@index')->name('streaming.index');

@@ -14,9 +14,7 @@
         <link rel="stylesheet" href="{{ asset('bootstrap-4.5.1/css/bootstrap.min.css') }}">
         <link href="{{ asset('css/simple-sidebar.css') }}" rel="stylesheet">
         <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
-
-        <!-- css para la vista de anotaciones y mas -->
-        <link rel="stylesheet" href="{{asset('css/anotaciones-simple.css')}}">
+        <link href="https://emoji-css.afeld.me/emoji.css" rel="stylesheet">
         
         @stack('styles')
         

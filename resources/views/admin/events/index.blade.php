@@ -41,7 +41,7 @@
 		<div class="box">
 			<div class="box-body">
 				<div style="text-align: right;">
-					<a data-toggle="modal" data-target="#modal-new" class="btn btn-info descargar"><i class="fa fa-plus-circle"></i> Nuevo Curso</a>
+					<a data-toggle="modal" data-target="#modal-new" class="btn btn-info descargar"><i class="fa fa-plus-circle"></i> Nuevo Evento</a>
 				</div>
 				
 				<br class="col-xs-12">
@@ -51,28 +51,23 @@
 						<tr>
 							<th class="text-center">#</th>
 							<th class="text-center">Título</th>
-							<th class="text-center">Categoría</th>
-							<th class="text-center">Subcategoría</th>
-							<th class="text-center">Lecciones</th>
+							<th class="text-center">Mentor</th>
 							<th class="text-center">Acción</th>
 						</tr>
 					</thead>
 					<tbody>
-						@foreach($cursos as $curso)
+						@foreach($events as $event)
 							<tr>
-								<td class="text-center">{{ $curso->id }}</td>
-								<td class="text-center">{{ $curso->title }}</td>
-								<td class="text-center">{{ $curso->category->title }}</td>
-								<td class="text-center">{{ $curso->subcategory->title }}</td>
-								<td class="text-center">{{ $curso->lessons_count }}</td>
+								<td class="text-center">{{ $event->id }}</td>
+								<td class="text-center">{{ $event->title }}</td>
+								<td class="text-center">{{ App\Models\Events::findID($event->user_id) }}</td>
 								<td class="text-center">
-									<a class="btn btn-info editar" data-route="{{ route('admin.courses.edit', $curso->id) }}"><i class="fa fa-edit"></i></a>
-									<a class="btn btn-warning" href="{{ route('admin.courses.lessons.index', [$curso->slug, $curso->id]) }}" title="Ver Lecciones"><i class="fa fa-search"></i></a>
-									@if ($curso->status == 1)
-										<a class="btn btn-danger" href="{{ route('admin.courses.change-status', [$curso->id, 0]) }}" title="Deshabilitar"><i class="fa fa-ban"></i></a>
+									<!-- <a class="btn btn-info editar" data-route="{{ route('admin.courses.edit', $event->id) }}"><i class="fa fa-edit"></i></a>
+									@if ($event->status == 1)
+										<a class="btn btn-danger" href="{{ route('admin.courses.change-status', [$event->id, 0]) }}" title="Deshabilitar"><i class="fa fa-ban"></i></a>
 									@else
-										<a class="btn btn-success" href="{{ route('admin.courses.change-status', [$curso->id, 1]) }}" title="Habilitar"><i class="fa fa-check"></i></a>
-									@endif
+										<a class="btn btn-success" href="{{ route('admin.courses.change-status', [$event->id, 1]) }}" title="Habilitar"><i class="fa fa-check"></i></a>
+									@endif -->
 								</td>
 							</tr>
 						@endforeach
@@ -87,41 +82,26 @@
   		<div class="modal-dialog" role="document">
     		<div class="modal-content">
       			<div class="modal-header">
-        			<h5 class="modal-title" id="exampleModalLabel">Crear Curso</h5>
+        			<h5 class="modal-title" id="exampleModalLabel">Crear Evento</h5>
       			</div>
-      			<form action="{{ route('admin.courses.store') }}" method="POST" enctype="multipart/form-data">
+      			<form action="{{ route('admin.events.store') }}" method="POST" enctype="multipart/form-data">
 			        {{ csrf_field() }}
 				    <div class="modal-body">
 				        <div class="container-fluid">
 	    					<div class="row">
 						        <div class="col-md-12">
 						            <div class="form-group">
-						                <label>Título del Curso</label>
+						                <label>Título del Evento</label>
 						            	<input type="text" class="form-control" name="title" required>
 						            </div>
 						        </div>
-						        <div class="col-md-12">
+						        <!-- <div class="col-md-12">
 						            <div class="form-group">
-						                <label>Categoría</label>
-						                <select class="form-control category" name="category_id" required>
-						                	<option value="" selected disabled>Seleccione una categoría..</option>
-						                	@foreach ($categorias as $categoria)
-						                		<option value="{{ $categoria->id }}">{{ $categoria->title }}</option>
-						                	@endforeach
-						                </select>
+						                <label>Fecha</label>
+						            	<input type="text" class="form-control" name="date" required>
 						            </div>
-						        </div>
-						        <div class="col-md-12">
-						            <div class="form-group">
-						                <label>Subcategoría</label>
-						            	<select class="form-control" name="subcategory_id" required>
-						                	<option value="" selected disabled>Seleccione una subcategoría..</option>
-						                	@foreach ($subcategorias as $subcategoria)
-						                		<option value="{{ $subcategoria->id }}">{{ $subcategoria->title }}</option>
-						                	@endforeach
-						                </select>
-						            </div>
-						        </div>
+						        </div> -->
+						       
 						        <div class="col-md-12">
 						            <div class="form-group">
 						                <label>Mentor</label>
@@ -133,39 +113,14 @@
 						                </select>
 						            </div>
 						        </div>
-						        <div class="col-md-12">
-						            <div class="form-group">
-						                <label>Descripción</label>
-						            	<textarea class="form-control" name="description"></textarea> 
-						            </div>
-						        </div>
-						        <div class="col-md-12">
-						            <div class="form-group">
-						                <label>Imagen de Cover</label>
-						            	<input type="file" class="form-control" name="cover" >
-						            </div>
-						        </div>
-						        <div class="col-md-12">
-						            <div class="form-group">
-						                <label>Etiquetas Disponibles</label>
-						                <div class="row">
-						                	@foreach ($etiquetas as $etiqueta)
-							            		<div class="col-sm-6 col-md-3">
-												    <input type="checkbox" class="form-check-input" value="{{ $etiqueta->id }}" name="tags[]">
-												    <label class="form-check-label">{{ $etiqueta->tag }}</label>
-												</div>
-							            	@endforeach
-						                </div>
-						            	
-						            </div>
-						        </div>
+						      
 						    </div>
 						</div>
 				        
 				    </div>
 	      			<div class="modal-footer">
 	        			<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-	        			<button type="submit" class="btn btn-primary">Crear Curso</button>
+	        			<button type="submit" class="btn btn-primary">Crear Evento</button>
 	      			</div>
 	      		</form>
     		</div>

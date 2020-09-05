@@ -134,7 +134,7 @@ Route::group(['prefix' => 'tienda', 'middleware' => ['auth', 'licencia', 'menu']
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu']], function() {
    Route::group(['prefix' => 'courses'], function(){
-      Route::get('', 'CourseController@index')->name('admin.courses.index');
+      Route::get('/', 'CourseController@index')->name('admin.courses.index');
       Route::post('store', 'CourseController@store')->name('admin.courses.store');
       Route::get('edit/{id}', 'CourseController@edit')->name('admin.courses.edit');
       Route::post('update', 'CourseController@update')->name('admin.courses.update');
@@ -166,7 +166,28 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu']]
         Route::post('update', 'TagController@update')->name('admin.courses.update-tag');
         Route::get('delete/{id}', 'TagController@delete')->name('admin.courses.delete-tag');
       });
+
+      Route::group(['prefix' => 'lessons'], function(){
+        Route::get('/{slug}/{id}', 'LessonController@index')->name('admin.courses.lessons.index');
+        Route::post('store', 'LessonController@store')->name('admin.courses.lessons.store');
+        Route::get('edit/{id}', 'LessonController@edit')->name('admin.courses.lessons.edit');
+        Route::post('update', 'LessonController@update')->name('admin.courses.lessons.update');
+        Route::get('delete/{id}', 'LessonController@delete')->name('admin.courses.lessons.delete');
+      });
    });
+
+      
+    });
+    
+    //Eventos
+    Route::group(['prefix' => 'events'], function(){
+      Route::get('/', 'EventsController@index')->name('admin.events.index');
+      Route::get('show/{id}', 'EventsController@show')->name('admin.events.show');
+      Route::post('store', 'EventsController@store')->name('admin.events.store');
+      Route::put('edit/{id}', 'EventsController@edit')->name('admin.events.edit');
+      Route::delete('delete/{id}', 'EventsController@delete')->name('admin.events.delete');
+    });
+
 
 
     // Actualiza todos la informacion para los usuarios
@@ -764,8 +785,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu']]
         Route::post('/cambioestado','ProspeccionController@cambioestado')->name('prospeccion-cambioestado');
         
     });
-});
-
+    
 Route::group(['prefix' => 'link','middleware' => ['menu']], function(){
     
         //link para ver los productos    
@@ -818,6 +838,8 @@ Route::group(['prefix' => 'link','middleware' => ['menu']], function(){
 Route::get('cursos', 'CursosController@index')->name('cursos');
 Route::get('cursos/curso', 'CursosController@show_one_course')->name('curso');
 Route::get('cursos/leccion', 'CursosController@leccion')->name('leccion');
+
+
 
 //Streaming
 Route::get('streaming', 'StreamingController@index')->name('streaming.index');

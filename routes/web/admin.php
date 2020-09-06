@@ -826,7 +826,7 @@ Route::group(['prefix' => 'link','middleware' => ['menu']], function(){
     
     
     //vista del login
-    Route::get('/login', 'LoginController@login')->name('login');
+    Route::get('/log', 'LoginController@login')->name('log');
     //vista de transmisiones
     Route::get('/transmisiones', 'HomeController@transmisiones')->name('transmisiones');
     //vista de timelive

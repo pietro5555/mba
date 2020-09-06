@@ -102,13 +102,13 @@ class LoginController extends Controller
         }else{
             Auth::loginUsingId($user->ID);
  
-           return redirect('/admin');
+           return redirect('/');
           } 
         
         }else{
             Auth::loginUsingId($user->ID);
  
-           return redirect('/admin');
+           return redirect('/');
         }
         
       }

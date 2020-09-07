@@ -145,11 +145,6 @@ class HomeController extends Controller{
     }
     
     
-    public function timelive(){
-        
-        return view('timelive');
-    }
-    
     public function deleteProfile($id)
     {
        $consulta=new ReferralTreeController;    

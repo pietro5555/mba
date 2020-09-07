@@ -39,7 +39,7 @@
                     </div>
                 </li>
                 <li class="nav-item li-register-button">
-                    <a type="button" class="btn btn-primary btn-register-header" href="{{ route('log') }}">REGISTRARME</a>
+                    <a type="button" class="btn btn-primary btn-register-header" href="{{ route('/log') }}">REGISTRARME</a> <!--/login-->
                 </li>
             @else
                 <li class="nav-item dropdown li-language" id="li-language-larger">

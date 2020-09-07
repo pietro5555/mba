@@ -15,7 +15,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->string('name',90);
             $table->string('email')->unique();
             $table->string('password');
             // A partir de acá se guardan los datos en formato NULL, lo cual no afecta al registro básico normal propuesto por Laravel.

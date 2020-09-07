@@ -84,10 +84,23 @@
               <a class="nav-item nav-link mr-1 mt-2 text-center" id="nav-anotaciones-tab" data-toggle="tab" href="#nav-anotaciones" role="tab" aria-controls="nav-anotaciones" aria-selected="false">Anotaciones</a>
             </div>
             </nav>
-            <div class="col-md-10">
+            <div class="col-md-10 pl-0">
               <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade pl-2" id="nav-mentor" role="tabpanel" aria-labelledby="nav-mentor-tab">
-                 Sección Info del Especialista en construcción
+                <div class="tab-pane fade" id="nav-mentor" role="tabpanel" aria-labelledby="nav-mentor-tab">
+                 <div class="container-fluid">
+                        <div class="row featurette">
+                              <div class="col-md-7 order-md-2">
+                                <h5 class="featurette-heading text-white">Mentor</h5>
+                                <h3 class="featurette-heading text-primary">Nombre y Apellido</h3>
+                                <h6 class="featurette-heading text-white">Conferencista Experto en Liderazgo</h6>
+                                <p class="lead about-course-text">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+                                <a href="" class="text-primary">Ver perfil <i class=" fa fa-angle-right"> </i></a>
+                              </div>
+                              <div class="col-md-5 order-md-1">
+                                <img src="{{ asset('images/mentor-course.png') }}" alt="" class="featurette-image img-fluid mx-auto ml-2" width="409" height="370">
+                              </div>
+                        </div>
+                        </div>
                 </div>
                 <div class="tab-pane fade pl-2" id="nav-agenda" role="tabpanel" aria-labelledby="nav-agenda-tab">
                 Sección Próxima agenda en construcción
@@ -106,14 +119,16 @@
                             <div class="col-12 box-comments">
                               <div class="card card-anotaciones pb-2">
                               <div class="card-body p-0">
-                                <h5 class="card-title">
-                                  <input class="place pt-2 pl-2" type="text" name="titulo" placeholder="Título">
-                                </h5>
-                                <p class="card-text" align="right">
-                                  <textarea class="place pt-2 pl-2" name="nota" rows="4" style=""> Escribe tu nota</textarea>
-
-                                  <button type="button" class="btn btn-success float-right mr-2">Guardar Nota</button>
-                                </p>
+                                <form method="POST" action="{{ route('live.anotaciones') }}" class="m-2">
+                                  @csrf
+                                <div class="form-group notes-form-title">
+                                  <input type="text" id="title" placeholder="Título" class="col-md-6 form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" name="title" value="{{ old('title') }}" required autofocus>
+                                </div>
+                                <div class="form-group notes-form-content">
+                                  <textarea class="form-control{{ $errors->has('content') ? ' is-invalid' : '' }}" id="content"  name="content" value="{{ old('content') }}" required autofocus rows="3">Escribe tu nota</textarea>
+                                </div>
+                                <button type="submit" class="btn btn-success float-right">Guardar nota</button>
+                              </form>
                             </div>
                           </div>
                             </div>
@@ -127,42 +142,28 @@
               </div><!--End tab-content-->
             </div><!--End col -->
             <!--Notas-->
+            @foreach ($notes as $note)
+
             <div class="col-md-10 pl-0">
               <h4 class="title-note pb-2">Notas Guardadas</h4>
                         <div class="accordion accordionNotes" id="accordionNoteOne">
                           <div class="card">
                             <div class="card-header" id="headingOne">
                               <p class="mb-2 mt-2" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                Título de la Nota
+                                {{$note->title}}
                                 <img src="{{ asset('images/icons/chevron-black.svg') }}" height="20px" width="20px" class="float-right">
                               </p>
                              </div>
 
                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionNoteOne">
                      <div class="card-body">
-                     Contenido de la nota
-                      </div>
-                   </div>
-                 </div>
-               </div>
-               <h4 class="title-note pb-2">Notas Guardadas</h4>
-                        <div class="accordion accordionNotes pb-2" id="accordionNoteTwo">
-                          <div class="card">
-                            <div class="card-header" id="headingTwo">
-                              <p class="mb-2 mt-2" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                                Título de la Nota
-                                <img src="{{ asset('images/icons/chevron-black.svg') }}" height="20px" width="20px" class="float-right">
-                              </p>
-                             </div>
-
-                   <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionNoteTwo">
-                     <div class="card-body">
-                     Contenido de la nota
+                     {{$note->content}}
                       </div>
                    </div>
                  </div>
                </div>
             </div><!--end Notas-->
+            @endforeach
 
         </div><!--End col -->
         <!--Menu y Chat-->
@@ -289,7 +290,7 @@
                               <div class="card-body p-0">
                                 <h5 class="card-title">
                                 <p class="card-text" align="right">
-                                  <textarea class="place pt-2 pl-2" name="nota" rows="4" style="">Escribe tu mensaje</textarea>
+                                  <textarea class="place pt-2" name="nota" rows="4" style="">Escribe tu mensaje</textarea>
                                   <div class="col-12">
                                     <div class="row p-1">
                                     <div class="col">

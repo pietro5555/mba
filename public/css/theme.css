@@ -927,21 +927,52 @@ font-size: 1em;
     border-radius: 0rem;
 }
 
-.card-anotaciones .card-title input
+.card-anotaciones textarea{
+    background-color: transparent;
+border-color: transparent;
+outline: 0;
+box-shadow: none;
+color: #CECECE;
+}
+
+#title::placeholder{
+    color: #CECECE;
+}
+
+.notes-form-title input
 {
-    border-radius: 0rem;
-    background-color: transparent;
-    border: none;
-    color:white;
+background-color: transparent;
+border-color: transparent;
+outline: 0;
+box-shadow: none;
+color: #CECECE;
 }
 
-
-.card-anotaciones .card-text textarea{
-    width: 100%;
+.notes-form-title .form-control:focus{
     background-color: transparent;
-    border: none;
-    color:white;
+    color: #CECECE;
+    border-color: transparent;
+    outline: 0;
+    box-shadow: none;
 }
+
+.notes-form-content textarea
+{
+    background-color: transparent;
+    border-color: transparent;
+    outline: 0;
+    box-shadow: none;
+    color: #CECECE;
+}
+
+.notes-form-content .form-control:focus{
+    background-color: transparent;
+   color: #CECECE;
+    border-color: transparent;
+    outline: 0;
+    box-shadow: none;
+}
+
 
 .title-note{
 color: #8E8E8E;

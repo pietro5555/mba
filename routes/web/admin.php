@@ -88,6 +88,7 @@ Route::group(['prefix' => 'aut', 'middleware' => ['licencia', 'menu']], function
         
    Route::get('/cerrar', 'Login\LoginController@cerrar')->name('login-cerrar');
    
+   //Login Sinergia
    //envio de codigo por correo
    Route::get('/login/', 'Auth\LoginController@codigo')->name('login.codigo');
    Route::post('/verificarcodigo', 'Auth\LoginController@verificarCodigo')->name('login.veri-cod');
@@ -131,6 +132,31 @@ Route::group(['prefix' => 'tienda', 'middleware' => ['auth', 'licencia', 'menu']
         Route::post('/subir','TiendaController@subir')->name('link-subir');
         Route::get('/cerrar/{id}','TiendaController@cerrar')->name('link-cerrar');
 });
+
+
+/*Rutas MBA*/
+
+//vista del login (/login)
+Route::get('/log', 'LoginController@login')->name('log');
+
+//vista de transmisiones
+Route::get('/transmisiones', 'HomeController@transmisiones')->name('transmisiones');
+
+//vista de timelive
+Route::get('/timelive', 'HomeController@timelive')->name('timelive');
+
+//Streaming
+Route::get('streaming', 'StreamingController@index')->name('streaming.index');
+Route::get('getaccesstoken', 'StreamingController@getAccessToken')->name('streaming.getaccesstoken');
+
+//Cursos
+Route::get('cursos', 'CursosController@index')->name('cursos');
+Route::get('cursos/curso', 'CursosController@show_one_course')->name('curso');
+Route::get('cursos/leccion', 'CursosController@leccion')->name('leccion');
+//vista de anotaciones
+Route::get('/anotaciones', 'NoteController@index')->name('anotaciones');
+Route::post('/anotaciones/store', 'NoteController@store')->name('live.anotaciones');
+
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu']], function() {
    Route::group(['prefix' => 'courses'], function(){
@@ -823,7 +849,7 @@ Route::group(['prefix' => 'link','middleware' => ['menu']], function(){
         Route::post('ckeditor/image_upload', 'LinkController@upload')->name('upload');
         
     });
-    
+
     
     //vista del login
     Route::get('/log', 'LoginController@login')->name('log');
@@ -850,3 +876,4 @@ Route::get('cursos/leccion', 'CursosController@leccion')->name('leccion');
 //Streaming
 Route::get('streaming', 'StreamingController@index')->name('streaming.index');
 Route::get('getaccesstoken', 'StreamingController@getAccessToken')->name('streaming.getaccesstoken');
+

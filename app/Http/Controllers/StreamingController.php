@@ -23,17 +23,6 @@ class StreamingController extends Controller
      */
     public function index()
     { 
-        // CREATE TABLE `mba`.`events` ( `id` INT NOT NULL AUTO_INCREMENT ,  `title` VARCHAR(255) NOT NULL ,  `date` DATETIME NOT NULL ,  `type` VARCHAR(100) NULL ,  `url_streaming` VARCHAR(255) NULL ,  `url_video` VARCHAR(255) NULL ,`status` VARCHAR(50) NOT NULL ,  `user_id` INT NULL ,  `created_at` TIMESTAMP NULL ,  `updated_at` TIMESTAMP NULL ,  PRIMARY KEY  (`id`)) ENGINE = InnoDB;
-   
-
-        // CREATE TABLE `mba`.`event_content` ( `id` INT NOT NULL AUTO_INCREMENT ,  `title` VARCHAR(255) NOT NULL ,  `type` VARCHAR(100) NULL ,  `url` VARCHAR(255) NULL ,  `event_id` INT NOT NULL , `created_at` TIMESTAMP NULL ,  `updated_at` TIMESTAMP NULL ,   PRIMARY KEY  (`id`)) ENGINE = InnoDB;
-   
-
-        //  CREATE TABLE `mba`.`survey_options` ( `id` INT NOT NULL AUTO_INCREMENT ,  `question` TEXT NOT NULL ,  `content_event_id` INT NOT NULL ,  `created_at` TIMESTAMP NULL ,  `updated_at` TIMESTAMP NULL ,    PRIMARY KEY  (`id`)) ENGINE = InnoDB;
-
-
-        //  CREATE TABLE `mba`.`survey_options_response` ( `id` INT NOT NULL AUTO_INCREMENT ,  `response` TEXT NOT NULL ,  `survey_options_id` INT NOT NULL ,  `user_id` INT NOT NULL ,  `created_at` TIMESTAMP NULL ,  `updated_at` TIMESTAMP NULL ,    PRIMARY KEY  (`id`)) ENGINE = InnoDB;
-
     
         // http://localhost:8000/?access_token=54644cedbc4818a28a2001e41ea8570fab520e4b&token_type=bearer&expires_in=86400&state=XYZ
         // https://authentication.video.ibm.com/authorize?response_type=token&client_id=f462391e32e1374ceebeac9e840dc94c1c3c71d5&client_secret=5216193d16334f15908940d518d2adf1546dc752&redirect_uri=https://metalinks.com.ve/prueba&state=XYZ
@@ -69,20 +58,26 @@ class StreamingController extends Controller
 
         $client = new Client();
         $response = $client->request('POST', 'https://video.ibm.com/oauth2/token', [
-            'Authorization' => '1be2f4beeb416fa024d2ba4107e389e857d90deb',
+            'Authorization' => 'Basic ' .base64_encode('ca361d98cfa63255356b644e83130e919e62085e:ea6b8144deeec575c3d327faa8015b5729d43ddf'),
             'form_params' => [
                 'grant_type' => 'authorization_code',
-                'client_id' => 'f462391e32e1374ceebeac9e840dc94c1c3c71d5',
+                'client_id' => 'ca361d98cfa63255356b644e83130e919e62085e',
                 'client_secret' => 'ea6b8144deeec575c3d327faa8015b5729d43ddf',
-                'redirect_uri' => 'http://localhost:8000/',
-                'code' => '1be2f4beeb416fa024d2ba4107e389e857d90deb',
+                'redirect_uri' => 'http://localhost:8000/get_access_token',
+                'code' => '2b889e59cfbf4efac57fb43a37ccc3a1b31a5047',
             ]
         ]);
+
+        // {#1074 ▼
+        // +"access_token": "acc68c57f68dba834235e728acde96f153c697e4"
+        // +"refresh_token": "fd1317d2bf3fbfb078ef5972ac0ef999dd1dbe7c"
+        // +"token_type": "bearer"
+        // +"expires_in": 86400
+        // }
 
         $result =  json_decode( $response->getBody() );
 
         dd($result);
-
         
 	   	return view('streaming.indexstreaming')->with(compact('hola'));
 

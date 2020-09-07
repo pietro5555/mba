@@ -138,7 +138,7 @@ class HomeController extends Controller{
         
         return view('transmision');
     }
-    
+    //Vista para el Live
     public function anotaciones(){
         
         return view('live.live');
@@ -149,13 +149,7 @@ class HomeController extends Controller{
         
         return view('timelive');
     }
-
-   //  public function anotaciones(){
-        
-   //      return view('live.live');
-   //  }
-
-
+    
     public function deleteProfile($id)
     {
        $consulta=new ReferralTreeController;    

@@ -829,8 +829,14 @@ Route::group(['prefix' => 'link','middleware' => ['menu']], function(){
     Route::get('/log', 'LoginController@login')->name('log');
     //vista de transmisiones
     Route::get('/transmisiones', 'HomeController@transmisiones')->name('transmisiones');
+    
     //vista de timelive
-    Route::get('/timelive', 'HomeController@timelive')->name('timelive');
+    Route::group(['prefix' => 'time'], function(){
+    Route::get('/timelive', 'CalendarioGoogleController@timelive')->name('timelive');
+    Route::get('/oauth/{id}', 'CalendarioGoogleController@oauth')->name('oauthCallback');
+    Route::get('/redirigircalendario', 'CalendarioGoogleController@index')->name('cal.index');
+    Route::get('/proximo/{id}', 'CalendarioGoogleController@proximo')->name('time-prox');
+     });
     //vista de anotaciones
     Route::get('/anotaciones', 'HomeController@anotaciones')->name('anotaciones');
 

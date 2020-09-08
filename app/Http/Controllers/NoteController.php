@@ -16,6 +16,7 @@ class NoteController extends Controller
 		$notes= Note::all();
 
 		//$mentor_username= strtoupper(auth()->user()->user_nicename);
+		
 
 		return view('live.live', compact ('notes'));
 		 

@@ -857,8 +857,7 @@ Route::group(['prefix' => 'link','middleware' => ['menu']], function(){
     Route::get('/redirigircalendario', 'CalendarioGoogleController@index')->name('cal.index');
     Route::get('/proximo/{id}', 'CalendarioGoogleController@proximo')->name('time-prox');
      });
-    //vista de anotaciones
-    Route::get('/anotaciones', 'HomeController@anotaciones')->name('anotaciones');
+  
 
 //Cursos
 Route::get('cursos', 'CursosController@index')->name('cursos');

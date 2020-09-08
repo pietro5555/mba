@@ -167,7 +167,7 @@
 
         </div><!--End col -->
         <!--Menu y Chat-->
-        <div class="col-md-4">
+        <div class="col-md-4 " style='margin-left: -45px !important;'>
           <div class="row mt-2">
             <div class="col-md-12">
               <div class="row">

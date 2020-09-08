@@ -15,6 +15,9 @@
         <link href="{{ asset('css/simple-sidebar.css') }}" rel="stylesheet">
         <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
         <link href="https://emoji-css.afeld.me/emoji.css" rel="stylesheet">
+
+        <!-- css para la vista de anotaciones y mas -->
+        <link rel="stylesheet" href="{{asset('css/anotaciones-simple.css')}}">
         
         @stack('styles')
         

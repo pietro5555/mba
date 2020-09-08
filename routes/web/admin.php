@@ -142,9 +142,6 @@ Route::get('/log', 'LoginController@login')->name('log');
 //vista de transmisiones
 Route::get('/transmisiones', 'HomeController@transmisiones')->name('transmisiones');
 
-//vista de timelive
-Route::get('/timelive', 'HomeController@timelive')->name('timelive');
-
 //Streaming
 Route::get('streaming', 'StreamingController@index')->name('streaming.index');
 Route::get('getaccesstoken', 'StreamingController@getAccessToken')->name('streaming.getaccesstoken');
@@ -156,6 +153,15 @@ Route::get('cursos/leccion', 'CursosController@leccion')->name('leccion');
 //vista de anotaciones
 Route::get('/anotaciones', 'NoteController@index')->name('anotaciones');
 Route::post('/anotaciones/store', 'NoteController@store')->name('live.anotaciones');
+
+//Eventos
+    Route::group(['prefix' => 'events'], function(){
+      Route::get('/', 'EventsController@index')->name('admin.events.index');
+      Route::get('show/{id}', 'EventsController@show')->name('admin.events.show');
+      Route::post('store', 'EventsController@store')->name('admin.events.store');
+      Route::put('edit/{id}', 'EventsController@edit')->name('admin.events.edit');
+      Route::delete('delete/{id}', 'EventsController@delete')->name('admin.events.delete');
+    });
 
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu']], function() {
@@ -202,19 +208,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu']]
       });
    });
 
-      
-    });
     
-    //Eventos
-    Route::group(['prefix' => 'events'], function(){
-      Route::get('/', 'EventsController@index')->name('admin.events.index');
-      Route::get('show/{id}', 'EventsController@show')->name('admin.events.show');
-      Route::post('store', 'EventsController@store')->name('admin.events.store');
-      Route::put('edit/{id}', 'EventsController@edit')->name('admin.events.edit');
-      Route::delete('delete/{id}', 'EventsController@delete')->name('admin.events.delete');
-    });
-
-
 
     // Actualiza todos la informacion para los usuarios
     Route::get('updateall', 'AdminController@ActualizarTodo')->name('admin-update-all');
@@ -811,6 +805,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu']]
         Route::post('/cambioestado','ProspeccionController@cambioestado')->name('prospeccion-cambioestado');
         
     });
+  }); 
     
 Route::group(['prefix' => 'link','middleware' => ['menu']], function(){
     
@@ -850,9 +845,8 @@ Route::group(['prefix' => 'link','middleware' => ['menu']], function(){
         
     });
 
+
     
-    //vista del login
-    Route::get('/log', 'LoginController@login')->name('log');
     //vista de transmisiones
     Route::get('/transmisiones', 'HomeController@transmisiones')->name('transmisiones');
     

@@ -131,6 +131,7 @@ Route::group(['prefix' => 'tienda', 'middleware' => ['auth', 'licencia', 'menu']
         Route::get('/listado','TiendaController@listado')->name('link-listado');
         Route::post('/subir','TiendaController@subir')->name('link-subir');
         Route::get('/cerrar/{id}','TiendaController@cerrar')->name('link-cerrar');
+        
 });
 
 
@@ -154,14 +155,7 @@ Route::get('cursos/leccion', 'CursosController@leccion')->name('leccion');
 Route::get('/anotaciones', 'NoteController@index')->name('anotaciones');
 Route::post('/anotaciones/store', 'NoteController@store')->name('live.anotaciones');
 
-//Eventos
-    Route::group(['prefix' => 'events'], function(){
-      Route::get('/', 'EventsController@index')->name('admin.events.index');
-      Route::get('show/{id}', 'EventsController@show')->name('admin.events.show');
-      Route::post('store', 'EventsController@store')->name('admin.events.store');
-      Route::put('edit/{id}', 'EventsController@edit')->name('admin.events.edit');
-      Route::delete('delete/{id}', 'EventsController@delete')->name('admin.events.delete');
-    });
+
 
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu']], function() {
@@ -213,6 +207,15 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu']]
         Route::get('delete/{id}', 'LessonController@delete')->name('admin.courses.lessons.delete');
       });
    });
+
+   //Eventos
+   Route::group(['prefix' => 'events'], function(){
+    Route::get('/', 'EventsController@index')->name('admin.events.index');
+    Route::get('show/{id}', 'EventsController@show')->name('admin.events.show');
+    Route::post('store', 'EventsController@store')->name('admin.events.store');
+    Route::put('edit/{id}', 'EventsController@edit')->name('admin.events.edit');
+    Route::delete('delete/{id}', 'EventsController@delete')->name('admin.events.delete');
+  });
 
     
 
@@ -863,8 +866,7 @@ Route::group(['prefix' => 'link','middleware' => ['menu']], function(){
     Route::get('/redirigircalendario', 'CalendarioGoogleController@index')->name('cal.index');
     Route::get('/proximo/{id}', 'CalendarioGoogleController@proximo')->name('time-prox');
      });
-    //vista de anotaciones
-    Route::get('/anotaciones', 'HomeController@anotaciones')->name('anotaciones');
+  
 
 //Cursos
 Route::get('cursos', 'CursosController@index')->name('cursos');

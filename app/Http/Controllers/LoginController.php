@@ -12,6 +12,7 @@ use Hash;
 use Carbon\Carbon; 
 // modelo
 use App\Models\User; 
+use App\Models\Paises; 
 
 
 class LoginController extends Controller
@@ -20,7 +21,21 @@ class LoginController extends Controller
     /*login del sistema*/
     public function login(){
         
-        return view('login.login');
+        $paises = Paises::all();
+        return view('login.login', compact('paises'));
+    }
+
+
+    public function autenticacion(Request $datos){
+      
+      if (Auth::attempt(['ID' => $datos->ID, 'password' => $datos->password])) {
+          
+           return redirect('/');
+
+      	}else{
+            
+         return redirect()->back()->with('msj3', 'Las Credenciales no coinciden con nuestros registros');
+        }
     }
     
 }

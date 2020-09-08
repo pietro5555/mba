@@ -1,0 +1,57 @@
+	Tarjeta - A-Eventos
+
+            --La descripción del evento 
+            	Total horas= 40mn
+
+            Tarjeta - 10-Streamin en vivo Front
+	
+	        --Seccion Configuraciones (solo menotr y admin) 
+                    	SubTotal = 2hrs buton Agregar + switch Mostrar -- 3hrs modal Encuesta -- 3hrs modal Presentación -- 1hrs hora modal 				Video -- 3hrs Modal Archivos horas
+
+                    Total horas= 12 aprox
+
+                -- Seccion Participantes (solo mentor y admin)
+                    Total horas= 1 aprox
+                
+                -- Seccion Chat 
+                    Total horas= Tentativa hasta saber cual chat usar
+
+                -- Seccion Encuesta
+                    Total horas= 3 aprox
+
+                -- Seccion Video
+                    Total horas= 2 aprox
+                
+                -- Seccion Presentacion
+                    Total horas= 3 aprox
+
+                -- Seccion Archivos
+                    Total horas= 3 aprox
+
+
+            Tarjeta - 10-Streamin en vivo Back
+
+                -- Funcionalidad de todas las secciones
+				** SUBFUNCIONES **
+                        -- Seccion Participantes (solo mentor y admin)
+                            Total horas= 4 aprox
+                        
+                        -- Seccion Chat 
+                            Total horas= Tentativa hasta saber cual chat usar
+
+                        -- Seccion Encuesta
+                            Total horas= 3 aprox
+
+                        -- Seccion Video
+                            Total horas= 2 aprox
+                        
+                        -- Seccion Presentacion
+                            Total horas= 2 aprox
+
+                        -- Seccion Archivos
+                            Total horas= 3 aprox
+
+                    Total horas= 14 aprox
+                
+                -- Seccion Encuesta
+                    Total horas= 3 aprox

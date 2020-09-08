@@ -207,8 +207,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu']]
     Route::get('/', 'EventsController@index')->name('admin.events.index');
     Route::get('show/{id}', 'EventsController@show')->name('admin.events.show');
     Route::post('store', 'EventsController@store')->name('admin.events.store');
-    Route::put('edit/{id}', 'EventsController@edit')->name('admin.events.edit');
+    Route::get('edit/{id}', 'EventsController@edit')->name('admin.events.edit');
+    Route::post('update', 'EventsController@update')->name('admin.events.update');
     Route::delete('delete/{id}', 'EventsController@delete')->name('admin.events.delete');
+    Route::get('change-status/{id}/{status}', 'EventsController@change_status')->name('admin.events.change-status');
+
   });
 
     

@@ -28,7 +28,7 @@ class CalendarioGoogleController extends Controller
          
          $evento = $this->obtenerEvento(0);
          $fecha = (empty($evento)) ? 0 : $evento['inicio'];
-         $proxevent = $this->proxievents($evento['id']);
+         $proxevent = $this->proxievents((empty($evento)) ? 0 : $evento['id']);
         return view('timelive', compact('fecha','evento','proxevent'));
 
     }

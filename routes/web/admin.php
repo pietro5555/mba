@@ -203,16 +203,16 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu']]
    });
 
       
+      //Eventos
+      Route::group(['prefix' => 'events'], function(){
+        Route::get('/', 'EventsController@index')->name('admin.events.index');
+        Route::get('show/{id}', 'EventsController@show')->name('admin.events.show');
+        Route::post('store', 'EventsController@store')->name('admin.events.store');
+        Route::put('edit/{id}', 'EventsController@edit')->name('admin.events.edit');
+        Route::delete('delete/{id}', 'EventsController@delete')->name('admin.events.delete');
+      });
     });
     
-    //Eventos
-    Route::group(['prefix' => 'events'], function(){
-      Route::get('/', 'EventsController@index')->name('admin.events.index');
-      Route::get('show/{id}', 'EventsController@show')->name('admin.events.show');
-      Route::post('store', 'EventsController@store')->name('admin.events.store');
-      Route::put('edit/{id}', 'EventsController@edit')->name('admin.events.edit');
-      Route::delete('delete/{id}', 'EventsController@delete')->name('admin.events.delete');
-    });
 
 
 

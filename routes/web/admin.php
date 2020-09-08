@@ -139,6 +139,7 @@ Route::group(['prefix' => 'tienda', 'middleware' => ['auth', 'licencia', 'menu']
 
 //vista del login (/login)
 Route::get('/log', 'LoginController@login')->name('log');
+Route::post('/autenticar', 'LoginController@autenticacion')->name('autenticar');
 
 //vista de transmisiones
 Route::get('/transmisiones', 'HomeController@transmisiones')->name('transmisiones');

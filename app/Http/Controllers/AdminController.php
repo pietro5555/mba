@@ -188,7 +188,7 @@ class AdminController extends Controller
         
 
             if(Auth::user()->rol_id == 0){ 
-                $permiso = Permiso::where('iduser', Auth::user()->ID)->get()->toArray();
+                //$permiso = Permiso::where('iduser', Auth::user()->ID)->get()->toArray();
                          DB::table($settings->prefijo_wp.'users')
                         ->where('ID', '=', Auth::user()->ID)
                         ->update(['status' => 1 ]);
@@ -204,7 +204,7 @@ class AdminController extends Controller
             }
   
         return view('dashboard.index')->with(compact('cantReferidosDirectos', 'cantReferidosIndirectos', 'cantReferidosActivos', 'fechaProxActivacion', 'new_member',
-                    'cantventas', 'cantventasmont', 'fullname', 'rangos', 'cantAllUsers', 'rankingComisiones', 'rankingVentas', 'permiso','noticias', 'contTicket', 'moneda',
+                    'cantventas', 'cantventasmont', 'fullname', 'rangos', 'cantAllUsers', 'rankingComisiones', 'rankingVentas','noticias', 'contTicket', 'moneda',
                     'nombreRol','desde', 'ordenesView', 'productosnuevos','settingPuntos','totalventas','totalcobrado','anuncios','noticias','materiales','binario',
                     'settingEstructura','moneda1','moneda2','moneda3','adicional','redes','pop','component'
             ));

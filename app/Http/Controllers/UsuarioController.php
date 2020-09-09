@@ -14,6 +14,7 @@ use App\Models\User;
 use App\Models\Settings;
 use App\Models\SettingsEstructura;
 use App\Models\SettingsRol;
+use App\Models\Permiso;
 // llamado de Controlladores
 use App\Http\Controllers\IndexController;
 
@@ -228,4 +229,114 @@ class UsuarioController extends Controller
         $segundaInfo = DB::table('user_campo')->where('ID', 1)->first();
         return Excel::download(new UsersExport, $nombreArchivo.'.xlsx');
     }
+
+
+     public function admin(){
+      
+      view()->share('title', 'Listado de Usuarios');
+       
+       $permisos = Permiso::all();
+       $tipo = request()->tip;
+       if(request()->tip == 0){
+        $usuarios = User::where('ID', '!=', '1')->where('rol_id', request()->tip)->get();
+       }else{
+        $usuarios = User::where('rol_id', request()->tip)->get();
+       }
+
+      foreach($usuarios as $user){
+       
+       $nivel = $this->coincidirNivel($user->ID);  
+       $rol = Rol::where('id', $user->rol_id)->first();
+       $patrocinador = User::where('ID', $user->referred_id)->first();
+       $user->patrocinador = $patrocinador->display_name;
+       $user->rol = $rol->name;
+       $user->nivel = $nivel;
+
+      }
+
+     return view('usuario.usuarios')->with(compact('usuarios','tipo','permisos')); 
+    }
+
+
+
+    public function permiso($id){
+
+        $permisos = Permiso::where('iduser', '=', $id)->get();
+         return json_encode($permisos);
+    }
+
+
+
+    public function savepermiso(Request $datos)
+  {
+    if (!empty($datos)) {
+      if (!(empty($datos->id))) {
+        Permiso::where('id', $datos->id)->update([
+          'nuevo_registro' => ($datos->nuevo_registro == null) ? 0 : 1,
+          'red_usuario' => ($datos->red_usuario == null) ? 0 : 1,
+          'vision_usuario' => ($datos->vision_usuario == null) ? 0 : 1,
+          'billetera' => ($datos->billetera == null) ? 0 : 1,
+          'pago' => ($datos->pago == null) ? 0 : 1,
+          'informes' => ($datos->informes == null) ? 0 : 1,
+          'tickets' => ($datos->tickets == null) ? 0 : 1,
+          'buzon' => 0,
+          'ranking' => ($datos->ranking == null) ? 0 : 1,
+          'historial_actividades' => ($datos->historial_actividades == null) ? 0 : 1,
+          'soporte' => ($datos->soporte == null) ? 0 : 1,
+          'ajuste' => ($datos->ajuste == null) ? 0 : 1,
+          'herramienta' => ($datos->herramienta == null) ? 0 : 1,
+          'calendario' => ($datos->calendario == null) ? 0 : 1,
+          'correos' => ($datos->correos == null) ? 0 : 1,
+          'prospeccion' => ($datos->prospeccion == null) ? 0 : 1,
+          'puntos' => ($datos->puntos == null) ? 0 : 1,
+          'binario' => ($datos->binario == null) ? 0 : 1,
+          'usuario' => ($datos->usuario == null) ? 0 : 1,
+          'tienda' => ($datos->tienda == null) ? 0 : 1,
+          'transacciones' => ($datos->transacciones == null) ? 0 : 1,
+          'usuarios' => ($datos->usuarios == null) ? 0 : 1,
+          'red' => ($datos->red == null) ? 0 : 1,
+          'cursos' => ($datos->cursos == null) ? 0 : 1,
+          'eventos' => ($datos->eventos == null) ? 0 : 1,
+          'email_marketing' => ($datos->email_marketing == null) ? 0 : 1,
+          'administrar_redes' => ($datos->administrar_redes == null) ? 0 : 1,
+        ]);
+      } else {
+        Permiso::create([
+          'iduser' => $datos->iduser,
+          'nameuser' => $datos->nameuser,
+          'nuevo_registro' => ($datos->nuevo_registro == null) ? 0 : 1,
+          'red_usuario' => ($datos->red_usuario == null) ? 0 : 1,
+          'vision_usuario' => ($datos->vision_usuario == null) ? 0 : 1,
+          'billetera' => ($datos->billetera == null) ? 0 : 1,
+          'pago' => ($datos->pago == null) ? 0 : 1,
+          'informes' => ($datos->informes == null) ? 0 : 1,
+          'tickets' => ($datos->tickets == null) ? 0 : 1,
+          'buzon' => 0,
+          'ranking' => ($datos->ranking == null) ? 0 : 1,
+          'historial_actividades' => ($datos->historial_actividades == null) ? 0 : 1,
+          'soporte' => ($datos->soporte == null) ? 0 : 1,
+          'ajuste' => ($datos->ajuste == null) ? 0 : 1,
+          'herramienta' => ($datos->herramienta == null) ? 0 : 1,
+          'calendario' => ($datos->calendario == null) ? 0 : 1,
+          'correos' => ($datos->correos == null) ? 0 : 1,
+          'prospeccion' => ($datos->prospeccion == null) ? 0 : 1,
+          'puntos' => ($datos->puntos == null) ? 0 : 1,
+          'binario' => ($datos->binario == null) ? 0 : 1,
+          'usuario' => ($datos->usuario == null) ? 0 : 1,
+          'tienda' => ($datos->tienda == null) ? 0 : 1,
+          'transacciones' => ($datos->transacciones == null) ? 0 : 1,
+          'usuarios' => ($datos->usuarios == null) ? 0 : 1,
+          'red' => ($datos->red == null) ? 0 : 1,
+          'cursos' => ($datos->cursos == null) ? 0 : 1,
+          'eventos' => ($datos->eventos == null) ? 0 : 1,
+          'email_marketing' => ($datos->email_marketing == null) ? 0 : 1,
+          'administrar_redes' => ($datos->administrar_redes == null) ? 0 : 1,
+        ]);
+      }
+        return redirect()->back()->with('msj', 'Permisos al Usuario '.$datos->nameuser.' Actualizados');
+    } else {
+      return redirect()->back();
+    }
+    
+  }
 }

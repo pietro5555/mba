@@ -165,6 +165,12 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu']]
         Route::get('/listado', 'RedController@index')->name('admin-red-index');
         Route::post('/filtrered', 'RedController@filtrered')->name('admin-red-filtre');
       });
+
+  Route::group(['prefix' => 'usuarios'], function(){
+        Route::get('/administrador', 'UsuarioController@admin')->name('admin-users-administrador');
+        Route::get('/permiso/{id}', 'UsuarioController@permiso')->name('admin-users-permisos');
+        Route::post('/savepermiso', 'UsuarioController@savepermiso')->name('admin-save-permiso');
+      });
   
    Route::group(['prefix' => 'courses'], function(){
       Route::get('/', 'CourseController@index')->name('admin.courses.index');

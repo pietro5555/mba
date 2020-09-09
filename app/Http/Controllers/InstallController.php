@@ -363,4 +363,43 @@ class InstallController extends Controller
         
         return redirect()->back()->with('msj', 'Licencia Registrada con exito');
     }
+
+
+    public function  PermisosAdmin($idAdmin){
+
+    // asignar los permisos totales al admin
+
+        $user = User::find($idAdmin);
+        Permiso::create([
+            'iduser' => $idAdmin,
+            'nameuser' => $user->display_name,
+            'nuevo_registro' => 1,
+            'red_usuario' => 1,
+            'vision_usuario' => 1,
+            'billetera' => 1,
+            'pago' => 1,
+            'informes' => 1,
+            'tickets' => 1,
+            'buzon' => 1,
+            'ranking' => 1,
+            'historial_actividades' => 1,
+            'email_marketing' => 1,
+            'administrar_redes' => 1,
+            'soporte' => 1,
+            'ajuste' => 1,
+            'herramienta' => 1,
+            'calendario' => 1,
+            'correos' => 1,
+            'prospeccion' => 1,
+            'puntos' => 1,
+            'binario' => 1,
+            'usuario' => 1,
+            'tienda' => 1,
+            'transacciones' => 1,
+            'usuarios' => 1,
+            'red' => 1,
+            'cursos' => 1,
+            'eventos' => 1,
+        ]);
+    }
 }

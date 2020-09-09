@@ -105,6 +105,20 @@
                                     </h3>
                                 </div>
                                 <div class="box-body">
+
+                                    @if(!empty(request()->select))  
+                                    <div class="form-group">
+                                        <label class="control-label" style="text-align: center;">Tipo de Usuario (*)</label>
+                                       <select class="form-control" name="rango">
+                                        <option value="" selected disabled>Seleccion una opcion</option>
+                                        <option value="0">Administrador</option>
+                                        <option value="1">Moderador</option>
+                                        <option value="2">Mentor</option>
+                                        <option value="3">Cliente</option>
+                                       </select>
+                                    </div>
+                                    @endif
+                                    
                                     <div class="form-group">
                                         <label class="control-label" style="text-align: center;">Correo Electrónico
                                             (*)</label>

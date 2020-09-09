@@ -22,6 +22,7 @@ use App\Models\OpcionesSelect;
 use App\Models\SettingsEstructura; 
 // Llamado a los controladores
 use App\Http\Controllers\IndexController;
+use App\Http\Controllers\InstallController;
 use Modules\ReferralTree\Http\Controllers\ReferralTreeController;
 
 class RegisterController extends Controller
@@ -121,7 +122,11 @@ class RegisterController extends Controller
         }
         
         
-        $rol_id = ($data['tipouser'] == 'Cliente') ? 100 : 1;
+    if($data['rango'] == null){
+        $rol_id = ($data['tipouser'] == 'Cliente') ? 100 : 3;
+    }else{
+        $rol_id = $data['rango'];
+    }
         $user = User::create([
             'user_email' => $data['user_email'],
             'user_status' => '0',
@@ -147,7 +152,11 @@ class RegisterController extends Controller
         $this->insertarCampoUser($user->ID, $data);
 
         // inserta en usermeta
-        $this->insertUserMeta($user, $data);       
+        $this->insertUserMeta($user, $data);  
+
+        //registrar permisos
+        $instal=new InstallController;
+        $instal->PermisosAdmin($user->ID);     
        
         // enviar correo de bienvenida
         $consulta = $this->EnvioCorreo($data, $orden['referido'], $user);
@@ -158,6 +167,10 @@ class RegisterController extends Controller
         }
         
         
+        if($data['rango'] == 1){
+            $funciones->msjSistema('Para Terminar el registro debe asignar al usuario '.$user->display_name.' que opciones del menu tendra acceso ', 'success');
+            return redirect('/admin/usuarios/administrador?tip=1');
+        }
         
         if (Auth::guest()){
         return redirect('log')->with('msj2', 'Su Registro ha sido exitoso');
@@ -212,6 +225,7 @@ class RegisterController extends Controller
         if(!empty($settingEstructura)){
         $estructura = $settingEstructura->tipoestructura;
         }
+        $patrocinadores = User::all();
         $campos = Formulario::where('estado', 1)->get();
         $valoresSelect = [];
         foreach ($campos as $campo) {

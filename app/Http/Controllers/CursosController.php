@@ -89,13 +89,6 @@ class CursosController extends Controller
     }
 
 
-
-    public function show_one_course()
-    {
-        return view('cursos.show_one_course');
-    }
-
-
     /**
      * Show the form for creating a new resource.
      *

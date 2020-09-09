@@ -137,6 +137,7 @@ Route::group(['prefix' => 'tienda', 'middleware' => ['auth', 'licencia', 'menu']
 
 //vista del login (/login)
 Route::get('/log', 'LoginController@login')->name('log');
+Route::post('/autenticar', 'LoginController@autenticacion')->name('autenticar');
 
 //vista de transmisiones
 Route::get('/transmisiones', 'HomeController@transmisiones')->name('transmisiones');
@@ -160,6 +161,12 @@ Route::get('book-event/{evento}', 'EventsController@book')->name('landing.book-e
 
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu']], function() {
+
+  Route::group(['prefix' => 'red'], function(){
+        Route::get('/listado', 'RedController@index')->name('admin-red-index');
+        Route::post('/filtrered', 'RedController@filtrered')->name('admin-red-filtre');
+      });
+  
    Route::group(['prefix' => 'courses'], function(){
       Route::get('/', 'CourseController@index')->name('admin.courses.index');
       Route::post('store', 'CourseController@store')->name('admin.courses.store');
@@ -208,8 +215,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu']]
     Route::get('/', 'EventsController@index')->name('admin.events.index');
     Route::get('show/{id}', 'EventsController@show')->name('admin.events.show');
     Route::post('store', 'EventsController@store')->name('admin.events.store');
-    Route::put('edit/{id}', 'EventsController@edit')->name('admin.events.edit');
+    Route::get('edit/{id}', 'EventsController@edit')->name('admin.events.edit');
+    Route::post('update', 'EventsController@update')->name('admin.events.update');
     Route::delete('delete/{id}', 'EventsController@delete')->name('admin.events.delete');
+    Route::get('change-status/{id}/{status}', 'EventsController@change_status')->name('admin.events.change-status');
+
   });
 
     

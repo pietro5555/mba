@@ -127,7 +127,7 @@ class RegisterController extends Controller
             'user_status' => '0',
             'user_login' => $data['nameuser'],
             'user_nicename' => $data['nameuser'],
-            'display_name' => $data['firstname'].' '.$data['lastname'],
+            'display_name' => $data['nameuser'],
             'gender' => $data['genero'],
             'birthdate' => $data['edad'],
             'user_registered' => Carbon::now(),
@@ -191,6 +191,12 @@ class RegisterController extends Controller
             $arrayuser = array_merge($arrayuser,$arraytpm[$i]);
         }
         DB::table('user_campo')->insert($arrayuser);
+
+        DB::table('user_campo')
+           ->where('ID', '=', $userid)
+           ->update([
+            'pais' => $data['pais'], 
+            ]);
     }
     /**
      * crea el nuevo formulario con los campos dinamicos

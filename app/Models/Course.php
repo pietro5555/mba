@@ -8,7 +8,7 @@ class Course extends Model
 {
     protected $table = 'courses';
 
-    protected $fillable = ['mentor_id', 'title', 'slug', 'category_id', 'subcategory_id', 'description', 'cover', 'cover_name', 'featured', 'featured_cover', 'featured_cover_name', 'status'];
+    protected $fillable = ['mentor_id', 'title', 'slug', 'category_id', 'subcategory_id', 'description', 'cover', 'cover_name', 'featured', 'featured_cover', 'featured_cover_name', 'status', 'likes', 'shares', 'views'];
 
     public function mentor(){
         return $this->belongsTo('App\Models\User', 'mentor_id', 'ID');

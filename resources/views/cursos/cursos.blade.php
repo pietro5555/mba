@@ -3,7 +3,7 @@
 @section('content')
     
     <div class="title-page-course col-md"><span class="text-white">
-        <h3><span class="text-white">Hola</span><span class="text-primary"> Jhon</span><span class="text-white"> ¡Nos alegra verte hoy!</span></h3>
+        <h3><span class="text-white">Hola</span><span class="text-primary"> {{$username}}</span><span class="text-white"> ¡Nos alegra verte hoy!</span></h3>
     </div>
 
     {{-- BANNER --}}
@@ -258,85 +258,69 @@
 
 </div>   
 {{--FIN SECCIÓN RECOMENDACIONES--}}
-<div>
-        <hr style="border: 1px solid #707070;opacity: 1;" />
-    </div>
-    {{-- SECCIÓN CURSOS MAS NUEVOS --}}
-    <div class="section-landing" style="background: linear-gradient(to bottom, #222326 50%, #1C1D21 50.1%);">
+
+
+{{-- SECCIÓN CURSOS MAS NUEVOS --}}
+@if ($cursosNuevos->count() > 0)
+    <div class="section-landing new-courses-section" id="new-courses-section">
         <div class="row">
             <div class="col">
-                <div class="section-title-landing" style="padding-bottom: 35px;">LOS MÁS NUEVOS</div>
+                <div class="section-title-landing new-courses-section-title">LOS MÁS NUEVOS</div>
             </div>
             <div class="col text-right">
-                <button type="button" class="btn btn-outline-light btn-prev"><i class="fas fa-chevron-left"></i></button>
-                <button type="button" class="btn btn-outline-primary btn-next"><i class="fas fa-chevron-right"></i></button>
+                <button type="button" class="btn btn-outline-light btn-arrow btn-arrow-previous" @if ($previous == 0) disabled @endif data-route="{{ route('landing.load-more-courses-new', [$idStart, 'previous'] ) }}"  onclick="loadMoreCoursesNew('previous');"><i class="fas fa-chevron-left"></i></button>
+                <button type="button" class="btn btn-outline-success btn-arrow btn-arrow-next" @if ($next == 0) disabled @endif data-route="{{ route('landing.load-more-courses-new', [$idEnd, 'next'] ) }}"  onclick="loadMoreCoursesNew('next');"><i class="fas fa-chevron-right"></i></button>
             </div>
         </div>
                
         <div class="row" style="padding: 10px 30px;">
-            <div class="col">
-                <div class="card" >
-                    <img src="{{ asset('images/curso1.jpg') }}" class="card-img-top" alt="..." style="filter: brightness(80%);">
-                    <div class="card-img-overlay d-flex flex-column">
-                        <div class="mt-auto">
-                            <div style="font-size: 20px; font-weight: bold;">Nombre del Curso 1</div>
-                            <div class="row">
-                                <div class="col-12 col-xl-6" style="font-size: 16px; font-weight: bold;">Categoría</div>
-                                <div class="col-12 col-xl-6" style="font-size: 16px;">
-                                    <div class="row row-cols-3">
-                                        <div class="col text-right" style="padding-right: 0 !important; padding-left: 0 !important;"><i class="far fa-user-circle"></i><br><span style="font-size: 10px;">1310</span></div>
-                                        <div class="col text-center" style="padding-right: 0 !important; padding-left: 0 !important;"><i class="fas fa-share-alt"></i><br><span style="font-size: 10px;">869</span></div>
-                                        <div class="col text-left" style="padding-right: 0 !important; padding-left: 0 !important;"><i class="far fa-thumbs-up"></i><br><span style="font-size: 10px;">1242</span></div>
+            @foreach ($cursosNuevos as $cursoNuevo)
+                <div class="col-xl-4 col-lg-4 col-12" style="padding-bottom: 10px;">
+                    <div class="card" >
+                        @if (!is_null($cursoNuevo->cover))
+                            <img src="{{ asset('uploads/images/courses/covers/'.$cursoNuevo->cover) }}" class="card-img-top new-course-img" alt="...">
+                        @else
+                            <img src="{{ asset('uploads/images/courses/covers/default.jpg') }}" class="card-img-top new-course-img" alt="...">
+                        @endif
+                        <div class="card-img-overlay d-flex flex-column">
+                            <div class="mt-auto">
+                                <div class="new-course-title">{{ $cursoNuevo->title }}</div>
+                                <div class="row">
+                                    <div class="col-12 col-xl-6 new-course-category">{{ $cursoNuevo->category->title }}</div>
+                                    <div class="col-12 col-xl-6" style="font-size: 16px;">
+                                        <div class="row row-cols-3">
+                                            <div class="col text-right no-padding-sides">
+
+                                                <i class="far fa-user-circle"></i><br>
+                                                <span class="new-course-items-text">{{$cursoNuevo->views}}</span>
+                                            </div>
+                                            <div class="col text-center no-padding-sides">
+                                                <i class="fas fa-share-alt"></i><br>
+                                                <span class="new-course-items-text">{{$cursoNuevo->shares}}</span>
+                                            </div>
+                                            <div class="col text-left no-padding-sides">
+                                                <a href="#" class="text-white">
+                                                    <i class="far fa-thumbs-up"></i>
+                                                </a>
+                                                <br>
+                                                <span class="new-course-items-text">{{$cursoNuevo->likes}}</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col">
-                <div class="card">
-                    <img src="{{ asset('images/curso2.jpg') }}" class="card-img-top" alt="..." style="filter: brightness(80%);">
-                    <div class="card-img-overlay d-flex flex-column">
-                        <div class="mt-auto">
-                            <div style="font-size: 20px; font-weight: bold;">Nombre del Curso 2</div>
-                            <div class="row">
-                                <div class="col-12 col-xl-6" style="font-size: 16px; font-weight: bold;">Categoría</div>
-                                <div class="col-12 col-xl-6" style="font-size: 16px;">
-                                    <div class="row row-cols-3">
-                                        <div class="col text-right" style="padding-right: 0 !important; padding-left: 0 !important;"><i class="far fa-user-circle"></i><br><span style="font-size: 10px;">1310</span></div>
-                                        <div class="col text-center" style="padding-right: 0 !important; padding-left: 0 !important;"><i class="fas fa-share-alt"></i><br><span style="font-size: 10px;">869</span></div>
-                                        <div class="col text-left" style="padding-right: 0 !important; padding-left: 0 !important;"><i class="far fa-thumbs-up"></i><br><span style="font-size: 10px;">1242</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card" >
-                    <img src="{{ asset('images/curso3.jpg') }}" class="card-img-top" alt="..." style="filter: brightness(80%);">
-                    <div class="card-img-overlay d-flex flex-column">
-                        <div class="mt-auto">
-                            <div style="font-size: 20px; font-weight: bold;">Nombre del Curso 3</div>
-                            <div class="row">
-                                <div class="col-12 col-xl-6" style="font-size: 16px; font-weight: bold;">Categoría</div>
-                                <div class="col-12 col-xl-6" style="font-size: 16px;">
-                                    <div class="row row-cols-3">
-                                        <div class="col text-right" style="padding-right: 0 !important; padding-left: 0 !important;"><i class="far fa-user-circle"></i><br><span style="font-size: 10px;">1310</span></div>
-                                        <div class="col text-center" style="padding-right: 0 !important; padding-left: 0 !important;"><i class="fas fa-share-alt"></i><br><span style="font-size: 10px;">869</span></div>
-                                        <div class="col text-left" style="padding-right: 0 !important; padding-left: 0 !important;"><i class="far fa-thumbs-up"></i><br><span style="font-size: 10px;">1242</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
-    </div><br><br>
-    {{-- FIN DE SECCIÓN CURSOS MÁS NUEVOS--}}
+    </div>
+@endif
+{{-- FIN DE SECCIÓN CURSOS MÁS NUEVOS--}}
+
+
+   
+
  
  {{-- SECCIÓN CURSOS POR CATEGORÍA --}}
  <div class="section-landing">
@@ -346,7 +330,7 @@
         <div class="row">
             <div class="col-sm d-inline-flex p-2"> 
                 <img class="card-img-top img-fluid course-category1" src="{{ asset('images/img-category1.png') }}" alt="Card image cap">
-                <div class="course-banner-caption">
+                <div class="course-category-caption">
                         <div class="col">
                             <h4>Finanzas</h4>
                         </div>
@@ -357,7 +341,7 @@
             </div>
             <div class="col-sm d-inline-flex p-2"> 
                 <img class="card-img-top img-fluid course-category2" src="{{ asset('images/img-category2.png') }}" alt="Card image cap">
-                <div class="course-banner-caption">
+                <div class="course-category-caption">
                         <div class="col">
                             <h4>Emprendimiento</h4>
                         </div>
@@ -368,7 +352,7 @@
             </div>
             <div class="col-sm d-inline-flex p-2"> 
                 <img class="card-img-top img-fluid course-category3" src="{{ asset('images/img-category3.png') }}" alt="Card image cap">
-                <div class="course-banner-caption">
+                <div class="course-category-caption">
                         <div class="col">
                             <h4>Negocios</h4>
                         </div>
@@ -381,7 +365,7 @@
         <div class="row">
             <div class="col-sm d-inline-flex p-2"> 
                 <img class="card-img-top img-fluid course-category4" src="{{ asset('images/img-category4.png') }}" alt="Card image cap">
-                <div class="course-banner-caption">
+                <div class="course-category-caption">
                         <div class="col">
                             <h4>Marketing</h4>
                         </div>
@@ -392,7 +376,7 @@
             </div>
             <div class="col-sm d-inline-flex p-2"> 
                 <img class="card-img-top img-fluid course-category5" src="{{ asset('images/img-category5.png') }}" alt="Card image cap">
-                <div class="course-banner-caption">
+                <div class="course-category-caption">
                         <div class="col">
                             <h4>Ventas</h4>
                         </div>
@@ -403,7 +387,7 @@
             </div>
             <div class="col-sm d-inline-flex p-2"> 
                 <img class="card-img-top img-fluid course-category6" src="{{ asset('images/img-category6.png') }}" alt="Card image cap">
-                <div class="course-banner-caption">
+                <div class="course-category-caption">
                         <div class="col">
                             <h4>Liderazgo</h4>
                         </div>

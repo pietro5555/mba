@@ -406,6 +406,12 @@
     font-size: 24px;
 }
 
+.course-category-caption{
+position: absolute;
+bottom: 1em;
+
+}
+
 .description-course{
     color: #DEDADA;
     opacity: 1;

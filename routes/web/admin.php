@@ -150,9 +150,14 @@ Route::get('getaccesstoken', 'StreamingController@getAccessToken')->name('stream
 Route::get('cursos', 'CursosController@index')->name('cursos');
 Route::get('cursos/curso', 'CursosController@show_one_course')->name('curso');
 Route::get('cursos/leccion', 'CursosController@leccion')->name('leccion');
+//Enviar likes
+Route::post('/likes', 'CursosController@course_likes')->name( 'like');
+
 //vista de anotaciones
 Route::get('/anotaciones', 'NoteController@index')->name('anotaciones');
 Route::post('/anotaciones/store', 'NoteController@store')->name('live.anotaciones');
+
+
 
 //Eventos
     Route::group(['prefix' => 'events'], function(){

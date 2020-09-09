@@ -132,7 +132,7 @@ class RegisterController extends Controller
             'user_status' => '0',
             'user_login' => $data['nameuser'],
             'user_nicename' => $data['nameuser'],
-            'display_name' => $data['nameuser'],
+            'display_name' => ($data['firstname'] == null) ? $data['nameuser'] : $data['firstname'].' '.$data['lastname'],
             'gender' => $data['genero'],
             'birthdate' => $data['edad'],
             'user_registered' => Carbon::now(),

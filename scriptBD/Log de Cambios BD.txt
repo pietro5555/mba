@@ -8,3 +8,8 @@ Dev: Luisana Marín
 08/09/2020
 Dev: Crisleivys Gil
 * Agregado los campos likes, shares, views en la tabla courses (correr el script courses)
+
+
+09/09/2020
+*Nuevo columna biografia en user_campo (user_campo.sql)
+*Nuevos permisos ususarios, cursos, transacciones, red, eventos, (settingpermiso.sql)

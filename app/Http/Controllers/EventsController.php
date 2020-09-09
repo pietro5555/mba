@@ -67,6 +67,7 @@ class EventsController extends Controller
         // se crea el enevents
         $data = Events::create([
             'title' => $request->input('title'),
+            'description' => $request->input('description'),
             'status' => '1',
             'user_id' => $request->input('mentor_id')
         ]);
@@ -83,7 +84,7 @@ class EventsController extends Controller
      */
     public function show($id)
     {
-        //
+        
     }
 
     /**
@@ -94,7 +95,14 @@ class EventsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $event = Events::find($id);
+        $mentores = DB::table('wp98_users')
+                        ->select('ID', 'user_email')
+                        ->where('rol_id', '=', 2)
+                        ->orderBy('user_email', 'ASC')
+                        ->get();
+        return view('admin.events.editEvent')->with(compact('event', 'mentores'));
+        
     }
 
     /**
@@ -104,9 +112,17 @@ class EventsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+
+        $event = Events::find($request->input('event_id'));
+        $event->title       =$request->input('title');
+        $event->description =$request->input('description');
+        $event->user_id     =$request->input('mentor_id');
+        $event->save();
+
+        return redirect('admin/events')->with('msj-exitoso', 'El evento '.$event->title.' ha sido modificado con éxito.');
+        
     }
 
     /**
@@ -118,5 +134,20 @@ class EventsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+    * Admin / Cursos / Listado de Cursos / Eliminar Curso (Lógico)
+    */
+    public function change_status($id, $status){
+        $event = Events::find($id);
+        $event->status = $status;
+        $event->save();
+
+        if ($status == 0){
+            return redirect('admin/events')->with('msj-exitoso', 'El evento '.$event->title.' ha sido deshabilitado con éxito.');
+        }else{
+            return redirect('admin/events')->with('msj-exitoso', 'El evento '.$event->title.' ha sido habilitado con éxito.');
+        }
     }
 }

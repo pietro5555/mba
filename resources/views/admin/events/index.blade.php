@@ -62,12 +62,15 @@
 								<td class="text-center">{{ $event->title }}</td>
 								<td class="text-center">{{ App\Models\Events::findID($event->user_id) }}</td>
 								<td class="text-center">
-									<!-- <a class="btn btn-info editar" data-route="{{ route('admin.courses.edit', $event->id) }}"><i class="fa fa-edit"></i></a>
-									@if ($event->status == 1)
-										<a class="btn btn-danger" href="{{ route('admin.courses.change-status', [$event->id, 0]) }}" title="Deshabilitar"><i class="fa fa-ban"></i></a>
-									@else
-										<a class="btn btn-success" href="{{ route('admin.courses.change-status', [$event->id, 1]) }}" title="Habilitar"><i class="fa fa-check"></i></a>
-									@endif -->
+									<a class="btn btn-info editar" data-route="{{ route('admin.events.edit', $event->id) }}"><i class="fa fa-edit"></i></a>
+									@if ($event->status == '1' )
+										<a class="btn btn-danger" href="{{ route('admin.events.change-status', [$event->id, 0]) }}" title="Deshabilitar"><i class="fa fa-ban"></i></a>
+									@endif
+
+									@if ($event->status == '0')
+									<a class="btn btn-success" href="{{ route('admin.events.change-status', [$event->id, 1]) }}" title="Habilitar"><i class="fa fa-check"></i></a>
+									@endif
+										
 								</td>
 							</tr>
 						@endforeach
@@ -77,7 +80,7 @@
 		</div>
 	</div>
 
-	<!-- Modal Agregar Curso-->
+	<!-- Modal Agregar Evento-->
 	<div class="modal fade" id="modal-new" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   		<div class="modal-dialog" role="document">
     		<div class="modal-content">
@@ -95,14 +98,7 @@
 						            	<input type="text" class="form-control" name="title" required>
 						            </div>
 						        </div>
-						        <!-- <div class="col-md-12">
-						            <div class="form-group">
-						                <label>Fecha</label>
-						            	<input type="text" class="form-control" name="date" required>
-						            </div>
-						        </div> -->
-						       
-						        <div class="col-md-12">
+								<div class="col-md-12">
 						            <div class="form-group">
 						                <label>Mentor</label>
 						                <select class="form-control" name="mentor_id" required>
@@ -113,6 +109,20 @@
 						                </select>
 						            </div>
 						        </div>
+								<div class="col-md-12">
+						            <div class="form-group">
+						                <label>Descripción</label>
+										<textarea name="description" class="form-control" id="description" cols="30" rows="10" required></textarea>
+						            </div>
+						        </div>
+						        <!-- <div class="col-md-12">
+						            <div class="form-group">
+						                <label>Fecha</label>
+						            	<input type="text" class="form-control" name="date" required>
+						            </div>
+						        </div> -->
+						       
+						        
 						      
 						    </div>
 						</div>
@@ -127,14 +137,14 @@
   		</div>
 	</div>
 
-	<!-- Modal Editar Curso-->
+	<!-- Modal Editar Evento-->
 	<div class="modal fade" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   		<div class="modal-dialog" role="document">
     		<div class="modal-content">
       			<div class="modal-header">
-        			<h5 class="modal-title" id="exampleModalLabel">Modificar Curso</h5>
+        			<h5 class="modal-title" id="exampleModalLabel">Modificar Evento</h5>
       			</div>
-      			<form action="{{ route('admin.courses.update') }}" method="POST" enctype="multipart/form-data">
+      			<form action="{{ route('admin.events.update') }}" method="POST" enctype="multipart/form-data">
 			        {{ csrf_field() }}
 				    <div class="modal-body">
 				        <div class="container-fluid" id="content-modal">

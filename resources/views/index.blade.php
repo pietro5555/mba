@@ -21,14 +21,37 @@
 @endpush
 
 @section('content')
+    @if (Session::has('msj-exitoso'))
+        <div class="alert alert-success alert-dismissible fade show mt-2" role="alert">
+            <strong>{{ Session::get('msj-exitoso') }}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+
+    @if (Session::has('msj-erroneo'))
+        <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert">
+            <strong>{{ Session::get('msj-erroneo') }}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+  
 	{{-- SLIDER --}}
     @if ($cursosDestacados->count() > 0)
     	<div class="container-fluid courses-slider">
     		<div id="mainSlider" class="carousel slide" data-ride="carousel">
-    	        <ol class="carousel-indicators">
-    	            <li data-target="#mainSlider" data-slide-to="0" class="active"></li>
-    	            <li data-target="#mainSlider" data-slide-to="1"></li>
-    	        </ol>
+                @if ($cursosDestacados->count() > 1)
+                    @php $contCD = 0; @endphp
+                    <ol class="carousel-indicators">
+                        @foreach ($cursosDestacados as $cd)
+                            <li data-target="#mainSlider" data-slide-to="{{ $contCD }}" @if ($contCD == 0) class="active" @endif></li>
+                            @php $contCD++; @endphp
+                        @endforeach
+                    </ol>
+                @endif
     	        <div class="carousel-inner">
                     @php $cont = 0; @endphp
                     @foreach ($cursosDestacados as $cursoDestacado)
@@ -43,21 +66,23 @@
         	                </div>
         	            </div>
                     @endforeach
-    	        </div>
-    	        <a class="carousel-control-prev" href="#mainSlider" role="button" data-slide="prev">
-    	            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    	            <span class="sr-only">Previous</span>
-    	        </a>
-    	        <a class="carousel-control-next" href="#mainSlider" role="button" data-slide="next">
-    	            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    	            <span class="sr-only">Next</span>
-    	        </a>
+                </div>
+                @if ($cursosDestacados->count() > 1)
+                    <a class="carousel-control-prev" href="#mainSlider" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#mainSlider" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                @endif
     	    </div>
     	</div>
     @endif
     {{-- FIN DEL SLIDER --}}
 
-	{{-- SECCIÓN TU AVANCE (USUARIOS LOGGUEADOS) --}}
+	{{-- SECCIÓN TU AVANCE (USUARIOS LOGGUEADOS) 
 	@if (!Auth::guest())
         <div class="section-landing">
             <div class="section-title-landing">TU AVANCE</div>
@@ -135,39 +160,42 @@
     {{-- FIN DE SECCIÓN CURSOS MÁS NUEVOS--}}
 
     {{-- SECCIÓN PRÓXIMO STREAMING--}}
-    <div class="next-streaming">
-        <img src="{{ asset('images/banner_completo.png') }}" class="next-streaming-img">
-        <div class="next-streaming-info">
-        	<button type="button" class="btn btn-primary btn-next-streaming">Próximo Streaming</button><br>
-                            
-            <div class="next-streaming-title">Lorem ipsum up dolor sit amet</div> 
-            <div class="next-streaming-date">
-                <i class="fa fa-calendar"></i> Sábado 25 de Julio
-                <i class="fa fa-clock"></i> 6:00 pm
+    @if (!is_null($proximoEvento))
+        <div class="next-streaming">
+            <img src="{{ asset('images/banner_completo.png') }}" class="next-streaming-img">
+            <div class="next-streaming-info">
+            	<button type="button" class="btn btn-primary btn-next-streaming">Próximo Streaming</button><br>
+                                
+                <div class="next-streaming-title">{{ $proximoEvento->title }}</div> 
+                <div class="next-streaming-date">
+                    <i class="fa fa-calendar"></i> {{ $proximoEvento->weekend_day }} {{ $proximoEvento->date_day }} de {{ $proximoEvento->month }}
+                    <i class="fa fa-clock"></i> {{ date('H:i A', strtotime($proximoEvento->date)) }}
+                </div>
+                @if (!Auth::guest())
+                    <div class="next-streaming-reserve">
+                        <a href="{{ route('landing.book-event', $proximoEvento->id) }}">Reservar Plaza <i class="fas fa-chevron-right"></i></a>
+                    </div>
+                @endif
             </div>
-            <div class="next-streaming-reserve">
-                <a href="">Reservar Plaza <i class="fas fa-chevron-right"></i></a>
-            </div>
-        </div>
-    </div><br><br>
+        </div><br><br>
+    @endif
     {{-- FIN SECCIÓN PRÓXIMO STREAMING--}}
 	
 	{{-- SECCIÓN REFERIDOS (USUARIOS LOGGUEADOS) --}}
     @if (!Auth::guest())
-        <div style="padding-top: 30px;">
+        <div class="pt-4">
             <div class="row">
-                <div class="col-4 " style="padding-left: 30px;">
-                    <div style="text-align: center; font-size: 34px; color: white; font-weight: bold; border: solid #919191 1px; background-color: #222326; margin-bottom: 10px; height: 330px; padding: 120px 15px;">
-                        <i class="fa fa-user"></i><br>
-                        739 Referidos
+                <div class="col-xl-4 col-lg-4 col-12 pl-4 pr-4">
+                    <div class="referrers-box">
+                        <i class="fa fa-user referrers-icon"></i><br>
+                        {{ $refeDirec }} Referidos
                     </div>
-                    <div style="text-align: center; font-size: 25px; color: white; font-weight: bold; background-color: #6AB742; height: 60px; padding: 10px 10px;">
+                    <div class="referrers-button">
                     	Panel de referidos
                     </div>
                 </div>
-                <div class="col-8" style=" background:url('http://localhost:8000/images/banner_referidos.png');">
-                    <!--<img src="{{ asset('images/banner_referidos.png') }}" alt="" style="height: 400px; width:100%; opacity: 1; background: transparent linear-gradient(90deg, #2A91FF 0%, #2276D0A1 54%, #15498000 100%) 0% 0% no-repeat padding-box;">-->
-                    <div style="font-size: 50px; width: 50%; padding: 80px 40px 80px 80px; color: white; line-height: 55px;">EL QUE QUIERE SUPERARSE, NO VE OBSTÁCULOS, VE SUEÑOS.</div>
+                <div class="col-xl-8 col-lg-8 d-none d-lg-block d-xl-block referrers-banner">
+                    <div class="referrers-banner-text">EL QUE QUIERE SUPERARSE, NO VE OBSTÁCULOS, VE SUEÑOS.</div>
                 </div>
             </div>
         </div><br><br>

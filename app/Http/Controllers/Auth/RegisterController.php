@@ -54,23 +54,7 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
-        	view()->share('title', 'Nuevo Registro');
-    }
-
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
-    {
-        $settings = Settings::first();
-        return Validator::make($data, [
-            'user_email' => 'required|string|email|max:100|unique:'.$settings->prefijo_wp.'users|confirmed',
-            'password' => 'required|string|min:6|confirmed',
-            'terms' => 'required'
-        ]);
+            view()->share('title', 'Nuevo Registro');
     }
 
     /**
@@ -96,6 +80,8 @@ class RegisterController extends Controller
         // data->tip == 1 son todos los campos del formulario interno
         // data->tip == 2 son todos los campos del formulario externo
         $settings = Settings::first();
+        
+        if($data->validar  == null){
         $campos = Formulario::where('estado', 1)->get();
          foreach($campos as $campo){
              if($campo->unico == 1 && $campo->tip == 0){
@@ -107,74 +93,31 @@ class RegisterController extends Controller
                     $campo->nameinput => 'unique:user_campo',
                 ]);
              }
-         }
+          }
+        }
         
-         // Permite validar los campos estaticos
+        if($data->validar  == 'oculto'){
+         // Permite validar los campos estaticos que estan en el nuevo login
+        $validatedData = $data->validate([
+            'user_email' => 'required|string|email|max:100|unique:'.$settings->prefijo_wp.'users',
+            'password' => 'required|string|min:6|confirmed',
+            'terms' => 'required'
+        ]);
+        }else{
+           // Permite validar los campos estaticos
         $validatedData = $data->validate([
             'user_email' => 'required|string|email|max:100|unique:'.$settings->prefijo_wp.'users|confirmed',
             'password' => 'required|string|min:6|confirmed',
             'terms' => 'required'
-        ]);
-
-    	// Obtenemos las configuraciones por defecto
-    	$settings = Settings::first();
-        $settingEstructura = SettingsEstructura::find(1);
-        $funciones = new IndexController;
-        // Usuario referido por defecto.
-        // 0: NONE.
-        $user_id_default = $settings->referred_id_default;
-
-        // Obtenemos el referido.
-        $referido = $user_id_default;
-        if(isset($data['referred_id'])){
-            if ($this->VerificarUser($data['referred_id'])) {
-                $funciones->msjSistema('El Usuario con el ID Referido Suministrado ('.$data['referred_id'].') No Se Encuentra Registrado, Pruebe Con Otro', 'info');
-                return redirect()->back()->withInput();
-            }
-            $referido =  $data['referred_id'];
+        ]);  
         }
-        $posicion = 0;
 
+        $funciones = new IndexController;
+        $orden = $this->OrdenarSistema($data);
         
-        if ($settingEstructura->tipoestructura != 'binaria') {
-            if (empty($data['position_id'])) {
-            
-                if ($settingEstructura->tipoestructura != 'arbol') {
-                    $consulta=new ReferralTreeController;
-                    $auspiciador = $consulta->getPosition($referido, '', $data['tipouser']);
-                    $posicion = $auspiciador;
-                }else{
-                    $posicion = $referido;
-                }
-                
-            } else {
-                if ($this->VerificarUser($data['position_id'])) {
-                    $funciones->msjSistema('El Usuario con el ID Posicionamiento Suministrado ('.$data['position_id'].') No Se Encuentra Registrado, Pruebe Con Otro', 'info');
-                    return redirect()->back()->withInput();
-                }
-                if ($settingEstructura->tipoestructura != 'arbol') {
-                    $consulta=new ReferralTreeController;
-                    $auspiciador = $consulta->getPosition($data['position_id'], '', $data['tipouser']);
-                    if ($auspiciador != $data['position_id']) {
-                        $funciones->msjSistema('El ID Posicionamiento Suministrado ('.$data['position_id'].') Tiene Sus Lugares LLeno, le Recomendamos este ID Posicionamiento ('.$auspiciador.')', 'info');
-                        return redirect()->back()->withInput();
-                    }
-                }
-                $posicion = $data['position_id'];
-            }
-        }else{
-            $validatedData = $data->validate([
-                'ladomatriz' => 'required'
-            ]);
-            // if ($data['ladomatriz'] == 'I') {
-                $consulta=new ReferralTreeController;
-                $auspiciador = $consulta->getPosition($referido, $data['ladomatriz'], $data['tipouser']);
-                $posicion = $auspiciador;
-            // }else{
-            //     $consulta=new ReferralTreeController;
-            //     $auspiciador = $consulta->getPosition($referido, $data['ladomatriz'], $data['tipouser']);
-            //     $posicion = $auspiciador;
-            // }
+        if($orden['error'] != null){
+            $funciones->msjSistema($orden['error'], 'warning');
+            return redirect()->back()->withInput();
         }
         
         
@@ -184,7 +127,7 @@ class RegisterController extends Controller
             'user_status' => '0',
             'user_login' => $data['nameuser'],
             'user_nicename' => $data['nameuser'],
-            'display_name' => $data['firstname'].' '.$data['lastname'],
+            'display_name' => $data['nameuser'],
             'gender' => $data['genero'],
             'birthdate' => $data['edad'],
             'user_registered' => Carbon::now(),
@@ -192,10 +135,10 @@ class RegisterController extends Controller
             'password' => bcrypt($data['password']),
             'clave' => encrypt($data['password']),
             'rol_id' => $rol_id,
-            'referred_id' => $referido,
+            'referred_id' => $orden['referido'],
             'ladomatriz' => $data['ladomatriz'], // esto es para lo binario
-            'sponsor_id' => $posicion,
-            'position_id' => $posicion,
+            'sponsor_id' => $orden['posicion'],
+            'position_id' => $orden['posicion'],
             'tipouser' => $data['tipouser'],
             'status' => '0',
             'correos' =>'{"pago":"1","compra":"1","pc":"1","liquidacion":"1"}'
@@ -207,7 +150,7 @@ class RegisterController extends Controller
         $this->insertUserMeta($user, $data);       
        
         // enviar correo de bienvenida
-        $consulta = $this->EnvioCorreo($data, $referido, $user);
+        $consulta = $this->EnvioCorreo($data, $orden['referido'], $user);
         
         if($consulta['error'] != null){
             $funciones->msjSistema($consulta['error'], 'warning');
@@ -217,7 +160,7 @@ class RegisterController extends Controller
         
         
         if (Auth::guest()){
-        return redirect('login')->with('msj2', 'Su Registro ha sido exitoso');
+        return redirect('log')->with('msj2', 'Su Registro ha sido exitoso');
         }else{
          $funciones->msjSistema('Su Registro ha sido exitoso', 'success');
          return redirect()->back();   
@@ -232,7 +175,7 @@ class RegisterController extends Controller
      * @access private
      * @param int $userid - id usuarios, array $data - informacion del usuario
      */
-    private function insertarCampoUser($userid, $data)
+    public function insertarCampoUser($userid, $data)
     {
         $formulario = Formulario::where('estado', 1)->get();
         $arraytpm [] = ['ID' => $userid];
@@ -248,6 +191,12 @@ class RegisterController extends Controller
             $arrayuser = array_merge($arrayuser,$arraytpm[$i]);
         }
         DB::table('user_campo')->insert($arrayuser);
+
+        DB::table('user_campo')
+           ->where('ID', '=', $userid)
+           ->update([
+            'pais' => $data['pais'], 
+            ]);
     }
     /**
      * crea el nuevo formulario con los campos dinamicos
@@ -288,10 +237,10 @@ class RegisterController extends Controller
      $error = null;
      $seting = Settings::find(1);
         $firma = null;
-	   if (!empty($seting->firma)) {
-	       $firma = $seting->firma;
-	   }
-	   
+       if (!empty($seting->firma)) {
+           $firma = $seting->firma;
+       }
+       
         $nombrecompleto = $data['firstname'].' '.$data['lastname'];
         $plantilla = SettingCorreo::find(1);
         if (!empty($plantilla->contenido)) {
@@ -315,7 +264,7 @@ class RegisterController extends Controller
         }
         
         $required = [
-                    'error' => $error,
+            'error' => $error,
                 ];
         
         return $required;
@@ -359,6 +308,95 @@ class RegisterController extends Controller
             $resul = false;
         }
         return $resul;
+    }
+    
+    
+    
+    public function OrdenarSistema($data){
+        
+        $requisitos = [];
+        
+        // Obtenemos las configuraciones por defecto
+        $settings = Settings::first();
+        $settingEstructura = SettingsEstructura::find(1);
+        // Usuario referido por defecto.
+        // 0: NONE.
+        $user_id_default = $settings->referred_id_default;
+
+        // Obtenemos el referido.
+        $referido = $user_id_default;
+        if(isset($data['referred_id'])){
+            if ($this->VerificarUser($data['referred_id'])) {
+                
+                $requisitos = [
+                    'error' => 'El Usuario con el ID Referido Suministrado ('.$data['referred_id'].') No Se Encuentra Registrado, Pruebe Con Otro'
+                    ];
+                    
+                return $requisitos;
+            }
+            $referido =  $data['referred_id'];
+        }
+        $posicion = 0;
+
+        
+        if ($settingEstructura->tipoestructura != 'binaria') {
+            if (empty($data['position_id'])) {
+            
+                if ($settingEstructura->tipoestructura != 'arbol') {
+                    $consulta=new ReferralTreeController;
+                    $auspiciador = $consulta->getPosition($referido, '', $data['tipouser']);
+                    $posicion = $auspiciador;
+                }else{
+                    $posicion = $referido;
+                }
+                
+            } else {
+                if ($this->VerificarUser($data['position_id'])) {
+                    
+                    $requisitos = [
+                    'error' => 'El Usuario con el ID Posicionamiento Suministrado ('.$data['position_id'].') No Se Encuentra Registrado, Pruebe Con Otro'
+                    ];
+                    
+                   return $requisitos;
+                
+                }
+                if ($settingEstructura->tipoestructura != 'arbol') {
+                    $consulta=new ReferralTreeController;
+                    $auspiciador = $consulta->getPosition($data['position_id'], '', $data['tipouser']);
+                    if ($auspiciador != $data['position_id']) {
+                        
+                        $requisitos = [
+                    'error' => 'El ID Posicionamiento Suministrado ('.$data['position_id'].') Tiene Sus Lugares LLeno, le Recomendamos este ID Posicionamiento ('.$auspiciador.')'
+                    ];
+                    
+                   return $requisitos;
+                   
+                    }
+                }
+                $posicion = $data['position_id'];
+            }
+        }else{
+            $validatedData = $data->validate([
+                'ladomatriz' => 'required'
+            ]);
+            // if ($data['ladomatriz'] == 'I') {
+                $consulta=new ReferralTreeController;
+                $auspiciador = $consulta->getPosition($referido, $data['ladomatriz'], $data['tipouser']);
+                $posicion = $auspiciador;
+            // }else{
+            //     $consulta=new ReferralTreeController;
+            //     $auspiciador = $consulta->getPosition($referido, $data['ladomatriz'], $data['tipouser']);
+            //     $posicion = $auspiciador;
+            // }
+        }
+        
+        $requisitos = [
+            'posicion' => $posicion,
+            'referido' => $referido,
+            'error' => null,
+            ];
+            
+        return $requisitos;
     }
    
 }

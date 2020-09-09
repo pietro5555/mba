@@ -5,7 +5,7 @@
         <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarItems">
+    <div class="collapse navbar-collapse" id="navbarItems" style="z-index: 1000;">
         <ul class="navbar-nav ml-auto mt-2 mt-lg-0 header-list">
             <li class="nav-item active">
                 <a class="nav-link items-header" href="#">INICIO</a>
@@ -38,8 +38,11 @@
                         <a class="dropdown-item" href="#">Inglés</a>
                     </div>
                 </li>
+                <li class="nav-item li-register-button">
+                    <a type="button" class="btn btn-primary btn-register-header" href="{{ route('log') }}">REGISTRARME</a> <!--/login-->
+                </li>
             @else
-                <li class="nav-item dropdown" style="padding-left: 10px; padding-right: 20px;">
+                <li class="nav-item dropdown li-language" id="li-language-larger">
                     <div class="btn-group">
                         <button type="button" class="btn btn-primary btn-language dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             IDIOMA
@@ -50,31 +53,43 @@
                         </div>
                     </div>
                 </li>
-                <li class="nav-item" style="padding-right: 10px;">
+                <li class="nav-item" id="li-language-small" style="display: none;">
+                    <a class="nav-link items-header" href="#">IDIOMA</a>
+                </li>
+                <li class="nav-item" id="li-search-larger" style="padding-right: 5px;">
                     <a class="nav-link items-header" href="#"><i class="fa fa-search"></i></a>
                 </li>
-                <li class="nav-item" style="padding-right: 10px;">
-                    <a class="nav-link items-header" href="#"><i class="fa fa-home"></i></a>
+                <li class="nav-item" id="li-search-small" style="display: none;">
+                    <a class="nav-link items-header" href="#">BUSCAR</a>
                 </li>
-                <li class="nav-item" style="padding-right: 10px;">
-                    <a class="nav-link items-header" href="#"><i class="fa fa-envelope"></i></a>
+                <li class="nav-item" id="li-home-larger">
+                    <a class="nav-link items-header" href="#"><i class="fa fa-home"></i> <span class="badge badge-pill badge-primary badge-header">9+</span></a>
                 </li>
-                <li class="nav-item" style="padding-right: 10px;">
-                    <a class="nav-link items-header" href="#"><i class="fa fa-bell"></i></a>
+                <li class="nav-item" id="li-messages-larger">
+                    <a class="nav-link items-header" href="#"><i class="fa fa-envelope"></i> <span class="badge badge-pill badge-primary badge-header">3</span></a>
                 </li>
-                <li class="nav-item dropdown dropleft" style="padding-right: 20px;">
+                <li class="nav-item" id="li-messages-small" style="display: none;">
+                    <a class="nav-link items-header" href="#">MENSAJES</a>
+                </li>
+                <li class="nav-item dropdown" id="li-notifications-larger">
+                    <a class="nav-link items-header" role="button" data-toggle="dropdown" data-target="#"><i class="fa fa-bell"></i> <span class="badge badge-pill badge-primary badge-header">3</span></a>
+                    
+                    @include('layouts.partials.notificationsDropdown')
+                </li>
+                <li class="nav-item" id="li-notifications-small" style="display: none;">
+                    <a class="nav-link items-header" href="#">NOTIFICACIONES</a>
+                </li>
+                <li class="nav-item dropdown dropleft" id="li-user-larger" style="padding-right: 10px;">
                     <img class="dropdown-toggle items-header" id="navbarDropdown2" role="button" data-toggle="dropdown" src="{{ asset('images/logo.png') }}" alt="" width="40" height="40">
                 
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="#">Salir</a>
                     </div>
                 </li>
-            @endif-
+                <li class="nav-item" id="li-user-small" style="display: none;">
+                    <a class="nav-link items-header" href="#">SALIR</a>
+                </li>
+            @endif
         </ul>
-        @if (Auth::guest())
-            <div class="btn-register-header-div">
-                <a type="button" class="btn btn-primary btn-register-header" href="{{ route('login') }}">REGISTRARME</a>
-            </div>
-        @endif
     </div>
 </nav>

@@ -8,11 +8,7 @@ class Subcategory extends Model
 {
     protected $table = 'subcategories';
 
-    protected $fillable = ['category_id', 'title', 'slug'];
-
-    public function category(){
-        return $this->belongsTo('App\Models\Category');
-    }
+    protected $fillable = ['title', 'slug'];
 
     public function courses(){
     	return $this->hasMany('App\Models\Course');

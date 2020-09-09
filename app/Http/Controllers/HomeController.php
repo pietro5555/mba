@@ -10,11 +10,8 @@ use DB;
 use Hash;
 use Carbon\Carbon;
 // modelo
-use App\Models\User;
-use App\Models\Settings;
-use App\Models\Formulario;
-use App\Models\SettingCliente;
-use App\Models\Course;
+use App\Models\User; use App\Models\Settings; use App\Models\Formulario; use App\Models\SettingCliente;
+use App\Models\Course; use App\Models\Category; use App\Models\Events;
 
 // llamando a los controladores
 use App\Http\Controllers\IndexController;
@@ -23,68 +20,144 @@ use Modules\ReferralTree\Http\Controllers\ReferralTreeController;
 class HomeController extends Controller{
 
    public function index(){
-      if (Auth::guest()){
-         $cursosDestacados = Course::where('featured', '=', 1)
-                                 ->where('status', '=', 1)
-                                 ->orderBy('id', 'DESC')
-                                 ->take(3)
-                                 ->get();
+      $cursosDestacados = Course::where('featured', '=', 1)
+                              ->where('status', '=', 1)
+                              ->orderBy('id', 'DESC')
+                              ->get();
 
-         $cursosNuevos = Course::where('status', '=', 1)
-                           ->orderBy('id', 'DESC')
-                           ->take(3)
-                           ->get();
-
-         $ultCurso = Course::select('id')
-                        ->where('status', '=', 1)
+      $cursosNuevos = Course::where('status', '=', 1)
                         ->orderBy('id', 'DESC')
+                        ->take(3)
+                        ->get();
+
+      $ultCurso = Course::select('id')
+                     ->where('status', '=', 1)
+                     ->orderBy('id', 'DESC')
+                     ->first();
+
+      $primerCurso = Course::select('id')
+                        ->where('status', '=', 1)
+                        ->orderBy('id', 'ASC')
                         ->first();
+      $idStart = 0;
+      $idEnd = 0;
+      $cont = 1;
+      $previous = 1;
+      $next = 1;
 
-         $primerCurso = Course::select('id')
-                           ->where('status', '=', 1)
-                           ->orderBy('id', 'ASC')
+      foreach ($cursosNuevos as $curso){
+         if ($cont == 1){
+            $idStart = $curso->id;
+         }
+         $idEnd = $curso->id;
+         $cont++;
+      }
+         
+      if ($cursosNuevos->count() > 0){
+         if ($idStart == $ultCurso->id){
+            $previous = 0;
+         }
+         if ($idEnd == $primerCurso->id){
+            $next = 0;
+         }
+      }
+
+      $proximoEvento = Events::where('status', '=', 2)
+                           ->orderBy('date', 'DESC')
                            ->first();
-         $idStart = 0;
-         $idEnd = 0;
-         $cont = 1;
-         $previous = 1;
-         $next = 1;
 
-         foreach ($cursosNuevos as $curso){
-            if ($cont == 1){
-               $idStart = $curso->id;
-            }
-            $idEnd = $curso->id;
-            $cont++;
+      if (!is_null($proximoEvento)){
+         $fechaEvento = new Carbon($proximoEvento->date);
+         $proximoEvento->date_day = $fechaEvento->format('d');
+
+         switch ($fechaEvento->format('l')) {
+            case 'Monday': $proximoEvento->weekend_day = 'Lunes'; break;
+            case 'Tuesday': $proximoEvento->weekend_day = 'Martes'; break;
+            case 'Wednesday': $proximoEvento->weekend_day = 'Miércoles'; break;
+            case 'Thursday': $proximoEvento->weekend_day = 'Jueves'; break;
+            case 'Friday': $proximoEvento->weekend_day = 'Viernes'; break;
+            case 'Saturday': $proximoEvento->weekend_day = 'Sábado'; break;
+            case 'Sunday': $proximoEvento->weekend_day = 'Domingo'; break;
          }
          
-         if ($cursosNuevos->count() > 0){
-            if ($idStart == $ultCurso->id){
-               $previous = 0;
-            }
-            if ($idEnd == $primerCurso->id){
-               $next = 0;
-            }
+         switch ($fechaEvento->format('m')) {
+            case '01': $proximoEvento->month = 'Enero'; break;
+            case '02': $proximoEvento->month = 'Febrero'; break;
+            case '03': $proximoEvento->month = 'Marzo'; break;
+            case '04': $proximoEvento->month = 'Abril'; break;
+            case '05': $proximoEvento->month = 'Mayo'; break;
+            case '06': $proximoEvento->month = 'Junio'; break;
+            case '07': $proximoEvento->month = 'Julio'; break;
+            case '08': $proximoEvento->month = 'Agosto'; break;
+            case '09': $proximoEvento->month = 'Septiembre'; break;
+            case '10': $proximoEvento->month = 'Octubre'; break;
+            case '11': $proximoEvento->month = 'Noviembre'; break;
+            case '12': $proximoEvento->month = 'Diciembre'; break;
          }
-
-         return view('index')->with(compact('cursosDestacados', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next'));
-      }else{
-         $cliente = SettingCliente::find(1);
-         if ($cliente->permiso == 0 && Auth::user()->tipouser == 'Cliente') {
-            return redirect('login')->with('msj3', 'Restringido el Acceso');
-         } else {
-            return redirect('/admin');
-         }   
       }
-      //return view('welcome');
+         
+      //linea de referidos Directos
+      $refeDirec =0;
+      if(Auth::user()){
+         $refeDirec = User::where('referred_id', Auth::user()->ID)->count('ID');
+      }
+
+      return view('index')->with(compact('cursosDestacados', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next', 'refeDirec', 'proximoEvento'));
+   }
+
+   public function search($busqueda){
+      $cursosIds = [];
+
+      $cursos = Course::where(function ($query) use ($busqueda){
+                     $query->where('title', 'LIKE', '%'.$busqueda.'%')
+                           ->orWhere('description', 'LIKE', '%'.$busqueda.'%');
+                  })->where('status', '=', 1)
+                  ->get();
+      
+      foreach ($cursos as $curso){
+         array_push($cursosIds, $curso->id);
+      }
+      
+      $categorias = Category::with(['courses' => function($query) use ($cursosIds){
+                              $query->whereNotIn('id', $cursosIds)
+                                 ->where('status', '=', 1);
+                        }])->where('title', 'LIKE', '%'.$busqueda.'%')
+                        ->get();
+
+      foreach ($categorias as $categoria){
+         foreach ($categoria->courses as $cursoCat){
+            array_push($cursosIds, $cursoCat->id);
+            $cursos->push($cursoCat);
+         }
+      }      
+
+      $page = 'search';
+
+      return view('search')->with(compact('cursos', 'page'));
+   }
+
+   public function search_by_category($category_slug, $category_id, $subcategory_slug, $subcategory_id){
+      $categoria = Category::with(['courses' => function($query) use ($subcategory_id){
+                              $query->where('status', '=', 1)
+                                 ->where('subcategory_id', '=', $subcategory_id);
+                        }])->where('id', '=', $category_id)
+                        ->first();
+
+      $cursos = $categoria->courses;
+      
+      $page = 'category';
+   
+      return view('search')->with(compact('categoria', 'cursos', 'page'));
+
    }
     
+    
+    //vista de transmisiones
     public function transmisiones(){
         
         return view('transmision');
     }
-
-
+    
     public function deleteProfile($id)
     {
        $consulta=new ReferralTreeController;    
@@ -161,7 +234,7 @@ class HomeController extends Controller{
         }
         
         $funciones = new IndexController;
-        $funciones->msjSistema('Contraseña editada con exito' , 'success');
+        $funciones->msjSistema('Contrase単a editada con exito' , 'success');
             return redirect()->back();
     }
 }

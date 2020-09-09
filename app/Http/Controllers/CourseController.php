@@ -13,6 +13,12 @@ class CourseController extends Controller{
     *Consulta Ajax para actualizar los cursos (Previous y Next)
     */
     public function load_more_courses_new($ultimoId, $accion){
+        $idStart = 0;
+        $idEnd = 0;
+        $cont = 1;
+        $previous = 1;
+        $next = 1;
+
         if ($accion == 'next'){
             $cursosNuevos = Course::where('id', '<', $ultimoId)
                             ->where('status', '=', 1)
@@ -22,9 +28,19 @@ class CourseController extends Controller{
         }else{
             $cursosNuevos = Course::where('id', '>', $ultimoId)
                             ->where('status', '=', 1)
-                            ->orderBy('id', 'DESC')
+                            ->orderBy('id', 'ASC')
                             ->take(3)
                             ->get();
+
+            $cursosNuevos = $cursosNuevos->sortByDesc('id');
+        }
+
+        foreach ($cursosNuevos as $curso){
+            if ($cont == 1){
+                $idStart = $curso->id;
+            }
+            $idEnd = $curso->id;
+            $cont++;
         }
 
         $ultCurso = Course::select('id')
@@ -36,19 +52,6 @@ class CourseController extends Controller{
                            ->where('status', '=', 1)
                            ->orderBy('id', 'ASC')
                            ->first();
-
-        $idStart = 0;
-        $idEnd = 0;
-        $cont = 1;
-        $previous = 1;
-        $next = 1;
-        foreach ($cursosNuevos as $curso){
-            if ($cont == 1){
-               $idStart = $curso->id;
-            }
-            $idEnd = $curso->id;
-            $cont++;
-        }
 
         if ($idStart == $ultCurso->id){
             $previous = 0;
@@ -67,14 +70,31 @@ class CourseController extends Controller{
         // TITLE
         view()->share('title', 'Listado de Cursos');
 
-        $cursos = Course::orderBy('id', 'DESC')->get();
+        $cursos = Course::withCount('lessons')
+                    ->orderBy('id', 'DESC')->get();
+
+        $mentores = DB::table('wp98_users')
+                        ->select('ID', 'user_email')
+                        ->where('rol_id', '=', 2)
+                        ->orderBy('user_email', 'ASC')
+                        ->get();
 
         $categorias = DB::table('categories')
                         ->select('id', 'title')
-                        ->orderBy('title', 'ASC')
+                        ->orderBy('id', 'ASC')
                         ->get();
 
-        return view('admin.courses.index')->with(compact('cursos', 'categorias'));
+        $subcategorias = DB::table('subcategories')
+                            ->select('id', 'title')
+                            ->orderBy('id', 'ASC')
+                            ->get();
+
+        $etiquetas = DB::table('tags')
+                        ->select('id', 'tag')
+                        ->orderBy('tag', 'ASC')
+                        ->get();
+
+        return view('admin.courses.index')->with(compact('cursos', 'mentores', 'categorias', 'subcategorias', 'etiquetas'));
     }
 
     /**
@@ -95,6 +115,14 @@ class CourseController extends Controller{
         
         $curso->save();
 
+        if (!is_null($request->tags)){
+            foreach ($request->tags as $tag){
+                DB::table('courses_tags')->insert(
+                    ['course_id' => $curso->id, 'tag_id' => $tag]
+                );
+            }
+        }
+
         return redirect('admin/courses')->with('msj-exitoso', 'El curso '.$curso->title.' ha sido creado con éxito.');
     }
 
@@ -104,18 +132,33 @@ class CourseController extends Controller{
     public function edit($id){
         $curso = Course::find($id);
 
+        $mentores = DB::table('wp98_users')
+                        ->select('ID', 'user_email')
+                        ->where('rol_id', '=', 2)
+                        ->orderBy('user_email', 'ASC')
+                        ->get();
+
         $categorias = DB::table('categories')
                         ->select('id', 'title')
-                        ->orderBy('title', 'ASC')
+                        ->orderBy('id', 'ASC')
                         ->get();
 
         $subcategorias = DB::table('subcategories')
                             ->select('id', 'title')
-                            ->where('category_id', '=', $curso->category_id)
-                            ->orderBy('title', 'ASC')
+                            ->orderBy('id', 'ASC')
                             ->get();
 
-        return view('admin.courses.editCourse')->with(compact('curso', 'categorias', 'subcategorias'));
+        $etiquetas = DB::table('tags')
+                        ->select('id', 'tag')
+                        ->orderBy('tag', 'ASC')
+                        ->get();
+
+        $etiquetasActivas = [];
+        foreach ($curso->tags as $etiq){
+            array_push($etiquetasActivas, $etiq->id);
+        }
+
+        return view('admin.courses.editCourse')->with(compact('curso', 'mentores', 'categorias', 'subcategorias', 'etiquetas', 'etiquetasActivas'));
     }
 
     /**
@@ -135,6 +178,18 @@ class CourseController extends Controller{
         }
 
         $curso->save();
+
+        DB::table('courses_tags')
+            ->where('course_id', '=', $curso->id)
+            ->delete();
+
+        if (!is_null($request->tags)){
+            foreach ($request->tags as $tag){
+                DB::table('courses_tags')->insert(
+                    ['course_id' => $curso->id, 'tag_id' => $tag]
+                );
+            }
+        }
 
         return redirect('admin/courses')->with('msj-exitoso', 'El curso '.$curso->title.' ha sido modificado con éxito.');
     }

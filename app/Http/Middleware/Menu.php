@@ -63,6 +63,7 @@ class Menu
             'registro' =>  json_decode($date->registro),
             'registro_cliente' => json_decode($date->registro_cliente),
             'red' => json_decode($date->red_usuario),
+            'eventos' => json_decode($date->eventos),
             'transacciones' => json_decode($date->transacciones),
             'billetera' => json_decode($date->billetera),
             'calendario' =>  json_decode($date->calendario),
@@ -85,6 +86,7 @@ class Menu
             'registro' =>  json_decode($date->registro),
             'registro_cliente' => json_decode($date->registro_cliente),
             'red' => json_decode($date->red_usuario),
+            'eventos' => json_decode($date->eventos),
             'transacciones' => json_decode($date->transacciones),
             'billetera' => json_decode($date->billetera),
             'calendario' =>  json_decode($date->calendario),
@@ -951,10 +953,32 @@ class Menu
                 'permisoAdmin' => 1,
                 'activo' => 0,
             ],
+
+            'Usuarios' => [
+                'submenu' => 0,
+                'ruta' => 'admin.index',
+                'black'=> '0',
+                'icono' => 'fas fa-user',
+                'complementoruta' => '',
+                'permisoAdmin' => 1,
+                'activo' => 0,
+            ],
+
+
+            'Red' => [
+                'submenu' => 0,
+                'ruta' => 'admin-red-index',
+                'black'=> '0',
+                'icono' => 'fas fa-users',
+                'complementoruta' => '',
+                'permisoAdmin' => 1,
+                'activo' => 0,
+            ],
+            
             'Cursos' => [
                 'submenu' => 1,
                 'ruta' => 'javascript:;',
-                'icono' => 'fas fa-sitemap',
+                'icono' => 'fab fa-discourse',
                 'permisoAdmin' => (!empty($permiso)) ? $permiso->cursos : 0,
                 'activo' => 0,
                 'menus' => [
@@ -976,6 +1000,34 @@ class Menu
                         'black'=> '0',
                         'oculto'=> 'activo',
                     ],
+                    'Gestionar Subcategorías' => [
+                        'ruta' => 'admin.courses.subcategories',
+                        'complementoruta' => '',
+                        'black'=> '0',
+                        'oculto'=> 'activo',
+                    ],
+                    'Gestionar Etiquetas' => [
+                        'ruta' => 'admin.courses.tags',
+                        'complementoruta' => '',
+                        'black'=> '0',
+                        'oculto'=> 'activo',
+                    ],
+                ]
+            ],
+            'Eventos' => [
+                'submenu' => 1,
+                'ruta' => 'javascript:;',
+                'icono' => 'fas fa-calendar-day',
+                'permisoAdmin' => (!empty($permiso)) ? $permiso->red_usuario : 0,
+                'activo' => request()->is('admin/events') ? 'active' : 0,
+                'menus' => [
+                    'Listado de Eventos' => [
+                        'ruta' => 'admin.events.index',
+                        'complementoruta' => '',
+                        'black'=> '0',
+                        'oculto'=> 'activo',
+                    ],
+                   
                 ]
             ],
             'Actualizar' => [

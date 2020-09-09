@@ -85,4 +85,9 @@ class User extends Authenticatable
     public function courses(){
         return $this->hasMany('App\Models\Course', 'mentor_id', 'ID');
     }
+
+    //Relación Usuarios - Eventos (Agenda de Eventos)
+    public function events(){
+        return $this->belongsToMany('App\Models\Events', 'events_users', 'user_id', 'event_id')->withPivot('date', 'time')->withTimestamps();
+    }
 }

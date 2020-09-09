@@ -25,8 +25,6 @@ Route::get('/clear-cache', function() {
     return 'DONE'; //Return anything
 });
 
-Route::get('load-more-courses-new/{ultimoId}/{accion}', 'CourseController@load_more_courses_new')->name('landing.load-more-courses-new');
-
 //nuevo inicio a traves de un nuevo login
 Route::group(['prefix' => 'inicio','middleware' => ['auth']], function(){
     
@@ -131,6 +129,7 @@ Route::group(['prefix' => 'tienda', 'middleware' => ['auth', 'licencia', 'menu']
         Route::get('/listado','TiendaController@listado')->name('link-listado');
         Route::post('/subir','TiendaController@subir')->name('link-subir');
         Route::get('/cerrar/{id}','TiendaController@cerrar')->name('link-cerrar');
+        
 });
 
 
@@ -138,6 +137,7 @@ Route::group(['prefix' => 'tienda', 'middleware' => ['auth', 'licencia', 'menu']
 
 //vista del login (/login)
 Route::get('/log', 'LoginController@login')->name('log');
+Route::post('/autenticar', 'LoginController@autenticacion')->name('autenticar');
 
 //vista de transmisiones
 Route::get('/transmisiones', 'HomeController@transmisiones')->name('transmisiones');
@@ -167,9 +167,18 @@ Route::post('/anotaciones/store', 'NoteController@store')->name('live.anotacione
       Route::put('edit/{id}', 'EventsController@edit')->name('admin.events.edit');
       Route::delete('delete/{id}', 'EventsController@delete')->name('admin.events.delete');
     });
+/* Rutas de la Landing */
+Route::get('load-more-courses-new/{ultimoId}/{accion}', 'CourseController@load_more_courses_new')->name('landing.load-more-courses-new');
+Route::get('book-event/{evento}', 'EventsController@book')->name('landing.book-event');
 
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu']], function() {
+
+  Route::group(['prefix' => 'red'], function(){
+        Route::get('/listado', 'RedController@index')->name('admin-red-index');
+        Route::post('/filtrered', 'RedController@filtrered')->name('admin-red-filtre');
+      });
+  
    Route::group(['prefix' => 'courses'], function(){
       Route::get('/', 'CourseController@index')->name('admin.courses.index');
       Route::post('store', 'CourseController@store')->name('admin.courses.store');
@@ -212,6 +221,18 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu']]
         Route::get('delete/{id}', 'LessonController@delete')->name('admin.courses.lessons.delete');
       });
    });
+
+   //Eventos
+   Route::group(['prefix' => 'events'], function(){
+    Route::get('/', 'EventsController@index')->name('admin.events.index');
+    Route::get('show/{id}', 'EventsController@show')->name('admin.events.show');
+    Route::post('store', 'EventsController@store')->name('admin.events.store');
+    Route::get('edit/{id}', 'EventsController@edit')->name('admin.events.edit');
+    Route::post('update', 'EventsController@update')->name('admin.events.update');
+    Route::delete('delete/{id}', 'EventsController@delete')->name('admin.events.delete');
+    Route::get('change-status/{id}/{status}', 'EventsController@change_status')->name('admin.events.change-status');
+
+  });
 
     
 

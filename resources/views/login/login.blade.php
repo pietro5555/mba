@@ -28,27 +28,16 @@
           
           
           {{-- notificaciones --}}
-    @if($errors->any())
-    <div class="alert alert-danger">
-        <button class="close" data-close="alert"></button>
-            <span>
-            <ul class="no-margin">
-              @foreach ($errors->all() as $error)
-              <li>{{ $error }}</li>
-              @endforeach
-            </ul>
-            </span>
-    </div>
-     <br>
-    @endif
-    @if (Session::has('msj2'))
+
+     @if (Session::has('msj2'))
     <div class="alert alert-success">
-        <button class="close" data-close="alert"></button>
-            <span>
-                {{Session::get('msj2')}}
-            </span>
+    <button class="close" data-close="alert"></button>
+        <span>
+         {{Session::get('msj2')}}
+        </span>
     </div>
-    @endif
+    @endif      
+
     @if (Session::has('msj3'))
     <div class="alert alert-danger">
     <button class="close" data-close="alert"></button>
@@ -75,13 +64,13 @@
     {{-- login --}}
   <div class="tab-pane fade show active" id="acceso" role="tabpanel" aria-labelledby="home-tab">
       
-      <form class="login-form" method="POST" action="{{ route('login') }}" name="formulario">
+      <form class="login-form" method="POST" action="{{ route('autenticar') }}" name="formulario">
                             {{ csrf_field() }}
                            
                            
                             <div class="form-group has-feedback" style="margin-top:10px;">
-                                <label for="usr" style="font: 16px sans-serif;">Correo Electronico</label>
-                                <input type="email" class="form-control"  name="user_email" value="{{old('user_email')}}" style="border-radius: 20px;">
+                                <label for="usr" style="font: 16px sans-serif;">Número de Afiliación</label>
+                                <input type="number" class="form-control"  name="ID" value="{{old('ID')}}" style="border-radius: 20px;">
                             </div>
                             <div class="form-group has-feedback">
                                 <label for="usr" style="font: 16px sans-serif;">Contraseña</label>
@@ -129,6 +118,11 @@
                            
                            
                            <input name="validar" type="hidden" value="oculto">
+
+                           <div class="form-group has-feedback">
+                                <label for="usr">Usuario</label>
+                                <input type="text" class="form-control"  name="nameuser" value="{{old('nameuser')}}" style="border-radius: 20px;">
+                            </div>
                            
                             <div class="form-group has-feedback">
                                 <label for="usr">Correo Electronico</label>
@@ -141,6 +135,16 @@
                             <div class="form-group has-feedback">
                                 <label for="usr">Confirmar contraseña</label>
                                 <input type="password" class="form-control" name="password_confirmation" ID="txtPassword" style="border-radius: 20px;">
+                            </div>
+
+                            <div class="form-group has-feedback">
+                                <label for="usr">País</label>
+                                <select class="form-control" name="pais" required style="border-radius: 20px;">
+                                <option value="" selected disabled>Seleccion un país</option>
+                             @foreach($paises as $pais)
+                              <option value="{{$pais->nombre}}">{{$pais->nombre}}</option>
+                             @endforeach
+                                </select>
                             </div>
                             
                             

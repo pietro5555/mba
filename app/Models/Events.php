@@ -29,6 +29,10 @@ class Events extends Model
         'status'
     ];
 
+    public function users(){
+        return $this->belongsToMany('App\Models\User', 'events_users', 'event_id', 'user_id')->withPivot('date', 'time')->withTimestamps();
+    }
+
     public static function findID($id)
     {
         $mentor = DB::table('wp98_users')

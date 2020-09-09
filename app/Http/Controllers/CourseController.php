@@ -13,6 +13,12 @@ class CourseController extends Controller{
     *Consulta Ajax para actualizar los cursos (Previous y Next)
     */
     public function load_more_courses_new($ultimoId, $accion){
+        $idStart = 0;
+        $idEnd = 0;
+        $cont = 1;
+        $previous = 1;
+        $next = 1;
+
         if ($accion == 'next'){
             $cursosNuevos = Course::where('id', '<', $ultimoId)
                             ->where('status', '=', 1)
@@ -22,9 +28,19 @@ class CourseController extends Controller{
         }else{
             $cursosNuevos = Course::where('id', '>', $ultimoId)
                             ->where('status', '=', 1)
-                            ->orderBy('id', 'DESC')
+                            ->orderBy('id', 'ASC')
                             ->take(3)
                             ->get();
+
+            $cursosNuevos = $cursosNuevos->sortByDesc('id');
+        }
+
+        foreach ($cursosNuevos as $curso){
+            if ($cont == 1){
+                $idStart = $curso->id;
+            }
+            $idEnd = $curso->id;
+            $cont++;
         }
 
         $ultCurso = Course::select('id')
@@ -36,19 +52,6 @@ class CourseController extends Controller{
                            ->where('status', '=', 1)
                            ->orderBy('id', 'ASC')
                            ->first();
-
-        $idStart = 0;
-        $idEnd = 0;
-        $cont = 1;
-        $previous = 1;
-        $next = 1;
-        foreach ($cursosNuevos as $curso){
-            if ($cont == 1){
-               $idStart = $curso->id;
-            }
-            $idEnd = $curso->id;
-            $cont++;
-        }
 
         if ($idStart == $ultCurso->id){
             $previous = 0;

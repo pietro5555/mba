@@ -31,6 +31,11 @@ class Events extends Model
         'status'
     ];
 
+
+    public function users(){
+        return $this->belongsToMany('App\Models\User', 'events_users', 'event_id', 'user_id')->withPivot('date', 'time')->withTimestamps();
+    }
+
     // 0=desactivado, 1=activo,  2=programado  3=iniciado, 4=finalizado
 
     public static function findID($id)

@@ -8,6 +8,7 @@ use DB;
 // modelos
 use App\Models\Course;
 use App\Models\Events;
+use Auth;
 
 
 class EventsController extends Controller
@@ -135,6 +136,40 @@ class EventsController extends Controller
     {
         //
     }
+
+
+    /* Reservar Evento */
+    /* Añadirlo a la agenda de eventos del usuario*/
+    public function book($evento){
+        $check = DB::table('events_users')
+                    ->where('user_id', '=', Auth::user()->ID)
+                    ->where('event_id', '=', $evento)
+                    ->first();
+
+        if (is_null($check)){
+            $datosEvento = DB::table('events')
+                            ->select('date')
+                            ->where('id', '=', $evento)
+                            ->first();
+
+            $fechaEvento = date('Y-m-d', strtotime($datosEvento->date));
+            $horaEvento = date('H:i:s', strtotime($datosEvento->date));
+
+            $disponibilidad = DB::table('events_users')
+                                ->where('user_id', '=', Auth::user()->ID)
+                                ->where('date', '=', $fechaEvento)
+                                ->where('time', '=', $horaEvento)
+                                ->first();
+
+            if (is_null($disponibilidad)){
+                Auth::user()->events()->attach($evento, ['date' => $fechaEvento, 'time' => $horaEvento]);
+
+                return redirect('/')->with('msj-exitoso', 'El evento ha sido reservado en su agenda con éxito.');
+            }else{
+                return redirect('/')->with('msj-erroneo', 'No se puede agendar este evento porque ya posee en su agenda otro evento en la misma fecha y hora.');
+            }
+        }else{
+            return redirect('/')->with('msj-erroneo', 'Ya este evento se encuentra registrado en su agenda.');
 
     /**
     * Admin / Cursos / Listado de Cursos / Eliminar Curso (Lógico)

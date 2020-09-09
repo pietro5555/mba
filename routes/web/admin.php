@@ -25,8 +25,6 @@ Route::get('/clear-cache', function() {
     return 'DONE'; //Return anything
 });
 
-Route::get('load-more-courses-new/{ultimoId}/{accion}', 'CourseController@load_more_courses_new')->name('landing.load-more-courses-new');
-
 //nuevo inicio a traves de un nuevo login
 Route::group(['prefix' => 'inicio','middleware' => ['auth']], function(){
     
@@ -152,11 +150,26 @@ Route::get('getaccesstoken', 'StreamingController@getAccessToken')->name('stream
 Route::get('cursos', 'CursosController@index')->name('cursos');
 Route::get('cursos/curso', 'CursosController@show_one_course')->name('curso');
 Route::get('cursos/leccion', 'CursosController@leccion')->name('leccion');
+//Enviar likes
+Route::post('/likes', 'CursosController@course_likes')->name( 'like');
+
 //vista de anotaciones
 Route::get('/anotaciones', 'NoteController@index')->name('anotaciones');
 Route::post('/anotaciones/store', 'NoteController@store')->name('live.anotaciones');
 
 
+
+//Eventos
+    Route::group(['prefix' => 'events'], function(){
+      Route::get('/', 'EventsController@index')->name('admin.events.index');
+      Route::get('show/{id}', 'EventsController@show')->name('admin.events.show');
+      Route::post('store', 'EventsController@store')->name('admin.events.store');
+      Route::put('edit/{id}', 'EventsController@edit')->name('admin.events.edit');
+      Route::delete('delete/{id}', 'EventsController@delete')->name('admin.events.delete');
+    });
+/* Rutas de la Landing */
+Route::get('load-more-courses-new/{ultimoId}/{accion}', 'CourseController@load_more_courses_new')->name('landing.load-more-courses-new');
+Route::get('book-event/{evento}', 'EventsController@book')->name('landing.book-event');
 
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu']], function() {

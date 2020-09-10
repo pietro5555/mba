@@ -82,11 +82,11 @@
 								<td class="text-center">{{ $curso->lessons_count }}</td>
 								<td class="text-center">
 									<a class="btn btn-info editar" data-route="{{ route('admin.courses.edit', $curso->id) }}"><i class="fa fa-edit"></i></a>
-									<a class="btn btn-warning" href="{{ route('admin.courses.lessons.index', [$curso->slug, $curso->id]) }}" title="Ver Lecciones"><i class="fa fa-search"></i></a>
+									<a class="btn btn-warning" href="{{ route('admin.courses.lessons', $curso->id) }}" title="Ver Temario"><i class="fa fa-list"></i></a>
 									@if ($curso->featured == 0)
 										<a class="btn btn-success featured" href="javascript:;" data-id="{{ $curso->id }}" title="Agregar a Destacados"><i class="fa fa-star"></i></a>
 									@else
-										<a class="btn btn-info show-img" href="javascript:;" data-title="{{ $curso->title }}" data-source="{{ asset('uploads/images/courses/featured_covers/'.$curso->featured_cover) }}" title="Ver Imagen Destacada"><i class="fa fa-image"></i></a>
+										<!--<a class="btn btn-info show-img" href="javascript:;" data-title="{{ $curso->title }}" data-source="{{ asset('uploads/images/courses/featured_covers/'.$curso->featured_cover) }}" title="Ver Imagen Destacada"><i class="fa fa-image"></i></a>-->
 										<a class="btn btn-danger" href="{{ route('admin.courses.quit-featured', $curso->id) }}" title="Quitar de Destacados"><i class="fa fa-star"></i></a>
 									@endif
 

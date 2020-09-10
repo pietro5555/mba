@@ -219,11 +219,19 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu']]
       });
 
       Route::group(['prefix' => 'lessons'], function(){
-        Route::get('/{slug}/{id}', 'LessonController@index')->name('admin.courses.lessons.index');
+        Route::get('/{id}', 'LessonController@index')->name('admin.courses.lessons');
         Route::post('store', 'LessonController@store')->name('admin.courses.lessons.store');
         Route::get('edit/{id}', 'LessonController@edit')->name('admin.courses.lessons.edit');
         Route::post('update', 'LessonController@update')->name('admin.courses.lessons.update');
         Route::get('delete/{id}', 'LessonController@delete')->name('admin.courses.lessons.delete');
+
+        Route::group(['prefix' => 'resources'], function(){
+          Route::get('/{id}', 'ResourcesController@index')->name('admin.courses.lessons.resources');
+          Route::post('store', 'ResourcesController@store')->name('admin.courses.lessons.resources.store');
+          Route::get('edit/{id}', 'ResourcesController@edit')->name('admin.courses.lessons.resources.edit');
+          Route::post('update', 'ResourcesController@update')->name('admin.courses.lessons.resources.update');
+          Route::get('delete/{id}', 'ResourcesController@delete')->name('admin.courses.lessons.resources.delete');
+        });
       });
    });
 

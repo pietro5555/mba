@@ -11,7 +11,7 @@ class LessonController extends Controller{
     /**
     * Admin / Cursos / Listado de Cursos / Temario de un Curso
     */
-    public function index($slug, $id){
+    public function index($id){
         // TITLE
         view()->share('title', 'Lecciones del Curso');
 
@@ -30,7 +30,7 @@ class LessonController extends Controller{
         $leccion->slug = Str::slug($leccion->title);
         $leccion->save();
 
-        return redirect('admin/courses/lessons/'.$request->course_slug.'/'.$request->course_id)->with('msj-exitoso', 'La lección ha sido creada con éxito.');
+        return redirect('admin/courses/lessons/'.$request->course_id)->with('msj-exitoso', 'La lección ha sido creada con éxito.');
     }
 
      /**
@@ -39,9 +39,6 @@ class LessonController extends Controller{
     public function edit($id){
         $leccion = Lesson::find($id);
 
-        return response()->json(
-            "aqui estoy"
-        );
         return view('admin.courses.editLesson')->with(compact('leccion'));
     }
 
@@ -54,7 +51,7 @@ class LessonController extends Controller{
         $leccion->slug = Str::slug($leccion->title);
         $leccion->save();
 
-         return redirect('admin/courses/lessons/'.$leccion->course->slug.'/'.$leccion->course_id)->with('msj-exitoso', 'La lección ha sido creada con éxito.');
+         return redirect('admin/courses/lessons/'.$leccion->course_id)->with('msj-exitoso', 'La lección ha sido creada con éxito.');
     }
 
      /**
@@ -69,7 +66,7 @@ class LessonController extends Controller{
         
         $leccion->delete();
 
-        return redirect('admin/courses/lessons/'.$leccion->course->slug.'/'.$leccion->course_id)->with('msj-exitoso', 'La lección ha sido eliminada con éxito.');
+        return redirect('admin/courses/lessons/'.$leccion->course_id)->with('msj-exitoso', 'La lección ha sido eliminada con éxito.');
     }
 }
 

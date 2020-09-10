@@ -391,6 +391,9 @@
     }
 }
 @media (max-width: 450px) {
+    .course-category-caption a{
+    font-size: 12px;
+    }
     .carousel-caption{
         width: 50%;
     }
@@ -422,6 +425,22 @@
     }
 
 }
+
+@media  (min-width: 576px) and (max-width: 768px) {
+    .course-category-caption a{
+font-size: 12px;
+bottom: 0px;
+}
+    
+}
+
+@media  (min-width: 1024px) {
+    .course-category-caption a{
+font-size: 16px;
+}
+
+}
+
 .title-page-course{
     color: #FFFF;
     font-weight: bold; 
@@ -458,6 +477,7 @@ position: absolute;
 bottom: 1em;
 
 }
+
 
 .description-course{
     color: #DEDADA;
@@ -517,57 +537,6 @@ font-size: 2vw;
 background: transparent linear-gradient(180deg, #00000083 0%, #000000 100%) 0% 0% no-repeat padding-box;
 opacity: 0.75;
 height: 100%; 
--webkit-box-shadow: none; 
-box-shadow: none; 
-border: 0px; 
-border-radius: 0px; 
-}
-.course-category2
-{
-background: transparent linear-gradient(180deg, #00000083 0%, #000000 100%) 0% 0% no-repeat padding-box;
-opacity: 0.75;
-height: 100%;
--webkit-box-shadow: none; 
-box-shadow: none; 
-border: 0px; 
-border-radius: 0px; 
-}
-
-.course-category3
-{
-background: transparent linear-gradient(180deg, #00000083 0%, #000000 100%) 0% 0% no-repeat padding-box;
-opacity: 0.75;
-height: 100%;
--webkit-box-shadow: none; 
-box-shadow: none; 
-border: 0px; 
-border-radius: 0px;  
-}
-.course-category4
-{ 
-background: transparent linear-gradient(180deg, #00000083 0%, #000000 100%) 0% 0% no-repeat padding-box;
-opacity: 0.75;
-height: 100%;
--webkit-box-shadow: none; 
-box-shadow: none; 
-border: 0px; 
-border-radius: 0px; 
-}
-.course-category5
-{
-background: transparent linear-gradient(180deg, #00000083 0%, #000000 100%) 0% 0% no-repeat padding-box;
-opacity: 0.75;
-height: 100%;  
--webkit-box-shadow: none; 
-box-shadow: none; 
-border: 0px; 
-border-radius: 0px; 
-}
-.course-category6
-{ 
-background: transparent linear-gradient(180deg, #00000083 0%, #000000 100%) 0% 0% no-repeat padding-box;
-opacity: 0.75;
-height: 100%;
 -webkit-box-shadow: none; 
 box-shadow: none; 
 border: 0px; 

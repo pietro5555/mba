@@ -1,0 +1,293 @@
+@extends('layouts.landing')
+
+@section('content')
+    <div class="section-landing" style="background: linear-gradient(to bottom, #222326 50%, #1C1D21 50.1%);">
+        <div class="col mb-2">
+            <div class="title-page-course col-md text-center"><span class="text-white">
+            <h3><span class="text-white">Cursos sobre</span><span class="text-primary"> "{{$category_name->title}}"</span></h3>
+            </div>
+        </div>     
+             
+        <div class="row">
+            @if ($courses->count() > 0)
+                @foreach ($courses as $curso)
+                    <div class="col-md-3" style="margin-top: 20px;">
+                        <img src="{{ asset('uploads/images/courses/covers/'.$curso->cover) }}" class="card-img-top" alt="..." style="height: 200px;"> 
+                
+                        <div class="card-body" style="background-color: #2f343a;">
+                            <h6 class="card-title" style="margin-top: -15px;"> <i class="far fa-play-circle" style="font-size: 16px; color: #6fd843;"></i> {{ $curso->title }}</h6>
+                
+                            <h6 style="font-size: 10px; margin-left: 20px; margin-top: -10px;">{{ $curso->category->title }} ({{ $curso->subcategory->title }})</h6>
+                
+                            <h6 align="right" style="margin-bottom: -20px;"> 
+                                <i class="icon fa fa-eye text-right" style="font-size: 16px; margin-right: 10px;"><p style="font-size: 10px;">{{$curso->views}}</p></i>
+                                <i class="far fa-comment-alt" style="font-size: 16px; margin-right: 10px;"><p style="font-size: 10px;">346</p></i>
+                                <i class="fas fa-share-alt" style="font-size: 16px; margin-right: 10px;"><p style="font-size: 10px;">{{$curso->shares}}</p></i>
+                                <i class="far fa-thumbs-up" style="font-size: 16px;"><p style="font-size: 10px;">{{$curso->likes}}</p></i>
+                            </h6>
+                        </div>
+                    </div>
+                @endforeach
+            @else
+            <div class="container-fluid">
+                <h3>
+                    No se encontraron cursos relacionados con la búsqueda...
+                </h3>
+            </div>
+                
+            @endif
+        </div>
+    </div>
+
+
+ {{-- SECCIÓN TUS MENTORES--}}
+<div class="section-landing">
+    <div class="col-lg-6 offset-lg-3">
+        <h4 class=" section-title-landing text-primary text-center">TUS MENTORES</h4>
+    </div>
+    <div class="container-fluid">
+        <div class="row d-flex flex-row p-2">
+            <div class="col-xs-12 col-sm-4 mt-2">
+                <div class="card mentors-card">
+                    <div class="row no-gutters">
+                        <div class="col-auto">
+                            <img src="{{ asset('images/img-mentor1.png') }}" class="img-fluid" alt="">
+                        </div>
+                        <div class="col">
+                            <div class="card-block px-2">
+                                <h4 class="card-title mt-4">Nombre Apellido</h4>
+                                <p class="card-text">Categoría</p>
+                                <br>
+                                <p class="card-text text-lg-right">Ver perfil  <i class=" fa fa-angle-right"> </i></p>
+                            </div>
+                            
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 mt-2">
+                <div class="card mentors-card">
+                    <div class="row no-gutters">
+                        <div class="col-auto">
+                            <img src="{{ asset('images/img-mentor2.png') }}" class="img-fluid" alt="">
+                        </div>
+                        <div class="col">
+                            <div class="card-block px-2">
+                                <h4 class="card-title mt-4">Nombre Apellido</h4>
+                                <p class="card-text">Categoría</p>
+                                <br>
+                                <p class="card-text text-lg-right">Ver perfil  <i class=" fa fa-angle-right"> </i></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 mt-2">
+                <div class="card mentors-card">
+                    <div class="row no-gutters">
+                        <div class="col-auto">
+                            <img src="{{ asset('images/img-mentor3.png') }}" class="img-fluid" alt="">
+                        </div>
+                        <div class="col">
+                            <div class="card-block px-2">
+                                <h4 class="card-title mt-4">Nombre Apellido</h4>
+                                <p class="card-text">Categoría</p>
+                                <br>
+                                <p class="card-text text-lg-right">Ver perfil  <i class=" fa fa-angle-right"> </i></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <div class="row d-flex flex-row p-2">
+            <div class="col-xs-12 col-sm-4 mt-2">
+                <div class="card mentors-card">
+                    <div class="row no-gutters">
+                        <div class="col-auto">
+                            <img src="{{ asset('images/img-mentor4.png') }}" class="img-fluid" alt="">
+                        </div>
+                        <div class="col">
+                            <div class="card-block px-2">
+                                <h4 class="card-title mt-4">Nombre Apellido</h4>
+                                <p class="card-text">Categoría</p>
+                                <br>
+                                <p class="card-text text-lg-right">Ver perfil  <i class=" fa fa-angle-right"> </i></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 mt-2">
+                <div class="card mentors-card">
+                    <div class="row no-gutters">
+                        <div class="col-auto">
+                            <img src="{{ asset('images/img-mentor5.png') }}" class="img-fluid" alt="">
+                        </div>
+                        <div class="col">
+                            <div class="card-block px-2">
+                                <h4 class="card-title mt-4">Nombre Apellido</h4>
+                                <p class="card-text">Categoría</p>
+                                <br>
+                                <p class="card-text text-lg-right">Ver perfil  <i class=" fa fa-angle-right"> </i></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 mt-2">
+                <div class="card mentors-card">
+                    <div class="row no-gutters">
+                        <div class="col-auto">
+                            <img src="{{ asset('images/img-mentor6.png') }}" class="img-fluid" alt="">
+                        </div>
+                        <div class="col">
+                            <div class="card-block px-2">
+                                <h4 class="card-title mt-4">Nombre Apellido</h4>
+                                <p class="card-text">Categoría</p>
+                                <br>
+                                <p class="card-text text-lg-right">Ver perfil  <i class=" fa fa-angle-right"> </i></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row d-flex flex-row p-2">
+            <div class="col-xs-12 col-sm-4 mt-2">
+                <div class="card mentors-card">
+                    <div class="row no-gutters">
+                        <div class="col-auto">
+                            <img src="{{ asset('images/img-mentor7.png') }}" class="img-fluid" alt="">
+                        </div>
+                        <div class="col">
+                            <div class="card-block px-2">
+                                <h4 class="card-title mt-4">Nombre Apellido</h4>
+                                <p class="card-text">Categoría</p>
+                                <br>
+                                <p class="card-text text-lg-right">Ver perfil  <i class=" fa fa-angle-right"> </i></p>
+                            </div>
+                            
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 mt-2">
+                <div class="card mentors-card">
+                    <div class="row no-gutters">
+                        <div class="col-auto">
+                            <img src="{{ asset('images/img-mentor8.png') }}" class="img-fluid" alt="">
+                        </div>
+                        <div class="col">
+                            <div class="card-block px-2">
+                                <h4 class="card-title mt-4">Nombre Apellido</h4>
+                                <p class="card-text">Categoría</p>
+                                <br>
+                                <p class="card-text text-lg-right">Ver perfil  <i class=" fa fa-angle-right"> </i></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 mt-2">
+                <div class="card mentors-card">
+                    <div class="row no-gutters">
+                        <div class="col-auto">
+                            <img src="{{ asset('images/img-mentor9.png') }}" class="img-fluid" alt="">
+                        </div>
+                        <div class="col">
+                            <div class="card-block px-2">
+                                <h4 class="card-title mt-4">Nombre Apellido</h4>
+                                <p class="card-text">Categoría</p>
+                                <br>
+                                <p class="card-text text-lg-right">Ver perfil  <i class=" fa fa-angle-right"> </i></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row d-flex flex-row p-2">
+            <div class="col-xs-12 col-sm-4 mt-2">
+                <div class="card mentors-card">
+                    <div class="row no-gutters">
+                        <div class="col-auto">
+                            <img src="{{ asset('images/img-mentor10.png') }}" class="img-fluid" alt="">
+                        </div>
+                        <div class="col">
+                            <div class="card-block px-2">
+                                <h4 class="card-title mt-4">Nombre Apellido</h4>
+                                <p class="card-text">Categoría</p>
+                                <br>
+                                <p class="card-text text-lg-right">Ver perfil  <i class=" fa fa-angle-right"> </i></p>
+                            </div>
+                            
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 mt-2">
+                <div class="card mentors-card">
+                    <div class="row no-gutters">
+                        <div class="col-auto">
+                            <img src="{{ asset('images/img-mentor11.png') }}" class="img-fluid" alt="">
+                        </div>
+                        <div class="col">
+                            <div class="card-block px-2">
+                                <h4 class="card-title mt-4">Nombre Apellido</h4>
+                                <p class="card-text">Categoría</p>
+                                <br>
+                                <p class="card-text text-lg-right">Ver perfil  <i class=" fa fa-angle-right"> </i></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 mt-2">
+                <div class="card mentors-card">
+                    <div class="row no-gutters">
+                        <div class="col-auto">
+                            <img src="{{ asset('images/img-mentor12.png') }}" class="img-fluid" alt="">
+                        </div>
+                        <div class="col">
+                            <div class="card-block px-2">
+                                <h4 class="card-title mt-4">Nombre Apellido</h4>
+                                <p class="card-text">Categoría</p>
+                                <br>
+                                <p class="card-text text-lg-right">Ver perfil  <i class=" fa fa-angle-right"> </i></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</div>
+</div>
+ {{-- FIN SECCIÓN TUS MENTORES--}}
+
+        {{-- SECCIÓN REFERIDOS (USUARIOS LOGGUEADOS) --}}
+    @if (!Auth::guest())
+        <div style="padding-top: 30px;">
+            <div class="row">
+                <div class="col-4 " style="padding-left: 30px;">
+                    <div style="text-align: center; font-size: 34px; color: white; font-weight: bold; border: solid #919191 1px; background-color: #222326; margin-bottom: 10px; height: 330px; padding: 120px 15px;">
+                        <i class="fa fa-user"></i><br>
+                        739 Referidos
+                    </div>
+                    <div style="text-align: center; font-size: 25px; color: white; font-weight: bold; background-color: #6AB742; height: 60px; padding: 10px 10px;">
+                        Panel de referidos
+                    </div>
+                </div>
+                <div class="col-8" style=" background:url('http://localhost:8000/images/banner_referidos.png');">
+                    <!--<img src="{{ asset('images/banner_referidos.png') }}" alt="" style="height: 400px; width:100%; opacity: 1; background: transparent linear-gradient(90deg, #2A91FF 0%, #2276D0A1 54%, #15498000 100%) 0% 0% no-repeat padding-box;">-->
+                    <div style="font-size: 50px; width: 50%; padding: 80px 40px 80px 80px; color: white; line-height: 55px;">EL QUE QUIERE SUPERARSE, NO VE OBSTÁCULOS, VE SUEÑOS.</div>
+                </div>
+            </div>
+        </div><br><br>
+    @endif
+    {{-- FIN DE SECCIÓN REFERIDOS (USUARIOS LOGGUEADOS) --}}
+@endsection

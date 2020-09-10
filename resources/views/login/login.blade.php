@@ -29,6 +29,20 @@
           
           {{-- notificaciones --}}
 
+      @if($errors->any())
+        <div class="alert alert-danger">
+            <button class="close" data-close="alert"></button>
+            <span>
+                <ul class="no-margin">
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </span>
+        </div>
+        <br>
+        @endif         
+
      @if (Session::has('msj2'))
     <div class="alert alert-success">
     <button class="close" data-close="alert"></button>

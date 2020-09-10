@@ -23,9 +23,24 @@ class StreamingController extends Controller
      */
     public function index()
     { 
+
+        // CREDENCIALES PARA API DE IBM
+
+        // https://ibm.github.io/video-streaming-developer-docs/
+        // usuario: proyectos@fenttix.com
+        // Contraseña: Livembapro123*
+
+
     
         // http://localhost:8000/?access_token=54644cedbc4818a28a2001e41ea8570fab520e4b&token_type=bearer&expires_in=86400&state=XYZ
         // https://authentication.video.ibm.com/authorize?response_type=token&client_id=f462391e32e1374ceebeac9e840dc94c1c3c71d5&client_secret=5216193d16334f15908940d518d2adf1546dc752&redirect_uri=https://metalinks.com.ve/prueba&state=XYZ
+
+        //Obtener code
+        // https://authentication.video.ibm.com/authorize?response_type=code&client_id=ca361d98cfa63255356b644e83130e919e62085e&redirect_uri=http://localhost:8000/&state=XYZ
+
+        //result
+        // http://localhost:8000/?code=ebe6b3d9b6f14586dbf925956d81bd71ffc826e0&state=XYZ
+
 
 
         $client = new Client([
@@ -56,6 +71,15 @@ class StreamingController extends Controller
     public function getAccessToken()
     {
 
+        // {
+        //     "channel": {
+        //         "id": "23961562",
+        //         "title": "LaraCanal",
+        //         "url": "http://www.ustream.tv/channel/tLScnqZ7KVF",
+        //         "tiny_url": "http://www.ustream.tv/channel/id/23961562"
+        //     }
+        // }
+
         $client = new Client();
         $response = $client->request('POST', 'https://video.ibm.com/oauth2/token', [
             'Authorization' => 'Basic ' .base64_encode('ca361d98cfa63255356b644e83130e919e62085e:ea6b8144deeec575c3d327faa8015b5729d43ddf'),
@@ -64,13 +88,13 @@ class StreamingController extends Controller
                 'client_id' => 'ca361d98cfa63255356b644e83130e919e62085e',
                 'client_secret' => 'ea6b8144deeec575c3d327faa8015b5729d43ddf',
                 'redirect_uri' => 'http://localhost:8000/get_access_token',
-                'code' => '2b889e59cfbf4efac57fb43a37ccc3a1b31a5047',
+                'code' => 'ebe6b3d9b6f14586dbf925956d81bd71ffc826e0',
             ]
         ]);
 
-        // {#1074 ▼
-        // +"access_token": "acc68c57f68dba834235e728acde96f153c697e4"
-        // +"refresh_token": "fd1317d2bf3fbfb078ef5972ac0ef999dd1dbe7c"
+        // {#875 ▼
+        // +"access_token": "e1da7daba87f9726be170ac34f511db8c48619b4"
+        // +"refresh_token": "b516a0d1f815a2ed10a10c0a179e5d17870f2d2e"
         // +"token_type": "bearer"
         // +"expires_in": 86400
         // }

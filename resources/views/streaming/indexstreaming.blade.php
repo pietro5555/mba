@@ -21,6 +21,8 @@
                 Obtener Token
             </a>
 
+            <iframe src="https://video.ibm.com/combined-embed/23961562?videos=gallery" style="border: 0;" webkitallowfullscreen allowfullscreen frameborder="no" width="952" height="624"></iframe>
+
         </div>
     </div>
 

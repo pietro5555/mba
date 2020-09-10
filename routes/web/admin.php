@@ -221,6 +221,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu']]
 
   });
 
+  //Streaming
+  Route::get('streaming', 'StreamingController@index')->name('streaming.index');
+  Route::get('getaccesstoken', 'StreamingController@getAccessToken')->name('streaming.getaccesstoken');
+
     
 
     // Actualiza todos la informacion para los usuarios
@@ -879,7 +883,5 @@ Route::get('cursos/leccion', 'CursosController@leccion')->name('leccion');
 
 
 
-//Streaming
-Route::get('streaming', 'StreamingController@index')->name('streaming.index');
-Route::get('getaccesstoken', 'StreamingController@getAccessToken')->name('streaming.getaccesstoken');
+
 

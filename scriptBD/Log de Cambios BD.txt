@@ -15,3 +15,7 @@ Dev: Crisleivys Gil
 09/09/2020
 Dev: Luisana Marín
 *Nuevo campo featured_at (DATE, NULL) tabla courses (Correr script courses)
+
+09/09/2020
+Dev: Crisleivys Gil
+*Nuevos campos cover, cover_name tabla categories (Correr script categories)

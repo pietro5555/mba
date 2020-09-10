@@ -22,6 +22,7 @@ use App\Models\OpcionesSelect;
 use App\Models\SettingsEstructura; 
 // Llamado a los controladores
 use App\Http\Controllers\IndexController;
+use App\Http\Controllers\PermisosController;
 use App\Http\Controllers\InstallController;
 use Modules\ReferralTree\Http\Controllers\ReferralTreeController;
 
@@ -152,11 +153,7 @@ class RegisterController extends Controller
         $this->insertarCampoUser($user->ID, $data);
 
         // inserta en usermeta
-        $this->insertUserMeta($user, $data);  
-
-        //registrar permisos
-        $instal=new InstallController;
-        $instal->PermisosAdmin($user->ID);     
+        $this->insertUserMeta($user, $data);     
        
         // enviar correo de bienvenida
         $consulta = $this->EnvioCorreo($data, $orden['referido'], $user);
@@ -168,8 +165,18 @@ class RegisterController extends Controller
         
         
         if($data['rango'] == 1){
+
+           //registrar permisos Moderador
+           $permiso=new PermisosController;
+           $permiso->PermisosAdmin($user->ID);
+
             $funciones->msjSistema('Para Terminar el registro debe asignar al usuario '.$user->display_name.' que opciones del menu tendra acceso ', 'success');
             return redirect('/admin/usuarios/administrador?tip=1');
+
+        }elseif($data['rango'] == 0){
+        //registrar permisos Admin
+        $permiso=new PermisosController;
+        $permiso->PermisosAdmin($user->ID);
         }
         
         if (Auth::guest()){

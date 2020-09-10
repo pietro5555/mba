@@ -16,7 +16,6 @@ class EventsController extends Controller
 
     function __construct()
 	{
-        // ALTER TABLE `menu` ADD `eventos` TEXT NULL DEFAULT NULL AFTER `herramientas`;
         // TITLE
 		view()->share('title', 'Eventos');
 		
@@ -170,6 +169,10 @@ class EventsController extends Controller
             }
         }else{
             return redirect('/')->with('msj-erroneo', 'Ya este evento se encuentra registrado en su agenda.');
+    
+        }
+    }
+
 
     /**
     * Admin / Cursos / Listado de Cursos / Eliminar Curso (Lógico)

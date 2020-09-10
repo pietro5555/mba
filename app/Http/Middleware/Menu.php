@@ -1124,7 +1124,7 @@ class Menu
                 'submenu' => 1,
                 'ruta' => 'javascript:;',
                 'icono' => 'far fa-money-bill-alt',
-                'permisoAdmin' => (!empty($permiso)) ? $permiso->transacciones : 0,,
+                'permisoAdmin' => (!empty($permiso)) ? $permiso->transacciones : 0,
                 'activo' => (request()->is('admin/transactions*')) ? 'active' : '',
                 'menus' => [
                     'Ordenes Personales' => [

@@ -191,7 +191,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu']]
       Route::get('edit/{id}', 'CourseController@edit')->name('admin.courses.edit');
       Route::post('update', 'CourseController@update')->name('admin.courses.update');
       Route::get('change-status/{id}/{status}', 'CourseController@change_status')->name('admin.courses.change-status');
-      Route::get('featured', 'CourseController@featured')->name('admin.courses.featured');
       Route::post('add-featured', 'CourseController@add_featured')->name('admin.courses.add-featured');
       Route::get('quit-featured/{id}', 'CourseController@quit_featured')->name('admin.courses.quit-featured');
 

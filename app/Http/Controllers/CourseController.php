@@ -210,22 +210,7 @@ class CourseController extends Controller{
     }
 
     /**
-     * Admin / Cursos / Cursos Destacados (Slider Principal)
-     */
-    public function featured(){
-        // TITLE
-        view()->share('title', 'Gestionar Cursos Destacados');
-
-        $cursos = Course::where('status', '=', 1)
-                    ->orderBy('featured', 'DESC')
-                    ->get();
-
-        return view('admin.courses.featured')->with(compact('cursos'));
-    }
-
-    /**
-     * Admin / Cursos / Cursos Destacados (Slider Principal)
-     * Destacar Curso y cargar su imagen destacada
+     * Admin / Cursos / Destacar Curso y cargar su imagen destacada
      */
     public function add_featured(Request $request){
         $curso = Course::find($request->course_id);
@@ -238,14 +223,14 @@ class CourseController extends Controller{
             $curso->featured_cover_name = $file->getClientOriginalName();
         }
         $curso->featured = 1;
+        $curso->featured_at = date('Y-m-d');
         $curso->save();
 
-        return redirect('admin/courses/featured')->with('msj-exitoso', 'El curso ha sido destacado con éxito.');
+        return redirect('admin/courses')->with('msj-exitoso', 'El curso ha sido destacado con éxito.');
     }
 
      /**
-     * Admin / Cursos / Cursos Destacados (Slider Principal)
-     * Quitar Curso Destacado
+     * Admin / Cursos / Quitar Curso Destacado
      */
     public function quit_featured($id){
         $curso = Course::find($id);
@@ -257,9 +242,10 @@ class CourseController extends Controller{
         $curso->featured_cover = NULL;
         $curso->featured_cover_name = NULL;
         $curso->featured = 0;
+        $curso->featured_at = NULL;
         $curso->save();
 
-        return redirect('admin/courses/featured')->with('msj-exitoso', 'El curso ha sido quitado de destacados con éxito.');
+        return redirect('admin/courses')->with('msj-exitoso', 'El curso ha sido quitado de destacados con éxito.');
     }
 }
 

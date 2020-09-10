@@ -22,7 +22,7 @@ class HomeController extends Controller{
    public function index(){
       $cursosDestacados = Course::where('featured', '=', 1)
                               ->where('status', '=', 1)
-                              ->orderBy('id', 'DESC')
+                              ->orderBy('featured_at', 'DESC')
                               ->get();
 
       $cursosNuevos = Course::where('status', '=', 1)

@@ -1018,12 +1018,6 @@ class Menu
                         'black'=> '0',
                         'oculto'=> 'activo',
                     ],
-                    'Gestionar Destacados' => [
-                        'ruta' => 'admin.courses.featured',
-                        'complementoruta' => '',
-                        'black'=> '0',
-                        'oculto'=> 'activo',
-                    ],
                     'Gestionar Categorías' => [
                         'ruta' => 'admin.courses.categories',
                         'complementoruta' => '',
@@ -1124,7 +1118,7 @@ class Menu
                 'submenu' => 1,
                 'ruta' => 'javascript:;',
                 'icono' => 'far fa-money-bill-alt',
-                'permisoAdmin' => (!empty($permiso)) ? $permiso->transacciones : 0,,
+                'permisoAdmin' => (!empty($permiso)) ? $permiso->transacciones : 0,
                 'activo' => (request()->is('admin/transactions*')) ? 'active' : '',
                 'menus' => [
                     'Ordenes Personales' => [

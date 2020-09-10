@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Auth;
 use Illuminate\Support\Str as Str;
 use App\Models\Course;
+use App\Models\Category;
 use DB;
 
 class CursosController extends Controller
@@ -63,10 +64,24 @@ class CursosController extends Controller
             }
          }
          
+        $courses = Category::withCount('courses')
+        ->take(9)
+        ->get();
         
+         return view('cursos.cursos')->with(compact('username','cursosDestacados', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next', 'courses'));
 
-         return view('cursos.cursos')->with(compact('username','cursosDestacados', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next'));
+    }
 
+    /*MOSTRAR CURSOS POR CATEGORIA*/
+    public function show_course_category($category_id){
+
+    $courses = Course::where('category_id','=', $category_id)->get();
+    $category_name = Category::where('categories.id', '=', $category_id)->first();
+
+       if($courses)
+       {
+        return view('cursos.cursos_categorias', compact('courses', 'category_name'));
+       }
     }
 
     public function show_one_course()
@@ -87,7 +102,6 @@ class CursosController extends Controller
         $like->likes = $like->likes+1;
         $like->save();   
     }
-
 
 
     /**

@@ -30,7 +30,14 @@ class CategoryController extends Controller{
         $categoria = new Category($request->all());
         $categoria->slug = Str::slug($categoria->title);
         $categoria->save();
-
+        if ($request->hasFile('cover')){
+            $file = $request->file('cover');
+            $name = $categoria->id.".".$file->getClientOriginalExtension();
+            $file->move(public_path().'/uploads/images/categories/covers', $name);
+            $categoria->cover = $name;
+            $categoria->cover_name = $file->getClientOriginalName();
+        }
+        $categoria->save();
         return redirect('admin/courses/categories')->with('msj-exitoso', 'La categoría '.$categoria->title.' ha sido agregada con éxito.');
     }
 
@@ -53,7 +60,14 @@ class CategoryController extends Controller{
         $categoria->fill($request->all());
         $categoria->slug = Str::slug($categoria->title);
         $categoria->save();
-        
+         if ($request->hasFile('cover')){
+            $file = $request->file('cover');
+            $name = $categoria->id.".".$file->getClientOriginalExtension();
+            $file->move(public_path().'/uploads/images/categories/covers', $name);
+            $categoria->cover = $name;
+            $categoria->cover_name = $file->getClientOriginalName();
+        }
+        $categoria->save();
         return redirect('admin/courses/categories')->with('msj-exitoso', 'La categoría '.$categoria->title.' ha sido modificada con éxito.');
     }
 

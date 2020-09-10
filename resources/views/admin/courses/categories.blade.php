@@ -84,7 +84,7 @@
       			<div class="modal-header">
         			<h5 class="modal-title" id="exampleModalLabel">Crear Categoría</h5>
       			</div>
-      			<form action="{{ route('admin.courses.add-category') }}" method="POST">
+      			<form action="{{ route('admin.courses.add-category') }}" method="POST" enctype="multipart/form-data">
 			        {{ csrf_field() }}
 				    <div class="modal-body">
 				        <div class="container-fluid">
@@ -99,6 +99,12 @@
 						            <div class="form-group">
 						                <label>Icono de la Categoría</label>
 						            	<input type="text" class="form-control" name="icon" required>
+						            </div>
+						        </div>
+						        <div class="col-md-12">
+						            <div class="form-group">
+						                <label>Imagen de Cover</label>
+						            	<input type="file" class="form-control" name="cover" >
 						            </div>
 						        </div>
 						    </div>
@@ -121,7 +127,7 @@
       			<div class="modal-header">
         			<h5 class="modal-title" id="exampleModalLabel">Editar Categoría</h5>
       			</div>
-      			<form action="{{ route('admin.courses.update-category') }}" method="POST">
+      			<form action="{{ route('admin.courses.update-category') }}" method="POST" enctype="multipart/form-data">
 			        {{ csrf_field() }}
 			        <input type="hidden" name="category_id" id="category_id">
 				    <div class="modal-body">
@@ -139,6 +145,13 @@
 						            	<input type="text" class="form-control" name="icon" id="category_icon" required>
 						            </div>
 						        </div>
+						        <div class="col-md-12">
+						            <div class="form-group">
+						                <label>Imagen de Cover</label>
+						            	<input type="file" class="form-control" name="cover" >
+						            </div>
+						        </div>
+
 						    </div>
 						</div>
 				        

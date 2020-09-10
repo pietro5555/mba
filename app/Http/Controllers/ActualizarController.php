@@ -142,7 +142,8 @@ class ActualizarController extends Controller
                             'lastname' => $request['lastname'], 
                             'genero' => $request['genero'],
                             'edad' => $request['edad'],
-                            'document' => $request['n_document']
+                            'document' => $request['n_document'],
+                            'biografia' => $request['biografia']
                             ]);
 
                 $user->display_name = $request['firstname'].' '.$request['lastname'];

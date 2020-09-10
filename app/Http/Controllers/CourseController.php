@@ -13,6 +13,12 @@ class CourseController extends Controller{
     *Consulta Ajax para actualizar los cursos (Previous y Next)
     */
     public function load_more_courses_new($ultimoId, $accion){
+        $idStart = 0;
+        $idEnd = 0;
+        $cont = 1;
+        $previous = 1;
+        $next = 1;
+
         if ($accion == 'next'){
             $cursosNuevos = Course::where('id', '<', $ultimoId)
                             ->where('status', '=', 1)
@@ -22,9 +28,19 @@ class CourseController extends Controller{
         }else{
             $cursosNuevos = Course::where('id', '>', $ultimoId)
                             ->where('status', '=', 1)
-                            ->orderBy('id', 'DESC')
+                            ->orderBy('id', 'ASC')
                             ->take(3)
                             ->get();
+
+            $cursosNuevos = $cursosNuevos->sortByDesc('id');
+        }
+
+        foreach ($cursosNuevos as $curso){
+            if ($cont == 1){
+                $idStart = $curso->id;
+            }
+            $idEnd = $curso->id;
+            $cont++;
         }
 
         $ultCurso = Course::select('id')
@@ -36,19 +52,6 @@ class CourseController extends Controller{
                            ->where('status', '=', 1)
                            ->orderBy('id', 'ASC')
                            ->first();
-
-        $idStart = 0;
-        $idEnd = 0;
-        $cont = 1;
-        $previous = 1;
-        $next = 1;
-        foreach ($cursosNuevos as $curso){
-            if ($cont == 1){
-               $idStart = $curso->id;
-            }
-            $idEnd = $curso->id;
-            $cont++;
-        }
 
         if ($idStart == $ultCurso->id){
             $previous = 0;
@@ -207,22 +210,7 @@ class CourseController extends Controller{
     }
 
     /**
-     * Admin / Cursos / Cursos Destacados (Slider Principal)
-     */
-    public function featured(){
-        // TITLE
-        view()->share('title', 'Gestionar Cursos Destacados');
-
-        $cursos = Course::where('status', '=', 1)
-                    ->orderBy('featured', 'DESC')
-                    ->get();
-
-        return view('admin.courses.featured')->with(compact('cursos'));
-    }
-
-    /**
-     * Admin / Cursos / Cursos Destacados (Slider Principal)
-     * Destacar Curso y cargar su imagen destacada
+     * Admin / Cursos / Destacar Curso y cargar su imagen destacada
      */
     public function add_featured(Request $request){
         $curso = Course::find($request->course_id);
@@ -235,14 +223,14 @@ class CourseController extends Controller{
             $curso->featured_cover_name = $file->getClientOriginalName();
         }
         $curso->featured = 1;
+        $curso->featured_at = date('Y-m-d');
         $curso->save();
 
-        return redirect('admin/courses/featured')->with('msj-exitoso', 'El curso ha sido destacado con éxito.');
+        return redirect('admin/courses')->with('msj-exitoso', 'El curso ha sido destacado con éxito.');
     }
 
      /**
-     * Admin / Cursos / Cursos Destacados (Slider Principal)
-     * Quitar Curso Destacado
+     * Admin / Cursos / Quitar Curso Destacado
      */
     public function quit_featured($id){
         $curso = Course::find($id);
@@ -254,9 +242,10 @@ class CourseController extends Controller{
         $curso->featured_cover = NULL;
         $curso->featured_cover_name = NULL;
         $curso->featured = 0;
+        $curso->featured_at = NULL;
         $curso->save();
 
-        return redirect('admin/courses/featured')->with('msj-exitoso', 'El curso ha sido quitado de destacados con éxito.');
+        return redirect('admin/courses')->with('msj-exitoso', 'El curso ha sido quitado de destacados con éxito.');
     }
 }
 

@@ -20,7 +20,34 @@
 	                }
 	            });
 			});
+
 		});
+
+		function changeType($opc){
+			if ($opc == 'add'){
+				if ($('#type').val() == 'Archivo'){
+		        	$('#url').removeAttr("required");
+		        	$("#url_div").hide();
+		        	$('#file').prop("required", true);
+		        	$("#file_div").show();
+		        }else{
+		        	$('#file').removeAttr("required");
+		        	$("#file_div").hide();
+		        	$('#url').prop("required", true);
+		        	$("#url_div").show();
+		        }
+			}else{
+		        if ($('#type2').val() == 'Archivo'){
+		        	$('#url2').removeAttr("required");
+		        	$("#url_div2").hide();
+		        	$("#file_div2").show();
+		        }else{
+		        	$("#file_div2").hide();
+		        	$('#url2').prop("required", true);
+		        	$("#url_div2").show();
+		        }
+			}
+		}
 	</script>
 @endpush
 
@@ -41,7 +68,7 @@
 		<div class="box">
 			<div class="box-body">
 				<div style="text-align: right;">
-					<a data-toggle="modal" data-target="#modal-new" class="btn btn-info descargar"><i class="fa fa-plus-circle"></i> Nueva Lección</a>
+					<a data-toggle="modal" data-target="#modal-new" class="btn btn-info"><i class="fa fa-plus-circle"></i> Nuevo Recurso</a>
 				</div>
 				
 				<br class="col-xs-12">
@@ -51,24 +78,24 @@
 						<tr>
 							<th class="text-center">#</th>
 							<th class="text-center">Título</th>
-							<th class="text-center">Descripción</th>
-                            <th class="text-center">URL</th>
-                            <th class="text-center">Recursos Adicionales</th>
+							<th class="text-center">Tipo</th>
 							<th class="text-center">Acción</th>
 						</tr>
 					</thead>
 					<tbody>
-						@foreach($curso->lessons as $leccion)
+						@foreach($leccion->materials as $material)
 							<tr>
-								<td class="text-center">{{ $leccion->id }}</td>
-								<td class="text-center">{{ $leccion->title }}</td>
-								<td class="text-center">{{ $leccion->description }}</td>
-                                <td class="text-center">{{ $leccion->url }}</td>
-                                <td class="text-center">{{ $leccion->materials->count() }}</td>
+								<td class="text-center">{{ $material->id }}</td>
+								<td class="text-center">{{ $material->title }}</td>
+                                <td class="text-center">{{ $material->type }}</td>
 								<td class="text-center">
-									<a class="btn btn-info editar" data-route="{{ route('admin.courses.lessons.edit', $leccion->id) }}"><i class="fa fa-edit"></i></a>
-									<a class="btn btn-warning" href="{{ route('admin.courses.lessons.resources', $leccion->id) }}" title="Ver Recursos Adicionales"><i class="fa fa-file"></i></a>
-									<a class="btn btn-danger" href="{{ route('admin.courses.lessons.delete', $leccion->id) }}" title="Eliminar"><i class="fa fa-ban"></i></a>
+									@if ($material->type == 'Enlace')
+										<a class="btn btn-warning" href="{{ $material->material }}" target="_blank"><i class="fa fa-search"></i></a>
+									@else
+										<a class="btn btn-warning" href="{{ url('uploads/courses/lessons/materials/'.$material->material) }}" target="_blank"><i class="fa fa-search"></i></a>
+									@endif
+									<a class="btn btn-info editar" data-route="{{ route('admin.courses.lessons.resources.edit', $material->id) }}"><i class="fa fa-edit"></i></a>
+									<a class="btn btn-danger" href="{{ route('admin.courses.lessons.resources.delete', $material->id) }}" title="Eliminar"><i class="fa fa-ban"></i></a>
 								</td>
 							</tr>
 						@endforeach
@@ -78,36 +105,44 @@
 		</div>
 	</div>
 
-	<!-- Modal Agregar Leccion -->
+	<!-- Modal Agregar Recurso -->
 	<div class="modal fade" id="modal-new" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   		<div class="modal-dialog" role="document">
     		<div class="modal-content">
       			<div class="modal-header">
-        			<h5 class="modal-title" id="exampleModalLabel">Crear Lección</h5>
+        			<h5 class="modal-title" id="exampleModalLabel">Crear Material</h5>
       			</div>
-      			<form action="{{ route('admin.courses.lessons.store') }}" method="POST">
+      			<form action="{{ route('admin.courses.lessons.resources.store') }}" method="POST" enctype="multipart/form-data">
                     {{ csrf_field() }}
-                    <input type="hidden" name="course_id" value="{{ $curso->id }}">
-                    <input type="hidden" name="course_slug" value="{{ $curso->slug }}">
+                    <input type="hidden" name="lesson_id" value="{{ $leccion->id }}">
 				    <div class="modal-body">
 				        <div class="container-fluid">
 	    					<div class="row">
 						        <div class="col-md-12">
 						            <div class="form-group">
-						                <label>Título de la Lección</label>
+						                <label>Título</label>
 						            	<input type="text" class="form-control" name="title" required>
 						            </div>
 						        </div>
 						        <div class="col-md-12">
 						            <div class="form-group">
-						                <label>Descripción</label>
-						            	<textarea class="form-control" name="description"></textarea> 
+						                <label>Tipo</label>
+						            	<select class="form-control" name="type" id="type" onchange="changeType('add');">
+						            		<option value="Archivo">Archivo</option>
+						            		<option value="Enlace">Enlace</option>
+						            	</select>
 						            </div>
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-12" id="file_div">
+						            <div class="form-group">
+						                <label>Archivo</label>
+						            	<input type="file" class="form-control" name="file" id="file" required>
+						            </div>
+						        </div>
+                                <div class="col-md-12" id="url_div" style="display: none;">
 						            <div class="form-group">
 						                <label>URL</label>
-						            	<input type="url" class="form-control" name="url" required>
+						            	<input type="url" class="form-control" name="url" id="url">
 						            </div>
 						        </div>
 						    </div>
@@ -122,14 +157,14 @@
   		</div>
 	</div>
 
-	<!-- Modal Editar Leccion-->
+	<!-- Modal Editar Recurso-->
 	<div class="modal fade" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   		<div class="modal-dialog" role="document">
     		<div class="modal-content">
       			<div class="modal-header">
         			<h5 class="modal-title" id="exampleModalLabel">Modificar Leccion</h5>
       			</div>
-      			<form action="{{ route('admin.courses.lessons.update') }}" method="POST" enctype="multipart/form-data">
+      			<form action="{{ route('admin.courses.lessons.resources.update') }}" method="POST" enctype="multipart/form-data">
 			        {{ csrf_field() }}
 				    <div class="modal-body">
 				        <div class="container-fluid" id="content-modal">

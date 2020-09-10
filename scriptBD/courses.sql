@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-09-2020 a las 21:41:12
+-- Tiempo de generación: 10-09-2020 a las 03:48:02
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.4.4
 
@@ -40,10 +40,24 @@ CREATE TABLE `courses` (
   `featured` tinyint(1) NOT NULL DEFAULT 0,
   `featured_cover` varchar(255) DEFAULT NULL,
   `featured_cover_name` varchar(255) DEFAULT NULL,
+  `featured_at` date DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '0 = No Disponible. 1 = Disponible',
+  `likes` int(10) UNSIGNED DEFAULT NULL COMMENT 'Para guardar el numero de likes que tiene ese curso',
+  `shares` int(10) UNSIGNED DEFAULT NULL COMMENT 'Para guardar el numero de veces que ha sido compartido',
+  `views` int(10) UNSIGNED DEFAULT NULL COMMENT 'Para guardar el numero de visualizaciones',
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `courses`
+--
+
+INSERT INTO `courses` (`id`, `mentor_id`, `title`, `slug`, `category_id`, `subcategory_id`, `description`, `cover`, `cover_name`, `featured`, `featured_cover`, `featured_cover_name`, `featured_at`, `status`, `likes`, `shares`, `views`, `created_at`, `updated_at`) VALUES
+(1, 7, 'Cómo administrar tus finanzas', 'como-administrar-tus-finanzas', 1, 1, 'Curso de economia', '1.png', 'slider1.png', 1, '1.gif', 'Imagen2.gif', '2020-09-09', 1, 1, 0, 3, '2020-09-08 14:04:07', '2020-09-09 20:46:36'),
+(2, 7, 'Curso completo de Inteligencia Artificial con Python', 'curso-completo-de-inteligencia-artificial-con-python', 8, 4, 'Curso completo de Inteligencia Artificial con Python', '2.png', 'img-recommended2.png', 0, NULL, NULL, NULL, 0, 2, 4, 4, '2020-09-08 14:55:12', '2020-09-08 16:18:42'),
+(3, 7, 'Forex Begins: Curso de trading en Forex gratuito', 'forex-begins-curso-de-trading-en-forex-gratuito', 5, 1, 'Forex Begins: Curso de trading en Forex gratuito.', '3.png', 'img-recommended4.png', 0, NULL, NULL, NULL, 1, 2, 2, 2, '2020-09-08 16:17:28', '2020-09-08 16:17:28'),
+(4, 7, 'Análisis Técnico de los Mercados Financieros', 'analisis-tecnico-de-los-mercados-financieros', 3, 5, NULL, '4.png', 'img-recommended5.png', 0, NULL, NULL, NULL, 1, 3, 4, 4, '2020-09-08 16:46:14', '2020-09-08 16:54:19');
 
 --
 -- Índices para tablas volcadas
@@ -63,7 +77,7 @@ ALTER TABLE `courses`
 -- AUTO_INCREMENT de la tabla `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -532,6 +532,11 @@ class SettingController extends Controller
                     'binario' => $datos->binario,
                     'usuario' => $datos->usuario,
                     'tienda' => $datos->tienda,
+                    'transacciones' => $datos->transacciones,
+                    'usuarios' => $datos->usuarios,
+                    'red' => $datos->red,
+                    'cursos' => $datos->cursos,
+                    'eventos' => $datos->eventos,
 				]);
 			} else {
 				Permiso::create([
@@ -559,11 +564,16 @@ class SettingController extends Controller
                     'binario' => $datos->binario,
                     'usuario' => $datos->usuario,
                     'tienda' => $datos->tienda,
+                    'transacciones' => $datos->transacciones,
+                    'usuarios' => $datos->usuarios,
+                    'red' => $datos->red,
+                    'cursos' => $datos->cursos,
+                    'eventos' => $datos->eventos,
 				]);
 			}
-				return redirect('admin/settings/permisos')->with('msj', 'Permisos al Usuario '.$datos->nameuser.' Actualizados');
+				return redirect()->back()->with('msj', 'Permisos al Usuario '.$datos->nameuser.' Actualizados');
 		} else {
-			return redirect('admin/settings/permisos');
+			return redirect()->back()->with('msj', 'Lo sentimos esta peticion no pudo ser procesada');
 		}
 		
 	}

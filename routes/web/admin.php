@@ -157,16 +157,10 @@ Route::post('/likes', 'CursosController@course_likes')->name( 'like');
 Route::get('/anotaciones', 'NoteController@index')->name('anotaciones');
 Route::post('/anotaciones/store', 'NoteController@store')->name('live.anotaciones');
 
+//Configurar eventos
+Route::post('/settings/event/{event_id}', 'SetEventController@store')->name('set.event.store');
 
 
-//Eventos
-    Route::group(['prefix' => 'events'], function(){
-      Route::get('/', 'EventsController@index')->name('admin.events.index');
-      Route::get('show/{id}', 'EventsController@show')->name('admin.events.show');
-      Route::post('store', 'EventsController@store')->name('admin.events.store');
-      Route::put('edit/{id}', 'EventsController@edit')->name('admin.events.edit');
-      Route::delete('delete/{id}', 'EventsController@delete')->name('admin.events.delete');
-    });
 /* Rutas de la Landing */
 Route::get('load-more-courses-new/{ultimoId}/{accion}', 'CourseController@load_more_courses_new')->name('landing.load-more-courses-new');
 Route::get('book-event/{evento}', 'EventsController@book')->name('landing.book-event');

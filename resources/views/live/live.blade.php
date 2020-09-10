@@ -2,6 +2,7 @@
 
 @section('content')
 @stack('styles')
+
 <div class="bg-dark-gray">
 <div class="container-fluid">
   <div class="row">
@@ -71,6 +72,23 @@
     />
   </video>
 </div>
+@if (Session::has('msj-exitoso'))
+    <div class="alert alert-success alert-dismissible fade show mt-2" role="alert">
+        <strong>{{ Session::get('msj-exitoso') }}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+@endif
+
+@if (Session::has('msj-erroneo'))
+    <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert">
+        <strong>{{ Session::get('msj-erroneo') }}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+@endif
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-12 pl-0">
@@ -176,14 +194,15 @@
                   <nav >
                   <div class="nav nav-tabs nav-fill" id="nav-tab-chat" role="tablist">
 
-                    <a class="nav-item nav-link active" id="nav-settings-tab" data-toggle="tab" href="#nav-settings" role="tab" aria-controls="nav-settings" aria-selected="false">
+                    <a class="nav-item nav-link active" id="nav-settings-tab" data-toggle="tab"  href="#nav-settings" role="tab" aria-controls="nav-settings" aria-selected="true">
                     <img src="{{ asset('images/icons/settings.svg') }}" height="30px" class="">
-                    <h6 class="text-center d-none d-sm-none d-md-block">Configuración</h6></a>
+                    <h6 class="text-center d-none d-sm-none d-md-block">Configuración</h6>
+                    </a>
                     <a class="nav-item nav-link" id="nav-participantes-tab" data-toggle="tab" href="#nav-participantes" role="tab" aria-controls="nav-participantes" aria-selected="false">
                     <img src="{{ asset('images/icons/person.svg') }}" height="30px" class="">
                     <h6 class="text-center d-none d-sm-none d-md-block">Participantes</h6></a>
 
-                    <a class="nav-item nav-link active" id="nav-chat-tab" data-toggle="tab" href="#nav-chat" role="tab" aria-controls="nav-chat" aria-selected="true">
+                    <a class="nav-item nav-link" id="nav-chat-tab" data-toggle="tab" href="#nav-chat" role="tab" aria-controls="nav-chat" aria-selected="false">
                     <img src="{{ asset('images/icons/comment.svg') }}" height="30px" class="">
                     <h6 class="text-center d-none d-sm-none d-md-block">Chat</h6></a>
 
@@ -206,8 +225,22 @@
                 </div>
                 <div class="col pl-0 pr-0 mr-2">
                   <div class="tab-content" id="nav-chat-tabContent">
-              <div class="tab-pane fade pl-2" id="nav-settings" role="tabpanel" aria-labelledby="nav-settings-tab">
-                    Sección para configuraciones
+              <div class="tab-pane fade pl-2 active show" id="nav-settings" role="tabpanel" aria-labelledby="nav-settings-tab">
+                    <div style="text-align: right;">
+                      <a data-toggle="modal" data-target="#modal-settings-survey" class="btn btn-primary"><i class="fa fa-plus-circle"></i> Agregar Encuesta</a>
+                    </div> <br>
+                    <div style="text-align: right;">
+                      <a data-toggle="modal" data-target="#modal-settings-presentation" class="btn btn-primary"><i class="fa fa-plus-circle"></i> Agregar Presentación</a>
+                    </div> <br>
+                    <div style="text-align: right;">
+                      <a data-toggle="modal" data-target="#modal-settings" class="btn btn-primary"><i class="fa fa-plus-circle"></i> Agregar Video</a>
+                    </div> <br>
+                    <div style="text-align: right;">
+                      <a data-toggle="modal" data-target="#modal-settings-file" class="btn btn-primary"><i class="fa fa-plus-circle"></i> Agregar Archivos</a>
+                    </div> <br>
+                    <div style="text-align: right;">
+                      <a data-toggle="modal" data-target="#modal-settings-enable" class="btn btn-primary"><i class="fa fa-check"></i> Habilitar recursos</a>
+                    </div>
               </div>
               <div class="tab-pane fade pl-2" id="nav-participantes" role="tabpanel" aria-labelledby="nav-participantes-tab">
                     Sección para participantes
@@ -412,8 +445,201 @@
   
 </div>
 
+<!-- Modal Agregar recursos video -->
+<div class="modal fade" id="modal-settings" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  		<div class="modal-dialog" role="document">
+    		<div class="modal-content" >
+      			<div class="modal-header">
+        			<h5 class="modal-title" id="exampleModalLabel">Agregar video</h5>
+      			</div>
+      			<form action="{{ route('set.event.store', [1]) }}" method="POST">
+			        {{ csrf_field() }} 
+				    <div class="modal-body">
+				        <div class="container-fluid">
+	    					<div class="row">
+						        <div class="col-md-12">
+                        <div class="form-group">
+						                <label>Link del Video</label>
+						            	  <input type="text" class="form-control" name="url_video" required>
+						            </div>
+						        </div>
+						    </div>
+						</div>
+            <input type="hidden" name="type" value='video' required>
+				        
+				    </div>
+	      			<div class="modal-footer">
+	        			<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+	        			<button type="submit" class="btn btn-success">Enviar</button>
+	      			</div>
+	      		</form>
+    		</div>
+  		</div>
+	</div>
 
+<!-- Modal Agregar recursos file -->
+<div class="modal fade" id="modal-settings-file" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  		<div class="modal-dialog" role="document">
+    		<div class="modal-content" >
+      			<div class="modal-header">
+        			<h5 class="modal-title" id="exampleModalLabel">Agregar Archivos</h5>
+      			</div>
+      			<form action="{{ route('set.event.store', [1]) }}" method="POST" enctype="multipart/form-data" >
+			        {{ csrf_field() }} 
+				    <div class="modal-body">
+				        <div class="container-fluid">
+	    					<div class="row">
+						        <div class="col-md-12">
+                        <div class="form-group">
+						                <label>Seleccione un Archivo</label>
+						            	  <input type="file" class="form-control" name="file" required>
+						            </div>
+						        </div>
+						    </div>
+						</div>
+            <input type="hidden" name="type" value='file' required>
+				        
+				    </div>
+	      			<div class="modal-footer">
+	        			<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+	        			<button type="submit" class="btn btn-success">Enviar</button>
+	      			</div>
+	      		</form>
+    		</div>
+  		</div>
+	</div>
 
+<!-- Modal Agregar recursos presentation -->
+<div class="modal fade" id="modal-settings-presentation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  		<div class="modal-dialog" role="document">
+    		<div class="modal-content" >
+      			<div class="modal-header">
+        			<h5 class="modal-title" id="exampleModalLabel">Agregar Presentación</h5>
+      			</div>
+      			<form action="{{ route('set.event.store', [1]) }}" method="POST" enctype="multipart/form-data" >
+			        {{ csrf_field() }} 
+				    <div class="modal-body">
+				        <div class="container-fluid">
+	    					<div class="row">
+						        <div class="col-md-12">
+                        <div class="form-group">
+						                <label>Seleccione la presentación</label>
+						            	  <input type="file" class="form-control" name="presentation" required>
+						            </div>
+						        </div>
+						    </div>
+						</div>
+            <input type="hidden" name="type" value='presentation' required>
+				        
+				    </div>
+	      			<div class="modal-footer">
+	        			<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+	        			<button type="submit" class="btn btn-success">Enviar</button>
+	      			</div>
+	      		</form>
+    		</div>
+  		</div>
+	</div>
 
+<!-- Modal Agregar recursos encuesta -->
+<div class="modal fade" id="modal-settings-survey" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  		<div class="modal-dialog modal-lg" role="document">
+    		<div class="modal-content" >
+      			<div class="modal-header">
+        			<h5 class="modal-title" id="exampleModalLabel">Agregar Encuesta</h5>
+      			</div>
+      			<form action="{{ route('set.event.store', [1]) }}" method="POST" id="formQuestion">
+			        {{ csrf_field() }} 
+				    <div class="modal-body">
+				        <div class="container-fluid">
+	    					<div class="row">
+                    <div class="col-md-12">
+                      <div id="list_question">
+                          <div class="form-group">
+                              <label>Escribe la pregunta #1</label>
+                              <textarea required class="form-control" name="q1" id="q1"></textarea>
+                          </div>
+                      </div>
+                    </div>
 
-  @endsection       
+                    <div class="col-md-12">
+                      <a title="Agregar una pregunta más"  class="btn btn-primary btn-circle addQuestion"><i class="fa fa-plus-circle"></i></a>
+						        </div>
+						    </div>
+						</div>
+            <input type="hidden" name="type" value='survey' required>
+				        
+				    </div>
+	      			<div class="modal-footer">
+	        			<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+	        			<button type="button" class="btn btn-success sendFormQuestion">Enviar</button>
+	      			</div>
+	      		</form>
+    		</div>
+  		</div>
+	</div>
+
+  <!-- Modal Habilitar recursos 20130394-->
+  <div class="modal fade" id="modal-settings-enable" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  		<div class="modal-dialog" role="document">
+    		<div class="modal-content">
+      			<div class="modal-header">
+        			<h5 class="modal-title" id="exampleModalLabel">Configuraciones del Evento</h5>
+      			</div>
+      			<form action="{{ route('admin.courses.add-subcategory') }}" method="POST">
+			        {{ csrf_field() }} 
+				    <div class="modal-body">
+				        <div class="container-fluid">
+	    					<div class="row">
+						        <div class="col-md-12">
+                        <label>Habilitar recursos</label>
+						        </div>
+						    </div>
+						</div>
+				        
+				    </div>
+	      			<div class="modal-footer">
+	        			<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+	      			</div>
+	      		</form>
+    		</div>
+  		</div>
+	</div>
+
+ 
+@endsection
+
+@push('scripts')
+  <script type="text/javascript">
+    let  nextinput = 1;
+    $('.addQuestion').on('click',function(e){
+        e.preventDefault();
+        nextinput++;
+        campo = '<div class="form-group"> <label>Escribe la pregunta #'+nextinput+'</label> <textarea required class="form-control" id="q'+nextinput+'"&nbsp; name="q' + nextinput + '"&nbsp; ></textarea> </div> ';
+        $("#list_question").append(campo);
+    
+    });
+
+    
+
+    $('.sendFormQuestion').on('click',function(e){
+      e.preventDefault();
+      // var questionArray = [];
+
+      $("#formQuestion").find(':textarea').each(function(e) {
+        // var elemento= this;
+        // alert("elemento.value="+ elemento.value);
+
+        console.log("seee this", this)
+       console.log("seee e", e)
+
+        // questionArray.push(elemento.value)
+      });
+
+      // console.log("seee q", questionArray)
+
+    });
+    
+
+  </script>
+@endpush

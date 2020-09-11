@@ -24,7 +24,7 @@ class User extends Authenticatable
         'name',
         'birthdate', 'gender','user_login', 'user_pass', 'user_nicename', 
         'user_email', 'user_url', 'user_registered', 'user_activation_key', 'user_status', 
-        'display_name', 'password', 'avatar', 'provider_id', 'provider', 
+        'display_name', 'password', 'avatar','provider_id', 'provider', 
         'access_token', 'referred_id', 'status', 'wallet_amount','billetera', 'bank_amount', 
         'clave', 'activacion', 'sponsor_id', 'position_id', 'tipouser', 'rol_id',
         'ladomatriz', 'puntosPro', 'puntosRed', 'puntosDer', 'puntosIzq',

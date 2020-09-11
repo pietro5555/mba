@@ -1,5 +1,23 @@
 @extends('layouts.landing')
-
+@push('scripts')
+    <script>
+        function loadMoreCoursesNew($accion){
+            if ($accion == 'next'){
+                var route = $(".btn-arrow-next").attr('data-route');
+            }else{
+                var route = $(".btn-arrow-previous").attr('data-route');
+            }
+            
+            $.ajax({
+                url:route,
+                type:'GET',
+                success:function(ans){
+                    $("#new-courses-section").html(ans); 
+                }
+            });
+        }
+    </script>
+@endpush
 @section('content')
     
     <div class="title-page-course col-md"><span class="text-white">
@@ -323,79 +341,32 @@
 
  
  {{-- SECCIÓN CURSOS POR CATEGORÍA --}}
- <div class="section-landing">
+ <div class="">
     <div class="container-fluid">
         <div class="col section-title-category">CURSOS POR CATEGORÍA
         </div>
         <div class="row">
-            <div class="col-sm d-inline-flex p-2"> 
-                <img class="card-img-top img-fluid course-category1" src="{{ asset('images/img-category1.png') }}" alt="Card image cap">
-                <div class="course-category-caption">
-                        <div class="col">
-                            <h4>Finanzas</h4>
+            @foreach ($courses as $course)
+            @if ($course->courses_count > 0)
+            <div class="col-sm-4 d-inline-flex p-2"> 
+                @if (!is_null($course->cover))
+                            <img src="{{ asset('uploads/images/categories/covers/'.$course->cover) }}" class="card-img-top img-fluid course-category1" alt="...">
+                        @else
+                            <img src="{{ asset('uploads/images/categories/covers/default.png') }}" class="card-img-top img-fluid course-category1" alt="...">
+                        @endif
+                <div class="course-category-caption ml-1 mr-1">
+                        <div class="col-sm-lg text-sm-left font-weight-bold">
+                            <a href="{{ url('cursos/category/'.$course->id) }}" class="col-sm-lg text-sm-left  text-white" >{{$course->title}}</a>
                         </div>
-                        <div class="col">
-                        <h5>43 Cursos</h5>
-                        </div>
-                </div> 
-            </div>
-            <div class="col-sm d-inline-flex p-2"> 
-                <img class="card-img-top img-fluid course-category2" src="{{ asset('images/img-category2.png') }}" alt="Card image cap">
-                <div class="course-category-caption">
-                        <div class="col">
-                            <h4>Emprendimiento</h4>
-                        </div>
-                        <div class="col">
-                        <h5>32 Cursos</h5>
+                        <div class="col-lg">
+                        <a href="" class="text-white font-weight-bold">{{$course->courses_count}} Cursos</a>
                         </div>
                 </div> 
             </div>
-            <div class="col-sm d-inline-flex p-2"> 
-                <img class="card-img-top img-fluid course-category3" src="{{ asset('images/img-category3.png') }}" alt="Card image cap">
-                <div class="course-category-caption">
-                        <div class="col">
-                            <h4>Negocios</h4>
-                        </div>
-                        <div class="col">
-                        <h5>51 Cursos</h5>
-                        </div>
-                </div> 
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm d-inline-flex p-2"> 
-                <img class="card-img-top img-fluid course-category4" src="{{ asset('images/img-category4.png') }}" alt="Card image cap">
-                <div class="course-category-caption">
-                        <div class="col">
-                            <h4>Marketing</h4>
-                        </div>
-                        <div class="col">
-                        <h5>64 Cursos</h5>
-                        </div>
-                </div> 
-            </div>
-            <div class="col-sm d-inline-flex p-2"> 
-                <img class="card-img-top img-fluid course-category5" src="{{ asset('images/img-category5.png') }}" alt="Card image cap">
-                <div class="course-category-caption">
-                        <div class="col">
-                            <h4>Ventas</h4>
-                        </div>
-                        <div class="col">
-                        <h5>28 Cursos</h5>
-                        </div>
-                </div> 
-            </div>
-            <div class="col-sm d-inline-flex p-2"> 
-                <img class="card-img-top img-fluid course-category6" src="{{ asset('images/img-category6.png') }}" alt="Card image cap">
-                <div class="course-category-caption">
-                        <div class="col">
-                            <h4>Liderazgo</h4>
-                        </div>
-                        <div class="col">
-                        <h5>37 Cursos</h5>
-                        </div>
-                </div> 
-            </div>
+            @endif
+
+            @endforeach
+            
         </div>
         
     </div>
@@ -409,6 +380,7 @@
     </div>
     <div class="container-fluid">
         <div class="row d-flex flex-row p-2">
+            @foreach ($mentores as $mentor)
             <div class="col-xs-12 col-sm-4 mt-2">
                 <div class="card mentors-card">
                     <div class="row no-gutters">
@@ -417,10 +389,11 @@
                         </div>
                         <div class="col">
                             <div class="card-block px-2">
-                                <h4 class="card-title mt-4">Nombre Apellido</h4>
-                                <p class="card-text">Categoría</p>
+                                <h4 class="card-title mt-4">{{$mentor->nombre}}</h4>
+                                <p class="card-text">{{$mentor->categoria}}</p>
                                 <br>
-                                <p class="card-text text-lg-right">Ver perfil  <i class=" fa fa-angle-right"> </i></p>
+
+                                <p class="card-text text-lg-right"><a href="{{ url('cursos/mentor/'.$mentor->mentor_id) }}" class="col-sm-lg text-sm-left card-text" >Ver perfil</a>  <i class=" fa fa-angle-right"> </i></p>
                             </div>
                             
                            
@@ -428,203 +401,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-4 mt-2">
-                <div class="card mentors-card">
-                    <div class="row no-gutters">
-                        <div class="col-auto">
-                            <img src="{{ asset('images/img-mentor2.png') }}" class="img-fluid" alt="">
-                        </div>
-                        <div class="col">
-                            <div class="card-block px-2">
-                                <h4 class="card-title mt-4">Nombre Apellido</h4>
-                                <p class="card-text">Categoría</p>
-                                <br>
-                                <p class="card-text text-lg-right">Ver perfil  <i class=" fa fa-angle-right"> </i></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-4 mt-2">
-                <div class="card mentors-card">
-                    <div class="row no-gutters">
-                        <div class="col-auto">
-                            <img src="{{ asset('images/img-mentor3.png') }}" class="img-fluid" alt="">
-                        </div>
-                        <div class="col">
-                            <div class="card-block px-2">
-                                <h4 class="card-title mt-4">Nombre Apellido</h4>
-                                <p class="card-text">Categoría</p>
-                                <br>
-                                <p class="card-text text-lg-right">Ver perfil  <i class=" fa fa-angle-right"> </i></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-         <div class="row d-flex flex-row p-2">
-            <div class="col-xs-12 col-sm-4 mt-2">
-                <div class="card mentors-card">
-                    <div class="row no-gutters">
-                        <div class="col-auto">
-                            <img src="{{ asset('images/img-mentor4.png') }}" class="img-fluid" alt="">
-                        </div>
-                        <div class="col">
-                            <div class="card-block px-2">
-                                <h4 class="card-title mt-4">Nombre Apellido</h4>
-                                <p class="card-text">Categoría</p>
-                                <br>
-                                <p class="card-text text-lg-right">Ver perfil  <i class=" fa fa-angle-right"> </i></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-4 mt-2">
-                <div class="card mentors-card">
-                    <div class="row no-gutters">
-                        <div class="col-auto">
-                            <img src="{{ asset('images/img-mentor5.png') }}" class="img-fluid" alt="">
-                        </div>
-                        <div class="col">
-                            <div class="card-block px-2">
-                                <h4 class="card-title mt-4">Nombre Apellido</h4>
-                                <p class="card-text">Categoría</p>
-                                <br>
-                                <p class="card-text text-lg-right">Ver perfil  <i class=" fa fa-angle-right"> </i></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-4 mt-2">
-                <div class="card mentors-card">
-                    <div class="row no-gutters">
-                        <div class="col-auto">
-                            <img src="{{ asset('images/img-mentor6.png') }}" class="img-fluid" alt="">
-                        </div>
-                        <div class="col">
-                            <div class="card-block px-2">
-                                <h4 class="card-title mt-4">Nombre Apellido</h4>
-                                <p class="card-text">Categoría</p>
-                                <br>
-                                <p class="card-text text-lg-right">Ver perfil  <i class=" fa fa-angle-right"> </i></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row d-flex flex-row p-2">
-            <div class="col-xs-12 col-sm-4 mt-2">
-                <div class="card mentors-card">
-                    <div class="row no-gutters">
-                        <div class="col-auto">
-                            <img src="{{ asset('images/img-mentor7.png') }}" class="img-fluid" alt="">
-                        </div>
-                        <div class="col">
-                            <div class="card-block px-2">
-                                <h4 class="card-title mt-4">Nombre Apellido</h4>
-                                <p class="card-text">Categoría</p>
-                                <br>
-                                <p class="card-text text-lg-right">Ver perfil  <i class=" fa fa-angle-right"> </i></p>
-                            </div>
-                            
-                           
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-4 mt-2">
-                <div class="card mentors-card">
-                    <div class="row no-gutters">
-                        <div class="col-auto">
-                            <img src="{{ asset('images/img-mentor8.png') }}" class="img-fluid" alt="">
-                        </div>
-                        <div class="col">
-                            <div class="card-block px-2">
-                                <h4 class="card-title mt-4">Nombre Apellido</h4>
-                                <p class="card-text">Categoría</p>
-                                <br>
-                                <p class="card-text text-lg-right">Ver perfil  <i class=" fa fa-angle-right"> </i></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-4 mt-2">
-                <div class="card mentors-card">
-                    <div class="row no-gutters">
-                        <div class="col-auto">
-                            <img src="{{ asset('images/img-mentor9.png') }}" class="img-fluid" alt="">
-                        </div>
-                        <div class="col">
-                            <div class="card-block px-2">
-                                <h4 class="card-title mt-4">Nombre Apellido</h4>
-                                <p class="card-text">Categoría</p>
-                                <br>
-                                <p class="card-text text-lg-right">Ver perfil  <i class=" fa fa-angle-right"> </i></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row d-flex flex-row p-2">
-            <div class="col-xs-12 col-sm-4 mt-2">
-                <div class="card mentors-card">
-                    <div class="row no-gutters">
-                        <div class="col-auto">
-                            <img src="{{ asset('images/img-mentor10.png') }}" class="img-fluid" alt="">
-                        </div>
-                        <div class="col">
-                            <div class="card-block px-2">
-                                <h4 class="card-title mt-4">Nombre Apellido</h4>
-                                <p class="card-text">Categoría</p>
-                                <br>
-                                <p class="card-text text-lg-right">Ver perfil  <i class=" fa fa-angle-right"> </i></p>
-                            </div>
-                            
-                           
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-4 mt-2">
-                <div class="card mentors-card">
-                    <div class="row no-gutters">
-                        <div class="col-auto">
-                            <img src="{{ asset('images/img-mentor11.png') }}" class="img-fluid" alt="">
-                        </div>
-                        <div class="col">
-                            <div class="card-block px-2">
-                                <h4 class="card-title mt-4">Nombre Apellido</h4>
-                                <p class="card-text">Categoría</p>
-                                <br>
-                                <p class="card-text text-lg-right">Ver perfil  <i class=" fa fa-angle-right"> </i></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-4 mt-2">
-                <div class="card mentors-card">
-                    <div class="row no-gutters">
-                        <div class="col-auto">
-                            <img src="{{ asset('images/img-mentor12.png') }}" class="img-fluid" alt="">
-                        </div>
-                        <div class="col">
-                            <div class="card-block px-2">
-                                <h4 class="card-title mt-4">Nombre Apellido</h4>
-                                <p class="card-text">Categoría</p>
-                                <br>
-                                <p class="card-text text-lg-right">Ver perfil  <i class=" fa fa-angle-right"> </i></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
 
 </div>

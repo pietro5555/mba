@@ -18,3 +18,13 @@ Dev: Luisana Marín
 
 11/09/2020
 *nuevos campos about, cover_name, y reutilizacion del campo avatar (wp98_users.sql)
+
+09/09/2020
+Dev: Crisleivys Gil
+*Nuevos campos cover, cover_name tabla categories (Correr script categories)
+
+10/09/2020
+Dev: Luisana Marín
+*Nueva tabla evaluations (Correr script evaluations.sql)
+*Nueva tabla questions (Correr script questions.sql
+

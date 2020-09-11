@@ -152,21 +152,21 @@ Route::get('cursos/curso', 'CursosController@show_one_course')->name('curso');
 Route::get('cursos/leccion', 'CursosController@leccion')->name('leccion');
 //Enviar likes
 Route::post('/likes', 'CursosController@course_likes')->name( 'like');
+// Cursos por categoria
+Route::get('cursos/category/{id}', 'CursosController@show_course_category')->name('show.cursos.category');
+//Route::get('cursos/porcategorias', 'CursosController@show_course_category')->name('show.cursos.category');
+//Perfil del mentor
+Route::get('cursos/mentor/{id}', 'CursosController@perfil_mentor')->name('show.perfil.mentor');
+Route::get('cursos/mentor', 'CursosController@show_course_category')->name('show.cursos.category');
 
 //vista de anotaciones
 Route::get('/anotaciones', 'NoteController@index')->name('anotaciones');
 Route::post('/anotaciones/store', 'NoteController@store')->name('live.anotaciones');
 
+//Configurar eventos
+Route::post('/settings/event/{event_id}', 'SetEventController@store')->name('set.event.store');
 
 
-//Eventos
-    Route::group(['prefix' => 'events'], function(){
-      Route::get('/', 'EventsController@index')->name('admin.events.index');
-      Route::get('show/{id}', 'EventsController@show')->name('admin.events.show');
-      Route::post('store', 'EventsController@store')->name('admin.events.store');
-      Route::put('edit/{id}', 'EventsController@edit')->name('admin.events.edit');
-      Route::delete('delete/{id}', 'EventsController@delete')->name('admin.events.delete');
-    });
 /* Rutas de la Landing */
 Route::get('load-more-courses-new/{ultimoId}/{accion}', 'CourseController@load_more_courses_new')->name('landing.load-more-courses-new');
 Route::get('book-event/{evento}', 'EventsController@book')->name('landing.book-event');
@@ -232,6 +232,16 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu']]
           Route::post('update', 'ResourcesController@update')->name('admin.courses.lessons.resources.update');
           Route::get('delete/{id}', 'ResourcesController@delete')->name('admin.courses.lessons.resources.delete');
         });
+      });
+
+      Route::group(['prefix' => 'evaluation'], function(){
+        Route::post('store', 'EvaluationController@store')->name('admin.courses.evaluation.store');
+        Route::post('update', 'EvaluationController@update')->name('admin.courses.evaluation.update');
+        Route::get('show/{id}', 'EvaluationController@show')->name('admin.courses.evaluation.show');
+        Route::post('add-question', 'EvaluationController@add_question')->name('admin.courses.evaluation.add-question');
+        Route::get('edit-question/{id}', 'EvaluationController@edit_question')->name('admin.courses.evaluation.edit-question');
+        Route::post('update-question', 'EvaluationController@update_question')->name('admin.courses.evaluation.update-question');
+        Route::get('delete-question/{id}', 'EvaluationController@delete_question')->name('admin.courses.evaluation.delete-question');
       });
    });
 

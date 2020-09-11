@@ -17,7 +17,7 @@
             @if ($cursos->count() > 0)
                 @foreach ($cursos as $curso)
                     <div class="col-md-3" style="margin-top: 20px;">
-                        <img src="{{ asset('uploads/images/courses/covers/'.$curso->cover) }}" class="card-img-top" alt="..." style="height: 200px;">
+                        <img src="{{ asset('uploads/images/courses/covers/'.$curso->cover) }}" class="card-img-top" alt="..." style="height: 200px;"> 
                 
                         <div class="card-body" style="background-color: #2f343a;">
                             <h6 class="card-title" style="margin-top: -15px;"> <i class="far fa-play-circle" style="font-size: 16px; color: #6fd843;"></i> {{ $curso->title }}</h6>

@@ -128,6 +128,9 @@ class RegisterController extends Controller
     }else{
         $rol_id = $data['rango'];
     }
+
+        $avatar = $this->imagen_avatar($data);
+
         $user = User::create([
             'user_email' => $data['user_email'],
             'user_status' => '0',
@@ -147,7 +150,9 @@ class RegisterController extends Controller
             'position_id' => $orden['posicion'],
             'tipouser' => $data['tipouser'],
             'status' => '0',
-            'correos' =>'{"pago":"1","compra":"1","pc":"1","liquidacion":"1"}'
+            'correos' =>'{"pago":"1","compra":"1","pc":"1","liquidacion":"1"}',
+            'about' => $data['about'],
+            'avatar' => ($avatar == null) ? 'avatar.png'  : $avatar,
         ]);
 
         $this->insertarCampoUser($user->ID, $data);
@@ -185,6 +190,21 @@ class RegisterController extends Controller
          $funciones->msjSistema('Su Registro ha sido exitoso', 'success');
          return redirect()->back();   
         }
+    }
+
+
+
+    public function imagen_avatar($datos){
+      
+      $nombre_imagen= null;
+      if ($datos->file('cover')) {
+            $imagen = $datos->file('cover');
+            $nombre_imagen = 'user_'.time().'.'.$imagen->getClientOriginalExtension();
+            $path = public_path() .'/uploads/avatar';
+            $imagen->move($path, $nombre_imagen);
+        }
+
+        return $nombre_imagen;
     }
 
     /**

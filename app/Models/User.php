@@ -29,7 +29,8 @@ class User extends Authenticatable
         'clave', 'activacion', 'sponsor_id', 'position_id', 'tipouser', 'rol_id',
         'ladomatriz', 'puntosPro', 'puntosRed', 'puntosDer', 'puntosIzq',
         'fecha_activacion','binario','debiDer','debiIzq','codigo','correos',
-        'limitar','pop_up','autenticacion','fechaver','factor2','modo_oscuro'
+        'limitar','pop_up','autenticacion','fechaver','factor2','modo_oscuro','about'
+        ,'cover_name'
     ];
 
     /**

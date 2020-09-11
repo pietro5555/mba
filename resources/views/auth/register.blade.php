@@ -27,7 +27,7 @@
             {{-- fin mensajes --}}
 
             <!-- form start -->
-            <form class="login-form" method="POST" action="{{ route('autenticacion.save-register') }}">
+            <form class="login-form" method="POST" action="{{ route('autenticacion.save-register') }}" enctype="multipart/form-data">
                 <div class="box-body">
                     {{ csrf_field() }}
                     <div class="row">
@@ -118,6 +118,22 @@
                                        </select>
                                     </div>
                                     @endif
+
+
+                                    <div id="dat-mentor" style="display:none;">
+                                      <div class="form-group">
+                                        <label class="control-label" style="text-align: center;">About
+                                            (*)</label>
+                                        <textarea name="about" class="form-control"></textarea>
+                                       </div>
+
+                                       <div class="form-group">
+                                        <label class="control-label" style="text-align: center;">Imagen de Perfil
+                                            (*)</label>
+                                            <input type="file" name="cover">
+                                        
+                                       </div>
+                                    </div>
                                     
                                     <div class="form-group">
                                         <label class="control-label" style="text-align: center;">Correo Electrónico
@@ -255,6 +271,18 @@
 
 @push('script')
 <script>
+    function datosmentor(){
+
+        var opt = $('#rang').val();
+    
+    if(opt=="2"){
+        $('#dat-mentor').show();
+        }else{
+            $('#dat-mentor').hide();
+        }
+    }
+
+
     function validarEdad(edad) {
         var hoy = new Date();
         var cumpleanos = new Date(edad);
@@ -266,11 +294,7 @@
             edad--;
         }
 
-        if (edad < {
-                {
-                    $settings - > edad_minino
-                }
-            }) {
+        if (edad < {{$settings->edad_minino}} ) {
             document.getElementById("btn").disabled = true;
             document.getElementById("errorEdad").style.display = 'block';
         } else {

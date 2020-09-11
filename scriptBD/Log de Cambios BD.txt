@@ -15,3 +15,6 @@ Dev: Crisleivys Gil
 09/09/2020
 Dev: Luisana Marín
 *Nuevo campo featured_at (DATE, NULL) tabla courses (Correr script courses)
+
+11/09/2020
+*nuevos campos about, cover_name, y reutilizacion del campo avatar (wp98_users.sql)

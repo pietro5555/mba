@@ -1105,4 +1105,9 @@ border-bottom: 1px solid #707070;
         flex-basis: 0;
         flex-grow: 0;
     }
-    }
+
+/* ESTILOS PARA LIVE.BLADE.PHP */
+
+.contentQuestion{
+    display: flex;
+}

@@ -19,3 +19,8 @@ Dev: Luisana Marín
 09/09/2020
 Dev: Crisleivys Gil
 *Nuevos campos cover, cover_name tabla categories (Correr script categories)
+
+10/09/2020
+Dev: Luisana Marín
+*Nueva tabla evaluations (Correr script evaluations.sql)
+*Nueva tabla questions (Correr script questions.sql

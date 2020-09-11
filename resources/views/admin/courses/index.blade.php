@@ -89,7 +89,7 @@
 										<!--<a class="btn btn-info show-img" href="javascript:;" data-title="{{ $curso->title }}" data-source="{{ asset('uploads/images/courses/featured_covers/'.$curso->featured_cover) }}" title="Ver Imagen Destacada"><i class="fa fa-image"></i></a>-->
 										<a class="btn btn-danger" href="{{ route('admin.courses.quit-featured', $curso->id) }}" title="Quitar de Destacados"><i class="fa fa-star"></i></a>
 									@endif
-
+									<a class="btn btn-info" href="{{ route('admin.courses.evaluation.show', $curso->id) }}" title="Evaluación"><i class="far fa-file-alt"></i></a>
 									@if ($curso->status == 1)
 										<a class="btn btn-danger" href="{{ route('admin.courses.change-status', [$curso->id, 0]) }}" title="Deshabilitar"><i class="fa fa-ban"></i></a>
 									@else

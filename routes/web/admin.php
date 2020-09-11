@@ -233,6 +233,16 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu']]
           Route::get('delete/{id}', 'ResourcesController@delete')->name('admin.courses.lessons.resources.delete');
         });
       });
+
+      Route::group(['prefix' => 'evaluation'], function(){
+        Route::post('store', 'EvaluationController@store')->name('admin.courses.evaluation.store');
+        Route::post('update', 'EvaluationController@update')->name('admin.courses.evaluation.update');
+        Route::get('show/{id}', 'EvaluationController@show')->name('admin.courses.evaluation.show');
+        Route::post('add-question', 'EvaluationController@add_question')->name('admin.courses.evaluation.add-question');
+        Route::get('edit-question/{id}', 'EvaluationController@edit_question')->name('admin.courses.evaluation.edit-question');
+        Route::post('update-question', 'EvaluationController@update_question')->name('admin.courses.evaluation.update-question');
+        Route::get('delete-question/{id}', 'EvaluationController@delete_question')->name('admin.courses.evaluation.delete-question');
+      });
    });
 
    //Eventos

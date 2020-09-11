@@ -29,4 +29,8 @@ class Course extends Model
     public function lessons(){
         return $this->hasMany('App\Models\Lesson');
     }
+
+    public function evaluation(){
+        return $this->hasOne('App\Models\Evaluation');
+    }
 }

@@ -557,7 +557,7 @@
                       <div id="list_question">
                           <div class="form-group">
                               <label>Escribe la pregunta #1</label>
-                              <textarea required class="form-control" name="q1" id="q1"></textarea>
+                              <textarea required class="form-control fieldSurvey" name="q1" id="q1"></textarea>
                           </div>
                       </div>
                     </div>
@@ -568,6 +568,7 @@
 						    </div>
 						</div>
             <input type="hidden" name="type" value='survey' required>
+            <input type="hidden" name="questions" class="questionsArray">
 				        
 				    </div>
 	      			<div class="modal-footer">
@@ -615,30 +616,39 @@
     $('.addQuestion').on('click',function(e){
         e.preventDefault();
         nextinput++;
-        campo = '<div class="form-group"> <label>Escribe la pregunta #'+nextinput+'</label> <textarea required class="form-control" id="q'+nextinput+'"&nbsp; name="q' + nextinput + '"&nbsp; ></textarea> </div> ';
+        campo = '<div id="content_' + nextinput + '" class="form-group"> <label>Escribe la pregunta #'+nextinput+'</label> <div class="contentQuestion"> <textarea required class="form-control mr-2 fieldSurvey" id="q'+nextinput+'"&nbsp; name="q' + nextinput + '"&nbsp; ></textarea> <span> <a title="Eliminar pregunta"  class="btn btn-danger btn-circle " onclick="removeQuestion('+nextinput+')"><i class="fa fa-ban"></i></a> </span> </div> </div>';
+        $(".msjError").remove();
         $("#list_question").append(campo);
     
     });
+
+   
+    
 
     
 
     $('.sendFormQuestion').on('click',function(e){
       e.preventDefault();
-      // var questionArray = [];
+      var questionArray = [];
+      let valida = false;
+      let elementos = document.querySelectorAll(".fieldSurvey")
 
-      $("#formQuestion").find(':textarea').each(function(e) {
-        // var elemento= this;
-        // alert("elemento.value="+ elemento.value);
+      elementos.forEach((elemento) => {
+        questionArray.push(elemento.value)
+        valida = (elemento.value === "") ? true : false
+      })
+      $(".questionsArray").val(questionArray)
 
-        console.log("seee this", this)
-       console.log("seee e", e)
-
-        // questionArray.push(elemento.value)
-      });
-
-      // console.log("seee q", questionArray)
-
+      if(!valida) 
+        $("#formQuestion").submit();
+      else
+        msjError = '<p class="msjError" style="color: red">No pude enviar campos vacios!</>';
+        $("#list_question").append(msjError);
     });
+
+     removeQuestion = function(q) {
+      $('#content_'+q).remove()
+    }
     
 
   </script>

@@ -97,7 +97,9 @@ class SetEventController extends Controller
                         'event_id' => $event_id
                     ]);
 
-                    foreach ($request->input('questions') as $question) {
+                    $questions = explode(',', $request->input('questions'));
+
+                    foreach ($questions as $question) {
                         DB::table('survey_options')->insert([
                             'question' => $question,
                             'content_event_id' => $dataE->id

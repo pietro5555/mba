@@ -39,7 +39,7 @@ class StreamingController extends Controller
         // https://authentication.video.ibm.com/authorize?response_type=code&client_id=ca361d98cfa63255356b644e83130e919e62085e&redirect_uri=http://localhost:8000/&state=XYZ
 
         //result
-        // http://localhost:8000/?code=ebe6b3d9b6f14586dbf925956d81bd71ffc826e0&state=XYZ
+        // http://localhost:8000/?code=643f3906bf9605da966c6a69c77946c52b0cf180&state=XYZ
 
 
 
@@ -88,16 +88,15 @@ class StreamingController extends Controller
                 'client_id' => 'ca361d98cfa63255356b644e83130e919e62085e',
                 'client_secret' => 'ea6b8144deeec575c3d327faa8015b5729d43ddf',
                 'redirect_uri' => 'http://localhost:8000/get_access_token',
-                'code' => 'ebe6b3d9b6f14586dbf925956d81bd71ffc826e0',
+                'code' => '643f3906bf9605da966c6a69c77946c52b0cf180',
             ]
         ]);
 
-        // {#875 ▼
-        // +"access_token": "e1da7daba87f9726be170ac34f511db8c48619b4"
-        // +"refresh_token": "b516a0d1f815a2ed10a10c0a179e5d17870f2d2e"
-        // +"token_type": "bearer"
-        // +"expires_in": 86400
-        // }
+    //     +"access_token": "9d17fb622ef158fa70b7c65b6cce9823146fdef7"
+    //     +"refresh_token": "f80383c9540efabc0ad11b8b90be2029bb1a1073"
+    //     +"token_type": "bearer"
+    //     +"expires_in": 86400
+    //   }
 
         $result =  json_decode( $response->getBody() );
 

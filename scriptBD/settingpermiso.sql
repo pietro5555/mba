@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-09-2020 a las 00:51:10
+-- Tiempo de generación: 12-09-2020 a las 00:20:01
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.4.9
 
@@ -52,12 +52,13 @@ CREATE TABLE `settingpermiso` (
   `prospeccion` tinyint(4) DEFAULT 0,
   `puntos` tinyint(4) DEFAULT 0,
   `binario` tinyint(4) DEFAULT 0,
-  `usuario` tinyint(4) NOT NULL DEFAULT 0,
-  `tienda` tinyint(4) NOT NULL DEFAULT 0,
-  `transacciones` tinyint(4) NOT NULL DEFAULT 0,
+  `usuario` tinyint(4) DEFAULT 0,
+  `tienda` tinyint(4) DEFAULT 0,
+  `transacciones` tinyint(4) DEFAULT 0,
   `usuarios` tinyint(4) DEFAULT 0,
   `red` tinyint(4) DEFAULT 0,
-  `eventos` tinyint(4) NOT NULL DEFAULT 0,
+  `eventos` tinyint(4) DEFAULT 0,
+  `entradas` tinyint(4) DEFAULT 0,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
@@ -66,8 +67,8 @@ CREATE TABLE `settingpermiso` (
 -- Volcado de datos para la tabla `settingpermiso`
 --
 
-INSERT INTO `settingpermiso` (`id`, `iduser`, `nameuser`, `cursos`, `nuevo_registro`, `red_usuario`, `vision_usuario`, `billetera`, `pago`, `informes`, `tickets`, `buzon`, `ranking`, `historial_actividades`, `email_marketing`, `administrar_redes`, `soporte`, `ajuste`, `herramienta`, `calendario`, `correos`, `prospeccion`, `puntos`, `binario`, `usuario`, `tienda`, `transacciones`, `usuarios`, `red`, `eventos`, `created_at`, `updated_at`) VALUES
-(1, 1, '1', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, '2020-09-09 21:45:39', '2020-03-26 20:49:07');
+INSERT INTO `settingpermiso` (`id`, `iduser`, `nameuser`, `cursos`, `nuevo_registro`, `red_usuario`, `vision_usuario`, `billetera`, `pago`, `informes`, `tickets`, `buzon`, `ranking`, `historial_actividades`, `email_marketing`, `administrar_redes`, `soporte`, `ajuste`, `herramienta`, `calendario`, `correos`, `prospeccion`, `puntos`, `binario`, `usuario`, `tienda`, `transacciones`, `usuarios`, `red`, `eventos`, `entradas`, `created_at`, `updated_at`) VALUES
+(1, 1, '1', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, '2020-09-11 19:42:10', '2020-03-26 20:49:07');
 
 --
 -- Índices para tablas volcadas
@@ -87,7 +88,7 @@ ALTER TABLE `settingpermiso`
 -- AUTO_INCREMENT de la tabla `settingpermiso`
 --
 ALTER TABLE `settingpermiso`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10012;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -163,16 +163,10 @@ Route::get('cursos/mentor', 'CursosController@show_course_category')->name('show
 Route::get('/anotaciones', 'NoteController@index')->name('anotaciones');
 Route::post('/anotaciones/store', 'NoteController@store')->name('live.anotaciones');
 
+//Configurar eventos
+Route::post('/settings/event/{event_id}', 'SetEventController@store')->name('set.event.store');
 
 
-//Eventos
-    Route::group(['prefix' => 'events'], function(){
-      Route::get('/', 'EventsController@index')->name('admin.events.index');
-      Route::get('show/{id}', 'EventsController@show')->name('admin.events.show');
-      Route::post('store', 'EventsController@store')->name('admin.events.store');
-      Route::put('edit/{id}', 'EventsController@edit')->name('admin.events.edit');
-      Route::delete('delete/{id}', 'EventsController@delete')->name('admin.events.delete');
-    });
 /* Rutas de la Landing */
 Route::get('load-more-courses-new/{ultimoId}/{accion}', 'CourseController@load_more_courses_new')->name('landing.load-more-courses-new');
 Route::get('book-event/{evento}', 'EventsController@book')->name('landing.book-event');
@@ -187,8 +181,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu']]
 
   Route::group(['prefix' => 'usuarios'], function(){
         Route::get('/administrador', 'UsuarioController@admin')->name('admin-users-administrador');
-        Route::get('/permiso/{id}', 'UsuarioController@permiso')->name('admin-users-permisos');
-        Route::post('/savepermiso', 'UsuarioController@savepermiso')->name('admin-save-permiso');
+        Route::get('/permiso/{id}', 'PermisosController@permiso')->name('admin-users-permisos');
+        Route::post('/savepermiso', 'PermisosController@savepermiso')->name('admin-save-permiso');
       });
   
    Route::group(['prefix' => 'courses'], function(){
@@ -252,6 +246,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu']]
     Route::get('change-status/{id}/{status}', 'EventsController@change_status')->name('admin.events.change-status');
 
   });
+
+  //Streaming
+  Route::get('streaming', 'StreamingController@index')->name('streaming.index');
+  Route::get('getaccesstoken', 'StreamingController@getAccessToken')->name('streaming.getaccesstoken');
 
     
 
@@ -911,7 +909,5 @@ Route::get('cursos/leccion', 'CursosController@leccion')->name('leccion');
 
 
 
-//Streaming
-Route::get('streaming', 'StreamingController@index')->name('streaming.index');
-Route::get('getaccesstoken', 'StreamingController@getAccessToken')->name('streaming.getaccesstoken');
+
 

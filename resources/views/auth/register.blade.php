@@ -109,7 +109,7 @@
                                     @if(!empty(request()->select))  
                                     <div class="form-group">
                                         <label class="control-label" style="text-align: center;">Tipo de Usuario (*)</label>
-                                       <select class="form-control" name="rango">
+                                       <select class="form-control" name="rango" id="rang" onchange="datosmentor()">
                                         <option value="" selected disabled>Seleccion una opcion</option>
                                         <option value="0">Administrador</option>
                                         <option value="1">Moderador</option>

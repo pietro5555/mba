@@ -154,7 +154,11 @@ Route::get('cursos/leccion', 'CursosController@leccion')->name('leccion');
 Route::post('/likes', 'CursosController@course_likes')->name( 'like');
 // Cursos por categoria
 Route::get('cursos/category/{id}', 'CursosController@show_course_category')->name('show.cursos.category');
-Route::get('cursos/porcategorias', 'CursosController@show_course_category')->name('show.cursos.category');
+//Route::get('cursos/porcategorias', 'CursosController@show_course_category')->name('show.cursos.category');
+//Perfil del mentor
+Route::get('cursos/mentor/{id}', 'CursosController@perfil_mentor')->name('show.perfil.mentor');
+Route::get('cursos/mentor', 'CursosController@show_course_category')->name('show.cursos.category');
+
 //vista de anotaciones
 Route::get('/anotaciones', 'NoteController@index')->name('anotaciones');
 Route::post('/anotaciones/store', 'NoteController@store')->name('live.anotaciones');

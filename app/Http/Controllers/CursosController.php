@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth;
 use Illuminate\Support\Str as Str;
 use App\Models\Course;
 use App\Models\Category;
+use App\Models\User;
 use DB;
 
 class CursosController extends Controller
@@ -63,12 +64,21 @@ class CursosController extends Controller
                $next = 0;
             }
          }
-         
+        
+        /*Cursos por categoria con el numero de cursos asociados*/
         $courses = Category::withCount('courses')
         ->take(9)
         ->get();
+
+        /*Mentores que tengan cursos*/
+        $mentores = DB::table('wp98_users')
+        ->join('courses', 'courses.mentor_id', '=', 'wp98_users.id')
+        ->join('categories', 'categories.id', '=', 'courses.category_id')
+        ->select(array ('wp98_users.display_name as nombre','categories.title as categoria', 'courses.mentor_id as mentor_id'))
+        ->get();
+
         
-         return view('cursos.cursos')->with(compact('username','cursosDestacados', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next', 'courses'));
+         return view('cursos.cursos')->with(compact('username','cursosDestacados', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next', 'courses', 'mentores'));
 
     }
 
@@ -77,12 +87,39 @@ class CursosController extends Controller
 
     $courses = Course::where('category_id','=', $category_id)->get();
     $category_name = Category::where('categories.id', '=', $category_id)->first();
+    
+    /*Mentores con cursos*/
+        $mentores = DB::table('wp98_users')
+        ->join('courses', 'courses.mentor_id', '=', 'wp98_users.id')
+        ->join('categories', 'categories.id', '=', 'courses.category_id')
+        ->where('categories.id', '=', $category_id)
+        ->select(array ('wp98_users.display_name as nombre','categories.title as categoria', 'courses.mentor_id as mentor_id'))
+        ->take(12)
+        ->get();
 
        if($courses)
        {
-        return view('cursos.cursos_categorias', compact('courses', 'category_name'));
+        return view('cursos.cursos_categorias', compact('courses', 'category_name', 'mentores'));
        }
     }
+
+    public function perfil_mentor($mentor_id){
+
+        $mentor_name = User::where('wp98_users.id', '=', $mentor_id)
+        ->select('wp98_users.display_name as nombre')
+        ->first();
+
+         $mentores = DB::table('wp98_users')
+        ->join('courses', 'courses.mentor_id', '=', 'wp98_users.id')
+        ->join('categories', 'categories.id', '=', 'courses.category_id')
+        ->where('wp98_users.id', '=', $mentor_id)
+        ->select(array ('wp98_users.display_name as nombre','categories.title as categoria', 'courses.title as course_title'))
+        ->get();
+
+      // return dd($mentores);
+        return view('cursos.perfil_mentor', compact('mentores','mentor_name'));
+    }
+
 
     public function show_one_course()
     {

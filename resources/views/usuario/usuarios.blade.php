@@ -106,7 +106,8 @@
           <h4>Cursos</h4>
         <input type="checkbox" name="cursos" id="cursos" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
         </div>
-
+        
+        <div class="col-md-3 col-xs-6">
         <h4>Entradas</h4>
         <input type="checkbox" name="entradas" id="entradas" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
         </div>
@@ -187,7 +188,7 @@
         </div>
 
         <div class="col-md-3 col-xs-6">
-          <h4>Lista de Usuarios</h4>
+          <h4>Lista Usuarios</h4>
         <input type="checkbox" name="usuario" id="usuario" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
         </div>
 

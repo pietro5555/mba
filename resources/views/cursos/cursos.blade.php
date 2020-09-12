@@ -296,9 +296,9 @@
                 <div class="col-xl-4 col-lg-4 col-12" style="padding-bottom: 10px;">
                     <div class="card" >
                         @if (!is_null($cursoNuevo->cover))
-                            <img src="{{ asset('uploads/images/courses/covers/'.$cursoNuevo->cover) }}" class="card-img-top new-course-img" alt="...">
+                            <img src="{{ asset('uploads/images/courses/covers/'.$cursoNuevo->cover) }}" class="card-img-top new-course-img" alt="..." height="462px" width="242px">
                         @else
-                            <img src="{{ asset('uploads/images/courses/covers/default.jpg') }}" class="card-img-top new-course-img" alt="...">
+                            <img src="{{ asset('uploads/images/courses/covers/default.jpg') }}" class="card-img-top new-course-img" alt="..." height="462px" width="242px">
                         @endif
                         <div class="card-img-overlay d-flex flex-column">
                             <div class="mt-auto">
@@ -343,7 +343,11 @@
  {{-- SECCIÓN CURSOS POR CATEGORÍA --}}
  <div class="">
     <div class="container-fluid">
-        <div class="col section-title-category">CURSOS POR CATEGORÍA
+        <div class="col section-title-category">
+            <h3>
+                CURSOS POR CATEGORÍA
+            </h3>
+            
         </div>
         <div class="row">
             @foreach ($courses as $course)
@@ -359,7 +363,7 @@
                             <a href="{{ url('cursos/category/'.$course->id) }}" class="col-sm-lg text-sm-left  text-white" >{{$course->title}}</a>
                         </div>
                         <div class="col-lg">
-                        <a href="" class="text-white font-weight-bold">{{$course->courses_count}} Cursos</a>
+                        <p class="text-white font-weight-bold">{{$course->courses_count}} Cursos</p>
                         </div>
                 </div> 
             </div>
@@ -385,7 +389,7 @@
                 <div class="card mentors-card">
                     <div class="row no-gutters">
                         <div class="col-auto">
-                            <img src="{{ asset('images/img-mentor1.png') }}" class="img-fluid" alt="">
+                            <img src="{{ asset('uploads/avatar/'.$mentor->avatar)}}" class="" alt="" height="164px" width="164px">
                         </div>
                         <div class="col">
                             <div class="card-block px-2">

@@ -14,11 +14,12 @@
 <div class="row featurette">
       <div class="col-md-7 order-md-2">
         <h5 class="featurette-heading text-white">Perfil</h5>
-        <h3 class="featurette-heading text-primary">{{$mentor_name->nombre}}</h3>
-        <p class="lead about-course-text">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+        <h3 class="featurette-heading text-primary">{{$mentor_info->nombre}}</h3>
+        <h6 class="featurette-heading text-white">{{$mentor_info->profession}}</h6>
+        <p class="lead about-course-text">{{$mentor_info->about}}</p>
       </div>
       <div class="col-md-5 order-md-1">
-        <img src="{{ asset('images/mentor-course.png') }}" alt="" class="featurette-image img-fluid mx-auto ml-2" width="409" height="370">
+        <img src="{{ asset('uploads/avatar/'.$mentor_info->avatar) }}" alt="" class="featurette-image mx-auto ml-2" width="370" height="370">
       </div>
 </div>
 </div>
@@ -32,12 +33,12 @@
      <div class="container-fluid mt-2 p-2">
 
          <div class="row card-deck">
-             @foreach ($mentores as $mentor)
+             @foreach ($courses as $course)
              <div class="card col-md-3 mb-4 p-0">
-                <img class="card-img-top img-fluid mentor_img" src="{{ asset('images/preview-course1.png') }}" alt="Card image cap">
+                <img class="card-img-top img-fluid mentor_img" src="{{ asset('uploads/images/courses/covers/'.$course->cover) }}" alt="Card image cap">
                 <div class="card-body p-2">
                 <div class="row align-items-start">
-                    <div class="col-9"><p class="text-course-mentor">{{$mentor->course_title}}</p></div>
+                    <div class="col-9"><p class="text-course-mentor">{{$course->course_title}}</p></div>
                      <div class="col-3"><i class="text-primary fa fa-play-circle"></i></div>
                 </div>                     
                 </div>

@@ -29,3 +29,7 @@ Dev: Luisana Marín
 11/09/2020
 *nuevos campos about, cover_name, y reutilizacion del campo avatar (wp98_users.sql)
 
+11/09/2020
+Dev: Crisleivys Gil
+*Nuevo campo agregado profession en ta tabla wp98_users (Correr el script wp98_users)
+* Agregados datos para los mentores y cursos (Correr los scripts courses y wp98_users)

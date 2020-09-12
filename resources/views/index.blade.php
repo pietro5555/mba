@@ -136,15 +136,15 @@
                                             <div class="row row-cols-3">
                                                 <div class="col text-right no-padding-sides">
                                                     <i class="far fa-user-circle"></i><br>
-                                                    <span class="new-course-items-text">1310</span>
+                                                    <span class="new-course-items-text">{{ $cursoNuevo->views}}</span>
                                                 </div>
                                                 <div class="col text-center no-padding-sides">
                                                     <i class="fas fa-share-alt"></i><br>
-                                                    <span class="new-course-items-text">869</span>
+                                                    <span class="new-course-items-text">{{ $cursoNuevo->shares}}</span>
                                                 </div>
                                                 <div class="col text-left no-padding-sides">
                                                     <i class="far fa-thumbs-up"></i><br>
-                                                    <span class="new-course-items-text">1242</span>
+                                                    <span class="new-course-items-text">{{ $cursoNuevo->likes}}</span>
                                                 </div>
                                             </div>
                                         </div>

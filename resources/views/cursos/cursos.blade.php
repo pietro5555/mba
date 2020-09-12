@@ -302,7 +302,7 @@
                         @endif
                         <div class="card-img-overlay d-flex flex-column">
                             <div class="mt-auto">
-                                <div class="new-course-title">{{ $cursoNuevo->title }}</div>
+                                <div class="new-course-title"><a href="{{ route('courses.show', [$cursoNuevo->slug, $cursoNuevo->id]) }}" style="color: white;">{{ $cursoNuevo->title }}</a></div>
                                 <div class="row">
                                     <div class="col-12 col-xl-6 new-course-category">{{ $cursoNuevo->category->title }}</div>
                                     <div class="col-12 col-xl-6" style="font-size: 16px;">

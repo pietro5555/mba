@@ -91,4 +91,8 @@ class User extends Authenticatable
     public function events(){
         return $this->belongsToMany('App\Models\Events', 'events_users', 'user_id', 'event_id')->withPivot('date', 'time')->withTimestamps();
     }
+
+    public function ratings(){
+        return $this->hasMany('App\Models\Rating');
+    }
 }

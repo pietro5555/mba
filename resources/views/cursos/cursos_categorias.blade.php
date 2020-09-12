@@ -35,7 +35,7 @@
                         @if (!is_null($curso->cover))
                         <img src="{{ asset('uploads/images/courses/covers/'.$curso->cover) }}" class="card-img-top" alt="..." style="height: 200px;"> 
                         @else
-                            <img src="{{ asset('uploads/images/courses/covers/default.jpg') }}" class="card-img-top new-course-img" alt="..." height="200px">
+                            <img src="{{ asset('uploads/images/courses/covers/default.jpg') }}" class="card-img-top" alt="..." height="200px">
                         @endif
                         <div class="card-body" style="background-color: #2f343a;">
                             <h6 class="card-title" style="margin-top: -15px;"> <i class="far fa-play-circle" style="font-size: 16px; color: #6fd843;"></i> {{ $curso->title }}</h6>

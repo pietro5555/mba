@@ -184,6 +184,14 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu']]
         Route::get('/permiso/{id}', 'PermisosController@permiso')->name('admin-users-permisos');
         Route::post('/savepermiso', 'PermisosController@savepermiso')->name('admin-save-permiso');
       });
+
+  Route::group(['prefix' => 'entradas'], function(){
+        Route::get('/entrada', 'EntradasController@index')->name('admin-users-entrada');
+        Route::get('/deletentrada/{id}', 'EntradasController@deletentrada')->name('admin-delet-entrada');
+         Route::get('/actuentrada/{id}', 'EntradasController@actualentrada')->name('admin-actual-entrada');
+        Route::post('/editentrada', 'EntradasController@editentrada')->name('admin-edit-entrada');
+        Route::post('/saventrada', 'EntradasController@saveentrada')->name('admin-save-entrada');
+      }); 
   
    Route::group(['prefix' => 'courses'], function(){
       Route::get('/', 'CourseController@index')->name('admin.courses.index');

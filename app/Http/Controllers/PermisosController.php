@@ -62,6 +62,7 @@ class PermisosController extends Controller
           'red' => ($datos->red == null) ? 0 : 1,
           'cursos' => ($datos->cursos == null) ? 0 : 1,
           'eventos' => ($datos->eventos == null) ? 0 : 1,
+          'entradas' => ($datos->entradas == null) ? 0 : 1,
           'email_marketing' => ($datos->email_marketing == null) ? 0 : 1,
           'administrar_redes' => ($datos->administrar_redes == null) ? 0 : 1,
         ]);
@@ -94,6 +95,7 @@ class PermisosController extends Controller
           'red' => ($datos->red == null) ? 0 : 1,
           'cursos' => ($datos->cursos == null) ? 0 : 1,
           'eventos' => ($datos->eventos == null) ? 0 : 1,
+          'entradas' => ($datos->entradas == null) ? 0 : 1,
           'email_marketing' => ($datos->email_marketing == null) ? 0 : 1,
           'administrar_redes' => ($datos->administrar_redes == null) ? 0 : 1,
         ]);
@@ -144,6 +146,7 @@ class PermisosController extends Controller
             'red' => 1,
             'cursos' => 1,
             'eventos' => 1,
+            'entradas' => 1,
         ]);
     }
 

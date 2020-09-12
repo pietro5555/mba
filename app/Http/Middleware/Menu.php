@@ -993,7 +993,17 @@ class Menu
                     ],
                 ]
             ],
+             
 
+            'Entradas' => [
+                'submenu' => 0,
+                'ruta' => 'admin-users-entrada',
+                'black'=> '0',
+                'icono' => 'fas fa-door-closed',
+                'complementoruta' => '',
+                'permisoAdmin' => (!empty($permiso)) ? $permiso->entradas : 0,
+                'activo' => 0,
+            ],
 
             'Red' => [
                 'submenu' => 0,

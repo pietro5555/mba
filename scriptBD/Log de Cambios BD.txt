@@ -28,6 +28,8 @@ Dev: Luisana Marín
 
 11/09/2020
 *nuevos campos about, cover_name, y reutilizacion del campo avatar (wp98_users.sql)
+*Nueva tabla entradas (entradas.sql)
+*Nuevo campo de permisos (correr script de settingpermiso.sql)
 
 11/09/2020
 Dev: Crisleivys Gil

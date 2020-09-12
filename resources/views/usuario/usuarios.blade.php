@@ -106,6 +106,11 @@
           <h4>Cursos</h4>
         <input type="checkbox" name="cursos" id="cursos" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
         </div>
+        
+        <div class="col-md-3 col-xs-6">
+        <h4>Entradas</h4>
+        <input type="checkbox" name="entradas" id="entradas" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
+        </div>
 
         <div class="col-md-3 col-xs-6">
           <h4>Registro</h4>
@@ -183,7 +188,7 @@
         </div>
 
         <div class="col-md-3 col-xs-6">
-          <h4>Lista de Usuarios</h4>
+          <h4>Lista Usuarios</h4>
         <input type="checkbox" name="usuario" id="usuario" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
         </div>
 
@@ -243,6 +248,7 @@ seleccionar = function(id,nombre){
            permisos.forEach(item => {
            	$('#id').val(item.id);
            	$('#cursos').bootstrapToggle((item.cursos == 1) ? 'on' : 'off');
+            $('#entradas').bootstrapToggle((item.entradas == 1) ? 'on' : 'off');
            	$('#nuevo_registro').bootstrapToggle((item.nuevo_registro == 1) ? 'on' : 'off');
            	$('#red_usuario').bootstrapToggle((item.red_usuario == 1) ? 'on' : 'off');
            	$('#vision_usuario').bootstrapToggle((item.vision_usuario == 1) ? 'on' : 'off');

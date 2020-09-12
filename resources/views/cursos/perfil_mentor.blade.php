@@ -35,7 +35,11 @@
          <div class="row card-deck">
              @foreach ($courses as $course)
              <div class="card col-md-3 mb-4 p-0">
-                <img class="card-img-top img-fluid mentor_img" src="{{ asset('uploads/images/courses/covers/'.$course->cover) }}" alt="Card image cap">
+              @if (!is_null($course->cover))
+                <img class="card-img-top img-fluid mentor_img" src="{{ asset('uploads/images/courses/covers/'.$course->cover) }}" alt="Card image cap" height="226px">
+              @else
+                <img class="card-img-top img-fluid mentor_img" src="{{ asset('uploads/images/courses/covers/default.jpg') }}" alt="Card image cap" height="226px">
+              @endif
                 <div class="card-body p-2">
                 <div class="row align-items-start">
                     <div class="col-9"><p class="text-course-mentor">{{$course->course_title}}</p></div>

@@ -31,3 +31,8 @@ Dev: Luisana Marín
 *Nueva tabla entradas (entradas.sql)
 *Nuevo campo de permisos (correr script de settingpermiso.sql)
 
+12/09/2020
+Dev: Robinson vargas
+*Nueva tabla resources (resources.sql)
+*Nueva tabla event_resources (event_resources.sql)
+

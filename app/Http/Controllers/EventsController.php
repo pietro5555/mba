@@ -8,7 +8,11 @@ use DB;
 // modelos
 use App\Models\Course;
 use App\Models\Events;
+use App\Models\Note;
+use App\Models\EventResources;
+
 use Auth;
+
 
 
 class EventsController extends Controller
@@ -82,10 +86,29 @@ class EventsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($event_id)
     {
-        
+
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show_event($event_id)
+    {
+        $notes = Note::all();
+        $event = Events::find($event_id);
+        $menuResource = $event->getResource();
+
+        // return response()->json([$menuResource], 201);
+
+		return view('live.live', compact ('event','notes', 'menuResource'));
+    }
+
+    
 
     /**
      * Show the form for editing the specified resource.

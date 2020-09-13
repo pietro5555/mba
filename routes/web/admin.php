@@ -163,6 +163,9 @@ Route::get('cursos/mentor', 'CursosController@show_course_category')->name('show
 Route::get('/anotaciones', 'NoteController@index')->name('anotaciones');
 Route::post('/anotaciones/store', 'NoteController@store')->name('live.anotaciones');
 
+// Events landing
+Route::get('/event/{event_id}', 'EventsController@show_event')->name('show.event');
+
 //Configurar eventos
 Route::post('/settings/event/{event_id}', 'SetEventController@store')->name('set.event.store');
 
@@ -253,7 +256,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu']]
       });
    });
 
-   //Eventos
+   //Eventos admin
    Route::group(['prefix' => 'events'], function(){
     Route::get('/', 'EventsController@index')->name('admin.events.index');
     Route::get('show/{id}', 'EventsController@show')->name('admin.events.show');

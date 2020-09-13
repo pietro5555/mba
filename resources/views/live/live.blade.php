@@ -3,6 +3,10 @@
 @section('content')
 @stack('styles')
 
+@php
+ //dd($menuResource)
+@endphp
+
 <div class="bg-dark-gray">
 <div class="container-fluid">
   <div class="row">
@@ -10,8 +14,8 @@
       <div class="row">
         <div class="col-md-6 my-auto">
           <h4 class="text-blue">
-        NOMBRE DEL LIVE / ESPECIALISTA
-        </h4>
+            {{ $event->title }} / ESPECIALISTA
+          </h4>
         </div>
         <div class="col-md-6">
           <div class="row">
@@ -194,7 +198,15 @@
                   <nav >
                   <div class="nav nav-tabs nav-fill" id="nav-tab-chat" role="tablist">
 
+                  @foreach($menuResource as $menu)
                     <a class="nav-item nav-link active" id="nav-settings-tab" data-toggle="tab"  href="#nav-settings" role="tab" aria-controls="nav-settings" aria-selected="true">
+                      <img src="{{ asset('images/icons/settings.svg') }}" height="30px" class="">
+                      <h6 class="text-center d-none d-sm-none d-md-block">{{ $menu->resources->title }}</h6>
+                    </a>
+                  @endforeach
+
+
+                    <!-- <a class="nav-item nav-link active" id="nav-settings-tab" data-toggle="tab"  href="#nav-settings" role="tab" aria-controls="nav-settings" aria-selected="true">
                     <img src="{{ asset('images/icons/settings.svg') }}" height="30px" class="">
                     <h6 class="text-center d-none d-sm-none d-md-block">Configuración</h6>
                     </a>
@@ -218,7 +230,7 @@
                     <a class="nav-item nav-link" id="nav-archives-tab" data-toggle="tab" href="#nav-archives" role="tab" aria-controls="nav-archives" aria-selected="false"><img src="{{ asset('images/icons/documentos.svg') }}" height="30px" class="">
                   <h6 class="text-center d-none d-sm-none d-md-block">Archivos</h6></a>
                     <a class="nav-item nav-link" id="nav-ofertas-tab" data-toggle="tab" href="#nav-ofertas" role="tab" aria-controls="nav-ofertas" aria-selected="false"><img src="{{ asset('images/icons/descuento.svg') }}" height="30px" class="">
-                  <h6 class="text-center d-none d-sm-none d-md-block">Ofertas</h6></a>
+                  <h6 class="text-center d-none d-sm-none d-md-block">Ofertas</h6></a> -->
               </div>
               </nav>
             </div><!--End menu vertical-->

@@ -36,6 +36,10 @@ class Events extends Model
         return $this->belongsToMany('App\Models\User', 'events_users', 'event_id', 'user_id')->withPivot('date', 'time')->withTimestamps();
     }
 
+    public function getResource(){
+        return $this->EventResources()->with('resources')->get();
+    }
+
     // 0=desactivado, 1=activo,  2=programado  3=iniciado, 4=finalizado
 
     public static function findID($id)
@@ -47,6 +51,10 @@ class Events extends Model
         ->get();
 
         return $mentor[0]->user_email;
+    }
+
+    public function EventResources(){
+        return $this->hasMany('App\Models\EventResources', 'event_id', 'id');
     }
 
 }

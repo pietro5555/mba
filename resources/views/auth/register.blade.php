@@ -109,11 +109,11 @@
                                     @if(!empty(request()->select))  
                                     <div class="form-group">
                                         <label class="control-label" style="text-align: center;">Tipo de Usuario (*)</label>
-                                       <select class="form-control" name="rango" id="rang" onchange="datosmentor()">
+                                       <select class="form-control" name="rango" id="rang">
                                         <option value="" selected disabled>Seleccion una opcion</option>
                                         <option value="0">Administrador</option>
                                         <option value="1">Moderador</option>
-                                        <option value="2">Mentor</option>
+                                        <option value="2" >Mentor</option>
                                         <option value="3">Cliente</option>
                                        </select>
                                     </div>
@@ -121,8 +121,14 @@
 
 
                                     <div id="dat-mentor" style="display:none;">
+
+                                        <div class="form-group">
+                                        <label class="control-label" style="text-align: center;">Profesión (*)</label>
+                                        <input class="form-control form-control-solid placeholder-no-fix form-group"
+                                            type="text" autocomplete="off" name="profession" required/>
+                                        </div>
                                       <div class="form-group">
-                                        <label class="control-label" style="text-align: center;">About
+                                        <label class="control-label" style="text-align: center;">Sobre mi 
                                             (*)</label>
                                         <textarea name="about" class="form-control"></textarea>
                                        </div>
@@ -271,16 +277,11 @@
 
 @push('script')
 <script>
-    function datosmentor(){
 
-        var opt = $('#rang').val();
-    
-    if(opt=="2"){
-        $('#dat-mentor').show();
-        }else{
-            $('#dat-mentor').hide();
-        }
-    }
+    document.getElementById('rang').addEventListener('change', function () {
+       var style = this.value == 2 ? 'block' : 'none';
+       document.getElementById('dat-mentor').style.display = style;
+});
 
 
     function validarEdad(edad) {

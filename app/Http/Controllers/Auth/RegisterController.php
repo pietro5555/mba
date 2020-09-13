@@ -153,6 +153,7 @@ class RegisterController extends Controller
             'correos' =>'{"pago":"1","compra":"1","pc":"1","liquidacion":"1"}',
             'about' => $data['about'],
             'avatar' => ($avatar == null) ? 'avatar.png'  : $avatar,
+            'profession' => $data['profession'],
         ]);
 
         $this->insertarCampoUser($user->ID, $data);

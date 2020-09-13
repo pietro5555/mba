@@ -14,6 +14,7 @@ use App\Models\User;
 use App\Models\Settings;
 use App\Models\SettingsEstructura;
 use App\Models\SettingsRol;
+use App\Models\Permiso;
 // llamado de Controlladores
 use App\Http\Controllers\IndexController;
 

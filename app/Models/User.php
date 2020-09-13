@@ -30,7 +30,7 @@ class User extends Authenticatable
         'ladomatriz', 'puntosPro', 'puntosRed', 'puntosDer', 'puntosIzq',
         'fecha_activacion','binario','debiDer','debiIzq','codigo','correos',
         'limitar','pop_up','autenticacion','fechaver','factor2','modo_oscuro','about'
-        ,'cover_name'
+        ,'cover_name', 'profession'
     ];
 
     /**
@@ -90,5 +90,9 @@ class User extends Authenticatable
     //Relación Usuarios - Eventos (Agenda de Eventos)
     public function events(){
         return $this->belongsToMany('App\Models\Events', 'events_users', 'user_id', 'event_id')->withPivot('date', 'time')->withTimestamps();
+    }
+
+    public function ratings(){
+        return $this->hasMany('App\Models\Rating');
     }
 }

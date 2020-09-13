@@ -928,6 +928,10 @@ Route::get('cursos', 'CursosController@index')->name('cursos');
 Route::get('cursos/curso', 'CursosController@show_one_course')->name('curso');
 Route::get('cursos/leccion', 'CursosController@leccion')->name('leccion');
 
+Route::group(['prefix' => 'courses'], function(){
+  Route::get('/', 'CourseController@index')->name('courses');
+  Route::get('show/{slug}/{id}', 'CourseController@show')->name('courses.show');
+});
 
 
 

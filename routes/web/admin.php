@@ -197,7 +197,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu']]
       }); 
   
    Route::group(['prefix' => 'courses'], function(){
-      Route::get('/', 'CourseController@index')->name('admin.courses.index');
+      Route::get('/', 'CourseController@record')->name('admin.courses.index');
       Route::post('store', 'CourseController@store')->name('admin.courses.store');
       Route::get('edit/{id}', 'CourseController@edit')->name('admin.courses.edit');
       Route::post('update', 'CourseController@update')->name('admin.courses.update');

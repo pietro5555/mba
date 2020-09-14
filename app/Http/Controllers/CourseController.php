@@ -70,7 +70,7 @@ class CourseController extends Controller{
         // TITLE
         view()->share('title', 'Listado de Cursos');
 
-        if ( (Auth::guest()) || (Auth::user()->rol_id != 0) ){
+
             $username = NULL;
             if (!Auth::guest()){
                 $username = strtoupper(auth()->user()->user_nicename);
@@ -133,14 +133,18 @@ class CourseController extends Controller{
 
         
             return view('cursos.cursos')->with(compact('username','cursosDestacados', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next', 'courses', 'mentores'));
-        }
+    }
 
-        if (Auth::user()->rol_id == 0){
-            $cursos = Course::withCount('lessons')
+    public function record(){
+        // TITLE
+        view()->share('title', 'Listado de Cursos');
+
+
+        $cursos = Course::withCount('lessons')
                     ->with('evaluation')
                     ->orderBy('id', 'DESC')->get();
 
-            $mentores = DB::table('wp98_users')
+        $mentores = DB::table('wp98_users')
                             ->select('ID', 'user_email')
                             ->where('rol_id', '=', 2)
                             ->orderBy('user_email', 'ASC')
@@ -162,9 +166,6 @@ class CourseController extends Controller{
                             ->get();
 
             return view('admin.courses.index')->with(compact('cursos', 'mentores', 'categorias', 'subcategorias', 'etiquetas'));
-        }
-
-       
     }
 
     /**

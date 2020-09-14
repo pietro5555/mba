@@ -287,7 +287,7 @@ class ActualizarController extends Controller
         if ($request->file('avatar')) {
             $imagen = $request->file('avatar');
             $nombre_imagen = 'user_'.$id.'_'.time().'.'.$imagen->getClientOriginalExtension();
-            $path = public_path() .'/avatar';
+            $path = public_path() .'/uploads/avatar';
             //unlink($path.'/'.$user->avatar);
             $imagen->move($path,$nombre_imagen);
             $user->avatar = $nombre_imagen;

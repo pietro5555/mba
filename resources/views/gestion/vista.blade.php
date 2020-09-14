@@ -87,7 +87,7 @@
 						@endphp
 						<tr>
 							<td HEIGHT="50" WIDTH="30" COLSPAN=2>
-								<img src="{{asset('/avatar/'.$usuario->avatar)}}" class="center-block img" alt="">
+								<img src="{{asset('/uploads/avatar/'.$usuario->avatar)}}" class="center-block img" alt="">
 							</td>
 						</tr>
 						@foreach($faltante as $falta)

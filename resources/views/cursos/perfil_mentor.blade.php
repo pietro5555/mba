@@ -16,7 +16,7 @@
         <h5 class="featurette-heading text-white">Perfil</h5>
         <h3 class="featurette-heading text-primary">{{$mentor_info->nombre}}</h3>
         <h6 class="featurette-heading text-white">{{$mentor_info->profession}}</h6>
-        <p class="lead about-course-text">{{$mentor_info->about}}</p>
+        <p class="lead about-course-text">{{$mentor_info->biography}}</p>
       </div>
       <div class="col-md-5 order-md-1">
         <img src="{{ asset('uploads/avatar/'.$mentor_info->avatar) }}" alt="" class="featurette-image mx-auto ml-2" width="370" height="370">

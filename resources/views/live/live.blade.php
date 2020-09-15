@@ -4,7 +4,7 @@
 @stack('styles')
 
 @php
- //dd($menuResource)
+ //dd();
 @endphp
 
 <div class="bg-dark-gray">
@@ -168,16 +168,16 @@
 
             <div class="col-md-10 pl-0">
               <h4 class="title-note pb-2">Notas Guardadas</h4>
-                        <div class="accordion accordionNotes" id="accordionNoteOne">
+                        <div class="accordion accordionNotes" id="accordionNoteOne{{ $note->id }}">
                           <div class="card">
                             <div class="card-header" id="headingOne">
-                              <p class="mb-2 mt-2" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                              <p class="mb-2 mt-2" data-toggle="collapse" data-target="#collapseOne{{ $note->id }}" aria-expanded="true" aria-controls="collapseOne{{ $note->id }}">
                                 {{$note->title}}
                                 <img src="{{ asset('images/icons/chevron-black.svg') }}" height="20px" width="20px" class="float-right">
                               </p>
                              </div>
 
-                   <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionNoteOne">
+                   <div id="collapseOne{{ $note->id }}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionNoteOne{{ $note->id }}">
                      <div class="card-body">
                      {{$note->content}}
                       </div>
@@ -198,46 +198,39 @@
                   <nav >
                   <div class="nav nav-tabs nav-fill" id="nav-tab-chat" role="tablist">
 
-                  @foreach($menuResource as $menu)
-                    <a class="nav-item nav-link active" id="nav-settings-tab" data-toggle="tab"  href="#nav-settings" role="tab" aria-controls="nav-settings" aria-selected="true">
-                      <img src="{{ asset('images/icons/settings.svg') }}" height="30px" class="">
-                      <h6 class="text-center d-none d-sm-none d-md-block">{{ $menu->resources->title }}</h6>
-                    </a>
-                  @endforeach
+                    
 
-
-                    <!-- <a class="nav-item nav-link active" id="nav-settings-tab" data-toggle="tab"  href="#nav-settings" role="tab" aria-controls="nav-settings" aria-selected="true">
+                    <a class="nav-item nav-link {{ $menuR[1] === '1' ? 'd-block' : 'd-none'  }}" id="nav-settings-tab" data-toggle="tab"  href="#nav-settings" role="tab" aria-controls="nav-settings" aria-selected="true">
                     <img src="{{ asset('images/icons/settings.svg') }}" height="30px" class="">
                     <h6 class="text-center d-none d-sm-none d-md-block">Configuración</h6>
                     </a>
-                    <a class="nav-item nav-link" id="nav-participantes-tab" data-toggle="tab" href="#nav-participantes" role="tab" aria-controls="nav-participantes" aria-selected="false">
+                    <a class="nav-item nav-link {{ $menuR[2] === '1' ? 'd-block' : 'd-none'  }} " id="nav-participantes-tab" data-toggle="tab" href="#nav-participantes" role="tab" aria-controls="nav-participantes" aria-selected="false">
                     <img src="{{ asset('images/icons/person.svg') }}" height="30px" class="">
                     <h6 class="text-center d-none d-sm-none d-md-block">Participantes</h6></a>
 
-                    <a class="nav-item nav-link" id="nav-chat-tab" data-toggle="tab" href="#nav-chat" role="tab" aria-controls="nav-chat" aria-selected="false">
+                    <a class="nav-item nav-link {{ $menuR[3] === '1' ? 'd-block' : 'd-none'  }} " id="nav-chat-tab" data-toggle="tab" href="#nav-chat" role="tab" aria-controls="nav-chat" aria-selected="false">
                     <img src="{{ asset('images/icons/comment.svg') }}" height="30px" class="">
                     <h6 class="text-center d-none d-sm-none d-md-block">Chat</h6></a>
 
-                    <a class="nav-item nav-link" id="nav-encuesta-tab" data-toggle="tab" href="#nav-encuesta" role="tab" aria-controls="nav-encuesta" aria-selected="false">
+                    <a class="nav-item nav-link {{ $menuR[4] === '1' ? 'd-block' : 'd-none'  }} " id="nav-encuesta-tab" data-toggle="tab" href="#nav-encuesta" role="tab" aria-controls="nav-encuesta" aria-selected="false">
                     <img src="{{ asset('images/icons/lista.svg') }}" height="30px" class="">
                     <h6 class="text-center d-none d-sm-none d-md-block">Encuesta</h6></a>
-                    <a class="nav-item nav-link" id="nav-presentation-tab" data-toggle="tab" href="#nav-presentation" role="tab" aria-controls="nav-presentation" aria-selected="false">
+                    <a class="nav-item nav-link {{ $menuR[5] === '1' ? 'd-block' : 'd-none'  }} " id="nav-presentation-tab" data-toggle="tab" href="#nav-presentation" role="tab" aria-controls="nav-presentation" aria-selected="false">
                     <img src="{{ asset('images/icons/presentacion.svg') }}" height="30px" class="">
                     <h6 class="text-center d-none d-sm-none d-md-block">Presentación</h6></a>
-                    <a class="nav-item nav-link" id="nav-video-tab" data-toggle="tab" href="#nav-video" role="tab" aria-controls="nav-video" aria-selected="false">
+                    <a class="nav-item nav-link {{ $menuR[6] === '1' ? 'd-block' : 'd-none'  }} " id="nav-video-tab" data-toggle="tab" href="#nav-video" role="tab" aria-controls="nav-video" aria-selected="false">
                     <img src="{{ asset('images/icons/video.svg') }}" height="30px" class="">
                   <h6 class="text-center d-none d-sm-none d-md-block">Vídeo</h6></a>
-                    <a class="nav-item nav-link" id="nav-archives-tab" data-toggle="tab" href="#nav-archives" role="tab" aria-controls="nav-archives" aria-selected="false"><img src="{{ asset('images/icons/documentos.svg') }}" height="30px" class="">
+                    <a class="nav-item nav-link {{ $menuR[7] === '1' ? 'd-block' : 'd-none'  }} " id="nav-archives-tab" data-toggle="tab" href="#nav-archives" role="tab" aria-controls="nav-archives" aria-selected="false"><img src="{{ asset('images/icons/documentos.svg') }}" height="30px" class="">
                   <h6 class="text-center d-none d-sm-none d-md-block">Archivos</h6></a>
-                    <a class="nav-item nav-link" id="nav-ofertas-tab" data-toggle="tab" href="#nav-ofertas" role="tab" aria-controls="nav-ofertas" aria-selected="false"><img src="{{ asset('images/icons/descuento.svg') }}" height="30px" class="">
-                  <h6 class="text-center d-none d-sm-none d-md-block">Ofertas</h6></a> -->
+               
               </div>
               </nav>
             </div><!--End menu vertical-->
                 </div>
                 <div class="col pl-0 pr-0 mr-2">
                   <div class="tab-content" id="nav-chat-tabContent">
-              <div class="tab-pane fade pl-2 active show" id="nav-settings" role="tabpanel" aria-labelledby="nav-settings-tab">
+              <div class="tab-pane fade pl-2" id="nav-settings" role="tabpanel" aria-labelledby="nav-settings-tab">
                     <div style="text-align: right;">
                       <a data-toggle="modal" data-target="#modal-settings-survey" class="btn btn-primary"><i class="fa fa-plus-circle"></i> Agregar Encuesta</a>
                     </div> <br>
@@ -464,7 +457,7 @@
       			<div class="modal-header">
         			<h5 class="modal-title" id="exampleModalLabel">Agregar video</h5>
       			</div>
-      			<form action="{{ route('set.event.store', [1]) }}" method="POST">
+      			<form action="{{ route('set.event.store', [$event_id]) }}" method="POST">
 			        {{ csrf_field() }} 
 				    <div class="modal-body">
 				        <div class="container-fluid">
@@ -496,7 +489,7 @@
       			<div class="modal-header">
         			<h5 class="modal-title" id="exampleModalLabel">Agregar Archivos</h5>
       			</div>
-      			<form action="{{ route('set.event.store', [1]) }}" method="POST" enctype="multipart/form-data" >
+      			<form action="{{ route('set.event.store', [$event_id]) }}" method="POST" enctype="multipart/form-data" >
 			        {{ csrf_field() }} 
 				    <div class="modal-body">
 				        <div class="container-fluid">
@@ -528,7 +521,7 @@
       			<div class="modal-header">
         			<h5 class="modal-title" id="exampleModalLabel">Agregar Presentación</h5>
       			</div>
-      			<form action="{{ route('set.event.store', [1]) }}" method="POST" enctype="multipart/form-data" >
+      			<form action="{{ route('set.event.store', [$event_id]) }}" method="POST" enctype="multipart/form-data" >
 			        {{ csrf_field() }} 
 				    <div class="modal-body">
 				        <div class="container-fluid">
@@ -560,7 +553,7 @@
       			<div class="modal-header">
         			<h5 class="modal-title" id="exampleModalLabel">Agregar Encuesta</h5>
       			</div>
-      			<form action="{{ route('set.event.store', [1]) }}" method="POST" id="formQuestion">
+      			<form action="{{ route('set.event.store', [$event_id]) }}" method="POST" id="formQuestion">
 			        {{ csrf_field() }} 
 				    <div class="modal-body">
 				        <div class="container-fluid">
@@ -592,32 +585,51 @@
   		</div>
 	</div>
 
-  <!-- Modal Habilitar recursos 20130394-->
-  <div class="modal fade" id="modal-settings-enable" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  		<div class="modal-dialog" role="document">
-    		<div class="modal-content">
-      			<div class="modal-header">
-        			<h5 class="modal-title" id="exampleModalLabel">Configuraciones del Evento</h5>
-      			</div>
-      			<form action="{{ route('admin.courses.add-subcategory') }}" method="POST">
-			        {{ csrf_field() }} 
-				    <div class="modal-body">
-				        <div class="container-fluid">
-	    					<div class="row">
-						        <div class="col-md-12">
-                        <label>Habilitar recursos</label>
-						        </div>
-						    </div>
-						</div>
-				        
-				    </div>
-	      			<div class="modal-footer">
-	        			<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-	      			</div>
-	      		</form>
-    		</div>
-  		</div>
-	</div>
+<!-- Modal Habilitar recursos 20130394-->
+<div class="modal fade" id="modal-settings-enable" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Configuraciones del Evento</h5>
+          </div>
+          <form action="{{ route('admin.courses.add-subcategory') }}" method="POST">
+            {{ csrf_field() }} 
+          <div class="modal-body">
+              <div class="container-fluid">
+              <div class="row">
+                 
+                 
+                
+
+                @foreach($menuResource as $menu)
+
+                  <div class="col-md-6">
+                    <label for="">{{ $menu->resources->title }} </label>
+                    <div class="material-switch pull-right">
+                        <input id="someSwitchOptionSuccess{{ $menu->id }}" name="swith{{ $menu->id }}"
+                        value="{{ $menu->id }}"
+                        onchange="ChangeStatusReso(this)"
+                        type="checkbox"
+                        {{ $menu->status === '1' ? 'checked' : '' }}
+                        />
+                        <label for="someSwitchOptionSuccess{{ $menu->id }}" class="label-success"></label>
+                    </div>
+                  </div>
+                @endforeach
+
+                      
+                  
+              </div>
+          </div>
+              
+          </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+          </form>
+      </div>
+    </div>
+</div>
 
  
 @endsection
@@ -633,11 +645,6 @@
         $("#list_question").append(campo);
     
     });
-
-   
-    
-
-    
 
     $('.sendFormQuestion').on('click',function(e){
       e.preventDefault();
@@ -661,6 +668,29 @@
      removeQuestion = function(q) {
       $('#content_'+q).remove()
     }
+
+    ChangeStatusReso = function(q) {
+
+ 				$.ajax({
+            url: `/show/resource/${q.value}/event/{{ $event_id }}`,
+            type:'POST',
+            data: {
+            "_token": "{{ csrf_token() }}",
+            "resource_id": q.value,
+            "event_id": '{{ $event_id }}',
+            "status": $(q).is(':checked')
+            },
+            success:function(ans){
+              setTimeout(() => {
+                alert("Cambio realizado con éxito")
+                console.log("seee request ", ans)
+              }, 800);
+            }
+            
+        });
+    }
+
+   
     
 
   </script>

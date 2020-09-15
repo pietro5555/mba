@@ -12,24 +12,24 @@ use App\Models\SetEvent;
 
 class SetEventController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
 
     /**
-     * Show the form for creating a new resource.
+     * Habilitar / Inhabilitar recursos
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function changeStatusResources(Request $request)
     {
-        //
+
+        $itemsMenu = DB::table('event_resources')
+            ->where('event_id', $request->event_id)
+            ->where('id', $request->resource_id)
+            ->update(['status' => $request->status === 'true' ? '1' : '0']);
+
+
+        return response()->json(['message' => 'Cambio realizado con éxito'], 201);
+
+
     }
 
     /**
@@ -116,7 +116,7 @@ class SetEventController extends Controller
 
         
 
-        return redirect('/anotaciones')->with('msj-exitoso', 'El Recurso ha sido creado con éxito.');
+        return redirect('/event/'.$event_id)->with('msj-exitoso', 'El Recurso ha sido creado con éxito.');
 
     }    
     /**

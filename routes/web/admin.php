@@ -168,6 +168,7 @@ Route::get('/event/{event_id}', 'EventsController@show_event')->name('show.event
 
 //Configurar eventos
 Route::post('/settings/event/{event_id}', 'SetEventController@store')->name('set.event.store');
+Route::post('/show/resource/{resource_id}/event/{event_id}', 'SetEventController@changeStatusResources')->name('set.show.resource');
 
 
 /* Rutas de la Landing */

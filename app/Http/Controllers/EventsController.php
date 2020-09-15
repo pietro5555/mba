@@ -103,9 +103,14 @@ class EventsController extends Controller
         $event = Events::find($event_id);
         $menuResource = $event->getResource();
 
-        // return response()->json([$menuResource], 201);
+        $menuR = [];
+        foreach ($menuResource as $key => $menu) {
+            $menuR[$menu->resources->id] = $menu->status;
+        }
 
-		return view('live.live', compact ('event','notes', 'menuResource'));
+        // return response()->json([$menuR], 201);
+
+		return view('live.live', compact ('event','notes', 'menuR', 'menuResource', 'event_id'));
     }
 
     

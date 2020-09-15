@@ -8,11 +8,7 @@ class Category extends Model
 {
     protected $table = 'categories';
 
-    protected $fillable = ['title', 'slug'];
-
-    public function subcategories(){
-        return $this->hasMany('App\Models\Subcategory');
-    }
+    protected $fillable = ['title', 'slug', 'icon', 'cover', 'cover_name'];
 
     public function courses(){
         return $this->hasMany('App\Models\Course');

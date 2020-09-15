@@ -28,7 +28,7 @@ class Menu
     {
         if (Auth::user()) {
             
-            if(Auth::user()->rol_id == 0) {
+            if(Auth::user()->rol_id == 0 || Auth::user()->rol_id == 1) {
                 
                 $menus = $this->menuAdmin();
                 
@@ -63,6 +63,7 @@ class Menu
             'registro' =>  json_decode($date->registro),
             'registro_cliente' => json_decode($date->registro_cliente),
             'red' => json_decode($date->red_usuario),
+            'eventos' => json_decode($date->eventos),
             'transacciones' => json_decode($date->transacciones),
             'billetera' => json_decode($date->billetera),
             'calendario' =>  json_decode($date->calendario),
@@ -85,6 +86,7 @@ class Menu
             'registro' =>  json_decode($date->registro),
             'registro_cliente' => json_decode($date->registro_cliente),
             'red' => json_decode($date->red_usuario),
+            'eventos' => json_decode($date->eventos),
             'transacciones' => json_decode($date->transacciones),
             'billetera' => json_decode($date->billetera),
             'calendario' =>  json_decode($date->calendario),
@@ -905,7 +907,7 @@ class Menu
     {
         $permiso = null;
         $settings = Settings::first();
-        if (Auth::user()->rol_id == 0) {
+        
             $permiso = DB::table('settingpermiso')->where('iduser', Auth::user()->ID)->get()[0];
             
              $habilitar = 0;
@@ -940,7 +942,7 @@ class Menu
                   $red ='active';
               }
              
-        }
+        
         return [
             'Inicio' => [
                 'submenu' => 0,
@@ -951,21 +953,77 @@ class Menu
                 'permisoAdmin' => 1,
                 'activo' => 0,
             ],
+
+            'Usuarios' => [
+                'submenu' => 1,
+                'ruta' => 'javascript:;',
+                'icono' => 'fas fa-user',
+                'permisoAdmin' => (!empty($permiso)) ? $permiso->usuarios : 0,
+                'activo' => 0,
+                'menus' => [
+                    'Administradores' => [
+                        'ruta' => 'admin-users-administrador',
+                        'complementoruta' => '?tip=0',
+                        'black'=> '0',
+                        'oculto'=> 'activo',
+                    ],
+                    'Moderador' => [
+                        'ruta' => 'admin-users-administrador',
+                        'complementoruta' => '?tip=1',
+                        'black'=> '0',
+                        'oculto'=> 'activo',
+                    ],
+                    'Mentor' => [
+                        'ruta' => 'admin-users-administrador',
+                        'complementoruta' => '?tip=2',
+                        'black'=> '0',
+                        'oculto'=> 'activo',
+                    ],
+                    'Cliente' => [
+                        'ruta' => 'admin-users-administrador',
+                        'complementoruta' => '?tip=3',
+                        'black'=> '0',
+                        'oculto'=> 'activo',
+                    ],
+                    'Nuevo Usuario' => [
+                        'ruta' => 'autenticacion.new-register',
+                        'complementoruta' => '?ref='.Auth::user()->ID.'&select=true',
+                        'black'=> '0',
+                        'oculto'=> 'activo',
+                    ],
+                ]
+            ],
+             
+
+            'Entradas' => [
+                'submenu' => 0,
+                'ruta' => 'admin-users-entrada',
+                'black'=> '0',
+                'icono' => 'fas fa-door-closed',
+                'complementoruta' => '',
+                'permisoAdmin' => (!empty($permiso)) ? $permiso->entradas : 0,
+                'activo' => 0,
+            ],
+
+            'Red' => [
+                'submenu' => 0,
+                'ruta' => 'admin-red-index',
+                'black'=> '0',
+                'icono' => 'fas fa-users',
+                'complementoruta' => '',
+                'permisoAdmin' => (!empty($permiso)) ? $permiso->red : 0,
+                'activo' => 0,
+            ],
+            
             'Cursos' => [
                 'submenu' => 1,
                 'ruta' => 'javascript:;',
-                'icono' => 'fas fa-sitemap',
+                'icono' => 'fab fa-discourse',
                 'permisoAdmin' => (!empty($permiso)) ? $permiso->cursos : 0,
                 'activo' => 0,
                 'menus' => [
                     'Listado de Cursos' => [
                         'ruta' => 'admin.courses.index',
-                        'complementoruta' => '',
-                        'black'=> '0',
-                        'oculto'=> 'activo',
-                    ],
-                    'Gestionar Destacados' => [
-                        'ruta' => 'admin.courses.featured',
                         'complementoruta' => '',
                         'black'=> '0',
                         'oculto'=> 'activo',
@@ -976,6 +1034,34 @@ class Menu
                         'black'=> '0',
                         'oculto'=> 'activo',
                     ],
+                    'Gestionar Subcategorías' => [
+                        'ruta' => 'admin.courses.subcategories',
+                        'complementoruta' => '',
+                        'black'=> '0',
+                        'oculto'=> 'activo',
+                    ],
+                    'Gestionar Etiquetas' => [
+                        'ruta' => 'admin.courses.tags',
+                        'complementoruta' => '',
+                        'black'=> '0',
+                        'oculto'=> 'activo',
+                    ],
+                ]
+            ],
+            'Eventos' => [
+                'submenu' => 1,
+                'ruta' => 'javascript:;',
+                'icono' => 'fas fa-calendar-day',
+                'permisoAdmin' => (!empty($permiso)) ? $permiso->eventos : 0,
+                'activo' => request()->is('admin/events') ? 'active' : 0,
+                'menus' => [
+                    'Listado de Eventos' => [
+                        'ruta' => 'admin.events.index',
+                        'complementoruta' => '',
+                        'black'=> '0',
+                        'oculto'=> 'activo',
+                    ],
+                   
                 ]
             ],
             'Actualizar' => [
@@ -1042,7 +1128,7 @@ class Menu
                 'submenu' => 1,
                 'ruta' => 'javascript:;',
                 'icono' => 'far fa-money-bill-alt',
-                'permisoAdmin' => 1,
+                'permisoAdmin' => (!empty($permiso)) ? $permiso->transacciones : 0,
                 'activo' => (request()->is('admin/transactions*')) ? 'active' : '',
                 'menus' => [
                     'Ordenes Personales' => [

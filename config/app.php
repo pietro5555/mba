@@ -121,9 +121,9 @@ return [
     |
     */
 
-    'log' => env('APP_LOG', 'daily'),
+    // 'log' => env('APP_LOG', 'daily'),
 
-    'log_level' => env('APP_LOG_LEVEL', 'debug'),
+    // 'log_level' => env('APP_LOG_LEVEL', 'debug'),
 
     /*
     |--------------------------------------------------------------------------
@@ -182,6 +182,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         Chumper\Zipper\ZipperServiceProvider::class,
+        App\Providers\ViewServiceProvider::class,
 
     ],
 

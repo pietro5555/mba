@@ -27,7 +27,7 @@
             {{-- fin mensajes --}}
 
             <!-- form start -->
-            <form class="login-form" method="POST" action="{{ route('autenticacion.save-register') }}">
+            <form class="login-form" method="POST" action="{{ route('autenticacion.save-register') }}" enctype="multipart/form-data">
                 <div class="box-body">
                     {{ csrf_field() }}
                     <div class="row">
@@ -105,6 +105,42 @@
                                     </h3>
                                 </div>
                                 <div class="box-body">
+
+                                    @if(!empty(request()->select))  
+                                    <div class="form-group">
+                                        <label class="control-label" style="text-align: center;">Tipo de Usuario (*)</label>
+                                       <select class="form-control" name="rango" id="rang">
+                                        <option value="" selected disabled>Seleccion una opcion</option>
+                                        <option value="0">Administrador</option>
+                                        <option value="1">Moderador</option>
+                                        <option value="2" >Mentor</option>
+                                        <option value="3">Cliente</option>
+                                       </select>
+                                    </div>
+                                    @endif
+
+
+                                    <div id="dat-mentor" style="display:none;">
+
+                                        <div class="form-group">
+                                        <label class="control-label" style="text-align: center;">Profesión (*)</label>
+                                        <input class="form-control form-control-solid placeholder-no-fix form-group"
+                                            type="text" autocomplete="off" name="profession" required/>
+                                        </div>
+                                      <div class="form-group">
+                                        <label class="control-label" style="text-align: center;">Sobre mi 
+                                            (*)</label>
+                                        <textarea name="about" class="form-control"></textarea>
+                                       </div>
+
+                                       <div class="form-group">
+                                        <label class="control-label" style="text-align: center;">Imagen de Perfil
+                                            (*)</label>
+                                            <input type="file" name="cover">
+                                        
+                                       </div>
+                                    </div>
+                                    
                                     <div class="form-group">
                                         <label class="control-label" style="text-align: center;">Correo Electrónico
                                             (*)</label>
@@ -241,6 +277,13 @@
 
 @push('script')
 <script>
+
+    document.getElementById('rang').addEventListener('change', function () {
+       var style = this.value == 2 ? 'block' : 'none';
+       document.getElementById('dat-mentor').style.display = style;
+});
+
+
     function validarEdad(edad) {
         var hoy = new Date();
         var cumpleanos = new Date(edad);
@@ -252,11 +295,7 @@
             edad--;
         }
 
-        if (edad < {
-                {
-                    $settings - > edad_minino
-                }
-            }) {
+        if (edad < {{$settings->edad_minino}} ) {
             document.getElementById("btn").disabled = true;
             document.getElementById("errorEdad").style.display = 'block';
         } else {

@@ -14,7 +14,7 @@
                 <a class="nav-link items-header" href="#">NOSOTROS</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link items-header" href="{{ route('cursos') }}">CURSOS</a>
+                <a class="nav-link items-header" href="{{ route('courses') }}">CURSOS</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link items-header" href="#">STREAMING</a>
@@ -39,7 +39,7 @@
                     </div>
                 </li>
                 <li class="nav-item li-register-button">
-                    <a type="button" class="btn btn-primary btn-register-header" href="{{ route('login') }}">REGISTRARME</a>
+                    <a type="button" class="btn btn-primary btn-register-header" href="{{ route('log') }}">REGISTRARME</a> <!--/login-->
                 </li>
             @else
                 <li class="nav-item dropdown li-language" id="li-language-larger">
@@ -79,15 +79,21 @@
                 <li class="nav-item" id="li-notifications-small" style="display: none;">
                     <a class="nav-link items-header" href="#">NOTIFICACIONES</a>
                 </li>
+
                 <li class="nav-item dropdown dropleft" id="li-user-larger" style="padding-right: 10px;">
                     <img class="dropdown-toggle items-header" id="navbarDropdown2" role="button" data-toggle="dropdown" src="{{ asset('images/logo.png') }}" alt="" width="40" height="40">
                 
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Salir</a>
+                    <a class="dropdown-item" href="{{ route('logout') }}"
+            onclick="event.preventDefault();
+                              document.getElementById('logout-form').submit();">
+                 {{ __('Salir') }}
+                </a>
+
+                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                     @csrf
+                 </form>
                     </div>
-                </li>
-                <li class="nav-item" id="li-user-small" style="display: none;">
-                    <a class="nav-link items-header" href="#">SALIR</a>
                 </li>
             @endif
         </ul>

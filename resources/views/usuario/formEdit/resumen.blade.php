@@ -5,7 +5,7 @@
                 <div class="box-body box-profile">
 
                     <img class="profile-user-img img-responsive img-circle"
-                        src="{{asset('/avatar/'.$data['principal']->avatar)}}">
+                        src="{{asset('/uploads/avatar/'.$data['principal']->avatar)}}">
 
                     <h3 class="profile-username text-center">{{$data['principal']->user_nicename}}</h3>
                     <p class="text-muted text-center">{{$data['principal']->user_email}}</p>

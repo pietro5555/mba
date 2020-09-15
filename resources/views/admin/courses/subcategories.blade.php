@@ -50,6 +50,7 @@
 				<table id="mytable" class="table table-bordered table-striped">
 					<thead>
 						<tr>
+							<th class="text-center">#</th>
 							<th class="text-center">Título</th>
 							<th class="text-center">Cursos Asociados</th>
 							<th class="text-center">Acción</th>
@@ -58,6 +59,7 @@
 					<tbody>
 						@foreach($subcategorias as $subcategoria)
 							<tr>
+								<td class="text-center">{{ $subcategoria->id }}</td>
 								<td class="text-center">{{ $subcategoria->title }}</td>
 								<td class="text-center">{{ $subcategoria->courses_count }}</td>
 								<td class="text-center">
@@ -82,8 +84,7 @@
         			<h5 class="modal-title" id="exampleModalLabel">Crear Subcategoría</h5>
       			</div>
       			<form action="{{ route('admin.courses.add-subcategory') }}" method="POST">
-			        {{ csrf_field() }}
-			        <input type="hidden" name="category_id" value="{{ $datosCategoria->id }}">
+			        {{ csrf_field() }} 
 				    <div class="modal-body">
 				        <div class="container-fluid">
 	    					<div class="row">

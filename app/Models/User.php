@@ -21,14 +21,16 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
+        'name',
         'birthdate', 'gender','user_login', 'user_pass', 'user_nicename', 
         'user_email', 'user_url', 'user_registered', 'user_activation_key', 'user_status', 
-        'display_name', 'password', 'avatar', 'provider_id', 'provider', 
+        'display_name', 'password', 'avatar','provider_id', 'provider', 
         'access_token', 'referred_id', 'status', 'wallet_amount','billetera', 'bank_amount', 
         'clave', 'activacion', 'sponsor_id', 'position_id', 'tipouser', 'rol_id',
         'ladomatriz', 'puntosPro', 'puntosRed', 'puntosDer', 'puntosIzq',
         'fecha_activacion','binario','debiDer','debiIzq','codigo','correos',
-        'limitar','pop_up','autenticacion','fechaver','factor2','modo_oscuro'
+        'limitar','pop_up','autenticacion','fechaver','factor2','modo_oscuro','about'
+        ,'cover_name', 'profession'
     ];
 
     /**
@@ -78,5 +80,19 @@ class User extends Authenticatable
     public function comentarios(){
         return $this->hasMany('App\Models\Comentario');
         
+    }
+
+    //Relación Mentor - Cursos
+    public function courses(){
+        return $this->hasMany('App\Models\Course', 'mentor_id', 'ID');
+    }
+
+    //Relación Usuarios - Eventos (Agenda de Eventos)
+    public function events(){
+        return $this->belongsToMany('App\Models\Events', 'events_users', 'user_id', 'event_id')->withPivot('date', 'time')->withTimestamps();
+    }
+
+    public function ratings(){
+        return $this->hasMany('App\Models\Rating');
     }
 }

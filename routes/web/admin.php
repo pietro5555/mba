@@ -18,7 +18,12 @@ Route::group(['prefix' => 'installer'], function (){
 });
 
 
-Route::get('load-more-courses-new/{ultimoId}/{accion}', 'CourseController@load_more_courses_new')->name('landing.load-more-courses-new');
+Route::get('/clear-cache', function() {
+    $exitCode = Artisan::call('config:clear');
+    $exitCode = Artisan::call('cache:clear');
+    $exitCode = Artisan::call('config:cache');
+    return 'DONE'; //Return anything
+});
 
 //nuevo inicio a traves de un nuevo login
 Route::group(['prefix' => 'inicio','middleware' => ['auth']], function(){
@@ -81,6 +86,7 @@ Route::group(['prefix' => 'aut', 'middleware' => ['licencia', 'menu']], function
         
    Route::get('/cerrar', 'Login\LoginController@cerrar')->name('login-cerrar');
    
+   //Login Sinergia
    //envio de codigo por correo
    Route::get('/login/', 'Auth\LoginController@codigo')->name('login.codigo');
    Route::post('/verificarcodigo', 'Auth\LoginController@verificarCodigo')->name('login.veri-cod');
@@ -123,16 +129,79 @@ Route::group(['prefix' => 'tienda', 'middleware' => ['auth', 'licencia', 'menu']
         Route::get('/listado','TiendaController@listado')->name('link-listado');
         Route::post('/subir','TiendaController@subir')->name('link-subir');
         Route::get('/cerrar/{id}','TiendaController@cerrar')->name('link-cerrar');
+        
 });
 
+
+/*Rutas MBA*/
+
+//vista del login (/login)
+Route::get('/log', 'LoginController@login')->name('log');
+Route::post('/autenticar', 'LoginController@autenticacion')->name('autenticar');
+
+//vista de transmisiones
+Route::get('/transmisiones', 'HomeController@transmisiones')->name('transmisiones');
+
+//Streaming
+Route::get('streaming', 'StreamingController@index')->name('streaming.index');
+Route::get('getaccesstoken', 'StreamingController@getAccessToken')->name('streaming.getaccesstoken');
+
+//Cursos
+Route::get('cursos', 'CursosController@index')->name('cursos');
+Route::get('cursos/curso', 'CursosController@show_one_course')->name('curso');
+Route::get('cursos/leccion', 'CursosController@leccion')->name('leccion');
+//Enviar likes
+Route::post('/likes', 'CursosController@course_likes')->name( 'like');
+// Cursos por categoria
+Route::get('cursos/category/{id}', 'CursosController@show_course_category')->name('show.cursos.category');
+//Route::get('cursos/porcategorias', 'CursosController@show_course_category')->name('show.cursos.category');
+//Perfil del mentor
+Route::get('cursos/mentor/{id}', 'CursosController@perfil_mentor')->name('show.perfil.mentor');
+Route::get('cursos/mentor', 'CursosController@show_course_category')->name('show.cursos.category');
+
+//vista de anotaciones
+Route::get('/anotaciones', 'NoteController@index')->name('anotaciones');
+Route::post('/anotaciones/store', 'NoteController@store')->name('live.anotaciones');
+
+// Events landing
+Route::get('/event/{event_id}', 'EventsController@show_event')->name('show.event');
+
+//Configurar eventos
+Route::post('/settings/event/{event_id}', 'SetEventController@store')->name('set.event.store');
+
+
+/* Rutas de la Landing */
+Route::get('load-more-courses-new/{ultimoId}/{accion}', 'CourseController@load_more_courses_new')->name('landing.load-more-courses-new');
+Route::get('book-event/{evento}', 'EventsController@book')->name('landing.book-event');
+
+
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu']], function() {
+
+  Route::group(['prefix' => 'red'], function(){
+        Route::get('/listado', 'RedController@index')->name('admin-red-index');
+        Route::post('/filtrered', 'RedController@filtrered')->name('admin-red-filtre');
+      });
+
+  Route::group(['prefix' => 'usuarios'], function(){
+        Route::get('/administrador', 'UsuarioController@admin')->name('admin-users-administrador');
+        Route::get('/permiso/{id}', 'PermisosController@permiso')->name('admin-users-permisos');
+        Route::post('/savepermiso', 'PermisosController@savepermiso')->name('admin-save-permiso');
+      });
+
+  Route::group(['prefix' => 'entradas'], function(){
+        Route::get('/entrada', 'EntradasController@index')->name('admin-users-entrada');
+        Route::get('/deletentrada/{id}', 'EntradasController@deletentrada')->name('admin-delet-entrada');
+         Route::get('/actuentrada/{id}', 'EntradasController@actualentrada')->name('admin-actual-entrada');
+        Route::post('/editentrada', 'EntradasController@editentrada')->name('admin-edit-entrada');
+        Route::post('/saventrada', 'EntradasController@saveentrada')->name('admin-save-entrada');
+      }); 
+  
    Route::group(['prefix' => 'courses'], function(){
-      Route::get('', 'CourseController@index')->name('admin.courses.index');
+      Route::get('/', 'CourseController@record')->name('admin.courses.index');
       Route::post('store', 'CourseController@store')->name('admin.courses.store');
       Route::get('edit/{id}', 'CourseController@edit')->name('admin.courses.edit');
       Route::post('update', 'CourseController@update')->name('admin.courses.update');
       Route::get('change-status/{id}/{status}', 'CourseController@change_status')->name('admin.courses.change-status');
-      Route::get('featured', 'CourseController@featured')->name('admin.courses.featured');
       Route::post('add-featured', 'CourseController@add_featured')->name('admin.courses.add-featured');
       Route::get('quit-featured/{id}', 'CourseController@quit_featured')->name('admin.courses.quit-featured');
 
@@ -142,18 +211,68 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu']]
          Route::get('edit/{id}', 'CategoryController@edit_category')->name('admin.courses.edit-category');
          Route::post('update', 'CategoryController@update_category')->name('admin.courses.update-category');
          Route::get('delete/{id}', 'CategoryController@delete_category')->name('admin.courses.delete-category');
-         Route::get('load-subcategories/{category_id}', 'CategoryController@load_subcategories')->name('admin.courses.load-subcategories');
       });
 
       Route::group(['prefix' => 'subcategories'], function(){
-         Route::post('add', 'CategoryController@add_subcategory')->name('admin.courses.add-subcategory');
+        Route::get('/', 'CategoryController@subcategories')->name('admin.courses.subcategories');
+        Route::post('add', 'CategoryController@add_subcategory')->name('admin.courses.add-subcategory');
          Route::get('edit/{id}', 'CategoryController@edit_subcategory')->name('admin.courses.edit-subcategory');
          Route::post('update', 'CategoryController@update_subcategory')->name('admin.courses.update-subcategory');
          Route::get('delete/{id}', 'CategoryController@delete_subcategory')->name('admin.courses.delete-subcategory');
-         Route::get('/{category_slug}/{category_id}', 'CategoryController@subcategories')->name('admin.courses.subcategories');
+      });
+
+      Route::group(['prefix' => 'tags'], function(){
+        Route::get('/', 'TagController@index')->name('admin.courses.tags');
+        Route::post('store', 'TagController@store')->name('admin.courses.add-tag');
+        Route::get('edit/{id}', 'TagController@edit')->name('admin.courses.edit-tag');
+        Route::post('update', 'TagController@update')->name('admin.courses.update-tag');
+        Route::get('delete/{id}', 'TagController@delete')->name('admin.courses.delete-tag');
+      });
+
+      Route::group(['prefix' => 'lessons'], function(){
+        Route::get('/{id}', 'LessonController@index')->name('admin.courses.lessons');
+        Route::post('store', 'LessonController@store')->name('admin.courses.lessons.store');
+        Route::get('edit/{id}', 'LessonController@edit')->name('admin.courses.lessons.edit');
+        Route::post('update', 'LessonController@update')->name('admin.courses.lessons.update');
+        Route::get('delete/{id}', 'LessonController@delete')->name('admin.courses.lessons.delete');
+
+        Route::group(['prefix' => 'resources'], function(){
+          Route::get('/{id}', 'ResourcesController@index')->name('admin.courses.lessons.resources');
+          Route::post('store', 'ResourcesController@store')->name('admin.courses.lessons.resources.store');
+          Route::get('edit/{id}', 'ResourcesController@edit')->name('admin.courses.lessons.resources.edit');
+          Route::post('update', 'ResourcesController@update')->name('admin.courses.lessons.resources.update');
+          Route::get('delete/{id}', 'ResourcesController@delete')->name('admin.courses.lessons.resources.delete');
+        });
+      });
+
+      Route::group(['prefix' => 'evaluation'], function(){
+        Route::post('store', 'EvaluationController@store')->name('admin.courses.evaluation.store');
+        Route::post('update', 'EvaluationController@update')->name('admin.courses.evaluation.update');
+        Route::get('show/{id}', 'EvaluationController@show')->name('admin.courses.evaluation.show');
+        Route::post('add-question', 'EvaluationController@add_question')->name('admin.courses.evaluation.add-question');
+        Route::get('edit-question/{id}', 'EvaluationController@edit_question')->name('admin.courses.evaluation.edit-question');
+        Route::post('update-question', 'EvaluationController@update_question')->name('admin.courses.evaluation.update-question');
+        Route::get('delete-question/{id}', 'EvaluationController@delete_question')->name('admin.courses.evaluation.delete-question');
       });
    });
 
+   //Eventos admin
+   Route::group(['prefix' => 'events'], function(){
+    Route::get('/', 'EventsController@index')->name('admin.events.index');
+    Route::get('show/{id}', 'EventsController@show')->name('admin.events.show');
+    Route::post('store', 'EventsController@store')->name('admin.events.store');
+    Route::get('edit/{id}', 'EventsController@edit')->name('admin.events.edit');
+    Route::post('update', 'EventsController@update')->name('admin.events.update');
+    Route::delete('delete/{id}', 'EventsController@delete')->name('admin.events.delete');
+    Route::get('change-status/{id}/{status}', 'EventsController@change_status')->name('admin.events.change-status');
+
+  });
+
+  //Streaming
+  Route::get('streaming', 'StreamingController@index')->name('streaming.index');
+  Route::get('getaccesstoken', 'StreamingController@getAccessToken')->name('streaming.getaccesstoken');
+
+    
 
     // Actualiza todos la informacion para los usuarios
     Route::get('updateall', 'AdminController@ActualizarTodo')->name('admin-update-all');
@@ -750,8 +869,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu']]
         Route::post('/cambioestado','ProspeccionController@cambioestado')->name('prospeccion-cambioestado');
         
     });
-});
-
+  }); 
+    
 Route::group(['prefix' => 'link','middleware' => ['menu']], function(){
     
         //link para ver los productos    
@@ -789,9 +908,31 @@ Route::group(['prefix' => 'link','middleware' => ['menu']], function(){
         Route::post('ckeditor/image_upload', 'LinkController@upload')->name('upload');
         
     });
+
+
     
-    
+    //vista de transmisiones
     Route::get('/transmisiones', 'HomeController@transmisiones')->name('transmisiones');
+    
+    //vista de timelive
+    Route::group(['prefix' => 'time'], function(){
+    Route::get('/timelive', 'CalendarioGoogleController@timelive')->name('timelive');
+    Route::get('/oauth/{id}', 'CalendarioGoogleController@oauth')->name('oauthCallback');
+    Route::get('/redirigircalendario', 'CalendarioGoogleController@index')->name('cal.index');
+    Route::get('/proximo/{id}', 'CalendarioGoogleController@proximo')->name('time-prox');
+     });
+  
 
 //Cursos
 Route::get('cursos', 'CursosController@index')->name('cursos');
+Route::get('cursos/curso', 'CursosController@show_one_course')->name('curso');
+Route::get('cursos/leccion', 'CursosController@leccion')->name('leccion');
+
+Route::group(['prefix' => 'courses'], function(){
+  Route::get('/', 'CourseController@index')->name('courses');
+  Route::get('show/{slug}/{id}', 'CourseController@show')->name('courses.show');
+});
+
+
+
+

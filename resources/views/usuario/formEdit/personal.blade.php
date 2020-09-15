@@ -48,6 +48,12 @@
             value="{{$data['segundo']->edad}}" disabled>
     </div>
 
+
+    <div class="form-group" style="margin-bottom: 15px;">
+        <label>Biografia</label>
+        <textarea name="biografia" class="form-control personal" disabled>{{(!empty($data['segundo']->biografia)) ? $data['segundo']->biografia : '' }}</textarea>
+    </div>
+
     @if (Auth::user()->rol_id == 0)
     <div class="form-group" style="margin-bottom: 15px;">
         <label>ID Patrocinado</label>

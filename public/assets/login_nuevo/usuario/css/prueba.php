@@ -1,6 +1,6 @@
 <?php
 header("Content-type: text/css; charset: UTF-8");
-?&gt;
+?>
 
 
 $brandColor = "#990000";

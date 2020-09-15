@@ -1,0 +1,45 @@
+﻿ÚLTIMA ACTUALIZACIÓN DEL SERVIDOR: 07/09/2020
+----------------------------------------------
+08/09/2020
+Dev: Luisana Marín
+*Nueva tabla events_users (Correr script events_users)
+
+08/09/2020
+Dev: Crisleivys Gil
+* Agregado los campos likes, shares, views en la tabla courses (correr el script courses)
+
+09/09/2020
+*Nuevo columna biografia en user_campo (user_campo.sql)
+*Nuevos permisos ususarios, cursos, transacciones, red, eventos, (settingpermiso.sql)
+
+09/09/2020
+Dev: Luisana Marín
+*Nuevo campo featured_at (DATE, NULL) tabla courses (Correr script courses)
+
+09/09/2020
+Dev: Crisleivys Gil
+*Nuevos campos cover, cover_name tabla categories (Correr script categories)
+
+10/09/2020
+Dev: Luisana Marín
+*Nueva tabla evaluations (Correr script evaluations.sql)
+*Nueva tabla questions (Correr script questions.sql)
+
+11/09/2020
+*nuevos campos about, cover_name, y reutilizacion del campo avatar (wp98_users.sql)
+*Nueva tabla entradas (entradas.sql)
+*Nuevo campo de permisos (correr script de settingpermiso.sql)
+
+11/09/2020
+Dev: Crisleivys Gil
+*Nuevo campo agregado profession en ta tabla wp98_users (Correr el script wp98_users)
+* Agregados datos para los mentores y cursos (Correr los scripts courses y wp98_users)
+
+12/09/2020
+Dev: Luisana Marín
+*Nueva tabla ratings (Correr script ratings.sql)
+
+12/09/2020
+Dev: Robinson vargas
+*Nueva tabla resources (resources.sql)
+*Nueva tabla event_resources (event_resources.sql)

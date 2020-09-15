@@ -14,6 +14,7 @@ use App\Models\User;
 use App\Models\Settings;
 use App\Models\SettingsEstructura;
 use App\Models\SettingsRol;
+use App\Models\Permiso;
 // llamado de Controlladores
 use App\Http\Controllers\IndexController;
 
@@ -228,4 +229,32 @@ class UsuarioController extends Controller
         $segundaInfo = DB::table('user_campo')->where('ID', 1)->first();
         return Excel::download(new UsersExport, $nombreArchivo.'.xlsx');
     }
+
+
+     public function admin(){
+      
+      view()->share('title', 'Listado de Usuarios');
+       
+       $permisos = Permiso::all();
+       $tipo = request()->tip;
+       if(request()->tip == 0){
+        $usuarios = User::where('ID', '!=', '1')->where('rol_id', request()->tip)->get();
+       }else{
+        $usuarios = User::where('rol_id', request()->tip)->get();
+       }
+
+      foreach($usuarios as $user){
+       
+       $nivel = $this->coincidirNivel($user->ID);  
+       $rol = Rol::where('id', $user->rol_id)->first();
+       $patrocinador = User::where('ID', $user->referred_id)->first();
+       $user->patrocinador = $patrocinador->display_name;
+       $user->rol = $rol->name;
+       $user->nivel = $nivel;
+
+      }
+
+     return view('usuario.usuarios')->with(compact('usuarios','tipo','permisos')); 
+    }
+
 }

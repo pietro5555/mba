@@ -26,9 +26,9 @@ class CalendarioGoogleController extends Controller
 
     public function timelive(){
          
-         $evento = $this->obtenerEvento(0);
-         $fecha = (empty($evento)) ? 0 : $evento['inicio'];
-         $proxevent = $this->proxievents((empty($evento)) ? 0 : $evento['id']);
+         $evento = $this->obtenerEvento(1);
+         $fecha = (empty($evento)) ? 1 : $evento['inicio'];
+         $proxevent = $this->proxievents((empty($evento)) ? 1 : $evento['id']);
         return view('timelive', compact('fecha','evento','proxevent'));
 
     }
@@ -36,7 +36,7 @@ class CalendarioGoogleController extends Controller
     public function proximo($id){
       
        $evento = $this->obtenerEvento($id);
-       $fecha = (empty($evento)) ? 0 : $evento['inicio'];
+       $fecha = (empty($evento)) ? 1 : $evento['inicio'];
        return view('timelive', compact('fecha','evento'));
     }
 
@@ -49,12 +49,11 @@ class CalendarioGoogleController extends Controller
     }
 
     public function obtenerEvento($eventactual){
-          
         $datos = [];
         $fechactual = Carbon::now();
         $fin = new Carbon('2020-09-10');
 
-        if($eventactual == 0){
+        if($eventactual == 1){
         $evento = Events::whereDate('date', '>=', $fechactual)->orderBy('date', 'ASC')->take('1')->first();
         }else{
         $evento = Events::whereDate('date', '>=', $fechactual)->where('id', '>', $eventactual)->orderBy('date', 'ASC')->take('1')->first();
@@ -65,15 +64,17 @@ class CalendarioGoogleController extends Controller
 
         if($evento != null){
 
-        $user = DB::table('user_campo')->where('ID', $evento->user_id)->first();
+        $user = DB::table('wp98_users')->where('ID', $evento->user_id)->first();
+
         $datos =[
             'id' => $evento->id,
             'title' => $evento->title,
-            'descripcion' => 'Descripcion',
+            'descripcion' => $evento->description,
             'inicio' => $evento->date,
             'fin' => $fin,
-            'nombre' => $user->firstname,
-            'apellido' => $user->lastname, 
+            'nombre' => $user->display_name,
+            'profession' => $user->profession,
+            'about' => $user->about,
         ];
        }
 

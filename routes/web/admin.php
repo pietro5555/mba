@@ -147,17 +147,15 @@ Route::get('streaming', 'StreamingController@index')->name('streaming.index');
 Route::get('getaccesstoken', 'StreamingController@getAccessToken')->name('streaming.getaccesstoken');
 
 //Cursos
-Route::get('cursos', 'CursosController@index')->name('cursos');
-Route::get('cursos/curso', 'CursosController@show_one_course')->name('curso');
-Route::get('cursos/leccion', 'CursosController@leccion')->name('leccion');
+Route::get('courses/curso', 'CursosController@show_one_course')->name('curso');
+Route::get('courses/leccion', 'CursosController@leccion')->name('leccion');
 //Enviar likes
 Route::post('/likes', 'CursosController@course_likes')->name( 'like');
 // Cursos por categoria
-Route::get('cursos/category/{id}', 'CursosController@show_course_category')->name('show.cursos.category');
-//Route::get('cursos/porcategorias', 'CursosController@show_course_category')->name('show.cursos.category');
+Route::get('courses/category/{id}', 'CursosController@show_course_category')->name('show.cursos.category');
 //Perfil del mentor
-Route::get('cursos/mentor/{id}', 'CursosController@perfil_mentor')->name('show.perfil.mentor');
-Route::get('cursos/mentor', 'CursosController@show_course_category')->name('show.cursos.category');
+Route::get('courses/mentor/{id}', 'CursosController@perfil_mentor')->name('show.perfil.mentor');
+Route::get('courses/mentor', 'CursosController@show_course_category')->name('show.cursos.category');
 
 //vista de anotaciones
 Route::get('/anotaciones', 'NoteController@index')->name('anotaciones');

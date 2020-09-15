@@ -136,7 +136,7 @@
                 <div class="card mentors-card">
                     <div class="row no-gutters">
                         <div class="col-auto">
-                            <img src="{{ asset('uploads/avatar/'.$mentor->avatar) }}" class="" alt="" height="164px" width="164px">
+                            <img src="{{ asset('uploads/images/avatar/'.$mentor->avatar) }}" class="" alt="" height="164px" width="164px">
                         </div>
                         <div class="col">
                             <div class="card-block px-2">

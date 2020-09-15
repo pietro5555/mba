@@ -87,14 +87,13 @@ countdown('{{$fecha}}', 'clock');
 <div class="row">
     <div class="col-md-12">
 
-        <img src="{{ asset('vivo/temporizador.png') }}" class="card-img-top" alt="..." style="height: 500px; width: 100%;">
+        <img src="{{ asset('vivo/temporizador.png') }}" class="card-img-top img-fluid" alt="...">
 
-        <div class="card-img-overlay" style="text-align: center; margin-top: 130px; color:white;">
-
+        <div class="card-img-overlay counter-caption">
             
-            <h6 class="card-title">TIEMPO PARA INICIAR EL LIVE</h6>
+            <h6 class="card-title text-white text-center">TIEMPO PARA INICIAR EL LIVE</h6>
 
-          <div class="d-flex justify-content-center bd-highlight mb-1" id="clock">
+          <div class="d-flex justify-content-center bd-highlight mb-1 text-white" id="clock">
            
 
            </div>
@@ -106,8 +105,7 @@ countdown('{{$fecha}}', 'clock');
 
 <div class="row">
 
-<div class="col-md-8" style="background-color: #121317; margin-left: 15px;
-    margin-right: -15px;">
+<div class="col-md-8">
   <h3 style="color: #2A91FF; margin-top: 20px;">{{$evento['title']}}</h3>
    <hr color="white" size=3>
    <p style="color:white;">
@@ -138,7 +136,9 @@ countdown('{{$fecha}}', 'clock');
    </div>
 
    <div class="col-md-6" style="margin-bottom: 10px;">
-       <a href="{{route('time-prox', $evento['id'])}}" class="btn btn-secondary btn-block">PROXIMO LIVE <i class="fas fa-angle-right"></i></a>
+     <a href="{{route('time-prox', $evento['id'])}}" class="btn btn-secondary btn-block">PROXIMO LIVE <i class="fas fa-angle-right"></i></a>
+
+       <!--<a href="" class="btn btn-secondary btn-block">PROXIMO LIVE <i class="fas fa-angle-right"></i></a>-->
    </div>
 
    <div class="col-md-6" style="margin-bottom: 10px;">
@@ -156,9 +156,9 @@ countdown('{{$fecha}}', 'clock');
           <img src="{{ asset('vivo/nivel.png') }}" class="card-img-top" alt="..." style="height: 165px; width: 100%;">
 
           <p style="color: white;">Invitado</p>
-          <h5 style="color:#2A91FF; margin-top: -20px;">{{$evento['nombre']}} {{$evento['apellido']}}</h5>
-          <p style="color: white;">Conferencista Experta en Marketing<p>
-          <p style="color:#b7a7a7; font-size: 12px; margin-top: -10px;"> {{$evento['descripcion']}}</p>
+          <h5 style="color:#2A91FF; margin-top: -20px;">{{$evento['nombre']}}</h5>
+          <p style="color: white;">{{$evento['profession']}}<p>
+          <p style="color:#b7a7a7; font-size: 12px; margin-top: -10px;"> {{$evento['about']}}</p>
 
         <a href="#" class="btn btn-success btn-block">NIVEL: PRINCIPIANTE</a>
     </div>

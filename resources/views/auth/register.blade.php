@@ -125,7 +125,7 @@
                                         <div class="form-group">
                                         <label class="control-label" style="text-align: center;">Profesión (*)</label>
                                         <input class="form-control form-control-solid placeholder-no-fix form-group"
-                                            type="text" autocomplete="off" name="profession" required/>
+                                            type="text" autocomplete="off" name="profession"/>
                                         </div>
                                       <div class="form-group">
                                         <label class="control-label" style="text-align: center;">Sobre mi 

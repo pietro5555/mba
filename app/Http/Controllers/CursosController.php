@@ -144,7 +144,7 @@ class CursosController extends Controller
 
        if($courses)
        {
-        return view('cursos.cursos_categorias', compact('courses', 'category_name', 'mentores', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next',));
+        return view('cursos.cursos_categorias', compact('courses', 'category_name', 'mentores', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next'));
        }
     }
 

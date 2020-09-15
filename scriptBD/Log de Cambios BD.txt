@@ -43,3 +43,6 @@ Dev: Luisana Marín
 Dev: Robinson vargas
 *Nueva tabla resources (resources.sql)
 *Nueva tabla event_resources (event_resources.sql)
+
+14/09/2020
+*Nuevo campo description en la tabla events (correr script events)

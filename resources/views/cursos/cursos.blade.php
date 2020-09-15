@@ -360,7 +360,7 @@
                         @endif
                 <div class="course-category-caption ml-1 mr-1">
                         <div class="col-sm-lg text-sm-left font-weight-bold">
-                            <a href="{{ url('cursos/category/'.$course->id) }}" class="col-sm-lg text-sm-left  text-white" >{{$course->title}}</a>
+                            <a href="{{ url('courses/category/'.$course->id) }}" class="col-sm-lg text-sm-left  text-white" >{{$course->title}}</a>
                         </div>
                         <div class="col-lg">
                         <p class="text-white font-weight-bold">{{$course->courses_count}} Cursos</p>
@@ -383,9 +383,9 @@
         <h4 class=" section-title-landing text-primary text-center">TUS MENTORES</h4>
     </div>
     <div class="container-fluid">
-        <div class="row d-flex flex-row p-2">
+        <div class="mentor-index-seccion row d-flex flex-row p-2">
             @foreach ($mentores as $mentor)
-            <div class="col-xs-12 col-sm-4 mt-2">
+            <div class="col-xs-12 mt-2">
                 <div class="card mentors-card">
                     <div class="row no-gutters">
                         <div class="col-auto">
@@ -397,7 +397,7 @@
                                 <p class="card-text">{{$mentor->categoria}}</p>
                                 <br>
 
-                                <p class="card-text text-lg-right"><a href="{{ url('cursos/mentor/'.$mentor->mentor_id) }}" class="col-sm-lg text-sm-left card-text" >Ver perfil</a>  <i class=" fa fa-angle-right"> </i></p>
+                                <p class="card-text text-lg-right"><a href="{{ url('courses/mentor/'.$mentor->mentor_id) }}" class="col-sm-lg text-sm-left card-text" >Ver perfil</a>  <i class=" fa fa-angle-right"> </i></p>
                             </div>
                             
                            

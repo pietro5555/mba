@@ -232,13 +232,16 @@
                   <div class="tab-content" id="nav-chat-tabContent">
               <div class="tab-pane fade pl-2" id="nav-settings" role="tabpanel" aria-labelledby="nav-settings-tab">
                     <div style="text-align: right;">
+                      <a data-toggle="modal" data-target="#modal-settings" class="btn btn-primary"><i class="fa fa-plus-circle"></i> Configurar evento</a>
+                    </div> <br>
+                    <div style="text-align: right;">
                       <a data-toggle="modal" data-target="#modal-settings-survey" class="btn btn-primary"><i class="fa fa-plus-circle"></i> Agregar Encuesta</a>
                     </div> <br>
                     <div style="text-align: right;">
                       <a data-toggle="modal" data-target="#modal-settings-presentation" class="btn btn-primary"><i class="fa fa-plus-circle"></i> Agregar Presentación</a>
                     </div> <br>
                     <div style="text-align: right;">
-                      <a data-toggle="modal" data-target="#modal-settings" class="btn btn-primary"><i class="fa fa-plus-circle"></i> Agregar Video</a>
+                      <a data-toggle="modal" data-target="#modal-settings-video" class="btn btn-primary"><i class="fa fa-plus-circle"></i> Agregar Video</a>
                     </div> <br>
                     <div style="text-align: right;">
                       <a data-toggle="modal" data-target="#modal-settings-file" class="btn btn-primary"><i class="fa fa-plus-circle"></i> Agregar Archivos</a>
@@ -451,7 +454,7 @@
 </div>
 
 <!-- Modal Agregar recursos video -->
-<div class="modal fade" id="modal-settings" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal-settings-video" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   		<div class="modal-dialog" role="document">
     		<div class="modal-content" >
       			<div class="modal-header">
@@ -585,21 +588,18 @@
   		</div>
 	</div>
 
-<!-- Modal Habilitar recursos 20130394-->
+<!-- Modal Habilitar recursos-->
 <div class="modal fade" id="modal-settings-enable" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Configuraciones del Evento</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Habilitar / Inhabilitar recursos</h5>
           </div>
           <form action="{{ route('admin.courses.add-subcategory') }}" method="POST">
             {{ csrf_field() }} 
           <div class="modal-body">
               <div class="container-fluid">
-              <div class="row">
-                 
-                 
-                
+                <div class="row">
 
                 @foreach($menuResource as $menu)
 
@@ -619,6 +619,48 @@
 
                       
                   
+              </div>
+          </div>
+              
+          </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+          </form>
+      </div>
+    </div>
+</div>
+
+<!-- Modal Configurar evento-->
+<div class="modal fade" id="modal-settings" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Configuración del Evento</h5>
+          </div>
+          <form action="{{ route('admin.courses.add-subcategory') }}" method="POST">
+            {{ csrf_field() }} 
+          <div class="modal-body">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Título del Evento</label>
+                        <input type="text" class="form-control" name="title" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Seleccione la Imagen</label>
+                        <input type="file" class="form-control" name="image" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha de Inicio</label>
+                        <input type="text" class="form-control" name="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha de Fin</label>
+                        <input type="text" class="form-control" name="date_end" required>
+                    </div>
+                  </div>
               </div>
           </div>
               

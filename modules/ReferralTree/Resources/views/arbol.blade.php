@@ -46,7 +46,7 @@
 					<img title="{{ ucwords($referidoBase['nombre']) }}" src="{{ asset('/arbol/'.$referidoBase['picture'])}}"
 					 style="width:35px">
 					<div class="inforuser">
-						<h3><img title="{{ ucwords($referidoBase['nombre']) }}" src="{{  asset('/avatar/') }}/{{ $referidoBase['avatar'] }}"></h3>
+						<h3><img title="{{ ucwords($referidoBase['nombre']) }}" src="{{  asset('/uploads/avatar/') }}/{{ $referidoBase['avatar'] }}"></h3>
 						<h4>{{ ucwords($referidoBase['nombre']) }}</h4>
 						<h5><span>Ingreso</span>: <b>{{ date('d-m-Y', strtotime($referidoBase['fechaingreso'])) }}</b></h5>
 						
@@ -69,7 +69,7 @@
 							<a href="{{ route('moretree', $item['ID']) }}@if(!empty(request()->user))?user={{request()->user}} @endif">
 								<img title="{{ ucwords($item['nombre']) }}" src="{{ asset('/arbol/'.$item['picture'])}}" style="width:35px">
 								<div class="inforuser">
-									<h3><img title="{{ ucwords($item['nombre']) }}" src="{{  asset('/avatar/') }}/{{ $item['avatar'] }}"></h3>
+									<h3><img title="{{ ucwords($item['nombre']) }}" src="{{  asset('/uploads/avatar/') }}/{{ $item['avatar'] }}"></h3>
 									<h4>{{ ucwords($item['nombre']) }}</h4>
 									<h5><span>Ingreso</span>: <b>{{ date('d-m-Y', strtotime($item['fechaingreso'])) }}</b></h5>
 									<h5>ID: {{ $item['ID'] }}</b></h5>
@@ -89,7 +89,7 @@
 						<a href="{{ route('moretree', $item['ID']) }}@if(!empty(request()->user))?user={{request()->user}} @endif" class="del">
 							<img title="{{ ucwords($item['nombre']) }}" src="{{ asset('/arbol/'.$item['picture'])}}" style="width:35px">
 							<div class="inforuser">
-								<h3><img title="{{ ucwords($item['nombre']) }}" src="{{  asset('/avatar/') }}/{{ $item['avatar'] }}"></h3>
+								<h3><img title="{{ ucwords($item['nombre']) }}" src="{{  asset('/uploads/avatar/') }}/{{ $item['avatar'] }}"></h3>
 								<h4>{{ ucwords($item['nombre']) }}</h4>
 								<h5><span>Ingreso</span>: <b>{{ date('d-m-Y', strtotime($item['fechaingreso'])) }}</b></h5>
 								<h5>ID: {{ $item['ID'] }}</b></h5>
@@ -111,7 +111,7 @@
 											<img title="{{ ucwords($elemento['nombre']) }}" src="{{ asset('/arbol/'.$elemento['picture'])}}"
 											style="width:35px">
 											<div class="inforuser">
-												<h3><img title="{{ ucwords($elemento['nombre']) }}" src="{{  asset('/avatar/') }}/{{ $elemento['avatar'] }}"></h3>
+												<h3><img title="{{ ucwords($elemento['nombre']) }}" src="{{  asset('/uploads/avatar/') }}/{{ $elemento['avatar'] }}"></h3>
 												<h4>{{ ucwords($elemento['nombre']) }}</h4>
 												<h5><span>Ingreso</span>: <b>{{ date('d-m-Y', strtotime($elemento['fechaingreso'])) }}</b></h5>
 												
@@ -133,7 +133,7 @@
 										<img title="{{ ucwords($elemento['nombre']) }}" src="{{ asset('/arbol/'.$elemento['picture'])}}"
 										 style="width:35px">
 										<div class="inforuser">
-											<h3><img title="{{ ucwords($elemento['nombre']) }}" src="{{  asset('/avatar/') }}/{{ $elemento['avatar'] }}"></h3>
+											<h3><img title="{{ ucwords($elemento['nombre']) }}" src="{{  asset('/uploads/avatar/') }}/{{ $elemento['avatar'] }}"></h3>
 											<h4>{{ ucwords($elemento['nombre']) }}</h4>
 											<h5><span>Ingreso</span>: <b>{{ date('d-m-Y', strtotime($elemento['fechaingreso'])) }}</b></h5>
 											
@@ -156,7 +156,7 @@
                                                     <img title="{{ ucwords($elemento2['nombre']) }}" src="{{ asset('/arbol/'.$elemento2['picture'])}}"
                                                         style="width:35px">
                                                     <div class="inforuser">
-                                                        <h3><img title="{{ ucwords($elemento2['nombre']) }}" src="{{  asset('/avatar/') }}/{{ $elemento2['avatar'] }}"></h3>
+                                                        <h3><img title="{{ ucwords($elemento2['nombre']) }}" src="{{  asset('/uploads/avatar/') }}/{{ $elemento2['avatar'] }}"></h3>
                                                         <h4>{{ ucwords($elemento2['nombre']) }}</h4>
                                                         
                                                         <h5><span>Ingreso</span>: <b>{{ date('d-m-Y',
@@ -181,7 +181,7 @@
                                         <img title="{{ ucwords($elemento2['nombre']) }}" src="{{ asset('/arbol/'.$elemento2['picture'])}}"
                                             style="width:35px">
                                         <div class="inforuser">
-                                            <h3><img title="{{ ucwords($elemento2['nombre']) }}" src="{{  asset('/avatar/') }}/{{ $elemento2['avatar'] }}" ></h3>
+                                            <h3><img title="{{ ucwords($elemento2['nombre']) }}" src="{{  asset('/uploads/avatar/') }}/{{ $elemento2['avatar'] }}" ></h3>
                                             <h4>{{ ucwords($elemento2['nombre']) }}</h4>
                                             <h5><span>Ingreso</span>: <b>{{ date('d-m-Y',
                                                     strtotime($elemento2['fechaingreso'])) }}</b></h5>
@@ -207,7 +207,7 @@
                                                     <img title="{{ ucwords($elemento3['nombre']) }}" src="{{ asset('/arbol/'.$elemento3['picture'])}}"
                                                         style="width:35px">
                                                     <div class="inforuser">
-                                                        <h3><img title="{{ ucwords($elemento3['nombre']) }}" src="{{  asset('/avatar/') }}/{{ $elemento3['avatar'] }}"></h3>
+                                                        <h3><img title="{{ ucwords($elemento3['nombre']) }}" src="{{  asset('/uploads/avatar/') }}/{{ $elemento3['avatar'] }}"></h3>
                                                         <h4>{{ ucwords($elemento3['nombre']) }}</h4>
                                                         
                                                         <h5><span>Ingreso</span>: <b>{{ date('d-m-Y',
@@ -231,7 +231,7 @@
                                         <img title="{{ ucwords($elemento3['nombre']) }}" src="{{ asset('/arbol/'.$elemento3['picture'])}}"
                                             style="width:35px">
                                         <div class="inforuser">
-                                            <h3><img title="{{ ucwords($elemento3['nombre']) }}" src="{{  asset('/avatar/') }}/{{ $elemento3['avatar'] }}" ></h3>
+                                            <h3><img title="{{ ucwords($elemento3['nombre']) }}" src="{{  asset('/uploads/avatar/') }}/{{ $elemento3['avatar'] }}" ></h3>
                                             <h4>{{ ucwords($elemento3['nombre']) }}</h4>
                                             <h5><span>Ingreso</span>: <b>{{ date('d-m-Y',
                                                     strtotime($elemento3['fechaingreso'])) }}</b></h5>
@@ -258,7 +258,7 @@
                                                     <img title="{{ ucwords($elemento4['nombre']) }}" src="{{ asset('/arbol/'.$elemento4['picture'])}}"
                                                         style="width:35px">
                                                     <div class="inforuser">
-                                                        <h3><img title="{{ ucwords($elemento4['nombre']) }}" src="{{  asset('/avatar/') }}/{{ $elemento4['avatar'] }}"></h3>
+                                                        <h3><img title="{{ ucwords($elemento4['nombre']) }}" src="{{  asset('/uploads/avatar/') }}/{{ $elemento4['avatar'] }}"></h3>
                                                         <h4>{{ ucwords($elemento4['nombre']) }}</h4>
                                                         
                                                         <h5><span>Ingreso</span>: <b>{{ date('d-m-Y',
@@ -282,7 +282,7 @@
                                         <img title="{{ ucwords($elemento4['nombre']) }}" src="{{ asset('/arbol/'.$elemento4['picture'])}}"
                                             style="width:35px">
                                         <div class="inforuser">
-                                            <h3><img title="{{ ucwords($elemento4['nombre']) }}" src="{{  asset('/avatar/') }}/{{ $elemento4['avatar'] }}" ></h3>
+                                            <h3><img title="{{ ucwords($elemento4['nombre']) }}" src="{{  asset('/uploads/avatar/') }}/{{ $elemento4['avatar'] }}" ></h3>
                                             <h4>{{ ucwords($elemento4['nombre']) }}</h4>
                                             <h5><span>Ingreso</span>: <b>{{ date('d-m-Y',
                                                     strtotime($elemento4['fechaingreso'])) }}</b></h5>

@@ -46,3 +46,7 @@ Dev: Robinson vargas
 
 14/09/2020
 *Nuevo campo description en la tabla events (correr script events)
+
+15/09/2020
+*Ajuste en la tabla settings (correr script settings.sql) 
+*tabla wp98_users campo profession null (correr script wp98_users.sql) 

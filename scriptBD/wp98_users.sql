@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3306
--- Generation Time: Sep 11, 2020 at 10:39 PM
--- Server version: 5.7.24
--- PHP Version: 7.2.14
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 16-09-2020 a las 00:53:12
+-- Versión del servidor: 10.4.14-MariaDB
+-- Versión de PHP: 7.4.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -19,18 +18,17 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `mba`
+-- Base de datos: `shapin`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `wp98_users`
+-- Estructura de tabla para la tabla `wp98_users`
 --
 
-DROP TABLE IF EXISTS `wp98_users`;
-CREATE TABLE IF NOT EXISTS `wp98_users` (
-  `ID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `wp98_users` (
+  `ID` bigint(20) UNSIGNED NOT NULL,
   `birthdate` date DEFAULT NULL,
   `gender` char(1) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `user_login` varchar(60) COLLATE utf8mb4_unicode_ci DEFAULT '',
@@ -38,9 +36,9 @@ CREATE TABLE IF NOT EXISTS `wp98_users` (
   `user_nicename` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT '',
   `user_email` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `user_url` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT '',
-  `user_registered` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `user_registered` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `user_activation_key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `user_status` int(11) NOT NULL DEFAULT '0',
+  `user_status` int(11) NOT NULL DEFAULT 0,
   `display_name` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT '',
   `password` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `avatar` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT 'avatar.png',
@@ -50,46 +48,42 @@ CREATE TABLE IF NOT EXISTS `wp98_users` (
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `referred_id` int(11) DEFAULT '0',
-  `sponsor_id` bigint(20) DEFAULT '0',
+  `referred_id` int(11) DEFAULT 0,
+  `sponsor_id` bigint(20) DEFAULT 0,
   `position_id` int(11) DEFAULT NULL,
   `status` tinyint(1) DEFAULT NULL,
-  `rol_id` int(11) NOT NULL DEFAULT '1',
-  `wallet_amount` double NOT NULL DEFAULT '0',
-  `billetera` double NOT NULL DEFAULT '0',
-  `bank_amount` double NOT NULL DEFAULT '0',
+  `rol_id` int(11) NOT NULL DEFAULT 1,
+  `wallet_amount` double NOT NULL DEFAULT 0,
+  `billetera` double NOT NULL DEFAULT 0,
+  `bank_amount` double NOT NULL DEFAULT 0,
   `clave` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `activacion` tinyint(1) DEFAULT '0',
+  `activacion` tinyint(1) DEFAULT 0,
   `fecha_activacion` datetime DEFAULT NULL,
   `token_correo` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `tipouser` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT 'Normal',
   `ladomatriz` char(1) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `puntosPro` double DEFAULT '0',
-  `puntosRed` double DEFAULT '0',
-  `puntosDer` double DEFAULT '0',
-  `puntosIzq` double DEFAULT '0',
-  `debiDer` double NOT NULL DEFAULT '0',
-  `debiIzq` double DEFAULT '0',
+  `puntosPro` double DEFAULT 0,
+  `puntosRed` double DEFAULT 0,
+  `puntosDer` double DEFAULT 0,
+  `puntosIzq` double DEFAULT 0,
+  `debiDer` double NOT NULL DEFAULT 0,
+  `debiIzq` double DEFAULT 0,
   `binario` date DEFAULT NULL,
   `codigo` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `correos` longtext COLLATE utf8mb4_unicode_ci,
-  `limitar` int(2) NOT NULL DEFAULT '1',
-  `pop_up` int(2) NOT NULL DEFAULT '0',
-  `autenticacion` text COLLATE utf8mb4_unicode_ci,
-  `factor2` text COLLATE utf8mb4_unicode_ci,
+  `correos` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `limitar` int(2) NOT NULL DEFAULT 1,
+  `pop_up` int(2) NOT NULL DEFAULT 0,
+  `autenticacion` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `factor2` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `fechaver` date DEFAULT NULL,
-  `modo_oscuro` int(2) NOT NULL DEFAULT '0',
-  `profession` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `about` longtext COLLATE utf8mb4_unicode_ci,
-  `cover_name` text COLLATE utf8mb4_unicode_ci,
-  PRIMARY KEY (`ID`),
-  KEY `user_login_key` (`user_login`),
-  KEY `user_nicename` (`user_nicename`),
-  KEY `user_email` (`user_email`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `modo_oscuro` int(2) NOT NULL DEFAULT 0,
+  `profession` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `about` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cover_name` text COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `wp98_users`
+-- Volcado de datos para la tabla `wp98_users`
 --
 
 INSERT INTO `wp98_users` (`ID`, `birthdate`, `gender`, `user_login`, `user_pass`, `user_nicename`, `user_email`, `user_url`, `user_registered`, `user_activation_key`, `user_status`, `display_name`, `password`, `avatar`, `provider`, `provider_id`, `access_token`, `remember_token`, `created_at`, `updated_at`, `referred_id`, `sponsor_id`, `position_id`, `status`, `rol_id`, `wallet_amount`, `billetera`, `bank_amount`, `clave`, `activacion`, `fecha_activacion`, `token_correo`, `tipouser`, `ladomatriz`, `puntosPro`, `puntosRed`, `puntosDer`, `puntosIzq`, `debiDer`, `debiIzq`, `binario`, `codigo`, `correos`, `limitar`, `pop_up`, `autenticacion`, `factor2`, `fechaver`, `modo_oscuro`, `profession`, `about`, `cover_name`) VALUES
@@ -102,6 +96,29 @@ INSERT INTO `wp98_users` (`ID`, `birthdate`, `gender`, `user_login`, `user_pass`
 (7, '1975-09-16', 'F', 'mfernandez', '25f9e794323b453885f5181f1b624d0b', 'mfernandez', 'mlfernandez@mail.com', '', '2020-09-11 23:58:28', '', 0, 'Maria Luisa Hernandez', '$2y$10$wrKJ69er30ZvaDvKJ4XNJey5MV0Gt3H/yLKV.cpnYHs1veyDfWk9e', 'user_1599870508.png', NULL, NULL, NULL, NULL, '2020-09-11 23:58:28', '2020-09-11 23:58:28', 1, 2, 2, 0, 2, 0, 0, 0, 'eyJpdiI6IkVXMkZtTDFrM2lCZHhySDZDYnFDXC9nPT0iLCJ2YWx1ZSI6Ik15c1FIVTREZlM5SzJhZElzYlREZ0w2NlhYWURcL2RUSHA5OFZBMmZ3S0hjPSIsIm1hYyI6ImNkMjI4NWMwYWI0M2I1NDA1ZThlMjYzOTI3N2I1MmIyNGVhNGIxZTNlZGNhNWI4ODVlYjU3MGFkMTZjY2QyMGYifQ==', 0, NULL, NULL, 'Normal', NULL, 0, 0, 0, 0, 0, 0, NULL, NULL, '{\"pago\":\"1\",\"compra\":\"1\",\"pc\":\"1\",\"liquidacion\":\"1\"}', 1, 0, NULL, NULL, NULL, 0, 'Experto en Forex', 'Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper.', NULL),
 (8, '1989-02-08', 'F', 'ejuarez', '25f9e794323b453885f5181f1b624d0b', 'ejuarez', 'ejuarez@mail.com', '', '2020-09-12 00:07:13', '', 0, 'Estefani Juarez', '$2y$10$ST9lSUADvpEOjrcZ5TWlQu2JC/VW5Yg4Tivo8fjVRozHaZSnf9jy.', 'user_1599871033.png', NULL, NULL, NULL, NULL, '2020-09-12 00:07:13', '2020-09-12 00:07:13', 1, 2, 2, 0, 2, 0, 0, 0, 'eyJpdiI6InZWXC9iMG1MbDR5Nnp1VjZCdlpCamVRPT0iLCJ2YWx1ZSI6Ikxocjk5MlwvUnc0bkNuRkdWajg2SVlJbStzMkJlcnZKaWdaTFFteWtpQzVNPSIsIm1hYyI6IjA4OGNmMThlOTQ1Y2U3MmNmYzQ5NmNmMDc0ZWM2OGJjNTgyMzFhYWUwYWY1MmVmMzRiMWYyMDM3YmNmZDAwMTgifQ==', 0, NULL, NULL, 'Normal', NULL, 0, 0, 0, 0, 0, 0, NULL, NULL, '{\"pago\":\"1\",\"compra\":\"1\",\"pc\":\"1\",\"liquidacion\":\"1\"}', 1, 0, NULL, NULL, NULL, 0, 'Experto en Análisis Técnico y Financiero', 'Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper.', NULL),
 (9, '1998-09-12', 'F', 'avaldivieso', '25f9e794323b453885f5181f1b624d0b', 'avaldivieso', 'avaldivieso@mail.com', '', '2020-09-12 00:14:37', '', 0, 'Alejandro Valdivieso', '$2y$10$aiprzCFk6G1uydEf5iqjfeY9kf6ZFeqOm.Au9HFARPYvnQNJuwVAG', 'user_1599871477.png', NULL, NULL, NULL, NULL, '2020-09-12 00:14:38', '2020-09-12 00:14:38', 1, 2, 2, 0, 2, 0, 0, 0, 'eyJpdiI6InQ0S0VONXcxUlFPcGtvTWRvcDVLekE9PSIsInZhbHVlIjoiMW01ejQ1dmIxWFJ3TnJiZGVxc2h3aGlSUkNLdVBhTEJUNFJWVDFWeDYwST0iLCJtYWMiOiI0ZDgzNjZiMzIyOWU1YzFkMzdlM2FmMmE5ZDg5MGQ3ZDhlMDJlZDcxNTYxN2MwMDNjZDU0NGM2MjZiMDYwODhmIn0=', 0, NULL, NULL, 'Normal', NULL, 0, 0, 0, 0, 0, 0, NULL, NULL, '{\"pago\":\"1\",\"compra\":\"1\",\"pc\":\"1\",\"liquidacion\":\"1\"}', 1, 0, NULL, NULL, NULL, 0, 'Conferencista y experta en Criptomonedas', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus maximus eros malesuada arcu sagittis, et lobortis.', NULL);
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `wp98_users`
+--
+ALTER TABLE `wp98_users`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `user_login_key` (`user_login`),
+  ADD KEY `user_nicename` (`user_nicename`),
+  ADD KEY `user_email` (`user_email`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `wp98_users`
+--
+ALTER TABLE `wp98_users`
+  MODIFY `ID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

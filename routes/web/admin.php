@@ -140,7 +140,8 @@ Route::get('/log', 'LoginController@login')->name('log');
 Route::post('/autenticar', 'LoginController@autenticacion')->name('autenticar');
 
 //vista de transmisiones
-Route::get('/transmisiones', 'HomeController@transmisiones')->name('transmisiones');
+Route::get('/transmisiones', 'TransmisionesController@transmisiones')->name('transmisiones');
+Route::get('/agendar/{id}', 'TransmisionesController@agendar')->name('transmi-agendar');
 
 //Streaming
 Route::get('streaming', 'StreamingController@index')->name('streaming.index');
@@ -906,11 +907,6 @@ Route::group(['prefix' => 'link','middleware' => ['menu']], function(){
         Route::post('ckeditor/image_upload', 'LinkController@upload')->name('upload');
         
     });
-
-
-    
-    //vista de transmisiones
-    Route::get('/transmisiones', 'HomeController@transmisiones')->name('transmisiones');
     
     //vista de timelive
     Route::group(['prefix' => 'time'], function(){

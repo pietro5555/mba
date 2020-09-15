@@ -29,10 +29,14 @@ class LoginController extends Controller
     public function autenticacion(Request $datos){
       
       if (Auth::attempt(['ID' => $datos->ID, 'password' => $datos->password])) {
+        if(Auth::user()->rol_id != 0){
           
            return redirect('/');
+        }else{
+           return redirect('/admin');
+        }
 
-      	}else{
+        }else{
             
          return redirect()->back()->with('msj3', 'Las Credenciales no coinciden con nuestros registros');
         }

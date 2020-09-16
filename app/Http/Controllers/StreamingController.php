@@ -29,6 +29,8 @@ class StreamingController extends Controller
         // https://ibm.github.io/video-streaming-developer-docs/
         // usuario: proyectos@fenttix.com
         // Contraseña: Livembapro123*
+        //device username:cgpxzukgpqy
+        //device password: hdebc pdtbj qewbr
     
 
         //Obtener code
@@ -38,7 +40,7 @@ class StreamingController extends Controller
         // http://localhost:8000/?code=643f3906bf9605da966c6a69c77946c52b0cf180&state=XYZ
 
 
-	   	return view('streaming.indexstreaming')->with(compact('hola'));
+	   	return view('streaming.indexstreaming');
     }
 
     /**
@@ -46,9 +48,7 @@ class StreamingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getAccessToken()
-    {
-
+    public function getAccessToken(Request $request){
         $client = new Client();
         $response = $client->request('POST', 'https://video.ibm.com/oauth2/token', [
             'Authorization' => 'Basic ' .base64_encode('ee69a8f44e5eef4a512eaa7dc4a7501c8b64f019:b115060c57dd13dfce8f0adc25643ca470f8861c'),
@@ -57,18 +57,49 @@ class StreamingController extends Controller
                 'client_id' => 'ee69a8f44e5eef4a512eaa7dc4a7501c8b64f019',
                 'client_secret' => 'b115060c57dd13dfce8f0adc25643ca470f8861c',
                 'redirect_uri' => 'http://localhost:8000/get_access_token',
-                'code' => '01751189490830cd66308d23eeb10394700715c2',
+                'code' => $request->get('code'),
             ]
         ]);
 
         $result =  json_decode( $response->getBody() );
 
-        dd($result);
+        $headers = [
+            'Authorization' => 'Bearer '.base64_encode($result->access_token),        
+            'Accept'        => 'application/json',
+        ];
+
+        $response2 = $client->request('GET', 'https://api.video.ibm.com/users/self/channels.json', [
+            'headers' => $headers
+        ]);
         
+        $result2 =  json_decode( $response2->getBody() );
+
+        dd($result2);
 	   	return view('streaming.indexstreaming')->with(compact('hola'));
 
     }
 
+    public function new_channel(){
+        $client = new Client(['base_uri' => 'https://api.video.ibm.com/']);
+        $headers = [
+            'Authorization' => 'Bearer a20eb6e6921f13d3ce76f88892b16f06cfea551d',        
+            'Accept'        => 'application/json',
+        ];
+
+        $response = $client->request('GET', 'users/self/channels.json', [
+            'headers' => $headers
+        ]);
+        /*$response = $client->request('GET', 'users/self/channels.json', [
+            'Authorization' => 'Bearer cb3b4abe13b99aa35c33f66d7044ace8edc2e526'
+        ]);
+*/
+        
+
+         $result =  json_decode( $response->getBody() );
+
+        dd($result);
+        
+    }
     /**
      * Show the form for creating a new resource.
      *

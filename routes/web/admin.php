@@ -146,6 +146,10 @@ Route::get('/agendar/{id}', 'TransmisionesController@agendar')->name('transmi-ag
 //Streaming
 Route::get('streaming', 'StreamingController@index')->name('streaming.index');
 Route::get('getaccesstoken', 'StreamingController@getAccessToken')->name('streaming.getaccesstoken');
+Route::get('new-channel', 'StreamingController@new_channel')->name('streaming.new-channel');
+Route::get('encode', function(){
+  dd(base64_encode('ee69a8f44e5eef4a512eaa7dc4a7501c8b64f019:b115060c57dd13dfce8f0adc25643ca470f8861c'));
+});
 
 //Cursos
 Route::get('courses/curso', 'CursosController@show_one_course')->name('curso');

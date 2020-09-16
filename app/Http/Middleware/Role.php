@@ -17,6 +17,8 @@ class role
     	if (Auth::user()->rol_id >= 2){
     		 return redirect('/')->with('msj-erroneo', 'Usted no posee acceso a la ruta ruta que esta tratando de ingresar');
     	}
+
+    	return $next($request);
     }
 
 }

@@ -1136,6 +1136,35 @@ border-bottom: 1px solid #707070;
 
     }
 
+/*CALENDARIO*/
+.box.box-info {
+    border-top-color: #007bff;
+}
+.box {
+    position: relative;
+    border-radius: 3px;
+    background: #ffffff;
+    border-top: 3px solid #007bff;
+    margin-bottom: 20px;
+    width: 100%;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+}
+
+.fc-view-container{
+    margin: 1em;
+}
+.fc-toolbar.fc-header-toolbar {
+    margin: 1em;
+}
+.fc-unthemed .fc-content, .fc-unthemed .fc-divider, .fc-unthemed .fc-list-heading td, .fc-unthemed .fc-list-view, .fc-unthemed .fc-popover, .fc-unthemed .fc-row, .fc-unthemed tbody, .fc-unthemed td, .fc-unthemed th, .fc-unthemed thead {
+    border-color: #dedada;
+}
+
+.fc-unthemed td.fc-today {
+    background: #007bff;
+}
+
+
 /* ESTILOS PARA LIVE.BLADE.PHP */
 
 .contentQuestion{

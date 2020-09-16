@@ -39,34 +39,34 @@ const countdown = (deadline,elem) => {
 
      $('#'+elem).append(
 
-            '<p class="p-1 bd-highlight" style="font-size: 76px;">'+
+            '<p class="p-1 bd-highlight" style="font-size: 66px;">'+
              t.remainDays +   
                 '<p style="margin-left: -40px; margin-top: 100px;">DIAS</p>'+
             '</p>'+
 
-            '<p class="p-2 bd-highlight" style="font-size: 66px;">'+
+            '<p class="p-2 bd-highlight" style="font-size: 56px;">'+
                 ':'+
             '</p>'+
 
-            '<p class="p-1 bd-highlight" style="font-size: 76px;">'+
+            '<p class="p-1 bd-highlight" style="font-size: 66px;">'+
               t.remainHours +
                 '<p style="margin-left: -68px; margin-top: 100px;">HORAS</p>'+
             '</p>'+
 
-            '<p class="p-2 bd-highlight" style="font-size: 66px;">'+
+            '<p class="p-2 bd-highlight" style="font-size: 56px;">'+
                ':'+
             '</p>'+
 
-            '<p class="p-1 bd-highlight" style="font-size: 76px;">'+
+            '<p class="p-1 bd-highlight" style="font-size: 66px;">'+
                t.remainMinutes + 
             
                 '<p style="margin-left: -80px; margin-top: 100px;">MINUTOS</p>'+
             '</p>'+
 
-            '<p class="p-2 bd-highlight" style="font-size: 66px;">'+
+            '<p class="p-2 bd-highlight" style="font-size: 56px;">'+
                 ':'+
             '</p>'+
-            '<p class="p-1 bd-highlight" style="font-size: 76px;">'+
+            '<p class="p-1 bd-highlight" style="font-size: 66px;">'+
                t.remainSeconds +
 
                 '<p style="margin-left: -85px; margin-top: 100px;">SEGUNDOS</p>'+
@@ -128,8 +128,13 @@ countdown('{{$fecha}}', 'clock');
   @endif
 
    <div class="col-md-6" style="margin-bottom: 10px;">
-       <a href="#" class="btn btn-primary btn-block">AGENDAR LIVE</a>
+       <!--<a href="#" class="btn btn-primary btn-block" data-toggle="modal" data-target="AgendarLiveModal">AGENDAR LIVE</a>-->
+       <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#AgendarLiveModal">
+        AGENDAR LIVE
+      </button>
    </div>
+   <!-- Button trigger modal -->
+
 
    <div class="col-md-6" style="margin-bottom: 10px;">
        <a href="{{route('oauthCallback', ['id' => $evento['id']])}}" class="btn gris-boton btn-block"><i class="fas fa-calendar-alt" style="color:#2A91FF"></i> Google Calendar</a>
@@ -153,8 +158,11 @@ countdown('{{$fecha}}', 'clock');
 
   <div class="col-md-4 col-xs-12" style="margin-top: 20px;">
      <div style="margin-right: 10px; margin-left: 10px;">
-          <img src="{{ asset('vivo/nivel.png') }}" class="card-img-top" alt="..." style="height: 165px; width: 100%;">
-
+          @if (!is_null($evento['avatar']))
+            <img src="{{ asset('uploads/images/avatar/'.$evento['avatar']) }}" class="card-img-top" alt="..." height="200px"> 
+          @else
+          <img src="{{ asset('uploads/images/avatar/default.jpg') }}" class="card-img-top" alt="..." height="200px">
+          @endif
           <p style="color: white;">Invitado</p>
           <h5 style="color:#2A91FF; margin-top: -20px;">{{$evento['nombre']}}</h5>
           <p style="color: white;">{{$evento['profession']}}<p>
@@ -294,6 +302,74 @@ countdown('{{$fecha}}', 'clock');
 
         <div class="section-title-landing" style="padding-top: 20px; margin-bottom: 20px; text-align: center;">NO HAY EVENTOS PENDIENTES</div>
 
-        @endif     
+        @endif   
+
+        <!-- Modal -->
+<div class="modal fade" id="AgendarLiveModal" tabindex="-1" role="dialog" aria-labelledby="AgendarLiveModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="AgendarLiveModalLabel">Agendar Live</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <form action="{{route ('schedule.event',[$evento['id'], $evento['user_id']]) }}" method="POST">
+            @csrf
+            <div class="form-group row">
+                <label for="titulo"  class="col-md-4 col-form-label text-md-left text-primary font-weight-bold">{{ __('Título del evento') }}</label>
+                <div class="col-md-8">
+                  <label for="title_event" class="col-form-label text-md-left">{{$evento['title']}} 
+                    
+                  </label>
+
+                </div>
+            </div>
+              <div class="form-group row">
+                  <label for="titulo"  class="col-md-4 col-form-label text-md-left text-primary font-weight-bold">{{ __('Descripción') }}</label>
+                  <div class="col-md-8">
+                    <label for="description_event" class="col-form-label text-justify">{{$evento['descripcion']}}
+                      
+                    </label>
+
+              </div>
+          </div>
+          <div class="form-group row">
+            <label for="fecha_evento"  class="col-md-4 col-form-label text-md-left text-primary font-weight-bold">{{ __('Fecha del evento') }}</label>
+            <div class="col-md-8">
+                <label for="description_event" class="col-form-label text-justify">
+                  {{ date ("d/m/Y", strtotime($evento['date']))}}
+                </label>
+
+              </div>
+            </div>
+            <div class="form-group row">
+            <label for="color"  class="col-md-4 col-form-label text-md-left text-primary font-weight-bold">{{ __('Color') }}</label>
+            <div class="col-md-8">
+                <div class="col-md-8">
+                <select class="form-control" name="color">
+                 <option value="#00acd6">Azul</option>
+                 <option value="#ffc107">Amarillo</option>
+                 <option value="#28a745">Verde</option>
+                 <option value="#dc3545">Rojo</option>
+                 <option value="#6c757d">gris</option>
+                 <option value="#343a40">Negro</option>
+                </select>
+              </div>
+
+              </div>
+            </div>
+            
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Agendar</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+          </form>          
+</div>
+      
+    </div>
+  </div>
+</div>  
 
   @endsection

@@ -44,5 +44,8 @@ Dev: Robinson vargas
 *Nueva tabla resources (resources.sql)
 *Nueva tabla event_resources (event_resources.sql)
 
-14/09/2020
-*Nuevo campo description en la tabla events (correr script events)
+15/09/2020
+Dev: Crisleivys
+*Nueva tabla creada schedule (correr el script  schedule)
+* Agregados datos para que se muestre el calendario (correr el script calendarios)
+* Agregados datos en la tabla events (correr el script events)

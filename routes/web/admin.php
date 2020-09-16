@@ -149,13 +149,15 @@ Route::get('getaccesstoken', 'StreamingController@getAccessToken')->name('stream
 //Cursos
 Route::get('courses/curso', 'CursosController@show_one_course')->name('curso');
 Route::get('courses/leccion', 'CursosController@leccion')->name('leccion');
-//Enviar likes
-Route::post('/likes', 'CursosController@course_likes')->name( 'like');
+
 // Cursos por categoria
 Route::get('courses/category/{id}', 'CursosController@show_course_category')->name('show.cursos.category');
 //Perfil del mentor
 Route::get('courses/mentor/{id}', 'CursosController@perfil_mentor')->name('show.perfil.mentor');
 Route::get('courses/mentor', 'CursosController@show_course_category')->name('show.cursos.category');
+
+//Agendar
+Route::post('schedule/{event_id}/{user_id}', 'CalendarioGoogleController@schedule')->name('schedule.event');
 
 //vista de anotaciones
 Route::get('/anotaciones', 'NoteController@index')->name('anotaciones');

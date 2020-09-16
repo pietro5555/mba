@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\User; 
 use App\Models\Events; 
+use App\Models\Schedule; 
+use App\Models\Calendario; 
+use Auth; 
 use DB; 
 use Carbon\Carbon;
 use Google_Client;
@@ -30,6 +33,7 @@ class CalendarioGoogleController extends Controller
          $fecha = (empty($evento)) ? 1 : $evento['inicio'];
          $proxevent = $this->proxievents((empty($evento)) ? 1 : $evento['id']);
         return view('timelive', compact('fecha','evento','proxevent'));
+
 
     }
 
@@ -69,12 +73,16 @@ class CalendarioGoogleController extends Controller
         $datos =[
             'id' => $evento->id,
             'title' => $evento->title,
+            'date' => $evento->date,
             'descripcion' => $evento->description,
+            'image' => $evento->image,
             'inicio' => $evento->date,
             'fin' => $fin,
+            'user_id' => $user->ID,
             'nombre' => $user->display_name,
             'profession' => $user->profession,
             'about' => $user->about,
+            'avatar' => $user->avatar,
         ];
        }
 
@@ -124,5 +132,441 @@ class CalendarioGoogleController extends Controller
             return redirect('time/timelive')->with('msj', 'El live a sido agregado con exito a Google Calendar');
            }   
         }
+    }
+    
+
+    public function schedule($event_id, $user_id, Request $request){
+
+        $agendar = Schedule::create([
+        'user_id' => $user_id,
+        'event_id' => $event_id,
+        ]);
+
+        $new_calendar = Events::where('id', '=', $event_id)
+        ->first();
+        
+        $funciones = new IndexController;
+        
+        if(Auth::user()->rol_id == 0){
+        $todos = $funciones->generarArregloAdmin(Auth::user()->ID);
+        $calendarios = $this->almacenadoAdmin($todos, Auth::user()->ID);
+        }else{
+            $todos = $funciones->generarArregloReversa(Auth::user()->ID);
+            $calendarios = $this->almacenadoNormal($todos, Auth::user()->ID);
+        }
+        
+        $pendientes = DB::table('notifications')
+                                    ->where('user_id', '=', Auth::user()->ID)
+                                    ->where('status', '=', '0')
+                                    ->get();
+                                    
+        foreach($pendientes as $pendiente){
+            $marca = Notification::find($pendiente->id);
+            $marca->status = '1';
+            $marca->save();
+        }
+        
+        $usuario = Auth::user()->ID;
+        $modal = 0;
+        $correoprospecto = 0;
+
+         $calendario = new Calendario();
+         $calendario->titulo = $new_calendar->title;
+         $calendario->contenido = $new_calendar->description;
+         $calendario->inicio = $new_calendar->date;
+         $calendario->vence = $new_calendar->date_end;
+         $calendario->color = $request->color;
+         $calendario->lugar = 'Ninguno';
+         $calendario->iduser = Auth::user()->ID;
+         $calendario->save();
+         return view('agendar.calendar',compact('calendarios','usuario','modal','correoprospecto'));
+    }
+
+
+
+
+    //modificamos algun dato del calendario
+    public function modificar(Request $request){
+        
+        $funciones = new IndexController;
+        
+    if($request->inicio > $request->vence){
+          $funciones->msjSistema('La fecha de inicio debe ser mayor a la fecha final', 'danger');
+          return redirect()->back();  
+        }     
+
+     $calendar = Calendario::find($request->ID);
+     $calendar->titulo = $request->titulo;
+     $calendar->contenido = $request->contenido;
+     $calendar->inicio = $request->inicio;
+     $calendar->vence = $request->vence;
+     $calendar->color = $request->color;
+     $calendar->lugar = $request->lugar;
+     $calendar->tipo = $request->detalle;
+     $calendar->especifico = $request->usuario;
+     $calendar->save();
+     
+     $funciones->msjSistema('Modificado con exito', 'success');
+     return redirect()->back();
+    }
+    
+    //eliminamos datos del calendario
+    public function eliminar(Request $request){
+        
+        $funciones = new IndexController;
+
+     $calendar = Calendario::find($request->ID);
+     $calendar->delete();
+     
+     $funciones->msjSistema('Eliminado con exito', 'success');
+     return redirect()->back();
+    }
+    
+    
+    //alamacenamos los datos del calendario que haya creado el admin
+    //o sean especificos para el admin
+    public function almacenadoAdmin($todos, $autenticado){
+        
+        $datos = [];
+        $mios = Calendario::where('iduser', $autenticado)->get();
+        foreach($mios as $mio){
+            
+            array_push($datos, [
+            'ID' => $mio->id,
+            'iduser' => $autenticado,
+            'titulo' => $mio->titulo,
+            'contenido' => $mio->contenido,
+            'lugar' => $mio->lugar,
+            'color' => $mio->color,
+            'tipo' => $mio->tipo,
+            'especifico' => $mio->especifico,
+            'inicio' => $mio->inicio,
+            'vence' => $mio->vence,
+          ]);
+          
+        }
+        
+        
+        foreach($todos as $todo){
+            $calendario = Calendario::where('iduser', $todo['ID'])->get();
+          if(!empty($calendario)){    
+            foreach($calendario as $calen){
+                if($calen->tipo == 5){
+                    if($calen->especifico == Auth::user()->user_email){
+                    array_push($datos, [
+            'ID' => $calen->id,
+            'iduser' => $calen->iduser,
+            'titulo' => $calen->titulo,
+            'contenido' => $calen->contenido,
+            'lugar' => $calen->lugar,
+            'color' => $calen->color,
+            'tipo' => $calen->tipo,
+            'especifico' => $calen->especifico,
+            'inicio' => $calen->inicio,
+            'vence' => $calen->vence,
+          ]);
+                  }
+                }
+              }
+            }
+        }
+        
+        return $datos;
+    }
+    
+    
+    
+    
+    
+    //alamacenamos los datos del calendario que haya creado el usuario
+    //o sean especificos para el usuario
+    public function almacenadoNormal($todos, $autenticado){
+        
+        $datos = [];
+        $mios = Calendario::where('iduser', $autenticado)->get();
+        foreach($mios as $mio){
+            
+            array_push($datos, [
+            'ID' => $mio->id,
+            'iduser' => $autenticado,
+            'titulo' => $mio->titulo,
+            'contenido' => $mio->contenido,
+            'lugar' => $mio->lugar,
+            'color' => $mio->color,
+            'tipo' => $mio->tipo,
+            'especifico' => $mio->especifico,
+            'inicio' => $mio->inicio,
+            'vence' => $mio->vence,
+          ]);
+          
+        }
+        
+        
+        foreach($todos as $todo){
+            $calendario = Calendario::where('iduser', $todo['ID'])->get();
+          if(!empty($calendario)){    
+            foreach($calendario as $calen){
+                if($calen->tipo == 1){
+                    
+            array_push($datos, [
+            'ID' => $calen->id,
+            'iduser' => $calen->iduser,
+            'titulo' => $calen->titulo,
+            'contenido' => $calen->contenido,
+            'lugar' => $calen->lugar,
+            'color' => $calen->color,
+            'tipo' => $calen->tipo,
+            'especifico' => $calen->especifico,
+            'inicio' => $calen->inicio,
+            'vence' => $calen->vence,
+          ]);
+          
+                }elseif($calen->tipo == 2){
+                    if(Auth::user()->status == 1){
+                        
+            array_push($datos, [
+            'ID' => $calen->id,
+            'iduser' => $calen->iduser,
+            'titulo' => $calen->titulo,
+            'contenido' => $calen->contenido,
+            'lugar' => $calen->lugar,
+            'color' => $calen->color,
+            'tipo' => $calen->tipo,
+            'especifico' => $calen->especifico,
+            'inicio' => $calen->inicio,
+            'vence' => $calen->vence,
+                      ]);
+                    }
+                    
+                }elseif($calen->tipo == 3){
+                    if(Auth::user()->status == 0){
+                        
+            array_push($datos, [
+            'ID' => $calen->id,
+            'iduser' => $calen->iduser,
+            'titulo' => $calen->titulo,
+            'contenido' => $calen->contenido,
+            'lugar' => $calen->lugar,
+            'color' => $calen->color,
+            'tipo' => $calen->tipo,
+            'especifico' => $calen->especifico,
+            'inicio' => $calen->inicio,
+            'vence' => $calen->vence,
+                      ]);
+                    }
+                    
+                }elseif($calen->tipo == 4){
+                    
+           $fechaActual = date('m', strtotime($calen->created_at));
+           $ingreso = date('m', strtotime(Auth::user()->created_at));
+           if($fechaActual == $ingreso){
+               
+            array_push($datos, [
+            'ID' => $calen->id,
+            'iduser' => $calen->iduser,
+            'titulo' => $calen->titulo,
+            'contenido' => $calen->contenido,
+            'lugar' => $calen->lugar,
+            'color' => $calen->color,
+            'tipo' => $calen->tipo,
+            'especifico' => $calen->especifico,
+            'inicio' => $calen->inicio,
+            'vence' => $calen->vence,
+          ]);
+          
+           }
+                }elseif($calen->tipo == 5){
+                    if($calen->especifico == Auth::user()->user_email){
+                        
+            array_push($datos, [
+            'ID' => $calen->id,
+            'iduser' => $calen->iduser,
+            'titulo' => $calen->titulo,
+            'contenido' => $calen->contenido,
+            'lugar' => $calen->lugar,
+            'color' => $calen->color,
+            'tipo' => $calen->tipo,
+            'especifico' => $calen->especifico,
+            'inicio' => $calen->inicio,
+            'vence' => $calen->vence,
+          ]);
+          
+                  }
+                }
+              }
+            }
+        }
+        
+        return $datos;
+    }
+    
+    
+    //buscamos nuevos eventos del calendario para notificarlo
+    public function notificarCalendario($usuario){
+        
+        $funciones = new IndexController;
+        $user = User::find($usuario);
+        
+        if($user->rol_id != 0){
+            $todos = $funciones->generarArregloReversa($usuario);
+            $calendarios = $this->notificacion($todos, $usuario);
+        }else{
+            $todos = $funciones->generarArregloAdmin($usuario);
+            $calendarios = $this->notificacion($todos, $usuario);
+        }
+            
+            foreach($calendarios as $calendario){
+                
+                $buscar = DB::table('notifications')->where('calendario', $calendario['ID'])->first();
+                
+                if($buscar == null){
+                $notifica = new Notification();
+     $notifica->user_id = $usuario;
+     $notifica->date = Carbon::now();
+     $notifica->route = 'admin/calendario/calendario';
+     $notifica->description = 'Nuevo anuncio del calendario';
+     $notifica->icon = 'fas fa-calendar-alt';
+     $notifica->label = 'calendario';
+     $notifica->status = '0';
+     $notifica->calendario = $calendario['ID'];
+     $notifica->save();
+                }
+            }
+    }
+    
+    
+    
+    
+    //buscamos las notificaciones tanto del admin como 
+    //las de un usuario
+    public function notificacion($todos, $usuario){
+        
+        $datos = [];
+        
+        $user = User::find($usuario);
+        if($user->rol_id != 0){
+        foreach($todos as $todo){
+            $calendario = Calendario::where('iduser', $todo['ID'])->get();
+          if(!empty($calendario)){    
+            foreach($calendario as $calen){
+                if($calen->tipo == 1){
+                    
+            array_push($datos, [
+            'ID' => $calen->id,
+            'iduser' => $calen->iduser,
+            'titulo' => $calen->titulo,
+            'contenido' => $calen->contenido,
+            'lugar' => $calen->lugar,
+            'color' => $calen->color,
+            'tipo' => $calen->tipo,
+            'especifico' => $calen->especifico,
+            'inicio' => $calen->inicio,
+            'vence' => $calen->vence,
+          ]);
+          
+                }elseif($calen->tipo == 2){
+                    if(Auth::user()->status == 1){
+                        
+            array_push($datos, [
+            'ID' => $calen->id,
+            'iduser' => $calen->iduser,
+            'titulo' => $calen->titulo,
+            'contenido' => $calen->contenido,
+            'lugar' => $calen->lugar,
+            'color' => $calen->color,
+            'tipo' => $calen->tipo,
+            'especifico' => $calen->especifico,
+            'inicio' => $calen->inicio,
+            'vence' => $calen->vence,
+                      ]);
+                    }
+                    
+                }elseif($calen->tipo == 3){
+                    if(Auth::user()->status == 0){
+                        
+            array_push($datos, [
+            'ID' => $calen->id,
+            'iduser' => $calen->iduser,
+            'titulo' => $calen->titulo,
+            'contenido' => $calen->contenido,
+            'lugar' => $calen->lugar,
+            'color' => $calen->color,
+            'tipo' => $calen->tipo,
+            'especifico' => $calen->especifico,
+            'inicio' => $calen->inicio,
+            'vence' => $calen->vence,
+                      ]);
+                    }
+                    
+                }elseif($calen->tipo == 4){
+                    
+           $fechaActual = date('m', strtotime($calen->created_at));
+           $ingreso = date('m', strtotime(Auth::user()->created_at));
+           if($fechaActual == $ingreso){
+               
+            array_push($datos, [
+            'ID' => $calen->id,
+            'iduser' => $calen->iduser,
+            'titulo' => $calen->titulo,
+            'contenido' => $calen->contenido,
+            'lugar' => $calen->lugar,
+            'color' => $calen->color,
+            'tipo' => $calen->tipo,
+            'especifico' => $calen->especifico,
+            'inicio' => $calen->inicio,
+            'vence' => $calen->vence,
+          ]);
+          
+           }
+                }elseif($calen->tipo == 5){
+                    if($calen->especifico == Auth::user()->user_email){
+                        
+            array_push($datos, [
+            'ID' => $calen->id,
+            'iduser' => $calen->iduser,
+            'titulo' => $calen->titulo,
+            'contenido' => $calen->contenido,
+            'lugar' => $calen->lugar,
+            'color' => $calen->color,
+            'tipo' => $calen->tipo,
+            'especifico' => $calen->especifico,
+            'inicio' => $calen->inicio,
+            'vence' => $calen->vence,
+          ]);
+          
+                  }
+                }
+              }
+            }
+        }
+      }else{
+          
+          foreach($todos as $todo){
+            $calendario = Calendario::where('iduser', $todo['ID'])->get();
+          if(!empty($calendario)){    
+            foreach($calendario as $calen){
+                if($calen->tipo == 5){
+                    if($calen->especifico == Auth::user()->user_email){
+                    array_push($datos, [
+            'ID' => $calen->id,
+            'iduser' => $calen->iduser,
+            'titulo' => $calen->titulo,
+            'contenido' => $calen->contenido,
+            'lugar' => $calen->lugar,
+            'color' => $calen->color,
+            'tipo' => $calen->tipo,
+            'especifico' => $calen->especifico,
+            'inicio' => $calen->inicio,
+            'vence' => $calen->vence,
+          ]);
+                  }
+                }
+              }
+            }
+        }
+      }
+      
+      return $datos;
+        
     }
 }

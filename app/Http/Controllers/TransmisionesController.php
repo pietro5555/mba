@@ -32,7 +32,10 @@ class TransmisionesController extends Controller
     public function transmisiones(){
         
         $anuncio =[];
-        $banner = Events::where('status', '1')->take(1)->first();
+         $banner = Events::where('status', '1')->where('image','!=',null)->take(1)->first();
+        if($banner == null){
+         $banner = Events::where('status', '1')->where('image', null)->take(1)->first();
+        }
         $proximas = Events::where('status', '1')->where('id', '!=', ($banner == null) ? 0 : $banner->id)->take(6)->get();
         $total = count($proximas);
 

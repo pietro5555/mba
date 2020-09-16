@@ -20,9 +20,6 @@
                 <a class="nav-link items-header" href="#">STREAMING</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link items-header" href="#">GRATIS</a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link items-header" href="#">BLOG</a>
             </li>
             <li class="nav-item">

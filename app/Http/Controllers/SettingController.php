@@ -42,7 +42,7 @@ class SettingController extends Controller
 		
 		$component = Component::all();
 		
-	    return view ('setting.logo')->with(compact('settingCliente','component'));
+	    return view ('setting.logo')->with(compact('component'));
 	}
 	
 	/**

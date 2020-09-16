@@ -2,26 +2,27 @@
 
 @section('content')
                 
-                
+                @if(!empty($anuncio))
                <div style="width: 100%; position: relative; display: inline-block;">
-                    <img src="{{ asset('images/banner_completo.png') }}" alt="" style="height: 500px; width:100%; opacity: 0.5;">
+                    <img src="{{ asset('images/'.$anuncio['imagen']) }}" alt="" style="height: 500px; width:100%; opacity: 0.5;">
                     <div style="position: absolute; top: 2%; left: 5%;">
                         <div style="color: white; font-size: 70px; font-weight: bold;">
                             <a style="font-weight: bold; width: 180px; font-size: 28px; color: #2A91FF;">PRÓXIMO STREAMING</a><br>
                             
                             <div style="width: 60%; line-height: 70px;">
-                                Lorem ipsum up dolor sit amet
+                                {{$anuncio['title']}}
                             </div> 
                             <div style="font-size: 25px; font-weight: 500;">
-                                <i class="fa fa-calendar"></i> Sábado 25 de Julio
-                                <i class="fa fa-clock"></i> 6:00 pm
+                                <i class="fa fa-calendar"></i> {{$anuncio['fechacompleta']}}
+                                <i class="fa fa-clock"></i> {{\Carbon\Carbon::parse($anuncio['fecha'])->format('g:i a')}}
                             </div>
                             <div style="font-size: 35px; padding-top: 60px;">
-                                <a href="" style="color: #6fd843;">Reservar Plaza <i class="fas fa-chevron-right"></i></a>
+                                <a href="{{route('transmi-agendar', $anuncio['id'])}}" style="color: #6fd843;">Reservar Plaza <i class="fas fa-chevron-right"></i></a>
                             </div>
                         </div>
                     </div>
                 </div><br><br>
+                @endif
                 
                 
             
@@ -53,7 +54,7 @@
                             <div class="section-title-landing" style="padding-bottom: 35px;">PRÓXIMAS TRANSMISIONES EN VIVO</div>
                         </div>
 
-                    @if($proximas->isNotEmpty())
+                    @if($total > 0)
 
 
                         <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
@@ -77,7 +78,7 @@
                              <img src="{{ asset('uploads/avatar/'.$proxima->avatar) }}" class="card-img-top" alt="..." style="height: 320px;">
                              <div class="card-img-overlay" style="margin-left: 10px; margin-right: 10px;">
                               <h3 class="card-title" style="margin-top: 190px; color: #2A91FF;">{{$proxima->title}}</h3>
-                              <p class="card-text" style="margin-top: -10px; font-size: 10px;"> <i class="far fa-calendar" style="font-size: 18px;"></i> {{\Carbon\Carbon::parse($proxima->date)->format('l j F')}}
+                              <p class="card-text" style="margin-top: -10px; font-size: 10px;"> <i class="far fa-calendar" style="font-size: 18px;"></i> {{$proxima->fecha}}
 
 
                               <i class="far fa-clock" style="font-size: 18px;margin-right: 5px;"></i>{{\Carbon\Carbon::parse($proxima->date)->format('g:i a')}} 
@@ -113,9 +114,9 @@
                              <img src="{{ asset('uploads/avatar/'.$proxima->avatar) }}" class="card-img-top" alt="..." style="height: 320px;">
                              <div class="card-img-overlay" style="margin-left: 10px; margin-right: 10px;">
                               <h3 class="card-title" style="margin-top: 190px; color: #2A91FF;">{{$proxima->title}}</h3>
-                              <p class="card-text" style="margin-top: -10px; font-size: 10px;"> <i class="far fa-calendar" style="font-size: 18px;"></i> Sabado 25 de Julio 
+                              <p class="card-text" style="margin-top: -10px; font-size: 10px;"> <i class="far fa-calendar" style="font-size: 18px;"></i> {{$proxima->fecha}} 
 
-                              <i class="far fa-clock" style="font-size: 18px;"></i> 6:00 Pm 
+                              <i class="far fa-clock" style="font-size: 18px;"></i> {{\Carbon\Carbon::parse($proxima->date)->format('g:i a')}}
 
                                </p>
 
@@ -157,9 +158,9 @@
         
         <div class="form-row">
        
-       <div class="col-md-2" style="font-size: 20px;">
+       {{--<div class="col-md-2" style="font-size: 20px;">
         <label>ORDENAR POR:</label>
-        </div>
+        </div>--}}
         
         <div class="col-md-3">
         <select name="tipo" class="form-control" required style="height: calc(1.9em + .100rem + 2px); width: 80%; border: none; background-color: #1a1b1d; color: #2A91FF; font-size: 16px; font-weight: bold;

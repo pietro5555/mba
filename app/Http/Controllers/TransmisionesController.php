@@ -22,25 +22,49 @@ use App\Http\Controllers\IndexController;
 class TransmisionesController extends Controller
 {
 
-	function __construct()
-	{
+    function __construct()
+    {
         
-	    Carbon::setLocale('es');
-	}
+        Carbon::setLocale('es');
+    }
 
-	//vista de transmisiones
+    //vista de transmisiones
     public function transmisiones(){
         
-        $proximas = Events::where('status', '1')->take(6)->get();
+        $anuncio =[];
+        $banner = Events::where('status', '1')->take(1)->first();
+        $proximas = Events::where('status', '1')->where('id', '!=', ($banner == null) ? 0 : $banner->id)->take(6)->get();
         $total = count($proximas);
+
+         if($banner != null){
+
+           $dia = $this->dias($banner->date);
+           $mes = $this->meses($banner->date);
+           $fech = $dia.' '.date('d', strtotime($banner->dia)).' '.$mes;
+
+           $anuncio =[
+            'id' => $banner->id,
+            'imagen' => 'banner_completo.png',
+            'title' => $banner->title,
+            'fechacompleta' => $fech,
+            'fecha' => $banner->date,
+
+           ];
+         }
 
         foreach($proximas as $proxima){
           $user = User::find($proxima->user_id);
           $proxima->avatar = $user->avatar;
+          $dia = $this->dias($proxima->date);
+          $mes = $this->meses($proxima->date);
+          $proxima->fecha = $dia.' '.date('d', strtotime($proxima->date)).' '.$mes;
+
         }
 
-        return view('transmision.transmision',compact('proximas','total'));
+        return view('transmision.transmision',compact('proximas','total','anuncio'));
     }
+
+
 
 
      public function agendar($evento){
@@ -76,6 +100,70 @@ class TransmisionesController extends Controller
     
         }
     }
+
+
+
+
+     public function dias($fecha){
+
+       $dia ='';
+       $fech = Carbon::parse($fecha)->format('l');
+       
+       if($fech == 'Saturday'){
+         $dia='Sábado';
+       }elseif($fech == 'Sunday'){
+           $dia='Domingo';
+       }elseif($fech == 'Monday'){
+           $dia='Lunes';
+       }elseif($fech == 'Tuesday'){
+            $dia='Martes';
+       }elseif($fech == 'Wednesday'){
+           $dia='Miercoles';
+       }elseif($fech == 'Thursday'){
+           $dia='Jueves';
+       }elseif($fech == 'Friday'){
+           $dia='Viernes';
+       }
+
+
+       return $dia;
+    }
+
+    public function meses($fecha){
+
+       $mes ='';
+       $fech = Carbon::parse($fecha)->format('F');
+       
+       if($fech == 'January'){
+         $mes='Enero';
+       }elseif($fech == 'February'){
+           $mes='Febrero';
+       }elseif($fech == 'March'){
+            $mes='Marzo';
+       }elseif($fech == 'April'){
+           $mes='Abril';
+       }elseif($fech == 'May'){
+           $mes='Mayo';
+       }elseif($fech == 'June'){
+           $mes='Junio';
+       }elseif($fech == 'July'){
+           $mes='Julio';
+       }elseif($fech == 'August'){
+           $mes='Agosto';
+       }elseif($fech == 'September'){
+           $mes='Septiembre';
+       }elseif($fech == 'October'){
+           $mes='Octubre';
+       }elseif($fech == 'November'){
+           $mes='Noviembre';
+       }elseif($fech == 'December'){
+           $mes='Diciembre';
+       }
+
+
+       return $mes;
+    } 
+
     
 
 }

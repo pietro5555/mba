@@ -174,7 +174,7 @@ Route::get('load-more-courses-new/{ultimoId}/{accion}', 'CourseController@load_m
 Route::get('book-event/{evento}', 'EventsController@book')->name('landing.book-event');
 
 
-Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu']], function() {
+Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu', 'role']], function() {
 
   Route::group(['prefix' => 'red'], function(){
         Route::get('/listado', 'RedController@index')->name('admin-red-index');

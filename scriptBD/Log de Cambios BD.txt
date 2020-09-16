@@ -44,8 +44,15 @@ Dev: Robinson vargas
 *Nueva tabla resources (resources.sql)
 *Nueva tabla event_resources (event_resources.sql)
 
+
+15/09/2020
+*Ajuste en la tabla settings (correr script settings.sql) 
+*tabla wp98_users campo profession null (correr script wp98_users.sql) 
+*tabla wp98_users campo profession null (correr script wp98_users.sql)
+
 15/09/2020
 Dev: Crisleivys
 *Nueva tabla creada schedule (correr el script  schedule)
 * Agregados datos para que se muestre el calendario (correr el script calendarios)
 * Agregados datos en la tabla events (correr el script events)
+

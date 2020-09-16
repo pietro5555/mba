@@ -152,12 +152,6 @@ class HomeController extends Controller{
    }
     
     
-    //vista de transmisiones
-    public function transmisiones(){
-        
-        return view('transmision');
-    }
-    
     public function deleteProfile($id)
     {
        $consulta=new ReferralTreeController;    

@@ -140,7 +140,8 @@ Route::get('/log', 'LoginController@login')->name('log');
 Route::post('/autenticar', 'LoginController@autenticacion')->name('autenticar');
 
 //vista de transmisiones
-Route::get('/transmisiones', 'HomeController@transmisiones')->name('transmisiones');
+Route::get('/transmisiones', 'TransmisionesController@transmisiones')->name('transmisiones');
+Route::get('/agendar/{id}', 'TransmisionesController@agendar')->name('transmi-agendar');
 
 //Streaming
 Route::get('streaming', 'StreamingController@index')->name('streaming.index');
@@ -175,7 +176,7 @@ Route::get('load-more-courses-new/{ultimoId}/{accion}', 'CourseController@load_m
 Route::get('book-event/{evento}', 'EventsController@book')->name('landing.book-event');
 
 
-Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu']], function() {
+Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu', 'role']], function() {
 
   Route::group(['prefix' => 'red'], function(){
         Route::get('/listado', 'RedController@index')->name('admin-red-index');
@@ -908,11 +909,6 @@ Route::group(['prefix' => 'link','middleware' => ['menu']], function(){
         Route::post('ckeditor/image_upload', 'LinkController@upload')->name('upload');
         
     });
-
-
-    
-    //vista de transmisiones
-    Route::get('/transmisiones', 'HomeController@transmisiones')->name('transmisiones');
     
     //vista de timelive
     Route::group(['prefix' => 'time'], function(){

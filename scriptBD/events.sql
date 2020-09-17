@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3306
--- Generation Time: Sep 15, 2020 at 11:40 PM
--- Server version: 5.7.24
--- PHP Version: 7.2.14
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 18-09-2020 a las 01:57:30
+-- Versión del servidor: 10.4.14-MariaDB
+-- Versión de PHP: 7.4.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -19,18 +18,17 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `mba`
+-- Base de datos: `shapin`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `events`
+-- Estructura de tabla para la tabla `events`
 --
 
-DROP TABLE IF EXISTS `events`;
-CREATE TABLE IF NOT EXISTS `events` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `events` (
+  `id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `date` datetime DEFAULT NULL,
   `type` varchar(100) DEFAULT NULL,
@@ -39,19 +37,32 @@ CREATE TABLE IF NOT EXISTS `events` (
   `status` varchar(50) NOT NULL,
   `image` varchar(255) DEFAULT NULL,
   `date_end` datetime DEFAULT NULL,
-  `description` text,
+  `description` text DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
+  `id_categori` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `events`
+-- Índices para tablas volcadas
 --
 
-INSERT INTO `events` (`id`, `title`, `date`, `type`, `url_streaming`, `url_video`, `status`, `image`, `date_end`, `description`, `user_id`, `created_at`, `updated_at`) VALUES
-(1, 'Curso de trading en Forex gratuito.', '2020-09-19 00:00:00', NULL, NULL, NULL, '1', 'null', '2020-09-19 18:00:00', 'Potencia tu trading con nuestro curso online gratis de Forex y CFDs. Esperamos que este programa de tan solo 3 pasos te ayude a saber todo lo que necesitas para empezar a operar, ¡compruébalo tu mismo!', 4, '2020-09-15 16:49:28', '2020-09-15 16:49:28');
+--
+-- Indices de la tabla `events`
+--
+ALTER TABLE `events`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `events`
+--
+ALTER TABLE `events`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

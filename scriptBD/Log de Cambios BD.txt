@@ -57,6 +57,7 @@ Dev: Crisleivys
 * Agregados datos para que se muestre el calendario (correr el script calendarios)
 * Agregados datos en la tabla events (correr el script events)
 
-ÚLTIMA ACTUALIZACIÓN DEL SERVIDOR: 16/09/2020
+ÚLTIMA ACTUALIZACIÓN DEL SERVIDOR: 17/09/2020
 ----------------------------------------------
+* Nuevo campo agregado id_categori (correr el script events)
 

@@ -8,7 +8,7 @@
     <div class="collapse navbar-collapse" id="navbarItems" style="z-index: 1000;">
         <ul class="navbar-nav ml-auto mt-2 mt-lg-0 header-list">
             <li class="nav-item active">
-                <a class="nav-link items-header" href="#">INICIO</a>
+                <a class="nav-link items-header" href="{{route('index')}}">INICIO</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link items-header" href="#">NOSOTROS</a>

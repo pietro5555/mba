@@ -121,8 +121,24 @@
 						            	<input type="text" class="form-control" name="date" required>
 						            </div>
 						        </div> -->
-						       
+						        <div class="col-md-12">
+						        <div class="form-group">
+                                   <label class="control-label text-center">Banner
+                             		</label>
+                                   <input class="form-control" type="file" name="image">
+                                        
+                                </div>
+						        </div>
+
+						        <div class="col-md-12">
+						        	<label>Fecha Inicio</label>
+						            <input type="datetime-local" class="form-control" name="date" id="fechainicio" required>
+						        </div>
 						        
+						        <div class="col-md-12">
+						        	<label>Fecha de finalización</label>
+            						<input type="datetime-local" class="form-control" name="date_end" required>
+						        </div>
 						      
 						    </div>
 						</div>
@@ -148,6 +164,7 @@
 			        {{ csrf_field() }}
 				    <div class="modal-body">
 				        <div class="container-fluid" id="content-modal">
+
 	    					
 						</div>
 				    </div>

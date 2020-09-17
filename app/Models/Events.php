@@ -22,6 +22,7 @@ class Events extends Model
     protected $fillable = [
         'title',
         'date',
+        'image',
         'type',
         'url_streaming',
         'url_video',

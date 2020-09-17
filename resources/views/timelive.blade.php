@@ -87,7 +87,11 @@ countdown('{{$fecha}}', 'clock');
 <div class="row">
     <div class="col-md-12">
 
-        <img src="{{ asset('vivo/temporizador.png') }}" class="card-img-top img-fluid" alt="...">
+        @if (!is_null($evento['image']))
+            <img src="{{ asset('uploads/images/banner/'.$evento['image']) }}" class="card-img-top img-banner-live" alt="..."> 
+          @else
+          <img src="{{ asset('uploads/images/banner/default.jpg') }}" class="card-img-top img-fluid img-banner-live" alt="...">
+          @endif
 
         <div class="card-img-overlay counter-caption">
             
@@ -189,101 +193,21 @@ countdown('{{$fecha}}', 'clock');
 
                        <div class="carousel-item active">
                          <div class="row">
-
+                           @foreach ($proxevent as $prox)
                            <div class="col-md-4" style="margin-top: 20px;">
-                             <img src="{{ asset('vivo/1.png') }}" class="card-img-top" alt="..." style="height: 320px;">
+                             <img src="{{ asset('vivo/1.png') }}" class="card-img-top img-prox-events" alt="..." style="height: 320px;">
                              <div class="card-img-overlay" style="margin-left: 10px; margin-right: 10px;">
-                              <h3 class="card-title" style="margin-top: 190px; color: #2A91FF;">Nombre del Live</h3>
-                              <p class="card-text" style="margin-top: -10px; font-size: 10px;"> <i class="far fa-calendar" style="font-size: 18px;"></i> Sabado 25 de Julio 
-
-                              <i class="far fa-clock" style="font-size: 18px;"></i> 6:00 Pm 
-
+                              <h5 class="card-title" style="margin-top: 170px; color: #2A91FF;">{{$prox->title}}</h5>
+                              <p class="card-text font-weight-bold" style="margin-top: -10px; font-size: 10px;"> <i class="far fa-calendar" style="font-size: 18px;"></i> {{ date ("d/m/Y", strtotime($prox->date))}}<i class="far fa-clock" style="font-size: 18px;"></i> 6:00 Pm 
                                </p>
-
                               <a href="#" class="btn btn-success btn-block">Agendar</a>
                               </div>
                              </div>
-
-                            <div class="col-md-4" style="margin-top: 20px;">
-                             <img src="{{ asset('vivo/2.png') }}" class="card-img-top" alt="..." style="height: 320px;">
-                             <div class="card-img-overlay" style="margin-left: 10px; margin-right: 10px;">
-                              <h3 class="card-title" style="margin-top: 190px; color: #2A91FF;">Nombre del Live</h3>
-                              <p class="card-text" style="margin-top: -10px; font-size: 10px;"> <i class="far fa-calendar" style="font-size: 18px;"></i> Sabado 25 de Julio 
-
-                              <i class="far fa-clock" style="font-size: 18px;"></i> 6:00 Pm 
-
-                               </p>
-
-                              <a href="#" class="btn btn-success btn-block">Agendar</a>
-                              </div>
-                             </div>
-
-                            <div class="col-md-4" style="margin-top: 20px;">
-                             <img src="{{ asset('vivo/3.png') }}" class="card-img-top" alt="..." style="height: 320px;">
-                             <div class="card-img-overlay" style="margin-left: 10px; margin-right: 10px;">
-                              <h3 class="card-title" style="margin-top: 190px; color: #2A91FF;">Nombre del Live</h3>
-                              <p class="card-text" style="margin-top: -10px; font-size: 10px;"> <i class="far fa-calendar" style="font-size: 18px;"></i> Sabado 25 de Julio 
-
-                              <i class="far fa-clock" style="font-size: 18px;"></i> 6:00 Pm 
-
-                               </p>
-
-                              <a href="#" class="btn btn-success btn-block">Agendar</a>
-                              </div>
-                             </div>
+                              @endforeach
 
                       </div>
                    </div>
                    
-                   
-                   
-                   <div class="carousel-item">
-                         <div class="row">
-
-                           <div class="col-md-4" style="margin-top: 20px;">
-                             <img src="{{ asset('vivo/1.png') }}" class="card-img-top" alt="..." style="height: 320px;">
-                             <div class="card-img-overlay" style="margin-left: 10px; margin-right: 10px;">
-                              <h3 class="card-title" style="margin-top: 190px; color: #2A91FF;">Nombre del Live</h3>
-                              <p class="card-text" style="margin-top: -10px; font-size: 10px;"> <i class="far fa-calendar" style="font-size: 18px;"></i> Sabado 25 de Julio 
-
-                              <i class="far fa-clock" style="font-size: 18px;"></i> 6:00 Pm 
-
-                               </p>
-
-                              <a href="#" class="btn btn-success btn-block">Agendar</a>
-                              </div>
-                             </div>
-
-                            <div class="col-md-4" style="margin-top: 20px;">
-                             <img src="{{ asset('vivo/2.png') }}" class="card-img-top" alt="..." style="height: 320px;">
-                             <div class="card-img-overlay" style="margin-left: 10px; margin-right: 10px;">
-                              <h3 class="card-title" style="margin-top: 190px; color: #2A91FF;">Nombre del Live</h3>
-                              <p class="card-text" style="margin-top: -10px; font-size: 10px;"> <i class="far fa-calendar" style="font-size: 18px;"></i> Sabado 25 de Julio 
-
-                              <i class="far fa-clock" style="font-size: 18px;"></i> 6:00 Pm 
-
-                               </p>
-
-                              <a href="#" class="btn btn-success btn-block">Agendar</a>
-                              </div>
-                             </div>
-
-                            <div class="col-md-4" style="margin-top: 20px;">
-                             <img src="{{ asset('vivo/3.png') }}" class="card-img-top" alt="..." style="height: 320px;">
-                             <div class="card-img-overlay" style="margin-left: 10px; margin-right: 10px;">
-                              <h3 class="card-title" style="margin-top: 190px; color: #2A91FF;">Nombre del Live</h3>
-                              <p class="card-text" style="margin-top: -10px; font-size: 10px;"> <i class="far fa-calendar" style="font-size: 18px;"></i> Sabado 25 de Julio 
-
-                              <i class="far fa-clock" style="font-size: 18px;"></i> 6:00 Pm 
-
-                               </p>
-
-                              <a href="#" class="btn btn-success btn-block">Agendar</a>
-                              </div>
-                             </div>
-
-                      </div>
-                   </div>
                 </div>    
 
 

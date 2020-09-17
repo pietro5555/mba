@@ -45,7 +45,6 @@
                             <h6 align="right" style="margin-bottom: -20px;"> 
                                 <i class="icon fa fa-eye text-right" style="font-size: 16px; margin-right: 10px;"><p style="font-size: 10px;">{{$curso->views}}</p></i>
                                 <i class="far fa-comment-alt" style="font-size: 16px; margin-right: 10px;"><p style="font-size: 10px;">346</p></i>
-                                <i class="fas fa-share-alt" style="font-size: 16px; margin-right: 10px;"><p style="font-size: 10px;">{{$curso->shares}}</p></i>
                                 <i class="far fa-thumbs-up" style="font-size: 16px;"><p style="font-size: 10px;">{{$curso->likes}}</p></i>
                             </h6>
                         </div>
@@ -87,19 +86,16 @@
                         @endif
                         <div class="card-img-overlay d-flex flex-column">
                             <div class="mt-auto">
-                                <div class="new-course-title">{{ $cursoNuevo->title }}</div>
+                                <div class="new-course-title">
+                                    <a href="{{ route('courses.show', [$cursoNuevo->slug, $cursoNuevo->id]) }}" style="color: white;">{{ $cursoNuevo->title }}</a></div>
                                 <div class="row">
                                     <div class="col-12 col-xl-6 new-course-category">{{ $cursoNuevo->category->title }}</div>
                                     <div class="col-12 col-xl-6" style="font-size: 16px;">
                                         <div class="row row-cols-3">
-                                            <div class="col text-right no-padding-sides">
+                                            <div class="col text-right no-padding-sides mr-2">
 
                                                 <i class="far fa-user-circle"></i><br>
                                                 <span class="new-course-items-text">{{$cursoNuevo->views}}</span>
-                                            </div>
-                                            <div class="col text-center no-padding-sides">
-                                                <i class="fas fa-share-alt"></i><br>
-                                                <span class="new-course-items-text">{{$cursoNuevo->shares}}</span>
                                             </div>
                                             <div class="col text-left no-padding-sides">
                                                 <a href="#" class="text-white">
@@ -143,7 +139,7 @@
                                 <h4 class="card-title mt-4">{{$mentor->nombre}}</h4>
                                 <p class="card-text">{{$mentor->categoria}}</p>
                                 <br>
-                                <p class="card-text text-lg-right"><a href="{{ url('cursos/mentor/'.$mentor->mentor_id) }}" class="col-sm-lg text-sm-left card-text" >Ver perfil</a>  <i class=" fa fa-angle-right"> </i></p>
+                                <p class="card-text text-lg-right"><a href="{{ url('courses/mentor/'.$mentor->mentor_id) }}" class="col-sm-lg text-sm-left card-text" >Ver perfil</a>  <i class=" fa fa-angle-right"> </i></p>
                             </div>
                             
                            

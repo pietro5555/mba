@@ -23,5 +23,10 @@
             <textarea name="description" class="form-control" id="description" cols="30" rows="10" required>{{ $event->description }}</textarea>
         </div>
     </div>
-	
+   <div class="col-md-12">
+		<div class="form-group">
+			<label>Imagen de Cover</label>
+			<input id="file-input" name="image" type="file"/>
+		</div>
+	</div>	 
 </div>

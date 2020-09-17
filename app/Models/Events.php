@@ -27,6 +27,7 @@ class Events extends Model
         'url_streaming',
         'url_video',
         'user_id',
+        'id_categori',
         'description',
         'date_end',
         'status'

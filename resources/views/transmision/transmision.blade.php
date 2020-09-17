@@ -77,7 +77,7 @@
                            <div class="col-md-4" style="margin-top: 20px;">
                              <img src="{{ asset('uploads/avatar/'.$proxima->avatar) }}" class="card-img-top" alt="..." style="height: 320px;">
                              <div class="card-img-overlay" style="margin-left: 10px; margin-right: 10px;">
-                              <h3 class="card-title" style="margin-top: 190px; color: #2A91FF;">{{$proxima->title}}</h3>
+                              <h4 class="card-title" style="margin-top: 180px; color: #2A91FF;">{{$proxima->title}}</h4>
                               <p class="card-text" style="margin-top: -10px; font-size: 10px;"> <i class="far fa-calendar" style="font-size: 18px;"></i> {{$proxima->fecha}}
 
 
@@ -113,7 +113,7 @@
                            <div class="col-md-4" style="margin-top: 20px;">
                              <img src="{{ asset('uploads/avatar/'.$proxima->avatar) }}" class="card-img-top" alt="..." style="height: 320px;">
                              <div class="card-img-overlay" style="margin-left: 10px; margin-right: 10px;">
-                              <h3 class="card-title" style="margin-top: 190px; color: #2A91FF;">{{$proxima->title}}</h3>
+                              <h4 class="card-title" style="margin-top: 180px; color: #2A91FF;">{{$proxima->title}}</h4>
                               <p class="card-text" style="margin-top: -10px; font-size: 10px;"> <i class="far fa-calendar" style="font-size: 18px;"></i> {{$proxima->fecha}} 
 
                               <i class="far fa-clock" style="font-size: 18px;"></i> {{\Carbon\Carbon::parse($proxima->date)->format('g:i a')}}
@@ -125,11 +125,12 @@
                              </div>
                         @endif
                        @endforeach
-                      @endif
                       </div>
                    </div>
+                   @endif
                 </div>
-
+                 
+                 @if($total >= 3)
                   <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
                   <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                   <span class="sr-only">Previous</span>
@@ -138,6 +139,8 @@
                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
                    <span class="sr-only">Next</span>
                    </a>
+                   @endif
+
                </div>
                
                @else
@@ -156,35 +159,35 @@
           <div class="section-title-landing" style="padding-bottom: 35px; text-align:center;">TRANSMISIONES RECIENTES</div>
         </div> 
         
-        <div class="form-row">
+        {{--<div class="form-row">
        
-       {{--<div class="col-md-2" style="font-size: 20px;">
+       <div class="col-md-2" style="font-size: 20px;">
         <label>ORDENAR POR:</label>
-        </div>--}}
+        </div>
         
         <div class="col-md-3">
         <select name="tipo" class="form-control" required style="height: calc(1.9em + .100rem + 2px); width: 80%; border: none; background-color: #1a1b1d; color: #2A91FF; font-size: 16px; font-weight: bold;
 ">
             <option value="1">MÁS VISTOS</option>
         </select>
-        </div>    
+        </div> 
         
-    </div>      
+    </div>--}}   
 
-         <div class="row">
+        <div class="row">
             
-            @for($i=1; $i<=12; $i++)
+            @foreach($finalizados as $fin)
             <div class="col-md-3" style="margin-top: 20px;">
-                <img src="{{ asset('vivo/reciente') }}{{$i}}.png" class="card-img-top" alt="..." style="height: 200px;">
+                <img src="{{ asset('uploads/avatar/'.$fin->avatar) }}" class="card-img-top" alt="..." style="height: 200px;">
 
                 <div class="card-img-overlay" style="margin-left: 10px; margin-right: 10px;">
-                   <h6 class="card-title">Nombre Apellido</h6>
+                   <h6 class="card-title">{{$fin->nombre}}</h6>
                 </div>
 
                 <div class="card-body" style="background-color: #2f343a;">
-                  <h6 class="card-title" style="margin-top: -15px;"> <i class="far fa-play-circle" style="font-size: 16px; color: #6fd843;"></i> Nombre del Curso</h6>
+                  <h6 class="card-title" style="margin-top: -15px;"> <i class="far fa-play-circle" style="font-size: 16px; color: #6fd843;"></i> {{$fin->title}}</h6>
 
-                  <h6 style="font-size: 10px; margin-left: 20px; margin-top: -10px;">Categoria</h6>
+                  <h6 style="font-size: 10px; margin-left: 20px; margin-top: -10px;">{{$fin->title_cate}}</h6>
  
                   <h6 align="right" style="margin-bottom: -20px;"> 
                     <i class="icon fa fa-eye" style="font-size: 16px; margin-right: 10px;"><p style="font-size: 10px;">1310</p></i>
@@ -194,7 +197,7 @@
                   </h6>
                 </div>
             </div>
-            @endfor
+            @endforeach
          </div>
     </div>
     

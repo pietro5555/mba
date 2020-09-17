@@ -10,7 +10,7 @@ use App\Models\Course;
 use App\Models\Events;
 use App\Models\Note;
 use App\Models\EventResources;
-
+use App\Models\Category;
 use Auth;
 
 
@@ -32,7 +32,7 @@ class EventsController extends Controller
     public function index()
     {
         $events = Events::orderBy('id', 'DESC')->get();
-
+        $categorias = Category::all();
         $mentores = DB::table('wp98_users')
                         ->select('ID', 'user_email')
                         ->where('rol_id', '=', 2)
@@ -46,7 +46,7 @@ class EventsController extends Controller
                     ->get();
 
 
-        return view('admin.events.index')->with(compact('events', 'mentores'));
+        return view('admin.events.index')->with(compact('events', 'mentores','categorias'));
     }
 
     /**
@@ -75,7 +75,8 @@ class EventsController extends Controller
             'status' => '1',
             'user_id' => $request->input('mentor_id'),
             'date' => $request->input('date'),
-            'date_end' => $request->input('date_end')
+            'date_end' => $request->input('date_end'),
+            'id_categori' => $request->categoria,
         ]);
         $data->save();
 
@@ -131,13 +132,14 @@ class EventsController extends Controller
      */
     public function edit($id)
     {
+        $categorias = Category::all();
         $event = Events::find($id);
         $mentores = DB::table('wp98_users')
                         ->select('ID', 'user_email')
                         ->where('rol_id', '=', 2)
                         ->orderBy('user_email', 'ASC')
                         ->get();
-        return view('admin.events.editEvent')->with(compact('event', 'mentores'));
+        return view('admin.events.editEvent')->with(compact('event', 'mentores', 'categorias'));
         
     }
 

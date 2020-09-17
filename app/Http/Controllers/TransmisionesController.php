@@ -15,6 +15,7 @@ use App\Models\EventResources;
 use App\Models\Course; 
 use App\Models\Events;
 use App\Models\Permiso;
+use App\Models\Category;
 
 // llamado de Controlladores
 use App\Http\Controllers\IndexController;
@@ -32,6 +33,7 @@ class TransmisionesController extends Controller
     public function transmisiones(){
         
         $anuncio =[];
+         $finalizados = Events::where('status', '3')->orderBy('id', 'DESC')->take(9)->get();
          $banner = Events::where('status', '1')->where('image','!=',null)->take(1)->first();
         if($banner == null){
          $banner = Events::where('status', '1')->where('image', null)->take(1)->first();
@@ -64,7 +66,16 @@ class TransmisionesController extends Controller
 
         }
 
-        return view('transmision.transmision',compact('proximas','total','anuncio'));
+        foreach($finalizados as $fin){
+         $user = User::find($fin->user_id);
+         $categoria = Category::find($fin->id_categori);
+         $fin->avatar = $user->avatar;
+         $fin->nombre = $user->display_name;
+         $fin->title_cate = $categoria->title;
+
+        }
+
+        return view('transmision.transmision',compact('proximas','total','anuncio','finalizados'));
     }
 
 

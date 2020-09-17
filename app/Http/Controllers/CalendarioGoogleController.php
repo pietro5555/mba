@@ -24,6 +24,7 @@ class CalendarioGoogleController extends Controller
     function __construct()
     {
         Carbon::setLocale('es'); 
+        $this->middleware(['auth']);
     }
 
 
@@ -33,7 +34,6 @@ class CalendarioGoogleController extends Controller
          $fecha = (empty($evento)) ? 1 : $evento['inicio'];
          $proxevent = $this->proxievents((empty($evento)) ? 1 : $evento['id']);
         return view('timelive', compact('fecha','evento','proxevent'));
-
 
     }
 
@@ -133,7 +133,7 @@ class CalendarioGoogleController extends Controller
            }   
         }
     }
-    
+
 
     public function schedule($event_id, $user_id, Request $request){
 

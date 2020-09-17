@@ -42,7 +42,7 @@
               @endif
                 <div class="card-body p-2">
                 <div class="row align-items-start">
-                    <div class="col-9"><p class="text-course-mentor">{{$course->course_title}}</p></div>
+                    <div class="col-9"><p class="text-course-mentor"><a href="{{ route('courses.show', [$course->slug, $course->id]) }}" style="color: white;">{{$course->course_title}}</a></p></div>
                      <div class="col-3"><i class="text-primary fa fa-play-circle"></i></div>
                 </div>                     
                 </div>

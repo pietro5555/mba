@@ -73,8 +73,21 @@ class EventsController extends Controller
             'title' => $request->input('title'),
             'description' => $request->input('description'),
             'status' => '1',
-            'user_id' => $request->input('mentor_id')
+            'user_id' => $request->input('mentor_id'),
+            'date' => $request->input('date'),
+            'date_end' => $request->input('date_end')
         ]);
+        $data->save();
+
+         if ($request->hasFile('image')){
+             $file = $request->file('image');
+            $name = $data->id.".".$file->getClientOriginalExtension();
+           
+            $file->move(public_path().'/uploads/images/banner', $name);
+            $data->image = $name;
+            
+        }
+        $data->save();
 
         return redirect('admin/events')->with('msj-exitoso', 'El evento '.$data->title.' ha sido creado con éxito.');
         
@@ -138,11 +151,22 @@ class EventsController extends Controller
     public function update(Request $request)
     {
 
+         
         $event = Events::find($request->input('event_id'));
-        $event->title       =$request->input('title');
-        $event->description =$request->input('description');
-        $event->user_id     =$request->input('mentor_id');
+        $event->fill($request->all());
         $event->save();
+
+         if ($request->hasFile('image')){
+             $file = $request->file('image');
+            $name = $event->id.".".$file->getClientOriginalExtension();
+           
+            $file->move(public_path().'/uploads/images/banner', $name);
+            $event->image = $name;
+            
+        }
+        $event->save();
+        
+
 
         return redirect('admin/events')->with('msj-exitoso', 'El evento '.$event->title.' ha sido modificado con éxito.');
         

@@ -22,7 +22,7 @@
                     <div class="collapse" id="searchDiv" style="padding-left: 10px; padding-right: 10px;">
                         <form>
                             <div class="form-group">
-                                <input type="email" class="form-control" id="search" placeholder="Buscar...">
+                                <input type="text" class="form-control" id="search" placeholder="Buscar...">
                             </div>
                         </form>
                     </div>

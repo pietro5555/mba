@@ -20,9 +20,9 @@
                     @endif
                     <a class="list-group-item bg-dark-gray" data-toggle="collapse" href="#searchDiv" style="color: white;"><i class="fa fa-search"></i> Explorar</a>
                     <div class="collapse" id="searchDiv" style="padding-left: 10px; padding-right: 10px;">
-                        <form>
+                        <form action="{{ route('search') }}" method="GET">
                             <div class="form-group">
-                                <input type="text" class="form-control" id="search" placeholder="Buscar...">
+                                <input type="text" class="form-control" id="search" name="q" placeholder="Buscar...">
                             </div>
                         </form>
                     </div>

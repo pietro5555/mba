@@ -174,8 +174,8 @@
         
     </div>--}}   
 
-        <div class="row">
-            
+<div class="row">
+          @if($finalizados->isNotEmpty())
             @foreach($finalizados as $fin)
             <div class="col-md-3" style="margin-top: 20px;">
                 <img src="{{ asset('uploads/avatar/'.$fin->avatar) }}" class="card-img-top" alt="..." style="height: 200px;">
@@ -198,6 +198,9 @@
                 </div>
             </div>
             @endforeach
+            @else
+             No se encontraron transmisiones recientes...
+            @endif
          </div>
     </div>
     

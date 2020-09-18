@@ -95,4 +95,21 @@ class User extends Authenticatable
     public function ratings(){
         return $this->hasMany('App\Models\Rating');
     }
+
+    public function membership(){
+        return $this->belongsTo('App\Models\Membership');
+    }
+
+    public function shopping_carts(){
+        return $this->hasMany('App\Models\ShoppingCart');
+    }
+
+    public function purchases(){
+        return $this->hasMany('App\Models\Purchase');
+    }
+
+    //Relación con los cursos que posee el usuario
+    public function courses_buyed(){
+        return $this->belongsToMany('App\Models\Course', 'courses_users', 'user_id', 'course_id')->withPivot('progress', 'start_date', 'finish_date', 'certificate')->withTimestamps();
+    }
 }

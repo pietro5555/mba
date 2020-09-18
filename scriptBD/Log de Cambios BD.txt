@@ -44,7 +44,8 @@ Dev: Robinson vargas
 *Nueva tabla resources (resources.sql)
 *Nueva tabla event_resources (event_resources.sql)
 
-
+ÚLTIMA ACTUALIZACIÓN DEL SERVIDOR: 14/09/2020
+----------------------------------------------
 15/09/2020
 *Ajuste en la tabla settings (correr script settings.sql) 
 *tabla wp98_users campo profession null (correr script wp98_users.sql) 
@@ -56,3 +57,18 @@ Dev: Crisleivys
 * Agregados datos para que se muestre el calendario (correr el script calendarios)
 * Agregados datos en la tabla events (correr el script events)
 
+ÚLTIMA ACTUALIZACIÓN DEL SERVIDOR: 16/09/2020
+----------------------------------------------
+17/09/2020
+Dev: Prieto 
+* Nuevo campo agregado id_categori (correr el script events)
+
+17/09/2020
+Dev: Luisana Marín
+*Nueva tabla memberships (Correr script memberships.sql)
+*Nueva tabla shopping_cart (Correr script shopping_cart.sql)
+*Nueva tabla purchases (Correr script purchases.sql)
+*Nueva tabla purchase_details (Correr script purchase_details.sql)
+*Nueva tabla courses_users (Correr script courses_users.sql)
+*Nuevo campo membership_id (INT NULL) a la tabla wp98_users (Correr script wp98_users.sql)
+*Nuevo campo price (DOUBLE PREDEFINIDO 0) a la tabla courses (Correr script courses.sql)

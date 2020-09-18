@@ -42,7 +42,7 @@ class EntradasController extends Controller
 
       $funciones = new IndexController;
       $funciones->msjSistema('Creado Con exito', 'success');
-      return redirect()->route()->back();
+      return redirect()->back();
 
 
 	}

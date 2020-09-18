@@ -121,6 +121,20 @@
 						            	<input type="text" class="form-control" name="date" required>
 						            </div>
 						        </div> -->
+
+						        <div class="col-md-12">
+						        <div class="form-group">
+                                   <label class="control-label text-center">Categoria
+                             		</label>
+                                   <select name="categoria" class="form-control" required>
+                                   	<option value="" selected disabled>Seleccion una Categoria</option>
+                                     @foreach($categorias as $categori)
+                                      <option value="{{$categori->id}}">{{$categori->title}}</option>
+                                     @endforeach
+                                   </select>       
+                                </div>
+						        </div>
+						        
 						        <div class="col-md-12">
 						        <div class="form-group">
                                    <label class="control-label text-center">Banner

@@ -23,6 +23,20 @@
             <textarea name="description" class="form-control" id="description" cols="30" rows="10" required>{{ $event->description }}</textarea>
         </div>
     </div>
+
+
+    <div class="col-md-12">
+		<div class="form-group">
+           <label class="control-label text-center">Categoria</label>
+                <select name="categoria" class="form-control" required>
+                    <option value="" selected disabled>Seleccion una Categoria</option>
+                      @foreach($categorias as $categori)
+                        <option value="{{$categori->id}}" @if ($event->id_categori == $categori->id) selected @endif>{{$categori->title}}</option>
+                      @endforeach
+                </select>       
+        </div>
+	</div>
+
    <div class="col-md-12">
 		<div class="form-group">
 			<label>Imagen de Cover</label>

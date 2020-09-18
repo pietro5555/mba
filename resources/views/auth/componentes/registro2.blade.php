@@ -88,6 +88,16 @@
                                     @endif
                                     @endif
                                     @endforeach
+
+                                    <div class="form-group">
+                                        <label class="claro" style="text-align: center;">Correo Electrónico
+                                            (*)</label>
+                                        <input class="form-control"
+                                            type="text" autocomplete="off" name="user_email" required
+                                            oncopy="return false"
+                                            onpaste="return false" />
+                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -99,24 +109,6 @@
                                     </h3>
                                 </div>
                                 <div class="box-body" style="background-color: #{{$settings->colorfondo}};">
-                                    <div class="form-group">
-                                        <label class="claro" style="text-align: center;">Correo Electrónico
-                                            (*)</label>
-                                        <input class="form-control"
-                                            type="text" autocomplete="off" name="user_email" required
-                                            oncopy="return false"
-                                            onpaste="return false" />
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="claro" style="text-align: center;">Confirmación de
-                                            Correo Electrónico (*)</label>
-                                        <input class="form-control"
-                                            type="text" autocomplete="off" name="user_email_confirmation" required
-                                             oncopy="return false"
-                                            onpaste="return false" />
-                                    </div>
-
 
                                     <div class="form-group">
                                         <label class="claro" style="text-align: center;">Contraseña
@@ -153,7 +145,7 @@
                                         
                                     </div>
                                     @else
-                                    <input type="hidden" name="referred_id" value="{{ request()->ref }}" />
+                                        <input type="hidden" class="form-control" name="referred_id" value="{{ request()->ref }}">
                                     @endif
                                     
                                     

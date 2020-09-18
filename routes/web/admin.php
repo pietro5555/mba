@@ -139,6 +139,41 @@ Route::group(['prefix' => 'tienda', 'middleware' => ['auth', 'licencia', 'menu']
 Route::get('/log', 'LoginController@login')->name('log');
 Route::post('/autenticar', 'LoginController@autenticacion')->name('autenticar');
 
+/* Rutas de la Landing */
+Route::get('load-more-courses-new/{ultimoId}/{accion}', 'CourseController@load_more_courses_new')->name('landing.load-more-courses-new');
+Route::get('book-event/{evento}', 'EventsController@book')->name('landing.book-event');
+// Cursos por categoria
+Route::get('courses/category/{id}', 'CursosController@show_course_category')->name('show.cursos.category');
+//Perfil del mentor
+Route::get('courses/mentor/{id}', 'CursosController@perfil_mentor')->name('show.perfil.mentor');
+Route::get('courses/mentor', 'CursosController@show_course_category')->name('show.cursos.category');
+
+//Rutas de timelive
+Route::group(['prefix' => 'time'], function(){
+  Route::get('/timelive', 'CalendarioGoogleController@timelive')->name('timelive');
+  Route::get('/oauth/{id}', 'CalendarioGoogleController@oauth')->name('oauthCallback');
+  Route::get('/redirigircalendario', 'CalendarioGoogleController@index')->name('cal.index');
+  Route::get('/proximo/{id}', 'CalendarioGoogleController@proximo')->name('time-prox');
+});
+  
+//Cursos
+Route::get('cursos', 'CursosController@index')->name('cursos');
+//Route::get('cursos/curso', 'CursosController@show_one_course')->name('curso');
+Route::get('cursos/leccion', 'CursosController@leccion')->name('leccion');
+
+Route::group(['prefix' => 'courses', 'middleware' => ['auth']], function(){
+  Route::get('/', 'CourseController@index')->name('courses');
+  Route::get('show/{slug}/{id}', 'CourseController@show')->name('courses.show');
+  Route::get('recommended', 'CourseController@recommended')->name('courses.recommended');
+});
+
+/*** RUTAS PARA LOS CLIENTES ***/
+Route::group(['prefix' => 'client'], function(){
+   Route::group(['prefix' => 'courses'], function(){
+      Route::get('my-list', 'CourseController@my_courses')->name('client.my-courses');
+   });
+});
+
 //vista de transmisiones
 Route::get('/transmisiones', 'TransmisionesController@transmisiones')->name('transmisiones');
 Route::get('/agendar/{id}', 'TransmisionesController@agendar')->name('transmi-agendar');
@@ -151,15 +186,7 @@ Route::get('encode', function(){
   dd(base64_encode('ee69a8f44e5eef4a512eaa7dc4a7501c8b64f019:b115060c57dd13dfce8f0adc25643ca470f8861c'));
 });
 
-//Cursos
-Route::get('courses/curso', 'CursosController@show_one_course')->name('curso');
-Route::get('courses/leccion', 'CursosController@leccion')->name('leccion');
 
-// Cursos por categoria
-Route::get('courses/category/{id}', 'CursosController@show_course_category')->name('show.cursos.category');
-//Perfil del mentor
-Route::get('courses/mentor/{id}', 'CursosController@perfil_mentor')->name('show.perfil.mentor');
-Route::get('courses/mentor', 'CursosController@show_course_category')->name('show.cursos.category');
 
 //Agendar
 Route::post('schedule/{event_id}/{user_id}', 'CalendarioGoogleController@schedule')->name('schedule.event');
@@ -173,11 +200,6 @@ Route::get('/event/{event_id}', 'EventsController@show_event')->name('show.event
 
 //Configurar eventos
 Route::post('/settings/event/{event_id}', 'SetEventController@store')->name('set.event.store');
-
-
-/* Rutas de la Landing */
-Route::get('load-more-courses-new/{ultimoId}/{accion}', 'CourseController@load_more_courses_new')->name('landing.load-more-courses-new');
-Route::get('book-event/{evento}', 'EventsController@book')->name('landing.book-event');
 
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu', 'role']], function() {
@@ -912,26 +934,9 @@ Route::group(['prefix' => 'link','middleware' => ['menu']], function(){
         //subida de imagenes para ckeditor
         Route::post('ckeditor/image_upload', 'LinkController@upload')->name('upload');
         
-    });
-    
-    //vista de timelive
-    Route::group(['prefix' => 'time'], function(){
-    Route::get('/timelive', 'CalendarioGoogleController@timelive')->name('timelive');
-    Route::get('/oauth/{id}', 'CalendarioGoogleController@oauth')->name('oauthCallback');
-    Route::get('/redirigircalendario', 'CalendarioGoogleController@index')->name('cal.index');
-    Route::get('/proximo/{id}', 'CalendarioGoogleController@proximo')->name('time-prox');
-     });
-  
-
-//Cursos
-Route::get('cursos', 'CursosController@index')->name('cursos');
-Route::get('cursos/curso', 'CursosController@show_one_course')->name('curso');
-Route::get('cursos/leccion', 'CursosController@leccion')->name('leccion');
-
-Route::group(['prefix' => 'courses'], function(){
-  Route::get('/', 'CourseController@index')->name('courses');
-  Route::get('show/{slug}/{id}', 'CourseController@show')->name('courses.show');
 });
+
+
 
 
 

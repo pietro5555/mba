@@ -954,6 +954,16 @@ class Menu
                 'activo' => 0,
             ],
 
+            'Actualizar' => [
+                'submenu' => 0,
+                'ruta' => 'admin-update-all',
+                'black'=> '0',
+                'icono' => 'fas fa-sync',
+                'complementoruta' => '',
+                'permisoAdmin' => 1,
+                'activo' => 0,
+            ],
+
             'Usuarios' => [
                 'submenu' => 1,
                 'ruta' => 'javascript:;',
@@ -1064,15 +1074,8 @@ class Menu
                    
                 ]
             ],
-            'Actualizar' => [
-                'submenu' => 0,
-                'ruta' => 'admin-update-all',
-                'black'=> '0',
-                'icono' => 'fas fa-sync',
-                'complementoruta' => '',
-                'permisoAdmin' => 1,
-                'activo' => 0,
-            ],
+            
+            /*
             'Nuevo Registro' => [
                 'submenu' => 0,
                 'ruta' => 'autenticacion.new-register',
@@ -1162,6 +1165,7 @@ class Menu
                 'permisoAdmin' => (!empty($permiso)) ? $permiso->vision_usuario : 0,
                 'activo' => 0,
             ],
+            */
             'Lista de Usuarios' => [
                 'submenu' => 0,
                 'ruta' => 'users.records',
@@ -1172,7 +1176,7 @@ class Menu
                 'activo' => 0,
             ],
             
-            
+            /*
             'Binario' => [
                 'submenu' => 0,
                 'ruta' => 'setting-binario-ver',
@@ -1508,6 +1512,8 @@ class Menu
                     ],
                 ]
             ],
+             */
+
             'Ajustes' => [
                 'submenu' => 1,
                 'ruta' => 'javascript',
@@ -1696,6 +1702,8 @@ class Menu
                     ],
                 ]
             ],
+
+             /*
             'Herramientas' => [
                 'submenu' => 1,
                 'ruta' => 'javascript',
@@ -1741,6 +1749,7 @@ class Menu
                     
                 ]
             ]
+            */
         ];
     }
 }

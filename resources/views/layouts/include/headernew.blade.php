@@ -98,7 +98,7 @@
                 </li>
                 
                 
-                <li class="dropdown notifications-menu">
+                {{--<li class="dropdown notifications-menu">
                     <a href="{{route('chat-inicio')}}">
                         <i class="fa fa-comments"></i>
                         @if($mensajeria != '0')
@@ -146,7 +146,7 @@
                         </li>
                         <li class="footer"><a href="{{url('admin/ticket/todosticket')}}">Todos los Tickets/Soporte</a></li>
                     </ul>
-                </li>
+                </li>--}}
 
 
                 <!-- Notifications: style can be found in dropdown.less -->

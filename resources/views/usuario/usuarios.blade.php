@@ -4,82 +4,82 @@
 
 
 <div class="col-xs-12">
-	<div class="box">
-		<div class="box-body">
-			<br class="col-xs-12">
-			<table id="mytable" class="table table-bordered table-striped">
-				<thead>
-					<tr>
-						<th class="text-center">
-							ID
-						</th>
-						<th class="text-center">
-							Usuario
-						</th>
-						<th class="text-center">
-							Correo Electrónico
-						</th>
-						<th class="text-center">
-							Referifo Por
-						</th>
-						<th class="text-center">
-							Rango
-						</th>
-						<th class="text-center">
-							Estatus
-						</th>
-						<th class="text-center">
-							Nivel
-						</th>
+  <div class="box">
+    <div class="box-body">
+      <br class="col-xs-12">
+      <table id="mytable" class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th class="text-center">
+              ID
+            </th>
+            <th class="text-center">
+              Usuario
+            </th>
+            <th class="text-center">
+              Correo Electrónico
+            </th>
+            <th class="text-center">
+              Referifo Por
+            </th>
+            <th class="text-center">
+              Rango
+            </th>
+            <th class="text-center">
+              Estatus
+            </th>
+            <th class="text-center">
+              Nivel
+            </th>
                        
                        @if($tipo == 1)
-						<th class="text-center">
-							Acción
-						</th>
-						@endif
-					</tr>
-				</thead>
-				<tbody>
-					@foreach($usuarios as $usuario)
-					<tr>
-						<td class="text-center">
-							{{ $usuario->ID }}
-						</td>
-						<td class="text-center">
-							{{ $usuario->display_name }}
-						</td>
-						<td class="text-center">
-							{{ $usuario->user_email }}
-						</td>
-						<td class="text-center">
-							{{ $usuario->patrocinador }}
-						</td>
-						<td class="text-center">
-							{{$usuario->rol}}
-						</td>
-						<td class="text-center">
-							@if ($usuario->status == 1)
-							Activo
-							@else
-							Inactivo
-							@endif
-						</td>
-						
-						<td class="text-center">
-						{{$usuario->nivel}}
-						</td>
-						
-						@if($tipo == 1)
-						<td class="text-center">
-							<a class="btn btn-info" data-toggle="modal" data-target="#moderador" onclick="seleccionar('{{$usuario->ID}}','{{$usuario->display_name}}')">Permisos Menu</a>
-						</td>
-						@endif
-					</tr>
-					@endforeach
-				</tbody>
-			</table>
-		</div>
-	</div>
+            <th class="text-center">
+              Acción
+            </th>
+            @endif
+          </tr>
+        </thead>
+        <tbody>
+          @foreach($usuarios as $usuario)
+          <tr>
+            <td class="text-center">
+              {{ $usuario->ID }}
+            </td>
+            <td class="text-center">
+              {{ $usuario->display_name }}
+            </td>
+            <td class="text-center">
+              {{ $usuario->user_email }}
+            </td>
+            <td class="text-center">
+              {{ $usuario->patrocinador }}
+            </td>
+            <td class="text-center">
+              {{$usuario->rol}}
+            </td>
+            <td class="text-center">
+              @if ($usuario->status == 1)
+              Activo
+              @else
+              Inactivo
+              @endif
+            </td>
+            
+            <td class="text-center">
+            {{$usuario->nivel}}
+            </td>
+            
+            @if($tipo == 1)
+            <td class="text-center">
+              <a class="btn btn-info" data-toggle="modal" data-target="#moderador" onclick="seleccionar('{{$usuario->ID}}','{{$usuario->display_name}}')">Permisos Menu</a>
+            </td>
+            @endif
+          </tr>
+          @endforeach
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
 
 
@@ -111,8 +111,34 @@
         <h4>Entradas</h4>
         <input type="checkbox" name="entradas" id="entradas" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
         </div>
+        
+        <div class="col-md-3 col-xs-6">
+          <h4>Lista Usuarios</h4>
+        <input type="checkbox" name="usuario" id="usuario" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
+        </div>
 
         <div class="col-md-3 col-xs-6">
+          <h4>Usuarios</h4>
+        <input type="checkbox" name="usuarios" id="usuarios" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
+        </div>
+
+
+        <div class="col-md-3 col-xs-6">
+          <h4>Red</h4>
+        <input type="checkbox" name="red" id="red" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
+        </div>
+
+        <div class="col-md-3 col-xs-6">
+          <h4>Eventos</h4>
+        <input type="checkbox" name="eventos" id="eventos" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
+        </div>
+
+        <div class="col-md-3 col-xs-6">
+          <h4>Ajuste</h4>
+        <input type="checkbox" name="ajuste" id="ajuste" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
+        </div>
+
+        {{--<div class="col-md-3 col-xs-6">
           <h4>Registro</h4>
         <input type="checkbox" name="nuevo_registro" id="nuevo_registro" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
         </div>
@@ -167,10 +193,6 @@
         <input type="checkbox" name="soporte" id="soporte" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
         </div>
 
-        <div class="col-md-3 col-xs-6">
-          <h4>Ajuste</h4>
-        <input type="checkbox" name="ajuste" id="ajuste" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
-        </div>
 
         <div class="col-md-3 col-xs-6">
           <h4>Herramientas</h4>
@@ -187,11 +209,6 @@
         <input type="checkbox" name="prospeccion" id="prospeccion" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
         </div>
 
-        <div class="col-md-3 col-xs-6">
-          <h4>Lista Usuarios</h4>
-        <input type="checkbox" name="usuario" id="usuario" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
-        </div>
-
 
         <div class="col-md-3 col-xs-6">
           <h4>Tienda</h4>
@@ -202,24 +219,7 @@
         <div class="col-md-3 col-xs-6">
           <h4>Transacciones</h4>
         <input type="checkbox" name="transacciones" id="transacciones" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
-        </div>
-
-
-        <div class="col-md-3 col-xs-6">
-          <h4>Usuarios</h4>
-        <input type="checkbox" name="usuarios" id="usuarios" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
-        </div>
-
-
-        <div class="col-md-3 col-xs-6">
-          <h4>Red</h4>
-        <input type="checkbox" name="red" id="red" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
-        </div>
-
-        <div class="col-md-3 col-xs-6">
-          <h4>Eventos</h4>
-        <input type="checkbox" name="eventos" id="eventos" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
-        </div>
+        </div>--}}
 
                
               <button type="submit" class="btn btn-primary btn-block">Aceptar</button>
@@ -246,30 +246,30 @@ seleccionar = function(id,nombre){
       $.get('permiso/'+id, function (response) {
           permisos = JSON.parse(response)
            permisos.forEach(item => {
-           	$('#id').val(item.id);
-           	$('#cursos').bootstrapToggle((item.cursos == 1) ? 'on' : 'off');
+            $('#id').val(item.id);
+            $('#cursos').bootstrapToggle((item.cursos == 1) ? 'on' : 'off');
             $('#entradas').bootstrapToggle((item.entradas == 1) ? 'on' : 'off');
-           	$('#nuevo_registro').bootstrapToggle((item.nuevo_registro == 1) ? 'on' : 'off');
-           	$('#red_usuario').bootstrapToggle((item.red_usuario == 1) ? 'on' : 'off');
-           	$('#vision_usuario').bootstrapToggle((item.vision_usuario == 1) ? 'on' : 'off');
-           	$('#billetera').bootstrapToggle((item.billetera == 1) ? 'on' : 'off');
-           	$('#pago').bootstrapToggle((item.pago == 1) ? 'on' : 'off');
-           	$('#informes').bootstrapToggle((item.informes == 1) ? 'on' : 'off');
-           	$('#tickets').bootstrapToggle((item.tickets == 1) ? 'on' : 'off');
-           	$('#correos').bootstrapToggle((item.correos == 1) ? 'on' : 'off');
-           	$('#ranking').bootstrapToggle((item.ranking == 1) ? 'on' : 'off');
-           	$('#historial_actividades').bootstrapToggle((item.historial_actividades == 1) ? 'on' : 'off');
-           	$('#soporte').bootstrapToggle((item.soporte == 1) ? 'on' : 'off');
-           	$('#herramienta').bootstrapToggle((item.herramienta == 1) ? 'on' : 'off');
-           	$('#calendario').bootstrapToggle((item.calendario == 1) ? 'on' : 'off');
-           	$('#prospeccion').bootstrapToggle((item.prospeccion == 1) ? 'on' : 'off');
-           	$('#usuario').bootstrapToggle((item.usuario == 1) ? 'on' : 'off');
-           	$('#tienda').bootstrapToggle((item.tienda == 1) ? 'on' : 'off');
-           	$('#transacciones').bootstrapToggle((item.transacciones == 1) ? 'on' : 'off');
-           	$('#usuarios').bootstrapToggle((item.usuarios == 1) ? 'on' : 'off');
-           	$('#red').bootstrapToggle((item.red == 1) ? 'on' : 'off');
-           	$('#eventos').bootstrapToggle((item.eventos == 1) ? 'on' : 'off');
-           	$('#ajuste').bootstrapToggle((item.ajuste == 1) ? 'on' : 'off');
+            $('#nuevo_registro').bootstrapToggle((item.nuevo_registro == 1) ? 'on' : 'off');
+            $('#red_usuario').bootstrapToggle((item.red_usuario == 1) ? 'on' : 'off');
+            $('#vision_usuario').bootstrapToggle((item.vision_usuario == 1) ? 'on' : 'off');
+            $('#billetera').bootstrapToggle((item.billetera == 1) ? 'on' : 'off');
+            $('#pago').bootstrapToggle((item.pago == 1) ? 'on' : 'off');
+            $('#informes').bootstrapToggle((item.informes == 1) ? 'on' : 'off');
+            $('#tickets').bootstrapToggle((item.tickets == 1) ? 'on' : 'off');
+            $('#correos').bootstrapToggle((item.correos == 1) ? 'on' : 'off');
+            $('#ranking').bootstrapToggle((item.ranking == 1) ? 'on' : 'off');
+            $('#historial_actividades').bootstrapToggle((item.historial_actividades == 1) ? 'on' : 'off');
+            $('#soporte').bootstrapToggle((item.soporte == 1) ? 'on' : 'off');
+            $('#herramienta').bootstrapToggle((item.herramienta == 1) ? 'on' : 'off');
+            $('#calendario').bootstrapToggle((item.calendario == 1) ? 'on' : 'off');
+            $('#prospeccion').bootstrapToggle((item.prospeccion == 1) ? 'on' : 'off');
+            $('#usuario').bootstrapToggle((item.usuario == 1) ? 'on' : 'off');
+            $('#tienda').bootstrapToggle((item.tienda == 1) ? 'on' : 'off');
+            $('#transacciones').bootstrapToggle((item.transacciones == 1) ? 'on' : 'off');
+            $('#usuarios').bootstrapToggle((item.usuarios == 1) ? 'on' : 'off');
+            $('#red').bootstrapToggle((item.red == 1) ? 'on' : 'off');
+            $('#eventos').bootstrapToggle((item.eventos == 1) ? 'on' : 'off');
+            $('#ajuste').bootstrapToggle((item.ajuste == 1) ? 'on' : 'off');
            });
          })
        };  

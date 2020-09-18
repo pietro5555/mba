@@ -30,18 +30,34 @@ class CalendarioGoogleController extends Controller
 
     public function timelive(){
          
-         $evento = $this->obtenerEvento(1);
-         $fecha = (empty($evento)) ? 1 : $evento['inicio'];
-         $proxevent = $this->proxievents((empty($evento)) ? 1 : $evento['id']);
-        return view('timelive', compact('fecha','evento','proxevent'));
+         $evento = $this->obtenerEvento(0);
+         $fecha = (empty($evento)) ? 0 : $evento['inicio'];
+
+         $proxevent = $this->proxievents((empty($evento)) ? 0 : $evento['id']);
+           
+           $sig = $proxevent[0]->id;
+            //return $sig;
+            date_default_timezone_set('Europe/Madrid');
+            setlocale(LC_TIME, 'spanish');
+
+
+        return view('timelive', compact('fecha','evento','proxevent', 'sig'));
 
     }
 
     public function proximo($id){
       
+      $id = $id;
+
        $evento = $this->obtenerEvento($id);
-       $fecha = (empty($evento)) ? 1 : $evento['inicio'];
-       return view('timelive', compact('fecha','evento'));
+       
+       $fecha = (empty($evento)) ? 0 : $evento['inicio'];
+       $proxevent = $this->proxievents((empty($evento)) ? 0 : $evento['id']);
+       $sig = $proxevent[0]->id;
+
+        date_default_timezone_set('Europe/Madrid');
+            setlocale(LC_TIME, 'spanish');
+       return view('timelive', compact('fecha','evento', 'proxevent', 'sig' ));
     }
 
     public function proxievents($id){
@@ -57,14 +73,11 @@ class CalendarioGoogleController extends Controller
         $fechactual = Carbon::now();
         $fin = new Carbon('2020-09-10');
 
-        if($eventactual == 1){
-        $evento = Events::whereDate('date', '>=', $fechactual)->orderBy('date', 'ASC')->take('1')->first();
-        }else{
-        $evento = Events::whereDate('date', '>=', $fechactual)->where('id', '>', $eventactual)->orderBy('date', 'ASC')->take('1')->first();
+        
+        $evento = Events::whereDate('date', '>=', $fechactual)->where('id', '>=', $eventactual)->orderBy('date', 'ASC')->take('1')->first();
          if($evento == null){
            $evento = Events::whereDate('date', '>=', $fechactual)->where('id', '<', $eventactual)->orderBy('date', 'ASC')->take('1')->first();
          }
-        }
 
         if($evento != null){
 
@@ -134,7 +147,38 @@ class CalendarioGoogleController extends Controller
         }
     }
 
+    /*MOSTRAR CALENDARIO DE EVENTOS DEL USUARIO*/
+    public function calendar()
+    {
+         $funciones = new IndexController;
+        
+        if(Auth::user()->rol_id == 0){
+        $todos = $funciones->generarArregloAdmin(Auth::user()->ID);
+        $calendarios = $this->almacenadoAdmin($todos, Auth::user()->ID);
+        }else{
+            $todos = $funciones->generarArregloReversa(Auth::user()->ID);
+            $calendarios = $this->almacenadoNormal($todos, Auth::user()->ID);
+        }
+        
+        $pendientes = DB::table('notifications')
+                                    ->where('user_id', '=', Auth::user()->ID)
+                                    ->where('status', '=', '0')
+                                    ->get();
+                                    
+        foreach($pendientes as $pendiente){
+            $marca = Notification::find($pendiente->id);
+            $marca->status = '1';
+            $marca->save();
+        }
+        
+        $usuario = Auth::user()->ID;
+        $modal = 0;
+        $correoprospecto = 0;
+        return view('agendar/calendar',compact('calendarios','usuario','modal','correoprospecto'));
+    }
 
+
+    /*AGENDAR EVENTOS DEL USUARIO*/
     public function schedule($event_id, $user_id, Request $request){
 
         $agendar = Schedule::create([
@@ -175,11 +219,14 @@ class CalendarioGoogleController extends Controller
          $calendario->contenido = $new_calendar->description;
          $calendario->inicio = $new_calendar->date;
          $calendario->vence = $new_calendar->date_end;
-         $calendario->color = $request->color;
+         $calendario->color = '#28a745';
          $calendario->lugar = 'Ninguno';
          $calendario->iduser = Auth::user()->ID;
          $calendario->save();
-         return view('agendar.calendar',compact('calendarios','usuario','modal','correoprospecto'));
+
+        //return redirect('agendar/calendar');
+
+        return redirect()->action('CalendarioGoogleController@calendar');
     }
 
 
@@ -400,39 +447,6 @@ class CalendarioGoogleController extends Controller
         return $datos;
     }
     
-    
-    //buscamos nuevos eventos del calendario para notificarlo
-    public function notificarCalendario($usuario){
-        
-        $funciones = new IndexController;
-        $user = User::find($usuario);
-        
-        if($user->rol_id != 0){
-            $todos = $funciones->generarArregloReversa($usuario);
-            $calendarios = $this->notificacion($todos, $usuario);
-        }else{
-            $todos = $funciones->generarArregloAdmin($usuario);
-            $calendarios = $this->notificacion($todos, $usuario);
-        }
-            
-            foreach($calendarios as $calendario){
-                
-                $buscar = DB::table('notifications')->where('calendario', $calendario['ID'])->first();
-                
-                if($buscar == null){
-                $notifica = new Notification();
-     $notifica->user_id = $usuario;
-     $notifica->date = Carbon::now();
-     $notifica->route = 'admin/calendario/calendario';
-     $notifica->description = 'Nuevo anuncio del calendario';
-     $notifica->icon = 'fas fa-calendar-alt';
-     $notifica->label = 'calendario';
-     $notifica->status = '0';
-     $notifica->calendario = $calendario['ID'];
-     $notifica->save();
-                }
-            }
-    }
     
     
     

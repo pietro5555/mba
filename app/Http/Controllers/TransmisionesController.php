@@ -49,7 +49,7 @@ class TransmisionesController extends Controller
 
            $anuncio =[
             'id' => $banner->id,
-            'imagen' => 'banner_completo.png',
+            'imagen' => ($banner->image == null) ? '3.png' : $banner->image,
             'title' => $banner->title,
             'fechacompleta' => $fech,
             'fecha' => $banner->date,
@@ -68,11 +68,16 @@ class TransmisionesController extends Controller
 
         foreach($finalizados as $fin){
          $user = User::find($fin->user_id);
-         $categoria = Category::find($fin->id_categori);
+         $cursos = Course::find($fin->id_courses);
+         $categoria = Category::find($cursos->category_id);
          $fin->avatar = $user->avatar;
          $fin->nombre = $user->display_name;
          $fin->title_cate = $categoria->title;
 
+         //
+         $fin->views = $cursos->views;
+         $fin->likes = $cursos->likes;
+         $fin->shares = $cursos->shares;
         }
 
         return view('transmision.transmision',compact('proximas','total','anuncio','finalizados'));
@@ -116,7 +121,7 @@ class TransmisionesController extends Controller
     }
 
 
-
+ 
 
      public function dias($fecha){
 
@@ -132,7 +137,7 @@ class TransmisionesController extends Controller
        }elseif($fech == 'Tuesday'){
             $dia='Martes';
        }elseif($fech == 'Wednesday'){
-           $dia='Miercoles';
+           $dia='Miércoles';
        }elseif($fech == 'Thursday'){
            $dia='Jueves';
        }elseif($fech == 'Friday'){

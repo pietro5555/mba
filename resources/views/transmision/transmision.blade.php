@@ -4,7 +4,7 @@
                 
                 @if(!empty($anuncio))
                <div style="width: 100%; position: relative; display: inline-block;">
-                    <img src="{{ asset('images/'.$anuncio['imagen']) }}" alt="" style="height: 500px; width:100%; opacity: 0.5;">
+                    <img src="{{ asset('uploads/images/banner/'.$anuncio['imagen']) }}" alt="" style="height: 500px; width:100%; opacity: 0.5;">
                     <div style="position: absolute; top: 2%; left: 5%;">
                         <div style="color: white; font-size: 70px; font-weight: bold;">
                             <a style="font-weight: bold; width: 180px; font-size: 28px; color: #2A91FF;">PRÓXIMO STREAMING</a><br>
@@ -174,7 +174,7 @@
         
     </div>--}}   
 
-<div class="row">
+        <div class="row">
           @if($finalizados->isNotEmpty())
             @foreach($finalizados as $fin)
             <div class="col-md-3" style="margin-top: 20px;">
@@ -190,10 +190,10 @@
                   <h6 style="font-size: 10px; margin-left: 20px; margin-top: -10px;">{{$fin->title_cate}}</h6>
  
                   <h6 align="right" style="margin-bottom: -20px;"> 
-                    <i class="icon fa fa-eye" style="font-size: 16px; margin-right: 10px;"><p style="font-size: 10px;">1310</p></i>
+                    <i class="icon fa fa-eye" style="font-size: 16px; margin-right: 10px;"><p style="font-size: 10px;">{{$fin->views}}</p></i>
                     <i class="far fa-comment-alt" style="font-size: 16px; margin-right: 10px;"><p style="font-size: 10px;">346</p></i>
-                    <i class="fas fa-share-alt" style="font-size: 16px; margin-right: 10px;"><p style="font-size: 10px;">862</p></i>
-                    <i class="far fa-thumbs-up" style="font-size: 16px;"><p style="font-size: 10px;">1243</p></i>
+                    <i class="fas fa-share-alt" style="font-size: 16px; margin-right: 10px;"><p style="font-size: 10px;">{{$fin->shares}}</p></i>
+                    <i class="far fa-thumbs-up" style="font-size: 16px;"><p style="font-size: 10px;">{{$fin->likes}}</p></i>
                   </h6>
                 </div>
             </div>

@@ -6,6 +6,8 @@ use App\Models\User;
 use App\Models\Events; 
 use App\Models\Schedule; 
 use App\Models\Calendario; 
+use App\Models\Subcategory;
+use App\Models\Course;
 use Auth; 
 use DB; 
 use Carbon\Carbon;
@@ -31,38 +33,32 @@ class CalendarioGoogleController extends Controller
     public function timelive(){
          
          $evento = $this->obtenerEvento(0);
-         $fecha = (empty($evento)) ? 0 : $evento['inicio'];
 
+         $fecha = (empty($evento)) ? 0 : $evento['inicio'];
          $proxevent = $this->proxievents((empty($evento)) ? 0 : $evento['id']);
-           
-           $sig = $proxevent[0]->id;
             //return $sig;
             date_default_timezone_set('Europe/Madrid');
             setlocale(LC_TIME, 'spanish');
 
 
-        return view('timelive', compact('fecha','evento','proxevent', 'sig'));
+        return view('timelive/timelive', compact('fecha','evento','proxevent'));
 
     }
 
     public function proximo($id){
-      
-      $id = $id;
-
        $evento = $this->obtenerEvento($id);
        
        $fecha = (empty($evento)) ? 0 : $evento['inicio'];
        $proxevent = $this->proxievents((empty($evento)) ? 0 : $evento['id']);
-       $sig = $proxevent[0]->id;
-
         date_default_timezone_set('Europe/Madrid');
             setlocale(LC_TIME, 'spanish');
-       return view('timelive', compact('fecha','evento', 'proxevent', 'sig' ));
+       return view('timelive/timelive', compact('fecha','evento', 'proxevent'));
     }
 
     public function proxievents($id){
       
       $fechactual = Carbon::now();
+      //VERIFICAR CONSULTA
       $proximos = Events::where('id', '!=', $id)->whereDate('date', '>=', $fechactual)->take('6')->get();
 
       return $proximos;
@@ -73,7 +69,7 @@ class CalendarioGoogleController extends Controller
         $fechactual = Carbon::now();
         $fin = new Carbon('2020-09-10');
 
-        
+        //VERIFICAR CONSULTA
         $evento = Events::whereDate('date', '>=', $fechactual)->where('id', '>=', $eventactual)->orderBy('date', 'ASC')->take('1')->first();
          if($evento == null){
            $evento = Events::whereDate('date', '>=', $fechactual)->where('id', '<', $eventactual)->orderBy('date', 'ASC')->take('1')->first();
@@ -82,6 +78,10 @@ class CalendarioGoogleController extends Controller
         if($evento != null){
 
         $user = DB::table('wp98_users')->where('ID', $evento->user_id)->first();
+        $category_id = $evento->id_categori; 
+        $courses = Course::where('category_id', '=', $category_id)
+        ->first();
+        $subcategory= Subcategory::where('id', '=', $courses->subcategory_id)->first();
 
         $datos =[
             'id' => $evento->id,
@@ -96,6 +96,8 @@ class CalendarioGoogleController extends Controller
             'profession' => $user->profession,
             'about' => $user->about,
             'avatar' => $user->avatar,
+            'subcategory' => $subcategory->title,
+
         ];
        }
 
@@ -147,6 +149,30 @@ class CalendarioGoogleController extends Controller
         }
     }
 
+
+    /*EVENTO FAVORITO*/
+    public function event_favorite($event_id){
+
+        $user_id = Auth::user()->ID;
+
+        $favorite = DB::table('events_users')
+        ->where('event_id', '=',$event_id)
+        ->where('user_id', '=', $user_id)
+        ->update(['favorite' => 1]);
+        date_default_timezone_set('Europe/Madrid');
+            setlocale(LC_TIME, 'spanish');
+        //Eventos favoritos de un usuario
+        $eventos_favoritos = DB::table('events')
+        ->join('events_users', 'events_users.event_id', '=', 'events.id')
+        ->where('events_users.user_id', '=',$user_id )
+        ->where('events_users.favorite', '=',1 )
+        ->get();
+        return view('timelive.favorite', compact('eventos_favoritos'));
+
+    }
+
+    /*LISTADO DE EVENTOS AGENDADOS POR EL USUARIO*/
+
     /*MOSTRAR CALENDARIO DE EVENTOS DEL USUARIO*/
     public function calendar()
     {
@@ -174,19 +200,44 @@ class CalendarioGoogleController extends Controller
         $usuario = Auth::user()->ID;
         $modal = 0;
         $correoprospecto = 0;
-        return view('agendar/calendar',compact('calendarios','usuario','modal','correoprospecto'));
+        date_default_timezone_set('Europe/Madrid');
+            setlocale(LC_TIME, 'spanish');
+
+        //TODOS LOS EVENTOS AGENDADOS POR ESE USUARIO
+        $eventos_agendados = DB::table('events')
+        ->join('events_users', 'events_users.event_id', '=', 'events.id')
+        ->where('events_users.user_id', '=', $usuario)
+        ->get();
+
+        return view('agendar/calendar',compact('calendarios','usuario','modal','correoprospecto', 'eventos_agendados'));
     }
 
 
     /*AGENDAR EVENTOS DEL USUARIO*/
-    public function schedule($event_id, $user_id, Request $request){
+public function schedule($event_id, $user_id, Request $request){
+ $check = DB::table('events_users')
+                    ->where('user_id', '=', Auth::user()->ID)
+                    ->where('event_id', '=', $event_id)
+                    ->first();
 
-        $agendar = Schedule::create([
-        'user_id' => $user_id,
-        'event_id' => $event_id,
-        ]);
+        if (is_null($check)){
+            $events = DB::table('events')
+                            ->select('date')
+                            ->where('id', '=', $event_id)
+                            ->first();
 
-        $new_calendar = Events::where('id', '=', $event_id)
+            $date_event = date('Y-m-d', strtotime($events->date));
+            $time_event = date('H:i:s', strtotime($events->date));
+
+            $disponibilidad = DB::table('events_users')
+                                ->where('user_id', '=', Auth::user()->ID)
+                                ->where('date', '=', $date_event)
+                                ->where('time', '=', $time_event)
+                                ->first();
+
+            if (is_null($disponibilidad)){
+                Auth::user()->events()->attach($event_id, ['date' => $date_event, 'time' => $time_event]);
+                $new_calendar = Events::where('id', '=', $event_id)
         ->first();
         
         $funciones = new IndexController;
@@ -227,6 +278,18 @@ class CalendarioGoogleController extends Controller
         //return redirect('agendar/calendar');
 
         return redirect()->action('CalendarioGoogleController@calendar');
+
+
+        }else{
+                return redirect()->back()->with('msj-erroneo', 'No se puede agendar este evento porque ya posee en su agenda otro evento en la misma fecha y hora.');
+            }
+        }else{
+            return redirect()->back()->with('msj-erroneo', 'Este evento se encuentra registrado en su agenda.');
+    
+        }
+
+
+        
     }
 
 

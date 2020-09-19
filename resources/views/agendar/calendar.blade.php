@@ -88,14 +88,46 @@
 </script>
 @endpush
 @section('content')
+<div>
+@if(!empty($agendado))
+  <div class="alert alert-success"> {{ $agendado }}</div>
+@endif
+</div>
+<div>
+  <h3 class="text-primary text-center mt-5 mb-5">EVENTOS AGENDADOS</h3>
+  
+</div>
+
+<div class="container-fluid">
+<div class="row">
+        @foreach ($eventos_agendados as $agendado)
+            <div class="col-md-3" style="margin-top: 20px;">
+                @if (!is_null($agendado->image))
+                <img src="{{ asset('uploads/images/banner/'.$agendado->image) }}" class="card-img-top" alt="..." style="height: 200px;"> 
+                @else
+                    <img src="{{ asset('uploads/images/banner/default.png') }}" class="card-img-top" alt="..." height="200px">
+                @endif
+                <div class="card-body" style="background-color: #2f343a; height: 150px">
+                    <h6 class="card-title text-white" style="margin-top: -15px;"> <i class="far fa-play-circle" style="font-size: 16px; color: #6fd843;"></i> {{ $agendado->title }}</h6>
+                    <h6 class="text-secondary">   {{strftime("%d de %B",strtotime($agendado->date) )}}</h6>
+                    @if ($agendado->favorite ==1)
+                    <h6 class="text-right"><img src="{{ asset('images/icons/heart.svg') }}" alt="" height="20px" width="20px"></h6>
+                    @else
+                    <a href="{{route('event.favorite', $agendado->event_id)}}" class="float-right"><i class="far fa-heart text-secondary" height="20px" width="20px"></i></a>
+                    @endif
+                </div>
+            </div>
+        @endforeach
+</div>
+</div>
 
 <div>
-  <h4 class="text-primary text-center mt-5 mb-5">CALENDARIO DE EVENTOS</h4>
+  <h3 class="text-primary text-center mt-5 mb-5">CALENDARIO DE EVENTOS</h3>
   
 </div>
 <div class="container-fluid m-2">
   <div class="row justify-content-center">
-    <div class="col-md-10">
+    <div class="col-md-12">
     <div class="box box-info">
         <div class="box-body"> 
             <div id="calendario"></div>

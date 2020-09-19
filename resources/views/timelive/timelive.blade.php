@@ -84,6 +84,29 @@ countdown('{{$fecha}}', 'clock');
 @endpush
 
 @if(!empty($evento))
+<div>
+  
+@if (Session::has('msj-exitoso'))
+        <div class="alert alert-success alert-dismissible fade show mt-2" role="alert">
+            <strong>{{ Session::get('msj-exitoso') }}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+
+    @if (Session::has('msj-erroneo'))
+        <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert">
+            <strong>{{ Session::get('msj-erroneo') }}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <div>
+              <a href="{{route ('schedule.calendar')}}" class="btn btn-success"> VER AGENDA</a>
+            </div>
+        </div>
+    @endif
+</div>
 <div class="row">
     <div class="col-md-12">
 
@@ -119,25 +142,6 @@ countdown('{{$fecha}}', 'clock');
    <div style="margin-top: 60px;">
    
 <div class="row">
-
-@if (Session::has('msj-exitoso'))
-        <div class="alert alert-success alert-dismissible fade show mt-2" role="alert">
-            <strong>{{ Session::get('msj-exitoso') }}</strong>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif
-
-    @if (Session::has('msj-erroneo'))
-        <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert">
-            <strong>{{ Session::get('msj-erroneo') }}</strong>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif
-
    <div class="col-md-6" style="margin-bottom: 10px;">
        <a href="{{route ('schedule.event',[$evento['id'], $evento['user_id']]) }}" class="btn btn-primary btn-block">AGENDAR LIVE</a>
        <!--<button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#AgendarLiveModal">
@@ -152,17 +156,15 @@ countdown('{{$fecha}}', 'clock');
    </div>
 
    <div class="col-md-6" style="margin-bottom: 10px;">
-     <a href="{{route('time-prox', $evento['id'])}}" class="btn btn-secondary btn-block">PROXIMO LIVE <i class="fas fa-angle-right"></i></a>
+     <a href="{{route('time-prox', $evento['id']+1)}}" class="btn btn-secondary btn-block">PROXIMO LIVE <i class="fas fa-angle-right"></i></a>
 
        <!--<a href="" class="btn btn-secondary btn-block">PROXIMO LIVE <i class="fas fa-angle-right"></i></a>-->
    </div>
 
+   
    <div class="col-md-6" style="margin-bottom: 10px;">
-      @if ($evento['favorito'] ==1)
-       <a href="#" class="btn btn-secondary btn-block"><img src="{{ asset('images/icons/heart.svg') }}" alt="" height="30px" width="30px">FAVORITOS</a>
-      @else
+    
         <a href="{{route('event.favorite', $evento['id'])}}" class="btn btn-secondary btn-block"><i class="far fa-heart"></i> FAVORITOS</a>
-      @endif
    </div>
 </div>
 

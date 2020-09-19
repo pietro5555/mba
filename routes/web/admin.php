@@ -168,6 +168,15 @@ Route::get('calendar', 'CalendarioGoogleController@calendar')->name('schedule.ca
 Route::get('/anotaciones', 'NoteController@index')->name('anotaciones');
 Route::post('/anotaciones/store', 'NoteController@store')->name('live.anotaciones');
 
+//vista de timelive
+    Route::group(['prefix' => 'time'], function(){
+    Route::get('/timelive', 'CalendarioGoogleController@timelive')->name('timelive');
+    Route::get('/oauth/{id}', 'CalendarioGoogleController@oauth')->name('oauthCallback');
+    Route::get('/redirigircalendario', 'CalendarioGoogleController@index')->name('cal.index');
+    Route::get('/proximo/{id}', 'CalendarioGoogleController@proximo')->name('time-prox');
+    Route::get('/favorite/{id}', 'CalendarioGoogleController@event_favorite')->name('event.favorite');
+     });
+
 // Events landing
 Route::get('/event/{event_id}', 'EventsController@show_event')->name('show.event');
 
@@ -914,13 +923,7 @@ Route::group(['prefix' => 'link','middleware' => ['menu']], function(){
         
     });
     
-    //vista de timelive
-    Route::group(['prefix' => 'time'], function(){
-    Route::get('/timelive', 'CalendarioGoogleController@timelive')->name('timelive');
-    Route::get('/oauth/{id}', 'CalendarioGoogleController@oauth')->name('oauthCallback');
-    Route::get('/redirigircalendario', 'CalendarioGoogleController@index')->name('cal.index');
-    Route::get('/proximo/{id}', 'CalendarioGoogleController@proximo')->name('time-prox');
-     });
+
   
 
 //Cursos

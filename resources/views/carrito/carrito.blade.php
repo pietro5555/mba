@@ -420,7 +420,7 @@ function provinciabuscar(){
     $('#localidad').empty()
     var pro = $('#provincia').val()
     
-    $.get('{{$enlace}}/mioficina/link/envio/'+pro, function (response) {
+    $.get('{{$enlace}}/link/envio/'+pro, function (response) {
       rangos = JSON.parse(response)
       
       $('#localidad').append($('<option>',
@@ -444,7 +444,7 @@ function almacenardatos(){
     var prov = $('#provincia').val()
     var local = $('#localidad').val()
     
-    $.get('{{$enlace}}/mioficina/link/almacenar/'+prov+'/'+local, function (response) {
+    $.get('{{$enlace}}/link/almacenar/'+prov+'/'+local, function (response) {
         
         location.reload();
     })

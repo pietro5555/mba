@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-09-2020 a las 04:16:12
+-- Tiempo de generación: 18-09-2020 a las 04:55:13
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.4.4
 
@@ -31,9 +31,9 @@ CREATE TABLE `courses_users` (
   `id` int(11) NOT NULL,
   `course_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `progress` int(11) NOT NULL,
+  `progress` int(11) NOT NULL DEFAULT 0,
   `start_date` date NOT NULL,
-  `finish_date` date NOT NULL,
+  `finish_date` date DEFAULT NULL,
   `certificate` tinyint(1) NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL

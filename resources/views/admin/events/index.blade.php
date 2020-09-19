@@ -124,17 +124,18 @@
 
 						        <div class="col-md-12">
 						        <div class="form-group">
-                                   <label class="control-label text-center">Categoria
+                                   <label class="control-label text-center">Cursos
                              		</label>
-                                   <select name="categoria" class="form-control" required>
-                                   	<option value="" selected disabled>Seleccion una Categoria</option>
-                                     @foreach($categorias as $categori)
-                                      <option value="{{$categori->id}}">{{$categori->title}}</option>
+                                   <select name="cursos" class="form-control" required>
+                                   	<option value="" selected disabled>Seleccione un Curso</option>
+                                     @foreach($cursos as $curs)
+                                      <option value="{{$curs->id}}">{{$curs->title}}</option>
                                      @endforeach
                                    </select>       
                                 </div>
 						        </div>
-						        
+
+
 						        <div class="col-md-12">
 						        <div class="form-group">
                                    <label class="control-label text-center">Banner

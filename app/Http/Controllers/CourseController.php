@@ -183,6 +183,48 @@ class CourseController extends Controller{
         return view('cursos.show_one_course')->with(compact('curso'));
     }
 
+     /**
+    * Landing / Cursos / Cursos Recomendados
+    */
+    public function recommended(){
+        $cursosArray = [];
+
+        $cursosMasComprados = DB::table('courses_users')
+                                ->select(DB::raw('count(course_id) as purchases_count, course_id'))
+                                ->groupBy('course_id')
+                                ->orderBy('purchases_count', 'DESC')
+                                ->get();
+
+        $cursosRecomendados = collect();
+        foreach ($cursosMasComprados as $cursoComprado){
+            array_push($cursosArray, $cursoComprado->course_id);
+
+            $curso = Course::where('id', '=', $cursoComprado->course_id)->first();
+
+            $cursosRecomendados->push($curso);
+        }
+
+        $cursosMasVistos = Course::where('views', '>', 0)
+                                ->whereNotIn('id', $cursosArray)
+                                ->orderBy('views', 'DESC')
+                                ->get(); 
+
+        foreach ($cursosMasVistos as $cursoVisto){
+            $cursosRecomendados->push($cursoVisto);
+        }
+
+        dd($cursosRecomendados);
+    }
+
+    /**
+    * Cliente / Cursos / Mis Cursos
+    */
+    public function my_courses(){
+        $cursos = Auth::user()->courses_buyed;
+
+        dd($cursos);
+    }
+
     /**
     * Admin / Cursos / Listado de Cursos / Nuevo Curso
     */

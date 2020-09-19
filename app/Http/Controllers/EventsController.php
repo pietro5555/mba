@@ -11,6 +11,7 @@ use App\Models\Events;
 use App\Models\Note;
 use App\Models\EventResources;
 use App\Models\Category;
+
 use Auth;
 
 
@@ -19,20 +20,21 @@ class EventsController extends Controller
 {
 
     function __construct()
-	{
+    {
         // TITLE
-		view()->share('title', 'Eventos');
-		
-	}
+        view()->share('title', 'Eventos');
+        
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {   
+        $cursos = Course::all();
         $events = Events::orderBy('id', 'DESC')->get();
-        $categorias = Category::all();
+
         $mentores = DB::table('wp98_users')
                         ->select('ID', 'user_email')
                         ->where('rol_id', '=', 2)
@@ -46,7 +48,7 @@ class EventsController extends Controller
                     ->get();
 
 
-        return view('admin.events.index')->with(compact('events', 'mentores','categorias'));
+        return view('admin.events.index')->with(compact('events', 'mentores','cursos'));
     }
 
     /**
@@ -76,7 +78,7 @@ class EventsController extends Controller
             'user_id' => $request->input('mentor_id'),
             'date' => $request->input('date'),
             'date_end' => $request->input('date_end'),
-            'id_categori' => $request->categoria,
+            'id_courses' => $request->cursos,
         ]);
         $data->save();
 
@@ -119,7 +121,7 @@ class EventsController extends Controller
 
         // return response()->json([$menuResource], 201);
 
-		return view('live.live', compact ('event','notes', 'menuResource'));
+        return view('live.live', compact ('event','notes', 'menuResource'));
     }
 
     
@@ -132,14 +134,14 @@ class EventsController extends Controller
      */
     public function edit($id)
     {
-        $categorias = Category::all();
         $event = Events::find($id);
+        $cursos = Course::all();
         $mentores = DB::table('wp98_users')
                         ->select('ID', 'user_email')
                         ->where('rol_id', '=', 2)
                         ->orderBy('user_email', 'ASC')
                         ->get();
-        return view('admin.events.editEvent')->with(compact('event', 'mentores', 'categorias'));
+        return view('admin.events.editEvent')->with(compact('event', 'mentores', 'cursos'));
         
     }
 
@@ -156,6 +158,7 @@ class EventsController extends Controller
          
         $event = Events::find($request->input('event_id'));
         $event->fill($request->all());
+        $event->id_courses = $request->cursos;
         $event->save();
 
          if ($request->hasFile('image')){

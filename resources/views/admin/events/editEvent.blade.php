@@ -27,11 +27,11 @@
 
     <div class="col-md-12">
 		<div class="form-group">
-           <label class="control-label text-center">Categoria</label>
-                <select name="categoria" class="form-control" required>
-                    <option value="" selected disabled>Seleccion una Categoria</option>
-                      @foreach($categorias as $categori)
-                        <option value="{{$categori->id}}" @if ($event->id_categori == $categori->id) selected @endif>{{$categori->title}}</option>
+           <label class="control-label text-center">Cursos</label>
+                <select name="cursos" class="form-control" required>
+                    <option value="" selected disabled>Seleccione un Curso</option>
+                      @foreach($cursos as $curs)
+                        <option value="{{$curs->id}}" @if ($event->id_courses == $curs->id) selected @endif>{{$curs->title}}</option>
                       @endforeach
                 </select>       
         </div>

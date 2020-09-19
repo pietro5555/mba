@@ -276,6 +276,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu', 
 
       Route::group(['prefix' => 'lessons'], function(){
         Route::get('/{id}', 'LessonController@index')->name('admin.courses.lessons');
+        Route::get('show/{id}', 'LessonController@show')->name('admin.courses.lessons.show');
+        Route::get('load-video-duration/{id}/{duration?}', 'LessonController@load_video_duration')->name('admin.courses.lessons.load-video-duration');
         Route::post('store', 'LessonController@store')->name('admin.courses.lessons.store');
         Route::get('edit/{id}', 'LessonController@edit')->name('admin.courses.lessons.edit');
         Route::post('update', 'LessonController@update')->name('admin.courses.lessons.update');

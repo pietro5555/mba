@@ -76,14 +76,14 @@
                         <h6 class="text-white"> <img src="{{ asset('images/icons/icon-book-video.svg') }}" height="30px" width="30px"> {{ $curso->lessons_count }} Lecciones</h6>
                      </div>
                      <div class="col-md-4">
-                        <h6 class="text-white"> <img src="{{ asset('images/icons/clock.svg') }}" height="30px" width="30px">  2h 17m</h6>
+                        <h6 class="text-white"> <img src="{{ asset('images/icons/clock.svg') }}" height="30px" width="30px"> {{$curso->hours}}h {{$curso->minutes}}m {{$curso->seconds}}s</h6>
                      </div>
                   </div>
                </div>
             </div>
             <div class="row">
                <div class="col-md-12 mt-2">
-                  <h6 class="text-white"><img src="{{ asset('images/icons/calendar.svg') }}" height="30px" width="30px">  Fecha de salida: 12 de Marzo 2020</h6>
+                  <h6 class="text-white"><img src="{{ asset('images/icons/calendar.svg') }}" height="30px" width="30px">  Fecha de salida: {{ date('d-m-Y', strtotime($curso->created_at)) }}</h6>
                </div>
             </div>
          </div>

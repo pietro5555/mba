@@ -59,9 +59,6 @@ Dev: Crisleivys
 
 ÚLTIMA ACTUALIZACIÓN DEL SERVIDOR: 16/09/2020
 ----------------------------------------------
-17/09/2020
-Dev: Prieto 
-* Nuevo campo agregado id_categori (correr el script events)
 
 17/09/2020
 Dev: Luisana Marín
@@ -72,3 +69,7 @@ Dev: Luisana Marín
 *Nueva tabla courses_users (Correr script courses_users.sql)
 *Nuevo campo membership_id (INT NULL) a la tabla wp98_users (Correr script wp98_users.sql)
 *Nuevo campo price (DOUBLE PREDEFINIDO 0) a la tabla courses (Correr script courses.sql)
+
+18/09/2020
+Dev: Prieto 
+* Nuevo campo agregado id_courses (correr el script events)

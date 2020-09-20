@@ -29,9 +29,10 @@
       <div class="row">
          <div class="col-md-12">
             <div class="row">
-               <div class="col-md-8">
+               <div class="col-md-12">
                   <h3 class="text-white">{{ $curso->title }}</h3>
                </div>
+
             </div>
             <div class="row">
                <div class="col-md-9">
@@ -60,9 +61,9 @@
                   @else
                      <i class="fa fa-star-o text-secondary"></i>
                   @endif
-                 
+
                </div>
-                <div class="col-md-3">
+               <div class="col-md-3">
                   <div class="row">
                      <h4 class="text-white mr-2">COSTO</h4>
                      <h1 class="text-success">47 USD</h1>
@@ -187,13 +188,11 @@
    {{-- FIN SECCIÓN LECCIONES--}}
 
    {{-- SECCIÓN VALORACIONES--}}
-   @if ($curso->ratings_count > 0)
       <div class="container-fluid p-2 pt-5">
          <div class="row">
             <div class="col-md-10">
                <h3 class="text-white ml-5">VALORACIONES</h3>
                <hr style="border: 1px solid #707070;opacity: 1;" />
-               @foreach ($curso->ratings as $valoracion)
                   <div class="row m-4 pt-4 border-bottom">  
                      <div class="col-md-2">
                         <div class="circle"><h2 class="text-white"> JD</h2></div>
@@ -203,7 +202,7 @@
                            <div class="col-md-12 mt-2">
                               <div class="row">
                                  <div class="col-md-4">
-                                    <h5 class="text-white font-weight-bold">{{ $valoracion->user->display_name }}</h5>
+                                    <h5 class="text-white font-weight-bold"></h5>
                                  </div>
                               </div>
                            </div>

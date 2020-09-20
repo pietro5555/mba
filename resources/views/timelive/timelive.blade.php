@@ -201,46 +201,100 @@ countdown('{{$fecha}}', 'clock');
                             <div class="section-title-landing" style="padding-bottom: 35px;">PRÓXIMAS TRANSMISIONES EN VIVO</div>
                         </div>
 
-                        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-                      <div class="carousel-inner">
+               <!--Carrusel-->
+               @if($total > 0)
 
+
+                        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+
+                     <div class="carousel-inner">
+                      
                        <div class="carousel-item active">
                          <div class="row">
-                           @foreach ($proxevent as $prox)
-                           <div class="col-md-4" style="margin-top: 20px;">
-                             <img src="{{ asset('uploads/images/banner/'.$prox->image) }}" class="card-img-top img-prox-events" alt="..." style="height: 320px;">
-                             <div class="card-img-overlay" style="margin-left: 10px; margin-right: 10px;">
-                              <h5 class="card-title font-weight-bold" style="margin-top: 170px; color: #2A91FF;">{{$prox->title}} </h5>
-                              <p class="card-text font-weight-bold mr-2" style="margin-top: -10px; font-size: 12px;"> <i class="far fa-calendar mr-2" style="font-size: 18px;"> </i>
+                          
+                      @php
+                      $contador =0;
+                      @endphp
+                      @foreach($proximas as $proxima)
+                      @php
+                      $contador++;
+                      @endphp
 
-                                {{strftime("%d de %B",strtotime($prox->date) )}}
-                                
-                                <!--{{strftime("%A, %d de %B", strtotime($prox->date))}}-->
-                               <i class="far fa-clock ml-2" style="font-size: 18px;"></i> {{  date ("H:i", strtotime($prox->date))}}
+                      @if($contador <= 3)
+
+                           <div class="col-md-4" style="margin-top: 20px;">
+                             <img src="{{ asset('uploads/avatar/'.$proxima->avatar) }}" class="card-img-top img-prox-events" alt="..." style="height: 320px;">
+                             <div class="card-img-overlay" style="margin-left: 10px; margin-right: 10px;">
+                              <h5 class="card-title font-weight-bold" style="margin-top: 170px; color: #2A91FF;">{{$proxima->title}} </h5>
+                              <p class="card-text font-weight-bold mr-2" style="margin-top: -10px; font-size: 12px;"> <i class="far fa-calendar mr-2" style="font-size: 18px;"> </i>
+                                {{$proxima->fecha}}
+                               <i class="far fa-clock ml-2" style="font-size: 18px;"></i>{{\Carbon\Carbon::parse($proxima->date)->format('g:i a')}} 
                                </p>
-                              <a href="{{route ('schedule.event',[$prox->id, auth()->user()->ID]) }}" class="btn btn-success btn-block">Agendar</a>
+                              <a href="{{route ('schedule.event',[$proxima->id, auth()->user()->ID]) }}" class="btn btn-success btn-block">Agendar</a>
                               </div>
                              </div>
-                              @endforeach
 
+                            @endif
+                            @endforeach
                       </div>
                    </div>
                    
-                </div>    
+                   
+                   
+                   @if($total >= 4)
+                   <div class="carousel-item">
+                         <div class="row">
 
+                      @php
+                      $segundo =0;
+                      @endphp
+                      @foreach($proximas as $proxima)
+                      @php
+                      $segundo++;
+                      @endphp
 
+                      @if($segundo >= 4)
+
+                           <div class="col-md-4" style="margin-top: 20px;">
+                             <img src="{{ asset('uploads/avatar/'.$proxima->avatar) }}" class="card-img-top img-prox-events" alt="..." style="height: 320px;">
+                             <div class="card-img-overlay" style="margin-left: 10px; margin-right: 10px;">
+                              <h5 class="card-title font-weight-bold" style="margin-top: 170px; color: #2A91FF;">{{$proxima->title}} </h5>
+                              <p class="card-text font-weight-bold mr-2" style="margin-top: -10px; font-size: 12px;"> <i class="far fa-calendar mr-2" style="font-size: 18px;"> </i>
+                                {{$proxima->fecha}}
+                               <i class="far fa-clock ml-2" style="font-size: 18px;"></i>{{\Carbon\Carbon::parse($proxima->date)->format('g:i a')}} 
+                               </p>
+                              <a href="{{route ('schedule.event',[$proxima->id, auth()->user()->ID]) }}" class="btn btn-success btn-block">Agendar</a>
+                              </div>
+                             </div>
+                        @endif
+                       @endforeach
+                      </div>
+                   </div>
+                   @endif
+                </div>
+                 
+                 @if($total >= 3)
                   <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-
-                  <img src="{{ asset('images/icons/left-arrow.svg') }}" alt="" height="30px" width="30px" aria-hidden="true"> 
-                  <!--<span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
+                   <img src="{{ asset('images/icons/left-arrow.svg') }}" alt="" height="30px" width="30px" aria-hidden="true"> 
                   <span class="sr-only">Previous</span>
                   </a>
+
                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                   <!--<span class="carousel-control-next-icon" aria-hidden="true"></span>-->
-                   <img src="{{ asset('images/icons/right-arrow.svg') }}" alt="" height="30px" width="30px" aria-hidden="true"> 
+                    <img src="{{ asset('images/icons/right-arrow.svg') }}" alt="" height="30px" width="30px" aria-hidden="true"> 
                    <span class="sr-only">Next</span>
                    </a>
+                   @endif
+
                </div>
+               
+               @else
+               <div class="row">
+                  No se encontraron próximas transmisiones...
+                </div>
+
+               @endif
+
+               <!--Carrusel-->
             </div>  
         
         @else

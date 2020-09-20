@@ -467,8 +467,8 @@ font-size: 16px;
     padding-bottom: 30px;
 }
 .course-banner-img{
-    background: transparent linear-gradient(178deg, #00000000 0%, #000000 100%) 0% 0% no-repeat padding-box;
-    opacity: 0.74;
+background: transparent linear-gradient(178deg, #00000000 0%, #000000 100%) 0% 0% no-repeat padding-box;
+opacity: 0.74;
 }
 
 .course-banner-caption{
@@ -491,7 +491,11 @@ bottom: 1em;
 
 }
 
-
+.img-opacity{
+height: 328px;
+    background: transparent linear-gradient(360deg, #1C1D21 0%, #1C1D21 29%, #00000046 100%) 0% 0% no-repeat padding-box;
+    opacity: 0.7;
+}
 .description-course{
     color: #DEDADA;
     opacity: 1;
@@ -499,7 +503,7 @@ bottom: 1em;
 
 .play-course-button{
     border: 1px;
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
 .section-title-courses{

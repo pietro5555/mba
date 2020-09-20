@@ -131,8 +131,35 @@ class CourseController extends Controller{
                 ->select(array ('wp98_users.display_name as nombre', 'wp98_users.avatar as avatar', 'categories.title as categoria', 'courses.mentor_id as mentor_id'))
                 ->get();
 
+        $cursos = Auth::user()->courses_buyed->take(4);
+        $cursosArray = [];
+
+        $cursosMasComprados = DB::table('courses_users')
+                                ->select(DB::raw('count(course_id) as purchases_count, course_id'))
+                                ->groupBy('course_id')
+                                ->orderBy('purchases_count', 'DESC')
+                                ->get();
+
+        $cursosRecomendados = collect();
         
-            return view('cursos.cursos')->with(compact('username','cursosDestacados', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next', 'courses', 'mentores'));
+        foreach ($cursosMasComprados as $cursoComprado){
+            array_push($cursosArray, $cursoComprado->course_id);
+
+            $curso = Course::where('id', '=', $cursoComprado->course_id)->first();
+
+            $cursosRecomendados->push($curso);
+        }
+
+        $cursosMasVistos = Course::where('views', '>', 0)
+                                ->whereNotIn('id', $cursosArray)
+                                ->orderBy('views', 'DESC')
+                                ->get(); 
+
+        foreach ($cursosMasVistos as $cursoVisto){
+            $cursosRecomendados->push($cursoVisto);
+        }
+        $total = count($cursosRecomendados);
+            return view('cursos.cursos')->with(compact('username','cursosDestacados', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next', 'courses', 'mentores', 'cursos', 'cursosRecomendados', 'total'));
     }
 
     public function record(){
@@ -220,9 +247,10 @@ class CourseController extends Controller{
     * Cliente / Cursos / Mis Cursos
     */
     public function my_courses(){
-        $cursos = Auth::user()->courses_buyed;
+        $cursos = Auth::user()->courses_buyed->take(12);
 
-        dd($cursos);
+        return view('cursos.all_courses', compact('cursos'));
+
     }
 
     /**

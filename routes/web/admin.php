@@ -167,6 +167,8 @@ Route::group(['prefix' => 'courses', 'middleware' => ['auth']], function(){
   Route::get('recommended', 'CourseController@recommended')->name('courses.recommended');
 });
 
+
+
 /*** RUTAS PARA LOS CLIENTES ***/
 Route::group(['prefix' => 'client'], function(){
    Route::group(['prefix' => 'courses'], function(){
@@ -945,10 +947,6 @@ Route::group(['prefix' => 'link','middleware' => ['menu']], function(){
         
     });
     
-
-  
-});
-
 
 
 

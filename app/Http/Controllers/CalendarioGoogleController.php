@@ -40,19 +40,176 @@ class CalendarioGoogleController extends Controller
             date_default_timezone_set('Europe/Madrid');
             setlocale(LC_TIME, 'spanish');
 
+            $finalizados = Events::where('status', '3')->orderBy('id', 'DESC')->take(9)->get();
+         $banner = Events::where('status', '1')->where('image','!=',null)->take(1)->first();
+        if($banner == null){
+         $banner = Events::where('status', '1')->where('image', null)->take(1)->first();
+        }
+        $proximas = Events::where('status', '1')->where('id', '!=', ($banner == null) ? 0 : $banner->id)->take(6)->get();
+        $total = count($proximas);
 
-        return view('timelive/timelive', compact('fecha','evento','proxevent'));
+         if($banner != null){
+
+           $dia = $this->dias($banner->date);
+           $mes = $this->meses($banner->date);
+           $fech = $dia.' '.date('d', strtotime($banner->dia)).' '.$mes;
+
+           $anuncio =[
+            'id' => $banner->id,
+            'imagen' => ($banner->image == null) ? '3.png' : $banner->image,
+            'title' => $banner->title,
+            'fechacompleta' => $fech,
+            'fecha' => $banner->date,
+
+           ];
+         }
+
+        foreach($proximas as $proxima){
+          $user = User::find($proxima->user_id);
+          $proxima->avatar = $user->avatar;
+          $dia = $this->dias($proxima->date);
+          $mes = $this->meses($proxima->date);
+          $proxima->fecha = $dia.' '.date('d', strtotime($proxima->date)).' '.$mes;
+
+        }
+
+        foreach($finalizados as $fin){
+         $user = User::find($fin->user_id);
+         $cursos = Course::find($fin->id_courses);
+         $categoria = Category::find($cursos->category_id);
+         $fin->avatar = $user->avatar;
+         $fin->nombre = $user->display_name;
+         $fin->title_cate = $categoria->title;
+
+         //
+         $fin->views = $cursos->views;
+         $fin->likes = $cursos->likes;
+         $fin->shares = $cursos->shares;
+        }
+
+
+        return view('timelive/timelive', compact('fecha','evento','proxevent','proximas','total','anuncio','finalizados'));
 
     }
+
+
+     public function dias($fecha){
+
+       $dia ='';
+       $fech = Carbon::parse($fecha)->format('l');
+       
+       if($fech == 'Saturday'){
+         $dia='Sábado';
+       }elseif($fech == 'Sunday'){
+           $dia='Domingo';
+       }elseif($fech == 'Monday'){
+           $dia='Lunes';
+       }elseif($fech == 'Tuesday'){
+            $dia='Martes';
+       }elseif($fech == 'Wednesday'){
+           $dia='Miércoles';
+       }elseif($fech == 'Thursday'){
+           $dia='Jueves';
+       }elseif($fech == 'Friday'){
+           $dia='Viernes';
+       }
+
+
+       return $dia;
+    }
+
+    public function meses($fecha){
+
+       $mes ='';
+       $fech = Carbon::parse($fecha)->format('F');
+       
+       if($fech == 'January'){
+         $mes='Enero';
+       }elseif($fech == 'February'){
+           $mes='Febrero';
+       }elseif($fech == 'March'){
+            $mes='Marzo';
+       }elseif($fech == 'April'){
+           $mes='Abril';
+       }elseif($fech == 'May'){
+           $mes='Mayo';
+       }elseif($fech == 'June'){
+           $mes='Junio';
+       }elseif($fech == 'July'){
+           $mes='Julio';
+       }elseif($fech == 'August'){
+           $mes='Agosto';
+       }elseif($fech == 'September'){
+           $mes='Septiembre';
+       }elseif($fech == 'October'){
+           $mes='Octubre';
+       }elseif($fech == 'November'){
+           $mes='Noviembre';
+       }elseif($fech == 'December'){
+           $mes='Diciembre';
+       }
+
+
+       return $mes;
+    } 
+
+
 
     public function proximo($id){
        $evento = $this->obtenerEvento($id);
        
        $fecha = (empty($evento)) ? 0 : $evento['inicio'];
        $proxevent = $this->proxievents((empty($evento)) ? 0 : $evento['id']);
-        date_default_timezone_set('Europe/Madrid');
-            setlocale(LC_TIME, 'spanish');
-       return view('timelive/timelive', compact('fecha','evento', 'proxevent'));
+
+
+            $finalizados = Events::where('status', '3')->orderBy('id', 'DESC')->take(9)->get();
+         $banner = Events::where('status', '1')->where('image','!=',null)->take(1)->first();
+        if($banner == null){
+         $banner = Events::where('status', '1')->where('image', null)->take(1)->first();
+        }
+        $proximas = Events::where('status', '1')->where('id', '!=', ($banner == null) ? 0 : $banner->id)->take(6)->get();
+        $total = count($proximas);
+
+         if($banner != null){
+
+           $dia = $this->dias($banner->date);
+           $mes = $this->meses($banner->date);
+           $fech = $dia.' '.date('d', strtotime($banner->dia)).' '.$mes;
+
+           $anuncio =[
+            'id' => $banner->id,
+            'imagen' => ($banner->image == null) ? '3.png' : $banner->image,
+            'title' => $banner->title,
+            'fechacompleta' => $fech,
+            'fecha' => $banner->date,
+
+           ];
+         }
+
+        foreach($proximas as $proxima){
+          $user = User::find($proxima->user_id);
+          $proxima->avatar = $user->avatar;
+          $dia = $this->dias($proxima->date);
+          $mes = $this->meses($proxima->date);
+          $proxima->fecha = $dia.' '.date('d', strtotime($proxima->date)).' '.$mes;
+
+        }
+
+        foreach($finalizados as $fin){
+         $user = User::find($fin->user_id);
+         $cursos = Course::find($fin->id_courses);
+         $categoria = Category::find($cursos->category_id);
+         $fin->avatar = $user->avatar;
+         $fin->nombre = $user->display_name;
+         $fin->title_cate = $categoria->title;
+
+         //
+         $fin->views = $cursos->views;
+         $fin->likes = $cursos->likes;
+         $fin->shares = $cursos->shares;
+        }
+
+       return view('timelive/timelive', compact('fecha','evento', 'proxevent', 'proximas','total','anuncio','finalizados'));
     }
 
     public function proxievents($id){
@@ -78,10 +235,9 @@ class CalendarioGoogleController extends Controller
         if($evento != null){
 
         $user = DB::table('wp98_users')->where('ID', $evento->user_id)->first();
-        $category_id = $evento->id_categori; 
-        $courses = Course::where('category_id', '=', $category_id)
+        $courses = Course::where('id', '=', $evento->id_courses)
         ->first();
-        $subcategory= Subcategory::where('id', '=', $courses->subcategory_id)->first();
+       
 
         $datos =[
             'id' => $evento->id,
@@ -96,7 +252,7 @@ class CalendarioGoogleController extends Controller
             'profession' => $user->profession,
             'about' => $user->about,
             'avatar' => $user->avatar,
-            'subcategory' => $subcategory->title,
+            'subcategory' => $courses->subcategory->title,
 
         ];
        }

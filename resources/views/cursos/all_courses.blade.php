@@ -21,16 +21,16 @@
 
 
 @section('content')
-    <div class="section-landing">
+    <div class="section-landing" style="background: linear-gradient(to bottom, #222326 50%, #1C1D21 50.1%);">
         <div class="col mb-4 mt-4">
-            <div class="title-page-course col-md"><span class="text-white">
-            <h2>Cursos  Online de<span class="text-primary"> "{{$category_name->title}}"</span></h2>
+            <div class="title-page-course col-md-12"><span class="text-white">
+            <h2>Mis cursos</h2>
             </div>
         </div>     
              
         <div class="row">
-            @if ($courses->count() > 0)
-                @foreach ($courses as $curso)
+            @if ($cursos->count() > 0)
+                @foreach ($cursos  as $curso)
 
                 <div class="col-md-4 mt-1">
                     @if (!is_null($curso->cover))
@@ -66,8 +66,6 @@
             @endif
         </div>
     </div>
-
-
 
 
         {{-- SECCIÓN REFERIDOS (USUARIOS LOGGUEADOS) --}}

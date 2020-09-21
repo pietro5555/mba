@@ -30,7 +30,30 @@ class LessonController extends Controller{
         $leccion->slug = Str::slug($leccion->title);
         $leccion->save();
 
-        return redirect('admin/courses/lessons/'.$request->course_id)->with('msj-exitoso', 'La lección ha sido creada con éxito.');
+        return redirect('admin/courses/lessons/show/'.$leccion->id)->with('msj-exitoso', 'La lección ha sido creada con éxito.');
+    }
+
+      /**
+    * Admin / Cursos / Temario / Ver Video de Lección
+    */
+    public function show($id){
+        // TITLE
+        view()->share('title', 'Video de Lección');
+
+        $leccion = Lesson::find($id);
+
+        return view('admin.courses.showLesson')->with(compact('leccion'));
+    }
+    
+    public function load_video_duration($id, $duration){
+        $duracion = number_format($duration, 2);
+        $leccion = DB::table('lessons')
+                        ->where('id', '=', $id)
+                        ->update(['duration' => $duracion]);
+
+        return response()->json(
+            true
+        );
     }
 
      /**
@@ -47,11 +70,20 @@ class LessonController extends Controller{
     */
     public function update(Request $request){
         $leccion = Lesson::find($request->lesson_id);
+        $videoUpdate = 0;
+        if ($request->url != $leccion->url){
+            $videoUpdate = 1;
+        }
         $leccion->fill($request->all());
         $leccion->slug = Str::slug($leccion->title);
         $leccion->save();
 
-         return redirect('admin/courses/lessons/'.$leccion->course_id)->with('msj-exitoso', 'La lección ha sido creada con éxito.');
+        if ($videoUpdate == 0){
+            return redirect('admin/courses/lessons/'.$leccion->course_id)->with('msj-exitoso', 'La lección ha sido actualizada con éxito.');
+        }else{
+            return redirect('admin/courses/lessons/show/'.$leccion->id)->with('msj-exitoso', 'El video de la lección ha sido actualido con éxito.');
+        }
+         
     }
 
      /**

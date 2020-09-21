@@ -205,7 +205,16 @@ class CourseController extends Controller{
                             $query->select(DB::raw('avg(points)'));
                         }
                     ])->first();
-       // dd(number_format($curso->promedio, 0));
+        
+        $dur = 0;
+        foreach ($curso->lessons as $leccion){
+            $dur += $leccion->duration;
+        } 
+        $tiempo = explode(".", $dur);
+        $segundos = $tiempo[0]*60 + $tiempo[1]; 
+        $curso->hours = floor($segundos/ 3600);
+        $curso->minutes = floor(($segundos - ($curso->hours * 3600)) / 60);
+        $curso->seconds = $segundos - ($curso->hours * 3600) - ($curso->minutes * 60);
 
         return view('cursos.show_one_course')->with(compact('curso'));
     }

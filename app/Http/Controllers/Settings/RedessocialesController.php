@@ -22,7 +22,7 @@ class RedessocialesController extends Controller
         View::share('title', 'Ajustes - Redes Sociales');
         
         $redes = Redesociales::all();
-		return view('setting.redes.red')->with(compact('redes'));
+        return view('setting.redes.red')->with(compact('redes'));
     }
     
     public function savered(Request $datos){
@@ -38,6 +38,7 @@ class RedessocialesController extends Controller
           'tipo' => $requisitos['tipo'],
           'imagen' => ($requisitos['imagen'] != null) ? $requisitos['imagen'] : $requisitos['gly'],
           'color' => $datos['color'.$i],
+          'nombre' => $datos['nombre'.$i],
         ]);
         
         }
@@ -80,6 +81,7 @@ class RedessocialesController extends Controller
           'tipo' => $requisitos['tipo'],
           'imagen' => ($requisitos['imagen'] != null) ? $requisitos['imagen'] : $requisitos['gly'],
           'color' => $datos['color'],
+          'nombre' => $datos['nombre'],
         ]);
         
          $funciones->msjSistema('Redes Sociales Agregadas con exito', 'success');

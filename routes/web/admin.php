@@ -191,7 +191,7 @@ Route::get('encode', function(){
 
 
 //Agendar
-Route::get('schedule/{event_id}/{user_id}', 'CalendarioGoogleController@schedule')->name('schedule.event');
+Route::get('schedule/{event_id}', 'CalendarioGoogleController@schedule')->name('schedule.event');
 Route::get('calendar', 'CalendarioGoogleController@calendar')->name('schedule.calendar');
 //vista de anotaciones
 Route::get('/anotaciones', 'NoteController@index')->name('anotaciones');

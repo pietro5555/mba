@@ -43,7 +43,7 @@
                         <div class="col-md-9">
                             <h6 class="col-sm"><i class="text-success fa fa-play-circle"></i> <a href="{{ route('courses.show', [$curso->slug, $curso->id]) }}" class="text-white">{{ $curso->title }}</a></h6>
                             <h6 class="ml-2 subtitle-cat">
-                                <a href="{{ route('courses.show', [$curso->slug, $curso->id]) }}" class="" style="color:#8E8E8E;">{{ $curso->category->title }} </a>
+                                {{ $curso->category->title }}
                             </h6>
                          </div>
                         <div class="col-md-3">

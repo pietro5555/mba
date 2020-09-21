@@ -26,69 +26,46 @@ class CalendarioGoogleController extends Controller
     function __construct()
     {
         Carbon::setLocale('es'); 
-        $this->middleware(['auth']);
+        $this->middleware('auth');
     }
 
 
-    public function timelive(){
-         
-         $evento = $this->obtenerEvento(0);
+    public function timelive(Request $request){
 
-         $fecha = (empty($evento)) ? 0 : $evento['inicio'];
-         $proxevent = $this->proxievents((empty($evento)) ? 0 : $evento['id']);
-            //return $sig;
-            date_default_timezone_set('Europe/Madrid');
-            setlocale(LC_TIME, 'spanish');
+        if ($request->sigEvent == '' or $request->sigEvent == null) {
+            $evento = Events::where('date', '>=', Carbon::now())->first();
+            $prox = true;
+            $i = 1;
+            while($prox){
+                $nextEvent = Events::where('id', $evento->id+($i++))->get()->first();
+                if($nextEvent != null)
+                    $prox = false;
+            }
+        } else {
+            $lastEvent = Events::all()->last();
+            $evento = Events::find($request->sigEvent);
+            if ($lastEvent->id == $evento->id) {
+                $nextEvent = Events::where('date', '>=', Carbon::now())->first();
+            } else {
+                $prox = true;
+                $i = 1;
+                while($prox){
+                    $nextEvent = Events::where('id', $evento->id+($i++))->get()->first();
+                    if ($nextEvent != null)
+                        $prox = false;
+                }
+            }
+        } 
+          
+        /*PROXIMOS EVENTOS*/
 
-            $finalizados = Events::where('status', '3')->orderBy('id', 'DESC')->take(9)->get();
-         $banner = Events::where('status', '1')->where('image','!=',null)->take(1)->first();
-        if($banner == null){
-         $banner = Events::where('status', '1')->where('image', null)->take(1)->first();
-        }
-        $proximas = Events::where('status', '1')->where('id', '!=', ($banner == null) ? 0 : $banner->id)->take(6)->get();
-        $total = count($proximas);
+        $proximos = Events::where('date', '>=', Carbon::now())
+        ->where('id', '!=', $evento->id)
+        ->where('status', '=', '1')->get();
+        $total= count($proximos);
 
-         if($banner != null){
-
-           $dia = $this->dias($banner->date);
-           $mes = $this->meses($banner->date);
-           $fech = $dia.' '.date('d', strtotime($banner->dia)).' '.$mes;
-
-           $anuncio =[
-            'id' => $banner->id,
-            'imagen' => ($banner->image == null) ? '3.png' : $banner->image,
-            'title' => $banner->title,
-            'fechacompleta' => $fech,
-            'fecha' => $banner->date,
-
-           ];
-         }
-
-        foreach($proximas as $proxima){
-          $user = User::find($proxima->user_id);
-          $proxima->avatar = $user->avatar;
-          $dia = $this->dias($proxima->date);
-          $mes = $this->meses($proxima->date);
-          $proxima->fecha = $dia.' '.date('d', strtotime($proxima->date)).' '.$mes;
-
-        }
-
-        foreach($finalizados as $fin){
-         $user = User::find($fin->user_id);
-         $cursos = Course::find($fin->id_courses);
-         $categoria = Category::find($cursos->category_id);
-         $fin->avatar = $user->avatar;
-         $fin->nombre = $user->display_name;
-         $fin->title_cate = $categoria->title;
-
-         //
-         $fin->views = $cursos->views;
-         $fin->likes = $cursos->likes;
-         $fin->shares = $cursos->shares;
-        }
-
-
-        return view('timelive/timelive', compact('fecha','evento','proxevent','proximas','total','anuncio','finalizados'));
+        //dd($evento->id, $proximos);
+        return view('timelive/timelive', compact('evento', 'nextEvent', 'proximos', 'total'));
 
     }
 
@@ -154,111 +131,6 @@ class CalendarioGoogleController extends Controller
     } 
 
 
-
-    public function proximo($id){
-       $evento = $this->obtenerEvento($id);
-       
-       $fecha = (empty($evento)) ? 0 : $evento['inicio'];
-       $proxevent = $this->proxievents((empty($evento)) ? 0 : $evento['id']);
-
-
-            $finalizados = Events::where('status', '3')->orderBy('id', 'DESC')->take(9)->get();
-         $banner = Events::where('status', '1')->where('image','!=',null)->take(1)->first();
-        if($banner == null){
-         $banner = Events::where('status', '1')->where('image', null)->take(1)->first();
-        }
-        $proximas = Events::where('status', '1')->where('id', '!=', ($banner == null) ? 0 : $banner->id)->take(6)->get();
-        $total = count($proximas);
-
-         if($banner != null){
-
-           $dia = $this->dias($banner->date);
-           $mes = $this->meses($banner->date);
-           $fech = $dia.' '.date('d', strtotime($banner->dia)).' '.$mes;
-
-           $anuncio =[
-            'id' => $banner->id,
-            'imagen' => ($banner->image == null) ? '3.png' : $banner->image,
-            'title' => $banner->title,
-            'fechacompleta' => $fech,
-            'fecha' => $banner->date,
-
-           ];
-         }
-
-        foreach($proximas as $proxima){
-          $user = User::find($proxima->user_id);
-          $proxima->avatar = $user->avatar;
-          $dia = $this->dias($proxima->date);
-          $mes = $this->meses($proxima->date);
-          $proxima->fecha = $dia.' '.date('d', strtotime($proxima->date)).' '.$mes;
-
-        }
-
-        foreach($finalizados as $fin){
-         $user = User::find($fin->user_id);
-         $cursos = Course::find($fin->id_courses);
-         $categoria = Category::find($cursos->category_id);
-         $fin->avatar = $user->avatar;
-         $fin->nombre = $user->display_name;
-         $fin->title_cate = $categoria->title;
-
-         //
-         $fin->views = $cursos->views;
-         $fin->likes = $cursos->likes;
-         $fin->shares = $cursos->shares;
-        }
-
-       return view('timelive/timelive', compact('fecha','evento', 'proxevent', 'proximas','total','anuncio','finalizados'));
-    }
-
-    public function proxievents($id){
-      
-      $fechactual = Carbon::now();
-      //VERIFICAR CONSULTA
-      $proximos = Events::where('id', '!=', $id)->whereDate('date', '>=', $fechactual)->take('6')->get();
-
-      return $proximos;
-    }
-
-    public function obtenerEvento($eventactual){
-        $datos = [];
-        $fechactual = Carbon::now();
-        $fin = new Carbon('2020-09-10');
-
-        //VERIFICAR CONSULTA
-        $evento = Events::whereDate('date', '>=', $fechactual)->where('id', '>=', $eventactual)->orderBy('date', 'ASC')->take('1')->first();
-         if($evento == null){
-           $evento = Events::whereDate('date', '>=', $fechactual)->where('id', '<', $eventactual)->orderBy('date', 'ASC')->take('1')->first();
-         }
-
-        if($evento != null){
-
-        $user = DB::table('wp98_users')->where('ID', $evento->user_id)->first();
-        $courses = Course::where('id', '=', $evento->id_courses)
-        ->first();
-       
-
-        $datos =[
-            'id' => $evento->id,
-            'title' => $evento->title,
-            'date' => $evento->date,
-            'descripcion' => $evento->description,
-            'image' => $evento->image,
-            'inicio' => $evento->date,
-            'fin' => $fin,
-            'user_id' => $user->ID,
-            'nombre' => $user->display_name,
-            'profession' => $user->profession,
-            'about' => $user->about,
-            'avatar' => $user->avatar,
-            'subcategory' => $courses->subcategory->title,
-
-        ];
-       }
-
-       return $datos;
-    }
 
      public function oauth($id)
     {
@@ -332,45 +204,27 @@ class CalendarioGoogleController extends Controller
     /*MOSTRAR CALENDARIO DE EVENTOS DEL USUARIO*/
     public function calendar()
     {
-         $funciones = new IndexController;
-        
-        if(Auth::user()->rol_id == 0){
-        $todos = $funciones->generarArregloAdmin(Auth::user()->ID);
-        $calendarios = $this->almacenadoAdmin($todos, Auth::user()->ID);
-        }else{
-            $todos = $funciones->generarArregloReversa(Auth::user()->ID);
-            $calendarios = $this->almacenadoNormal($todos, Auth::user()->ID);
-        }
-        
-        $pendientes = DB::table('notifications')
-                                    ->where('user_id', '=', Auth::user()->ID)
-                                    ->where('status', '=', '0')
-                                    ->get();
-                                    
-        foreach($pendientes as $pendiente){
-            $marca = Notification::find($pendiente->id);
-            $marca->status = '1';
-            $marca->save();
-        }
-        
+            /*DATOS PARA PINTAR EL CALENDARIO*/
+        $user_calendar = Calendario::where('iduser', Auth::user()->ID)->get();
         $usuario = Auth::user()->ID;
-        $modal = 0;
-        $correoprospecto = 0;
         date_default_timezone_set('Europe/Madrid');
             setlocale(LC_TIME, 'spanish');
 
         //TODOS LOS EVENTOS AGENDADOS POR ESE USUARIO
         $eventos_agendados = DB::table('events')
         ->join('events_users', 'events_users.event_id', '=', 'events.id')
-        ->where('events_users.user_id', '=', $usuario)
+        ->where('events_users.user_id', '=', Auth::user()->ID)
         ->get();
 
-        return view('agendar/calendar',compact('calendarios','usuario','modal','correoprospecto', 'eventos_agendados'));
+        
+      //  return dd($user_calendar);
+
+        return view('agendar/calendar',compact('usuario','eventos_agendados', 'user_calendar'));
     }
 
 
     /*AGENDAR EVENTOS DEL USUARIO*/
-public function schedule($event_id, $user_id, Request $request){
+public function schedule($event_id, Request $request){
  $check = DB::table('events_users')
                     ->where('user_id', '=', Auth::user()->ID)
                     ->where('event_id', '=', $event_id)
@@ -394,32 +248,8 @@ public function schedule($event_id, $user_id, Request $request){
             if (is_null($disponibilidad)){
                 Auth::user()->events()->attach($event_id, ['date' => $date_event, 'time' => $time_event]);
                 $new_calendar = Events::where('id', '=', $event_id)
-        ->first();
+                ->first();
         
-        $funciones = new IndexController;
-        
-        if(Auth::user()->rol_id == 0){
-        $todos = $funciones->generarArregloAdmin(Auth::user()->ID);
-        $calendarios = $this->almacenadoAdmin($todos, Auth::user()->ID);
-        }else{
-            $todos = $funciones->generarArregloReversa(Auth::user()->ID);
-            $calendarios = $this->almacenadoNormal($todos, Auth::user()->ID);
-        }
-        
-        $pendientes = DB::table('notifications')
-                                    ->where('user_id', '=', Auth::user()->ID)
-                                    ->where('status', '=', '0')
-                                    ->get();
-                                    
-        foreach($pendientes as $pendiente){
-            $marca = Notification::find($pendiente->id);
-            $marca->status = '1';
-            $marca->save();
-        }
-        
-        $usuario = Auth::user()->ID;
-        $modal = 0;
-        $correoprospecto = 0;
 
          $calendario = new Calendario();
          $calendario->titulo = $new_calendar->title;
@@ -488,318 +318,4 @@ public function schedule($event_id, $user_id, Request $request){
      return redirect()->back();
     }
     
-    
-    //alamacenamos los datos del calendario que haya creado el admin
-    //o sean especificos para el admin
-    public function almacenadoAdmin($todos, $autenticado){
-        
-        $datos = [];
-        $mios = Calendario::where('iduser', $autenticado)->get();
-        foreach($mios as $mio){
-            
-            array_push($datos, [
-            'ID' => $mio->id,
-            'iduser' => $autenticado,
-            'titulo' => $mio->titulo,
-            'contenido' => $mio->contenido,
-            'lugar' => $mio->lugar,
-            'color' => $mio->color,
-            'tipo' => $mio->tipo,
-            'especifico' => $mio->especifico,
-            'inicio' => $mio->inicio,
-            'vence' => $mio->vence,
-          ]);
-          
-        }
-        
-        
-        foreach($todos as $todo){
-            $calendario = Calendario::where('iduser', $todo['ID'])->get();
-          if(!empty($calendario)){    
-            foreach($calendario as $calen){
-                if($calen->tipo == 5){
-                    if($calen->especifico == Auth::user()->user_email){
-                    array_push($datos, [
-            'ID' => $calen->id,
-            'iduser' => $calen->iduser,
-            'titulo' => $calen->titulo,
-            'contenido' => $calen->contenido,
-            'lugar' => $calen->lugar,
-            'color' => $calen->color,
-            'tipo' => $calen->tipo,
-            'especifico' => $calen->especifico,
-            'inicio' => $calen->inicio,
-            'vence' => $calen->vence,
-          ]);
-                  }
-                }
-              }
-            }
-        }
-        
-        return $datos;
-    }
-    
-    
-    
-    
-    
-    //alamacenamos los datos del calendario que haya creado el usuario
-    //o sean especificos para el usuario
-    public function almacenadoNormal($todos, $autenticado){
-        
-        $datos = [];
-        $mios = Calendario::where('iduser', $autenticado)->get();
-        foreach($mios as $mio){
-            
-            array_push($datos, [
-            'ID' => $mio->id,
-            'iduser' => $autenticado,
-            'titulo' => $mio->titulo,
-            'contenido' => $mio->contenido,
-            'lugar' => $mio->lugar,
-            'color' => $mio->color,
-            'tipo' => $mio->tipo,
-            'especifico' => $mio->especifico,
-            'inicio' => $mio->inicio,
-            'vence' => $mio->vence,
-          ]);
-          
-        }
-        
-        
-        foreach($todos as $todo){
-            $calendario = Calendario::where('iduser', $todo['ID'])->get();
-          if(!empty($calendario)){    
-            foreach($calendario as $calen){
-                if($calen->tipo == 1){
-                    
-            array_push($datos, [
-            'ID' => $calen->id,
-            'iduser' => $calen->iduser,
-            'titulo' => $calen->titulo,
-            'contenido' => $calen->contenido,
-            'lugar' => $calen->lugar,
-            'color' => $calen->color,
-            'tipo' => $calen->tipo,
-            'especifico' => $calen->especifico,
-            'inicio' => $calen->inicio,
-            'vence' => $calen->vence,
-          ]);
-          
-                }elseif($calen->tipo == 2){
-                    if(Auth::user()->status == 1){
-                        
-            array_push($datos, [
-            'ID' => $calen->id,
-            'iduser' => $calen->iduser,
-            'titulo' => $calen->titulo,
-            'contenido' => $calen->contenido,
-            'lugar' => $calen->lugar,
-            'color' => $calen->color,
-            'tipo' => $calen->tipo,
-            'especifico' => $calen->especifico,
-            'inicio' => $calen->inicio,
-            'vence' => $calen->vence,
-                      ]);
-                    }
-                    
-                }elseif($calen->tipo == 3){
-                    if(Auth::user()->status == 0){
-                        
-            array_push($datos, [
-            'ID' => $calen->id,
-            'iduser' => $calen->iduser,
-            'titulo' => $calen->titulo,
-            'contenido' => $calen->contenido,
-            'lugar' => $calen->lugar,
-            'color' => $calen->color,
-            'tipo' => $calen->tipo,
-            'especifico' => $calen->especifico,
-            'inicio' => $calen->inicio,
-            'vence' => $calen->vence,
-                      ]);
-                    }
-                    
-                }elseif($calen->tipo == 4){
-                    
-           $fechaActual = date('m', strtotime($calen->created_at));
-           $ingreso = date('m', strtotime(Auth::user()->created_at));
-           if($fechaActual == $ingreso){
-               
-            array_push($datos, [
-            'ID' => $calen->id,
-            'iduser' => $calen->iduser,
-            'titulo' => $calen->titulo,
-            'contenido' => $calen->contenido,
-            'lugar' => $calen->lugar,
-            'color' => $calen->color,
-            'tipo' => $calen->tipo,
-            'especifico' => $calen->especifico,
-            'inicio' => $calen->inicio,
-            'vence' => $calen->vence,
-          ]);
-          
-           }
-                }elseif($calen->tipo == 5){
-                    if($calen->especifico == Auth::user()->user_email){
-                        
-            array_push($datos, [
-            'ID' => $calen->id,
-            'iduser' => $calen->iduser,
-            'titulo' => $calen->titulo,
-            'contenido' => $calen->contenido,
-            'lugar' => $calen->lugar,
-            'color' => $calen->color,
-            'tipo' => $calen->tipo,
-            'especifico' => $calen->especifico,
-            'inicio' => $calen->inicio,
-            'vence' => $calen->vence,
-          ]);
-          
-                  }
-                }
-              }
-            }
-        }
-        
-        return $datos;
-    }
-    
-    
-    
-    
-    
-    //buscamos las notificaciones tanto del admin como 
-    //las de un usuario
-    public function notificacion($todos, $usuario){
-        
-        $datos = [];
-        
-        $user = User::find($usuario);
-        if($user->rol_id != 0){
-        foreach($todos as $todo){
-            $calendario = Calendario::where('iduser', $todo['ID'])->get();
-          if(!empty($calendario)){    
-            foreach($calendario as $calen){
-                if($calen->tipo == 1){
-                    
-            array_push($datos, [
-            'ID' => $calen->id,
-            'iduser' => $calen->iduser,
-            'titulo' => $calen->titulo,
-            'contenido' => $calen->contenido,
-            'lugar' => $calen->lugar,
-            'color' => $calen->color,
-            'tipo' => $calen->tipo,
-            'especifico' => $calen->especifico,
-            'inicio' => $calen->inicio,
-            'vence' => $calen->vence,
-          ]);
-          
-                }elseif($calen->tipo == 2){
-                    if(Auth::user()->status == 1){
-                        
-            array_push($datos, [
-            'ID' => $calen->id,
-            'iduser' => $calen->iduser,
-            'titulo' => $calen->titulo,
-            'contenido' => $calen->contenido,
-            'lugar' => $calen->lugar,
-            'color' => $calen->color,
-            'tipo' => $calen->tipo,
-            'especifico' => $calen->especifico,
-            'inicio' => $calen->inicio,
-            'vence' => $calen->vence,
-                      ]);
-                    }
-                    
-                }elseif($calen->tipo == 3){
-                    if(Auth::user()->status == 0){
-                        
-            array_push($datos, [
-            'ID' => $calen->id,
-            'iduser' => $calen->iduser,
-            'titulo' => $calen->titulo,
-            'contenido' => $calen->contenido,
-            'lugar' => $calen->lugar,
-            'color' => $calen->color,
-            'tipo' => $calen->tipo,
-            'especifico' => $calen->especifico,
-            'inicio' => $calen->inicio,
-            'vence' => $calen->vence,
-                      ]);
-                    }
-                    
-                }elseif($calen->tipo == 4){
-                    
-           $fechaActual = date('m', strtotime($calen->created_at));
-           $ingreso = date('m', strtotime(Auth::user()->created_at));
-           if($fechaActual == $ingreso){
-               
-            array_push($datos, [
-            'ID' => $calen->id,
-            'iduser' => $calen->iduser,
-            'titulo' => $calen->titulo,
-            'contenido' => $calen->contenido,
-            'lugar' => $calen->lugar,
-            'color' => $calen->color,
-            'tipo' => $calen->tipo,
-            'especifico' => $calen->especifico,
-            'inicio' => $calen->inicio,
-            'vence' => $calen->vence,
-          ]);
-          
-           }
-                }elseif($calen->tipo == 5){
-                    if($calen->especifico == Auth::user()->user_email){
-                        
-            array_push($datos, [
-            'ID' => $calen->id,
-            'iduser' => $calen->iduser,
-            'titulo' => $calen->titulo,
-            'contenido' => $calen->contenido,
-            'lugar' => $calen->lugar,
-            'color' => $calen->color,
-            'tipo' => $calen->tipo,
-            'especifico' => $calen->especifico,
-            'inicio' => $calen->inicio,
-            'vence' => $calen->vence,
-          ]);
-          
-                  }
-                }
-              }
-            }
-        }
-      }else{
-          
-          foreach($todos as $todo){
-            $calendario = Calendario::where('iduser', $todo['ID'])->get();
-          if(!empty($calendario)){    
-            foreach($calendario as $calen){
-                if($calen->tipo == 5){
-                    if($calen->especifico == Auth::user()->user_email){
-                    array_push($datos, [
-            'ID' => $calen->id,
-            'iduser' => $calen->iduser,
-            'titulo' => $calen->titulo,
-            'contenido' => $calen->contenido,
-            'lugar' => $calen->lugar,
-            'color' => $calen->color,
-            'tipo' => $calen->tipo,
-            'especifico' => $calen->especifico,
-            'inicio' => $calen->inicio,
-            'vence' => $calen->vence,
-          ]);
-                  }
-                }
-              }
-            }
-        }
-      }
-      
-      return $datos;
-        
-    }
 }

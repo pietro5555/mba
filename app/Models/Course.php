@@ -46,4 +46,10 @@ class Course extends Model
     public function users(){
         return $this->belongsToMany('App\Models\User', 'courses_users', 'course_id', 'user_id')->withPivot('progress', 'start_date', 'finish_date', 'certificate')->withTimestamps();
     }
+
+    //Relacion Eventos que tiene un curso
+    public function eventos(){
+        return $this->hasMany('App\Models\Events');
+
+    }
 }

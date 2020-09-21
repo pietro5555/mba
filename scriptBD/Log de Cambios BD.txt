@@ -73,3 +73,6 @@ Dev: Luisana Marín
 18/09/2020
 Dev: Prieto 
 * Nuevo campo agregado id_courses (correr el script events)
+20/09/2020
+Dev: Crisleivys
+* Modificado el id_courses por course_id (correr el script events)

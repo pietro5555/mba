@@ -87,6 +87,12 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Course', 'mentor_id', 'ID');
     }
 
+    //Relacion mentores (usuarios) - Eventos
+    public function eventos()
+    {
+        return $this->hasMany('App\Models\Events');
+    }
+
     //Relación Usuarios - Eventos (Agenda de Eventos)
     public function events(){
         return $this->belongsToMany('App\Models\Events', 'events_users', 'user_id', 'event_id')->withPivot('date', 'time')->withTimestamps();

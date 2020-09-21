@@ -44,6 +44,10 @@ class Events extends Model
 
     // 0=desactivado, 1=activo,  2=programado  3=iniciado, 4=finalizado
 
+    public function getEmailMentorAttribute(){
+        return $this->mentor->user_email;
+    }
+
     public static function findID($id)
     {
         $mentor = DB::table('wp98_users')
@@ -57,6 +61,17 @@ class Events extends Model
 
     public function EventResources(){
         return $this->hasMany('App\Models\EventResources', 'event_id', 'id');
+    }
+
+    public function mentor()
+       {
+          return $this->belongsTo('App\Models\User', 'user_id');
+       }
+
+    //Relacion Evento que pertenece a un curso
+    public function curso()
+    {
+        return $this->belongsTo('App\Models\Course', 'course_id');
     }
 
 }

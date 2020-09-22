@@ -203,6 +203,7 @@ Route::group(['prefix' => 'installer'], function (){
   Route::group(['prefix' => 'client'], function(){
      Route::group(['prefix' => 'courses'], function(){
         Route::get('my-list', 'CourseController@my_courses')->name('client.my-courses');
+        Route::post('rate', 'RatingController@store')->name('client.courses.rate');
      });
   });
   

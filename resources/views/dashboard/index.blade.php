@@ -11,13 +11,16 @@
     @include('dashboard.componenteIndex.cuadros')
     {{-- seccion de las graficas --}}
     @include('dashboard.componenteIndex.graficas')
-    {{-- seccion de nuevos miembros y de ultimos pedidos --}}
-    @include('dashboard.componenteIndex.pedidosymiembros')
+
     {{-- seccion de rangos y ultimos productos --}}
     @include('dashboard.componenteIndex.productosyrangos')
     
+    {{-- seccion de nuevos miembros y de ultimos pedidos --}}
+    @include('dashboard.componenteIndex.pedidosymiembros')
+
+    
     {{-- seccion de noticias y materiales --}}
-    @include('dashboard.componenteIndex.herramientas')
+    {{--@include('dashboard.componenteIndex.herramientas')--}}
     
     @if($pop->activado == '1')
      <div class="modal fade" id="mostrar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

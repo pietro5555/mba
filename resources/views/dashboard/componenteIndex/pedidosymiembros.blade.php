@@ -1,104 +1,50 @@
 <div class="row">
   <div class="col-md-6">
     <!-- USERS LIST -->
-    <div class="box box-danger" style="border-radius: 20px;">
-      <div class="box-header with-border">
-        <h3 class="box-title">Ultimos Miembros</h3>
-        <div class="box-tools pull-right">
-          <span class="label label-danger">{{count($new_member)}} New Members</span>
-          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-          </button>
-          <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
-          </button>
-        </div>
-      </div>
-      <!-- /.box-header -->
-      <div class="box-body no-padding">
-        <ul class="users-list clearfix">
+    <div class="info-box border-radius" style="border-radius: 20px;">
+      <div class="box-body" style="padding: 15px 20px;">
+        <h3 class="box-title white" style="margin-top: -5px; margin-bottom: 20px;">Últimos Miembros</h3>
           @foreach ($new_member as $member)
-          <li>
-            <img class="imas" src="{{asset('assets/img/member.jpg')}}" height="128" alt="">
-            @if (Auth::user()->ID == 1)
-            <a class="users-list-name" href="#">{{$member->display_name}}</a>
-            <span class="users-list-date">{{date('d-m-Y', strtotime($member->created_at))}}</span>
-            @else
-            <a class="users-list-name" href="#">{{$member['nombre']}}</a>
-            <span class="users-list-date">{{date('d-m-Y', strtotime($member['fecha']))}}</span>
-            @endif
-          </li>
+          <div class="col-sm-6 col-xs-12" style="margin-bottom: 20px;">
+            <div class="col-md-5 col-xs-5" align="left">
+              <img src="{{asset('assets/img/member.jpg')}}" alt="" style="border-radius: 60%; width: 80px; height: 80px;">
+            </div>
+              <div class="col-md-7 col-xs-7">
+                <div class="card-body"> 
+                  <h6 class="card-title white">{{$member->display_name}}</h6>
+                  <h4 class="card-title white">{{date('d-m-Y', strtotime($member->created_at))}}</h4>
+                </div>
+              </div>
+           </div> 
           @endforeach
-
-        </ul>
-        <!-- /.users-list -->
       </div>
-      <!-- /.box-body -->
-      <div class="box-footer text-center border-radius">
-        @if (Auth::user()->ID)
-        <a href="{{route('networkrecords')}}" class="uppercase">Ver Todos los Ususarios</a>
-        @else
-        <a href="{{route('admin.userrecords')}}" class="uppercase">Ver Todos los Ususarios</a>
-        @endif
-      </div>
-      <!-- /.box-footer -->
     </div>
-    <!--/.box -->
   </div>
+
 
   <div class="col-md-6">
-    <div class="box box-info" style="border-radius: 20px;">
-      <div class="box-header with-border">
-        <h3 class="box-title">Ultimos Pedidos</h3>
+    <div class="info-box border-radius" style="border-radius: 20px;">
+      <div class="box-body" style="padding: 15px 20px;">
+        <h3 class="box-title white" style="margin-top: -5px; margin-bottom: 20px; padding: 15px 20px;">Rangos</h3>
 
-        <div class="box-tools pull-right">
-          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-          </button>
-          <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        @foreach($rangos as $rango)
+        <div class="">
+          <span class="pull-right text-primary white">{{$rango->cantidad}} / {{$cantAllUsers}}</span>
+          <span class="white">{{$rango->name}}</span>
         </div>
-      </div>
-      <!-- /.box-header -->
-      <div class="box-body">
-        <div class="table-responsive">
-          <table class="table no-margin">
-            <thead>
-              <tr>
-                <th class="text-center">Orden</th>
-                <th class="text-center">Producto</th>
-                <th class="text-center">Estado</th>
-                <th class="text-center">Fecha</th>
-              </tr>
-            </thead>
-            <tbody>
-              @php
-                  $cont = 0;
-              @endphp
-              @foreach ($ordenesView as $compra)
-              <tr>
-                <td class="text-center">
-                  {{$compra['ordenID']}}
-                </td>
-                <td class="text-center">
-                  {{$compra['items']}}
-                </td>
-                <td class="text-center">
-                  {{$compra['estadoCompra']}}
-                </td>
-                <td class="text-center">
-                  {{date('d-m-Y', strtotime($compra['fechaOrden']))}}
-                </td>
-              </tr>
-              @php
-                  $cont++;
-              @endphp
-              @endforeach
-          </table>
-        </div>
-        <!-- /.table-responsive -->
-      </div>
-      <!-- /.box-body -->
-      <div class="box-footer clearfix border-radius">
-        <a href="{{route('networkorders')}}" class="btn btn-sm btn-default btn-flat pull-right">Ver Todas</a>
-      </div>
-      <!-- /.box-footer -->
-    </div>
-  </div>
+             @if($rango->cantidad > 0)
+             <div class="progress progress-xs m-t-sm bg-white">
+              <div class="progress-bar bg-primary" data-toggle="tooltip" data-original-title="{{ (($rango->cantidad * 100) / $cantAllUsers) }}%" style="width: {{ (($rango->cantidad * 100) / $cantAllUsers) }}%"></div>
+            </div>
+              @else
+            <div class="progress progress-xs m-t-sm bg-white">
+                <div class="progress-bar bg-primary" data-toggle="tooltip" data-original-title="0%" style="width: 0%">
+                </div>
+            </div>
+            @endif
+         @endforeach
+       </div>
+     </div>
+   </div> 
+
 </div>

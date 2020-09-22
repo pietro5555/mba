@@ -1,9 +1,5 @@
 @push('style')
    <style>
-   .white{
-     color:#fff;  
-   }
-
 
     .info-box-contenido{
         padding: 5px 10px;
@@ -140,7 +136,7 @@
           <small id="{{$red->nombre}}">{{$red->link}}</small>
         </div>
         
-        <div class="info-box border-radius" style="background-color: #313335;">
+        <div class="info-box border-radius">
           <div class="box-body" style="padding: 15px 20px;">
              <div class="col-md-3 col-xs-3 col-md-offset-1 col-xs-offset-1">
               <i class="{{$red->imagen}} ampliar" style="color:#{{$red->color}};"></i>
@@ -161,7 +157,7 @@
          <div style="display:none;">
           <small id="{{$red->nombre}}">{{$red->link}}</small>
          </div>
-        <div class="info-box border-radius" style="background-color: #313335;">
+        <div class="info-box border-radius">
           <div class="box-body" style="padding: 15px 20px;">
                 <div class="col-md-3 col-xs-3 col-md-offset-1 col-xs-offset-1">
             <img src="{{asset('redes/'.$red->imagen)}}" height="50" class="border-redes">
@@ -181,7 +177,7 @@
     </div>
 
     <div class="col-sm-6 col-xs-12">
-        <div class="info-box border-radius" style="min-height: 210px; background-color: #313335;">
+        <div class="info-box border-radius" style="min-height: 210px;">
             <div class="col-sm-12 col-xs-12">
                 <h4 class="white">Valor de sus Comisiones en otras monedas</h4>
                  <br>
@@ -210,7 +206,7 @@
         <div style="display:none;">
           <small id="{{$red->nombre}}">{{$red->link}}</small>
         </div>
-        <div class="info-box border-radius" style="background-color: #313335;">
+        <div class="info-box border-radius">
           <div class="box-body" style="padding: 15px 20px;">
                 <div class="col-md-3 col-xs-3 col-md-offset-2 col-xs-offset-2">
             <a href="{{$red->link}}" target="_blank"> <i class="{{$red->imagen}} ampliar" style="color:#{{$red->color}};"></i>
@@ -232,7 +228,7 @@
          <div style="display:none;">
           <small id="{{$red->nombre}}">{{$red->link}}</small>
          </div>
-        <div class="info-box border-radius" style="background-color: #313335;">
+        <div class="info-box border-radius">
           <div class="box-body" style="padding: 15px 20px;">
                 <div class="col-md-3 col-xs-3 col-md-offset-1 col-xs-offset-1">
             <img src="{{asset('redes/'.$red->imagen)}}" height="50" class="border-redes">
@@ -254,7 +250,7 @@
     
 @if (!empty($settingPuntos))
     <div class="col-sm-6 col-xs-12">
-        <div class="info-box border-radius" style="background-color: #313335;">
+        <div class="info-box border-radius">
             <div class="box-body" style="padding: 15px 20px;">
                 <div class="col-md-10 col-xs-10 white" style="font-size: 22px; margin-top: 15px;">
                     <i class="far fa-user" style="color:#00a65a; margin-right: 20px;"></i>
@@ -270,7 +266,7 @@
 
 
     <div class="col-sm-6 col-xs-12">
-        <div class="info-box border-radius" style="background-color: #313335;">
+        <div class="info-box border-radius">
             <div class="box-body" style="padding: 15px 20px;">
                 <div class="col-md-10 col-xs-10 white" style="font-size: 22px; margin-top: 15px;">
                     <i class="fas fa-user-friends" style="color:#6f42c1; margin-right: 20px;"></i>
@@ -327,7 +323,7 @@
      @if(Auth::user()->rol_id == 0)
 
      <div class="col-sm-12 col-xs-12">
-        <div class="info-box border-radius" onclick="copyToClipboard('especial')" style="background-color: #313335;">
+        <div class="info-box border-radius" onclick="copyToClipboard('especial')">
             <div class="box-body" style="padding: 15px 20px;">
                 <div class="col-md-3 col-xs-12 white" style="font-size: 22px; margin-top: 15px;">
                     <i class="fas fa-link" style="color:#007bff; margin-right: 20px;"></i>
@@ -359,7 +355,7 @@
     {{-- referido normal --}}
 
     <div class="col-sm-12 col-xs-12">
-        <div class="info-box border-radius" onclick="copyToClipboard('usuario')" style="background-color: #313335;">
+        <div class="info-box border-radius" onclick="copyToClipboard('usuario')">
             <div class="box-body" style="padding: 15px 20px;">
                 <div class="col-md-3 col-xs-12 white" style="font-size: 22px; margin-top: 15px;">
                     <i class="fas fa-link" style="color:#dc3545; margin-right: 20px;"></i>
@@ -383,7 +379,7 @@
     @if ($settingCliente->cliente == 1)
 
     <div class="col-sm-12 col-xs-12">
-        <div class="info-box border-radius" onclick="copyToClipboard('cliente')" style="background-color: #313335;">
+        <div class="info-box border-radius" onclick="copyToClipboard('cliente')">
             <div class="box-body" style="padding: 15px 20px;">
                 <div class="col-md-3 col-xs-12 white" style="font-size: 22px; margin-top: 15px;">
                     <i class="fas fa-link" style="color:#28a745; margin-right: 20px;"></i>

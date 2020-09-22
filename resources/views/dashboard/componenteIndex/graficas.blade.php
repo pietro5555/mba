@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-6">
-        <div class="box" style="border-radius: 20px; background-color: #313335; border-top: 0;">
+        <div class="info-box" style="border-radius: 20px;">
             <!-- /.box-header -->
             <div class="box-body">
                 <div class="row">
@@ -67,7 +67,7 @@
     </div>
     <div class="col-md-6">
         <!-- MAP & BOX PANE -->
-        <div class="box"style="border-radius: 20px; background-color: #313335; border-top: 0;">
+        <div class="info-box" style="border-radius: 20px;">
             <!-- /.box-header -->
             <div class="box-body">
                 <div class="row">
@@ -75,7 +75,7 @@
                         <h4 class="box-title white">Usuarios</h4>
                         <div class="pad">
                             <!-- Map will be created here -->
-                            <div id="world-map-markers" style="height: 330px;">
+                            <div id="world-map-markers" style="height: 310px;">
                                 <canvas id="chart_usuarios"></canvas>
                             </div>
                         </div>

@@ -11,6 +11,11 @@
     border-radius: 50%;
 }    
 
+
+.white{
+     color:#fff;  
+   }
+
 /* logo y mas */
 
 
@@ -82,9 +87,14 @@ img.circular-herramienta{
 }
 
 td, th {
-  border: 1px solid #dddddd;
+   
   text-align: left;
   padding: 8px;
+}
+
+.table>thead>tr>th{
+  color: white;
+  font-size: 18px;
 }
 
 /*para redondear el footer en el home*/

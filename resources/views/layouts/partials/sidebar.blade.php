@@ -1,3 +1,9 @@
+@php
+    $categoriasSidebar = \App\Models\Category::orderBy('id', 'ASC')->get();
+        
+        $subcategoriasSidebar = \App\Models\Subcategory::orderBy('id', 'ASC')->get();
+@endphp
+
 <!-- Sidebar -->
             <div class="bg-dark-gray" id="sidebar-wrapper">
                 <div class="sidebar-heading border-right" style="border-bottom: solid white 1px; height: 70px;">

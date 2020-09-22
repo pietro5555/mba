@@ -1,5 +1,9 @@
 <?php
 
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Route;
+
+
 // configuracion inicial
 Route::group(['prefix' => 'installer'], function (){
   Route::get('/step1', 'InstallController@index')->name('install-step1');
@@ -148,6 +152,13 @@ Route::get('courses/category/{id}', 'CursosController@show_course_category')->na
 Route::get('courses/mentor/{id}', 'CursosController@perfil_mentor')->name('show.perfil.mentor');
 Route::get('courses/mentor', 'CursosController@show_course_category')->name('show.cursos.category');
 
+/*** RUTAS PARA EL CARRITO DE COMPRA***/
+Route::group(['prefix' => 'shpping-cart'], function(){
+  Route::get('/', 'ShppingCartController@index')->name('shopping-cart.index');
+  Route::get('store/{id}', 'ShoppingCartController@store')->name('shopping-cart.store');
+  Route::get('delete/{id}', 'ShoppingCartController@delete')->name('shopping-cart.delete');
+});
+
 //Rutas de timelive
 Route::group(['prefix' => 'time'], function(){
   Route::get('/timelive', 'CalendarioGoogleController@timelive')->name('timelive');
@@ -173,6 +184,8 @@ Route::group(['prefix' => 'client'], function(){
       Route::get('my-list', 'CourseController@my_courses')->name('client.my-courses');
    });
 });
+
+
 
 //vista de transmisiones
 Route::get('/transmisiones', 'TransmisionesController@transmisiones')->name('transmisiones');
@@ -944,13 +957,3 @@ Route::group(['prefix' => 'link','middleware' => ['menu']], function(){
         Route::post('ckeditor/image_upload', 'LinkController@upload')->name('upload');
         
     });
-    
-
-  
-});
-
-
-
-
-
-

@@ -131,8 +131,46 @@ class CourseController extends Controller{
                 ->select(array ('wp98_users.display_name as nombre', 'wp98_users.avatar as avatar', 'categories.title as categoria', 'courses.mentor_id as mentor_id'))
                 ->get();
 
+        $cursos = Auth::user()->courses_buyed->take(4);
+        $cursosArray = [];
+
+        $cursosMasComprados = DB::table('courses_users')
+                                ->select(DB::raw('count(course_id) as purchases_count, course_id'))
+                                ->groupBy('course_id')
+                                ->orderBy('purchases_count', 'DESC')
+                                ->get();
+
+        $cursosRecomendados = collect();
         
-            return view('cursos.cursos')->with(compact('username','cursosDestacados', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next', 'courses', 'mentores'));
+        foreach ($cursosMasComprados as $cursoComprado){
+            array_push($cursosArray, $cursoComprado->course_id);
+
+            $curso = Course::where('id', '=', $cursoComprado->course_id)->first();
+
+            $cursosRecomendados->push($curso);
+        }
+
+        $cursosMasVistos = Course::where('views', '>', 0)
+                                ->whereNotIn('id', $cursosArray)
+                                ->orderBy('views', 'DESC')
+                                ->get(); 
+
+        foreach ($cursosMasVistos as $cursoVisto){
+            $cursosRecomendados->push($cursoVisto);
+        }
+        $total = count($cursosRecomendados);
+
+            //ULTIMO CURSO VISTO POR EL USUARIO
+            $last_course = DB::table('courses')
+            ->join('courses_users', 'courses_users.course_id', '=', 'courses.id')
+            ->where('courses_users.user_id', '=', Auth::user()->ID )
+            ->orderBy('courses_users.updated_at', 'DESC')
+            ->get()
+            ->take(1);
+            //return  $last_course;
+
+
+            return view('cursos.cursos')->with(compact('username','cursosDestacados', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next', 'courses', 'mentores', 'cursos', 'cursosRecomendados', 'total', 'last_course'));
     }
 
     public function record(){
@@ -178,7 +216,16 @@ class CourseController extends Controller{
                             $query->select(DB::raw('avg(points)'));
                         }
                     ])->first();
-       // dd(number_format($curso->promedio, 0));
+        
+        $dur = 0;
+        foreach ($curso->lessons as $leccion){
+            $dur += $leccion->duration;
+        } 
+        $tiempo = explode(".", $dur);
+        $segundos = $tiempo[0]*60 + $tiempo[1]; 
+        $curso->hours = floor($segundos/ 3600);
+        $curso->minutes = floor(($segundos - ($curso->hours * 3600)) / 60);
+        $curso->seconds = $segundos - ($curso->hours * 3600) - ($curso->minutes * 60);
 
         return view('cursos.show_one_course')->with(compact('curso'));
     }
@@ -220,10 +267,48 @@ class CourseController extends Controller{
     * Cliente / Cursos / Mis Cursos
     */
     public function my_courses(){
-        $cursos = Auth::user()->courses_buyed;
+        $cursos = Auth::user()->courses_buyed->take(12);
 
-        dd($cursos);
+        return view('cursos.all_courses', compact('cursos'));
+
     }
+
+    /*CURSO FAVORITO*/
+    public function course_favorite($course_id){
+
+        $user_id = Auth::user()->ID;
+
+        $favorite = DB::table('courses_users')
+        ->where('course_id', '=',$course_id)
+        ->where('user_id', '=', $user_id)
+        ->update(['favorite' => 1]);
+        
+        return redirect()->action('CourseController@favorites');
+
+    }
+
+    /*EVENTOS Y CURSOS FAVORITOS DEL USUARIO*/
+    public function favorites(){
+        //Eventos favoritos de un usuario
+        $eventos_favoritos = DB::table('events')
+        ->join('events_users', 'events_users.event_id', '=', 'events.id')
+        ->where('events_users.user_id', '=', Auth::user()->ID )
+        ->where('events_users.favorite', '=',1 )
+        ->get();
+
+        //Cursos favoritos de un usuario
+
+        $cursos_favoritos = Auth::user()->courses_buyed()->wherePivot('favorite', '=', 1)->get();
+        //return $cursos_favoritos;
+         return view('timelive.favorite', compact('eventos_favoritos', 'cursos_favoritos'));
+    }
+
+    /*ULTIMO CURSO VISTO POR EL USUARIO*/
+    public function last_viewed_course(){
+
+
+    }
+
 
     /**
     * Admin / Cursos / Listado de Cursos / Nuevo Curso

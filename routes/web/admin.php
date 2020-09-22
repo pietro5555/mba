@@ -176,13 +176,18 @@ Route::group(['prefix' => 'courses', 'middleware' => ['auth']], function(){
   Route::get('/', 'CourseController@index')->name('courses');
   Route::get('show/{slug}/{id}', 'CourseController@show')->name('courses.show');
   Route::get('recommended', 'CourseController@recommended')->name('courses.recommended');
+  Route::get('favorite/{id}', 'CourseController@course_favorite')->name('courses.favorite');
+
 });
+
+
 
 /*** RUTAS PARA LOS CLIENTES ***/
 Route::group(['prefix' => 'client'], function(){
    Route::group(['prefix' => 'courses'], function(){
       Route::get('my-list', 'CourseController@my_courses')->name('client.my-courses');
    });
+  Route::get('favorites/', 'CourseController@favorites')->name('favorites');
 });
 
 
@@ -202,19 +207,19 @@ Route::get('encode', function(){
 
 
 //Agendar
-Route::get('schedule/{event_id}/{user_id}', 'CalendarioGoogleController@schedule')->name('schedule.event');
-Route::get('calendar', 'CalendarioGoogleController@calendar')->name('schedule.calendar');
+Route::get('schedule/{event_id}', 'EventsController@schedule')->name('schedule.event');
+Route::get('calendar', 'EventsController@calendar')->name('schedule.calendar');
 //vista de anotaciones
 Route::get('/anotaciones', 'NoteController@index')->name('anotaciones');
 Route::post('/anotaciones/store', 'NoteController@store')->name('live.anotaciones');
 
 //vista de timelive
     Route::group(['prefix' => 'time'], function(){
-    Route::get('/timelive', 'CalendarioGoogleController@timelive')->name('timelive');
+    Route::get('/timelive', 'EventsController@timelive')->name('timelive');
     Route::get('/oauth/{id}', 'CalendarioGoogleController@oauth')->name('oauthCallback');
     Route::get('/redirigircalendario', 'CalendarioGoogleController@index')->name('cal.index');
     Route::get('/proximo/{id}', 'CalendarioGoogleController@proximo')->name('time-prox');
-    Route::get('/favorite/{id}', 'CalendarioGoogleController@event_favorite')->name('event.favorite');
+    Route::get('/favorite/{id}', 'EventsController@event_favorite')->name('event.favorite');
      });
 
 // Events landing
@@ -280,6 +285,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu', 
 
       Route::group(['prefix' => 'lessons'], function(){
         Route::get('/{id}', 'LessonController@index')->name('admin.courses.lessons');
+        Route::get('show/{id}', 'LessonController@show')->name('admin.courses.lessons.show');
+        Route::get('load-video-duration/{id}/{duration?}', 'LessonController@load_video_duration')->name('admin.courses.lessons.load-video-duration');
         Route::post('store', 'LessonController@store')->name('admin.courses.lessons.store');
         Route::get('edit/{id}', 'LessonController@edit')->name('admin.courses.lessons.edit');
         Route::post('update', 'LessonController@update')->name('admin.courses.lessons.update');
@@ -957,3 +964,9 @@ Route::group(['prefix' => 'link','middleware' => ['menu']], function(){
         Route::post('ckeditor/image_upload', 'LinkController@upload')->name('upload');
         
     });
+
+
+
+
+
+

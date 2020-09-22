@@ -146,7 +146,7 @@ class AdminController extends Controller
             $totalcobrado = Wallet::where('iduser', Auth::user()->ID)->where('tipotransacion', '2')->sum('debito');
             
             //Redes Sociales
-            $redes = Redesociales::all();
+            $redes = Redesociales::orderBy('id', 'ASC')->get();
             
             //Pop up
             $pop = Pop::find(1);

@@ -381,10 +381,6 @@
         padding-top: 20px;
     }
 
-    .course-banner-caption{
-        top: 40%;
-    }
-
 
     .vertical-menu p
     {
@@ -425,6 +421,10 @@
     font-size: 2vh;
     }
 
+.course-banner-caption{
+        top: 70%;
+    }
+
 }
 
 @media  (min-width: 576px) and (max-width: 768px) {
@@ -452,7 +452,24 @@ font-size: 16px;
 }
     }
     
-}
+    @media (min-width: 1366px) {
+
+        .course-banner-caption{
+            position: absolute;
+            bottom: 0 !important;
+            top: 85%;
+        }
+        
+    }
+
+    @media (min-width: 1400px ) {
+         .course-banner-caption{
+            position: absolute;
+            bottom: 0 !important;
+            top: 65%;
+        }
+        
+    }
 
 .title-page-course{
     color: #FFFF;
@@ -467,13 +484,13 @@ font-size: 16px;
     padding-bottom: 30px;
 }
 .course-banner-img{
-    background: transparent linear-gradient(178deg, #00000000 0%, #000000 100%) 0% 0% no-repeat padding-box;
-    opacity: 0.74;
+background: transparent linear-gradient(178deg, #00000000 0%, #000000 100%) 0% 0% no-repeat padding-box;
+opacity: 0.74;
 }
 
 .course-banner-caption{
     position: absolute;
-    top: 70%;
+    bottom: 0 !important;
 }
 .bar-progress-banner{
     position: absolute;
@@ -491,7 +508,11 @@ bottom: 1em;
 
 }
 
-
+.img-opacity{
+height: 328px;
+    background: transparent linear-gradient(360deg, #1C1D21 0%, #1C1D21 29%, #00000046 100%) 0% 0% no-repeat padding-box;
+    opacity: 0.7;
+}
 .description-course{
     color: #DEDADA;
     opacity: 1;
@@ -499,7 +520,7 @@ bottom: 1em;
 
 .play-course-button{
     border: 1px;
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
 .section-title-courses{
@@ -582,7 +603,7 @@ border-radius: 0px;
 .carousel-image{
 background: transparent linear-gradient(180deg, #00000000 0%, #000000 100%) 0% 0% no-repeat padding-box;
 opacity: 8;
-max-height: 320px
+height: 320px
 }
 .bg-carousel{
 
@@ -1150,6 +1171,7 @@ border-bottom: 1px solid #707070;
     box-shadow: 0 1px 1px rgba(0,0,0,0.1);
 }
 
+/*ESTILOS CALENDARIO DE EVENTOS*/
 .fc-view-container{
     margin: 1em;
 }
@@ -1163,7 +1185,10 @@ border-bottom: 1px solid #707070;
 .fc-unthemed td.fc-today {
     background: #007bff;
 }
-
+.fc-day-grid-event .fc-content {
+    white-space: normal;
+    overflow: hidden;
+}
 
 .img-banner-live{
     height: 704px;

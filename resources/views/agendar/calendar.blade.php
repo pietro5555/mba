@@ -19,21 +19,21 @@
         },
         
         events    : [
-        @foreach($calendarios as $calendario)
+        @foreach($user_calendar as $calendario)
         {
-          ID        : '{{$calendario['ID']}}',
-          iduser    : '{{$calendario['iduser']}}',
-          title     : '{{$calendario['titulo']}}',
-          contenido : '{{$calendario['contenido']}}',
-          color     : '{{$calendario['color']}}',
-          start     : '{{$calendario['inicio']}}',
-          end       : '{{$calendario['vence']}}',
-          backgroundColor: '{{$calendario['color']}}',
-          borderColor    : '{{$calendario['color']}}', 
+          ID        : '{{$calendario->id}}',
+          iduser    : '{{$calendario->iduser}}',
+          title     : '{{$calendario->titulo}}',
+          color     : '{{$calendario->color}}',
+          start     : '{{$calendario->inicio}}',
+          end       : '{{$calendario->vence}}',
+          backgroundColor: '{{$calendario->color}}',
+          borderColor    : '{{$calendario->color}}', 
         },
         @endforeach
-        
       ],
+      timeFormat: 'hh:mm a',
+
       
       dayClick:function(date, jsEvent, view){
         $('#fechainicio').val(date.format("YYYY-MM-DD[T]HH:mm:ss"));
@@ -43,8 +43,6 @@
       eventClick:function(calEvent,jsEvent,view){
         $('#titulo').html(calEvent.title);
         $('#titu').val(calEvent.title);
-        $('#contenido').val(calEvent.contenido);
-        $('#lugar').val(calEvent.lugar);
         $('#color').val(calEvent.color);
         $('#ID').val(calEvent.ID);
         $('#iduser').val(calEvent.iduser);

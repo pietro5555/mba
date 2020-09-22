@@ -73,3 +73,10 @@ Dev: Luisana Marín
 18/09/2020
 Dev: Prieto 
 * Nuevo campo agregado id_courses (correr el script events)
+
+19/09/2020
+Dev: Luisana Marín
+*Nuevo campo duration (time PREDEFINIDO 0:00:00 NOT NULL) a la tabla Lessons (Correr script lessons)
+20/09/2020
+Dev: Crisleivys
+* Modificado el id_courses por course_id (correr el script events)

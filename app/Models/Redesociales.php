@@ -11,7 +11,7 @@ protected $table = "redes_sociales";
 
 
     protected $fillable=[
-    	'link','tipo','imagen','color'
+    	'link','tipo','imagen','color','nombre'
     ];
 
 }

@@ -68,7 +68,7 @@ class TransmisionesController extends Controller
 
         foreach($finalizados as $fin){
          $user = User::find($fin->user_id);
-         $cursos = Course::find($fin->id_courses);
+         $cursos = Course::find($fin->course_id);
          $categoria = Category::find($cursos->category_id);
          $fin->avatar = $user->avatar;
          $fin->nombre = $user->display_name;

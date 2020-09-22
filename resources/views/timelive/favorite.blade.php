@@ -19,8 +19,8 @@
         </div>
     @endif
 @if(!empty($eventos_favoritos))
-<div>
-  <h3 class="text-primary text-center mt-5 mb-5">EVENTOS FAVORITOS</h3>
+<div class="col-md-12">
+  <h2 class="text-white mt-5 mb-5">EVENTOS FAVORITOS</h2>
   
 </div>
 <div class="container-fluid">
@@ -47,7 +47,67 @@
 
 @endif  
 
+@if(!empty($cursos_favoritos))
+<div class="col-md-12">
+  <h2 class="text-white mt-5 mb-5">CURSOS FAVORITOS</h2>
+  
+</div>
+<div class="container-fluid">
+  <div class="row">
+        @foreach ($cursos_favoritos as $favorito)
+            <div class="col-md-4 mt-1">
+                    @if (!is_null($favorito->cover))
+                    <img src="{{ asset('uploads/images/courses/covers/'.$favorito->cover) }}" class="card-img-top img-opacity" alt="..."> 
+                    @else
+                        <img src="{{ asset('uploads/images/courses/covers/default.jpg') }}" class="card-img-top img-opacity" alt="...">
+                    @endif
+                   <div class="card-img-overlay ml-1 mr-1">
+                        <div class="container-fluid">
+                        <div class="row card-carousel-text mr-1">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-9 p-0">
+                                        <h6>
+                                            <a href="{{ route('courses.show', [$favorito->slug, $favorito->id]) }}" class="text-white"><i class="text-success fa fa-play-circle"></i>{{ $favorito->title }}</a>
+                                        </h6>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <i class="far fa-user-circle text-white"><p class="text-center text-white" style="font-size: 10px;">{{ $favorito->views }}</p></i>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <i class="far fa-thumbs-up text-white"><p class="text-center text-white" style="font-size: 10px;">{{ $favorito->likes }}</p></i>
+                                            </div>
+                                        </div>
+                                                            
+                                        
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <h6>
+                                            <a href="{{ url('courses/category/'.$favorito->category_id) }}" class="subtitle-cat">{{$favorito->category->title}} </a>
+                                        </h6>
+                                    </div>
+                                    <div class="col-md-2">
 
+                                        <h6 class="text-right"><img src="{{ asset('images/icons/heart.svg') }}" alt="" height="20px" width="20px"></h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                   </div>
+        @endforeach
+</div>
+</div>
+@else
+
+<div class="section-title-landing text-center"><h3 class="mt-5 mb-5">NO SE ENCONTRARON CURSOS FAVORITOS</h3></div>
+
+@endif 
 
 
   {{-- SECCIÓN REFERIDOS (USUARIOS LOGGUEADOS) --}}

@@ -1,4 +1,4 @@
-  @guest
+ @guest
    @php
   $carrito = DB::table('carritos')
     ->where('ip', '=', request()->ip())
@@ -73,7 +73,12 @@
     @endphp
     <!-- Logo -->
     <a class="logo" href="{{ url('/') }}">
-        <img src="{{ asset('assets/img/logo-light.png') }}" alt="logo" class="logo-default" />
+        <div class="col-md-1">
+        <img src="{{ asset('images/logo.png') }}" style="width: 40px; height: 40px;">
+        </div>
+        
+        <div style="color: white; font-size: 16px; font-weight: bold; margin-top: -10px;">My Business</div> 
+        <div style="color: white; font-size: 11px; margin-top: -30px;">A c a d e m y  p r o</div>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -86,7 +91,7 @@
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
                 
-                 <li class="dropdown notifications-menu">
+                 {{--<li class="dropdown notifications-menu">
                     <a href="{{route('setting-modo-oscuro', Auth::user()->ID)}}">
                         @if(Auth::user()->modo_oscuro == 1)
                         <i class="fas fa-adjust"></i>
@@ -98,7 +103,7 @@
                 </li>
                 
                 
-                {{--<li class="dropdown notifications-menu">
+                <li class="dropdown notifications-menu">
                     <a href="{{route('chat-inicio')}}">
                         <i class="fa fa-comments"></i>
                         @if($mensajeria != '0')
@@ -170,7 +175,7 @@
                 
                 
         <!-- Escojer el color del sistema solo para el admin -->        
-            @if(Auth::user()->rol_id == 0)
+            {{--@if(Auth::user()->rol_id == 0)
                 <li>
                     
 <a href="#" data-container="body" title="Selecione el color del sistema" data-toggle="popover" data-placement="left" data-html="true" 
@@ -191,7 +196,7 @@
                     ><i class="fas fa-cog"></i></a>
                     
                 </li>
-            @endif
+            @endif--}}
                 
                 <!-- Tasks: style can be found in dropdown.less -->
 

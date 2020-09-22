@@ -211,7 +211,7 @@ class CourseController extends Controller{
     */
     public function show($slug, $id){
         $curso = Course::where('id', '=', $id)
-                    ->withCount(['lessons', 'ratings', 
+                    ->withCount(['lessons', 'ratings', 'users', 
                         'ratings as promedio' => function ($query){
                             $query->select(DB::raw('avg(points)'));
                         }
@@ -221,11 +221,15 @@ class CourseController extends Controller{
         foreach ($curso->lessons as $leccion){
             $dur += $leccion->duration;
         } 
-        $tiempo = explode(".", $dur);
-        $segundos = $tiempo[0]*60 + $tiempo[1]; 
-        $curso->hours = floor($segundos/ 3600);
-        $curso->minutes = floor(($segundos - ($curso->hours * 3600)) / 60);
-        $curso->seconds = $segundos - ($curso->hours * 3600) - ($curso->minutes * 60);
+        $curso->duration = $dur;
+        if ($dur > 0){
+            $tiempo = explode(".", $dur);
+            $segundos = $tiempo[0]*60 + $tiempo[1]; 
+            $curso->hours = floor($segundos/ 3600);
+            $curso->minutes = floor(($segundos - ($curso->hours * 3600)) / 60);
+            $curso->seconds = $segundos - ($curso->hours * 3600) - ($curso->minutes * 60);
+        }
+       
 
         return view('cursos.show_one_course')->with(compact('curso'));
     }

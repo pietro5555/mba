@@ -1,5 +1,9 @@
 <?php
 
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Route;
+
+
 // configuracion inicial
 Route::group(['prefix' => 'installer'], function (){
   Route::get('/step1', 'InstallController@index')->name('install-step1');

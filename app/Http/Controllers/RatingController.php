@@ -40,6 +40,7 @@ class RatingController extends Controller
         $valoracion->date = date('Y-m-d');
         $valoracion->save(); 
         
+        return redirect('courses/show/'.$request->course_slug.'/'.$request->course_id)->with('msj-exitoso', 'Su calificación ha sido creada con éxito.');
     }
 
     /**

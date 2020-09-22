@@ -1,21 +1,13 @@
 <div class="row">
     <div class="col-md-6">
-        <div class="box" style="border-radius: 20px;">
-            <div class="box-header with-border">
-                <h3 class="box-title">Informe de Ganancias</h3>
-
-                <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                    </button>
-
-                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i
-                            class="fa fa-times"></i></button>
-                </div>
-            </div>
+        <div class="box" style="border-radius: 20px; background-color: #313335; border-top: 0;">
             <!-- /.box-header -->
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-12">
+
+                         <h4 class="box-title white">Ganancias</h4>
+
                         {{-- <p class="text-center">
                             <strong>Ventas: 1 Ene, 2019 - 30 Jul, 2019</strong>
                         </p> --}}
@@ -32,7 +24,7 @@
                     <!-- /.row -->
                 </div>
                 <!-- ./box-body -->
-                <div class="box-footer">
+                {{--<div class="box-footer">
                     <div class="row">
                         <div class="col-sm-6 col-xs-6">
                             <div class="description-block border-right">
@@ -66,7 +58,7 @@
 
                     </div>
                     <!-- /.row -->
-                </div>
+                </div>--}}
                 <!-- /.box-footer -->
             </div>
             <!-- /.box -->
@@ -75,30 +67,21 @@
     </div>
     <div class="col-md-6">
         <!-- MAP & BOX PANE -->
-        <div class="box box-success" style="border-radius: 20px;">
-            <div class="box-header with-border">
-                <h3 class="box-title">Reporte de Usuarios</h3>
-
-                <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                    </button>
-                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i
-                            class="fa fa-times"></i></button>
-                </div>
-            </div>
+        <div class="box"style="border-radius: 20px; background-color: #313335; border-top: 0;">
             <!-- /.box-header -->
-            <div class="box-body no-padding">
+            <div class="box-body">
                 <div class="row">
                     <div class="col-md-12 col-sm-12">
+                        <h4 class="box-title white">Usuarios</h4>
                         <div class="pad">
                             <!-- Map will be created here -->
-                            <div id="world-map-markers" style="height: 230px;">
+                            <div id="world-map-markers" style="height: 330px;">
                                 <canvas id="chart_usuarios"></canvas>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="box-footer border-radius" style="margin-top: 40px;">
+                {{--<div class="box-footer border-radius" style="margin-top: 40px;">
                     <div class="col-md-12 col-sm-12">
                         <div class="pad box-pane-right bg-green" style="border-radius: 20px;">
                             <div class="description-block">
@@ -111,7 +94,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>--}}
                 <!-- /.row -->
             </div>
             <!-- /.box-body -->

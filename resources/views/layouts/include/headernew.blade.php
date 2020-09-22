@@ -1,4 +1,4 @@
-  @guest
+ @guest
    @php
   $carrito = DB::table('carritos')
     ->where('ip', '=', request()->ip())
@@ -73,7 +73,12 @@
     @endphp
     <!-- Logo -->
     <a class="logo" href="{{ url('/') }}">
-        <img src="{{ asset('assets/img/logo-light.png') }}" alt="logo" class="logo-default" />
+        <div class="col-md-1">
+        <img src="{{ asset('images/logo.png') }}" style="width: 40px; height: 40px;">
+        </div>
+        
+        <div style="color: white; font-size: 16px; font-weight: bold; margin-top: -10px;">My Business</div> 
+        <div style="color: white; font-size: 11px; margin-top: -30px;">A c a d e m y  p r o</div>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">

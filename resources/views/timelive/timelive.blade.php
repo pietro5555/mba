@@ -265,7 +265,7 @@ $segundo++;
  <div class="card-img-overlay" style="margin-left: 10px; margin-right: 10px;">
   <h5 class="card-title font-weight-bold" style="margin-top: 170px; color: #2A91FF;">{{$prox->title}} </h5>
   <p class="card-text font-weight-bold mr-2" style="margin-top: -10px; font-size: 12px;"> <i class="far fa-calendar mr-2" style="font-size: 18px;"> </i>
-    {{$prox->date}}
+    {{strftime("%A, %d de %B", strtotime($prox->date))}} 
    <i class="far fa-clock ml-2" style="font-size: 18px;"></i>{{\Carbon\Carbon::parse($prox->date)->format('g:i a')}} 
    </p>
   <a href="{{route ('schedule.event',[$prox->id]) }}" class="btn btn-success btn-block">Agendar</a>

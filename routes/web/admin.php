@@ -172,6 +172,8 @@ Route::group(['prefix' => 'courses', 'middleware' => ['auth']], function(){
   Route::get('/', 'CourseController@index')->name('courses');
   Route::get('show/{slug}/{id}', 'CourseController@show')->name('courses.show');
   Route::get('recommended', 'CourseController@recommended')->name('courses.recommended');
+  Route::get('favorite/{id}', 'CourseController@course_favorite')->name('courses.favorite');
+
 });
 
 
@@ -181,6 +183,7 @@ Route::group(['prefix' => 'client'], function(){
    Route::group(['prefix' => 'courses'], function(){
       Route::get('my-list', 'CourseController@my_courses')->name('client.my-courses');
    });
+  Route::get('favorites/', 'CourseController@favorites')->name('favorites');
 });
 
 
@@ -200,19 +203,19 @@ Route::get('encode', function(){
 
 
 //Agendar
-Route::get('schedule/{event_id}', 'CalendarioGoogleController@schedule')->name('schedule.event');
-Route::get('calendar', 'CalendarioGoogleController@calendar')->name('schedule.calendar');
+Route::get('schedule/{event_id}', 'EventsController@schedule')->name('schedule.event');
+Route::get('calendar', 'EventsController@calendar')->name('schedule.calendar');
 //vista de anotaciones
 Route::get('/anotaciones', 'NoteController@index')->name('anotaciones');
 Route::post('/anotaciones/store', 'NoteController@store')->name('live.anotaciones');
 
 //vista de timelive
     Route::group(['prefix' => 'time'], function(){
-    Route::get('/timelive', 'CalendarioGoogleController@timelive')->name('timelive');
+    Route::get('/timelive', 'EventsController@timelive')->name('timelive');
     Route::get('/oauth/{id}', 'CalendarioGoogleController@oauth')->name('oauthCallback');
     Route::get('/redirigircalendario', 'CalendarioGoogleController@index')->name('cal.index');
     Route::get('/proximo/{id}', 'CalendarioGoogleController@proximo')->name('time-prox');
-    Route::get('/favorite/{id}', 'CalendarioGoogleController@event_favorite')->name('event.favorite');
+    Route::get('/favorite/{id}', 'EventsController@event_favorite')->name('event.favorite');
      });
 
 // Events landing

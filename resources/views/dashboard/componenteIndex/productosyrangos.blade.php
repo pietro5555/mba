@@ -2,6 +2,13 @@
     .table>thead>tr>th {
     border-bottom: 0;
    }
+   
+   .ajustext{
+   color: white;
+   text-align: center;
+   background-color: #403f3f;
+   border-spacing: 0px 10px;
+   }
 </style>
 
 <div class="row">
@@ -11,7 +18,7 @@
         <h3 class="box-title white" style="margin-top: -5px; margin-bottom: 20px; padding: 15px 20px;border-radius: 20px; background-color: #007bff; color: white;">Últimos Pedidos</h3>
           
           <div class="table-responsive">
-          <table class="table table-dark">
+          <table class="table" style="border-spacing: 0px 10px; border-collapse: separate;">
             <thead>
               <tr>
                 <th class="text-center">Orden</th>
@@ -24,16 +31,16 @@
              
               @foreach ($ordenesView as $compra)
               <tr>
-                <td class="text-center">
-                  {{$compra['ordenID']}}
+                <td class="ajustext" style="border-top: 0;">
+                 {{$compra['ordenID']}}
                 </td>
-                <td class="text-center">
-                  {{$compra['items']}}
+                <td class="ajustext" style="border-top: 0;">
+                 {{$compra['items']}}
                 </td>
-                <td class="text-center">
+                <td class="ajustext" style="border-top: 0;">
                   {{$compra['estadoCompra']}}
                 </td>
-                <td class="text-center">
+                <td class="ajustext" style="border-top: 0;">
                   {{date('d-m-Y', strtotime($compra['fechaOrden']))}}
                 </td>
               </tr>

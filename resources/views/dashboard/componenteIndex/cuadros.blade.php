@@ -4,25 +4,7 @@
     .info-box-contenido{
         padding: 5px 10px;
     }
-    
-    .info-box-icones{
-    border-top-left-radius: 2px;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 2px;
-    display: block;
-    float: right;
-    margin-right: 20px;
-    margin-top: 20px;
-    height: 40px;
-    width: 40px;
-    text-align: center;
-    font-size: 25px;
-    line-height: 40px;
-    background: rgba(0,0,0,0.2);
-    border-radius: 60%;
-    border: 1px solid #fff;
-    }
+
    </style>
 @endpush
 

@@ -84,6 +84,11 @@ Dev: Crisleivys
 * Nuevo campo favorite en tabla courses_users (correr script courses_users)
 
 23/09/2020
+Dev: Prieto 
+* Nuevo campo agregado nombre (correr el script redes_sociales)
+
+
+23/09/2020
 Dev: Carlos Gonzalez
 *Nueva tabla courses_orden (Correr script courses_orden.sql)
 *Nueva tabla coinpayment_transaction (Correr script coinpayment_transaction.sql)
@@ -99,3 +104,4 @@ en esta ruta "vendor/hexters/coinpayment/src/Http/Controllers"
 Dev: Luisana Marín
 *Nueva tabla evaluations_users (Correr script evaluations_users)
 *Nueva tabla evaluations_users_answers (Correr script evaluations_users_answers)
+

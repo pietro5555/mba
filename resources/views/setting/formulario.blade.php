@@ -6,7 +6,7 @@
 <div class="col-xs-12">
   <div class="box box-info">
     <div class="box-header with-border">
-      <div class="box-title">
+      <div class="box-title white">
         <h3>Terminos y Condiciones</h3>
         <button class="btn btn-primary btn-block mostrar float-right toggle">Editar</button>
       </div>
@@ -23,7 +23,7 @@
         <form class="" action="{{route('setting-terminos')}}" method="post" enctype="multipart/form-data">
           {{ csrf_field() }}
           <div class="form-group col-xs-12 ptr">
-            <label for="">Terminos y Condiciones</label>
+            <label for="" class="white">Terminos y Condiciones</label>
             <input class="form-control" type="file" name="terminos" accept="application/pdf">
           </div>
           <div class="form-group col-sm-12 ji">
@@ -48,7 +48,7 @@
   <div class="box box-info">
     <div class="box-header with-border">
       
-        <h3>Formulario de Registro</h3>
+        <h3 class="white">Formulario de Registro</h3>
         <div class="col-md-3 col-xs-12">
         <button type="button" class="btn btn-info btn-block hh" data-toggle="modal" data-target="#myModal">
           Agregar Campo
@@ -56,7 +56,7 @@
         </div>
         
         <div class="col-md-3 col-xs-12">
-        <a href="{{route('setting-posicionamiento')}}" class="btn btn-info btn-block">
+        <a href="{{route('setting-posicionamiento')}}" class="btn btn-info btn-block white">
           @if($settings->posicionamiento == '0') Desactivar Posicionamiento @else Activar Posicionamiento @endif
         </a>
         </div>

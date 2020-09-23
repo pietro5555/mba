@@ -80,3 +80,7 @@ Dev: Luisana Marín
 20/09/2020
 Dev: Crisleivys
 * Modificado el id_courses por course_id (correr el script events)
+
+23/09/2020
+Dev: Prieto 
+* Nuevo campo agregado nombre (correr el script redes_sociales)

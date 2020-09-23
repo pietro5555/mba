@@ -229,11 +229,20 @@ Route::get('/event/{event_id}', 'EventsController@show_event')->name('show.event
 Route::post('/settings/event/{event_id}', 'SetEventController@store')->name('set.event.store');
 
 
-Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu', 'role']], function() {
+Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu']], function() {
 
   Route::group(['prefix' => 'red'], function(){
         Route::get('/listado', 'RedController@index')->name('admin-red-index');
         Route::post('/filtrered', 'RedController@filtrered')->name('admin-red-filtre');
+
+      // vista de referidos directos e indirectos
+      Route::get('/direct', 'RedController@direct')->name('red.directos');
+      //filtros de referidos directos e indirectos
+      Route::post('/filtrered', 'RedController@filtre')->name('red.filtre');
+      //volumen grupal
+      Route::get('/individual', 'RedController@individual')->name('individual');
+      Route::post('/todofecha', 'RedController@todofecha')->name('todofecha');
+      Route::post('/filtrouser', 'RedController@filtrouser')->name('filtrouser');
       });
 
   Route::group(['prefix' => 'usuarios'], function(){

@@ -3,86 +3,65 @@
 @section('content')
 
 <div class="col-xs-12">
-      <div class="box box-info">
-        <div class="box-body">
-            
-            @if(Auth::user()->rol_id == 0)
-            <form method="POST" action="{{ route('wallet-filtro') }}" class="form-inline" style="margin-bottom:10px;">
+  <div class="box box-info" style="background-color: #007bff; border-radius: 10px;">
+    <div class="box-body">
+
+      <h4 class="box-title white">
+              <span class="info-box-icon-fecha-white">
+               <i class="fas fa-calendar-week"></i>
+               </span>
+              <p style="padding: 10px 50px;"> Filtrar Por fechas</p>
+          </h4>
+
+         @if(Auth::user()->rol_id == 0)
+          <form method="POST" action="{{ route('wallet-filtro-user') }}">
                 {{ csrf_field() }}
-                
-                <div class="form-group has-feedback date col-xs-12 col-md-4">
-                    <label class="control-label">Fecha desde</label>
-                    <input class="form-control form-control-solid placeholder-no-fix" type="date" autocomplete="off"
-                        name="fecha1" required />
-                </div>
-                <div class="form-group has-feedback date col-xs-12 col-md-4">
-                    <label class="control-label">Fecha hasta</label>
-                    <input class="form-control form-control-solid placeholder-no-fix" type="date" autocomplete="off"
-                        name="fecha2" required />
-                </div>
-                <div class="form-group has-feedback date col-xs-12 col-md-4" style="margin-bottom: 20px;">
-                    <button class="btn green padding_both_small" type="submit" id="btn">
-                        buscar
-                    </button>
-                </div>
-            </form>
-            
-            
-            
-            <form method="POST" action="{{ route('wallet-filtro-user') }}" class="form-inline">
-                {{ csrf_field() }}
-                
-                
-                <div class="form-group has-feedback date col-xs-12 col-md-3">
-                    <label class="control-label">ID del Usuario</label>
+               
+              <div class="col-md-12">
+                <div class="form-group col-xs-12 col-md-3">
+                    <label class="control-label" style="color:white">ID del Usuario</label>
                     <input class="form-control" type="text" autocomplete="off"
                         name="user" required />
                 </div>
                 
-                <div class="form-group has-feedback date col-xs-12 col-md-3">
-                    <label class="control-label">Fecha desde</label>
-                    <input class="form-control form-control-solid placeholder-no-fix" type="date" autocomplete="off"
-                        name="fecha1" required />
-                </div>
-                <div class="form-group has-feedback date col-xs-12 col-md-3">
-                    <label class="control-label">Fecha hasta</label>
-                    <input class="form-control form-control-solid placeholder-no-fix" type="date" autocomplete="off"
-                        name="fecha2" required />
-                </div>
-                <div class="form-group has-feedback date col-xs-12 col-md-3">
-                    <button class="btn green padding_both_small" type="submit" id="btn" style="margin-top:20px;">
+                
+                <div class="form-group col-xs-12 col-md-2" style="margin-top:20px;">
+                    <button class="btn btn-success" type="submit">
                         buscar
                     </button>
                 </div>
-            </form>
-            @else
-            
-            <form method="POST" action="{{ route('wallet-filtro-normal') }}" class="form-inline">
-                {{ csrf_field() }}
-                
-                
-                <div class="form-group has-feedback date col-xs-12 col-md-3">
-                    <label class="control-label">Nombre del Usuario</label>
-                    <input class="form-control" type="text" autocomplete="off"
-                        name="display" required />
-                </div>
-                
-                <div class="form-group has-feedback date col-xs-12 col-md-3">
-                    <button class="btn green padding_both_small" type="submit" id="btn" style="margin-top:20px;">
-                        buscar
-                    </button>
-                </div>
+               </div>
             </form>
             @endif
+
+            <form method="POST" action="{{ route('wallet-filtro') }}">
+                {{ csrf_field() }}
+                
+               <div class="col-md-12"> 
+                <div class="form-group col-xs-12 col-md-3">
+                    <label class="control-label" style="color:white">Desde</label>
+                    <input class="form-control" type="date" name="fecha1" required>
+                </div>
+                <div class="form-group date col-xs-12 col-md-3">
+                    <label class="control-label" style="color:white">Hasta</label>
+                    <input class="form-control" type="date" name="fecha2" required>
+                </div>
+                <div class="form-group col-xs-12 col-md-4" style="margin-top: 20px;">
+                    <button class="btn btn-success" type="submit">
+                        buscar
+                    </button>
+                </div>
+               </div> 
+            </form>
             
         </div>
-      </div>
+    </div>
 </div>
 
 <div class="col-xs-12">
     <div class="box box-info">
         <div class="box-body">
-            <table id="mytable" class="table table-bordered table-hover table-responsive">
+            <table id="mytable" class="table">
                 <thead>
                     <tr>
                         <th class="text-center">
@@ -117,11 +96,6 @@
                         </th>
                         @endif
                         
-                        @if (Auth::user()->rol_id == 0)
-                        <th class="text-center">
-                            Accion
-                        </th>
-                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -162,7 +136,7 @@
                             {{$wallet->credito}} {{$moneda->simbolo}}
                             @endif
                         </td>
-                        <td class="text-center">
+                        <td class="text-center" style="color:#28a745;">
                             @if ($moneda->mostrar_a_d)
                             {{$moneda->simbolo}} {{$wallet->balance}}
                             @else
@@ -174,120 +148,205 @@
                              {{$wallet->monedaAdicional}}
                         </td>
                         @endif
-                        @if (Auth::user()->rol_id == 0)
-                        <td>
-                            <a class="btn btn-danger cancelar" href="{{ route('wallet-cancel', $wallet->id) }}" data-id="{{$wallet->id}}">
-                                <i class="fa fa-trash"></i></a>
-                        </td>
-                        @endif
+                        
                     </tr>
                     @endforeach
                 </tbody>
             </table>
-            <h4 style="text-align:center;"><strong>Total:
-            
-            @if ($moneda->mostrar_a_d)
+
+            <div class="col-md-2" style="background-color: #28a745; color: white; padding: 5px 10px;border-radius: 20px; text-align: center">
+             Total: 
+             @if ($moneda->mostrar_a_d)
                 {{$moneda->simbolo}} {{$total}}
              @else
                 {{$total}} {{$moneda->simbolo}}
             @endif
-            </strong></h4>
+            </div>
         </div>
     </div>
-
-</div>
-@if (Auth::user()->rol_id != 0)
-@if ($Botones->btn_retiro == 1)
-<div class="col-xs-12 col-sm-6">
-    <button class="btn btn-info btn-block" data-toggle="modal" data-target="#myModalRetiro">Comisiones pagadas</button>
-</div>
-@endif
-@if ($Botones->btn_transferencia == 1)
-<div class="col-xs-12 col-sm-6">
-    <button class="btn btn-info btn-block" data-toggle="modal" data-target="#myModalTrasferencia">Transferencia</button>
-</div>
-@endif
-@endif
-</div>
 </div>
 
-@include('wallet/componentes/formRetiro')
-@include('wallet/componentes/formTransferencia')
+{{-- Comisiones a pagar--}}
+@if(Auth::user()->rol_id == 0)
+<div class="col-xs-12">
+    <div class="box-body white">
+       <h3>Comisiones a Pagar</h3>
+    </div>
+</div>
+
+
+<div class="col-xs-12">
+    <div class="box box-info" style="background-color: #5743a7; border-radius: 10px;">
+        <div class="box-body">
+
+            <h4 class="box-title white">
+              <span class="info-box-icon-fecha-blue">
+               <i class="fas fa-calendar-week white"></i>
+               </span>
+                <p style="padding: 10px 50px;"> Filtrar Por fechas</p>
+            </h4>
+
+            <form method="POST" action="{{ route('wallet-comisiones-pagar-filtro') }}">
+                {{ csrf_field() }}
+               
+                <div class="form-group col-xs-6 col-md-3">
+                    <label class="control-label" style="color:white">Desde</label>
+                    <input class="form-control" type="date" name="fecha3" required>
+                </div>
+                <div class="form-group col-xs-6 col-md-3">
+                    <label class="control-label" style="color:white">Hasta</label>
+                    <input class="form-control" type="date" name="fecha4" required>
+                </div>
+                <div class="col-xs-12 col-md-2" style="margin-top: 23px;">
+                    <button class="btn btn-success" type="submit">
+                        buscar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="col-xs-12">
+    <div class="box box-info">
+        <div class="box-body">
+            <table id="mytable2" class="table">
+                <thead>
+                    <tr>
+                        <th class="text-center">#</th>
+                        <th class="text-center">Usuario</th>
+                        <th class="text-center">Nivel</th>
+                        <th class="text-center">Total</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach ($datos as $wallet)
+                    <tr>
+                        <td class="text-center">{{ $wallet['ID'] }}</td>
+                        <td class="text-center">{{ $wallet['usuario'] }}</td>
+                        <td class="text-center">{{ $wallet['nivel'] }}</td>
+                        <td class="text-center">
+                            @if ($moneda->mostrar_a_d)
+                            {{$moneda->simbolo}} {{ $wallet['total'] }}
+                            @else
+                            {{ $wallet['total'] }} {{$moneda->simbolo}}
+                            @endif  
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+
+            <div class="col-md-2" style="background-color: #28a745; color: white; padding: 5px 10px;border-radius: 20px; text-align: center">
+             Total: 
+             @if ($moneda->mostrar_a_d)
+              {{$moneda->simbolo}} {{$totalcompleto}}
+             @else
+              {{$totalcompleto}} {{$moneda->simbolo}}
+             @endif
+            </div>
+
+        </div>
+    </div>
+</div>
+@endif
+
+
+{{-- Recarga Billetera--}}
+
+<div class="col-xs-12">
+    <div class="box-body white">
+       <h3>Recargar Billetera</h3>
+    </div>
+</div>
+
+
+<div class="col-xs-12">
+    <div class="box box-info" style="background-color: #28a745; border-radius: 10px;">
+        <div class="box-body">
+
+            <h4 class="box-title white">
+              <span class="info-box-icon-fecha-blue">
+               <i class="fas fa-calendar-week white"></i>
+               </span>
+                <p style="padding: 10px 50px;"> Filtrar Por fechas</p>
+            </h4>
+
+            <form method="POST" action="{{ route('wallet-filtro-user') }}">
+                {{ csrf_field() }}
+               
+                <div class="form-group col-xs-6 col-md-3">
+                    <label class="control-label" style="color:white">Desde</label>
+                    <input class="form-control" type="date" name="fecha3" required>
+                </div>
+                <div class="form-group col-xs-6 col-md-3">
+                    <label class="control-label" style="color:white">Hasta</label>
+                    <input class="form-control" type="date" name="fecha4" required>
+                </div>
+                <div class="col-xs-12 col-md-2" style="margin-top: 23px;">
+                    <button class="btn btn-success" type="submit">
+                        buscar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="col-xs-12">
+    <div class="box box-info">
+        <div class="box-body">
+            <table id="mytable3" class="table">
+                <thead>
+                    <tr>
+                        <th class="text-center">#</th>
+                        @if(Auth::user()->rol_id == 0)
+                        <th class="text-center">Usuario</th>
+                        @endif
+                        <th class="text-center">Billetera</th>
+                        <th class="text-center">Fecha</th>
+                        <th class="text-center">Total</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach ($recargas as $recarga)
+                    <tr>
+                        <td class="text-center">{{ $recarga->id }}</td>
+                        @if(Auth::user()->rol_id == 0)
+                        <td class="text-center">{{ $recarga->display_name }}</td>
+                        @endif
+                        <td class="text-center">{{ $recarga->wallet_amount }}</td>
+                        <td class="text-center">{{ date('d-m-Y', strtotime($recarga->created_at)) }}</td>
+                        <td class="text-center">
+                            @if ($moneda->mostrar_a_d)
+                              {{$moneda->simbolo}} {{$totalrecarga}}
+                            @else
+                             {{$totalrecarga}} {{$moneda->simbolo}}
+                            @endif
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+
+            <div class="col-md-2" style="background-color: #28a745; color: white; padding: 5px 10px;border-radius: 20px; text-align: center">
+             Total: 
+             @if ($moneda->mostrar_a_d)
+              {{$moneda->simbolo}} {{$totalrecarga}}
+             @else
+              {{$totalrecarga}} {{$moneda->simbolo}}
+             @endif
+            </div>
+
+        </div>
+    </div>
+</div>
+
 
 @endsection
 
 @include('usuario.componentes.scripBotones')
-@push('script')
-<script>
-    function metodospago() {
-        $('#correo').hide()
-        $('#wallet').hide()
-        $('#bancario').hide()
-        let url = 'wallet/obtenermetodo/' + $('#metodopago').val()
-        $.get(url, function (response) {
-            let data = JSON.parse(response)
-            $('#total').val(0)
-            if (data.tipofeed == 1) {
-                $('#comision').val(data.feed * 100)
-                $('#lblcomision').text('Comision de Retiro en Porcentaje')
-                $('#comisionH').val(data.feed)
-                $('#tipo').val(data.tipofeed)
-                $('#monto_min').val(data.monto_min)
-            } else {
-                $('#comision').val(data.feed)
-                $('#lblcomision').text('Comision de Retiro Fija')
-                $('#comisionH').val(data.feed)
-                $('#tipo').val(data.tipofeed)
-                $('#monto_min').val(data.monto_min)
-            }
-            if (data.correo == 1) {
-                $('#correo').show()
-            }
-            if (data.wallet == 1) {
-                $('#wallet').show()
-            }
-            if (data.bancario == 1) {
-                $('.bancario').show()
-            }
-            $('#retirar').removeAttr('disabled')
-        })
-    }
-
-    function totalRetiro(valor, tagTipo, tagResul, tagValor) {
-        console.log(valor, tagTipo, tagResul, tagValor);
-
-        let resul = 0
-        if ($('#' + tagTipo).val() == 1) {
-            let tmp = valor * $('#' + tagValor).val()
-            resul = valor - tmp
-        } else {
-            resul = valor - $('#' + tagValor).val()
-        }
-        $('#' + tagResul).val(resul)
-    }
-</script>
-
-<script type="text/javascript">
-
-$('.cancelar').on('click',function(e){
- e.preventDefault();
- 
- var ID = $(this).attr('data-id');
-        
-   Swal.fire({
-  title: 'Esta seguro que quiere eliminar esta comision',
-  type:'warning',
-  showCancelButton: true,
-  confirmButtonColor: '#3085d6',
-  cancelButtonColor: '#d33',
-  confirmButtonText: 'Si',
-  cancelButtonText: 'No',
-}).then((result) => {
-  if (result.value) {
-   window.location.href = 'wallet/'+ID+'/cancelar';
-    }
-  });
-});
-
-</script>
-@endpush

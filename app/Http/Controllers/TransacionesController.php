@@ -16,6 +16,7 @@ use App\Models\Pagocarrito;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\TiendaController;
 use App\Http\Controllers\MonedaAdicionalController;
+use App\Http\Controllers\ComisionesController;
 
 class TransacionesController extends Controller
 {
@@ -134,9 +135,9 @@ class TransacionesController extends Controller
                         ->where('meta_key', '=', '_billing_last_name')
                         ->first();
 
-		$nombreCompleto = '';
+    $nombreCompleto = '';
         if (!empty($nombreOrden->meta_value) && !empty($apellidoOrden->meta_value)) {
-    	$nombreCompleto = $nombreOrden->meta_value." ".$apellidoOrden->meta_value;
+      $nombreCompleto = $nombreOrden->meta_value." ".$apellidoOrden->meta_value;
         }
 
         $itemsOrden = DB::table($settings->prefijo_wp.'woocommerce_order_items')
@@ -208,6 +209,116 @@ class TransacionesController extends Controller
             }
         }
         return($array_datos);
+    }
+
+
+
+    public function agrupar($iduser, $fechas){
+        
+        
+        $total =0; $totalmes=0;
+        $arreglo=[]; $concatenar ='';
+        $user = User::find($iduser);
+        $finDeMes = Carbon::now()->endOfMonth();
+        $principioMes = Carbon::now()->startOfMonth();
+        $fin = new Carbon($finDeMes);
+        $principio = new Carbon($principioMes);
+        
+        $comisiones = new ComisionesController;
+        $settings = Settings::first();
+        $ordenes = DB::table($settings->prefijo_wp.'postmeta')
+                            ->select('post_id')
+                            ->where('meta_key', '=', '_customer_user')
+                            ->where('meta_value', '=', $iduser)
+                            ->orderBy('post_id', 'ASC')
+                            ->get();
+            
+            
+        foreach ($ordenes as $orden){
+            
+            $datosCompra = $comisiones->getShoppingDetails($orden->post_id);
+            
+            $totalOrden = DB::table($settings->prefijo_wp.'postmeta')
+                        ->select('meta_value')
+                        ->where('post_id', '=', $orden->post_id)
+                        ->where('meta_key', '=', '_order_total')
+                        ->first();
+                        
+            $estadoOrden = DB::table($settings->prefijo_wp.'posts')
+                        ->select('post_status')
+                        ->where('ID', '=', $orden->post_id)
+                        ->first();
+                        
+            $estadoEntendible = '';
+        switch ($estadoOrden->post_status) {
+            case 'wc-completed':
+                $estadoEntendible = 'Completado';
+                break;
+            case 'wc-pending':
+                $estadoEntendible = 'Pendiente de Pago';
+                break;
+            case 'wc-processing':
+                $estadoEntendible = 'Procesando';
+                break;
+            case 'wc-on-hold':
+                $estadoEntendible = 'En Espera';
+                break;
+            case 'wc-cancelled':
+                $estadoEntendible = 'Cancelado';
+                break;
+            case 'wc-refunded':
+                $estadoEntendible = 'Reembolsado';
+                break;
+            case 'wc-failed':
+                $estadoEntendible = 'Fallido';
+                break;
+        }            
+        
+          if (empty($fechas)) {           
+            if($estadoEntendible == 'Completado'){
+                
+            $fechacompra = new Carbon($datosCompra->post_date);
+                
+            $concatenar .= $orden->post_id.', ';
+            $total = ($total + $totalOrden->meta_value);
+            
+            if($fechacompra->format('ymd') >= $principio->format('ymd')
+            && $fechacompra->format('ymd') <= $fin->format('ymd')){
+                $totalmes = ($totalmes + $totalOrden->meta_value);
+            }
+            
+            }
+          }else{
+            $fechaInicio = new Carbon($fechas['inicio']);
+            $fechaFin = new Carbon($fechas['fin']);
+            $fechacompra = new Carbon($datosCompra->post_date);
+            
+            if ($fechacompra->format('ymd') >= $fechaInicio->format('ymd') && $fechacompra->format('ymd') <= $fechaFin->format('ymd')) {
+                if($estadoEntendible == 'Completado'){
+                
+                $concatenar .= $orden->post_id.', ';
+                $total = ($total + $totalOrden->meta_value);
+                
+                if($fechacompra->format('ymd') >= $principio->format('ymd')
+            && $fechacompra->format('ymd') <= $fin->format('ymd')){
+                $totalmes = ($totalmes + $totalOrden->meta_value);
+            }
+                
+                }
+            }
+          }
+          
+        }
+        
+        $arreglo=[
+            'iduser' => $iduser,
+            'nombre' => $user->display_name,
+            'total' => $total, 
+            'concatenar' => $concatenar,
+            'totalmes' => $totalmes,
+              ];
+        
+        return $arreglo;
     }
 
     /**
@@ -356,7 +467,7 @@ class TransacionesController extends Controller
       
       $moneda = Monedas::where('principal', 1)->get()->first();
       $adicional =0;
-		$monedaAdicional = Monedadicional::find(1);
+    $monedaAdicional = Monedadicional::find(1);
         if (!empty($monedaAdicional)) { 
             $adicional =1;
         }
@@ -394,7 +505,7 @@ class TransacionesController extends Controller
           $product = $tienda->nombre_product($directa->idcompra);
           $precio = $tienda->precio_product($directa->idcompra);
           $estado = $tienda->estado($directa->idcompra);
-	   
+     
            array_push($datos, [
             'orden' => $directa->idcompra,
             'usuario' => $usuarios->name,

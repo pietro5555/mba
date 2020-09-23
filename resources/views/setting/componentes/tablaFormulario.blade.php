@@ -1,5 +1,5 @@
 
-<table id="mytable" class="table table-bordered table-hover table-responsive pli">
+<table id="mytable" class="table">
   <thead>
     <tr>
       <th><center>ID </center></th>

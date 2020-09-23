@@ -10,7 +10,7 @@
 			<button data-toggle="modal" data-target="#editar" class="btn btn-info">Editar la contraseña de todos</button>
 			
 			<br class="col-xs-12">
-			<table id="mytable" class="table table-bordered table-striped">
+			<table id="mytable" class="table">
 				<thead>
 					<tr>
 						<th class="text-center">

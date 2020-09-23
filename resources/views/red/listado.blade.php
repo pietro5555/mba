@@ -4,15 +4,19 @@
 
 <div class="col-xs-12">
     <div class="box box-info">
-        <div class="box-header with-border">
-            <h3 class="box-title">Filtrar por Usuarios</h3>
-        </div>
         <div class="box-body">
+        	 <h4 class="box-title white">
+              <span class="info-box-icon-users">
+               <i class="fas fa-user white"></i>
+               </span>
+        	    <p style="padding: 10px 50px;"> Buscar Usuarios</p>
+        	</h4>
+
             <form method="POST" action="{{ route('admin-red-filtre') }}" class="form-inline">
                 {{ csrf_field() }}
                
                 <div class="form-group has-feedback date col-xs-12 col-md-4">
-                    <label class="control-label">Lista de Red</label>
+                    <label class="control-label" style="color: white;">Buscar</label>
                     <select name="lista" class="chosen">
                         @foreach($red as $re)
                         <option value="{{$re->ID}}">{{$re->display_name}}</option>
@@ -21,7 +25,7 @@
                 </div>
                 
                 <div class="form-group has-feedback date col-xs-12 col-md-2" style="margin-top: 15px;">
-                    <button class="btn green padding_both_small" type="submit">
+                    <button class="btn btn-success" type="submit">
                         buscar
                     </button>
                 </div>
@@ -33,7 +37,7 @@
 <div class="col-xs-12">
 	<div class="box box-info">
 		<div class="box-body">
-			<table id="mytable" class="table table-bordered table-striped" cellspacing="0">
+			<table id="mytable" class="table" cellspacing="0">
 				<thead>
 					<tr>
 						<th class="text-center">#</th>

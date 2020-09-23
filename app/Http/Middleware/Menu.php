@@ -1575,7 +1575,7 @@ class Menu
                         'black'=> '0',
                         'oculto'=> 'activo',
                     ],
-                    
+                    /*
                     'Informe de Comisiones' => [
                         'ruta' => 'setting-ganancias',
                         'complementoruta' => '',
@@ -1589,34 +1589,35 @@ class Menu
                         'black'=> '0',
                         'oculto'=> 'activo',
                     ],
-                    
+                    */
                     'Plantilla de Correos' => [
                         'ruta' => 'setting-plantilla',
                         'complementoruta' => '',
                         'black'=> '0',
                         'oculto'=> 'activo',
                     ],
-                    
+                    /*
                     'Permiso' => [
                         'ruta' => 'setting-permisos',
                         'complementoruta' => '',
                         'black'=> '0',
                         'oculto'=> 'activo',
                     ],
+                    */
                     'Activacion' => [
                         'ruta' => 'setting-activacion',
                         'complementoruta' => '',
                         'black'=> '0',
                         'oculto'=> 'activo',
                     ],
-                    
+                    /*
                     'Editar Menus' => [
                         'ruta' => 'setting-menu',
                         'complementoruta' => '',
                         'black'=> '0',
                         'oculto'=> 'activo',
                     ],
-                    
+                    */
                     'Monedas' => [
                         'ruta' => 'setting-monedas',
                         'complementoruta' => '',
@@ -1637,7 +1638,7 @@ class Menu
                         'black'=> '0',
                         'oculto'=> 'activo',
                     ],
-                    
+                    /*
                     'Metodos de pago' => [
                         'ruta' => 'link-metodo',
                         'complementoruta' => '',
@@ -1651,14 +1652,14 @@ class Menu
                         'black'=> '0',
                         'oculto'=> 'activo',
                     ],
-                    
+                    */
                     'Pop up' => [
                         'ruta' => 'setting-pop',
                         'complementoruta' => '',
                         'black'=> '0',
                         'oculto'=> 'activo',
                     ],
-                    
+                    /*
                     'Iva' => [
                         'ruta' => 'setting-iva',
                         'complementoruta' => '',
@@ -1700,6 +1701,7 @@ class Menu
                         'black'=> '0',
                         'oculto'=> 'activo',
                     ],
+                    */
                 ]
             ],
 

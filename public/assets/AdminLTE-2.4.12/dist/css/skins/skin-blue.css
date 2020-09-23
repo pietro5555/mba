@@ -59,7 +59,7 @@
 .skin-blue .wrapper,
 .skin-blue .main-sidebar,
 .skin-blue .left-side {
-  background-color: #222d32;
+  background-color: #191818;
 }
 .skin-blue .user-panel > .info,
 .skin-blue .user-panel > .info > a {
@@ -67,7 +67,7 @@
 }
 .skin-blue .sidebar-menu > li.header {
   color: #4b646f;
-  background: #1a2226;
+  background: #222323;
 }
 .skin-blue .sidebar-menu > li > a {
   border-left: 3px solid transparent;
@@ -76,14 +76,14 @@
 .skin-blue .sidebar-menu > li.active > a,
 .skin-blue .sidebar-menu > li.menu-open > a {
   color: #ffffff;
-  background: #1e282c;
+  background: #2A91FF;
 }
 .skin-blue .sidebar-menu > li.active > a {
   border-left-color: #2A91FF;
 }
 .skin-blue .sidebar-menu > li > .treeview-menu {
   margin: 0 1px;
-  background: #2c3b41;
+  background: #1f1e1e;
 }
 .skin-blue .sidebar a {
   color: #b8c7ce;

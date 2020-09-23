@@ -113,7 +113,7 @@ class AdminController extends Controller
             if (Auth::user()->ID != 1) {
                 $new_member = $informacion->newMembers(Auth::user()->ID);
             }else{
-                $new_member = User::select('display_name', 'created_at')->get()->sortByDesc('created_at')->take(8);
+                $new_member = User::select('display_name', 'created_at')->get()->sortByDesc('created_at')->take(4);
             }
             // cantidad de todos los rangos en el sistema
             $rangos = json_decode($informacion->chartRangos(Auth::user()->ID));

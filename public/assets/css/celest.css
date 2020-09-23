@@ -350,7 +350,7 @@ label.control-label {
     padding-bottom: 25px;
 }
 .table-bordered, .table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>td, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>thead>tr>th {
-    border: 1px solid #dee5e7;
+    
 }
 img.center-block {
     margin-top: -50px;
@@ -404,9 +404,10 @@ div#mytable_filter input[type="search"] {
     height: 30px;
     line-height: 1.42857143;
     color: #666667 !important;
-    background-color: #fff;
+    background-color: #403f3f;
     border: 1px solid #e8e8e8;
     border-radius: 20px !important;
+    border: none;
 }
 
 body {
@@ -418,7 +419,7 @@ body {
 
 table#mytable th, table#mytable tr {
    
-    border-top: 1px solid #cecece;
+    
     text-align: center;
  
 }
@@ -496,29 +497,28 @@ legend {
 }
 a#mytable_previous , a#mytable_next  {
     border-radius: 2px !important;
-    background: #1199c4 !important;
+    background: #403f3f !important;
     color: #ffffff !important;
-    border-color: #1199c4;
+    border-color: #403f3f;
 }
 
 a#mytable_previous:hover, a#mytable_next:hover  {
-    background: #09afe4 !important;
+    background: #403f3f !important;
     color: #FFF !important;
     border-radius: 2px !important;
-    border-color: #09afe4 !important;
+    border-color: #403f3f !important;
 }
 a.paginate_button.current {
     background: transparent !important;
 }
 .table-bordered, .table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>td, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>thead>tr>th {
-    border: 1px solid #dee5e7;
+    
     border-right: 0px;
     border-bottom: 0px !important;
 }
 .table-bordered {
     border: 0px;
-    border-bottom: 1px solid #dee5e7 !important;
-    border-right: 1px solid #dee5e7 !important;
+    
 }
 div#mytable_paginate {
     padding: 10px 0px 10px 0px;
@@ -591,7 +591,7 @@ border-right: 3px dotted #1199c4 !important;
     border-right: 1px solid #cecece;
 }
 table.dataTable.no-footer {
-    border-left: 1px solid #cecece;
+    
 }
 
 .text-center.box-info.letazu:hover h2 b {

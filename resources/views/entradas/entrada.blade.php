@@ -9,7 +9,7 @@
       
       <a class="btn btn-info btn-block" data-toggle="modal" data-target="#anexar">Agregar Entrada</a>
 
-      <table id="mytable" class="table table-bordered table-hover table-responsive">
+      <table id="mytable" class="table">
                 <thead>
                     <tr>
                         <th class="text-center">

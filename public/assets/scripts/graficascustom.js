@@ -70,46 +70,33 @@
             data: {
 
                 datasets: [
-                    {
-                    label: 'Ventas Mensuales',
-                    data: ventas,
-                    backgroundColor:[
-                        '#00a65a',
-                        '#00a65a',
-                        '#00a65a',
-                        '#00a65a',
-                        '#00a65a',
-                        '#00a65a',
-                        '#00a65a',
-                        '#00a65a',
-                        '#00a65a',
-                        '#00a65a',
-                        '#00a65a',
-                        '#00a65a'
-                    ]
-                },
                 {
                     label: 'Ganancias Mensuales',
                     data: ganancias,
                     backgroundColor:[
-                        '#00bcd5',
-                        '#00bcd5',
-                        '#00bcd5',
-                        '#00bcd5',
-                        '#00bcd5',
-                        '#00bcd5',
-                        '#00bcd5',
-                        '#00bcd5',
-                        '#00bcd5',
-                        '#00bcd5',
-                        '#00bcd5',
-                        '#00bcd5',
+                        '#007bff',
+                        '#007bff',
+                        '#007bff',
+                        '#007bff',
+                        '#007bff',
+                        '#007bff',
+                        '#007bff',
+                        '#007bff',
+                        '#007bff',
+                        '#007bff',
+                        '#007bff',
+                        '#007bff',
                     ]
                 }
             ],
 
                 labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
 
+            },
+
+            options: {
+          responsive: true,
+          legend: { display: false}
             }
 
         })
@@ -210,17 +197,18 @@
 
                      backgroundColor: [
 
-                         '#00a65a',
+                         '#28a745', 
 
-                         'rgba(255, 99, 132)',
+                         '#007bff',
 
                      ],
 
-                     borderColor: [
+                      borderColor: [
 
-                         '#00a65a',
+                         '#28a745',
 
-                         'rgba(255,99,132,1)',
+                         '#007bff',
+
 
                      ],
 
@@ -230,23 +218,13 @@
 
              },
 
-            //  options: {
-
-            //      scales: {
-
-            //          yAxes: [{
-
-            //              ticks: {
-
-            //                  beginAtZero: true
-
-            //              }
-
-            //          }]
-
-            //      },
-
-            //  }
+         options: {
+            responsive: true,
+              legend: { 
+                 position: 'bottom',
+                 display: true,
+              },
+            }
 
          });
 

@@ -283,7 +283,7 @@ class IndexController extends Controller
     {
         $TodosUsuarios = $this->generarArregloUsuario($iduser);
         $TodosUsuarios = $this->ordenarArreglosMultiDimensiones($TodosUsuarios, 'ID', 'numero');
-        return array_slice($TodosUsuarios, 0, 8);
+        return array_slice($TodosUsuarios, 0, 4);
     }
 
     /**

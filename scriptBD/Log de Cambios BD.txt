@@ -77,6 +77,7 @@ Dev: Prieto
 19/09/2020
 Dev: Luisana Marín
 *Nuevo campo duration (time PREDEFINIDO 0:00:00 NOT NULL) a la tabla Lessons (Correr script lessons)
+
 20/09/2020
 Dev: Crisleivys
 * Modificado el id_courses por course_id (correr el script events)
@@ -86,3 +87,9 @@ Dev: Crisleivys
 Dev: Carlos Gonzalez
 *Nueva tabla courses_orden (Correr script courses_orden.sql)
 *Nueva tabla coinpayment_transaction (Correr script coinpayment_transaction.sql)
+* Nuevo campo favorite en tabla courses_users (correr script courses_users)
+
+23/09/2020
+Dev: Luisana Marín
+*Nueva tabla evaluations_users (Correr script evaluations_users)
+*Nueva tabla evaluations_users_answers (Correr script evaluations_users_answers)

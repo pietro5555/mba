@@ -7,7 +7,7 @@
   <div class="box">
     <div class="box-body">
       <br class="col-xs-12">
-      <table id="mytable" class="table table-bordered table-striped">
+      <table id="mytable" class="table">
         <thead>
           <tr>
             <th class="text-center">
@@ -32,7 +32,7 @@
               Nivel
             </th>
                        
-                       @if($tipo == 1)
+            @if($tipo == 1)
             <th class="text-center">
               Acción
             </th>

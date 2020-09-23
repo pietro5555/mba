@@ -1,10 +1,9 @@
 <?php
 
+use Carbon\Carbon;
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
-
-use Carbon\Carbon;
 
 return [
 
@@ -45,13 +44,13 @@ return [
 
         'single' => [
             'driver' => 'single',
-            'path' => storage_path('logs/laravel'.Carbon::now()->format('d-m-Y').'.log'),
+            'path' => storage_path('logs/laravel-'.Carbon::now()->format('d-m-Y').'.log'),
             'level' => 'debug',
         ],
 
         'daily' => [
             'driver' => 'daily',
-            'path' => storage_path('logs/laravel'.Carbon::now()->format('d-m-Y').'.log'),
+            'path' => storage_path('logs/laravel-'.Carbon::now()->format('d-m-Y').'.log'),
             'level' => 'debug',
             'days' => 14,
         ],
@@ -99,7 +98,7 @@ return [
         ],
 
         'emergency' => [
-            'path' => storage_path('logs/laravel'.Carbon::now()->format('d-m-Y').'.log'),
+            'path' => storage_path('logs/laravel-'.Carbon::now()->format('d-m-Y').'.log'),
         ],
     ],
 

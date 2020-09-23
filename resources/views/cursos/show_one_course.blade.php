@@ -1,6 +1,44 @@
 @extends('layouts.landing')
 
+@push('styles')
+   <style>
+      input[type="radio"] {
+         display: none;
+      }
+
+      label {
+         color: grey;
+      }
+
+      .rating {
+         direction: rtl;
+         unicode-bidi: bidi-override;
+      }
+
+      label:hover,
+      label:hover ~ label {
+         color: orange;
+      }
+
+      input[type="radio"]:checked ~ label {
+         color: orange;
+      }
+   </style>
+@endpush
+
 @section('content')
+   @if (Session::has('msj-exitoso'))
+      <div class="alert alert-success" style="margin: 5px 15px;">
+         {{ Session::get('msj-exitoso') }}
+      </div>
+   @endif
+
+   @if (Session::has('msj-erroneo'))
+      <div class="alert alert-danger" style="margin: 5px 15px;">
+         {{ Session::get('msj-erroneo') }}
+      </div>
+   @endif
+
    <div class="title-page-one_course col-md border-bottom-2"><span>
       <h6 class=""><span>Cursos > </span><span> {{ $curso->category->title }} ></span><span>{{ $curso->title }}</span></h6>
       <hr style="border: 1px solid #707070;opacity: 1;" />
@@ -74,13 +112,20 @@
                <div class="col-md-12 mt-2">
                   <div class="row">
                      <div class="col-md-3">
-                        <h6 class="text-white"> <img src="{{ asset('images/icons/icon-user.svg') }}" alt="" height="30px" width="30px">  1296 Alumnos</h6>
+                        <h6 class="text-white"> <img src="{{ asset('images/icons/icon-user.svg') }}" alt="" height="30px" width="30px">  {{ $curso->users_count }} Alumnos</h6>
                      </div>
                      <div class="col-md-3">
                         <h6 class="text-white"> <img src="{{ asset('images/icons/icon-book-video.svg') }}" height="30px" width="30px"> {{ $curso->lessons_count }} Lecciones</h6>
                      </div>
                      <div class="col-md-3">
-                        <h6 class="text-white"> <img src="{{ asset('images/icons/clock.svg') }}" height="30px" width="30px">  2h 17m</h6>
+                        <h6 class="text-white"> 
+                           <img src="{{ asset('images/icons/clock.svg') }}" height="30px" width="30px">
+                           @if ($curso->duration > 0)
+                              {{ $curso->hours }}h {{ $curso->minutes }}m
+                           @else
+                              0h 0m
+                           @endif
+                        </h6>
                      </div>
                      <div class="col-md-3">
                         <a href="{{route('shopping-cart.store', [$curso->id])}}" class="btn btn-info play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> AGREGAR AL CARRITO</a>
@@ -91,10 +136,12 @@
             </div>
             <div class="row">
                <div class="col-md-9 mt-2">
-                  <h6 class="text-white"><img src="{{ asset('images/icons/calendar.svg') }}" height="30px" width="30px">  Fecha de salida: 12 de Marzo 2020</h6>
+                  <h6 class="text-white"><img src="{{ asset('images/icons/calendar.svg') }}" height="30px" width="30px">  Fecha de salida: {{ date('d-m-Y', strtotime($curso->created_at)) }}</h6>
                </div>
                <div class="col-md-3 mt-2">
                   <a href="" class="btn btn-success play-course-button btn-block">COMPRAR</a>
+                  <a href="#ratingModal" data-toggle="modal" class="btn btn-primary play-course-button btn-block">VALORAR</a>
+                  <a href="{{ route('client.courses.take-evaluation', [$curso->slug, $curso->id]) }}" class="btn btn-primary play-course-button btn-block">PRESENTAR EVALUACIÓN</a>
                </div>
             </div>
          </div>
@@ -255,4 +302,48 @@
       </div>
    @endif
    {{-- FIN SECCIÓN VALORACIONES--}}
+
+   <div class="modal fade" id="ratingModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+         <div class="modal-content" style="background-color: black;">
+            <div class="modal-header">
+               <h5 class="modal-title" id="exampleModalLabel" style="color: white;">Valorar Curso</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <form action="{{ route('client.courses.rate') }}" method="POST">
+               @csrf
+               <input type="hidden" name="course_id" value="{{ $curso->id }}">
+               <input type="hidden" name="course_slug" value="{{ $curso->slug }}">
+               <div class="modal-body">
+                  <div class="form-group">
+                     <label for="comment" style="color: white;">Comentario</label>
+                     <textarea class="form-control" name="comment" id="comment" rows="3" style="background-color: #1C1D21;"></textarea>
+                  </div>
+                  <div class="form-group">
+                     <div class="row">
+                        <div class="col-4">
+                           <label for="comment" style="color: white;">Puntuación</label>
+                        </div>
+                        <div class="col-8 text-right"> 
+                           <p class="rating text-right">
+                              <input id="radio1c" type="radio" name="points" value="5"><label for="radio1c"><i class="fa fa-star"></i></label>
+                              <input id="radio2c" type="radio" name="points" value="4"><label for="radio2c"><i class="fa fa-star"></i></label>
+                              <input id="radio3c" type="radio" name="points" value="3"><label for="radio3c"><i class="fa fa-star"></i></label>
+                              <input id="radio4c" type="radio" name="points" value="2"><label for="radio4c"><i class="fa fa-star"></i></label>
+                              <input id="radio5c" type="radio" name="points" value="1"><label for="radio5c"><i class="fa fa-star"></i></label>
+                           </p>
+                        </div>
+                     </div>
+                  </div> 
+               </div>
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                  <button type="submit" class="btn btn-primary">Valorar</button>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
 @endsection

@@ -14,7 +14,7 @@
 
                         <div class="chart">
                             <!-- Sales Chart Canvas -->
-                            <div style="height: 315px;">
+                            <div style="height: 250px;">
                                 <canvas id="salesChart"></canvas>
                             </div>
                         </div>
@@ -75,7 +75,7 @@
                         <h4 class="box-title white">Usuarios</h4>
                         <div class="pad">
                             <!-- Map will be created here -->
-                            <div id="world-map-markers" style="height: 310px;">
+                            <div id="world-map-markers" style="height: 250px;">
                                 <canvas id="chart_usuarios"></canvas>
                             </div>
                         </div>

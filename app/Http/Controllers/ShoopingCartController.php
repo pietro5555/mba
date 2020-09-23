@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\ShoppingCart;
 use App\Models\Course;
-use Auth;
+use App\Models\Category;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ShoopingCartController extends Controller
 {
@@ -15,7 +18,6 @@ class ShoopingCartController extends Controller
     public function index(Request $request){
         if (Auth::guest()){
             $cantItems = 0;
-            $totalItems = 0;
 
             $itemsA = array();
 
@@ -26,7 +28,6 @@ class ShoopingCartController extends Controller
             $items = collect();
             foreach ($itemsA as $itemA) {
                 $item = Course::where('id', '=', $itemA)->first();
-                $totalItems += $item->price;
                 $cantItems++;
 
                 $items->push($item);
@@ -37,17 +38,32 @@ class ShoopingCartController extends Controller
                         ->get();
             
             $cantItems = 0;
-            $totalItems = 0;
 
             foreach ($items as $item){     
                 $cantItems++;
-                $totalItems += $item->price;
             }
         }
+        $totalItems = 0;
+        foreach ($items as $item) {
+            $curso = Course::find($item->course_id);
+            $categoria = null;
+            $mentor = null;
+            if (!empty($curso)) {
+                $categoria = Category::find($curso->category_id);
+                $mentor = User::find($curso->mentor_id);
+            }
+            $item->curso = [
+                'titulo' => (!empty($curso)) ? $curso->title : 'Curso no disponible',
+                'categoria' => (!empty($categoria)) ? $categoria->title : 'Categoria no disponible',
+                'mentor' => (!empty($mentor)) ? $mentor->display_name : 'Mento no disponible',
+                'precio' => (!empty($curso)) ? $curso->price : 0,
+                'img' => (!empty($curso)) ? asset('uploads/images/courses/covers/'.$curso->cover) : 'no disponible'
+            ];
+            $totalItems += (!empty($curso)) ? $curso->price : 0;
+        }
 
-        dd($items);
         //RETORNAR VISTA AQUÍ
-        //return view('vista-de-carrito')->with(compact('items'));
+        return view('carrito_user.index')->with(compact('items', 'totalItems'));
     }
 
 

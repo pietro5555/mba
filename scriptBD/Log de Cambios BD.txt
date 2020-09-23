@@ -80,3 +80,9 @@ Dev: Luisana Marín
 20/09/2020
 Dev: Crisleivys
 * Modificado el id_courses por course_id (correr el script events)
+
+
+23/09/2020
+Dev: Carlos Gonzalez
+*Nueva tabla courses_orden (Correr script courses_orden.sql)
+*Nueva tabla coinpayment_transaction (Correr script coinpayment_transaction.sql)

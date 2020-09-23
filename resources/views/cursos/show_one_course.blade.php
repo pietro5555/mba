@@ -83,7 +83,7 @@
                         <h6 class="text-white"> <img src="{{ asset('images/icons/clock.svg') }}" height="30px" width="30px">  2h 17m</h6>
                      </div>
                      <div class="col-md-3">
-                        <a href="" class="btn btn-info play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> AGREGAR AL CARRITO</a>
+                        <a href="{{route('shopping-cart.store', [$curso->id])}}" class="btn btn-info play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> AGREGAR AL CARRITO</a>
                         
                      </div>
                   </div>

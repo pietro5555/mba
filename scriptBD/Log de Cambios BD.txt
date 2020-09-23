@@ -81,13 +81,19 @@ Dev: Luisana Marín
 20/09/2020
 Dev: Crisleivys
 * Modificado el id_courses por course_id (correr el script events)
-
+* Nuevo campo favorite en tabla courses_users (correr script courses_users)
 
 23/09/2020
 Dev: Carlos Gonzalez
 *Nueva tabla courses_orden (Correr script courses_orden.sql)
 *Nueva tabla coinpayment_transaction (Correr script coinpayment_transaction.sql)
-* Nuevo campo favorite en tabla courses_users (correr script courses_users)
+Nota: aparte de la informacion de bd
+Cuando se bajen mi nueva actualiza tiene que instalar los plugins de stripe y coinpayment
+para que los plugins funcionen correctamente deben agregar la informacion que esta en el 
+archivo que se llama (variables para el archivo .env.txt)
+y lo otro tambien cuando tengan esos plugins listo
+deben pegar los archivos AjaxController.php y IPNController.php
+en esta ruta "vendor/hexters/coinpayment/src/Http/Controllers"
 
 23/09/2020
 Dev: Luisana Marín

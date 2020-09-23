@@ -229,7 +229,6 @@ class CourseController extends Controller{
             $curso->minutes = floor(($segundos - ($curso->hours * 3600)) / 60);
             $curso->seconds = $segundos - ($curso->hours * 3600) - ($curso->minutes * 60);
         }
-       
 
         return view('cursos.show_one_course')->with(compact('curso'));
     }

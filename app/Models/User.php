@@ -118,4 +118,9 @@ class User extends Authenticatable
     public function courses_buyed(){
         return $this->belongsToMany('App\Models\Course', 'courses_users', 'user_id', 'course_id')->withPivot('progress', 'start_date', 'finish_date', 'certificate', 'favorite')->withTimestamps();
     }
+
+    public function evaluations(){
+        return $this->belongsToMany('App\Models\Evaluation', 'evaluations_users', 'user_id', 'evaluation_id')
+            ->withPivot('score', 'date');
+    }
 }

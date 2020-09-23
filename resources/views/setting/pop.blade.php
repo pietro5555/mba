@@ -5,7 +5,7 @@
 <div class="col-xs-12">
   <div class="box box-info">
     <div class="box-header with-border">
-      <div class="box-title">
+      <div class="box-title white">
         Pop up
       </div>
     </div>
@@ -16,12 +16,12 @@
         <a href="{{route('setting-desactivaciom-pop')}}" class="btn btn-info btn-block">{{($pop->activado == 0) ? 'Activar' : 'Desactivar'}}</a>
         
         <div class="col-md-12">
-            <label for="">Titulo</label>
+            <label for="" class="white">Titulo</label>
             <input type="text" name="titulo" class="form-control" value="{{(!empty($pop->titulo)) ? $pop->titulo : '' }}">
         </div>
         
             <div class="col-md-12">
-                <label for="">Contenido del Pop Up</label>
+                <label for="" class="white">Contenido del Pop Up</label>
                 <textarea name="contenido" class="summernote" cols="30" rows="10">{{(!empty($pop->contenido)) ? $pop->contenido : '' }}</textarea>
             </div>
        

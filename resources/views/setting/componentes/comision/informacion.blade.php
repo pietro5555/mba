@@ -3,7 +3,7 @@
     {{-- bono activacion --}}
     <div class="box box-info">
         <div class="box-header with-border">
-            <div class="box-title">
+            <div class="box-title white">
                 <h3>Bono Por Activacion y Comision de Primera Compra</h3>
                 <button type="button" class="btn btn-info btn-block hh" id="modal">
                     Editar
@@ -14,7 +14,7 @@
             <div class="alert alert-warning alert-dismissible" role="alert">
                 <strong>Nota:</strong> Para desactivar este bono deben poner el valor del monto en 0 agregando un solo producto
             </div>
-            <div class="col-xs-12 col-sm-6">
+            <div class="col-xs-12 col-sm-6 white">
                 <h5>Bono por Activacion</h5>
                 @empty(!$settingComision)
                 @empty(!$settingComision->bonoactivacion)
@@ -36,7 +36,7 @@
                     </div>
                     
                     <div class="col-xs-6">
-                        <label for="">Bono</label>
+                        <label for="" class="white">Bono</label>
                         @if($item->tipobono == 'porcentaje')
                         <input type="text" readonly class="form-control" value="{{$item->bono * 100}} %">
                         @else
@@ -53,21 +53,21 @@
                 @endempty
                 @endempty
             </div>
-            <div class="col-xs-12 col-sm-6">
+            <div class="col-xs-12 col-sm-6 white">
                     <h5>Tipo de bono</h5>
                     @empty(!$settingComision)
                     <input type="text" readonly class="form-control"
                         value="{{$settingComision->tipobono}}">
                     @endempty
                 </div>
-            <div class="col-xs-12 col-sm-6">
+            <div class="col-xs-12 col-sm-6 white">
                 <h5>Recibir Bono de los Usuario</h5>
                 @empty(!$settingComision)
                 <input type="text" readonly class="form-control"
                     value="{{($settingComision->directos == 1) ? 'Directos' : 'Todos en red'}}">
                 @endempty
             </div>
-            <div class="col-xs-12 col-sm-6">
+            <div class="col-xs-12 col-sm-6 white">
                 <h5>Aceptar Primera Compra</h5>
                 @empty(!$settingComision)
                 <input type="text" readonly class="form-control"
@@ -80,14 +80,14 @@
     {{-- productos que no generan comisiones --}}
     <div class="box box-info">
         <div class="box-header with-border">
-            <div class="box-title">
+            <div class="box-title white">
                 <h3>ID de productos que no generan comisiones</h3>
                 <button type="button" class="btn btn-info btn-block hh" id="modal3">
                     Editar
                 </button>
             </div>
         </div>
-        <div class="box-body">
+        <div class="box-body white">
             <h5>ID de productos</h5>
             <input type="text" readonly class="form-control" value="{{$settings->id_no_comision}}">
         </div>
@@ -96,26 +96,26 @@
     {{-- comisiones  --}}
     <div class="box box-info">
         <div class="box-header with-border">
-            <div class="box-title">
+            <div class="box-title white">
                 <h3>Información de las comisiones del Sistema </h3>
                 <button class="btn btn-info btn-block mostrar hh toggle">Editar</button>
             </div>
         </div>
         <div class="box-body">
             @empty(!$settingComision)
-            <div class="col-sm-3 col-xs-12">
+            <div class="col-sm-3 col-xs-12 white">
                 <h5>Niveles de Cobro</h5>
                 <input type="text" class="form-control" readonly value="{{$settingComision->niveles}}">
             </div>
-            <div class="col-sm-3 col-xs-12">
+            <div class="col-sm-3 col-xs-12 white">
                 <h5>Tipo</h5>
                 <input type="text" class="form-control" readonly value="{{$settingComision->tipocomision}}">
             </div>
-            <div class="col-sm-3 col-xs-12">
+            <div class="col-sm-3 col-xs-12 white">
                 <h5>Se calcula por</h5>
                 <input type="text" class="form-control" readonly value="{{$settingComision->tipopago}}">
             </div>
-            <div class="col-sm-3 col-xs-12">
+            <div class="col-sm-3 col-xs-12 white">
                 @if($settingComision->tipocomision == 'general')
                 <h5>Valor General</h5>
                 <h5>
@@ -141,7 +141,7 @@
                 @endif
             </div>
             <div class="col-xs-12">
-                <div class="row" style="background:#fff">
+                <div class="row white">
                     @if ($settingComision->tipocomision == 'categoria')
                     @foreach ($settingComision->valordetallado as $primerarreglo)
                     <h5 class="col-xs-12">Información de la Categoria - {{$primerarreglo->nombre}}</h5>

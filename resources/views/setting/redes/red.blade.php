@@ -8,14 +8,14 @@
     <div class="box box-info mostrar">
         <div class="box-header with-border">
             
-                <h3>Redes Sociales</h3>
+                <h3 class="white">Redes Sociales</h3>
                 <button type="button" class="btn btn-info btn-block" onclick="toggle()">
                     Agregar Nuevas Redes Sociales
                 </button>
             
         </div> 
         <div class="box-body">
-            <table id="mytable" class="table table-bordered table-striped" cellspacing="0">
+            <table id="mytable" class="table" cellspacing="0">
         <thead>
           <tr>
             <th class="text-center">#</th>

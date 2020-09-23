@@ -10,12 +10,12 @@
             <div class="col-xs-12 mostrar">
                 <div class="box box-info">
                     <div class="box-header">
-                        <div class="box-title">
+                        <div class="box-title white">
                             <h3>Información del Metodo de Activacion </h3>
                             <button class="btn btn-info btn-block mostrar hh toggle">Editar</button>
                         </div>
                     </div>
-                    <div class="box-body">
+                    <div class="box-body white">
                         @empty(!$settingAct)
                         <div class="col-sm-3 col-xs-12 ch">
                             <h3>Tipo de Activacion</h3>
@@ -88,7 +88,7 @@
             <div class="col-xs-12 mostrar" style="display:none;">
                 <div class="box box-info">
                     <div class="box-header">
-                        <div class="box-title">
+                        <div class="box-title white">
                                 <h3>Configuración del Proceso de Activacion del Sistema </h3>
                                 <button class="btn btn-info btn-block mostrar hh" onclick="toggle()">Editar</button>
                         </div>
@@ -98,7 +98,7 @@
                             {{ csrf_field() }}
                             <input type="hidden" name="id" value="{{(!empty($settingAct->id)) ? $settingAct->id : ''}}">
                             <div class="form-group col-sm-6 col-xs-12 ptr">
-                                <label for="">Tipo de Activacion</label>
+                                <label for="" class="white">Tipo de Activacion</label>
                                 <select class="form-control" name="activacion" id="activacion" required
                                     onchange="activaciondetalle()">
                                     <option value="" selected disabled>Seleccione una Opción</option>
@@ -107,7 +107,7 @@
                                 </select>
                             </div>
                             <div class="form-group col-sm-6 col-xs-12 ptr">
-                                <label for="">Activacion por Recompra</label>
+                                <label for="" class="white">Activacion por Recompra</label>
                                 <select class="form-control" name="recompra" id="recompra" onchange="recompradetalle()">
                                     <option value="" selected disabled>Seleccione una Opción</option>
                                     <option value="0">No Aplica</option>

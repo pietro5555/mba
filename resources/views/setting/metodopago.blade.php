@@ -9,7 +9,7 @@
             <div class="col-xs-12">
                 <div class="box box-info">
                     <div class="box-header">
-                        <div class="box-title">
+                        <div class="box-title white">
                             <h3>
                                 Comision de Metodos de Pagos y activar botones
                                 <button type="button" class="btn btn-info btn-block hh" id="modal">
@@ -20,7 +20,7 @@
                     </div>
                     {{-- cuerpo --}}
                     <div class="box-body">
-                        <div class="col-xs-12 col-md-6 ch">
+                        <div class="col-xs-12 col-md-6 ch white">
                             <h3>Comision Por Transferencia</h3>
                             @if (!empty($comisiones[0]))
                             <h5>
@@ -36,7 +36,7 @@
                             </div>
                             @endif
                         </div>
-                        <div class="col-xs-12 col-md-6">
+                        <div class="col-xs-12 col-md-6 white">
                             <h4>Botones Habilitados</h4>
                             <div class="col-xs-6">
                                 <h5>Boton Transferencia: {{($Botones->btn_transferencia == 1) ? 'Activo' : 'Inactivo'}}</h5>
@@ -67,7 +67,7 @@
             <div class="col-xs-12">
                 <div class="box box-info">
                     <div class="box-header">
-                        <div class="box-title">
+                        <div class="box-title white">
                             <h3>Metodos de Pagos</h3>
                             <button type="button" class="btn btn-info btn-block hh" data-toggle="modal"
                                 data-target="#myModal">

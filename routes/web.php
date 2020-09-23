@@ -174,10 +174,11 @@ Route::group(['prefix' => 'installer'], function (){
   Route::get('courses/mentor', 'CursosController@show_course_category')->name('show.cursos.category');
   
   /*** RUTAS PARA EL CARRITO DE COMPRA***/
-  Route::group(['prefix' => 'shpping-cart'], function(){
-    Route::get('/', 'ShppingCartController@index')->name('shopping-cart.index');
-    Route::get('store/{id}', 'ShoppingCartController@store')->name('shopping-cart.store');
-    Route::get('delete/{id}', 'ShoppingCartController@delete')->name('shopping-cart.delete');
+  Route::group(['prefix' => 'shopping-cart'], function(){
+    Route::get('/', 'ShoopingCartController@index')->name('shopping-cart.index');
+    Route::get('store/{id}', 'ShoopingCartController@store')->name('shopping-cart.store');
+    Route::get('delete/{id}', 'ShoopingCartController@delete')->name('shopping-cart.delete');
+    Route::post('finish', 'CoursesOrdenController@procesarCompra')->name('shopping-cart.finish');
   });
   
   //Rutas de timelive
@@ -204,6 +205,8 @@ Route::group(['prefix' => 'installer'], function (){
      Route::group(['prefix' => 'courses'], function(){
         Route::get('my-list', 'CourseController@my_courses')->name('client.my-courses');
         Route::post('rate', 'RatingController@store')->name('client.courses.rate');
+        Route::get('{slug}/{id}/take-evaluation', 'EvaluationController@take')->name('client.courses.take-evaluation');
+        Route::post('submit-evaluation', 'EvaluationController@submit')->name('client.courses.submit-evaluation');
      });
   });
   

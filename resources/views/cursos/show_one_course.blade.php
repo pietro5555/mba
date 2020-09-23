@@ -27,6 +27,18 @@
 @endpush
 
 @section('content')
+   @if (Session::has('msj-exitoso'))
+      <div class="alert alert-success" style="margin: 5px 15px;">
+         {{ Session::get('msj-exitoso') }}
+      </div>
+   @endif
+
+   @if (Session::has('msj-erroneo'))
+      <div class="alert alert-danger" style="margin: 5px 15px;">
+         {{ Session::get('msj-erroneo') }}
+      </div>
+   @endif
+
    <div class="title-page-one_course col-md border-bottom-2"><span>
       <h6 class=""><span>Cursos > </span><span> {{ $curso->category->title }} ></span><span>{{ $curso->title }}</span></h6>
       <hr style="border: 1px solid #707070;opacity: 1;" />
@@ -116,7 +128,8 @@
                         </h6>
                      </div>
                      <div class="col-md-3">
-                        <a href="" class="btn btn-info play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> AGREGAR AL CARRITO</a>
+                        <a href="{{route('shopping-cart.store', [$curso->id])}}" class="btn btn-info play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> AGREGAR AL CARRITO</a>
+                        
                      </div>
                   </div>
                </div>
@@ -128,6 +141,7 @@
                <div class="col-md-3 mt-2">
                   <a href="" class="btn btn-success play-course-button btn-block">COMPRAR</a>
                   <a href="#ratingModal" data-toggle="modal" class="btn btn-primary play-course-button btn-block">VALORAR</a>
+                  <a href="{{ route('client.courses.take-evaluation', [$curso->slug, $curso->id]) }}" class="btn btn-primary play-course-button btn-block">PRESENTAR EVALUACIÓN</a>
                </div>
             </div>
          </div>

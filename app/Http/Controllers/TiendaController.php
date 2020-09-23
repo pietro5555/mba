@@ -111,7 +111,7 @@ class TiendaController extends Controller
                         ['wp.post_type', '=', 'product'],
                     ])
                     ->select('wp.ID', 'wp.post_title', 'wp.post_content','post_date', 'wp.guid', 'wpm.meta_value', 'wp.post_password as img')
-                    ->orderBy('wp.ID', 'DECS')
+                    ->orderBy('wp.ID', 'desc')
                     ->get();
         
         $cont = 0;

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\ShoppingCart;
+use Illuminate\Http\Request;
 use App\Models\Course;
 use App\Models\Category;
 use App\Models\User;
@@ -33,7 +33,7 @@ class ShoopingCartController extends Controller
                 $items->push($item);
             }
         }else{
-            $items = ShoppingCart::where('user_id', '=', Auth::user()->ID)
+            $items = DB::table('shopping_cart')->where('user_id', '=', Auth::user()->ID)
                         ->orderBy('date', 'DESC')
                         ->get();
             

@@ -3,28 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use DB;
-use Auth;
-use Carbon\Carbon;
-use DateTime;
-// modelos
-use App\Models\Course;
-use App\Models\Events;
-use App\Models\Note;
-use App\Models\EventResources;
-use App\Models\Category;
-use App\Models\Subcategory;
-use App\Models\Calendario; 
-
-
-
-
+use GuzzleHttp\Client;
+use App\Models\Course; use App\Models\Events; use App\Models\Note; use App\Models\EventResources; 
+use App\Models\Category; use App\Models\Subcategory; use App\Models\Calendario; 
+use DB; use Auth; use Carbon\Carbon; use DateTime;
 
 class EventsController extends Controller
 {
 
-    function __construct()
-    {
+    function __construct(){
         // TITLE
         view()->share('title', 'Eventos');
         Carbon::setLocale('es'); 
@@ -36,9 +23,7 @@ class EventsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {   
-        $cursos = Course::all();
+    public function index(){   
         $events = Events::orderBy('id', 'DESC')->get();
 
         $mentores = DB::table('wp98_users')
@@ -47,24 +32,12 @@ class EventsController extends Controller
                         ->orderBy('user_email', 'ASC')
                         ->get();
 
-        $mentor = DB::table('wp98_users')
-                    ->select('ID', 'user_email')
-                    ->where('ID', '=', 7)
-                    ->orderBy('user_email', 'ASC')
-                    ->get();
+        $categorias = DB::table('categories')
+                        ->select('id', 'title')
+                        ->orderBy('id', 'ASC')
+                        ->get();
 
-
-        return view('admin.events.index')->with(compact('events', 'mentores','cursos'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return view('admin.events.index')->with(compact('events', 'mentores', 'categorias'));
     }
 
     /**
@@ -73,33 +46,59 @@ class EventsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request){
+        $client = new Client(['base_uri' => 'https://streaming.shapinetwork.com']);
 
-        // se crea el enevents
-        $data = Events::create([
-            'title' => $request->input('title'),
-            'description' => $request->input('description'),
-            'status' => '1',
-            'user_id' => $request->input('mentor_id'),
-            'date' => $request->input('date'),
-            'date_end' => $request->input('date_end'),
-            'id_courses' => $request->cursos,
-        ]);
-        $data->save();
+        if (is_null(Auth::user()->streaming_token)){
+            $response = $client->request('POST', 'api/auth/login', [
+                'headers' => ['Accept' => 'application/json', 'Content-Type' => 'application/x-www-form-urlencoded'],
+                'form_params' => [
+                    'email' => 'admin',
+                    'password' => '123456789',
+                    'device_name' => 'luisana',
+                ]
+            ]);
 
-         if ($request->hasFile('image')){
-             $file = $request->file('image');
-            $name = $data->id.".".$file->getClientOriginalExtension();
-           
-            $file->move(public_path().'/uploads/images/banner', $name);
-            $data->image = $name;
-            
+            $result = json_decode($response->getBody());
+
+            Auth::user()->streaming_token = $result->token;
         }
-        $data->save();
 
-        return redirect('admin/events')->with('msj-exitoso', 'El evento '.$data->title.' ha sido creado con éxito.');
+        $headers = [
+            'Accept'        => 'application/json',
+            'Content-Type' => 'application/x-www-form-urlencoded',
+            'Authorization' => 'Bearer '.Auth::user()->streaming_token
+        ];
+
+        $creacionEvento = $client->request('POST', 'api/meetings', [
+            'headers' => $headers,
+            'form_params' => [
+                'title' => $request->title,
+                'agenda' => $request->description,
+                'description' => $request->description,
+                'start_date_time' => $request->date."T".$request->time,
+                'period' => $request->duration,
+                'category' =>[$request->category_id],
+                'type' => ['webinar']
+            ]
+        ]);
         
+        $result2 = json_decode($creacionEvento->getBody());
+        
+        $evento = new Events($request->all());
+        $evento->uuid = $result2->meeting->uuid;
+        $evento->status = 1;
+        $evento->save();
+
+        if ($request->hasFile('banner')){
+            $file = $request->file('banner');
+            $name = $evento->id.".".$file->getClientOriginalExtension();
+            $file->move(public_path().'/uploads/images/banner', $name);
+            $evento->image = $name;
+            $evento->save();
+        }
+        
+        return redirect('admin/events')->with('msj-exitoso', 'El evento '.$evento->title.' ha sido creado con éxito.');
     }
 
     /**
@@ -108,19 +107,7 @@ class EventsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($event_id)
-    {
-
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show_event($event_id)
-    {
+    public function show_event($event_id){
         $notes = Note::all();
         $event = Events::find($event_id);
         $menuResource = $event->getResource();
@@ -140,15 +127,20 @@ class EventsController extends Controller
      */
     public function edit($id)
     {
-        $event = Events::find($id);
-        $cursos = Course::all();
+        $evento = Events::find($id);
+
         $mentores = DB::table('wp98_users')
                         ->select('ID', 'user_email')
                         ->where('rol_id', '=', 2)
                         ->orderBy('user_email', 'ASC')
                         ->get();
-        return view('admin.events.editEvent')->with(compact('event', 'mentores', 'cursos'));
-        
+
+        $categorias = DB::table('categories')
+                        ->select('id', 'title')
+                        ->orderBy('id', 'ASC')
+                        ->get();
+
+        return view('admin.events.editEvent')->with(compact('evento', 'mentores', 'categorias'));
     }
 
     /**
@@ -158,29 +150,57 @@ class EventsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
-    {
+    public function update(Request $request){ 
+        $evento = Events::find($request->event_id);
 
-         
-        $event = Events::find($request->input('event_id'));
-        $event->fill($request->all());
-        $event->id_courses = $request->cursos;
-        $event->save();
+        $client = new Client(['base_uri' => 'https://streaming.shapinetwork.com']);
 
-         if ($request->hasFile('image')){
-             $file = $request->file('image');
-            $name = $event->id.".".$file->getClientOriginalExtension();
-           
-            $file->move(public_path().'/uploads/images/banner', $name);
-            $event->image = $name;
-            
+        if (is_null(Auth::user()->streaming_token)){
+            $response = $client->request('POST', 'api/auth/login', [
+                'headers' => ['Accept' => 'application/json', 'Content-Type' => 'application/x-www-form-urlencoded'],
+                'form_params' => [
+                    'email' => 'admin',
+                    'password' => '123456789',
+                    'device_name' => 'luisana',
+                ]
+            ]);
+
+            $result = json_decode($response->getBody());
+
+            DB::table('wp98_users')
+                ->where('id', '=', Auth::user()->ID)
+                ->update(['streaming_token' => $result->token]);
         }
-        $event->save();
-        
 
+        $headers = [
+            'Accept'        => 'application/json',
+            'Content-Type' => 'application/x-www-form-urlencoded',
+            'Authorization' => 'Bearer '.Auth::user()->streaming_token
+        ];
 
-        return redirect('admin/events')->with('msj-exitoso', 'El evento '.$event->title.' ha sido modificado con éxito.');
+        $actualizacionEvento = $client->request('PATCH', 'api/meetings/'.$evento->uuid, [
+            'headers' => $headers,
+            'form_params' => [
+                'title' => $request->title,
+                'agenda' => $request->description,
+                'description' => $request->description,
+                'start_date_time' => $request->date."T".$request->time,
+                'period' => $request->duration,
+                'category' =>[$request->category_id],
+                'type' => ['webinar', 'video_conference']
+            ]
+        ]);
         
+        $evento->fill($request->all());
+        if ($request->hasFile('banner')){
+            $file = $request->file('banner');
+            $name = $evento->id.".".$file->getClientOriginalExtension();
+            $file->move(public_path().'/uploads/images/banner', $name);
+            $evento->image = $name;
+        }
+        $evento->save();
+
+        return redirect('admin/events')->with('msj-exitoso', 'El evento '.$evento->title.' ha sido modificado con éxito.');
     }
 
     /**

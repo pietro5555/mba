@@ -1,6 +1,7 @@
 @extends('layouts.dashboardnew')
 
 @push('script')
+	<script src="{{ asset('/ckeditor/ckeditor.js') }}"></script>
 	<script>
 		$(document).ready( function () {
 			$('#mytable').DataTable( {
@@ -101,10 +102,21 @@
 								<div class="col-md-12">
 						            <div class="form-group">
 						                <label>Mentor</label>
-						                <select class="form-control" name="mentor_id" required>
+						                <select class="form-control" name="user_id" required>
 						                	<option value="" selected disabled>Seleccione un mentor..</option>
 						                	@foreach ($mentores as $mentor)
 						                		<option value="{{ $mentor->ID }}">{{ $mentor->user_email }}</option>
+						                	@endforeach
+						                </select>
+						            </div>
+								</div>
+								<div class="col-md-12">
+						            <div class="form-group">
+						                <label>Categoría</label>
+						                <select class="form-control" name="category_id" required>
+						                	<option value="" selected disabled>Seleccione una categoría..</option>
+						                	@foreach ($categorias as $categoria)
+						                		<option value="{{ $categoria->id }}">{{ $categoria->title }}</option>
 						                	@endforeach
 						                </select>
 						            </div>
@@ -112,49 +124,27 @@
 								<div class="col-md-12">
 						            <div class="form-group">
 						                <label>Descripción</label>
-										<textarea name="description" class="form-control" id="description" cols="30" rows="10" required></textarea>
-						            </div>
+										<textarea class="ckeditor" name="description" id="description" cols="30" rows="10" required></textarea>
+								    </div>
 						        </div>
-						        <!-- <div class="col-md-12">
-						            <div class="form-group">
-						                <label>Fecha</label>
-						            	<input type="text" class="form-control" name="date" required>
-						            </div>
-						        </div> -->
-
+								<div class="col-md-12">
+									<label>Fecha</label>
+									<input type="date" class="form-control" name="date" required>
+								</div>
+								<div class="col-md-12">
+									<label>Hora</label>
+									<input type="time" class="form-control" name="time" required>
+								</div>
+								<div class="col-md-12">
+						        	<label>Duración (Minutos)</label>
+            						<input type="number" class="form-control" name="duration" required>
+						        </div>
 						        <div class="col-md-12">
-						        <div class="form-group">
-                                   <label class="control-label text-center">Cursos
-                             		</label>
-                                   <select name="cursos" class="form-control" required>
-                                   	<option value="" selected disabled>Seleccione un Curso</option>
-                                     @foreach($cursos as $curs)
-                                      <option value="{{$curs->id}}">{{$curs->title}}</option>
-                                     @endforeach
-                                   </select>       
-                                </div>
+									<div class="form-group">
+									<label class="control-label text-center">Banner</label>
+										<input class="form-control" type="file" name="banner" required>
+									</div>
 						        </div>
-
-
-						        <div class="col-md-12">
-						        <div class="form-group">
-                                   <label class="control-label text-center">Banner
-                             		</label>
-                                   <input class="form-control" type="file" name="image">
-                                        
-                                </div>
-						        </div>
-
-						        <div class="col-md-12">
-						        	<label>Fecha Inicio</label>
-						            <input type="datetime-local" class="form-control" name="date" id="fechainicio" required>
-						        </div>
-						        
-						        <div class="col-md-12">
-						        	<label>Fecha de finalización</label>
-            						<input type="datetime-local" class="form-control" name="date_end" required>
-						        </div>
-						      
 						    </div>
 						</div>
 				        

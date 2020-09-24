@@ -30,7 +30,7 @@ class User extends Authenticatable
         'ladomatriz', 'puntosPro', 'puntosRed', 'puntosDer', 'puntosIzq',
         'fecha_activacion','binario','debiDer','debiIzq','codigo','correos',
         'limitar','pop_up','autenticacion','fechaver','factor2','modo_oscuro','about'
-        ,'cover_name', 'profession'
+        ,'cover_name', 'profession', 'membership_id', 'streaming_token',
     ];
 
     /**

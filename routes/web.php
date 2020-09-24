@@ -227,7 +227,7 @@ Route::group(['prefix' => 'installer'], function (){
   
   
   //Agendar
-  Route::get('schedule/{event_id}/{user_id}', 'CalendarioGoogleController@schedule')->name('schedule.event');
+  Route::get('schedule/{event_id}', 'CalendarioGoogleController@schedule')->name('schedule.event');
   Route::get('calendar', 'CalendarioGoogleController@calendar')->name('schedule.calendar');
   //vista de anotaciones
   Route::get('/anotaciones', 'NoteController@index')->name('anotaciones');
@@ -235,7 +235,7 @@ Route::group(['prefix' => 'installer'], function (){
   
   //vista de timelive
       Route::group(['prefix' => 'time'], function(){
-      Route::get('/timelive', 'CalendarioGoogleController@timelive')->name('timelive');
+      Route::get('/timelive', 'EventsController@timelive')->name('timelive');
       Route::get('/oauth/{id}', 'CalendarioGoogleController@oauth')->name('oauthCallback');
       Route::get('/redirigircalendario', 'CalendarioGoogleController@index')->name('cal.index');
       Route::get('/proximo/{id}', 'CalendarioGoogleController@proximo')->name('time-prox');
@@ -332,6 +332,7 @@ Route::group(['prefix' => 'installer'], function (){
   
      //Eventos admin
      Route::group(['prefix' => 'events'], function(){
+       Route::get('prueba', 'EventsController@prueba');
       Route::get('/', 'EventsController@index')->name('admin.events.index');
       Route::get('show/{id}', 'EventsController@show')->name('admin.events.show');
       Route::post('store', 'EventsController@store')->name('admin.events.store');

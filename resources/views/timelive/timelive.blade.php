@@ -190,7 +190,7 @@ countdown('{{$evento->date}}', 'clock');
           <p style="color: white;">{{$evento->mentor->profession}}<p>
           <p style="color:#b7a7a7; font-size: 12px; margin-top: -10px;"> {{$evento->mentor->about}}</p>
 
-        <a href="#" class="btn btn-success btn-block">NIVEL: {{$evento->curso->subcategory->title}}</a>
+        <!--<a href="#" class="btn btn-success btn-block">NIVEL: CATEGORIA</a>-->
     </div>
   </div>
 

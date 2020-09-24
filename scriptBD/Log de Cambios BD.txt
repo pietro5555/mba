@@ -105,3 +105,8 @@ Dev: Luisana Marín
 *Nueva tabla evaluations_users (Correr script evaluations_users)
 *Nueva tabla evaluations_users_answers (Correr script evaluations_users_answers)
 
+24/09/2020
+Dev:Crisleivys
+*Agregado el campo favorite (correr el script events_users)
+*Agregado el campo favorite (correr el script courses_users)
+

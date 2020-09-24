@@ -183,7 +183,7 @@ Route::group(['prefix' => 'installer'], function (){
   
   //Rutas de timelive
   Route::group(['prefix' => 'time'], function(){
-    Route::get('/timelive', 'CalendarioGoogleController@timelive')->name('timelive');
+    Route::get('/timelive', 'EventsController@timelive')->name('timelive');
     Route::get('/oauth/{id}', 'CalendarioGoogleController@oauth')->name('oauthCallback');
     Route::get('/redirigircalendario', 'CalendarioGoogleController@index')->name('cal.index');
     Route::get('/proximo/{id}', 'CalendarioGoogleController@proximo')->name('time-prox');
@@ -208,6 +208,7 @@ Route::group(['prefix' => 'installer'], function (){
         Route::get('{slug}/{id}/take-evaluation', 'EvaluationController@take')->name('client.courses.take-evaluation');
         Route::post('submit-evaluation', 'EvaluationController@submit')->name('client.courses.submit-evaluation');
      });
+     Route::get('favorites/', 'CourseController@favorites')->name('favorites');
   });
   
   
@@ -227,8 +228,8 @@ Route::group(['prefix' => 'installer'], function (){
   
   
   //Agendar
-  Route::get('schedule/{event_id}', 'CalendarioGoogleController@schedule')->name('schedule.event');
-  Route::get('calendar', 'CalendarioGoogleController@calendar')->name('schedule.calendar');
+  Route::get('schedule/{event_id}', 'EventsController@schedule')->name('schedule.event');
+  Route::get('calendar', 'EventsController@calendar')->name('schedule.calendar');
   //vista de anotaciones
   Route::get('/anotaciones', 'NoteController@index')->name('anotaciones');
   Route::post('/anotaciones/store', 'NoteController@store')->name('live.anotaciones');
@@ -239,7 +240,7 @@ Route::group(['prefix' => 'installer'], function (){
       Route::get('/oauth/{id}', 'CalendarioGoogleController@oauth')->name('oauthCallback');
       Route::get('/redirigircalendario', 'CalendarioGoogleController@index')->name('cal.index');
       Route::get('/proximo/{id}', 'CalendarioGoogleController@proximo')->name('time-prox');
-      Route::get('/favorite/{id}', 'CalendarioGoogleController@event_favorite')->name('event.favorite');
+      Route::get('/favorite/{id}', 'EventsController@event_favorite')->name('event.favorite');
        });
   
   // Events landing

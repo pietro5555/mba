@@ -2,21 +2,6 @@
 
 @section('content')
 
-@push('style')
-<style>
-	
-			@media only screen and (min-width: 992px) {
-	    .ajustar{
-	        width: 14%;
-	    }
-	    .aumentar{
-	        width: 16.66666667%;
-	    }
-	}
-	</style>
-@endpush
-
-{{-- resumen --}}
 @include('usuario.formEdit.resumen')
 
 <div class="col-md-12">
@@ -24,9 +9,9 @@
         <div class="box-body">
 
             <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <li class="nav-item ">
+                <li class="nav-item active">
                     <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
-                        aria-controls="home" aria-selected="true">informacion Personal</a>
+                        aria-controls="home" aria-selected="true" aria-expanded="true">informacion Personal</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
@@ -48,7 +33,7 @@
             <!-- Aquí es informacion personal -->
 
             <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="tab-pane fade active in" id="home" role="tabpanel" aria-labelledby="home-tab">
                     @include('usuario.formEdit.personal', ['controler' => $data['controler']])
                 </div>
                 <!-- termina informacion personal -->
@@ -80,149 +65,7 @@
         </div>
     </div>
 </div>
-@if($yo != null)
-<div class="col-md-2 {{($settingCliente->cliente == 1) ? 'ajustar' : 'aumentar'}}">
-						<a href="{{ route('gestion.verusuario', Crypt::encrypt($yo)) }}">
-							<div class="panel-group">
-								<div class="panel panel-primary">
-									<div class="panel-heading">
-										<center><i class="far fa-address-book" style="font-size: 23px;"></i></center>
-									</div>
-									<div class="panel-footer">
-										<center>Perfil</center>
-									</div>
-								</div>
-							</div>
-					</div>
-
-					<div class="col-sm-2 {{($settingCliente->cliente == 1) ? 'ajustar' : 'aumentar'}}">
-						<a href="{{ route('gestion.ingresos', Crypt::encrypt($yo)) }}">
-							<div class="panel-group">
-								<div class="panel panel-primary">
-									<div class="panel-heading">
-										<center><i class="fas fa-money-bill-alt" style="font-size: 23px;"></i></center>
-									</div>
-									<div class="panel-footer">
-										<center>Ingresos</center>
-									</div>
-								</div>
-							</div>
-					</div>
-					<div class="col-sm-2 {{($settingCliente->cliente == 1) ? 'ajustar' : 'aumentar'}}">
-						<a href="{{ route('gestion.referidos', Crypt::encrypt($yo)) }}">
-							<div class="panel-group">
-								<div class="panel panel-primary">
-									<div class="panel-heading">
-										<center><i class="far fa-user-circle" style="font-size: 23px;"></i></center>
-									</div>
-									<div class="panel-footer">
-										<center>Referidos</center>
-									</div>
-								</div>
-							</div>
-					</div>
-
-					<div class="col-sm-2 {{($settingCliente->cliente == 1) ? 'ajustar' : 'aumentar'}}">
-						<a href="{{ route('gestion.wallet', Crypt::encrypt($yo)) }}">
-							<div class="panel-group">
-								<div class="panel panel-primary">
-									<div class="panel-heading">
-										<center><i class="fas fa-wallet" style="font-size: 23px;"></i></center>
-									</div>
-									<div class="panel-footer">
-										<center>Monedero</center>
-									</div>
-								</div>
-							</div>
-					</div>
-
-					<div class="col-sm-2 {{($settingCliente->cliente == 1) ? 'ajustar' : 'aumentar'}}">
-						<a href="{{ route('gestion.pago', Crypt::encrypt($yo)) }}">
-							<div class="panel-group">
-								<div class="panel panel-primary">
-									<div class="panel-heading">
-										<center><i class="fas fa-money-check" style="font-size: 23px;"></i></center>
-									</div>
-									<div class="panel-footer">
-										<center>Liberados</center>
-									</div>
-								</div>
-							</div>
-				        </div>
-				        
-				        
-				        <div class="col-sm-2 {{($settingCliente->cliente == 1) ? 'ajustar' : 'aumentar'}}">
-						<a href="{{ route('genealogia', ['id' => $yo, 'tipo' => 'Normal']) }}">
-							<div class="panel-group">
-								<div class="panel panel-primary">
-									<div class="panel-heading">
-										<center><i class="fas fa-sitemap" style="font-size: 23px;"></i></center>
-									</div>
-									<div class="panel-footer">
-										<center>Genealogia Usuarios</center>
-									</div>
-								</div>
-							</div>
-				        </div>
-				        
-				        @if($settingCliente->cliente == 1)
-				        <div class="col-sm-2 {{($settingCliente->cliente == 1) ? 'ajustar' : 'aumentar'}}">
-						<a href="{{ route('genealogia', ['id' => $yo, 'tipo' => 'Cliente']) }}">
-							<div class="panel-group">
-								<div class="panel panel-primary">
-									<div class="panel-heading">
-										<center><i class="fas fa-sitemap" style="font-size: 23px;"></i></center>
-									</div>
-									<div class="panel-footer">
-										<center>Genealogia Clientes</center>
-									</div>
-								</div>
-							</div>
-				        </div>
-				        @endif
-				@endif
-				
-				
-	
-	
-	
-	<!-- Ingresar Codigo -->   
-<div class="modal fade" id="codigoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Ingresar Codigo</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form action="{{route('calendario-guardar')}}" method="post">
-          {{ csrf_field() }} 
-          
-          <div class="col-md-12" id="cod">
-              
-          </div>
-          
-          <input type="hidden" name="numero" id="numero">
-          
-          <input type="hidden" name="tipo" id="tipo">
-          
-          <div class="col-md-12">
-            <label>Codigo</label>
-            <input type="text" class="form-control" name="codigo" required onkeyup="verificarCodigo(this.value)">
-               </div>
-               
-               
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-      </div>
-    </div>
-  </div>
-</div> 			
-				
+                
 @endsection
 @push('script')
 <script>
@@ -253,78 +96,33 @@
         $('.pago').attr('disabled', true)
         $('#botom4').hide('slow')
     }
-    
-    
-    function modalCodigo(numero, tipo){
-        
-        if({{Auth::user()->rol_id}} != '0'){
-        $.get('enviocodigo/{{Auth::user()->ID}}', function (response) {
-            
-            $('#cod').empty()
-            
-            $('#cod').append(
-        '<div class="alert alert-info" role="alert">' +        
-          '<h5> Se a enviado un codigo a su correo electrónico</h5>'+
-         '</div>'
-        )
-            
-            $('#numero').val(numero)
-            $('#tipo').val(tipo)
-            $('#codigoModal').modal();
-         })
-       }else{
-           
-           $('.'+tipo).attr('disabled', false)
-           $('#botom'+numero).show('slow')
-           
-           if(tipo == 'contacto'){
-              $('.botom'+numero).show('slow') 
-           }
-       }
+
+
+     function activarPersonal() {
+        $('.personal').attr('disabled', false)
+        $('#botom0').show('slow')
     }
     
-    
-    function verificarCodigo(valor){
-        
-        var productos = null
-        
-        $.get('verificarcodigo/{{Auth::user()->ID}}/'+valor, function (response){
-            productos = JSON.parse(response)
-            
-            if (productos.length <= 0) {
-        $('#cod').empty()
-        $('#cod').append(
-          '<div class="alert alert-danger" role="alert">' +
-          '<h5> <b>Aviso:</b> El codigo ingresado es Incorrcto</h5>' +
-          '</div>'
-        )
-      }else{
-          $('#cod').empty()
-          $('#cod').append(
-          '<div class="alert alert-success" role="alert">' +
-          '<h5> <b>Aviso:</b> El codigo ingresado es Correcto por favor espere 5 segundos</h5>' +
-          '</div>'
-            )
-            
-            setTimeout(activarPerfil, 3000);
-          }
-        })
-      
+
+    function activarContacto() {
+        $('.contacto').attr('disabled', false)
+        $('#botom1').show('slow')
+        $('.botom1').show('slow')
     }
-    
-    
-    function activarPerfil(){
-        
-        let numero = $('#numero').val()
-        let tipo = $('#tipo').val()
-        
-        $('.'+tipo).attr('disabled', false)
-        $('#botom'+numero).show('slow')
-        $('#codigoModal').modal('hide');
-        
-        if(tipo == 'contacto'){
-              $('.botom'+numero).show('slow') 
-         }
+
+    function activarSocial() {
+        $('.social').attr('disabled', false)
+        $('#botom2').show('slow')
+    }
+
+    function activarBanco() {
+        $('.banco').attr('disabled', false)
+        $('#botom3').show('slow')
+    }
+
+    function activarPago() {
+        $('.pago').attr('disabled', false)
+        $('#botom4').show('slow')
     }
     
 </script>

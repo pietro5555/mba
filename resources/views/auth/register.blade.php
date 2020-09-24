@@ -5,7 +5,7 @@
     <div class="content">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">
+                <h3 class="box-title white">
                     @if ( request()->ref != null )
                     @php
                     $referred = DB::table($settings->prefijo_wp.'users')
@@ -14,7 +14,7 @@
                     ->first();
                     @endphp
                     @if ($referred != null)
-                    <p cla ss="refer">Registro Referido por: <strong>{{  $referred->display_name }}</strong>
+                    <p>Registro Referido por: <strong>{{  $referred->display_name }}</strong>
                     </p>
                     @endif
                     @endif
@@ -34,7 +34,7 @@
                         <div class="col-12 col-md-6">
                             <div class="box box-info">
                                 <div class="box-header with-border">
-                                    <h3 class="box-title">
+                                    <h3 class="box-title white">
                                         Información General
                                     </h3>
                                 </div>
@@ -45,7 +45,7 @@
 
                                     @if(!empty(request()->select))  
                                     <div class="form-group">
-                                        <label class="control-label" style="text-align: center;">Tipo de Usuario (*)</label>
+                                        <label class="control-label" style="text-align: center; color: white;">Tipo de Usuario (*)</label>
                                        <select class="form-control" name="rango">
                                         <option value="" selected disabled>Seleccion una opcion</option>
                                         <option value="0">Administrador</option>
@@ -60,7 +60,7 @@
                                     @if($campo->tip == 0 || $campo->tip == 1)
                                     @if($campo->tipo == 'select')
                                     <div class="form-group">
-                                        <label class="" for="">{{$campo->label}}
+                                        <label class="white" for="">{{$campo->label}}
                                             {{($campo->requerido == 1) ? '(*)' : '(Opcional)'}}</label>
                                         <select class="form-control select2" name="{{$campo->nameinput}}"
                                             {{($campo->requerido == 1) ? 'required' : ' '}}>
@@ -74,7 +74,7 @@
                                     </div>
                                     @elseif($campo->tipo == 'number')
                                     <div class="form-group">
-                                        <label class="" for="">{{$campo->label}}
+                                        <label class="white" for="">{{$campo->label}}
                                             {{($campo->requerido == 1) ? '(*)' : '(Opcional)'}}</label>
                                         <input class="form-control " step="1" type="{{$campo->tipo}}"
                                             name="{{$campo->nameinput}}"
@@ -86,7 +86,7 @@
                                     @else
                                     @if($campo->input_edad == 1)
                                     <div class="form-group">
-                                        <label class="" for="">{{$campo->label}}
+                                        <label class="white" for="">{{$campo->label}}
                                             {{($campo->requerido == 1) ? '(*)' : '(Opcional)'}}</label>
                                         <input class="form-control " type="{{$campo->tipo}}"
                                             name="{{$campo->nameinput}}" value="{{old($campo->nameinput)}}"
@@ -95,7 +95,7 @@
                                     </div>
                                     @else
                                     <div class="form-group">
-                                        <label class="" for="">{{$campo->label}}
+                                        <label class="white" for="">{{$campo->label}}
                                             {{($campo->requerido == 1) ? '(*)' : '(Opcional)'}}</label>
                                         <input class="form-control " type="{{$campo->tipo}}"
                                             name="{{$campo->nameinput}}" value="{{old($campo->nameinput)}}"
@@ -111,9 +111,9 @@
 
 
                                     <div class="form-group">
-                                        <label class="control-label" style="text-align: center;">Correo Electrónico
+                                        <label class="control-label" style="text-align: center; color: white;">Correo Electrónico
                                             (*)</label>
-                                        <input class="form-control form-control-solid placeholder-no-fix form-group"
+                                        <input class="form-control"
                                             type="text" autocomplete="off" name="user_email" required
                                             style="background-color:f7f7f7;" oncopy="return false"
                                             onpaste="return false" />
@@ -125,14 +125,14 @@
                         <div class="col-12 col-md-6">
                             <div class="box box-info">
                                 <div class="box-header with-border">
-                                    <h3 class="box-title">
+                                    <h3 class="box-title white">
                                         Información para el Acceso de la pagina
                                     </h3>
                                 </div>
                                 <div class="box-body">
 
                                     <div class="form-group">
-                                        <label class="control-label" style="text-align: center;">Contraseña
+                                        <label class="control-label" style="text-align: center; color: white;">Contraseña
                                             (*)</label>
                                         <input class="form-control form-control-solid placeholder-no-fix form-group"
                                             type="password" autocomplete="off" name="password" required
@@ -141,7 +141,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="control-label" style="text-align: center;">Confirmación de
+                                        <label class="control-label" style="text-align: center; color: white;">Confirmación de
                                             Contraseña (*)</label>
                                         <input class="form-control form-control-solid placeholder-no-fix form-group"
                                             type="password" autocomplete="off" name="password_confirmation" required
@@ -168,7 +168,7 @@
                                     
                                     @else
                                     <div class=" form-group">
-                                        <label class="" for="">ID Patrocinador (opcional)</label>
+                                        <label class="white" for="">ID Patrocinador (opcional)</label>
                                         <input type="number" class="form-control" name="referred_id" value="{{ request()->ref }}">
                                     </div>
                                     @endif
@@ -194,7 +194,7 @@
                                     @if(empty(request()->lado))
                                     {{-- binario --}}
                                         <div class=" form-group">
-                                            <label class="" for="">Lado a Ingresar (*)</label>
+                                            <label class="white" for="">Lado a Ingresar (*)</label>
                                             <select class="form-control " name="ladomatriz" required>
                                                 <option value="" disabled selected>Selecciones una opcion</option>
                                                 <option value="D">Derecha</option>
@@ -214,7 +214,7 @@
                                         <div class="custom-control custom-checkbox">
                                             <input type="checkbox" name="terms" class="custom-control-input"
                                                 id="customCheck1" {{ old('terms') ? 'checked' : '' }}>
-                                            <label class="custom-control-label" for="customCheck1">He leído, Acepto
+                                            <label class="custom-control-label white" for="customCheck1">He leído, Acepto
                                                 los terminos y condiciones</label>
                                         </div>
                                         <a href="{{asset('assets/terminosycondiciones.pdf')}}" download>

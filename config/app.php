@@ -184,6 +184,9 @@ return [
         Chumper\Zipper\ZipperServiceProvider::class,
         App\Providers\ViewServiceProvider::class,
 
+        //PDF servicio 
+        Barryvdh\DomPDF\ServiceProvider::class,
+
     ],
 
     /*
@@ -239,6 +242,9 @@ return [
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'Zipper' => Chumper\Zipper\Zipper::class,
+
+        //PDF alias
+        'PDF' => Barryvdh\DomPDF\Facade::class,
     ],
 
 ];

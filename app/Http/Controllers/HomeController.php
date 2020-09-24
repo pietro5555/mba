@@ -17,7 +17,17 @@ use App\Models\Course; use App\Models\Category; use App\Models\Events;
 use App\Http\Controllers\IndexController;
 use Modules\ReferralTree\Http\Controllers\ReferralTreeController;
 
+use PDF;
+
 class HomeController extends Controller{
+
+   public function certificado(){
+      //return view('certificado.tipo1');
+      $pdf = PDF::loadView('certificado.tipo1');
+
+      // download PDF file with download method
+      return $pdf->download('pdf_file.pdf');
+   }
 
    public function index(){
       $cursosDestacados = Course::where('featured', '=', 1)

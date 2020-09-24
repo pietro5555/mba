@@ -183,7 +183,7 @@ Route::group(['prefix' => 'installer'], function (){
   
   //Rutas de timelive
   Route::group(['prefix' => 'time'], function(){
-    Route::get('/timelive', 'CalendarioGoogleController@timelive')->name('timelive');
+    Route::get('/timelive', 'EventsController@timelive')->name('timelive');
     Route::get('/oauth/{id}', 'CalendarioGoogleController@oauth')->name('oauthCallback');
     Route::get('/redirigircalendario', 'CalendarioGoogleController@index')->name('cal.index');
     Route::get('/proximo/{id}', 'CalendarioGoogleController@proximo')->name('time-prox');
@@ -208,6 +208,7 @@ Route::group(['prefix' => 'installer'], function (){
         Route::get('{slug}/{id}/take-evaluation', 'EvaluationController@take')->name('client.courses.take-evaluation');
         Route::post('submit-evaluation', 'EvaluationController@submit')->name('client.courses.submit-evaluation');
      });
+     Route::get('favorites/', 'CourseController@favorites')->name('favorites');
   });
   
   
@@ -227,19 +228,19 @@ Route::group(['prefix' => 'installer'], function (){
   
   
   //Agendar
-  Route::get('schedule/{event_id}/{user_id}', 'CalendarioGoogleController@schedule')->name('schedule.event');
-  Route::get('calendar', 'CalendarioGoogleController@calendar')->name('schedule.calendar');
+  Route::get('schedule/{event_id}', 'EventsController@schedule')->name('schedule.event');
+  Route::get('calendar', 'EventsController@calendar')->name('schedule.calendar');
   //vista de anotaciones
   Route::get('/anotaciones', 'NoteController@index')->name('anotaciones');
   Route::post('/anotaciones/store', 'NoteController@store')->name('live.anotaciones');
   
   //vista de timelive
       Route::group(['prefix' => 'time'], function(){
-      Route::get('/timelive', 'CalendarioGoogleController@timelive')->name('timelive');
+      Route::get('/timelive', 'EventsController@timelive')->name('timelive');
       Route::get('/oauth/{id}', 'CalendarioGoogleController@oauth')->name('oauthCallback');
       Route::get('/redirigircalendario', 'CalendarioGoogleController@index')->name('cal.index');
       Route::get('/proximo/{id}', 'CalendarioGoogleController@proximo')->name('time-prox');
-      Route::get('/favorite/{id}', 'CalendarioGoogleController@event_favorite')->name('event.favorite');
+      Route::get('/favorite/{id}', 'EventsController@event_favorite')->name('event.favorite');
        });
   
   // Events landing
@@ -249,11 +250,20 @@ Route::group(['prefix' => 'installer'], function (){
   Route::post('/settings/event/{event_id}', 'SetEventController@store')->name('set.event.store');
   
   
-  Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu', 'role']], function() {
+  Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu']], function() {
   
     Route::group(['prefix' => 'red'], function(){
           Route::get('/listado', 'RedController@index')->name('admin-red-index');
           Route::post('/filtrered', 'RedController@filtrered')->name('admin-red-filtre');
+
+          // vista de referidos directos e indirectos
+      Route::get('/direct', 'RedController@direct')->name('red.directos');
+      //filtros de referidos directos e indirectos
+      Route::post('/filtrered', 'RedController@filtre')->name('red.filtre');
+      //volumen grupal
+      Route::get('/individual', 'RedController@individual')->name('individual');
+      Route::post('/todofecha', 'RedController@todofecha')->name('todofecha');
+      Route::post('/filtrouser', 'RedController@filtrouser')->name('filtrouser');
         });
   
     Route::group(['prefix' => 'usuarios'], function(){
@@ -332,6 +342,7 @@ Route::group(['prefix' => 'installer'], function (){
   
      //Eventos admin
      Route::group(['prefix' => 'events'], function(){
+       Route::get('prueba', 'EventsController@prueba');
       Route::get('/', 'EventsController@index')->name('admin.events.index');
       Route::get('show/{id}', 'EventsController@show')->name('admin.events.show');
       Route::post('store', 'EventsController@store')->name('admin.events.store');

@@ -20,17 +20,19 @@ class Events extends Model
      * @var array
      */
     protected $fillable = [
+        'uuid',
         'title',
+        'user_id',
+        'category_id',
+        'description',
         'date',
+        'time',
+        'duration',
         'image',
+        'status',
         'type',
         'url_streaming',
-        'url_video',
-        'user_id',
-        'course_id',
-        'description',
-        'date_end',
-        'status'
+        'url_video'
     ];
 
     

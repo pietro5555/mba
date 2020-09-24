@@ -181,10 +181,11 @@
     </div>
     @else
 
+
+<div class="col-sm-12 col-xs-12" style="padding-right: 0px; padding-left: 0px;">
      @foreach($redes as $red)
       @if($red->tipo == '1')
-      <div class="col-sm-3 col-xs-12">
-        <div class="col-sm-6 col-xs-12" onclick="copyToClipboard('{{$red->nombre}}')">
+        <div class="col-sm-3 col-xs-12" onclick="copyToClipboard('{{$red->nombre}}')">
         <div style="display:none;">
           <small id="{{$red->nombre}}">{{$red->link}}</small>
         </div>
@@ -205,8 +206,8 @@
       </div>   
     @else
      
-     <div class="col-sm-3 col-xs-12">
-        <div class="col-sm-6 col-xs-12" onclick="copyToClipboard('{{$red->nombre}}')">
+     
+        <div class="col-sm-3 col-xs-12" onclick="copyToClipboard('{{$red->nombre}}')">
          <div style="display:none;">
           <small id="{{$red->nombre}}">{{$red->link}}</small>
          </div>
@@ -227,6 +228,7 @@
 
       @endif
     @endforeach 
+    </div>   
     @endif
 
     

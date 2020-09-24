@@ -29,8 +29,11 @@ class LoginController extends Controller
     public function autenticacion(Request $datos){
       
       if (Auth::attempt(['ID' => $datos->ID, 'password' => $datos->password])) {
-
+         if(Auth::user()->rol_id == 0 || Auth::user()->rol_id == 1){
            return redirect('/admin');
+         }else{
+          return redirect('/');
+         }
            
         }else{
             

@@ -19,7 +19,18 @@
     </script>
 @endpush
 @section('content')
-    
+    @if (Session::has('msj-exitoso'))
+      <div class="alert alert-success" style="margin: 5px 15px;">
+         {{ Session::get('msj-exitoso') }}
+      </div>
+   @endif
+
+   @if (Session::has('msj-erroneo'))
+      <div class="alert alert-danger" style="margin: 5px 15px;">
+         {{ Session::get('msj-erroneo') }}
+      </div>
+   @endif
+
     <div class="title-page-course col-md"><span class="text-white">
         <h3><span class="text-white">Hola</span><span class="text-primary"> {{$username}}</span><span class="text-white"> ¡Nos alegra verte hoy!</span></h3>
     </div>

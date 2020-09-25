@@ -12,6 +12,7 @@ use App\Models\ShoppingCart;
 use App\Models\Course;
 use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
+use DB;
 
 class CoursesOrdenController extends Controller
 {
@@ -22,8 +23,7 @@ class CoursesOrdenController extends Controller
      * @param Request $request
      * @return void
      */
-    public function procesarCompra(Request $request)
-    {
+    public function procesarCompra(Request $request){
         try {
             $iduser = Auth::user()->ID;
             $detalles = $this->getDataillOrden($iduser);
@@ -41,7 +41,8 @@ class CoursesOrdenController extends Controller
                     'idorden' => $idorden
                 ];
                 $this->stripe($dataStripe);
-                return redirect()->route('shopping-cart.index');
+                
+                return redirect('courses')->with('msj-exitoso', 'Su compra ha sido procesada con éxito.');
             }elseif($request->metodo == 'cripto'){
                 $dataCripto = [
                     'total' => $detalles['total'],
@@ -75,8 +76,7 @@ class CoursesOrdenController extends Controller
      * @param array $data
      * @return void
      */
-    public function stripe($data)
-    {
+    public function stripe($data){
         try {
             $secret_key = env('STRIPE_SECRET');
             Stripe::setApiKey($secret_key);
@@ -96,11 +96,13 @@ class CoursesOrdenController extends Controller
                 'idtransacion_stripe' => $data['token'],
                 'status' => 1
             ]);
+
+            $carrito = new ShoppingCartController();
+            $carrito->process_cart($data['idorden']);
         } catch (\Throwable $th) {
             dd($th);
         }
     }
-
     /**
      * Permite procesar el pago por medio de coinpayment
      *
@@ -127,6 +129,10 @@ class CoursesOrdenController extends Controller
                 ];
             }
             
+            DB::table('shopping_cart')
+                ->where('user_id', '=', Auth::user()->ID)
+                ->delete();
+
             $ruta = \CoinPayment::generatelink($transacion);
             return $ruta;
         } catch (\Throwable $th) {

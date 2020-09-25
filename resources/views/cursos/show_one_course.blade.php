@@ -103,7 +103,7 @@
                 <div class="col-md-3">
                   <div class="row">
                      <h4 class="text-white mr-2">COSTO</h4>
-                     <h1 class="text-success">47 USD</h1>
+                     <h1 class="text-success">{{ $curso->price }} USD</h1>
                   </div>
                   
                </div>

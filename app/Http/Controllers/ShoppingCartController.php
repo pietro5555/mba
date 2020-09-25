@@ -4,13 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\ShoppingCart;
 use Illuminate\Http\Request;
-use App\Models\Course;
-use App\Models\Category;
-use App\Models\User;
+use App\Models\Course; use App\Models\Category; use App\Models\User;
+use App\Models\Purchase; use App\Models\PurchaseDetail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class ShoopingCartController extends Controller
+class ShoppingCartController extends Controller
 {
     /**
      * Carrito de Compras (Usuarios No Registrados y Usuarios Registrados)
@@ -134,6 +133,64 @@ class ShoopingCartController extends Controller
             ShoppingCart::destroy($id);
 
             return redirect('shopping-cart')->with('msj-exitoso', 'El item ha sido eliminado de su carrito de compras con éxito.');
+        }
+    }
+
+    /**
+     * Procesar Compra una vez verificado el pago
+    */
+    public function process_cart($order){
+        $datosOrden = DB::table('courses_orden')
+                        ->where('id', '=', $order)
+                        ->first();
+
+        $compra = new Purchase();
+        $compra->user_id = $datosOrden->user_id;
+        $compra->amount = $datosOrden->total;
+        if (!is_null($datosOrden->idtransacion_stripe)){
+            $compra->payment_method = 'Stripe';
+            $compra->payment_id = $datosOrden->idtransacion_stripe;
+        }else if (!is_null($datosOrden->idtransacion_coinpaymen)){
+            $compra->payment_method = 'Coinpayment';
+            $compra->payment_id = $datosOrden->idtransacion_coinpaymen;
+        }
+        $compra->date = date('Y-m-d');
+        $compra->status = 1;
+        $compra->save();
+
+        $items = ShoppingCart::where('user_id', '=', $datosOrden->user_id)
+                    ->orderBy('id', 'ASC')
+                    ->get();
+                    
+        $fecha = date('Y-m-d H:i:s');
+
+        foreach ($items as $item){
+            $detalle = new PurchaseDetail();
+            $detalle->purchase_id = $compra->id;
+
+            if (!is_null($item->course_id)){
+                $detalle->course_id = $item->course_id;
+                $detalle->amount = $item->course->price;
+                $detalle->save();
+
+                DB::table('courses_users')
+                    ->insert(['course_id' => $item->course_id,
+                              'user_id' => $datosOrden->user_id,
+                              'progress' => 0,
+                              'start_date' => date('Y-m-d'),
+                              'created_at' => $fecha,
+                              'updated_at' => $fecha]);
+            }else if(!is_null($item->membership_id)){
+                $detalle->membership_id = $item->membership_id;
+                $detalle->amount = $item->membership->price;
+                $detalle->save();
+
+                DB::table('wp98_users')
+                    ->where('ID', '=', $usuario)
+                    ->update(['membership_id' => $item->membership_id]);
+            }
+
+            $item->delete();
         }
     }
 }

@@ -152,6 +152,11 @@
                             </div>
 
                             <div class="form-group has-feedback">
+                                <label for="patrocinador">ID Patrocinador (Opcional)</label>
+                                <input type="number" class="form-control" name="referred_id" ID="patrocinador" style="border-radius: 20px;">
+                            </div>
+
+                            <div class="form-group has-feedback">
                                 <label for="usr">País</label>
                                 <select class="form-control" name="pais" required style="border-radius: 20px;">
                                 <option value="" selected disabled>Seleccion un país</option>

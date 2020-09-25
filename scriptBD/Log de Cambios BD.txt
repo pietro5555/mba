@@ -87,7 +87,6 @@ Dev: Crisleivys
 Dev: Prieto 
 * Nuevo campo agregado nombre (correr el script redes_sociales)
 
-
 23/09/2020
 Dev: Carlos Gonzalez
 *Nueva tabla courses_orden (Correr script courses_orden.sql)
@@ -112,4 +111,7 @@ Dev:Crisleivys
 *Agregado el campo favorite (correr el script events_users)
 *Agregado el campo favorite (correr el script courses_users)
 
+24/09/2020
+Dev: Luisana Marín
+*Nueva campo uuid a la tabla categories (Correr script categories)
 

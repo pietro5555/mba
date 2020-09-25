@@ -61,7 +61,9 @@ class EventsController extends Controller
 
             $result = json_decode($response->getBody());
 
-            Auth::user()->streaming_token = $result->token;
+            DB::table('wp98_users')
+                ->where('ID', '=', Auth::user()->ID)
+                ->update(['streaming_token' => $result->token]);
         }
 
         $headers = [

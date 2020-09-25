@@ -1,7 +1,8 @@
 @extends('layouts.dashboardnew')
 
 @push('script')
-	<script src="{{ asset('/ckeditor/ckeditor.js') }}"></script>
+	<script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
+
 	<script>
 		$(document).ready( function () {
 			$('#mytable').DataTable( {
@@ -16,11 +17,20 @@
 	                url:route,
 	                type:'GET',
 	                success:function(ans){
-	                	$("#content-modal").html(ans); 
+	                	$("#event_id").val(ans.id);
+	                	$("#title").val(ans.title);
+                 		CKEDITOR.instances["description"].setData(ans.description);
+	                	$("#date").val(ans.date);
+	                	$("#time").val(ans.time);
+	                	$("#duration").val(ans.duration); 
 	                    $("#modal-edit").modal("show");
 	                }
 	            });
 			});
+
+			$('#modal-edit').on('hidden.bs.modal', function (e) {
+			  // do something...
+			})
 		});
 	</script>
 @endpush
@@ -124,7 +134,7 @@
 								<div class="col-md-12">
 						            <div class="form-group">
 						                <label>Descripción</label>
-										<textarea class="ckeditor" name="description" id="description" cols="30" rows="10" required></textarea>
+										<textarea class="ckeditor form-control" name="description"></textarea>
 								    </div>
 						        </div>
 								<div class="col-md-12">
@@ -169,7 +179,57 @@
 			        {{ csrf_field() }}
 				    <div class="modal-body">
 				        <div class="container-fluid" id="content-modal">
-
+				        	<input type="hidden" name="event_id" id="event_id" >
+							<div class="col-md-12">
+								<div class="form-group">
+									<label>Título del Evento</label>
+									<input type="text" class="form-control" name="title" id="title" required>
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div class="form-group">
+									<label>Mentor</label>
+									<select class="form-control" name="user_id" id="user_id" required>
+										@foreach ($mentores as $mentor)
+											<option value="{{ $mentor->ID }}">{{ $mentor->user_email }}</option>
+										@endforeach
+									</select>
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div class="form-group">
+									<label>Categoría</label>
+									<select class="form-control" name="category_id" id="category_id" required>
+										@foreach ($categorias as $categoria)
+											<option value="{{ $categoria->id }}">{{ $categoria->title }}</option>
+										@endforeach
+									</select>
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div class="form-group">
+									<label>Descripción</label>
+									<textarea class="ckeditor form-control" name="description" id="description"></textarea>
+								</div>
+							</div>
+							<div class="col-md-12">
+								<label>Fecha</label>
+								<input type="date" class="form-control" name="date" id="date" required>
+							</div>
+							<div class="col-md-12">
+								<label>Hora</label>
+								<input type="time" class="form-control" name="time" id="time" required>
+							</div>
+							<div class="col-md-12">
+								<label>Duración (Minutos)</label>
+								<input type="number" class="form-control" name="duration" id="duration" required>
+							</div>
+							<div class="col-md-12">
+								<div class="form-group">
+									<label class="control-label text-center">Banner</label>
+									<input class="form-control" type="file" name="banner">
+								</div>
+							</div>
 	    					
 						</div>
 				    </div>

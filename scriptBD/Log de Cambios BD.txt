@@ -115,3 +115,6 @@ Dev:Crisleivys
 Dev: Luisana Marín
 *Nueva campo uuid a la tabla categories (Correr script categories)
 
+ÚLTIMA ACTUALIZACIÓN DEL SERVIDOR: 24/09/2020
+----------------------------------------------
+

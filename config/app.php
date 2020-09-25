@@ -233,6 +233,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'DotenvEditor' => Brotzka\DotenvEditor\DotenvEditorFacade::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
     ],
 
 ];

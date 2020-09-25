@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "50812349f519eb31b34defb789c552de",
+    "content-hash": "eaf62b946a408e5dfed889e025c84e7a",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -57,6 +57,68 @@
                 "stack"
             ],
             "time": "2020-05-31T07:17:05+00:00"
+        },
+        {
+            "name": "barryvdh/laravel-dompdf",
+            "version": "v0.8.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/barryvdh/laravel-dompdf.git",
+                "reference": "30310e0a675462bf2aa9d448c8dcbf57fbcc517d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/barryvdh/laravel-dompdf/zipball/30310e0a675462bf2aa9d448c8dcbf57fbcc517d",
+                "reference": "30310e0a675462bf2aa9d448c8dcbf57fbcc517d",
+                "shasum": ""
+            },
+            "require": {
+                "dompdf/dompdf": "^0.8",
+                "illuminate/support": "^5.5|^6|^7|^8",
+                "php": ">=7"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.8-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Barryvdh\\DomPDF\\ServiceProvider"
+                    ],
+                    "aliases": {
+                        "PDF": "Barryvdh\\DomPDF\\Facade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Barryvdh\\DomPDF\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Barry vd. Heuvel",
+                    "email": "barryvdh@gmail.com"
+                }
+            ],
+            "description": "A DOMPDF Wrapper for Laravel",
+            "keywords": [
+                "dompdf",
+                "laravel",
+                "pdf"
+            ],
+            "funding": [
+                {
+                    "url": "https://github.com/barryvdh",
+                    "type": "github"
+                }
+            ],
+            "time": "2020-09-07T11:50:18+00:00"
         },
         {
             "name": "brick/math",
@@ -4096,20 +4158,6 @@
                 "mime",
                 "mime-type"
             ],
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
             "time": "2020-08-17T10:01:29+00:00"
         },
         {
@@ -4171,20 +4219,6 @@
                 "ctype",
                 "polyfill",
                 "portable"
-            ],
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
             ],
             "time": "2020-07-14T12:35:20+00:00"
         },
@@ -4248,20 +4282,6 @@
                 "polyfill",
                 "portable",
                 "shim"
-            ],
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
             ],
             "time": "2020-07-14T12:35:20+00:00"
         },
@@ -4327,6 +4347,20 @@
                 "portable",
                 "shim"
             ],
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-07-14T12:35:20+00:00"
         },
         {
@@ -4388,6 +4422,20 @@
                 "polyfill",
                 "portable",
                 "shim"
+            ],
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
             ],
             "time": "2020-07-14T12:35:20+00:00"
         },
@@ -5665,21 +5713,7 @@
                 "constructor",
                 "instantiate"
             ],
-            "funding": [
-                {
-                    "url": "https://www.doctrine-project.org/sponsorship.html",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://www.patreon.com/phpdoctrine",
-                    "type": "patreon"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/doctrine%2Finstantiator",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2020-05-29T17:27:14+00:00"p
+            "time": "2020-05-29T17:27:14+00:00"
         },
         {
             "name": "facade/flare-client-php",
@@ -7666,5 +7700,6 @@
     "platform": {
         "php": "^7.2.5"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
 }

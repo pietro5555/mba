@@ -1,101 +1,77 @@
-<div class="col-sm-12 ">
-    <div class="row">
-        <div class="col-xs-12 col-sm-4">
-            <div class="box box-primary">
-                <div class="box-body box-profile">
+<div class="col-xs-12">
+    <div class="box box-info">
+        <div class="box-body white">
+            <h3 style="padding: 10px 50px;"> Resumen</h3>
 
-                    <img class="profile-user-img img-responsive img-circle"
-                        src="{{asset('/uploads/avatar/'.$data['principal']->avatar)}}">
+            <div class="card mb-3" style="max-width: 740px;">
+              <div class="row no-gutters">
+                <div class="col-md-5" style="text-align: center;">
+                  <img src="{{asset('/uploads/avatar/'.$data['principal']->avatar)}}" style="width: 150px; height: 150px; border-radius: 50%; margin-top: 20px;">
 
-                    <h3 class="profile-username text-center">{{$data['principal']->user_nicename}}</h3>
-                    <p class="text-muted text-center">{{$data['principal']->user_email}}</p>
-
- @if(Auth::user()->ID == $data['principal']->ID || Auth::user()->rol_id == 0)    
+                  @if(Auth::user()->ID == $data['principal']->ID || Auth::user()->rol_id == 0)    
                     <a href="#" class="btn btn-primary btn-block" data-toggle="modal" data-target="#myModal"><b>Editar
                             imagen</b></a>
-                            @endif
+                  @endif
+
                 </div>
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-8">
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Datos de Usuario</h3>
-                </div>
-                <div class="box-body">
-                    <div class="col-xs-12">
+                  <div class="col-md-7">
+                    <div class="card-body">
                         <div class="row">
                             <div class="col-xs-6 text-center">
-                                <h5>
-                                    Nombre Usuario
-                                </h5>
-                            </div>
-                            <div class="col-xs-6 text-center">
-                                <h5>
-                                    <b>
-                                        {{$data['segundo']->nameuser}}
-                                    </b>
-                                </h5>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12">
-                        <div class="row">
-                            <div class="col-xs-6 text-center">
-                                <h5>
+                                <h4>
                                     Nombre Completo
-                                </h5>
+                                </h4>
                             </div>
                             <div class="col-xs-6 text-center">
-                                <h5>
+                                <h4>
                                     <b>
                                         {{$data['segundo']->firstname}} {{$data['segundo']->lastname}}
                                     </b>
-                                </h5>
+                                </h4>
                             </div>
                         </div>
                     </div>
                     <div class="col-xs-12">
                         <div class="row">
                             <div class="col-xs-6 text-center">
-                                <h5>
+                                <h4>
                                     Patrocinador
-                                </h5>
+                                </h4>
                             </div>
                             <div class="col-xs-6 text-center">
-                                <h5>
+                                <h4>
                                     <b>
                                         {{$data['referido']['display_name']}}
                                     </b>
-                                </h5>
+                                </h4>
                             </div>
                         </div>
                     </div>
                     <div class="col-xs-12">
                             <div class="row">
                                 <div class="col-xs-6 text-center">
-                                    <h5>
+                                    <h4>
                                         Rango
-                                    </h5>
+                                    </h4>
                                 </div>
                                 <div class="col-xs-6 text-center">
-                                    <h5>
+                                    <h4>
                                         <b>
                                             {{$data['rol']}}
                                         </b>
-                                    </h5>
+                                    </h4>
                                 </div>
                             </div>
                         </div>
                     <div class="col-xs-12">
                         <div class="row">
                             <div class="col-xs-6 text-center">
-                                <h5>
+                                <h4>
                                     Estado
-                                </h5>
+                                </h4>
                             </div>
                             <div class="col-xs-6 text-center">
-                                <h5>
+                                <h4>
                                     <b>
                                         @if($data['principal']->status == 1)
                                         Activo
@@ -103,15 +79,17 @@
                                         Inactivo
                                         @endif
                                     </b>
-                                </h5>
+                                </h4>
                             </div>
                         </div>
-                    </div>
-                </div>
+                     </div>
+                 </div>
+              </div>
             </div>
         </div>
     </div>
 </div>
+
 
 <!-- Modal para la imagen -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -147,3 +125,4 @@
         </div>
     </div>
 </div>
+  

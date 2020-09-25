@@ -4,7 +4,7 @@
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
         <!-- Sidebar user panel -->
-        <div class="user-panel">
+        {{--<div class="user-panel">
             <div class="pull-left image">
                 <img src="{{asset('/uploads/avatar/'.Auth::user()->avatar)}}" class="img-circle" alt="User Image">
             </div>
@@ -18,11 +18,8 @@
                     <strong>Activo</strong>
                     @endif</span></a>
             </div>
-        </div>
-        <!-- search form -->
-
-        <!-- /.search form -->
-        <!-- sidebar menu: : style can be found in sidebar.less -->
+        </div>--}}
+        
         <ul class="sidebar-menu" data-widget="tree">
             {{-- INICIO --}}
             <li class="header">Menu</li>

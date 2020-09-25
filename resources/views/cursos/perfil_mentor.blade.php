@@ -19,7 +19,7 @@
         <p class="lead about-course-text">{{$mentor_info->biography}}</p>
       </div>
       <div class="col-md-5 order-md-1">
-        <img src="{{ asset('uploads/avatar/'.$mentor_info->avatar) }}" alt="" class="featurette-image mx-auto ml-2" width="370" height="370">
+        <img src="{{ asset('uploads/images/avatar/'.$mentor_info->avatar) }}" alt="" class="featurette-image mx-auto ml-2" width="370" height="370">
       </div>
 </div>
 </div>
@@ -38,11 +38,11 @@
               @if (!is_null($course->cover))
                 <img class="card-img-top img-fluid mentor_img" src="{{ asset('uploads/images/courses/covers/'.$course->cover) }}" alt="Card image cap" height="226px">
               @else
-                <img class="card-img-top img-fluid mentor_img" src="{{ asset('uploads/images/courses/covers/default.jpg') }}" alt="Card image cap" height="226px">
+                <img class="card-img-top mentor_img" src="{{ asset('uploads/images/courses/covers/default.jpg') }}" alt="Card image cap" height="226px">
               @endif
                 <div class="card-body p-2">
                 <div class="row align-items-start">
-                    <div class="col-9"><p class="text-course-mentor">{{$course->course_title}}</p></div>
+                    <div class="col-9"><p class="text-course-mentor"><a href="{{ route('courses.show', [$course->slug, $course->id]) }}" style="color: white;">{{$course->course_title}}</a></p></div>
                      <div class="col-3"><i class="text-primary fa fa-play-circle"></i></div>
                 </div>                     
                 </div>

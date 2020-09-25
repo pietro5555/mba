@@ -84,7 +84,7 @@ cb=googleTranslateElementInit"></script>
     @include('layouts.include.sidebarnew')
     {{-- cuerpo de la pagina --}}
     
-    <div class="content-wrapper">
+    <div class="content-wrapper" style="background-color: #171515;">
     
       {{-- breadcrumb --}}
       @include('layouts.include.breadcrumb')

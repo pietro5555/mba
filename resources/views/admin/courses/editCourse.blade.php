@@ -50,6 +50,12 @@
 	</div>
 	<div class="col-md-12">
 		<div class="form-group">
+			<label>Precio</label>
+			<input type="text" class="form-control" name="price" value="{{ $curso->price }}">
+		</div>
+	</div>
+	<div class="col-md-12">
+		<div class="form-group">
 			<label>Etiquetas Disponibles</label>
 			<div class="row">
 				@foreach ($etiquetas as $etiqueta)

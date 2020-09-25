@@ -61,7 +61,7 @@
         	                <div class="carousel-caption">
         	                    <div class="course-label">NUEVO CURSO</div>
         						<div class="course-autor">John Doe</div>
-        						<div class="course-title"><a href="{{ route('courses.show', [$cursoDestacado->slug, $cursoDestacado->id]) }}" style="color: white;">{{ $cursoDestacado->title }}</a></div>
+        						<div class="course-title"> <a href="{{ route('courses.show', [$cursoDestacado->slug, $cursoDestacado->id]) }}" style="color: white;">{{ $cursoDestacado->title }}</a></div>
         	                    <div class="course-category">{{ $cursoDestacado->category->title }} | {{ $cursoDestacado->subcategory->title }}</div>
         	                </div>
         	            </div>
@@ -134,13 +134,9 @@
                                         <div class="col-12 col-xl-6 new-course-category">{{ $cursoNuevo->category->title }}</div>
                                         <div class="col-12 col-xl-6" style="font-size: 16px;">
                                             <div class="row row-cols-3">
-                                                <div class="col text-right no-padding-sides">
+                                                <div class="col text-right no-padding-sides mr-2">
                                                     <i class="far fa-user-circle"></i><br>
                                                     <span class="new-course-items-text">{{ $cursoNuevo->views}}</span>
-                                                </div>
-                                                <div class="col text-center no-padding-sides">
-                                                    <i class="fas fa-share-alt"></i><br>
-                                                    <span class="new-course-items-text">{{ $cursoNuevo->shares}}</span>
                                                 </div>
                                                 <div class="col text-left no-padding-sides">
                                                     <i class="far fa-thumbs-up"></i><br>

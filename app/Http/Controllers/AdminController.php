@@ -113,7 +113,7 @@ class AdminController extends Controller
             if (Auth::user()->ID != 1) {
                 $new_member = $informacion->newMembers(Auth::user()->ID);
             }else{
-                $new_member = User::select('display_name', 'created_at')->get()->sortByDesc('created_at')->take(8);
+                $new_member = User::select('display_name', 'created_at')->get()->sortByDesc('created_at')->take(4);
             }
             // cantidad de todos los rangos en el sistema
             $rangos = json_decode($informacion->chartRangos(Auth::user()->ID));
@@ -146,7 +146,7 @@ class AdminController extends Controller
             $totalcobrado = Wallet::where('iduser', Auth::user()->ID)->where('tipotransacion', '2')->sum('debito');
             
             //Redes Sociales
-            $redes = Redesociales::all();
+            $redes = Redesociales::orderBy('id', 'ASC')->get();
             
             //Pop up
             $pop = Pop::find(1);

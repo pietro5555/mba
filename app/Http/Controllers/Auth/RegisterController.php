@@ -108,7 +108,7 @@ class RegisterController extends Controller
         }else{
            // Permite validar los campos estaticos
         $validatedData = $data->validate([
-            'user_email' => 'required|string|email|max:100|unique:'.$settings->prefijo_wp.'users|confirmed',
+            'user_email' => 'required|string|email|max:100|unique:'.$settings->prefijo_wp.'users',
             'password' => 'required|string|min:6|confirmed',
             'terms' => 'required'
         ]);  
@@ -128,8 +128,6 @@ class RegisterController extends Controller
     }else{
         $rol_id = $data['rango'];
     }
-
-        $avatar = $this->imagen_avatar($data);
 
         $user = User::create([
             'user_email' => $data['user_email'],
@@ -151,9 +149,6 @@ class RegisterController extends Controller
             'tipouser' => $data['tipouser'],
             'status' => '0',
             'correos' =>'{"pago":"1","compra":"1","pc":"1","liquidacion":"1"}',
-            'about' => $data['about'],
-            'avatar' => ($avatar == null) ? 'avatar.png'  : $avatar,
-            'profession' => $data['profession'],
         ]);
 
         $this->insertarCampoUser($user->ID, $data);
@@ -186,26 +181,12 @@ class RegisterController extends Controller
         }
         
         if (Auth::guest()){
-        return redirect('log')->with('msj2', 'Su Registro ha sido exitoso');
+        Auth::loginUsingId($user->ID);   
+        return redirect('/')->with('msj-exitoso', 'Su Registro ha sido exitoso su ID es: '.$user->ID);
         }else{
-         $funciones->msjSistema('Su Registro ha sido exitoso', 'success');
+         $funciones->msjSistema('Su Registro ha sido exitoso el ID es: '.$user->ID, 'success');
          return redirect()->back();   
         }
-    }
-
-
-
-    public function imagen_avatar($datos){
-      
-      $nombre_imagen= null;
-      if ($datos->file('cover')) {
-            $imagen = $datos->file('cover');
-            $nombre_imagen = 'user_'.time().'.'.$imagen->getClientOriginalExtension();
-            $path = public_path() .'/uploads/avatar';
-            $imagen->move($path, $nombre_imagen);
-        }
-
-        return $nombre_imagen;
     }
 
     /**

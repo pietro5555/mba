@@ -1,5 +1,9 @@
 <?php
 
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Route;
+
+
 // configuracion inicial
 Route::group(['prefix' => 'installer'], function (){
 
@@ -142,29 +146,84 @@ Route::group(['prefix' => 'tienda', 'middleware' => ['auth', 'licencia', 'menu']
 Route::get('/log', 'LoginController@login')->name('log');
 Route::post('/autenticar', 'LoginController@autenticacion')->name('autenticar');
 
+/* Rutas de la Landing */
+Route::get('load-more-courses-new/{ultimoId}/{accion}', 'CourseController@load_more_courses_new')->name('landing.load-more-courses-new');
+Route::get('book-event/{evento}', 'EventsController@book')->name('landing.book-event');
+// Cursos por categoria
+Route::get('courses/category/{id}', 'CursosController@show_course_category')->name('show.cursos.category');
+//Perfil del mentor
+Route::get('courses/mentor/{id}', 'CursosController@perfil_mentor')->name('show.perfil.mentor');
+Route::get('courses/mentor', 'CursosController@show_course_category')->name('show.cursos.category');
+
+/*** RUTAS PARA EL CARRITO DE COMPRA***/
+Route::group(['prefix' => 'shpping-cart'], function(){
+  Route::get('/', 'ShppingCartController@index')->name('shopping-cart.index');
+  Route::get('store/{id}', 'ShoppingCartController@store')->name('shopping-cart.store');
+  Route::get('delete/{id}', 'ShoppingCartController@delete')->name('shopping-cart.delete');
+});
+
+//Rutas de timelive
+Route::group(['prefix' => 'time'], function(){
+  Route::get('/timelive', 'CalendarioGoogleController@timelive')->name('timelive');
+  Route::get('/oauth/{id}', 'CalendarioGoogleController@oauth')->name('oauthCallback');
+  Route::get('/redirigircalendario', 'CalendarioGoogleController@index')->name('cal.index');
+  Route::get('/proximo/{id}', 'CalendarioGoogleController@proximo')->name('time-prox');
+});
+  
+//Cursos
+Route::get('cursos', 'CursosController@index')->name('cursos');
+//Route::get('cursos/curso', 'CursosController@show_one_course')->name('curso');
+Route::get('cursos/leccion', 'CursosController@leccion')->name('leccion');
+
+Route::group(['prefix' => 'courses', 'middleware' => ['auth']], function(){
+  Route::get('/', 'CourseController@index')->name('courses');
+  Route::get('show/{slug}/{id}', 'CourseController@show')->name('courses.show');
+  Route::get('recommended', 'CourseController@recommended')->name('courses.recommended');
+  Route::get('favorite/{id}', 'CourseController@course_favorite')->name('courses.favorite');
+
+});
+
+
+
+/*** RUTAS PARA LOS CLIENTES ***/
+Route::group(['prefix' => 'client'], function(){
+   Route::group(['prefix' => 'courses'], function(){
+      Route::get('my-list', 'CourseController@my_courses')->name('client.my-courses');
+   });
+  Route::get('favorites/', 'CourseController@favorites')->name('favorites');
+});
+
+
+
 //vista de transmisiones
-Route::get('/transmisiones', 'HomeController@transmisiones')->name('transmisiones');
+Route::get('/transmisiones', 'TransmisionesController@transmisiones')->name('transmisiones');
+Route::get('/agendar/{id}', 'TransmisionesController@agendar')->name('transmi-agendar');
 
 //Streaming
 Route::get('streaming', 'StreamingController@index')->name('streaming.index');
 Route::get('getaccesstoken', 'StreamingController@getAccessToken')->name('streaming.getaccesstoken');
+Route::get('new-channel', 'StreamingController@new_channel')->name('streaming.new-channel');
+Route::get('encode', function(){
+  dd(base64_encode('ee69a8f44e5eef4a512eaa7dc4a7501c8b64f019:b115060c57dd13dfce8f0adc25643ca470f8861c'));
+});
 
-//Cursos
-Route::get('cursos', 'CursosController@index')->name('cursos');
-Route::get('cursos/curso', 'CursosController@show_one_course')->name('curso');
-Route::get('cursos/leccion', 'CursosController@leccion')->name('leccion');
-//Enviar likes
-Route::post('/likes', 'CursosController@course_likes')->name( 'like');
-// Cursos por categoria
-Route::get('cursos/category/{id}', 'CursosController@show_course_category')->name('show.cursos.category');
-//Route::get('cursos/porcategorias', 'CursosController@show_course_category')->name('show.cursos.category');
-//Perfil del mentor
-Route::get('cursos/mentor/{id}', 'CursosController@perfil_mentor')->name('show.perfil.mentor');
-Route::get('cursos/mentor', 'CursosController@show_course_category')->name('show.cursos.category');
 
+
+//Agendar
+Route::get('schedule/{event_id}', 'EventsController@schedule')->name('schedule.event');
+Route::get('calendar', 'EventsController@calendar')->name('schedule.calendar');
 //vista de anotaciones
 Route::get('/anotaciones', 'NoteController@index')->name('anotaciones');
 Route::post('/anotaciones/store', 'NoteController@store')->name('live.anotaciones');
+
+//vista de timelive
+    Route::group(['prefix' => 'time'], function(){
+    Route::get('/timelive', 'EventsController@timelive')->name('timelive');
+    Route::get('/oauth/{id}', 'CalendarioGoogleController@oauth')->name('oauthCallback');
+    Route::get('/redirigircalendario', 'CalendarioGoogleController@index')->name('cal.index');
+    Route::get('/proximo/{id}', 'CalendarioGoogleController@proximo')->name('time-prox');
+    Route::get('/favorite/{id}', 'EventsController@event_favorite')->name('event.favorite');
+     });
 
 // Events landing
 Route::get('/event/{event_id}', 'EventsController@show_event')->name('show.event');
@@ -173,16 +232,20 @@ Route::get('/event/{event_id}', 'EventsController@show_event')->name('show.event
 Route::post('/settings/event/{event_id}', 'SetEventController@store')->name('set.event.store');
 
 
-/* Rutas de la Landing */
-Route::get('load-more-courses-new/{ultimoId}/{accion}', 'CourseController@load_more_courses_new')->name('landing.load-more-courses-new');
-Route::get('book-event/{evento}', 'EventsController@book')->name('landing.book-event');
-
-
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu']], function() {
 
   Route::group(['prefix' => 'red'], function(){
         Route::get('/listado', 'RedController@index')->name('admin-red-index');
         Route::post('/filtrered', 'RedController@filtrered')->name('admin-red-filtre');
+
+      // vista de referidos directos e indirectos
+      Route::get('/direct', 'RedController@direct')->name('red.directos');
+      //filtros de referidos directos e indirectos
+      Route::post('/filtrered', 'RedController@filtre')->name('red.filtre');
+      //volumen grupal
+      Route::get('/individual', 'RedController@individual')->name('individual');
+      Route::post('/todofecha', 'RedController@todofecha')->name('todofecha');
+      Route::post('/filtrouser', 'RedController@filtrouser')->name('filtrouser');
       });
 
   Route::group(['prefix' => 'usuarios'], function(){
@@ -234,6 +297,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu']]
 
       Route::group(['prefix' => 'lessons'], function(){
         Route::get('/{id}', 'LessonController@index')->name('admin.courses.lessons');
+        Route::get('show/{id}', 'LessonController@show')->name('admin.courses.lessons.show');
+        Route::get('load-video-duration/{id}/{duration?}', 'LessonController@load_video_duration')->name('admin.courses.lessons.load-video-duration');
         Route::post('store', 'LessonController@store')->name('admin.courses.lessons.store');
         Route::get('edit/{id}', 'LessonController@edit')->name('admin.courses.lessons.edit');
         Route::post('update', 'LessonController@update')->name('admin.courses.lessons.update');
@@ -913,28 +978,6 @@ Route::group(['prefix' => 'link','middleware' => ['menu']], function(){
     });
 
 
-    
-    //vista de transmisiones
-    Route::get('/transmisiones', 'HomeController@transmisiones')->name('transmisiones');
-    
-    //vista de timelive
-    Route::group(['prefix' => 'time'], function(){
-    Route::get('/timelive', 'CalendarioGoogleController@timelive')->name('timelive');
-    Route::get('/oauth/{id}', 'CalendarioGoogleController@oauth')->name('oauthCallback');
-    Route::get('/redirigircalendario', 'CalendarioGoogleController@index')->name('cal.index');
-    Route::get('/proximo/{id}', 'CalendarioGoogleController@proximo')->name('time-prox');
-     });
-  
-
-//Cursos
-Route::get('cursos', 'CursosController@index')->name('cursos');
-Route::get('cursos/curso', 'CursosController@show_one_course')->name('curso');
-Route::get('cursos/leccion', 'CursosController@leccion')->name('leccion');
-
-Route::group(['prefix' => 'courses'], function(){
-  Route::get('/', 'CourseController@index')->name('courses');
-  Route::get('show/{slug}/{id}', 'CourseController@show')->name('courses.show');
-});
 
 
 

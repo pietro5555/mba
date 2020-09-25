@@ -1,6 +1,44 @@
 @extends('layouts.landing')
 
+@push('styles')
+   <style>
+      input[type="radio"] {
+         display: none;
+      }
+
+      label {
+         color: grey;
+      }
+
+      .rating {
+         direction: rtl;
+         unicode-bidi: bidi-override;
+      }
+
+      label:hover,
+      label:hover ~ label {
+         color: orange;
+      }
+
+      input[type="radio"]:checked ~ label {
+         color: orange;
+      }
+   </style>
+@endpush
+
 @section('content')
+   @if (Session::has('msj-exitoso'))
+      <div class="alert alert-success" style="margin: 5px 15px;">
+         {{ Session::get('msj-exitoso') }}
+      </div>
+   @endif
+
+   @if (Session::has('msj-erroneo'))
+      <div class="alert alert-danger" style="margin: 5px 15px;">
+         {{ Session::get('msj-erroneo') }}
+      </div>
+   @endif
+
    <div class="title-page-one_course col-md border-bottom-2"><span>
       <h6 class=""><span>Cursos > </span><span> {{ $curso->category->title }} ></span><span>{{ $curso->title }}</span></h6>
       <hr style="border: 1px solid #707070;opacity: 1;" />
@@ -32,12 +70,9 @@
                <div class="col-md-8">
                   <h3 class="text-white">{{ $curso->title }}</h3>
                </div>
-               <div class="col-md-4">
-                  <button type="button" class="btn btn-success play-course-button col-xs"><i class="fa fa-play"></i> ACCEDER AL CURSO</button>
-               </div>
             </div>
             <div class="row">
-               <div class="col-md-12">
+               <div class="col-md-9">
                   @if (number_format($curso->promedio, 0) >= 1)
                      <i class="fa fa-star text-warning"></i>
                   @else
@@ -63,27 +98,50 @@
                   @else
                      <i class="fa fa-star-o text-secondary"></i>
                   @endif
-
+                 
+               </div>
+                <div class="col-md-3">
+                  <div class="row">
+                     <h4 class="text-white mr-2">COSTO</h4>
+                     <h1 class="text-success">{{ $curso->price }} USD</h1>
+                  </div>
+                  
                </div>
             </div>
             <div class="row">
                <div class="col-md-12 mt-2">
                   <div class="row">
-                     <div class="col-md-4">
-                        <h6 class="text-white"> <img src="{{ asset('images/icons/icon-user.svg') }}" alt="" height="30px" width="30px">  1296 Alumnos</h6>
+                     <div class="col-md-3">
+                        <h6 class="text-white"> <img src="{{ asset('images/icons/icon-user.svg') }}" alt="" height="30px" width="30px">  {{ $curso->users_count }} Alumnos</h6>
                      </div>
-                     <div class="col-md-4">
+                     <div class="col-md-3">
                         <h6 class="text-white"> <img src="{{ asset('images/icons/icon-book-video.svg') }}" height="30px" width="30px"> {{ $curso->lessons_count }} Lecciones</h6>
                      </div>
-                     <div class="col-md-4">
-                        <h6 class="text-white"> <img src="{{ asset('images/icons/clock.svg') }}" height="30px" width="30px">  2h 17m</h6>
+                     <div class="col-md-3">
+                        <h6 class="text-white"> 
+                           <img src="{{ asset('images/icons/clock.svg') }}" height="30px" width="30px">
+                           @if ($curso->duration > 0)
+                              {{ $curso->hours }}h {{ $curso->minutes }}m
+                           @else
+                              0h 0m
+                           @endif
+                        </h6>
+                     </div>
+                     <div class="col-md-3">
+                        <a href="{{route('shopping-cart.store', [$curso->id])}}" class="btn btn-info play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> AGREGAR AL CARRITO</a>
+                        
                      </div>
                   </div>
                </div>
             </div>
             <div class="row">
-               <div class="col-md-12 mt-2">
-                  <h6 class="text-white"><img src="{{ asset('images/icons/calendar.svg') }}" height="30px" width="30px">  Fecha de salida: 12 de Marzo 2020</h6>
+               <div class="col-md-9 mt-2">
+                  <h6 class="text-white"><img src="{{ asset('images/icons/calendar.svg') }}" height="30px" width="30px">  Fecha de salida: {{ date('d-m-Y', strtotime($curso->created_at)) }}</h6>
+               </div>
+               <div class="col-md-3 mt-2">
+                  <a href="" class="btn btn-success play-course-button btn-block">COMPRAR</a>
+                  <a href="#ratingModal" data-toggle="modal" class="btn btn-primary play-course-button btn-block">VALORAR</a>
+                  <a href="{{ route('client.courses.take-evaluation', [$curso->slug, $curso->id]) }}" class="btn btn-primary play-course-button btn-block">PRESENTAR EVALUACIÓN</a>
                </div>
             </div>
          </div>
@@ -98,10 +156,10 @@
                   <h4 class="text-white ml-5">ACERCA DEL CURSO</h4>
                   <hr style="border: 1px solid #707070; opacity: 1;" />
                   <div class="col-md-12">
-                     <div class="col-md-12 justify-content-center p-2 ml-4">
-                        {{ $curso->description }}
+                     <div class="col-md-12 justify-content-center p-2 ml-4" style="color: white;">
+                        {!! $curso->description !!}
 
-                        <div class="container-fluid p-2">
+                        <div class="container-fluid pt-4">
                            <div class="row featurette">
                               <div class="col-md-7 order-md-2">
                                  <h5 class="featurette-heading text-white">Mentor</h5>
@@ -126,7 +184,7 @@
    {{-- FIN SECCIÓN ACERCA DEL CURSO--}}
 
    {{-- SECCIÓN LECCIONES--}}
-   <div class="container-fluid">
+   <div class="container-fluid pt-4">
       <div class="col-md-12 section-title-category">
          <h3 class="ml-4">LECCIONES</h3>
       </div>
@@ -176,94 +234,116 @@
    {{-- FIN SECCIÓN LECCIONES--}}
 
    {{-- SECCIÓN VALORACIONES--}}
-   <div class="container-fluid p-2 pt-5">
-      <div class="row">
-         <div class="col-md-10">
-            <h3 class="text-white ml-5">VALORACIONES</h3>
-            <hr style="border: 1px solid #707070;opacity: 1;" />
-            @foreach ($curso->ratings as $valoracion)
-               <div class="row m-4 pt-4 border-bottom">  
-                  <div class="col-md-2">
-                     <div class="circle"><h2 class="text-white"> JD</h2></div>
-                  </div>
-                  <div class="col-md-8">
-                     <div class="row">
-                        <div class="col-md-12 mt-2">
-                           <div class="row">
-                              <div class="col-md-4">
-                                 <h5 class="text-white font-weight-bold">{{ $valoracion->user->display_name }}</h5>
+   @if ($curso->ratings_count > 0)
+      <div class="container-fluid p-2 pt-5">
+         <div class="row">
+            <div class="col-md-10">
+               <h3 class="text-white ml-5">VALORACIONES</h3>
+               <hr style="border: 1px solid #707070;opacity: 1;" />
+               @foreach ($curso->ratings as $valoracion)
+                  <div class="row m-4 pt-4 border-bottom">  
+                     <div class="col-md-2">
+                        <div class="circle"><h2 class="text-white"> JD</h2></div>
+                     </div>
+                     <div class="col-md-8">
+                        <div class="row">
+                           <div class="col-md-12 mt-2">
+                              <div class="row">
+                                 <div class="col-md-4">
+                                    <h5 class="text-white font-weight-bold">{{ $valoracion->user->display_name }}</h5>
+                                 </div>
                               </div>
                            </div>
                         </div>
-                     </div>
-                     <div class="row">
-                        <div class="col-md-12">
-                           <div class="row">
-                              <div class="col-md-12">
-                                 @if ($valoracion->points >= 1) 
-                                    <i class="fa fa-star text-warning"></i> 
-                                 @else
-                                    <i class="fa fa-star-o text-secondary"></i>
-                                 @endif
-                                 @if ($valoracion->points >= 2) 
-                                    <i class="fa fa-star text-warning"></i> 
-                                 @else
-                                    <i class="fa fa-star-o text-secondary"></i>
-                                 @endif
-                                 @if ($valoracion->points >= 3) 
-                                    <i class="fa fa-star text-warning"></i> 
-                                 @else
-                                    <i class="fa fa-star-o text-secondary"></i>
-                                 @endif
-                                 @if ($valoracion->points >= 4) 
-                                    <i class="fa fa-star text-warning"></i> 
-                                 @else
-                                    <i class="fa fa-star-o text-secondary"></i>
-                                 @endif
-                                 @if ($valoracion->points >= 5) 
-                                    <i class="fa fa-star text-warning"></i> 
-                                 @else
-                                    <i class="fa fa-star-o text-secondary"></i>
-                                 @endif
-                                 <h6 class="text-secondary">{{ date('d-m-Y', strtotime($valoracion->date)) }}</h6>
+                        <div class="row">
+                           <div class="col-md-12">
+                              <div class="row">
+                                 <div class="col-md-12">
+                                    @if ($valoracion->points >= 1) 
+                                       <i class="fa fa-star text-warning"></i> 
+                                    @else
+                                       <i class="fa fa-star-o text-secondary"></i>
+                                    @endif
+                                    @if ($valoracion->points >= 2) 
+                                       <i class="fa fa-star text-warning"></i> 
+                                    @else
+                                       <i class="fa fa-star-o text-secondary"></i>
+                                    @endif
+                                    @if ($valoracion->points >= 3) 
+                                       <i class="fa fa-star text-warning"></i> 
+                                    @else
+                                       <i class="fa fa-star-o text-secondary"></i>
+                                    @endif
+                                    @if ($valoracion->points >= 4) 
+                                       <i class="fa fa-star text-warning"></i> 
+                                    @else
+                                       <i class="fa fa-star-o text-secondary"></i>
+                                    @endif
+                                    @if ($valoracion->points >= 5) 
+                                       <i class="fa fa-star text-warning"></i> 
+                                    @else
+                                       <i class="fa fa-star-o text-secondary"></i>
+                                    @endif
+                                    <h6 class="text-secondary">{{ date('d-m-Y', strtotime($valoracion->date)) }}</h6>
+                                 </div>
                               </div>
                            </div>
                         </div>
-                     </div>
-                     <div class="row">
-                        <div class="col-md-8">
-                           <h6 class="text-secondary">{{ $valoracion->comment }}</h6>
+                        <div class="row">
+                           <div class="col-md-8">
+                              <h6 class="text-secondary">{{ $valoracion->comment }}</h6>
+                           </div>
                         </div>
                      </div>
                   </div>
+               @endforeach
+            </div>
+         </div>
+      </div>
+   @endif
+   {{-- FIN SECCIÓN VALORACIONES--}}
+
+   <div class="modal fade" id="ratingModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+         <div class="modal-content" style="background-color: black;">
+            <div class="modal-header">
+               <h5 class="modal-title" id="exampleModalLabel" style="color: white;">Valorar Curso</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <form action="{{ route('client.courses.rate') }}" method="POST">
+               @csrf
+               <input type="hidden" name="course_id" value="{{ $curso->id }}">
+               <input type="hidden" name="course_slug" value="{{ $curso->slug }}">
+               <div class="modal-body">
+                  <div class="form-group">
+                     <label for="comment" style="color: white;">Comentario</label>
+                     <textarea class="form-control" name="comment" id="comment" rows="3" style="background-color: #1C1D21;"></textarea>
+                  </div>
+                  <div class="form-group">
+                     <div class="row">
+                        <div class="col-4">
+                           <label for="comment" style="color: white;">Puntuación</label>
+                        </div>
+                        <div class="col-8 text-right"> 
+                           <p class="rating text-right">
+                              <input id="radio1c" type="radio" name="points" value="5"><label for="radio1c"><i class="fa fa-star"></i></label>
+                              <input id="radio2c" type="radio" name="points" value="4"><label for="radio2c"><i class="fa fa-star"></i></label>
+                              <input id="radio3c" type="radio" name="points" value="3"><label for="radio3c"><i class="fa fa-star"></i></label>
+                              <input id="radio4c" type="radio" name="points" value="2"><label for="radio4c"><i class="fa fa-star"></i></label>
+                              <input id="radio5c" type="radio" name="points" value="1"><label for="radio5c"><i class="fa fa-star"></i></label>
+                           </p>
+                        </div>
+                     </div>
+                  </div> 
                </div>
-            @endforeach
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                  <button type="submit" class="btn btn-primary">Valorar</button>
+               </div>
+            </form>
          </div>
       </div>
    </div>
-   {{-- FIN SECCIÓN VALORACIONES--}}
-
-  
-   {{-- SECCIÓN REFERIDOS (USUARIOS LOGGUEADOS) --}}
-    @if (!Auth::guest())
-        <div style="padding-top: 30px;">
-            <div class="row">
-                <div class="col-4 " style="padding-left: 30px;">
-                    <div style="text-align: center; font-size: 34px; color: white; font-weight: bold; border: solid #919191 1px; background-color: #222326; margin-bottom: 10px; height: 330px; padding: 120px 15px;">
-                        <i class="fa fa-user"></i><br>
-                        739 Referidos
-                    </div>
-                    <div style="text-align: center; font-size: 25px; color: white; font-weight: bold; background-color: #6AB742; height: 60px; padding: 10px 10px;">
-                        Panel de referidos
-                    </div>
-                </div>
-                <div class="col-8" style=" background:url('http://localhost:8000/images/banner_referidos.png');">
-                    <!--<img src="{{ asset('images/banner_referidos.png') }}" alt="" style="height: 400px; width:100%; opacity: 1; background: transparent linear-gradient(90deg, #2A91FF 0%, #2276D0A1 54%, #15498000 100%) 0% 0% no-repeat padding-box;">-->
-                    <div style="font-size: 50px; width: 50%; padding: 80px 40px 80px 80px; color: white; line-height: 55px;">EL QUE QUIERE SUPERARSE, NO VE OBSTÁCULOS, VE SUEÑOS.</div>
-                </div>
-            </div>
-        </div><br><br>
-    @endif
-    {{-- FIN DE SECCIÓN REFERIDOS (USUARIOS LOGGUEADOS) --}}
-
 @endsection

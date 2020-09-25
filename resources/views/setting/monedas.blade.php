@@ -9,7 +9,7 @@
       <div class="col-xs-12">
         <div class="box box-info">
           <div class="box-header">
-        <h3>Monedas Adicionales</h3>
+        <h3 class="white">Monedas Adicionales</h3>
         
         <div class="col-md-3">
         <button class="btn btn-primary btn-block float-right" data-toggle="modal" data-target="#monedaAgregar">Agregar Monedas</button>
@@ -27,7 +27,7 @@
     <div class="box-body">
      
       
-      <div class="col-xs-12 col-sm-12">
+      <div class="col-xs-12 col-sm-12 white">
                 <h5>Monedas</h5>
                 @if(!empty($monedaAdicional))
                 <div class="row">
@@ -73,12 +73,12 @@
                 <div class="box box-info">
                     <div class="box-header">
                         <div class="box-title">
-                            <h3>Información de la Moneda Principal del Sistema </h3>
+                            <h3 class="white">Información de la Moneda Principal del Sistema </h3>
                             <button class="btn btn-info btn-block mostrar hh" onclick="toggle()">Agregar</button>
                         </div>
                     </div>
                     <div class="box-body">
-                        <div class="col-sm-4 col-xs-12 ch">
+                        <div class="col-sm-4 col-xs-12 ch white">
                             <h3>Moneda Principal</h3>
                             <h5>
                                 @empty(!$monedap)
@@ -88,7 +88,7 @@
                                 @endempty
                             </h5>
                         </div>
-                        <div class="col-sm-4 col-xs-12 ch">
+                        <div class="col-sm-4 col-xs-12 ch white">
                             <h3>Simbolo de la moneda</h3>
                             <h5>
                                 @empty(!$monedap)
@@ -98,7 +98,7 @@
                                 @endempty
                             </h5>
                         </div>
-                        <div class="col-sm-4 col-xs-12 ch kl">
+                        <div class="col-sm-4 col-xs-12 ch kl white">
                             <h3>Mostrar antes o despues del monto</h3>
                             <h5>
                                 @empty(!$monedap)
@@ -116,7 +116,7 @@
                         <div class="col-xs-12">
                             <hr>
                         </div>
-                        <table id="mytable" class="table table-bordered table-hover table-responsive pli">
+                        <table id="mytable" class="table">
                             <thead>
                                 <tr>
                                     <th class="text-center">
@@ -187,22 +187,22 @@
                 <div class="box box-info">
                     <div class="box-header">
                         <div class="box-title">
-                            <h3>Configuración de la moneda del Sistema</h3>
+                            <h3 class="white">Configuración de la moneda del Sistema</h3>
                         </div>
                     </div>
                     <div class="box-body">
                         <form class="" action="{{route('setting-save-monedas')}}" method="post">
                             {{ csrf_field() }}
                             <div class="form-group col-sm-12 ptr">
-                                <label for="">Nombre de la Moneda</label>
+                                <label for="" class="white">Nombre de la Moneda</label>
                                 <input type="text" class="form-control" name="nombre" required>
                             </div>
                             <div class="form-group col-sm-6 col-xs-12 ptr">
-                                <label for="">Simbolo de la Moneda</label>
+                                <label for="" class="white">Simbolo de la Moneda</label>
                                 <input type="text" class="form-control" name="simbolo" required>
                             </div>
                             <div class="form-group col-sm-6 col-xs-12 ptr">
-                                <label for="">Mostrar Antes o Despues del Monto</label>
+                                <label for="" class="white">Mostrar Antes o Despues del Monto</label>
                                 <select class="form-control" name="mostrar" required>
                                     <option value="" selected disabled>Seleccione una Opción</option>
                                     <option value="1">Antes</option>

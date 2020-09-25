@@ -21,35 +21,40 @@
 
 
 @section('content')
-    <div class="section-landing" style="background: linear-gradient(to bottom, #222326 50%, #1C1D21 50.1%);">
-        <div class="col mb-2">
-            <div class="title-page-course col-md text-center"><span class="text-white">
-            <h3><span class="text-white">Cursos sobre</span><span class="text-primary"> "{{$category_name->title}}"</span></h3>
+    <div class="section-landing">
+        <div class="col mb-4 mt-4">
+            <div class="title-page-course col-md"><span class="text-white">
+            <h2>Cursos  Online de<span class="text-primary"> "{{$category_name->title}}"</span></h2>
             </div>
         </div>     
              
         <div class="row">
             @if ($courses->count() > 0)
                 @foreach ($courses as $curso)
-                    <div class="col-md-3" style="margin-top: 20px;">
-                        @if (!is_null($curso->cover))
-                        <img src="{{ asset('uploads/images/courses/covers/'.$curso->cover) }}" class="card-img-top" alt="..." style="height: 200px;"> 
+
+                <div class="col-md-4 mt-1">
+                    @if (!is_null($curso->cover))
+                        <img src="{{ asset('uploads/images/courses/covers/'.$curso->cover) }}" class="card-img-top img-opacity" alt="..."> 
                         @else
-                            <img src="{{ asset('uploads/images/courses/covers/default.jpg') }}" class="card-img-top" alt="..." height="200px">
+                            <img src="{{ asset('uploads/images/courses/covers/default.jpg') }}" class="card-img-top img-opacity" alt="...">
                         @endif
-                        <div class="card-body" style="background-color: #2f343a;">
-                            <h6 class="card-title" style="margin-top: -15px;"> <i class="far fa-play-circle" style="font-size: 16px; color: #6fd843;"></i> {{ $curso->title }}</h6>
-                
-                            <h6 style="font-size: 10px; margin-left: 20px; margin-top: -10px;">{{ $curso->category->title }} ({{ $curso->subcategory->title }})</h6>
-                
-                            <h6 align="right" style="margin-bottom: -20px;"> 
-                                <i class="icon fa fa-eye text-right" style="font-size: 16px; margin-right: 10px;"><p style="font-size: 10px;">{{$curso->views}}</p></i>
-                                <i class="far fa-comment-alt" style="font-size: 16px; margin-right: 10px;"><p style="font-size: 10px;">346</p></i>
-                                <i class="fas fa-share-alt" style="font-size: 16px; margin-right: 10px;"><p style="font-size: 10px;">{{$curso->shares}}</p></i>
-                                <i class="far fa-thumbs-up" style="font-size: 16px;"><p style="font-size: 10px;">{{$curso->likes}}</p></i>
+                   <div class="card-img-overlay">
+                    <div class="row card-carousel-text">
+                        <div class="col-md-9">
+                            <h6 class="col-sm"><i class="text-success fa fa-play-circle"></i> <a href="{{ route('courses.show', [$curso->slug, $curso->id]) }}" class="text-white">{{ $curso->title }}</a></h6>
+                            <h6 class="ml-2 subtitle-cat">
+                                {{ $curso->category->title }}
                             </h6>
+                         </div>
+                        <div class="col-md-3">
+                            <h6>
+                                <i class="far fa-user-circle"><p style="font-size: 10px;">{{ $curso->views }}</p></i>
+                                <i class="far fa-thumbs-up"><p style="font-size: 10px;">{{ $curso->likes }}</p></i>
+                            </h6>           
                         </div>
                     </div>
+                    </div>
+                   </div>
                 @endforeach
             @else
             <div class="container-fluid">
@@ -63,99 +68,7 @@
     </div>
 
 
-{{-- SECCIÓN CURSOS MAS NUEVOS --}}
-@if ($cursosNuevos->count() > 0)
-    <div class="section-landing new-courses-section" id="new-courses-section">
-        <div class="row">
-            <div class="col">
-                <div class="section-title-landing new-courses-section-title">LOS MÁS NUEVOS</div>
-            </div>
-            <div class="col text-right">
-                <button type="button" class="btn btn-outline-light btn-arrow btn-arrow-previous" @if ($previous == 0) disabled @endif data-route="{{ route('landing.load-more-courses-new', [$idStart, 'previous'] ) }}"  onclick="loadMoreCoursesNew('previous');"><i class="fas fa-chevron-left"></i></button>
-                <button type="button" class="btn btn-outline-success btn-arrow btn-arrow-next" @if ($next == 0) disabled @endif data-route="{{ route('landing.load-more-courses-new', [$idEnd, 'next'] ) }}"  onclick="loadMoreCoursesNew('next');"><i class="fas fa-chevron-right"></i></button>
-            </div>
-        </div>
-               
-        <div class="row" style="padding: 10px 30px;">
-            @foreach ($cursosNuevos as $cursoNuevo)
-                <div class="col-xl-4 col-lg-4 col-12" style="padding-bottom: 10px;">
-                    <div class="card" >
-                        @if (!is_null($cursoNuevo->cover))
-                            <img src="{{ asset('uploads/images/courses/covers/'.$cursoNuevo->cover) }}" class="card-img-top new-course-img" alt="..." height="462px" width="242px">
-                        @else
-                            <img src="{{ asset('uploads/images/courses/covers/default.jpg') }}" class="card-img-top new-course-img" alt="..." height="462px" width="242px">
-                        @endif
-                        <div class="card-img-overlay d-flex flex-column">
-                            <div class="mt-auto">
-                                <div class="new-course-title">{{ $cursoNuevo->title }}</div>
-                                <div class="row">
-                                    <div class="col-12 col-xl-6 new-course-category">{{ $cursoNuevo->category->title }}</div>
-                                    <div class="col-12 col-xl-6" style="font-size: 16px;">
-                                        <div class="row row-cols-3">
-                                            <div class="col text-right no-padding-sides">
 
-                                                <i class="far fa-user-circle"></i><br>
-                                                <span class="new-course-items-text">{{$cursoNuevo->views}}</span>
-                                            </div>
-                                            <div class="col text-center no-padding-sides">
-                                                <i class="fas fa-share-alt"></i><br>
-                                                <span class="new-course-items-text">{{$cursoNuevo->shares}}</span>
-                                            </div>
-                                            <div class="col text-left no-padding-sides">
-                                                <a href="#" class="text-white">
-                                                    <i class="far fa-thumbs-up"></i>
-                                                </a>
-                                                <br>
-                                                <span class="new-course-items-text">{{$cursoNuevo->likes}}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-    </div>
-@endif
-{{-- FIN DE SECCIÓN CURSOS MÁS NUEVOS--}}
-
-
-
-
- {{-- SECCIÓN TUS MENTORES--}}
-<div class="section-landing">
-    <div class="col-lg-6 offset-lg-3">
-        <h4 class=" section-title-landing text-primary text-center">TUS MENTORES</h4>
-    </div>
-    <div class="container-fluid">
-        <div class="row d-flex flex-row p-2">
-            @foreach ($mentores as $mentor)
-            <div class="col-xs-12 col-sm-4 mt-2">
-                <div class="card mentors-card">
-                    <div class="row no-gutters">
-                        <div class="col-auto">
-                            <img src="{{ asset('uploads/avatar/'.$mentor->avatar) }}" class="" alt="" height="164px" width="164px">
-                        </div>
-                        <div class="col">
-                            <div class="card-block px-2">
-                                <h4 class="card-title mt-4">{{$mentor->nombre}}</h4>
-                                <p class="card-text">{{$mentor->categoria}}</p>
-                                <br>
-                                <p class="card-text text-lg-right"><a href="{{ url('cursos/mentor/'.$mentor->mentor_id) }}" class="col-sm-lg text-sm-left card-text" >Ver perfil</a>  <i class=" fa fa-angle-right"> </i></p>
-                            </div>
-                            
-                           
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @endforeach
-        </div>
-</div>
-</div>
- {{-- FIN SECCIÓN TUS MENTORES--}}
 
         {{-- SECCIÓN REFERIDOS (USUARIOS LOGGUEADOS) --}}
     @if (!Auth::guest())

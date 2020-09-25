@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Evaluation; use App\Models\Course; use App\Models\Question;
-use DB;
+use DB; use Auth;
 
 class EvaluationController extends Controller{
 
@@ -88,5 +88,62 @@ class EvaluationController extends Controller{
         $pregunta->delete();
         
         return redirect('admin/courses/evaluation/show/'.$pregunta->evaluation->course_id)->with('msj-exitoso', 'La  pregunta ha sido eliminada con éxito.');
+    }
+
+    /**
+    * Cliente / Cursos / Presentar Evaluación de un Curso
+    */
+    public function take($course_slug, $course_id){
+       $evaluacion = Evaluation::where('course_id', '=', $course_id)
+                        ->with(['questions' => function($query){
+                            $query->orderBy('order', 'ASC');
+                        }])->withCount('questions')
+                        ->orderBy('id', 'DESC')
+                        ->first();
+       
+       return view('cursos.takeEvaluation')->with(compact('evaluacion'));
+   }
+
+   /**
+    * Cliente / Cursos / Enviar Evaluación de un Curso
+    */
+    public function submit(Request $request){
+        $puntajePregunta = (100 / $request->questions_quantity);
+        $puntaje = 0;
+
+        $id = DB::table('evaluations_users')
+                ->insertGetId(['user_id' => Auth::user()->ID,
+                                'evaluation_id' => $request->evaluation_id,
+                                'score' => 0,
+                                'date' => date('Y-m-d')]);
+
+        for ($i=1; $i <= $request->questions_quantity; $i++) { 
+            $pregunta = "question-".$i;
+            $respuesta = "answer-".$i;
+            $seleccion = "selection-".$i;
+
+            DB::table('evaluations_users_answers')
+                ->insert(['evaluation_user_id' => $id,
+                          'question_id' => $request->$pregunta,
+                          'selected_answer' => $request->$seleccion]);
+
+            if ($request->$seleccion == $request->$respuesta){
+                $puntaje = $puntaje + $puntajePregunta;
+            }
+        }
+
+        DB::table('evaluations_users')
+            ->where('id', '=', $id)
+            ->update(['score' => number_format($puntaje, 2)]);
+
+        $datosEvaluacion = Evaluation::where('id', '=', $request->evaluation_id)
+                            ->with('course')
+                            ->first();
+        
+        if ($puntaje >= 50){
+            return redirect('courses/show/'.$datosEvaluacion->course->slug.'/'.$datosEvaluacion->course->id)->with('msj-exitoso', '¡Felicidades! Has aprobado la evaluación con '.number_format($puntaje).'%');
+        }else{
+            return redirect('courses/show/'.$datosEvaluacion->course->slug.'/'.$datosEvaluacion->course->id)->with('msj-erroneo', '¡Lo sentimos! Has reprobado la evaluación con '.number_format($puntaje).'%');
+        }
     }
 }

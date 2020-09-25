@@ -159,7 +159,7 @@
         <div class="form-group">
             <label for="">Region / Provincia</label>
             <select class="form-control" name="provincia" id="provincia" onchange="provinciabuscar()" required>
-              <option value="" selected disabled>Seleccione una opci¨®n</option>
+              <option value="" selected disabled>Seleccione una opciï¿½ï¿½n</option>
               
              @if($todo == null)
               @foreach($departamentos as $depart)
@@ -293,7 +293,7 @@
         <div class="form-group">
             <label for="">Metodo de Pago</label>
             <select class="form-control" name="medio_pago" required id="opcion" onchange="openWindow(this)">
-              <option value="" selected disabled>Seleccione una opci¨®n</option>
+              <option value="" selected disabled>Seleccione una opciï¿½ï¿½n</option>
               @foreach($pagos as $pago)
               <option value="{{$pago->id}}" id="{{$pago->link}}">{{$pago->nombre}}</option>
               @endforeach
@@ -420,7 +420,7 @@ function provinciabuscar(){
     $('#localidad').empty()
     var pro = $('#provincia').val()
     
-    $.get('{{$enlace}}/mioficina/link/envio/'+pro, function (response) {
+    $.get('{{$enlace}}/link/envio/'+pro, function (response) {
       rangos = JSON.parse(response)
       
       $('#localidad').append($('<option>',
@@ -444,7 +444,7 @@ function almacenardatos(){
     var prov = $('#provincia').val()
     var local = $('#localidad').val()
     
-    $.get('{{$enlace}}/mioficina/link/almacenar/'+prov+'/'+local, function (response) {
+    $.get('{{$enlace}}/link/almacenar/'+prov+'/'+local, function (response) {
         
         location.reload();
     })

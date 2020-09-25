@@ -17,4 +17,9 @@ class Evaluation extends Model
     public function questions(){
     	return $this->hasMany('App\Models\Question');
     }
+
+    public function users(){
+        return $this->belongsToMany('App\Models\User', 'evaluations_users', 'evaluation_id', 'user_id')
+            ->withPivot('score', 'date');
+    }
 }

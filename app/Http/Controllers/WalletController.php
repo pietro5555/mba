@@ -46,16 +46,27 @@ class WalletController extends Controller
 	public function index(){
 	   
 		$moneda = Monedas::where('principal', 1)->get()->first();
-		$metodopagos = MetodoPago::all();
-		$comisiones = SettingsComision::select('tipotransferencia', 'comisiontransf')->where('id', 1)->get();
-		$funciones = new ComisionesController;
-		$funciones->ObtenerUsuarios();
+		$datos = [];
+		$totalcompleto =0;
+
 		if (Auth::user()->rol_id == 0) {
 			$wallets = Wallet::all();
 			$total = $this->calcularTotal($wallets);
+			//recargas
+			$recargas = Wallet::where('tipotransacion', 4)->get();
+			$totalrecarga = $this->calcularTotal($recargas);
 		} else {
 			$wallets = Wallet::where('iduser', Auth::user()->ID)->get();
 			$total = $this->calcularTotal($wallets);
+			//recargas
+			$recargas = Wallet::where('tipotransacion', 4)->where('iduser', Auth::user()->ID)->get();
+			$totalrecarga = $this->calcularTotal($recargas);
+		}
+
+		foreach($recargas as $recar){
+         $user = User::find($recar->iduser);
+         $recar->display_name = ($user == null) ? 'N/A' : $user->display_name;
+         $recar->wallet_amount = ($user == null) ? 'N/A' : $user->wallet_amount;
 		}
 		
 		$adicional =0;
@@ -63,9 +74,148 @@ class WalletController extends Controller
         if (!empty($monedaAdicional)) { 
             $adicional =1;
         }
+
+	   	return view('wallet.indexwallet')->with(compact('wallets', 'moneda','total','adicional','datos','totalcompleto','recargas','totalrecarga'));
+	}
+
+
+	//filtro por fecha
+	public function filtro(Request $request){
+	    
+	    $datos = [];
+		$totalcompleto =0;
+
+	    if(Auth::user()->rol_id == 0){
+	    $wallets = Wallet::whereDate('created_at','>=',$request->fecha1)->whereDate('created_at','<=' ,$request->fecha2)->get();
+        $total = $this->calcularTotal($wallets);
+
+	    //recargas
+		$recargas = Wallet::where('tipotransacion', 4)->get();
+		$totalrecarga = $this->calcularTotal($recargas);
+
+	   }else{
+
+	   	$wallets = Wallet::where('iduser', Auth::user()->ID)->whereDate('created_at','>=',$request->fecha1)->whereDate('created_at','<=' ,$request->fecha2)->get();
+	   	$total = $this->calcularTotal($wallets);
+
+	   	//recargas
+		$recargas = Wallet::where('tipotransacion', 4)->where('iduser', Auth::user()->ID)->get();
+		$totalrecarga = $this->calcularTotal($recargas);
+	   }
+
+	   foreach($recargas as $recar){
+         $user = User::find($recar->iduser);
+         $recar->display_name = ($user == null) ? 'N/A' : $user->display_name;
+         $recar->wallet_amount = ($user == null) ? 'N/A' : $user->wallet_amount;
+		}
+
+	    $moneda = Monedas::where('principal', 1)->get()->first();
+
+	    $adicional =0;
+		$monedaAdicional = Monedadicional::find(1);
+        if (!empty($monedaAdicional)) { 
+            $adicional =1;
+        }
+		
+    return view('wallet.indexwallet')->with(compact('wallets', 'moneda','total','adicional','datos','totalcompleto','recargas','totalrecarga'));
+	}
 	
 	
-	   	return view('wallet.indexwallet')->with(compact('metodopagos', 'comisiones', 'wallets', 'moneda','Botones','adicional','total'));
+	//filtro por usuario y fecha
+	public function filtrouser(Request $request){
+	    
+	    $datos = [];
+		$totalcompleto =0;
+        
+        //filtro usuario
+        if($request->user != null){
+	    $wallets = Wallet::where('iduser', $request->user)->get();
+	    $total = $this->calcularTotal($wallets);
+
+	    //recargas
+		$recargas = Wallet::where('tipotransacion', 4)->get();
+		$totalrecarga = $this->calcularTotal($recargas);
+
+       }else{
+       	//filtro de recargas fechas
+       	if(Auth::user()->rol_id != 0){
+        $wallets = Wallet::where('iduser', Auth::user()->ID)->get();
+	    $total = $this->calcularTotal($wallets);
+	    }else{
+        $wallets = Wallet::all();
+	    $total = $this->calcularTotal($wallets);
+	    }
+
+	    //recargas
+		$recargas = Wallet::where('tipotransacion', 4)->whereDate('created_at','>=',$request->fecha3)->whereDate('created_at','<=',$request->fecha4)->get();
+		$totalrecarga = $this->calcularTotal($recargas);
+       }
+	    foreach($recargas as $recar){
+         $user = User::find($recar->iduser);
+         $recar->display_name = ($user == null) ? 'N/A' : $user->display_name;
+         $recar->wallet_amount = ($user == null) ? 'N/A' : $user->wallet_amount;
+		}
+
+	    $moneda = Monedas::where('principal', 1)->get()->first();
+
+	    $adicional =0;
+		$monedaAdicional = Monedadicional::find(1);
+        if (!empty($monedaAdicional)) { 
+            $adicional =1;
+        }
+		
+        
+    return view('wallet.indexwallet')->with(compact('wallets', 'moneda','total','adicional','datos','totalcompleto','recargas','totalrecarga'));
+	}
+
+
+	public function comisionesfiltro(Request $request){
+	    
+	    $datos = [];
+	    $fecha1 = new Carbon($request->fecha1);
+	    $fecha2 = new Carbon($request->fecha2);
+	    
+	    $funciones = new IndexController;  
+	    $moneda = Monedas::where('principal', 1)->get()->first();
+	    $totalcompleto =0;
+	    
+	    $user = $funciones->generarArregloAdmin(1);
+	    foreach($user as $use){
+	      $wall = Wallet::where('iduser', $use['ID'])->whereDate('created_at','>=', $fecha1)->whereDate('created_at','<=',$fecha2)->get();
+	      
+	      $total = $this->calcularTotal($wall);
+	      $totalcompleto = ($totalcompleto + $total); 
+	      
+	      
+	            $datos [] = [
+	                'ID' => $use['ID'],
+	                'nivel' => $use['nivel'],
+                    'usuario' => $use['nombre'],
+                    'total' => $total,
+                ];
+	    }
+
+	    //recargas
+		$recargas = Wallet::where('tipotransacion', 4)->get();
+		$totalrecarga = $this->calcularTotal($recargas);
+
+	    foreach($recargas as $recar){
+         $user = User::find($recar->iduser);
+         $recar->display_name = ($user == null) ? 'N/A' : $user->display_name;
+         $recar->wallet_amount = ($user == null) ? 'N/A' : $user->wallet_amount;
+		}
+
+		//wallets
+		$wallets = Wallet::all();
+		$total = $this->calcularTotal($wallets);
+
+		$adicional =0;
+		$monedaAdicional = Monedadicional::find(1);
+        if (!empty($monedaAdicional)) { 
+            $adicional =1;
+        }
+	    
+	    return view('wallet.indexwallet')->with(compact('wallets', 'moneda','total','adicional','datos','totalcompleto','recargas','totalrecarga'));
 	}
 	
 	
@@ -535,80 +685,6 @@ class WalletController extends Controller
 	}
 	
 	
-		//filtro por fecha
-	public function filtro(Request $request){
-	    
-	    $wallets = Wallet::whereDate('created_at','>=',$request->fecha1)->whereDate('created_at','<=' ,$request->fecha2)->get();
-	    $total = $this->calcularTotal($wallets);
-	    $moneda = Monedas::where('principal', 1)->get()->first();
-		$metodopagos = MetodoPago::all();
-		
-		
-		$adicional =0;
-		$monedaAdicional = Monedadicional::find(1);
-        if (!empty($monedaAdicional)) { 
-            $adicional =1;
-        }
-        
-    return view('wallet.indexwallet')->with(compact('metodopagos', 'comisiones', 'wallets', 'moneda','Botones','adicional','total'));
-	}
-	
-	
-	//filtro por usuario y fecha
-	public function filtrouser(Request $request){
-	    
-	    $wallets = Wallet::where('iduser', $request->user)->whereDate('created_at','>=',$request->fecha1)->whereDate('created_at','<=' ,$request->fecha2)->get();
-	    $total = $this->calcularTotal($wallets);
-	    $moneda = Monedas::where('principal', 1)->get()->first();
-		$metodopagos = MetodoPago::all();
-		
-		
-		$adicional =0;
-		$monedaAdicional = Monedadicional::find(1);
-        if (!empty($monedaAdicional)) { 
-            $adicional =1;
-        }
-        
-    return view('wallet.indexwallet')->with(compact('metodopagos', 'comisiones', 'wallets', 'moneda','Botones','adicional','total'));
-	}
-	
-	//filtro solo para el usuario normal
-	public function filtrorefe(Request $request){
-	    
-	    
-	    $funciones = new IndexController;
-		$todos = $funciones->generarArregloAdmin(Auth::user()->ID);
-		
-		$true = false;
-		foreach($todos as $todo){
-		    if($todo['nombre'] == $request->display){
-		        $true = true;
-		    }
-		}
-	    
-	    if($true == false){
-	        
-	        $funciones->msjSistema('No hemos encontrado ningun usuario en su red con ese nombre', 'success');
-               return redirect('admin/wallet'); 
-	    }
-	    
-	    $wallets = Wallet::where('usuario', $request->display)->get();
-	    $total = $this->calcularTotal($wallets);
-	    $moneda = Monedas::where('principal', 1)->get()->first();
-		$metodopagos = MetodoPago::all();
-		
-		
-		$adicional =0;
-		$monedaAdicional = Monedadicional::find(1);
-        if (!empty($monedaAdicional)) { 
-            $adicional =1;
-        }
-        
-    return view('wallet.indexwallet')->with(compact('metodopagos', 'comisiones', 'wallets', 'moneda','Botones','adicional','total'));
-    
-	}
-	
-	
 	//tabla de historial de cortes, liquidaciones
 	public function cortes(){
 	    
@@ -626,50 +702,5 @@ class WalletController extends Controller
 	    return view('wallet.cortes')->with(compact('wallets', 'moneda','adicional'));
 	}
 	
-	//comisiones a pagar por fechas
-	public function comisionespagar(){
-	    
-	    view()->share('title', 'Comisiones a Pagar');
-	    
-	    $datos = [];
-	    $moneda = Monedas::where('principal', 1)->get()->first();
-	    $totalcompleto =0;
-	    
-	    
-	    return view('wallet.pagar')->with(compact('datos', 'moneda','totalcompleto'));
-	}
-	
-	
-	public function comisionesfiltro(Request $request){
-	    
-	    view()->share('title', 'Comisiones a Pagar');
-	    
-	    
-	    $datos = [];
-	    $fecha1 = new Carbon($request->fecha1);
-	    $fecha2 = new Carbon($request->fecha2);
-	    
-	    $funciones = new IndexController;  
-	    $moneda = Monedas::where('principal', 1)->get()->first();
-	    $totalcompleto =0;
-	    
-	    $user = $funciones->generarArregloAdmin(1);
-	    foreach($user as $use){
-	      $wallets = Wallet::where('iduser', $use['ID'])->whereDate('created_at','>=', $fecha1)->whereDate('created_at','<=',$fecha2)->get();
-	      
-	      $total = $this->calcularTotal($wallets);
-	      $totalcompleto = ($totalcompleto + $total); 
-	      
-	      
-	            $datos [] = [
-	                'ID' => $use['ID'],
-	                'nivel' => $use['nivel'],
-                    'usuario' => $use['nombre'],
-                    'total' => $total,
-                ];
-	    }
-	    
-	    return view('wallet.pagar')->with(compact('datos', 'moneda', 'totalcompleto'));
-	}
 	
 }

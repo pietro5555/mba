@@ -46,13 +46,14 @@
 				
 				<br class="col-xs-12">
 
-				<table id="mytable" class="table table-bordered table-striped">
+				<table id="mytable" class="table">
 					<thead>
 						<tr>
 							<th class="text-center">#</th>
 							<th class="text-center">Título</th>
 							<th class="text-center">Descripción</th>
                             <th class="text-center">URL</th>
+							<th class="text-center">Duración</th>
                             <th class="text-center">Recursos Adicionales</th>
 							<th class="text-center">Acción</th>
 						</tr>
@@ -64,9 +65,11 @@
 								<td class="text-center">{{ $leccion->title }}</td>
 								<td class="text-center">{{ $leccion->description }}</td>
                                 <td class="text-center">{{ $leccion->url }}</td>
+								<td class="text-center">{{ $leccion->duration }}</td>
                                 <td class="text-center">{{ $leccion->materials->count() }}</td>
 								<td class="text-center">
-									<a class="btn btn-info editar" data-route="{{ route('admin.courses.lessons.edit', $leccion->id) }}"><i class="fa fa-edit"></i></a>
+									<a class="btn btn-info editar" data-route="{{ route('admin.courses.lessons.edit', $leccion->id) }}" title="Editar"><i class="fa fa-edit"></i></a>
+									<a class="btn btn-primary" href="{{ route('admin.courses.lessons.show', $leccion->id) }}" title="Ver Video"><i class="fa fa-video"></i></a>
 									<a class="btn btn-warning" href="{{ route('admin.courses.lessons.resources', $leccion->id) }}" title="Ver Recursos Adicionales"><i class="fa fa-file"></i></a>
 									<a class="btn btn-danger" href="{{ route('admin.courses.lessons.delete', $leccion->id) }}" title="Eliminar"><i class="fa fa-ban"></i></a>
 								</td>

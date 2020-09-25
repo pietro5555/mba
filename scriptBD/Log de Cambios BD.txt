@@ -43,3 +43,75 @@ Dev: Luisana Marín
 Dev: Robinson vargas
 *Nueva tabla resources (resources.sql)
 *Nueva tabla event_resources (event_resources.sql)
+
+ÚLTIMA ACTUALIZACIÓN DEL SERVIDOR: 14/09/2020
+----------------------------------------------
+15/09/2020
+*Ajuste en la tabla settings (correr script settings.sql) 
+*tabla wp98_users campo profession null (correr script wp98_users.sql) 
+*tabla wp98_users campo profession null (correr script wp98_users.sql)
+
+15/09/2020
+Dev: Crisleivys
+*Nueva tabla creada schedule (correr el script  schedule)
+* Agregados datos para que se muestre el calendario (correr el script calendarios)
+* Agregados datos en la tabla events (correr el script events)
+
+ÚLTIMA ACTUALIZACIÓN DEL SERVIDOR: 16/09/2020
+----------------------------------------------
+
+17/09/2020
+Dev: Luisana Marín
+*Nueva tabla memberships (Correr script memberships.sql)
+*Nueva tabla shopping_cart (Correr script shopping_cart.sql)
+*Nueva tabla purchases (Correr script purchases.sql)
+*Nueva tabla purchase_details (Correr script purchase_details.sql)
+*Nueva tabla courses_users (Correr script courses_users.sql)
+*Nuevo campo membership_id (INT NULL) a la tabla wp98_users (Correr script wp98_users.sql)
+*Nuevo campo price (DOUBLE PREDEFINIDO 0) a la tabla courses (Correr script courses.sql)
+
+18/09/2020
+Dev: Prieto 
+* Nuevo campo agregado id_courses (correr el script events)
+
+19/09/2020
+Dev: Luisana Marín
+*Nuevo campo duration (time PREDEFINIDO 0:00:00 NOT NULL) a la tabla Lessons (Correr script lessons)
+
+20/09/2020
+Dev: Crisleivys
+* Modificado el id_courses por course_id (correr el script events)
+* Nuevo campo favorite en tabla courses_users (correr script courses_users)
+
+23/09/2020
+Dev: Prieto 
+* Nuevo campo agregado nombre (correr el script redes_sociales)
+
+23/09/2020
+Dev: Carlos Gonzalez
+*Nueva tabla courses_orden (Correr script courses_orden.sql)
+*Nueva tabla coinpayment_transaction (Correr script coinpayment_transaction.sql)
+Nota: aparte de la informacion de bd
+Cuando se bajen mi nueva actualiza tiene que instalar los plugins de stripe y coinpayment
+para que los plugins funcionen correctamente deben agregar la informacion que esta en el 
+archivo que se llama (variables para el archivo .env.txt)
+y lo otro tambien cuando tengan esos plugins listo
+deben pegar los archivos AjaxController.php y IPNController.php
+en esta ruta "vendor/hexters/coinpayment/src/Http/Controllers"
+
+23/09/2020
+Dev: Luisana Marín
+*Nueva tabla evaluations_users (Correr script evaluations_users)
+*Nueva tabla evaluations_users_answers (Correr script evaluations_users_answers)
+*Eliminar campos sobrantes en la tabla eventos (Correr script events.sql)
+*Agregar campo streaming_token a la table users (Correr script wp98_users)
+
+24/09/2020
+Dev:Crisleivys
+*Agregado el campo favorite (correr el script events_users)
+*Agregado el campo favorite (correr el script courses_users)
+
+24/09/2020
+Dev: Luisana Marín
+*Nueva campo uuid a la tabla categories (Correr script categories)
+

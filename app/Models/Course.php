@@ -8,7 +8,7 @@ class Course extends Model
 {
     protected $table = 'courses';
 
-    protected $fillable = ['mentor_id', 'title', 'slug', 'category_id', 'subcategory_id', 'description', 'cover', 'cover_name', 'featured', 'featured_cover', 'featured_cover_name', 'featured_at', 'status', 'likes', 'shares', 'views'];
+    protected $fillable = ['mentor_id', 'title', 'slug', 'category_id', 'subcategory_id', 'description', 'cover', 'cover_name', 'featured', 'featured_cover', 'featured_cover_name', 'featured_at', 'status', 'likes', 'shares', 'views', 'price'];
 
     public function mentor(){
         return $this->belongsTo('App\Models\User', 'mentor_id', 'ID');
@@ -36,5 +36,20 @@ class Course extends Model
 
     public function ratings(){
         return $this->hasMany('App\Models\Rating');
+    }
+
+    public function shopping_carts(){
+        return $this->hasMany('App\Models\ShoppingCart');
+    }
+
+    //Relación con los estudiantes que poseen el curso
+    public function users(){
+        return $this->belongsToMany('App\Models\User', 'courses_users', 'course_id', 'user_id')->withPivot('progress', 'start_date', 'finish_date', 'certificate', 'favorite')->withTimestamps();
+    }
+
+    //Relacion Eventos que tiene un curso
+    public function eventos(){
+        return $this->hasMany('App\Models\Events');
+
     }
 }

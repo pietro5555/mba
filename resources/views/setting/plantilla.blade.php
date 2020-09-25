@@ -21,8 +21,8 @@
       {{-- informario --}}
       <div class="col-xs-12 mostrar">
         <div class="box box-info">
-          <div class="box-header">
-              <h3>Información de las Plantilla de correos </h3>
+          <div class="box-header white">
+              <h3 class="white">Información de las Plantilla de correos </h3>
               
               <div class="col-md-3">
               <button class="btn btn-info btn-block mostrar hh toggle">Editar</button>
@@ -53,7 +53,7 @@
                         </div>
                 </div>
                 
-                <div class="col-xs-12 col-md-12">
+                <div class="col-xs-12 col-md-12 white">
                             <h4><strong>Correos Habilitados</strong></h4>
                             <div class="col-xs-6">
                                 <h5>Correo de Pago: {{($Correos->pago == 1) ? 'Activo' : 'Inactivo'}}</h5>
@@ -72,23 +72,23 @@
                         </div>
                 
                 
-                <div class="col-sm-4 col-xs-12">
+                <div class="col-sm-4 col-xs-12 white">
                     <h3>Titulo de la Plantilla de Bienvenida</h3>
                     <h5>{{(!empty($plantillaB->titulo)) ? $plantillaB->titulo : ''}}</h5>
                   </div>
-                  <div class="col-sm-8 col-xs-12 ">
+                  <div class="col-sm-8 col-xs-12 white">
                     <h3>Contenido de la Plantilla de Bienvenida</h3>
                     <h5>{!!(!empty($plantillaB->contenido)) ? $plantillaB->contenido : ''!!}</h5>
                   </div>
                   
                   @if($Correos->pago == '1')
                   <div class="col-xs-12"></div>
-                  <div class="col-sm-4 col-xs-12 ">
+                  <div class="col-sm-4 col-xs-12 white">
                     <h3>Titulo de la plantilla de Pago</h3>
                     <h5>{{(!empty($plantillaP->titulo)) ? $plantillaP->titulo : ''}}</h5>
                   </div>
                   
-                  <div class="col-sm-8 col-xs-12 ">
+                  <div class="col-sm-8 col-xs-12 white">
                     <h3>Contenido de la Plantilla de Pago</h3>
                     <h5>{!!(!empty($plantillaP->contenido)) ? $plantillaP->contenido : ''!!}</h5>
                   </div>
@@ -96,11 +96,11 @@
                    
                   @if($Correos->compra == '1')
                   <div class="col-xs-12"></div>
-                  <div class="col-sm-4 col-xs-12 ">
+                  <div class="col-sm-4 col-xs-12 white">
                     <h3>Titulo de la plantilla de Compra</h3>
                     <h5>{{(!empty($plantillaC->titulo)) ? $plantillaC->titulo : ''}}</h5>
                   </div>
-                  <div class="col-sm-8 col-xs-12 ">
+                  <div class="col-sm-8 col-xs-12 white">
                     <h3>Contenido de la Plantilla de Compra</h3>
                     <h5>{!!(!empty($plantillaC->contenido)) ? $plantillaC->contenido : ''!!}</h5>
                   </div>
@@ -108,11 +108,11 @@
                   
                   @if($Correos->pc == '1')
                   <div class="col-xs-12"></div>
-                  <div class="col-sm-4 col-xs-12 ">
+                  <div class="col-sm-4 col-xs-12 white">
                     <h3>Titulo de la plantilla de Pago Compra</h3>
                     <h5>{{(!empty($plantillaPC->titulo)) ? $plantillaPC->titulo : ''}}</h5>
                   </div>
-                  <div class="col-sm-8 col-xs-12 ">
+                  <div class="col-sm-8 col-xs-12 white">
                     <h3>Contenido de la Plantilla de Pago Compra</h3>
                     <h5>{!!(!empty($plantillaPC->contenido)) ? $plantillaPC->contenido : ''!!}</h5>
                   </div>
@@ -120,11 +120,11 @@
                   
                   @if($Correos->liquidacion == '1')
                   <div class="col-xs-12"></div>
-                  <div class="col-sm-4 col-xs-12 ">
+                  <div class="col-sm-4 col-xs-12 white">
                     <h3>Titulo de la plantilla de Liquidacion</h3>
                     <h5>{{(!empty($plantillaL->titulo)) ? $plantillaL->titulo : ''}}</h5>
                   </div>
-                  <div class="col-sm-8 col-xs-12 ">
+                  <div class="col-sm-8 col-xs-12 white">
                     <h3>Contenido de la Plantilla de Liquidacion</h3>
                     <h5>{!!(!empty($plantillaL->contenido)) ? $plantillaL->contenido : ''!!}</h5>
                   </div>
@@ -134,11 +134,11 @@
                   
                    
                   <div class="col-xs-12"></div>
-                  <div class="col-sm-4 col-xs-12 ">
+                  <div class="col-sm-4 col-xs-12 white">
                     <h3>Titulo de la plantilla de Prospeccion</h3>
                     <h5>{{(!empty($plantillaPros->titulo)) ? $plantillaPros->titulo : ''}}</h5>
                   </div>
-                  <div class="col-sm-8 col-xs-12 ">
+                  <div class="col-sm-8 col-xs-12 white">
                     <h3>Contenido de la Plantilla de Prospeccion</h3>
                     <h5>{!!(!empty($plantillaPros->contenido)) ? $plantillaPros->contenido : ''!!}</h5>
                   </div>

@@ -93,7 +93,7 @@ class CursosController extends Controller
         ->join('courses', 'courses.mentor_id', '=', 'wp98_users.id')
         ->join('categories', 'categories.id', '=', 'courses.category_id')
         ->where('categories.id', '=', $category_id)
-        ->select(array ('wp98_users.display_name as nombre','categories.title as categoria', 'courses.mentor_id as mentor_id', 'wp98_users.avatar as avatar'))
+        ->select(array ('wp98_users.display_name as nombre','categories.title as categoria', 'courses.mentor_id as mentor_id','wp98_users.avatar as avatar'))
         ->take(12)
         ->get();
 
@@ -144,7 +144,7 @@ class CursosController extends Controller
 
        if($courses)
        {
-        return view('cursos.cursos_categorias', compact('courses', 'category_name', 'mentores', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next',));
+        return view('cursos.cursos_categorias', compact('courses', 'category_name', 'mentores', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next'));
        }
     }
 
@@ -158,7 +158,7 @@ class CursosController extends Controller
         ->join('courses', 'courses.mentor_id', '=', 'wp98_users.id')
         ->join('categories', 'categories.id', '=', 'courses.category_id')
         ->where('wp98_users.id', '=', $mentor_id)
-        ->select(array ('wp98_users.display_name as nombre','categories.title as categoria', 'courses.title as course_title', 'wp98_users.about as about', 'courses.cover as cover'))
+        ->select(array ('wp98_users.display_name as nombre','categories.title as categoria', 'courses.title as course_title', 'wp98_users.about as about', 'courses.cover as cover', 'courses.slug as slug', 'courses.id as id'))
         ->get();
 
       // return dd($cursos);
@@ -175,15 +175,6 @@ class CursosController extends Controller
         return view('cursos.leccion');
     }
 
-    /** Contar el número de Likes de un curso**/
-    public function course_likes()
-    {
-        $course_id = $request['course_id'];
-        $user = Auth::user();
-        $like = Course::find($course_id);
-        $like->likes = $like->likes+1;
-        $like->save();   
-    }
 
 
     /**

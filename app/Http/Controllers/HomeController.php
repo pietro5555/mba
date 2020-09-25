@@ -72,7 +72,7 @@ class HomeController extends Controller{
          }
       }
 
-      $proximoEvento = Events::where('status', '=', 2)
+      $proximoEvento = Events::where('status', '=', 1)
                            ->orderBy('date', 'DESC')
                            ->first();
 
@@ -115,8 +115,10 @@ class HomeController extends Controller{
       return view('index')->with(compact('cursosDestacados', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next', 'refeDirec', 'proximoEvento'));
    }
 
-   public function search($busqueda){
+   public function search(Request $request){
       $cursosIds = [];
+
+      $busqueda = $request->get('q');
 
       $cursos = Course::where(function ($query) use ($busqueda){
                      $query->where('title', 'LIKE', '%'.$busqueda.'%')
@@ -161,12 +163,6 @@ class HomeController extends Controller{
 
    }
     
-    
-    //vista de transmisiones
-    public function transmisiones(){
-        
-        return view('transmision');
-    }
     
     public function deleteProfile($id)
     {

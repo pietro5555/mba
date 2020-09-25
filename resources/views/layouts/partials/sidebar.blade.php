@@ -1,3 +1,9 @@
+@php
+    $categoriasSidebar = \App\Models\Category::orderBy('id', 'ASC')->get();
+        
+        $subcategoriasSidebar = \App\Models\Subcategory::orderBy('id', 'ASC')->get();
+@endphp
+
 <!-- Sidebar -->
             <div class="bg-dark-gray" id="sidebar-wrapper">
                 <div class="sidebar-heading border-right" style="border-bottom: solid white 1px; height: 70px;">
@@ -14,15 +20,15 @@
                 <div class="list-group list-group-flush">
                     <a href="{{ route('index') }}" class="list-group-item bg-dark-gray" style="color: white;"><i class="fa fa-home"></i> Home</a>
                     @if(Auth::user())
-                        <a href="#" class="list-group-item bg-dark-gray" style="color: white;"><i class="fas fa-asterisk"></i> Live Streames</a>
-                        <a href="#" class="list-group-item bg-dark-gray" style="color: white;"><i class="fas fa-user-circle"></i> Cursos</a>
-                        <a href="#" class="list-group-item bg-dark-gray" style="color: white;"><i class="fas fa-user"></i> Referidos</a>
+                        <a href="{{route('transmisiones')}}" class="list-group-item bg-dark-gray" style="color: white;"><i class="fas fa-asterisk"></i> FTX Live</a>
+                        <a href="{{ route('courses') }}" class="list-group-item bg-dark-gray" style="color: white;"><i class="fas fa-user-circle"></i> Cursos</a>
+                        <a href="{{route('red.directos')}}" class="list-group-item bg-dark-gray" style="color: white;"><i class="fas fa-user"></i> Referidos</a>
                     @endif
                     <a class="list-group-item bg-dark-gray" data-toggle="collapse" href="#searchDiv" style="color: white;"><i class="fa fa-search"></i> Explorar</a>
                     <div class="collapse" id="searchDiv" style="padding-left: 10px; padding-right: 10px;">
-                        <form>
+                        <form action="{{ route('search') }}" method="GET">
                             <div class="form-group">
-                                <input type="email" class="form-control" id="search" placeholder="Buscar...">
+                                <input type="text" class="form-control" id="search" name="q" placeholder="Buscar...">
                             </div>
                         </form>
                     </div>
@@ -38,9 +44,13 @@
                         @endforeach
                     </div>
                     <a href="#" class="list-group-item bg-dark-gray" style="color: white;"><i class="far fa-file-alt"></i> Test</a>
-                    <a href="#" class="list-group-item bg-dark-gray" style="color: white;"><i class="fa fa-gear"></i> Ajustes</a>
+                    @if(Auth::user())
+                     @if(Auth::user()->rol_id == 0)
+                    <a href="{{route('setting-logo')}}" class="list-group-item bg-dark-gray" style="color: white;"><i class="fa fa-gear"></i> Ajustes</a>
+                     @endif
+                    @endif
                     <a href="#" class="list-group-item bg-dark-gray" style="color: white;"><i class="far fa-question-circle"></i> Ayuda</a>
-                    <a href="#" class="list-group-item bg-dark-gray" style="color: white;"><i class="far fa-flag"></i> Informes</a>
+                   
                 </div>
             </div>
             <!-- /#sidebar-wrapper -->

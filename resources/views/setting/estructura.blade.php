@@ -7,14 +7,14 @@
   <!-- informacion -->
   <div class="box box-info mostrar">
     <div class="box-header with-border">
-      <div class="box-title">
+      <div class="box-title white">
         <h3>Información de las Estructura del Sistema </h3>
         <button class="btn btn-info btn-block mostrar hh toggle">Editar</button>
       </div>
     </div>
     {{-- cuerpo --}}
     <div class="box-body">
-      <div class="col-sm-6 col-xs-12 ch">
+      <div class="col-sm-6 col-xs-12 ch white">
         <h3>Sistema de Clientes</h3>
         <h5>
           @if ($settingCliente->cliente == 1)
@@ -24,7 +24,7 @@
           @endif
         </h5>
       </div>
-      <div class="col-sm-6 col-xs-12 ch kl">
+      <div class="col-sm-6 col-xs-12 ch kl white">
         <h3>Los Clientes Tiene Acceso Al Backoffice</h3>
         <h5>
           @if ($settingCliente->permiso == 1)
@@ -34,33 +34,33 @@
           @endif
         </h5>
       </div>
-      <div class="col-sm-6 col-xs-12 ch">
+      <div class="col-sm-6 col-xs-12 ch white">
         <h3>Tipo de Estructura</h3>
         <h5>{{$settingEstructura->tipoestructura}}</h5>
       </div>
-      <div class="col-sm-6 col-xs-12 ch kl">
+      <div class="col-sm-6 col-xs-12 ch kl white">
         <h3>Cantidad de Niveles (Fila en Matriz)</h3>
         <h5>{{$settingEstructura->cantnivel}}</h5>
       </div>
       @if($settingEstructura->tipoestructura == 'matriz' || $settingEstructura->tipoestructura == 'binaria')
-      <div class="col-sm-6 col-xs-12 ch">
+      <div class="col-sm-6 col-xs-12 ch white">
         <h3>Cantidad de Columnas (Matriz)</h3>
         <h5>{{$settingEstructura->cantfilas}}</h5>
       </div>
-      <div class="col-sm-6 col-xs-12 ch kl">
+      <div class="col-sm-6 col-xs-12 ch kl white">
         <h3>Matriz de:</h3>
         <h5>{{$settingEstructura->cantfilas}} * {{$settingEstructura->cantnivel}}</h5>
       </div>
       @elseif($settingEstructura->tipoestructura == 'ambas')
-      <div class="col-sm-6 col-xs-12 ch">
+      <div class="col-sm-6 col-xs-12 ch white">
         <h3>Cantidad de Columnas (Matriz)</h3>
         <h5>{{$settingEstructura->cantfilas}}</h5>
       </div>
-      <div class="col-sm-6 col-xs-12 ch kl">
+      <div class="col-sm-6 col-xs-12 ch kl white">
         <h3>Matriz de:</h3>
         <h5>{{$settingEstructura->cantfilas}} * {{$settingEstructura->cantnivel}}</h5>
       </div>
-      <div class="col-sm-6 col-xs-12 ch">
+      <div class="col-sm-6 col-xs-12 ch white">
         <h3>Estructura Principal (Ambas)</h3>
         <h5>
           @if($settingEstructura->estructuraprincipal == 1)
@@ -70,7 +70,7 @@
           @endif
         </h5>
       </div>
-      <div class="col-sm-6 col-xs-12 ch kl">
+      <div class="col-sm-6 col-xs-12 ch kl white">
         <h3>Usuario de la estructura Principal (Ambas)</h3>
         <h5>
           @if($settingEstructura->usuarioprincipal == 1)
@@ -86,7 +86,7 @@
   {{-- formulario --}}
   <div class="box box-info mostrar" style="display:none;">
     <div class="box-header with-border">
-      <div class="box-title">
+      <div class="box-title white">
         <h3>Configuración de Estructura del Sistema </h3>
       </div>
     </div>
@@ -101,7 +101,7 @@
         {{ csrf_field() }}
         <input type="hidden" name="id" value="{{$settingEstructura->id}}">
         <div class="form-group col-sm-6 col-xs-12 ptr">
-          <label for="">¿Sistema de Clientes?</label>
+          <label for="" class="white">¿Sistema de Clientes?</label>
           <select name="cliente" class="form-control">
             <option value="" selected disabled>Selecione una Opcion</option>
             <option value="0">NO</option>
@@ -109,7 +109,7 @@
           </select>
         </div>
         <div class="form-group col-sm-6 col-xs-12 ptr">
-          <label for="">¿Lo Clientes Podran Acceder al BackOffice?</label>
+          <label for="" class="white">¿Lo Clientes Podran Acceder al BackOffice?</label>
           <select name="permiso" class="form-control">
             <option value="" selected disabled>Selecione una Opcion</option>
             <option value="0">NO</option>
@@ -117,7 +117,7 @@
           </select>
         </div>
         <div class="form-group col-sm-6 col-xs-12 ptr">
-          <label for="">Tipo de Estructura</label>
+          <label for="" class="white">Tipo de Estructura</label>
           <select class="form-control" name="tipoestrutura" id="tipoestrutura" required onchange="estructuradetalle()">
             <option value="" selected disabled>Seleccione una Opción</option>
             <option value="arbol">Unilevel o Arbol</option>
@@ -127,23 +127,23 @@
           </select>
         </div>
         <div class="form-group col-sm-6 col-xs-12 matriz ptr" style="display:none;">
-          <label for="">Cantidad de Colmunas (solo matriz)</label>
+          <label for="" class="white">Cantidad de Colmunas (solo matriz)</label>
           <input class="form-control" type="number" name="cantfila">
         </div>
-        <div class="form-group col-sm-6 col-xs-12 ptr">
-          <label for="">Cantidad de Niveles (Filaz en matriz)</label>
+        <div class="form-group col-sm-6 col-xs-12 ptr white">
+          <label for="" class="white">Cantidad de Niveles (Filaz en matriz)</label>
           <input class="form-control" type="number" name="cantnivel" required>
         </div>
-        <div class="form-group col-sm-6 col-xs-12 ambas ptr" style="display:none;">
-          <label for="">Estructura Principal</label>
+        <div class="form-group col-sm-6 col-xs-12 ambas ptr white" style="display:none;">
+          <label for="" class="white">Estructura Principal</label>
           <select class="form-control" name="estruprincipal">
             <option value="" selected disabled>Seleccione una Opción</option>
             <option value="1">Unilevel</option>
             <option value="2">Matriz Forzada</option>
           </select>
         </div>
-        <div class="form-group col-sm-6 col-xs-12 ambas ptr" style="display:none;">
-          <label for="">¿La estructura principal que usuario la tendra?</label>
+        <div class="form-group col-sm-6 col-xs-12 ambas ptr white" style="display:none;">
+          <label for="" class="white">¿La estructura principal que usuario la tendra?</label>
           <select class="form-control" name="userprincipal">
             <option value="" selected disabled>Seleccione una Opción</option>
             <option value="1">Admin</option>

@@ -8,7 +8,7 @@
 		    
 		    <a class="btn btn-info btn-block" id="modal">Editar</a>
 		    
-			<div class="col-sm-8 col-xs-12 ">
+			<div class="col-sm-8 col-xs-12 white">
                     <h3>Contenido de la Plantilla de envio de correo Perfil</h3>
                     <h5>{!!(!empty($seguridad->contenido)) ? $seguridad->contenido : ''!!}</h5>
             </div>
@@ -22,7 +22,7 @@
 	<div class="box box-info">
 		<div class="box-body">
 		    
-		    <table id="mytable" class="table table-bordered table-striped" cellspacing="0">
+		    <table id="mytable" class="table" cellspacing="0">
 				<thead>
 					<tr>
 						<th class="text-center">#</th>

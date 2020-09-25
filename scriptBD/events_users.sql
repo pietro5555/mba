@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-09-2020 a las 04:07:54
--- Versión del servidor: 10.4.11-MariaDB
--- Versión de PHP: 7.4.4
+-- Tiempo de generación: 24-09-2020 a las 19:17:25
+-- Versión del servidor: 10.4.14-MariaDB
+-- Versión de PHP: 7.3.22
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -33,9 +33,18 @@ CREATE TABLE `events_users` (
   `user_id` int(11) NOT NULL,
   `date` date NOT NULL,
   `time` time NOT NULL,
+  `favorite` int(10) UNSIGNED DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `events_users`
+--
+
+INSERT INTO `events_users` (`id`, `event_id`, `user_id`, `date`, `time`, `favorite`, `created_at`, `updated_at`) VALUES
+(1, 4, 5, '2020-09-26', '10:00:00', 1, '2020-09-24 12:09:45', '2020-09-24 12:09:45'),
+(2, 5, 5, '2020-09-30', '13:00:00', 1, '2020-09-24 12:12:30', '2020-09-24 12:12:30');
 
 --
 -- Índices para tablas volcadas
@@ -55,7 +64,7 @@ ALTER TABLE `events_users`
 -- AUTO_INCREMENT de la tabla `events_users`
 --
 ALTER TABLE `events_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

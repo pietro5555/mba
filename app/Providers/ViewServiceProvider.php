@@ -4,9 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Auth;
-use DB;
-use Carbon\Carbon;
+use App\Models\Category;
+use App\Models\Subcategory;
 
 class ViewServiceProvider extends ServiceProvider
 {
@@ -18,9 +17,9 @@ class ViewServiceProvider extends ServiceProvider
 
     public function boot(){
 	    View::composer('*', function ($view) {
-        $categoriasSidebar = \App\Models\Category::orderBy('id', 'ASC')->get();
+        $categoriasSidebar = Category::orderBy('id', 'ASC')->get();
         
-        $subcategoriasSidebar = \App\Models\Subcategory::orderBy('id', 'ASC')->get();
+        $subcategoriasSidebar = Subcategory::orderBy('id', 'ASC')->get();
 
 
         $view->with(compact('categoriasSidebar', 'subcategoriasSidebar'));

@@ -8,7 +8,7 @@
     <div class="collapse navbar-collapse" id="navbarItems" style="z-index: 1000;">
         <ul class="navbar-nav ml-auto mt-2 mt-lg-0 header-list">
             <li class="nav-item active">
-                <a class="nav-link items-header" href="#">INICIO</a>
+                <a class="nav-link items-header" href="{{route('index')}}">INICIO</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link items-header" href="#">NOSOTROS</a>
@@ -18,9 +18,6 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link items-header" href="#">STREAMING</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link items-header" href="#">GRATIS</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link items-header" href="#">BLOG</a>
@@ -56,7 +53,8 @@
                 <li class="nav-item" id="li-language-small" style="display: none;">
                     <a class="nav-link items-header" href="#">IDIOMA</a>
                 </li>
-                <li class="nav-item" id="li-search-larger" style="padding-right: 5px;">
+                
+                {{--<li class="nav-item" id="li-search-larger" style="padding-right: 5px;">
                     <a class="nav-link items-header" href="#"><i class="fa fa-search"></i></a>
                 </li>
                 <li class="nav-item" id="li-search-small" style="display: none;">
@@ -78,7 +76,7 @@
                 </li>
                 <li class="nav-item" id="li-notifications-small" style="display: none;">
                     <a class="nav-link items-header" href="#">NOTIFICACIONES</a>
-                </li>
+                </li>--}}
 
                 <li class="nav-item dropdown dropleft" id="li-user-larger" style="padding-right: 10px;">
                     <img class="dropdown-toggle items-header" id="navbarDropdown2" role="button" data-toggle="dropdown" src="{{ asset('images/logo.png') }}" alt="" width="40" height="40">

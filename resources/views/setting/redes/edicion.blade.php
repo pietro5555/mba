@@ -12,6 +12,14 @@
           {{ csrf_field() }} 
             
             <input type="hidden" name="id" id="id">
+
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Nombre</label>
+            <input type="text" class="form-control" name="nombre" id="nombre" required>
+            </div>
+              </div>
             
             <div class="col-md-12">
                 <div class="form-group">

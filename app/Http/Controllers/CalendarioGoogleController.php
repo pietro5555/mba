@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\User; 
 use App\Models\Events; 
+use App\Models\Schedule; 
+use App\Models\Calendario; 
+use App\Models\Subcategory;
+use App\Models\Course;
+use Auth; 
 use DB; 
 use Carbon\Carbon;
 use Google_Client;
@@ -21,64 +26,10 @@ class CalendarioGoogleController extends Controller
     function __construct()
     {
         Carbon::setLocale('es'); 
+        $this->middleware('auth');
     }
 
 
-    public function timelive(){
-         
-         $evento = $this->obtenerEvento(0);
-         $fecha = (empty($evento)) ? 0 : $evento['inicio'];
-         $proxevent = $this->proxievents((empty($evento)) ? 0 : $evento['id']);
-        return view('timelive', compact('fecha','evento','proxevent'));
-
-    }
-
-    public function proximo($id){
-      
-       $evento = $this->obtenerEvento($id);
-       $fecha = (empty($evento)) ? 0 : $evento['inicio'];
-       return view('timelive', compact('fecha','evento'));
-    }
-
-    public function proxievents($id){
-      
-      $fechactual = Carbon::now();
-      $proximos = Events::where('id', '!=', $id)->whereDate('date', '>=', $fechactual)->take('6')->get();
-
-      return $proximos;
-    }
-
-    public function obtenerEvento($eventactual){
-          
-        $datos = [];
-        $fechactual = Carbon::now();
-        $fin = new Carbon('2020-09-10');
-
-        if($eventactual == 0){
-        $evento = Events::whereDate('date', '>=', $fechactual)->orderBy('date', 'ASC')->take('1')->first();
-        }else{
-        $evento = Events::whereDate('date', '>=', $fechactual)->where('id', '>', $eventactual)->orderBy('date', 'ASC')->take('1')->first();
-         if($evento == null){
-           $evento = Events::whereDate('date', '>=', $fechactual)->where('id', '<', $eventactual)->orderBy('date', 'ASC')->take('1')->first();
-         }
-        }
-
-        if($evento != null){
-
-        $user = DB::table('user_campo')->where('ID', $evento->user_id)->first();
-        $datos =[
-            'id' => $evento->id,
-            'title' => $evento->title,
-            'descripcion' => 'Descripcion',
-            'inicio' => $evento->date,
-            'fin' => $fin,
-            'nombre' => $user->firstname,
-            'apellido' => $user->lastname, 
-        ];
-       }
-
-       return $datos;
-    }
 
      public function oauth($id)
     {
@@ -124,4 +75,7 @@ class CalendarioGoogleController extends Controller
            }   
         }
     }
+
+
+    
 }

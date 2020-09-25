@@ -20,20 +20,24 @@ class Events extends Model
      * @var array
      */
     protected $fillable = [
+        'uuid',
         'title',
+        'user_id',
+        'category_id',
+        'description',
         'date',
+        'time',
+        'duration',
+        'image',
+        'status',
         'type',
         'url_streaming',
-        'url_video',
-        'user_id',
-        'description',
-        'date_end',
-        'status'
+        'url_video'
     ];
 
-
+    
     public function users(){
-        return $this->belongsToMany('App\Models\User', 'events_users', 'event_id', 'user_id')->withPivot('date', 'time')->withTimestamps();
+        return $this->belongsToMany('App\Models\User', 'events_users', 'event_id', 'user_id')->withPivot('date', 'time', 'favorite')->withTimestamps();
     }
 
     public function getResource(){
@@ -41,6 +45,10 @@ class Events extends Model
     }
 
     // 0=desactivado, 1=activo,  2=programado  3=iniciado, 4=finalizado
+
+    public function getEmailMentorAttribute(){
+        return $this->mentor->user_email;
+    }
 
     public static function findID($id)
     {
@@ -55,6 +63,17 @@ class Events extends Model
 
     public function EventResources(){
         return $this->hasMany('App\Models\EventResources', 'event_id', 'id');
+    }
+
+    public function mentor()
+       {
+          return $this->belongsTo('App\Models\User', 'user_id');
+       }
+
+    //Relacion Evento que pertenece a un curso
+    public function curso()
+    {
+        return $this->belongsTo('App\Models\Course', 'course_id');
     }
 
 }

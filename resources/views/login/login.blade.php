@@ -16,7 +16,7 @@
 </style>
 
  <center>
-    <img src="{{asset('/images/logo.png')}}" style="width: 100px; height: 100px; margin-top: 80px; margin-bottom: 40px;">
+    <img src="{{asset('/images/logo-login.png')}}" style="width: 100px; height: 100px; margin-top: 80px; margin-bottom: 40px;">
 </center>
             
  <div class="d-flex justify-content-center">  

@@ -61,7 +61,7 @@
 				
 				<br class="col-xs-12">
 
-				<table id="mytable" class="table table-bordered table-striped">
+				<table id="mytable" class="table">
 					<thead>
 						<tr>
 							<th class="text-center">#</th>
@@ -165,6 +165,12 @@
 						            <div class="form-group">
 						                <label>Imagen de Cover</label>
 						            	<input type="file" class="form-control" name="cover" >
+						            </div>
+						        </div>
+						        <div class="col-md-12">
+						            <div class="form-group">
+						                <label>Precio</label>
+						            	<input type="text" class="form-control" name="price">
 						            </div>
 						        </div>
 						        <div class="col-md-12">

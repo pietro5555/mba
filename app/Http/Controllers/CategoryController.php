@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str as Str;
+use GuzzleHttp\Client;
 use App\Models\Category; use App\Models\Subcategory;
-use DB;
+use DB; use Auth;
 
 class CategoryController extends Controller{
     
@@ -27,8 +28,47 @@ class CategoryController extends Controller{
      * Admin / Cursos / Gestionar Categorías / Agregar Categoría
      */
     public function add_category(Request $request){
+        $client = new Client(['base_uri' => 'https://streaming.shapinetwork.com']);
+
+        if (is_null(Auth::user()->streaming_token)){
+            $response = $client->request('POST', 'api/auth/login', [
+                'headers' => ['Accept' => 'application/json', 'Content-Type' => 'application/x-www-form-urlencoded'],
+                'form_params' => [
+                    'email' => 'admin',
+                    'password' => '123456789',
+                    'device_name' => 'luisana',
+                ]
+            ]);
+
+            $result = json_decode($response->getBody());
+
+            DB::table('wp98_users')
+                ->where('ID', '=', Auth::user()->ID)
+                ->update(['streaming_token' => $result->token]);
+        }
+
+        $headers = [
+            'Accept'        => 'application/json',
+            'Content-Type' => 'application/x-www-form-urlencoded',
+            'Authorization' => 'Bearer '.Auth::user()->streaming_token
+        ];
+        
+        $slug = Str::slug($request->title);
+        $creacionCategoria = $client->request('POST', 'api/options', [
+            'headers' => $headers,
+            'form_params' => [
+                'name' => $request->title,
+                'description' => $request->title,
+                'type' => 'meeting_category',
+                'slug' => $slug
+            ]
+        ]);
+        
+        $result2 = json_decode($creacionCategoria->getBody());
+
         $categoria = new Category($request->all());
-        $categoria->slug = Str::slug($categoria->title);
+        $categoria->uuid = $result2->option->uuid;
+        $categoria->slug = $slug;
         $categoria->save();
         if ($request->hasFile('cover')){
             $file = $request->file('cover');
@@ -56,9 +96,47 @@ class CategoryController extends Controller{
      * Admin / Cursos / Gestionar Categorías / Actualizar Categoría
      */
     public function update_category(Request $request){
+        $client = new Client(['base_uri' => 'https://streaming.shapinetwork.com']);
+
+        if (is_null(Auth::user()->streaming_token)){
+            $response = $client->request('POST', 'api/auth/login', [
+                'headers' => ['Accept' => 'application/json', 'Content-Type' => 'application/x-www-form-urlencoded'],
+                'form_params' => [
+                    'email' => 'admin',
+                    'password' => '123456789',
+                    'device_name' => 'luisana',
+                ]
+            ]);
+
+            $result = json_decode($response->getBody());
+
+            DB::table('wp98_users')
+                ->where('ID', '=', Auth::user()->ID)
+                ->update(['streaming_token' => $result->token]);
+        }
+
+        $headers = [
+            'Accept'        => 'application/json',
+            'Content-Type' => 'application/x-www-form-urlencoded',
+            'Authorization' => 'Bearer '.Auth::user()->streaming_token
+        ];
+
         $categoria = Category::find($request->category_id);
+        $slug = Str::slug($request->title);
+        $actualizacionCategoria = $client->request('PATCH', 'api/options/'.$categoria->uuid, [
+            'headers' => $headers,
+            'form_params' => [
+                'name' => $request->title,
+                'description' => $request->title,
+                'type' => 'meeting_category',
+                'slug' => $slug
+            ]
+        ]);
+        
+        $result2 = json_decode($actualizacionCategoria->getBody());
+        
         $categoria->fill($request->all());
-        $categoria->slug = Str::slug($categoria->title);
+        $categoria->slug = $slug;
         $categoria->save();
          if ($request->hasFile('cover')){
             $file = $request->file('cover');
@@ -75,7 +153,39 @@ class CategoryController extends Controller{
      * Admin / Cursos / Gestionar Categorías / Eliminar Categoría
      */
     public function delete_category($categoria){
+        $client = new Client(['base_uri' => 'https://streaming.shapinetwork.com']);
+
+        if (is_null(Auth::user()->streaming_token)){
+            $response = $client->request('POST', 'api/auth/login', [
+                'headers' => ['Accept' => 'application/json', 'Content-Type' => 'application/x-www-form-urlencoded'],
+                'form_params' => [
+                    'email' => 'admin',
+                    'password' => '123456789',
+                    'device_name' => 'luisana',
+                ]
+            ]);
+
+            $result = json_decode($response->getBody());
+
+            DB::table('wp98_users')
+                ->where('ID', '=', Auth::user()->ID)
+                ->update(['streaming_token' => $result->token]);
+        }
+
+        $headers = [
+            'Accept'        => 'application/json',
+            'Content-Type' => 'application/x-www-form-urlencoded',
+            'Authorization' => 'Bearer '.Auth::user()->streaming_token
+        ];
+
         $categoria = Category::find($categoria);
+
+        $eliminarCategoria = $client->request('DELETE', 'api/options/'.$categoria->uuid, [
+            'headers' => $headers
+        ]);
+        
+        $result2 = json_decode($eliminarCategoria->getBody());
+
         $categoria->delete();
 
         return redirect('admin/courses/categories')->with('msj-exitoso', 'La categoría '.$categoria->title.' ha sido eliminada con éxito.');

@@ -61,7 +61,9 @@ class EventsController extends Controller
 
             $result = json_decode($response->getBody());
 
-            Auth::user()->streaming_token = $result->token;
+            DB::table('wp98_users')
+                ->where('ID', '=', Auth::user()->ID)
+                ->update(['streaming_token' => $result->token]);
         }
 
         $headers = [
@@ -129,18 +131,9 @@ class EventsController extends Controller
     {
         $evento = Events::find($id);
 
-        $mentores = DB::table('wp98_users')
-                        ->select('ID', 'user_email')
-                        ->where('rol_id', '=', 2)
-                        ->orderBy('user_email', 'ASC')
-                        ->get();
-
-        $categorias = DB::table('categories')
-                        ->select('id', 'title')
-                        ->orderBy('id', 'ASC')
-                        ->get();
-
-        return view('admin.events.editEvent')->with(compact('evento', 'mentores', 'categorias'));
+        return response()->json(
+            $evento
+        );
     }
 
     /**

@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/', 'HomeController@index')->name('index');
+Route::get('/certificado', "HomeController@certificado");
 
 Route::get('search', 'HomeController@search')->name('search');
 Route::get('search-by-category/{category_slug}/{category_id}/{subcategory_slug}/{subcategory_id}', 'HomeController@search_by_category')->name('search-by-category');
@@ -175,9 +176,9 @@ Route::group(['prefix' => 'installer'], function (){
   
   /*** RUTAS PARA EL CARRITO DE COMPRA***/
   Route::group(['prefix' => 'shopping-cart'], function(){
-    Route::get('/', 'ShoopingCartController@index')->name('shopping-cart.index');
-    Route::get('store/{id}', 'ShoopingCartController@store')->name('shopping-cart.store');
-    Route::get('delete/{id}', 'ShoopingCartController@delete')->name('shopping-cart.delete');
+    Route::get('/', 'ShoppingCartController@index')->name('shopping-cart.index');
+    Route::get('store/{id}', 'ShoppingCartController@store')->name('shopping-cart.store');
+    Route::get('delete/{id}', 'ShoppingCartController@delete')->name('shopping-cart.delete');
     Route::post('finish', 'CoursesOrdenController@procesarCompra')->name('shopping-cart.finish');
   });
   

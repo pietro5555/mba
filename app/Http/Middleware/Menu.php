@@ -169,12 +169,6 @@ class Menu
                         'black'=> '0',
                         'oculto'=> 'activo',
                     ],
-                    'Volumen Grupal' => [
-                        'ruta' => 'individual',
-                        'complementoruta' => '',
-                        'black'=> '0',
-                        'oculto'=> 'activo',
-                    ],
                 ]
             ],
 

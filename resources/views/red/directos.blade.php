@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="col-xs-12">
+{{--<div class="col-xs-12">
     <div class="box box-info">
         <div class="box-body">
         	<h4 class="box-title white">
@@ -30,7 +30,6 @@
     </div>
 </div>
 
-{{-- Registros de red --}}
 <div class="col-xs-12">
     <div class="box-body white">
        <h3>Registros de Red</h3>
@@ -145,7 +144,7 @@
 			</table>
 		</div>
 	</div>
-</div>
+</div>--}}
 
 {{-- Registros directos --}}
 <div class="col-xs-12">

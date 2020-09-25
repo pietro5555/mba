@@ -135,6 +135,17 @@ class Menu
                 'permisoAdmin' => 1,
                 'activo' => 0,
             ],
+
+            'Volver a MBA' => [
+                'submenu' => 0,
+                'ruta' => 'index',
+                'black'=> '0',
+                'icono' => 'fas fa-exchange-alt',
+                'complementoruta' => '',
+                'permisoAdmin' => 1,
+                'activo' => 0,
+            ],
+
             'Actualizar' => [
                 'submenu' => 0,
                 'ruta' => 'admin-update-all',
@@ -605,6 +616,16 @@ class Menu
                 'ruta' => 'admin.index',
                 'black'=> '0',
                 'icono' => 'fa fa-home',
+                'complementoruta' => '',
+                'permisoAdmin' => 1,
+                'activo' => 0,
+            ],
+
+            'Volver a MBA' => [
+                'submenu' => 0,
+                'ruta' => 'index',
+                'black'=> '0',
+                'icono' => 'fas fa-exchange-alt',
                 'complementoruta' => '',
                 'permisoAdmin' => 1,
                 'activo' => 0,

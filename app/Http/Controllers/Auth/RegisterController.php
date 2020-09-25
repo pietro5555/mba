@@ -182,7 +182,7 @@ class RegisterController extends Controller
         
         if (Auth::guest()){
         Auth::loginUsingId($user->ID);   
-        return redirect('/admin')->with('msj-exitoso', 'Su Registro ha sido exitoso su ID es: '.$user->ID);
+        return redirect('/')->with('msj-exitoso', 'Su Registro ha sido exitoso su ID es: '.$user->ID);
         }else{
          $funciones->msjSistema('Su Registro ha sido exitoso el ID es: '.$user->ID, 'success');
          return redirect()->back();   

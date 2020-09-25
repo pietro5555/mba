@@ -259,7 +259,7 @@ Route::group(['prefix' => 'installer'], function (){
           // vista de referidos directos e indirectos
       Route::get('/direct', 'RedController@direct')->name('red.directos');
       //filtros de referidos directos e indirectos
-      Route::post('/filtrered', 'RedController@filtre')->name('red.filtre');
+      Route::post('/filtrere', 'RedController@filtre')->name('red.filtre');
       //volumen grupal
       Route::get('/individual', 'RedController@individual')->name('individual');
       Route::post('/todofecha', 'RedController@todofecha')->name('todofecha');

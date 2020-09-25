@@ -17,7 +17,7 @@
                 <a class="nav-link items-header" href="{{ route('courses') }}">CURSOS</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link items-header" href="#">STREAMING</a>
+                <a class="nav-link items-header" href="{{route('timelive')}}">STREAMING</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link items-header" href="#">BLOG</a>

@@ -43,7 +43,7 @@
                             </div>
                         @endforeach
                     </div>
-                    <a href="#" class="list-group-item bg-dark-gray" style="color: white;"><i class="far fa-file-alt"></i> Test</a>
+                    
                     @if(Auth::user())
                      @if(Auth::user()->rol_id == 0)
                     <a href="{{route('setting-logo')}}" class="list-group-item bg-dark-gray" style="color: white;"><i class="fa fa-gear"></i> Ajustes</a>

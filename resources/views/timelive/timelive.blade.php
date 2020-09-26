@@ -77,7 +77,7 @@ const countdown = (deadline,elem) => {
 
   }, 1000)
 };
-
+//Verificar que cuando no exista el evento no lo tome
 countdown('{{$evento->date}}', 'clock');
 
     </script>

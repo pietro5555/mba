@@ -73,8 +73,23 @@
                       @endphp
 
                       @if($contador <= 3)
+                          <div class="col-md-4" style="margin-top: 20px;">
+                          @if (!is_null($proxima->mentor->avatar))
+                         <img src="{{ asset('uploads/avatar/'.$proxima->mentor->avatar) }}" class="card-img-top img-prox-events" alt="..." style="height: 320px;">
+                         @else
+                         <img src="{{ asset('uploads/images/avatar/default.jpg') }}" class="card-img-top" alt="..." height="200px">
+                          @endif
+                         <div class="card-img-overlay" style="margin-left: 10px; margin-right: 10px;">
+                          <h5 class="card-title font-weight-bold" style="margin-top: 170px; color: #2A91FF;">{{$proxima->title}}</h5>
+                          <p class="card-text font-weight-bold mr-2" style="margin-top: -10px; font-size: 12px;"> <i class="far fa-calendar mr-2" style="font-size: 18px;"> </i>
+                            {{$proxima->fecha}}
+                           <i class="far fa-clock ml-2" style="font-size: 18px;"></i>{{\Carbon\Carbon::parse($proxima->date)->format('g:i a')}} 
+                           </p>
+                          <a href="{{route('transmi-agendar', $proxima->id)}}" class="btn btn-success btn-block">Agendar</a>
+                          </div>
+                         </div>
 
-                           <div class="col-md-4" style="margin-top: 20px;">
+                           <!--<div class="col-md-4" style="margin-top: 20px;">
                              <img src="{{ asset('uploads/avatar/'.$proxima->avatar) }}" class="card-img-top" alt="..." style="height: 320px;">
                              <div class="card-img-overlay" style="margin-left: 10px; margin-right: 10px;">
                               <h4 class="card-title" style="margin-top: 180px; color: #2A91FF;">{{$proxima->title}}</h4>
@@ -87,7 +102,7 @@
 
                               <a href="{{route('transmi-agendar', $proxima->id)}}" class="btn btn-success btn-block">Agendar</a>
                               </div>
-                             </div>
+                             </div>-->
 
                             @endif
                             @endforeach
@@ -110,19 +125,21 @@
 
                       @if($segundo >= 4)
 
-                           <div class="col-md-4" style="margin-top: 20px;">
-                             <img src="{{ asset('uploads/avatar/'.$proxima->avatar) }}" class="card-img-top" alt="..." style="height: 320px;">
-                             <div class="card-img-overlay" style="margin-left: 10px; margin-right: 10px;">
-                              <h4 class="card-title" style="margin-top: 180px; color: #2A91FF;">{{$proxima->title}}</h4>
-                              <p class="card-text" style="margin-top: -10px; font-size: 10px;"> <i class="far fa-calendar" style="font-size: 18px;"></i> {{$proxima->fecha}} 
-
-                              <i class="far fa-clock" style="font-size: 18px;"></i> {{\Carbon\Carbon::parse($proxima->date)->format('g:i a')}}
-
-                               </p>
-
-                              <a href="{{route('transmi-agendar', $proxima->id)}}" class="btn btn-success btn-block">Agendar</a>
-                              </div>
-                             </div>
+                          <div class="col-md-4" style="margin-top: 20px;">
+                          @if (!is_null($proxima->mentor->avatar))
+                         <img src="{{ asset('uploads/avatar/'.$proxima->mentor->avatar) }}" class="card-img-top img-prox-events" alt="..." style="height: 320px;">
+                         @else
+                         <img src="{{ asset('uploads/images/avatar/default.jpg') }}" class="card-img-top" alt="..." height="200px">
+                          @endif
+                         <div class="card-img-overlay" style="margin-left: 10px; margin-right: 10px;">
+                          <h5 class="card-title font-weight-bold" style="margin-top: 170px; color: #2A91FF;">{{$proxima->title}}</h5>
+                          <p class="card-text font-weight-bold mr-2" style="margin-top: -10px; font-size: 12px;"> <i class="far fa-calendar mr-2" style="font-size: 18px;"> </i>
+                            {{$proxima->fecha}}
+                           <i class="far fa-clock ml-2" style="font-size: 18px;"></i>{{\Carbon\Carbon::parse($proxima->date)->format('g:i a')}} 
+                           </p>
+                          <a href="{{route('transmi-agendar', $proxima->id)}}" class="btn btn-success btn-block">Agendar</a>
+                          </div>
+                         </div>
                         @endif
                        @endforeach
                       </div>

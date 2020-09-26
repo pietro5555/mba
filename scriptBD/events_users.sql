@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-09-2020 a las 19:17:25
+-- Tiempo de generación: 26-09-2020 a las 08:52:57
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.3.22
 
@@ -43,8 +43,7 @@ CREATE TABLE `events_users` (
 --
 
 INSERT INTO `events_users` (`id`, `event_id`, `user_id`, `date`, `time`, `favorite`, `created_at`, `updated_at`) VALUES
-(1, 4, 5, '2020-09-26', '10:00:00', 1, '2020-09-24 12:09:45', '2020-09-24 12:09:45'),
-(2, 5, 5, '2020-09-30', '13:00:00', 1, '2020-09-24 12:12:30', '2020-09-24 12:12:30');
+(1, 1, 10, '2020-09-28', '00:00:00', 1, '2020-09-26 01:34:13', '2020-09-26 01:34:13');
 
 --
 -- Índices para tablas volcadas
@@ -64,7 +63,7 @@ ALTER TABLE `events_users`
 -- AUTO_INCREMENT de la tabla `events_users`
 --
 ALTER TABLE `events_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

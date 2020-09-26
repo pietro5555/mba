@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-09-2020 a las 19:35:40
--- Versión del servidor: 10.4.11-MariaDB
--- Versión de PHP: 7.4.4
+-- Tiempo de generación: 26-09-2020 a las 08:52:20
+-- Versión del servidor: 10.4.14-MariaDB
+-- Versión de PHP: 7.3.22
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -47,6 +47,13 @@ CREATE TABLE `events` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
+-- Volcado de datos para la tabla `events`
+--
+
+INSERT INTO `events` (`id`, `uuid`, `user_id`, `category_id`, `title`, `description`, `date`, `time`, `duration`, `image`, `status`, `type`, `url_streaming`, `url_video`, `created_at`, `updated_at`) VALUES
+(1, '3ff6dee4-6ffc-445d-af03-19feb73ae700', 6, 5, 'Curso de trading en Forex gratuito.', 'Potencia tu trading con nuestro curso online gratis de Forex y CFDs. Esperamos que este programa de tan solo 3 pasos te ayude a saber todo lo que necesitas para empezar a operar, &iexcl;Compru&eacute;balo tu mismo!', '2020-09-28', '06:00:00', 90, '1.png', '1', NULL, NULL, NULL, '2020-09-25 00:24:53', '2020-09-25 00:24:53');
+
+--
 -- Índices para tablas volcadas
 --
 
@@ -64,7 +71,7 @@ ALTER TABLE `events`
 -- AUTO_INCREMENT de la tabla `events`
 --
 ALTER TABLE `events`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

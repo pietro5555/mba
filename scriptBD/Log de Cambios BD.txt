@@ -121,3 +121,5 @@ Dev: Luisana Marín
 25/09/2020
 Dev:Crisleivys Gil
 Modificada la información de las tablas events, calendarios, courses_users, events_users (correr scripts events, calendarios, courses_users, events_users)
+
+

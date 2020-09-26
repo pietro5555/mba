@@ -5,15 +5,15 @@
             <span class="color-green">{{$totalItems}} USD</span>
         </strong>
     </h3>
-    <div class="col-12 text-center mt-5 text-white">
-        <div class="form-group mt-5">
+    <div class="col-12 text-center mt-3 text-white">
+        <div class="form-group mt-3">
             <input type="checkbox" form="form-control" id="check_deacuerdo">
             <label for="">Acepto los Términos y Condiciones</label>
         </div>
         <h5 class="">Selecione medio de pago</h5>
         <div class="form-group">
             <button class="btn text-white btn-color-green" onclick="pagarS()">Tarjeta</button>
-            <button class="btn text-white btn-color-green" onclick="pagarC()">Cripto</button>
+            <button class="btn text-white btn-color-green" onclick="pagarC()">Cripto</button><br><br>
         </div>
     </div>
     <div class="stripe d-none">
@@ -35,4 +35,25 @@
             <input type="hidden" name="metodo" value="cripto">
         </form>
     </div>
+    
+    <hr style="background-color: white;">
+
+    <h3 class="text-center text-white">
+        <strong>
+            <small>COMPRAR MEMBRESÍA POR:</small>
+            <span class="color-green">50 USD</span>
+        </strong>
+    </h3>
+    <div class="col-12 text-center mt-3 text-white">
+        <div class="form-group mt-3">
+            <input type="checkbox" form="form-control" id="check_deacuerdo2">
+            <label for="">Acepto los Términos y Condiciones</label>
+        </div>
+        <h5 class="">Selecione medio de pago</h5>
+        <div class="form-group">
+            <button class="btn text-white btn-info" onclick="pagarS2()">Tarjeta</button>
+            <button class="btn text-white btn-info" onclick="pagarC2()">Cripto</button><br><br>
+            </div>
+    </div>
+    
 </div>

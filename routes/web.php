@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-
+Route::get('certificado', 'HomeController@certificado');
 Route::get('/', 'HomeController@index')->name('index');
 Route::get('/certificado', "HomeController@certificado");
 
@@ -195,19 +195,21 @@ Route::group(['prefix' => 'installer'], function (){
   //Route::get('cursos/curso', 'CursosController@show_one_course')->name('curso');
   Route::get('cursos/leccion', 'CursosController@leccion')->name('leccion');
   
-  Route::group(['prefix' => 'courses', 'middleware' => ['auth']], function(){
+  Route::group(['prefix' => 'courses'], function(){
     Route::get('/', 'CourseController@index')->name('courses');
     Route::get('show/{slug}/{id}', 'CourseController@show')->name('courses.show');
-    Route::get('recommended', 'CourseController@recommended')->name('courses.recommended');
+    //Route::get('recommended', 'CourseController@recommended')->name('courses.recommended');
   });
   
   /*** RUTAS PARA LOS CLIENTES ***/
-  Route::group(['prefix' => 'client'], function(){
+  Route::group(['prefix' => 'client', 'middleware' => ['auth']], function(){
      Route::group(['prefix' => 'courses'], function(){
         Route::get('my-list', 'CourseController@my_courses')->name('client.my-courses');
+        Route::get('add/{curso}', 'CourseController@add')->name('client.courses.add');
         Route::post('rate', 'RatingController@store')->name('client.courses.rate');
         Route::get('{slug}/{id}/take-evaluation', 'EvaluationController@take')->name('client.courses.take-evaluation');
         Route::post('submit-evaluation', 'EvaluationController@submit')->name('client.courses.submit-evaluation');
+        Route::get('get-certificate/{curso}', 'EvaluationController@get_certificate')->name('client.courses.get-certificate');
      });
      Route::get('favorites/', 'CourseController@favorites')->name('favorites');
      Route::get('favorite/{id}', 'CourseController@course_favorite')->name('courses.favorite');

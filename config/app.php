@@ -179,6 +179,7 @@ return [
 
         //PDF servicio 
         Barryvdh\DomPDF\ServiceProvider::class,
+        PragmaRX\Google2FALaravel\ServiceProvider::class,
 
     ],
 
@@ -234,6 +235,7 @@ return [
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'DotenvEditor' => Brotzka\DotenvEditor\DotenvEditorFacade::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
+        'Google2FA' => PragmaRX\Google2FALaravel\Facade::class,
     ],
 
 ];

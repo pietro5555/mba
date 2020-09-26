@@ -48,6 +48,16 @@
           $('#form-coin').submit()
         }
     }
+
+    function pagarC2() {
+      event.preventDefault();
+        if (!$("#check_deacuerdo2").prop('checked')) {
+            alert("Debe estar de acuerdo con los términos y condiciones!");
+            return false;
+        }else{
+          $('#form-coin2').submit()
+        }
+    }
 </script>
 
 @endsection

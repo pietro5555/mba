@@ -143,6 +143,11 @@
     border-color: #6AB742; 
     color: #6AB742;
 }
+.btn-arrow-next-lmcourses{
+    border-radius: 0px; 
+    border-color: #2A91FF; 
+    color: #2A91FF;
+}
 .new-course-img{
     filter: brightness(80%);
     height: 450px;
@@ -587,11 +592,11 @@ font-size: 2vw;
 {
 background: transparent linear-gradient(180deg, #00000083 0%, #000000 100%) 0% 0% no-repeat padding-box;
 opacity: 0.75;
-height: 100%; 
 -webkit-box-shadow: none; 
 box-shadow: none; 
-border: 0px; 
-border-radius: 0px; 
+border: 1px; 
+border-radius: 20px; 
+height: 242px;
 }
 
 .section-title-category{
@@ -603,7 +608,8 @@ border-radius: 0px;
 .carousel-image{
 background: transparent linear-gradient(180deg, #00000000 0%, #000000 100%) 0% 0% no-repeat padding-box;
 opacity: 8;
-height: 320px
+height: 320px;
+width: 320px;
 }
 .bg-carousel{
 
@@ -1222,4 +1228,16 @@ opacity: 1;
 
 .contentQuestion{
     display: flex;
+}
+
+.wrapper {
+   display: grid;
+   grid-template-columns: repeat(5, 1fr);
+   grid-column-gap: 10px;
+   grid-row-gap: 1em;
+}
+
+.card-courses{
+    background: #1C1D21;
+    border: 1px solid #707070;
 }

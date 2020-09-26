@@ -73,7 +73,7 @@ class CourseController extends Controller{
 
             $username = NULL;
             if (!Auth::guest()){
-                $username = strtoupper(auth()->user()->user_nicename);
+                $username = auth()->user()->display_name;
             }
 
             $cursosDestacados = Course::where('featured', '=', 1)
@@ -132,6 +132,8 @@ class CourseController extends Controller{
                 ->get();
 
         $cursos = Auth::user()->courses_buyed->take(4);
+       // $vacio = isset($cursos);
+       // return dd($cursos,$vacio);
         $cursosArray = [];
 
         $cursosMasComprados = DB::table('courses_users')
@@ -167,9 +169,6 @@ class CourseController extends Controller{
             ->orderBy('courses_users.updated_at', 'DESC')
             ->get()
             ->take(1);
-            //return  $last_course;
-
-
             return view('cursos.cursos')->with(compact('username','cursosDestacados', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next', 'courses', 'mentores', 'cursos', 'cursosRecomendados', 'total', 'last_course'));
     }
 

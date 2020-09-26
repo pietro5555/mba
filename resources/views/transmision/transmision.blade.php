@@ -10,7 +10,7 @@
                             <a style="font-weight: bold; width: 180px; font-size: 28px; color: #2A91FF;">PRÓXIMO STREAMING</a><br>
                             
                             <div style="width: 60%; line-height: 70px;">
-                                {{$anuncio['title']}}
+                                <a href="{{ route('timelive')}}" class="text-white">{{$anuncio['title']}}</a>
                             </div> 
                             <div style="font-size: 25px; font-weight: 500;">
                                 <i class="fa fa-calendar"></i> {{$anuncio['fechacompleta']}}

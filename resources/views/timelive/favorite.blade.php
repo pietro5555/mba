@@ -18,12 +18,11 @@
             </button>
         </div>
     @endif
-@if(!empty($eventos_favoritos))
+
 <div class="col-md-12">
   <h2 class="text-white mt-5 mb-5">EVENTOS FAVORITOS</h2>
-  
-</div>
-<div class="container-fluid">
+  @if(!empty($eventos_favoritos))
+  <div class="container-fluid">
   <div class="row">
         @foreach ($eventos_favoritos as $favorito)
             <div class="col-md-3" style="margin-top: 20px;">
@@ -41,18 +40,20 @@
         @endforeach
 </div>
 </div>
-@else
+ 
+  @else
 
-<div class="section-title-landing text-center"><h3 class="mt-5 mb-5">NO SE ENCONTRARON FAVORITOS</h3></div>
+<div><h5 class="mt-5 mb-5 text-primary">No se encontraron eventos favoritos</h5></div>
 
-@endif  
+@endif 
+</div>
 
-@if(!empty($cursos_favoritos))
+
+
 <div class="col-md-12">
   <h2 class="text-white mt-5 mb-5">CURSOS FAVORITOS</h2>
-  
-</div>
-<div class="container-fluid">
+  @if(!empty($cursos_favoritos))
+  <div class="container-fluid">
   <div class="row">
         @foreach ($cursos_favoritos as $favorito)
             <div class="col-md-4 mt-1">
@@ -105,9 +106,11 @@
 </div>
 @else
 
-<div class="section-title-landing text-center"><h3 class="mt-5 mb-5">NO SE ENCONTRARON CURSOS FAVORITOS</h3></div>
+<div class="section-title-landing text-center"><h5 class="mt-5 mb-5">No se encontraron cursos favoritos</h5></div>
 
 @endif 
+</div>
+
 
 
   {{-- SECCIÓN REFERIDOS (USUARIOS LOGGUEADOS) --}}

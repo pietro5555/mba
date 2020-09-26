@@ -210,6 +210,8 @@ Route::group(['prefix' => 'installer'], function (){
         Route::post('submit-evaluation', 'EvaluationController@submit')->name('client.courses.submit-evaluation');
      });
      Route::get('favorites/', 'CourseController@favorites')->name('favorites');
+     Route::get('favorite/{id}', 'CourseController@course_favorite')->name('courses.favorite');
+
   });
   
   

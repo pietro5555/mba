@@ -126,3 +126,6 @@ Modificada la información de las tablas events, calendarios, courses_users, eve
 Dev: Luisana Marín
 *Modifiqué el archivo IPNController en la carpeta vendor/hexters/src/HttP/Controllers (Reemplazar archivo IPNController)
 
+26/09/2020
+Dev:Crisleivys Gil
+*Agregados nuevos eventos (correr el script events)

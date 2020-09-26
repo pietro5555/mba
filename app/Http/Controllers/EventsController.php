@@ -263,6 +263,7 @@ class EventsController extends Controller
 
     /*Vista con la información del streaming Time/timelive*/
     public function timelive(Request $request){
+
         $total_eventos = count(Events::all());
         if ($request->sigEvent == '' or $request->sigEvent == null) {
             $evento = Events::where('date', '>=', Carbon::now())->first();
@@ -280,18 +281,23 @@ class EventsController extends Controller
                 $nextEvent = null;
             }
         } else {
+            
             $lastEvent = Events::all()->last();
             $evento = Events::find($request->sigEvent);
+
             if ($lastEvent->id == $evento->id) {
                 $nextEvent = Events::where('date', '>=', Carbon::now())->first();
+                //return dd($lastEvent, $total_eventos, $nextEvent);
             } else {
                 if($total_eventos > 1){
+
                     $prox = true;
                     $i = 1;
                     $id = $evento->id;
                     while($prox){
-                        $id += $id;
+                        $id = $id+1;
                         $nextEvent = Events::where('id', $id)->get()->first();
+                        //return dd($lastEvent, $evento, $id, $total_eventos, $nextEvent);
                         if ($nextEvent != null)
                             $prox = false;
                     }
@@ -302,11 +308,19 @@ class EventsController extends Controller
         } 
           
         /*PROXIMOS EVENTOS*/
-
-        $proximos = Events::where('date', '>=', Carbon::now())
+        if($total_eventos>0)
+        {
+            $proximos = Events::where('date', '>=', Carbon::now())
         ->where('id', '!=', $evento->id)
         ->where('status', '=', '1')->get();
         $total = count($proximos);
+        }
+        else
+        {
+            $proximos ='';
+            $total =0;
+        }
+        
         
         //dd($evento, $proximos);
         return view('timelive/timelive', compact('evento', 'nextEvent', 'proximos', 'total', 'total_eventos'));
@@ -463,7 +477,7 @@ public function schedule($event_id, Request $request){
 
         //return redirect('agendar/calendar');
 
-        return redirect()->action('Events@calendar');
+        return redirect()->action('EventsController@calendar');
 
 
         }else{

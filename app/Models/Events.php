@@ -70,10 +70,9 @@ class Events extends Model
           return $this->belongsTo('App\Models\User', 'user_id');
        }
 
-    //Relacion Evento que pertenece a un curso
-    public function curso()
-    {
-        return $this->belongsTo('App\Models\Course', 'course_id');
+
+    public function category(){
+        return $this->belongsTo('App\Models\Category');
     }
 
 }

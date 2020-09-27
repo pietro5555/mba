@@ -67,57 +67,55 @@
       <div class="row">
          <div class="col-md-12">
             <div class="row">
-               <div class="col-md-8">
-                  <h3 class="text-white">{{ $curso->title }}</h3>
-               </div>
-            </div>
-            <div class="row">
                <div class="col-md-9">
-                  @if (number_format($curso->promedio, 0) >= 1)
-                     <i class="fa fa-star text-warning"></i>
-                  @else
-                     <i class="fa fa-star-o text-secondary"></i>
-                  @endif
-                  @if (number_format($curso->promedio, 0) >= 2)
-                     <i class="fa fa-star text-warning"></i>
-                  @else
-                     <i class="fa fa-star-o text-secondary"></i>
-                  @endif
-                  @if (number_format($curso->promedio, 0) >= 3)
-                     <i class="fa fa-star text-warning"></i>
-                  @else
-                     <i class="fa fa-star-o text-secondary"></i>
-                  @endif
-                  @if (number_format($curso->promedio, 0) >= 4)
-                     <i class="fa fa-star text-warning"></i>
-                  @else
-                     <i class="fa fa-star-o text-secondary"></i>
-                  @endif
-                  @if (number_format($curso->promedio, 0) >= 5)
-                     <i class="fa fa-star text-warning"></i>
-                  @else
-                     <i class="fa fa-star-o text-secondary"></i>
-                  @endif
-                 
-               </div>
-                <div class="col-md-3">
-                  <div class="row">
-                     <h4 class="text-white mr-2">COSTO</h4>
-                     <h1 class="text-success">{{ $curso->price }} USD</h1>
+                  <h3 class="text-white">{{ $curso->title }}</h3>
+                  <div>
+                     @if (number_format($curso->promedio, 0) >= 1)
+                        <i class="fa fa-star text-warning"></i>
+                     @else
+                        <i class="fa fa-star-o text-secondary"></i>
+                     @endif
+                     @if (number_format($curso->promedio, 0) >= 2)
+                        <i class="fa fa-star text-warning"></i>
+                     @else
+                        <i class="fa fa-star-o text-secondary"></i>
+                     @endif
+                     @if (number_format($curso->promedio, 0) >= 3)
+                        <i class="fa fa-star text-warning"></i>
+                     @else
+                        <i class="fa fa-star-o text-secondary"></i>
+                     @endif
+                     @if (number_format($curso->promedio, 0) >= 4)
+                        <i class="fa fa-star text-warning"></i>
+                     @else
+                        <i class="fa fa-star-o text-secondary"></i>
+                     @endif
+                     @if (number_format($curso->promedio, 0) >= 5)
+                        <i class="fa fa-star text-warning"></i>
+                     @else
+                        <i class="fa fa-star-o text-secondary"></i>
+                     @endif
                   </div>
-                  
                </div>
+
+               @if ( (Auth::guest()) || (is_null($progresoCurso)) )
+                  <div class="col-md-3 text-center">
+                     <h5 class="text-white">COSTO</h5>
+                     <h2 class="text-success">{{ $curso->price }} USD</h2>
+                  </div>
+               @endif
             </div>
+
             <div class="row">
-               <div class="col-md-12 mt-2">
+               <div class="col-md-9 mt-2">
                   <div class="row">
-                     <div class="col-md-3">
+                     <div class="col-md-4">
                         <h6 class="text-white"> <img src="{{ asset('images/icons/icon-user.svg') }}" alt="" height="30px" width="30px">  {{ $curso->users_count }} Alumnos</h6>
                      </div>
-                     <div class="col-md-3">
+                     <div class="col-md-4">
                         <h6 class="text-white"> <img src="{{ asset('images/icons/icon-book-video.svg') }}" height="30px" width="30px"> {{ $curso->lessons_count }} Lecciones</h6>
                      </div>
-                     <div class="col-md-3">
+                     <div class="col-md-4">
                         <h6 class="text-white"> 
                            <img src="{{ asset('images/icons/clock.svg') }}" height="30px" width="30px">
                            @if ($curso->duration > 0)
@@ -127,21 +125,35 @@
                            @endif
                         </h6>
                      </div>
-                     <div class="col-md-3">
-                        <a href="{{route('shopping-cart.store', [$curso->id])}}" class="btn btn-info play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> AGREGAR AL CARRITO</a>
-                        
+                     <div class="col-md-4 mt-2">
+                        <h6 class="text-white"><img src="{{ asset('images/icons/calendar.svg') }}" height="30px" width="30px">  Fecha de salida: {{ date('d-m-Y', strtotime($curso->created_at)) }}</h6>
                      </div>
                   </div>
                </div>
-            </div>
-            <div class="row">
-               <div class="col-md-9 mt-2">
-                  <h6 class="text-white"><img src="{{ asset('images/icons/calendar.svg') }}" height="30px" width="30px">  Fecha de salida: {{ date('d-m-Y', strtotime($curso->created_at)) }}</h6>
-               </div>
-               <div class="col-md-3 mt-2">
-                  <a href="" class="btn btn-success play-course-button btn-block">COMPRAR</a>
-                  <a href="#ratingModal" data-toggle="modal" class="btn btn-primary play-course-button btn-block">VALORAR</a>
-                  <a href="{{ route('client.courses.take-evaluation', [$curso->slug, $curso->id]) }}" class="btn btn-primary play-course-button btn-block">PRESENTAR EVALUACIÓN</a>
+               <div class="col-md-3 mt-2 text-center">
+                  @if (Auth::guest())
+                     <a href="{{route('shopping-cart.store', [$curso->id])}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> AGREGAR AL CARRITO</a>
+                  @else
+                     @if (is_null($progresoCurso))
+                        @if (is_null(Auth::user()->membership_id))
+                           <a href="{{route('shopping-cart.store', [$curso->id])}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> AGREGAR AL CARRITO</a>
+                        @else
+                        <a href="{{route('client.courses.add', $curso->id)}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-plus-circle" aria-hidden="true"></i> AGREGAR A MIS CURSOS</a>
+                        @endif
+                     @else
+                     <a href="#" data-toggle="modal" class="btn btn-info play-course-button btn-block"><i class="fa fa-list"></i> VER LECCIONES</a>
+                        @if (is_null($miValoracion))
+                           <a href="#ratingModal" data-toggle="modal" class="btn btn-info play-course-button btn-block"><i class="fa fa-star"></i> VALORAR</a>
+                        @endif
+                        @if ($progresoCurso->certificate == 1)
+                           <a href="{{ route('client.courses.get-certificate', $curso->id) }}" class="btn btn-primary play-course-button btn-block"><i class="fas fa-certificate"></i> OBTENER CERTIFICADO</a>
+                        @else
+                           @if (!is_null($curso->evaluation))
+                              <a href="{{ route('client.courses.take-evaluation', [$curso->slug, $curso->id]) }}" class="btn btn-primary play-course-button btn-block"><i class="far fa-file-alt"></i> PRESENTAR EVALUACIÓN</a>
+                           @endif   
+                        @endif
+                     @endif
+                  @endif
                </div>
             </div>
          </div>
@@ -166,7 +178,7 @@
                                  <h3 class="featurette-heading text-primary">{{ $curso->mentor->display_name }}</h3>
                                  <h6 class="featurette-heading text-white">{{ $curso->mentor->profession }}</h6>
                                  <p class="lead about-course-text">{{ $curso->mentor->about }}</p>
-                                 <a href="" class="text-primary">Ver perfil <i class=" fa fa-angle-right"> </i></a>
+                                 <a href="#" class="text-primary">Ver perfil <i class=" fa fa-angle-right"> </i></a>
                               </div>
                               <div class="col-md-5 order-md-1">
                                  <img src="{{ asset('uploads/avatar/'.$curso->mentor->avatar) }}" alt="" class="featurette-image img-fluid mx-auto ml-2" width="409" height="370">
@@ -184,7 +196,7 @@
    {{-- FIN SECCIÓN ACERCA DEL CURSO--}}
 
    {{-- SECCIÓN LECCIONES--}}
-   <div class="container-fluid pt-4">
+   <div class="container-fluid pt-4 pb-4">
       <div class="col-md-12 section-title-category">
          <h3 class="ml-4">LECCIONES</h3>
       </div>

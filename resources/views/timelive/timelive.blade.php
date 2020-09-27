@@ -77,7 +77,7 @@ const countdown = (deadline,elem) => {
 
   }, 1000)
 };
-
+//Verificar que cuando no exista el evento no lo tome
 countdown('{{$evento->date}}', 'clock');
 
     </script>
@@ -158,7 +158,10 @@ countdown('{{$evento->date}}', 'clock');
    <div class="col-md-6" style="margin-bottom: 10px;">
     <form action="{{route('timelive')}}" method="GET">
       @csrf
+      @isset($nextEvent)
       <input id="sigEvent" name="sigEvent" type="hidden" value="{{ $nextEvent->id }}">
+      @endisset
+      
       <button class="btn btn-secondary btn-block" type="submit">PROXIMO LIVE <i class="fas fa-angle-right"></i></button>
     </form>
    </div>
@@ -190,7 +193,7 @@ countdown('{{$evento->date}}', 'clock');
           <p style="color: white;">{{$evento->mentor->profession}}<p>
           <p style="color:#b7a7a7; font-size: 12px; margin-top: -10px;"> {{$evento->mentor->about}}</p>
 
-        <!--<a href="#" class="btn btn-success btn-block">NIVEL: CATEGORIA</a>-->
+        <a href="#" class="btn btn-success btn-block">NIVEL: {{$evento->category->title}}</a>
     </div>
   </div>
 

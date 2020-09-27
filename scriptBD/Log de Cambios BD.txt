@@ -118,3 +118,14 @@ Dev: Luisana Marín
 ÚLTIMA ACTUALIZACIÓN DEL SERVIDOR: 24/09/2020
 ----------------------------------------------
 
+25/09/2020
+Dev:Crisleivys Gil
+Modificada la información de las tablas events, calendarios, courses_users, events_users (correr scripts events, calendarios, courses_users, events_users)
+
+25/09/2020
+Dev: Luisana Marín
+*Modifiqué el archivo IPNController en la carpeta vendor/hexters/src/HttP/Controllers (Reemplazar archivo IPNController)
+
+26/09/2020
+Dev:Crisleivys Gil
+*Agregados nuevos eventos (correr el script events)

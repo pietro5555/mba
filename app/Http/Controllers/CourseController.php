@@ -63,75 +63,63 @@ class CourseController extends Controller{
         return view('newCoursesSection')->with(compact('cursosNuevos', 'idStart', 'idEnd', 'previous', 'next'));
     }
 
-    /**
-     * Admin / Cursos / Listado de Cursos
-     */
     public function index(){
         // TITLE
         view()->share('title', 'Listado de Cursos');
 
+        $username = NULL;
+        if (!Auth::guest()){
+            $username = auth()->user()->display_name;
+        }
 
-            $username = NULL;
-            if (!Auth::guest()){
-                $username = strtoupper(auth()->user()->user_nicename);
-            }
+        $cursosDestacados = Course::where('featured', '=', 1)
+                                ->where('status', '=', 1)
+                                ->orderBy('id', 'DESC')
+                                ->take(3)
+                                ->get();
 
-            $cursosDestacados = Course::where('featured', '=', 1)
-                                     ->where('status', '=', 1)
-                                     ->orderBy('id', 'DESC')
-                                     ->take(3)
-                                     ->get();
-
-             $cursosNuevos = Course::where('status', '=', 1)
-                               ->orderBy('id', 'DESC')
-                               ->take(3)
-                               ->get();
-
-             $ultCurso = Course::select('id')
-                            ->where('status', '=', 1)
+        $cursosNuevos = Course::where('status', '=', 1)
                             ->orderBy('id', 'DESC')
-                            ->first();
+                            ->take(3)
+                            ->get();
 
-             $primerCurso = Course::select('id')
-                               ->where('status', '=', 1)
-                               ->orderBy('id', 'ASC')
-                               ->first();
-             $idStart = 0;
-             $idEnd = 0;
-             $cont = 1;
-             $previous = 1;
-             $next = 1;
+        $ultCurso = Course::select('id')
+                        ->where('status', '=', 1)
+                        ->orderBy('id', 'DESC')
+                        ->first();
 
-             foreach ($cursosNuevos as $curso){
-                if ($cont == 1){
-                   $idStart = $curso->id;
-                }
-                $idEnd = $curso->id;
-                $cont++;
-             }
+        $primerCurso = Course::select('id')
+                        ->where('status', '=', 1)
+                        ->orderBy('id', 'ASC')
+                        ->first();
+        $idStart = 0;
+        $idEnd = 0;
+        $cont = 1;
+        $previous = 1;
+        $next = 1;
+
+        foreach ($cursosNuevos as $curso){
+            if ($cont == 1){
+                $idStart = $curso->id;
+            }
+            $idEnd = $curso->id;
+            $cont++;
+        }
              
-             if ($cursosNuevos->count() > 0){
-                if ($idStart == $ultCurso->id){
-                   $previous = 0;
-                }
-                if ($idEnd == $primerCurso->id){
-                   $next = 0;
-                }
-             }
+        if ($cursosNuevos->count() > 0){
+            if ($idStart == $ultCurso->id){
+                $previous = 0;
+            }
+            if ($idEnd == $primerCurso->id){
+                $next = 0;
+            }
+        }
             
-            /*Cursos por categoria con el numero de cursos asociados*/
-            $courses = Category::withCount('courses')
+        /*Cursos por categoria con el numero de cursos asociados*/
+        $courses = Category::withCount('courses')
                         ->take(9)
                         ->get();
-
-            /*Mentores que tengan cursos*/
-            $mentores = DB::table('wp98_users')
-                ->join('courses', 'courses.mentor_id', '=', 'wp98_users.id')
-                ->join('categories', 'categories.id', '=', 'courses.category_id')
-                ->select(array ('wp98_users.display_name as nombre', 'wp98_users.avatar as avatar', 'categories.title as categoria', 'courses.mentor_id as mentor_id'))
-                ->get();
-
-        $cursos = Auth::user()->courses_buyed->take(4);
+       
         $cursosArray = [];
 
         $cursosMasComprados = DB::table('courses_users')
@@ -160,19 +148,35 @@ class CourseController extends Controller{
         }
         $total = count($cursosRecomendados);
 
+        $cursos = NULL;
+        $last_course = NULL;
+        $mentores = NULL;
+        if (!Auth::guest()){
+            $cursos = Auth::user()->courses_buyed->take(4);
+            // $vacio = isset($cursos);
+            // return dd($cursos,$vacio);
+
             //ULTIMO CURSO VISTO POR EL USUARIO
             $last_course = DB::table('courses')
-            ->join('courses_users', 'courses_users.course_id', '=', 'courses.id')
-            ->where('courses_users.user_id', '=', Auth::user()->ID )
-            ->orderBy('courses_users.updated_at', 'DESC')
-            ->get()
-            ->take(1);
-            //return  $last_course;
+                                ->join('courses_users', 'courses_users.course_id', '=', 'courses.id')
+                                ->where('courses_users.user_id', '=', Auth::user()->ID )
+                                ->orderBy('courses_users.updated_at', 'DESC')
+                                ->first();
+            
+            /*Mentores que tengan cursos*/
+            $mentores = DB::table('wp98_users')
+                        ->join('courses', 'courses.mentor_id', '=', 'wp98_users.id')
+                        ->join('categories', 'categories.id', '=', 'courses.category_id')
+                        ->select(array ('wp98_users.display_name as nombre', 'wp98_users.avatar as avatar', 'categories.title as categoria', 'courses.mentor_id as mentor_id'))
+                        ->get();
+        }
 
-
-            return view('cursos.cursos')->with(compact('username','cursosDestacados', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next', 'courses', 'mentores', 'cursos', 'cursosRecomendados', 'total', 'last_course'));
+        return view('cursos.cursos')->with(compact('username','cursosDestacados', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next', 'courses', 'mentores', 'cursos', 'cursosRecomendados', 'total', 'last_course'));
     }
 
+    /**
+     * Admin / Cursos / Listado de Cursos
+     */
     public function record(){
         // TITLE
         view()->share('title', 'Listado de Cursos');
@@ -215,7 +219,8 @@ class CourseController extends Controller{
                         'ratings as promedio' => function ($query){
                             $query->select(DB::raw('avg(points)'));
                         }
-                    ])->first();
+                    ])->with('evaluation')
+                    ->first();
         
         $dur = 0;
         foreach ($curso->lessons as $leccion){
@@ -230,7 +235,21 @@ class CourseController extends Controller{
             $curso->seconds = $segundos - ($curso->hours * 3600) - ($curso->minutes * 60);
         }
 
-        return view('cursos.show_one_course')->with(compact('curso'));
+        $miValoracion = NULL;
+        $progresoCurso = NULL;
+        if (!Auth::guest()){
+            $progresoCurso = DB::table('courses_users')
+                                ->where('course_id', '=', $id)
+                                ->where('user_id', '=', Auth::user()->ID)
+                                ->first();
+
+            $miValoracion = DB::table('ratings')
+                                ->where('course_id', '=', $id)
+                                ->where('user_id', '=', Auth::user()->ID)
+                                ->first();
+        }
+
+        return view('cursos.show_one_course')->with(compact('curso', 'progresoCurso', 'miValoracion'));
     }
 
      /**
@@ -274,6 +293,22 @@ class CourseController extends Controller{
 
         return view('cursos.all_courses', compact('cursos'));
 
+    }
+
+    /**
+    * Cliente con Membresía / agregar curso a mi lista
+    */
+    public function add($id){
+        $fecha = date('Y-m-d H:i:s');
+        $curso = Course::find($id);
+        $curso->users()->attach(Auth::user()->ID, ['progress' => 0, 'start_date' => date('Y-m-d'), 'certificate' => 0, 'favorite' => 0]);
+
+        /*DB::table('courses_users')
+            ->insert(['course_id' => $id, 'user_id' => Auth::user()->ID, 'progress' => 0, 
+                      'start_date' => date('Y-m-d'), 'certificate' => 0, 'favorite' => 0,
+                      'created_at' => $fecha, 'updated_at' => $fecha]);*/
+
+        return redirect('courses/show/'.$curso->slug.'/'.$curso->id)->with('msj-exitoso', 'El curso ha sido agregado a su lista con éxito.');
     }
 
     /*CURSO FAVORITO*/

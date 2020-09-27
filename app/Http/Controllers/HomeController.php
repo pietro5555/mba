@@ -24,6 +24,9 @@ class HomeController extends Controller{
    public function certificado(){
       //return view('certificado.tipo1');
       $pdf = PDF::loadView('certificado.tipo2');
+      $output = $pdf->output();
+      $path = public_path()."/certificates/courses/prueba.pdf"; 
+      file_put_contents($path, $output);
 
       // download PDF file with download method
       return $pdf->download('pdf_file.pdf');

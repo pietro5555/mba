@@ -192,8 +192,7 @@
         <div class="info-box border-radius">
           <div class="box-body" style="padding: 15px 20px;">
                 <div class="col-md-3 col-xs-3 col-md-offset-2 col-xs-offset-2">
-            <a href="{{$red->link}}" target="_blank"> <i class="{{$red->imagen}} ampliar" style="color:#{{$red->color}};"></i>
-            </a>
+             <i class="{{$red->imagen}} ampliar" style="color:#{{$red->color}};"></i>
                 </div>
                <div class="col-md-7 col-xs-7">
                  <div class="card-body"> 

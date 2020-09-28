@@ -46,15 +46,22 @@
                                     @if(!empty(request()->select))  
                                     <div class="form-group">
                                         <label class="control-label" style="text-align: center; color: white;">Tipo de Usuario (*)</label>
-                                       <select class="form-control" name="rango">
+                                       <select class="form-control" name="rango" id="idrang" onchange="avataresMentor()">
                                         <option value="" selected disabled>Seleccion una opcion</option>
                                         <option value="0">Administrador</option>
                                         <option value="1">Moderador</option>
-                                        <option value="2" >Mentor</option>
+                                        <option value="2">Mentor</option>
                                         <option value="3">Cliente</option>
                                        </select>
                                     </div>
                                     @endif
+
+                                    <div style="display: none;" id="imagenavatar">
+                                      <div class="form-group">
+                                        <label class="control-label" style="text-align: center; color: white;">Imagen de Usuario (*)</label>
+                                            <input type="file" name="avatar">
+                                      </div>
+                                    </div>
                                     
                                     @foreach($campos as $campo)
                                     @if($campo->tip == 0 || $campo->tip == 1)
@@ -271,5 +278,18 @@
             document.getElementById("errorEdad").style.display = 'none';
         }
     }
+
+
+    function avataresMentor(){
+
+    var opt = $('#idrang').val();
+    
+    if(opt == "1"){
+        $('#imagenavatar').show();
+        }else{
+            $('#imagenavatar').hide();
+        }
+    }
+    
 </script>
 @endpush

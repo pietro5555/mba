@@ -84,7 +84,7 @@
     padding-bottom: 30px;
 }
 .carousel-caption{
-    width: 30%;
+    width: auto;
     left: 10% !important;
     right: 0 !important;
     top: 5% !important;
@@ -397,7 +397,7 @@
     font-size: 12px;
     }
     .carousel-caption{
-        width: 50%;
+        width: auto;
     }
     .course-label{
         padding-bottom: 5px; 

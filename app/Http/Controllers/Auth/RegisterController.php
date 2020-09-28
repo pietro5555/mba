@@ -149,6 +149,7 @@ class RegisterController extends Controller
             'tipouser' => $data['tipouser'],
             'status' => '0',
             'correos' =>'{"pago":"1","compra":"1","pc":"1","liquidacion":"1"}',
+            'avatar' => ($rol_id != 1) ? 'avatar.png' : $this->avatarMentor($data),
         ]);
 
         $this->insertarCampoUser($user->ID, $data);
@@ -187,6 +188,20 @@ class RegisterController extends Controller
          $funciones->msjSistema('Su Registro ha sido exitoso el ID es: '.$user->ID, 'success');
          return redirect()->back();   
         }
+    }
+
+
+    public function avatarMentor($datos){
+      
+      $nombre_imagen='avatar.png';
+      if ($datos->file('avatar')) {
+            $imagen = $datos->file('avatar');
+            $nombre_imagen = 'user'.'_'.time().'.'.$imagen->getClientOriginalExtension();
+            $path = public_path() .'/uploads/avatar';
+            //unlink($path.'/'.$user->avatar);
+            $imagen->move($path, $nombre_imagen);
+        }
+       return $nombre_imagen;
     }
 
     /**

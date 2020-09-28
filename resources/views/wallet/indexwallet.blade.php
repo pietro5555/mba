@@ -167,7 +167,7 @@
 </div>
 
 {{-- Comisiones a pagar--}}
-@if(Auth::user()->rol_id == 0)
+{{--@if(Auth::user()->rol_id == 0)
 <div class="col-xs-12">
     <div class="box-body white">
        <h3>Comisiones a Pagar</h3>
@@ -251,12 +251,12 @@
         </div>
     </div>
 </div>
-@endif
+@endif--}}
 
 
 {{-- Recarga Billetera--}}
 
-<div class="col-xs-12">
+{{--<div class="col-xs-12">
     <div class="box-body white">
        <h3>Recargar Billetera</h3>
     </div>
@@ -344,7 +344,7 @@
 
         </div>
     </div>
-</div>
+</div>--}}
 
 
 @endsection

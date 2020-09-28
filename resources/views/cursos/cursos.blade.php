@@ -144,12 +144,14 @@
                                         @endif
 
                                         <div class="card-img-overlay clearfix">
+                                            <a href="{{ route('courses.show', [$recommended->slug, $recommended->id]) }}" style="text-decoration: none;background-color: transparent;">
+
                                             <div>
-                                                <h6 class="card-title" style="font-size: 14px">{{$recommended->mentor->display_name}}</h6>
+                                                <h6 class="card-title text-white" style="font-size: 14px;">{{$recommended->mentor->display_name}}</h6>
                                             </div>
                                             <div class="row ml-0 d-flex h-100">
                                                 <div class="col-md-9 my-auto" style="margin-bottom: 7px !important">
-                                                    <h6 class="col-sm w-100 pl-0" style="font-size: 14px"><img src="{{ asset('images/icons/video-player-green.svg') }}" alt="" height="20px" width="20px"> <a href="{{ route('courses.show', [$recommended->slug, $recommended->id]) }}" class="text-white"> {{$recommended->title}}</a></h6>
+                                                    <h6 class="col-sm w-100 pl-0 text-white" style="font-size: 14px"><img src="{{ asset('images/icons/video-player-green.svg') }}" alt="" height="20px" width="20px"> {{$recommended->title}}</h6>
                                                     <h6 class="ml-2 text-white" style="font-size: 12px">
                                                         {{$recommended->category->title}}
                                                     </h6>
@@ -165,6 +167,7 @@
                                                     </h6>
                                                 </div>
                                             </div>
+                                        </a>
                                         </div>
                                     </div>
                                 @endif
@@ -192,12 +195,14 @@
                                     @endif
 
                                     <div class="card-img-overlay clearfix">
+                                        <a href="{{ route('courses.show', [$recommended->slug, $recommended->id]) }}" style="text-decoration: none;background-color: transparent;">
+
                                         <div>
-                                            <h6 class="card-title" style="font-size: 14px">{{$recommended->mentor->display_name}}</h6>
+                                            <h6 class="card-title text-white" style="font-size: 14px">{{$recommended->mentor->display_name}}</h6>
                                         </div>
                                         <div class="row ml-0 d-flex h-100">
                                             <div class="col-md-9 my-auto" style="margin-bottom: 7px !important">
-                                                <h6 class="col-sm w-100 pl-0" style="font-size: 14px"><img src="{{ asset('images/icons/video-player-green.svg') }}" alt="" height="20px" width="20px"> <a href="{{ route('courses.show', [$recommended->slug, $recommended->id]) }}" class="text-white"> {{$recommended->title}}</a></h6>
+                                                <h6 class="col-sm w-100 pl-0 text-white" style="font-size: 14px"><img src="{{ asset('images/icons/video-player-green.svg') }}" alt="" height="20px" width="20px"> {{$recommended->title}}</h6>
                                                 <h6 class="ml-2 text-white" style="font-size: 12px">
                                                     {{$recommended->category->title}}
                                                 </h6>
@@ -213,7 +218,8 @@
                                                 </h6>
                                             </div>
                                         </div>
-                                    </div>
+                                      </a>
+                                </div>
                             </div>
                             @endif
                             @endforeach
@@ -238,12 +244,14 @@
                                 @endif
 
                                 <div class="card-img-overlay clearfix">
+                                    <a href="{{ route('courses.show', [$recommended->slug, $recommended->id]) }}" style="text-decoration: none;background-color: transparent;">
+
                                     <div>
-                                        <h6 class="card-title" style="font-size: 14px">{{$recommended->mentor->display_name}}</h6>
+                                        <h6 class="card-title text-white" style="font-size: 14px">{{$recommended->mentor->display_name}}</h6>
                                     </div>
                                     <div class="row ml-0 d-flex h-100">
                                         <div class="col-md-9 my-auto" style="margin-bottom: 7px !important">
-                                            <h6 class="col-sm w-100 pl-0" style="font-size: 14px"><img src="{{ asset('images/icons/video-player-green.svg') }}" alt="" height="20px" width="20px"> <a href="{{ route('courses.show', [$recommended->slug, $recommended->id]) }}" class="text-white"> {{$recommended->title}}</a></h6>
+                                            <h6 class="col-sm w-100 pl-0 text-white" style="font-size: 14px"><img src="{{ asset('images/icons/video-player-green.svg') }}" alt="" height="20px" width="20px">{{$recommended->title}}</h6>
                                             <h6 class="ml-2 text-white" style="font-size: 12px">
                                                 {{$recommended->category->title}}
                                             </h6>
@@ -259,7 +267,8 @@
                                             </h6>
                                         </div>
                                     </div>
-                                </div>
+                                  </a>
+                            </div>
                         </div>
                         @endif
                         @endforeach
@@ -301,7 +310,8 @@
             <div class="row" style="padding: 10px 30px;">
                 @foreach ($cursosNuevos as $cursoNuevo)
                 <div class="col-xl-4 col-lg-4 col-12" style="padding-bottom: 10px;">
-                    <div class="card">
+                    <a href="{{ route('courses.show', [$recommended->slug, $recommended->id]) }}" style="text-decoration: none;background-color: transparent; color: white;">
+                    <div class="card"> 
                         @if (!is_null($cursoNuevo->cover))
                         <img src="{{ asset('uploads/images/courses/covers/'.$cursoNuevo->cover) }}" class="card-img-top new-course-img" alt="..." height="462px" width="242px">
                         @else
@@ -309,7 +319,7 @@
                         @endif
                         <div class="card-img-overlay d-flex flex-column">
                             <div class="mt-auto">
-                                <div class="new-course-title"><a href="{{ route('courses.show', [$cursoNuevo->slug, $cursoNuevo->id]) }}" style="color: white;">{{ $cursoNuevo->title }}</a></div>
+                                <div class="new-course-title" style="color: white;">{{ $cursoNuevo->title }}</div>
                                 <div class="row">
                                     <div class="col-12 col-xl-6 new-course-category">{{ $cursoNuevo->category->title }}</div>
                                     <div class="col-12 col-xl-6" style="font-size: 16px;">
@@ -320,9 +330,7 @@
                                                 <span class="new-course-items-text">{{$cursoNuevo->views}}</span>
                                             </div>
                                             <div class="col text-left no-padding-sides">
-                                                <a href="#" class="text-white">
                                                     <i class="far fa-thumbs-up"></i>
-                                                </a>
                                                 <br>
                                                 <span class="new-course-items-text">{{$cursoNuevo->likes}}</span>
                                             </div>
@@ -332,6 +340,7 @@
                             </div>
                         </div>
                     </div>
+                </a>
                 </div>
                 @endforeach
             </div>
@@ -352,6 +361,7 @@
                 @foreach ($courses as $course)
                     @if ($course->courses_count > 0)
                         <div class="col-sm-4 d-inline-flex p-2">
+                            <a href="{{ url('courses/category/'.$course->id) }}">
                             @if (!is_null($course->cover))
                                 <img src="{{ asset('uploads/images/categories/covers/'.$course->cover) }}" class="card-img-top img-fluid course-category1" alt="...">
                             @else
@@ -359,12 +369,13 @@
                             @endif
                             <div class="course-category-caption ml-1 mr-1">
                                 <div class="col-sm-lg text-sm-left font-weight-bold">
-                                    <a href="{{ url('courses/category/'.$course->id) }}" class="col-sm-lg text-sm-left  text-white">{{$course->title}}</a>
+                                    <h5 class="col-sm-lg text-sm-left  text-white">{{$course->title}}</h5>
                                 </div>
                                 <div class="col-lg">
                                     <p class="text-white font-weight-bold">{{$course->courses_count}} Cursos</p>
                                 </div>
                             </div>
+                        </a>
                         </div>
                     @endif
                 @endforeach

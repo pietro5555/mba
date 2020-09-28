@@ -20,6 +20,18 @@
     </script>
 @endpush
 
+<style>
+    .carousel-image{
+        height: initial !important;
+        max-height: 250px !important;
+    }
+
+    .card-img-top-alt{
+        height: initial !important;
+        max-height: 320px !important;   
+    }
+</style>
+
 @section('content')
     @if (Session::has('msj-exitoso'))
         <div class="alert alert-success" style="margin: 5px 15px;">
@@ -76,7 +88,7 @@
 
     {{-- SECCIÓN TUS CURSOS--}}
     @if (!Auth::guest())
-        @if(!is_null($cursos))
+        @if($cursos->isNotEmpty())
             <div>
                 <div class="section-title-courses">Tus Cursos</div>
                 <hr style="border: 1px solid #707070;opacity: 1;" />
@@ -87,7 +99,7 @@
                     <div>
                         @foreach ($cursos as $curso)
                             <div class="card mb-4 card-courses">
-                                <img class="card-img-top" src="{{ asset('uploads/images/courses/covers/'.$curso->cover) }}" alt="card-image-cap" height="207px">
+                                <img class="card-img-top card-img-top-alt" src="{{ asset('uploads/images/courses/covers/'.$curso->cover) }}" alt="card-image-cap">
                                 <div class="card-body p-2">
                                     <div class="row align-items-start">
                                         <h6 class="col-sm"><a href="{{ route('courses.show', [$curso->slug, $curso->id]) }}" class="text-secondary text-sm">{{$curso->title}}</a></h6>
@@ -109,8 +121,10 @@
                 </div>
             </div>
         @else
-            <div class="title-page-course col-md"><span class="text-white">
-                    h4 class=""> {{$username}} <span class="text-white"> ¡No has agregado cursos!</span></h4>
+            <div class="title-page-course col-md">
+                <span class="text-white">
+                   <h4 class=""> {{$username}} <span class="text-white"> ¡No has agregado cursos!</span></h4>
+                </span>
             </div>
         @endif
     @endif
@@ -388,7 +402,7 @@
     @if (!Auth::guest())
         <div class="section-landing">
             <div class="col-lg-6 offset-lg-3">
-                <h4 class=" section-title-landing text-primary text-center">TUS MENTORES</h4>
+                <h4 class=" section-title-landing text-primary text-center">MENTORES</h4>
             </div>
             <div class="container-fluid">
                 <div class="mentor-index-seccion row d-flex flex-row p-2">

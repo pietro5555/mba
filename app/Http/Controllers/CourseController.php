@@ -337,8 +337,12 @@ class CourseController extends Controller{
         //Cursos favoritos de un usuario
 
         $cursos_favoritos = Auth::user()->courses_buyed()->wherePivot('favorite', '=', 1)->get();
+
+        //directos
+        $directos = User::where('referred_id', Auth::user()->ID)->count('ID');
+        
         //return $cursos_favoritos;
-         return view('timelive.favorite', compact('eventos_favoritos', 'cursos_favoritos'));
+         return view('timelive.favorite', compact('eventos_favoritos', 'cursos_favoritos','directos'));
     }
 
     /*ULTIMO CURSO VISTO POR EL USUARIO*/

@@ -120,7 +120,9 @@
             <div class="row" style="padding: 10px 30px;">
                 @foreach ($cursosNuevos as $cursoNuevo)
                     <div class="col-xl-4 col-lg-4 col-12" style="padding-bottom: 10px;">
-                        <div class="card" >
+                        <div class="card">
+                            <a href="{{ route('courses.show', [$cursoNuevo->slug, $cursoNuevo->id]) }}" style="color: white; cursor: auto;">
+
                             @if (!is_null($cursoNuevo->cover))
                                 <img src="{{ asset('uploads/images/courses/covers/'.$cursoNuevo->cover) }}" class="card-img-top new-course-img" alt="...">
                             @else
@@ -128,7 +130,7 @@
                             @endif
                             <div class="card-img-overlay d-flex flex-column">
                                 <div class="mt-auto">
-                                    <div class="new-course-title"><a href="{{ route('courses.show', [$cursoNuevo->slug, $cursoNuevo->id]) }}" style="color: white;">{{ $cursoNuevo->title }}</a></div>
+                                    <div class="new-course-title">{{ $cursoNuevo->title }}</div>
                                     <div class="row">
                                         <div class="col-12 col-xl-6 new-course-category">{{ $cursoNuevo->category->title }}</div>
                                         <div class="col-12 col-xl-6" style="font-size: 16px;">
@@ -146,6 +148,7 @@
                                     </div>
                                 </div>
                             </div>
+                          </a>
                         </div>
                     </div>
                 @endforeach

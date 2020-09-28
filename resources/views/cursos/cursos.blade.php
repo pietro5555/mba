@@ -394,6 +394,7 @@
                 <div class="mentor-index-seccion row d-flex flex-row p-2">
                     @foreach ($mentores as $mentor)
                     <div class="col-xs-12 mt-2">
+                        <a href="{{ url('courses/mentor/'.$mentor->mentor_id) }}" style="text-decoration: none;background-color: transparent; color: white;">
                         <div class="card mentors-card">
                             <div class="row no-gutters">
                                 <div class="col-auto">
@@ -405,13 +406,14 @@
                                         <p class="card-text">{{$mentor->categoria}}</p>
                                         <br>
 
-                                        <p class="card-text text-lg-right"><a href="{{ url('courses/mentor/'.$mentor->mentor_id) }}" class="col-sm-lg text-sm-left card-text">Ver perfil</a> <i class=" fa fa-angle-right"> </i></p>
+                                        <p class="card-text text-lg-right">Ver perfil <i class=" fa fa-angle-right"> </i></p>
                                     </div>
 
 
                                 </div>
                             </div>
                         </div>
+                      </a>
                     </div>
                     @endforeach
                 </div>

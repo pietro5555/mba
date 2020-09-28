@@ -1,6 +1,6 @@
 @extends('layouts.landing')
 
-@section('content')
+@section('content') 
                 
                 @if(!empty($anuncio))
                <div style="width: 100%; position: relative; display: inline-block;">
@@ -14,7 +14,7 @@
                             </div> 
                             <div style="font-size: 25px; font-weight: 500;">
                                 <i class="fa fa-calendar"></i> {{$anuncio['fechacompleta']}}
-                                <i class="fa fa-clock"></i> {{\Carbon\Carbon::parse($anuncio['fecha'])->format('g:i a')}}
+                                <i class="fa fa-clock"></i> {{\Carbon\Carbon::parse($anuncio['time'])->format('g:i a')}}
                             </div>
                             <div style="font-size: 35px; padding-top: 60px;">
                                 <a href="{{route('transmi-agendar', $anuncio['id'])}}" style="color: #6fd843;">Reservar Plaza <i class="fas fa-chevron-right"></i></a>
@@ -83,7 +83,7 @@
                           <h5 class="card-title font-weight-bold" style="margin-top: 170px; color: #2A91FF;">{{$proxima->title}}</h5>
                           <p class="card-text font-weight-bold mr-2" style="margin-top: -10px; font-size: 12px;"> <i class="far fa-calendar mr-2" style="font-size: 18px;"> </i>
                             {{$proxima->fecha}}
-                           <i class="far fa-clock ml-2" style="font-size: 18px;"></i>{{\Carbon\Carbon::parse($proxima->date)->format('g:i a')}} 
+                           <i class="far fa-clock ml-2" style="font-size: 18px;"></i>{{\Carbon\Carbon::parse($proxima->time)->format('g:i a')}} 
                            </p>
                           <a href="{{route('transmi-agendar', $proxima->id)}}" class="btn btn-success btn-block">Agendar</a>
                           </div>
@@ -135,7 +135,7 @@
                           <h5 class="card-title font-weight-bold" style="margin-top: 170px; color: #2A91FF;">{{$proxima->title}}</h5>
                           <p class="card-text font-weight-bold mr-2" style="margin-top: -10px; font-size: 12px;"> <i class="far fa-calendar mr-2" style="font-size: 18px;"> </i>
                             {{$proxima->fecha}}
-                           <i class="far fa-clock ml-2" style="font-size: 18px;"></i>{{\Carbon\Carbon::parse($proxima->date)->format('g:i a')}} 
+                           <i class="far fa-clock ml-2" style="font-size: 18px;"></i>{{\Carbon\Carbon::parse($proxima->time)->format('g:i a')}} 
                            </p>
                           <a href="{{route('transmi-agendar', $proxima->id)}}" class="btn btn-success btn-block">Agendar</a>
                           </div>
@@ -202,13 +202,13 @@
                 </div>
 
                 <div class="card-body" style="background-color: #2f343a;">
-                  <h6 class="card-title" style="margin-top: -15px;"> <i class="far fa-play-circle" style="font-size: 16px; color: #6fd843;"></i> {{$fin->title}}</h6>
+                  <h6 class="card-title" style="margin-top: -15px;"> <img src="{{ asset('images/icons/video-player-green.svg') }}" alt="" height="15px" width="15px"> {{$fin->title}}</h6>
 
                   <h6 style="font-size: 10px; margin-left: 20px; margin-top: -10px;">{{$fin->title_cate}}</h6>
  
                   <h6 align="right" style="margin-bottom: -20px;"> 
                     <i class="icon fa fa-eye" style="font-size: 16px; margin-right: 10px;"><p style="font-size: 10px;">{{$fin->views}}</p></i>
-                    <i class="far fa-comment-alt" style="font-size: 16px; margin-right: 10px;"><p style="font-size: 10px;">346</p></i>
+                    <i class="far fa-comment-alt" style="font-size: 16px; margin-right: 10px;"><p style="font-size: 10px;">{{$fin->coment}}</p></i>
                     <i class="fas fa-share-alt" style="font-size: 16px; margin-right: 10px;"><p style="font-size: 10px;">{{$fin->shares}}</p></i>
                     <i class="far fa-thumbs-up" style="font-size: 16px;"><p style="font-size: 10px;">{{$fin->likes}}</p></i>
                   </h6>

@@ -186,9 +186,11 @@
                         <i class="fa fa-user referrers-icon"></i><br>
                         {{ $refeDirec }} Referidos
                     </div>
-                    <div class="referrers-button">
-                    	Panel de referidos
-                    </div>
+                    <a href="{{url('/admin')}}" style="color: white; text-decoration: none;">
+                     <div class="referrers-button">
+                        Panel de referidos
+                     </div>
+                    </a>
                 </div>
                 <div class="col-xl-8 col-lg-8 d-none d-lg-block d-xl-block referrers-banner">
                     <div class="referrers-banner-text">EL QUE QUIERE SUPERARSE, NO VE OBSTÁCULOS, VE SUEÑOS.</div>

@@ -117,8 +117,10 @@
     {{-- FIN SECCIÓN TUS CURSOS--}}
 
     {{-- SECCIÓN RECOMENDACIONES--}}
-    <div class="section-landing">
-        <div class="col">
+
+<div class="section-landing" style="background-color: #121317;">
+
+    <div class="col">
             @if (Auth::guest())
                 <h3><span class="text-primary">Recomendados</span></h3>
             @else
@@ -126,162 +128,182 @@
             @endif
         </div>
 
-        <div class="row">
-            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <div class="row">
-                            @php $contador =0; @endphp
-                            @foreach ($cursosRecomendados as $recommended)
-                                @php $contador++; @endphp
+<!--Carrusel-->
 
-                                @if($contador <= 3) 
-                                    <div class="col-md-4 mt-1">
-                                        @if (!is_null($recommended->cover))
-                                            <img src="{{ asset('uploads/images/avatar/'.$recommended->mentor->avatar) }}" class="card-img-top carousel-image" alt="...">
-                                        @else
-                                            <img src="{{ asset('uploads/images/avatar/default.jpg') }}" class="card-img-top carousel-image" alt="...">
-                                        @endif
+@if($total > 0)
+<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
 
-                                        <div class="card-img-overlay clearfix">
-                                            <div>
-                                                <h6 class="card-title" style="font-size: 14px">{{$recommended->mentor->display_name}}</h6>
-                                            </div>
-                                            <div class="row ml-0 d-flex h-100">
-                                                <div class="col-md-9 my-auto" style="margin-bottom: 7px !important">
-                                                    <h6 class="col-sm w-100 pl-0" style="font-size: 14px"><img src="{{ asset('images/icons/video-player-green.svg') }}" alt="" height="20px" width="20px"> <a href="{{ route('courses.show', [$recommended->slug, $recommended->id]) }}" class="text-white"> {{$recommended->title}}</a></h6>
-                                                    <h6 class="ml-2 text-white" style="font-size: 12px">
-                                                        {{$recommended->category->title}}
-                                                    </h6>
-                                                </div>
-                                                <div class="col-md-3 my-auto" style="margin-bottom: 7px !important">
-                                                    <h6 class="text-white w-100">
-                                                        <i class="far fa-user-circle text-center">
-                                                            <p style="font-size: 10px;">{{ $recommended->views }}</p>
-                                                        </i>
-                                                        <i class="far fa-thumbs-up text-center">
-                                                            <p style="font-size: 10px;">{{ $recommended->likes }}</p>
-                                                        </i>
-                                                    </h6>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endif
-                            @endforeach
-                        </div>
-                    </div>
+ <div class="carousel-inner">
+  
+  <div class="carousel-item active">
+    <div class="row">
 
-                    @if($total >= 4)
-                        <div class="carousel-item">
-                            <div class="row">
+@php
+$contador=0;
+@endphp
+@foreach($cursosRecomendados as $recommended)
+@php
+$contador++;
+@endphp
 
-                                @php
-                                $segundo =0;
-                                @endphp
-                                @foreach ($cursosRecomendados as $recommended)
-                                @php
-                                $segundo++;
-                                @endphp
+@if($contador <= 3)
 
-                                @if($segundo >= 4 && $segundo <= 6) <div class="col-md-4 mt-1">
-                                    @if (!is_null($recommended->cover))
-                                    <img src="{{ asset('uploads/images/avatar/'.$recommended->mentor->avatar) }}" class="card-img-top carousel-image" alt="...">
-                                    @else
-                                    <img src="{{ asset('uploads/images/avatar/default.jpg') }}" class="card-img-top carousel-image" alt="...">
-                                    @endif
-
-                                    <div class="card-img-overlay clearfix">
-                                        <div>
-                                            <h6 class="card-title" style="font-size: 14px">{{$recommended->mentor->display_name}}</h6>
-                                        </div>
-                                        <div class="row ml-0 d-flex h-100">
-                                            <div class="col-md-9 my-auto" style="margin-bottom: 7px !important">
-                                                <h6 class="col-sm w-100 pl-0" style="font-size: 14px"><img src="{{ asset('images/icons/video-player-green.svg') }}" alt="" height="20px" width="20px"> <a href="{{ route('courses.show', [$recommended->slug, $recommended->id]) }}" class="text-white"> {{$recommended->title}}</a></h6>
-                                                <h6 class="ml-2 text-white" style="font-size: 12px">
-                                                    {{$recommended->category->title}}
-                                                </h6>
-                                            </div>
-                                            <div class="col-md-3 my-auto" style="margin-bottom: 7px !important">
-                                                <h6 class="text-white w-100">
-                                                    <i class="far fa-user-circle text-center">
-                                                        <p style="font-size: 10px;">{{ $recommended->views }}</p>
-                                                    </i>
-                                                    <i class="far fa-thumbs-up text-center">
-                                                        <p style="font-size: 10px;">{{ $recommended->likes }}</p>
-                                                    </i>
-                                                </h6>
-                                            </div>
-                                        </div>
-                                    </div>
-                            </div>
-                            @endif
-                            @endforeach
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="row">
-
-                            @php
-                            $tercero =0;
-                            @endphp
-                            @foreach ($cursosRecomendados as $recommended)
-                            @php
-                            $tercero++;
-                            @endphp
-
-                            @if($tercero >= 7 && $tercero <= 9) <div class="col-md-4 mt-1">
-                                @if (!is_null($recommended->cover))
-                                <img src="{{ asset('uploads/images/avatar/'.$recommended->mentor->avatar) }}" class="card-img-top carousel-image" alt="...">
-                                @else
-                                <img src="{{ asset('uploads/images/avatar/default.jpg') }}" class="card-img-top carousel-image" alt="...">
-                                @endif
-
-                                <div class="card-img-overlay clearfix">
-                                    <div>
-                                        <h6 class="card-title" style="font-size: 14px">{{$recommended->mentor->display_name}}</h6>
-                                    </div>
-                                    <div class="row ml-0 d-flex h-100">
-                                        <div class="col-md-9 my-auto" style="margin-bottom: 7px !important">
-                                            <h6 class="col-sm w-100 pl-0" style="font-size: 14px"><img src="{{ asset('images/icons/video-player-green.svg') }}" alt="" height="20px" width="20px"> <a href="{{ route('courses.show', [$recommended->slug, $recommended->id]) }}" class="text-white"> {{$recommended->title}}</a></h6>
-                                            <h6 class="ml-2 text-white" style="font-size: 12px">
-                                                {{$recommended->category->title}}
-                                            </h6>
-                                        </div>
-                                        <div class="col-md-3 my-auto" style="margin-bottom: 7px !important">
-                                            <h6 class="text-white w-100">
-                                                <i class="far fa-user-circle text-center">
-                                                    <p style="font-size: 10px;">{{ $recommended->views }}</p>
-                                                </i>
-                                                <i class="far fa-thumbs-up text-center">
-                                                    <p style="font-size: 10px;">{{ $recommended->likes }}</p>
-                                                </i>
-                                            </h6>
-                                        </div>
-                                    </div>
-                                </div>
-                        </div>
-                        @endif
-                        @endforeach
-                    </div>
-                </div>
-            @endif
-        </div>
-
-            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                <i class="fas fa-chevron-circle-left"></i>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                <i class="fas fa-chevron-circle-right"></i>
-                <span class="sr-only">Next</span>
-            </a>
-        </div>
-
-        </div>
-
-
+<div class="col-md-4" style="margin-top: 20px;">
+  @if (!is_null($recommended->mentor->avatar))
+ <img src="{{ asset('uploads/avatar/'.$recommended->mentor->avatar) }}" class="card-img-top img-prox-events" alt="..." style="height: 320px;">
+ @else
+ <img src="{{ asset('uploads/images/avatar/default.jpg') }}" class="card-img-top" alt="..." height="200px">
+  @endif
+ <div class="card-img-overlay clearfix">
+<div>
+    <h6 class="card-title" style="font-size: 14px">{{$recommended->mentor->display_name}}</h6>
+</div>
+<div class="row ml-0 d-flex h-100">
+    <div class="col-md-9 my-auto" style="margin-bottom: 7px !important">
+        <h6 class="col-sm w-100 pl-0" style="font-size: 14px"><img src="{{ asset('images/icons/video-player-green.svg') }}" alt="" height="20px" width="20px"> <a href="{{ route('courses.show', [$recommended->slug, $recommended->id]) }}" class="text-white"> {{$recommended->title}}</a></h6>
+        <h6 class="ml-2 text-white" style="font-size: 12px">
+            {{$recommended->category->title}}
+        </h6>
     </div>
+    <div class="col-md-3 my-auto" style="margin-bottom: 7px !important">
+        <h6 class="text-white w-100">
+            <i class="far fa-user-circle text-center">
+                <p style="font-size: 10px;">{{ $recommended->views }}</p>
+            </i>
+            <i class="far fa-thumbs-up text-center">
+                <p style="font-size: 10px;">{{ $recommended->likes }}</p>
+            </i>
+        </h6>
+    </div>
+</div>
+</div>
+ </div>
+@endif
+@endforeach
+</div>
+</div>
+
+@if($total >= 4)
+<div class="carousel-item">
+    <div class="row">
+
+@php
+$segundo =0;
+@endphp
+@foreach($cursosRecomendados as $recommended)
+@php
+$segundo++;
+@endphp
+
+@if($segundo >= 4 && $segundo <= 6)
+
+<div class="col-md-4" style="margin-top: 20px;">
+  @if (!is_null($recommended->mentor->avatar))
+ <img src="{{ asset('uploads/avatar/'.$recommended->mentor->avatar) }}" class="card-img-top img-prox-events" alt="..." style="height: 320px;">
+ @else
+ <img src="{{ asset('uploads/images/avatar/default.jpg') }}" class="card-img-top" alt="..." height="200px">
+  @endif
+<div class="card-img-overlay clearfix">
+<div>
+    <h6 class="card-title" style="font-size: 14px">{{$recommended->mentor->display_name}}</h6>
+</div>
+<div class="row ml-0 d-flex h-100">
+    <div class="col-md-9 my-auto" style="margin-bottom: 7px !important">
+        <h6 class="col-sm w-100 pl-0" style="font-size: 14px"><img src="{{ asset('images/icons/video-player-green.svg') }}" alt="" height="20px" width="20px"> <a href="{{ route('courses.show', [$recommended->slug, $recommended->id]) }}" class="text-white"> {{$recommended->title}}</a></h6>
+        <h6 class="ml-2 text-white" style="font-size: 12px">
+            {{$recommended->category->title}}
+        </h6>
+    </div>
+    <div class="col-md-3 my-auto" style="margin-bottom: 7px !important">
+        <h6 class="text-white w-100">
+            <i class="far fa-user-circle text-center">
+                <p style="font-size: 10px;">{{ $recommended->views }}</p>
+            </i>
+            <i class="far fa-thumbs-up text-center">
+                <p style="font-size: 10px;">{{ $recommended->likes }}</p>
+            </i>
+        </h6>
+    </div>
+</div>
+</div>
+ </div>
+@endif
+@endforeach
+</div>
+</div>
+<div class="carousel-item">
+    <div class="row">
+
+@php
+$tercero =0;
+@endphp
+@foreach($cursosRecomendados as $recommended)
+@php
+$tercero++;
+@endphp
+
+@if($tercero >= 7 && $tercero <= 9)
+
+<div class="col-md-4" style="margin-top: 20px;">
+  @if (!is_null($recommended->mentor->avatar))
+ <img src="{{ asset('uploads/avatar/'.$recommended->mentor->avatar) }}" class="card-img-top img-prox-events" alt="..." style="height: 320px;">
+ @else
+ <img src="{{ asset('uploads/images/avatar/default.jpg') }}" class="card-img-top" alt="..." height="200px">
+  @endif
+<div class="card-img-overlay clearfix">
+<div>
+    <h6 class="card-title" style="font-size: 14px">{{$recommended->mentor->display_name}}</h6>
+</div>
+<div class="row ml-0 d-flex h-100">
+    <div class="col-md-9 my-auto" style="margin-bottom: 7px !important">
+        <h6 class="col-sm w-100 pl-0" style="font-size: 14px"><img src="{{ asset('images/icons/video-player-green.svg') }}" alt="" height="20px" width="20px"> <a href="{{ route('courses.show', [$recommended->slug, $recommended->id]) }}" class="text-white"> {{$recommended->title}}</a></h6>
+        <h6 class="ml-2 text-white" style="font-size: 12px">
+            {{$recommended->category->title}}
+        </h6>
+    </div>
+    <div class="col-md-3 my-auto" style="margin-bottom: 7px !important">
+        <h6 class="text-white w-100">
+            <i class="far fa-user-circle text-center">
+                <p style="font-size: 10px;">{{ $recommended->views }}</p>
+            </i>
+            <i class="far fa-thumbs-up text-center">
+                <p style="font-size: 10px;">{{ $recommended->likes }}</p>
+            </i>
+        </h6>
+    </div>
+</div>
+</div>
+ </div>
+@endif
+@endforeach
+</div>
+</div>
+@endif
+
+</div>
+
+@if($total >= 3)
+<a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+<i class="fas fa-chevron-circle-left"></i>
+<span class="sr-only">Previous</span>
+</a>
+<a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+<i class="fas fa-chevron-circle-right"></i>
+<span class="sr-only">Next</span>
+</a>
+@endif
+
+</div>
+
+@else
+<div class="row">
+  No se encontraron cursos recomendados...
+</div>
+
+@endif
+<!--Carrusel-->
+</div>  
+
     {{--FIN SECCIÓN RECOMENDACIONES--}}
 
 
@@ -294,7 +316,7 @@
                 </div>
                 <div class="col text-right">
                     <button type="button" class="btn btn-outline-light btn-arrow btn-arrow-previous" @if ($previous==0) disabled @endif data-route="{{ route('landing.load-more-courses-new', [$idStart, 'previous'] ) }}" onclick="loadMoreCoursesNew('previous');"><i class="fas fa-chevron-left"></i></button>
-                    <button type="button" class="btn btn-outline-primary btn-arrow btn-arrow-next-lmcourses" @if ($next==0) disabled @endif data-route="{{ route('landing.load-more-courses-new', [$idEnd, 'next'] ) }}" onclick="loadMoreCoursesNew('next');"><i class="fas fa-chevron-right"></i></button>
+                    <button type="button" class="btn btn-outline-success btn-arrow btn-arrow-next" @if ($next==0) disabled @endif data-route="{{ route('landing.load-more-courses-new', [$idEnd, 'next'] ) }}" onclick="loadMoreCoursesNew('next');"><i class="fas fa-chevron-right"></i></button>
                 </div>
             </div>
 

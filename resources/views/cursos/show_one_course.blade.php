@@ -73,27 +73,28 @@
                      @if (number_format($curso->promedio, 0) >= 1)
                         <i class="fa fa-star text-warning"></i>
                      @else
-                        <i class="fa fa-star-o text-secondary"></i>
+                        <a href="#ratingModal" data-toggle="modal"><i class="fa fa-star-o text-secondary"></i></a>
                      @endif
                      @if (number_format($curso->promedio, 0) >= 2)
                         <i class="fa fa-star text-warning"></i>
                      @else
-                        <i class="fa fa-star-o text-secondary"></i>
+                       <a href="#ratingModal" data-toggle="modal"><i class="fa fa-star-o text-secondary"></i></a>
                      @endif
                      @if (number_format($curso->promedio, 0) >= 3)
                         <i class="fa fa-star text-warning"></i>
                      @else
-                        <i class="fa fa-star-o text-secondary"></i>
+                        <a href="#ratingModal" data-toggle="modal"><i class="fa fa-star-o text-secondary"></i></a>
                      @endif
                      @if (number_format($curso->promedio, 0) >= 4)
                         <i class="fa fa-star text-warning"></i>
                      @else
-                        <i class="fa fa-star-o text-secondary"></i>
+                        <a href="#ratingModal" data-toggle="modal"><i class="fa fa-star-o text-secondary"></i></a>
                      @endif
                      @if (number_format($curso->promedio, 0) >= 5)
                         <i class="fa fa-star text-warning"></i>
                      @else
-                        <i class="fa fa-star-o text-secondary"></i>
+                     <a href="#ratingModal" data-toggle="modal"><i class="fa fa-star-o text-secondary"></i></a>
+                        
                      @endif
                   </div>
                </div>
@@ -165,7 +166,7 @@
          <div class="col-md-12">
             <div class="row">
                <div class="col-md-12">
-                  <h4 class="text-white ml-5">ACERCA DEL CURSO</h4>
+                  <h4 class="text-white ml-5">ACERCA DEL CURSO </h4>
                   <hr style="border: 1px solid #707070; opacity: 1;" />
                   <div class="col-md-12">
                      <div class="col-md-12 justify-content-center p-2 ml-4" style="color: white;">
@@ -173,14 +174,14 @@
 
                         <div class="container-fluid pt-4">
                            <div class="row featurette">
-                              <div class="col-md-7 order-md-2">
+                              <div class="col-md-9 order-md-2">
                                  <h5 class="featurette-heading text-white">Mentor</h5>
                                  <h3 class="featurette-heading text-primary">{{ $curso->mentor->display_name }}</h3>
                                  <h6 class="featurette-heading text-white">{{ $curso->mentor->profession }}</h6>
                                  <p class="lead about-course-text">{{ $curso->mentor->about }}</p>
                                  <a href="#" class="text-primary">Ver perfil <i class=" fa fa-angle-right"> </i></a>
                               </div>
-                              <div class="col-md-5 order-md-1">
+                              <div class="col-md-3 order-md-1">
                                  <img src="{{ asset('uploads/avatar/'.$curso->mentor->avatar) }}" alt="" class="featurette-image img-fluid mx-auto ml-2" width="409" height="370">
                               </div>
                            </div>
@@ -218,7 +219,7 @@
                                        <div class="cuadrado"><h2 class="text-white"> @if ($cont < 10) 0{{ $cont }} @else {{ $cont }} @endif</h2></div>
                                     </div>
                                     <div class="col-md-8">
-                                       <p class="panel-title about-course-text"> <h5 class="about-course-text"> {{ $leccion->title }}</h5></p>
+                                       <h5 class="panel-title about-course-text"> <a href="{{ route('lesson.show', [$leccion->slug, $leccion->id, $curso->id]) }}" class="about-course-text">{{ $leccion->title }}</a></h5>
                                     </div>
                                     <div class="col-md-2">
                                        <img src="{{ asset('images/icons/chevron.svg') }}" class="leccion-icon float-right"> 
@@ -331,7 +332,7 @@
                <div class="modal-body">
                   <div class="form-group">
                      <label for="comment" style="color: white;">Comentario</label>
-                     <textarea class="form-control" name="comment" id="comment" rows="3" style="background-color: #1C1D21;"></textarea>
+                     <textarea class="form-control" name="comment" id="comment" rows="3" style="background-color: #1C1D21;" required></textarea>
                   </div>
                   <div class="form-group">
                      <div class="row">

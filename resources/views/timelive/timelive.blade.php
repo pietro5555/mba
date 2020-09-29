@@ -78,7 +78,7 @@ const countdown = (deadline,elem) => {
   }, 1000)
 };
 //Verificar que cuando no exista el evento no lo tome
-countdown('{{$evento->date}}', 'clock');
+countdown('{{($evento != null) ? $evento->date : $fechaActual ?? ''}}', 'clock');
 
     </script>
 @endpush
@@ -158,9 +158,7 @@ countdown('{{$evento->date}}', 'clock');
    <div class="col-md-6" style="margin-bottom: 10px;">
     <form action="{{route('timelive')}}" method="GET">
       @csrf
-      @isset($nextEvent)
       <input id="sigEvent" name="sigEvent" type="hidden" value="{{ $nextEvent->id }}">
-      @endisset
       
       <button class="btn btn-secondary btn-block" type="submit">PROXIMO LIVE <i class="fas fa-angle-right"></i></button>
     </form>
@@ -193,7 +191,7 @@ countdown('{{$evento->date}}', 'clock');
           <p style="color: white;">{{$evento->mentor->profession}}<p>
           <p style="color:#b7a7a7; font-size: 12px; margin-top: -10px;"> {{$evento->mentor->about}}</p>
 
-        <a href="#" class="btn btn-success btn-block">NIVEL: {{$evento->category->title}}</a>
+        <a href="#" class="btn btn-success btn-block">NIVEL: {{$evento->subcategory->title}}</a>
     </div>
   </div>
 
@@ -232,9 +230,13 @@ $contador++;
  <img src="{{ asset('uploads/images/avatar/default.jpg') }}" class="card-img-top" alt="..." height="200px">
   @endif
  <div class="card-img-overlay" style="margin-left: 10px; margin-right: 10px;">
-  <h5 class="card-title font-weight-bold" style="margin-top: 170px; color: #2A91FF;">{{$prox->title}}</h5>
+  <form action="{{route('timelive')}}" method="GET">
+  @csrf
+  <input id="sigEvent" name="sigEvent" type="hidden" value="{{ $prox->id }}">
+  <button class="btn text-left" type="submit" style="margin-top: 150px; color: #2A91FF;"><h5>{{$prox->title}}</h5></button>
+</form>
   <p class="card-text font-weight-bold mr-2" style="margin-top: -10px; font-size: 12px;"> <i class="far fa-calendar mr-2" style="font-size: 18px;"> </i>
-    {{$prox->date}}
+    {{\Carbon\Carbon::parse($prox->date)->formatLocalized(' %d de %B')}}
    <i class="far fa-clock ml-2" style="font-size: 18px;"></i>{{\Carbon\Carbon::parse($prox->date)->format('g:i a')}} 
    </p>
   <a href="{{route ('schedule.event',[$prox->id]) }}" class="btn btn-success btn-block">Agendar</a>
@@ -266,7 +268,11 @@ $segundo++;
  <img src="{{ asset('uploads/images/avatar/default.jpg') }}" class="card-img-top" alt="..." height="200px">
   @endif
  <div class="card-img-overlay" style="margin-left: 10px; margin-right: 10px;">
-  <h5 class="card-title font-weight-bold" style="margin-top: 170px; color: #2A91FF;">{{$prox->title}} </h5>
+ <form action="{{route('timelive')}}" method="GET">
+  @csrf
+  <input id="sigEvent" name="sigEvent" type="hidden" value="{{ $prox->id }}">
+  <button class="btn text-left" type="submit" style="margin-top: 150px; color: #2A91FF;"><h5>{{$prox->title}}</h5></button>
+</form>
   <p class="card-text font-weight-bold mr-2" style="margin-top: -10px; font-size: 12px;"> <i class="far fa-calendar mr-2" style="font-size: 18px;"> </i>
     {{strftime("%A, %d de %B", strtotime($prox->date))}} 
    <i class="far fa-clock ml-2" style="font-size: 18px;"></i>{{\Carbon\Carbon::parse($prox->date)->format('g:i a')}} 

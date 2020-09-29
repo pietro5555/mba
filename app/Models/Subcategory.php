@@ -13,4 +13,7 @@ class Subcategory extends Model
     public function courses(){
     	return $this->hasMany('App\Models\Course');
     }
+    public function events(){
+    	return $this->hasMany('App\Models\Events');
+    }
 }

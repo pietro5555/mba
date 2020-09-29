@@ -263,16 +263,24 @@ class EventsController extends Controller
 
     /*Vista con la información del streaming Time/timelive*/
     public function timelive(Request $request){
-
+        //setlocale(LC_TIME, 'es_ES.UTF-8'); Para el server
+      setlocale(LC_TIME, 'es');//Local
+        Carbon::setLocale('es');
         $total_eventos = count(Events::all());
-        if ($request->sigEvent == '' or $request->sigEvent == null) {
+        $evento = Events::where('date', '>=', Carbon::now()->format('Y-m-d'))
+                      ->where('status', '=',1)
+                      ->get()
+                      ->first();
+        if(!empty($evento))
+        {
+            if ($request->sigEvent == '' or $request->sigEvent == null) {
             $evento = Events::where('date', '>=', Carbon::now())->first();
             if($total_eventos > 1){
                 $prox = true;
                 $i = 1;
                 $id = $evento->id;
                 while($prox){
-                    $id += $id;
+                    $id = $id+1;
                     $nextEvent = Events::where('id', $id)->get()->first();
                     if($nextEvent != null)
                         $prox = false;
@@ -306,6 +314,16 @@ class EventsController extends Controller
                 }
             }
         } 
+        }
+        else{
+            $evento= '';
+            $nextEvent = '';
+            $proximos = '';
+            $total= $total_eventos;
+            $fechaActual = Carbon::now()->format('Y-m-d');
+            return view('timelive/timelive', compact('evento', 'nextEvent', 'proximos', 'total', 'total_eventos'));
+        }
+        
           
         /*PROXIMOS EVENTOS*/
         if($total_eventos>0)
@@ -320,10 +338,9 @@ class EventsController extends Controller
             $proximos ='';
             $total =0;
         }
-        
-        
+        $fechaActual = Carbon::now()->format('Y-m-d');
         //dd($evento, $proximos);
-        return view('timelive/timelive', compact('evento', 'nextEvent', 'proximos', 'total', 'total_eventos'));
+        return view('timelive/timelive', compact('evento', 'nextEvent', 'proximos', 'total', 'total_eventos', 'fechaActual'));
 
     }
 
@@ -451,17 +468,14 @@ public function schedule($event_id, Request $request){
                             ->where('id', '=', $event_id)
                             ->first();
 
-            $date_event = date('Y-m-d', strtotime($events->date));
-            $time_event = date('H:i:s', strtotime($events->date));
-
             $disponibilidad = DB::table('events_users')
                                 ->where('user_id', '=', Auth::user()->ID)
-                                ->where('date', '=', $date_event)
-                                ->where('time', '=', $time_event)
+                                ->where('date', '=', $events->date)
+                                ->where('time', '=', $events->time)
                                 ->first();
 
             if (is_null($disponibilidad)){
-                Auth::user()->events()->attach($event_id, ['date' => $date_event, 'time' => $time_event]);
+                Auth::user()->events()->attach($event_id, ['date' => $events->date, 'time' => $events->time]);
                 $new_calendar = Events::where('id', '=', $event_id)
                 ->first();
         
@@ -470,6 +484,7 @@ public function schedule($event_id, Request $request){
          $calendario->titulo = $new_calendar->title;
          $calendario->contenido = $new_calendar->description;
          $calendario->inicio = $new_calendar->date;
+         $calendario->time = $new_calendar->time;
          $calendario->color = '#28a745';
          $calendario->lugar = 'Ninguno';
          $calendario->iduser = Auth::user()->ID;

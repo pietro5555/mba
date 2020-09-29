@@ -4,7 +4,7 @@
    <div class="container-fluid">
   <div class="row justify-content-end">
     <div class="title-level col-xs-1 col-md-4">
-      <h5>Nivel: Principiante</h5>
+      <h5>Nivel: {{$lesson->course->subcategory->title}}</h5>
     </div>
     <div class="col-xs-1 col-md-4 text-center ">
       <div class="icon-social-media">
@@ -31,17 +31,17 @@
   >
     <!-- Video files -->
     <source
-      src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4"
+      src="{{$lesson->url}}"
       type="video/mp4"
       size="576"
     />
     <source
-      src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-720p.mp4"
+      src="{{$lesson->url}}"
       type="video/mp4"
       size="720"
     />
     <source
-      src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-1080p.mp4"
+      src="{{$lesson->url}}"
       type="video/mp4"
       size="1080"
     />
@@ -153,9 +153,9 @@ class="d-block w-100 leccion-curso"
    <div >
       <a class="btn-next text-white" href="#carouselExampleControls" role="button" data-slide="next">Lección 2</a>
   </div>
-  <div class="btn-play-video">
+ <!--<div class="btn-play-video">
     <i class="fa fa-play-circle text-primary"></i>
-  </div>
+  </div>-->
   
 
 
@@ -178,7 +178,7 @@ class="d-block w-100 leccion-curso"
 </nav>
 <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
 <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-  Sunt est aute sit dolor anim. Velit non irure adipisicing aliqua ullamco irure incididunt irure non esse consectetur nostrud minim non minim occaecat. Amet duis do nisi duis veniam non est eiusmod tempor incididunt tempor dolor ipsum in qui sit. Exercitation mollit sit culpa nisi culpa non adipisicing reprehenderit do dolore. Duis reprehenderit occaecat anim ullamco ad duis occaecat ex.
+  {{$lesson->course->description}}
 </div>
 <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
   <div class="custombox clearfix">
@@ -221,7 +221,7 @@ class="d-block w-100 leccion-curso"
                        Fusce felis tortor, condimentum at purus nec, vehicula malesuada lectus. Proin nec purus vel enim interdum feugiat.
                    </p>
                    <p class="about-course-text float-right mr-4">
-                    <i class="fa fa-heart-o" aria-hidden="true"></i> 5 <i class="far fa-comment-alt about-course-text" aria-hidden="true"></i> <a href="" class="about-course-text"> Responder</a>
+                   <i class="far fa-comment-alt about-course-text" aria-hidden="true"></i> <a href="" class="about-course-text"> Responder</a>
                        
                    </p>
                    
@@ -248,7 +248,7 @@ class="d-block w-100 leccion-curso"
                        Fusce felis tortor, condimentum at purus nec, vehicula malesuada lectus. Proin nec purus vel enim interdum feugiat.
                    </p>
                    <p class="about-course-text float-right mr-4">
-                    <i class="fa fa-heart-o" aria-hidden="true"></i> 5 <i class="far fa-comment-alt about-course-text" aria-hidden="true"></i> <a href="" class="about-course-text"> Responder</a>
+                   <i class="far fa-comment-alt about-course-text" aria-hidden="true"></i> <a href="" class="about-course-text"> Responder</a>
                        
                    </p>
                 </div>
@@ -274,7 +274,7 @@ class="d-block w-100 leccion-curso"
                          Fusce felis tortor, condimentum at purus nec, vehicula malesuada lectus. Proin nec purus vel enim interdum feugiat.
                      </p>
                      <p class="about-course-text float-right mr-4">
-                      <i class="fa fa-heart-o" aria-hidden="true"></i> 5 <i class="far fa-comment-alt about-course-text" aria-hidden="true"></i> <a href="" class="about-course-text"> Responder</a>
+                     <i class="far fa-comment-alt about-course-text" aria-hidden="true"></i> <a href="" class="about-course-text"> Responder</a>
                          
                      </p>
                   </div>
@@ -300,7 +300,7 @@ class="d-block w-100 leccion-curso"
                          Fusce felis tortor, condimentum at purus nec, vehicula malesuada lectus. Proin nec purus vel enim interdum feugiat.
                      </p>
                      <p class="about-course-text float-right mr-4">
-                      <i class="fa fa-heart-o" aria-hidden="true"></i> 5 <i class="far fa-comment-alt about-course-text" aria-hidden="true"></i> <a href="" class="about-course-text"> Responder</a>
+                     <i class="far fa-comment-alt about-course-text" aria-hidden="true"></i> <a href="" class="about-course-text"> Responder</a>
                          
                      </p>
 
@@ -331,76 +331,19 @@ class="d-block w-100 leccion-curso"
       <div id="accordionContentLeccion" class="accordion-leccion">
 
         <!-- Accordion item 1 -->
-        <div id="card1" class="card">
-        <div class="card-header accordion-leccion-content" data-toggle="collapse" data-target="#collapseOne">
-          <h5 class="mb-0 font-weight-bold d-block position-relative collapsible-link py-2" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"><i class="text-primary fa fa-play-circle"></i> Introducción</h5>
-            <h6 class="mb-0 ml-4 d-block py-2"><i class="fa fa-clock-o" aria-hidden="true"></i>  07 m</h6>
+        @foreach($all_lessons as $lesson)
+        <div id="card{{$lesson->id}}" class="card mb-2">
+        <div class="card-header accordion-leccion-content" data-toggle="collapse" data-target="#collapse{{$lesson->id}}">
+          <h5 class="mb-0 font-weight-bold d-block position-relative collapsible-link py-2" data-toggle="collapse" data-target="#collapse{{$lesson->id}}" aria-expanded="true" aria-controls="collapse{{$lesson->id}}"><i class="text-primary fa fa-play-circle"></i> {{$lesson->title}}</h5>
+            <h6 class="mb-0 ml-4 d-block py-2"><i class="fa fa-clock-o" aria-hidden="true"></i>  {{$lesson->duration}} m</h6>
         </div>
-        <div id="collapseOne" class="card-body collapse" data-parent="#accordionContentLeccion">
+        <div id="collapse{{$lesson->id}}" class="card-body collapse" data-parent="#accordionContentLeccion">
+          <p class="card-text about-course-text ">
+          {{$lesson->description}}
+        </p>
         </div>
       </div>
-          
-
-<!-- Accordion item 2 -->
-<div id="card2" class="card  mt-2">
-<div class="card-header accordion-leccion-content" data-toggle="collapse" data-target="#collapseTwo">
-<h5 class="mb-0 font-weight-bold d-block position-relative collapsible-link py-2" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo"><i class="text-primary fa fa-play-circle"></i> 1. Nombre de Lección</h5>
-  <h6 class="mb-0 ml-4 d-block py-2"><i class="fa fa-clock-o" aria-hidden="true"></i> 15 m</h6>
-</div>
-<div id="collapseTwo" class="card-body collapse show" data-parent="#accordionContentLeccion">
-  <p class="card-text about-course-text ">
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus maximus eros malesuada arcu sagittis, et lobortis lacus hendrerit.
-  </p>
-</div>
-</div>
-<!-- Accordion item 3 -->
-<div id="card3" class="card  mt-2">
-  <div class="card-header accordion-leccion-content" data-toggle="collapse" data-target="#collapseThree">
-    <h5 class="mb-0 font-weight-bold d-block position-relative collapsible-link py-2" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree"><i class="text-primary fa fa-play-circle"></i> 2. Nombre de Lección</h5>
-      <h6 class="mb-0 ml-4 d-block py-2"><i class="fa fa-clock-o" aria-hidden="true"></i>  35 m</h6>
-  </div>
-  <div id="collapseThree" class="card-body collapse" data-parent="#accordionContentLeccion">
-  </div>
-</div>
-
-<!-- Accordion item 4 -->
-<div id="card4" class="card  mt-2">
-  <div class="card-header accordion-leccion-content" data-toggle="collapse" data-target="#collapseFour">
-    <h5 class="mb-0 font-weight-bold d-block position-relative collapsible-link py-2" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour"><i class="text-primary fa fa-play-circle"></i> 3. Nombre de Lección</h5>
-      <h6 class="mb-0 ml-4 d-block py-2"><i class="fa fa-clock-o" aria-hidden="true"></i>  23 m</h6>
-  </div>
-  <div id="collapseFour" class="card-body collapse" data-parent="#accordionContentLeccion">
-  </div>
-</div>
-
-<!-- Accordion item 5 -->
-<div id="card5" class="card  mt-2">
-  <div class="card-header accordion-leccion-content" data-toggle="collapse" data-target="#collapseFive">
-    <h5 class="mb-0 font-weight-bold d-block position-relative collapsible-link py-2" data-toggle="collapse" data-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive"><i class="text-primary fa fa-play-circle"></i> 4. Nombre de Lección</h5>
-      <h6 class="mb-0 ml-4 d-block py-2"><i class="fa fa-clock-o" aria-hidden="true"></i>  23 m</h6>
-  </div>
-  <div id="collapseFive" class="card-body collapse" data-parent="#accordionContentLeccion">
-  </div>
-</div>
-<!-- Accordion item 6 -->
-<div id="card6" class="card  mt-2">
-  <div class="card-header accordion-leccion-content" data-toggle="collapse" data-target="#collapseSix">
-    <h5 class="mb-0 font-weight-bold d-block position-relative collapsible-link py-2" data-toggle="collapse" data-target="#collapseSix" aria-expanded="true" aria-controls="collapseSix"><i class="text-primary fa fa-play-circle"></i> 5. Nombre de Lección</h5>
-      <h6 class="mb-0 ml-4 d-block py-2"><i class="fa fa-clock-o" aria-hidden="true"></i>  23 m</h6>
-  </div>
-  <div id="collapseSix" class="card-body collapse" data-parent="#accordionContentLeccion">
-  </div>
-</div>
-
-<!-- Accordion item 7 -->
-<div id="card7" class="card  mt-2">
-  <div class="card-header accordion-leccion-content" data-toggle="collapse" data-target="#collapseSeven">
-    <h5 class="mb-0 font-weight-bold d-block position-relative collapsible-link py-2" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="true" aria-controls="collapseSeven"><i class="text-primary fa fa-play-circle"></i> 6. Nombre de Lección</h5>
-      <h6 class="mb-0 ml-4 d-block py-2"><i class="fa fa-clock-o" aria-hidden="true"></i>  23 m</h6>
-  </div>
-  <div id="collapseSeven" class="card-body collapse" data-parent="#accordionContentLeccion">
-  </div>
-</div>
+      @endforeach
   </div>
 </div>
 </div>

@@ -30,7 +30,7 @@ class TransmisionesController extends Controller
     }
 
     //vista de transmisiones
-    public function transmisiones(){
+   /* public function transmisiones(){
         
         $anuncio =[];
          $finalizados = Events::where('status', '3')->orderBy('id', 'DESC')->take(9)->get();
@@ -81,8 +81,31 @@ class TransmisionesController extends Controller
         }
 
         return view('transmision.transmision',compact('proximas','total','anuncio','finalizados'));
-    }
+    }*/
 
+    public function transmisiones(){
+      //setlocale(LC_TIME, 'es_ES.UTF-8'); Para el server
+      setlocale(LC_TIME, 'es');//Local
+        Carbon::setLocale('es');
+      $mytime = Carbon::now();
+      //return dd ($mytime->toDateTimeString());
+
+      $evento_actual = Events::where('date', '>=', Carbon::now()->format('Y-m-d'))
+                      ->where('status', '=',1)
+                      ->get()
+                      ->first();
+
+       $proximos = Events::where('date', '>', Carbon::now()->format('Y-m-d'))
+                      ->where('id', '!=',$evento_actual->id)
+                      ->where('status', '=',1)
+                      ->get();
+
+      $finalizados = Events::where('status', '=',3)
+                      ->get();
+      $total = count($proximos);
+
+       return view('transmision.transmision',compact('evento_actual','proximos','total','finalizados'));
+    }
 
 
 

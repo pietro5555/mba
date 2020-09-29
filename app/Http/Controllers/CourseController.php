@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str as Str;
-use App\Models\Course; use App\Models\Category; use App\Models\User;
+use App\Models\Course; 
+use App\Models\Category; 
+use App\Models\User;
+use App\Models\Lesson;
 use DB; use Auth;
 
 class CourseController extends Controller{
@@ -341,12 +344,16 @@ class CourseController extends Controller{
          return view('timelive.favorite', compact('eventos_favoritos', 'cursos_favoritos'));
     }
 
-    /*ULTIMO CURSO VISTO POR EL USUARIO*/
-    public function last_viewed_course(){
+    /**
+    * Courses / Leccion
+    */
 
-
+    public function lesson($lesson_slug, $lesson_id, $course_id)
+    {
+        $lesson = Lesson::where('id', '=',$lesson_id)->get()->first();
+        $all_lessons = Lesson::where('course_id', '=',  $course_id)->get();
+        return view('cursos.leccion', compact('lesson', 'all_lessons'));
     }
-
 
     /**
     * Admin / Cursos / Listado de Cursos / Nuevo Curso
@@ -498,5 +505,7 @@ class CourseController extends Controller{
 
         return redirect('admin/courses')->with('msj-exitoso', 'El curso ha sido quitado de destacados con éxito.');
     }
+
+
 }
 

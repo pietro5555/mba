@@ -133,3 +133,7 @@ Dev:Crisleivys Gil
 28/09/2020
 Dev: Carlos Gonzalez
 *Agregar las viariable para el funcionamiento de stripe y coinpayment del cliente en el sistema (estan en el archivo viariables para el archivo .env)
+
+28/09/2020
+Dev:Crisleivys Gil
+*Agregado el campo subcategory_id (correr el script events)

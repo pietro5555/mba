@@ -4,17 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str as Str;
-<<<<<<< HEAD
 use App\Models\Course; 
 use App\Models\Category; 
 use App\Models\User;
 use App\Models\Lesson;
 use DB; use Auth;
-=======
-use App\Models\Course; use App\Models\Category; use App\Models\User;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
->>>>>>> cf8a5c5099f246de6d539f9d994b7d501ac90ccc
 
 class CourseController extends Controller{
     /**

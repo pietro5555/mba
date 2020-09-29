@@ -29,13 +29,8 @@ class TransmisionesController extends Controller
         Carbon::setLocale('es');
     }
 
-<<<<<<< HEAD
-    //vista de transmisiones
+   //vista de transmisiones
    /* public function transmisiones(){
-=======
- //vista de transmisiones
-    public function transmisiones(){
->>>>>>> cf8a5c5099f246de6d539f9d994b7d501ac90ccc
         
         $anuncio =[];
          $finalizados = Events::where('status', '3')->orderBy('id', 'DESC')->take(9)->get();
@@ -45,49 +40,37 @@ class TransmisionesController extends Controller
         }
         $proximas = Events::where('status', '1')->where('id', '!=', ($banner == null) ? 0 : $banner->id)->take(6)->get();
         $total = count($proximas);
-
          if($banner != null){
-
            $dia = $this->dias($banner->date);
            $mes = $this->meses($banner->date);
            $fech = $dia.' '.date('d', strtotime($banner->dia)).' '.$mes;
-
            $anuncio =[
             'id' => $banner->id,
             'imagen' => ($banner->image == null) ? '3.png' : $banner->image,
             'title' => $banner->title,
             'fechacompleta' => $fech,
             'fecha' => $banner->date,
-            'time' => $banner->time,
-
            ];
          }
-
         foreach($proximas as $proxima){
           $user = User::find($proxima->user_id);
           $proxima->avatar = $user->avatar;
           $dia = $this->dias($proxima->date);
           $mes = $this->meses($proxima->date);
           $proxima->fecha = $dia.' '.date('d', strtotime($proxima->date)).' '.$mes;
-
         }
-
         foreach($finalizados as $fin){
          $user = User::find($fin->user_id);
-         $cursos = Course::where('category_id', $fin->category_id)->first();
-         $categoria = Category::find($fin->category_id);
-         $comentarios = Rating::where('course_id', $cursos->id)->count('id');
+         $cursos = Course::find($fin->course_id);
+         $categoria = Category::find($cursos->category_id);
          $fin->avatar = $user->avatar;
          $fin->nombre = $user->display_name;
          $fin->title_cate = $categoria->title;
-
-         //vistas, comentarios, me gusta, compartir
-         $fin->coment = $comentarios;
+         //
          $fin->views = $cursos->views;
          $fin->likes = $cursos->likes;
          $fin->shares = $cursos->shares;
         }
-
         return view('transmision.transmision',compact('proximas','total','anuncio','finalizados'));
     }*/
 

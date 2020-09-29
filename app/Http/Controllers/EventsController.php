@@ -266,7 +266,7 @@ class EventsController extends Controller
     }
 
 
-    /*Vista con la información del streaming Time/timelive*/
+/*Vista con la información del streaming Time/timelive*/
     public function timelive(Request $request){
         //setlocale(LC_TIME, 'es_ES.UTF-8'); Para el server
       setlocale(LC_TIME, 'es');//Local
@@ -434,8 +434,6 @@ class EventsController extends Controller
 
 
 
-    
-
     /*LISTADO DE EVENTOS AGENDADOS POR EL USUARIO*/
 
     /*MOSTRAR CALENDARIO DE EVENTOS DEL USUARIO*/
@@ -460,7 +458,7 @@ class EventsController extends Controller
     }
 
 
-    /*AGENDAR EVENTOS DEL USUARIO*/
+  /*AGENDAR EVENTOS DEL USUARIO*/
 public function schedule($event_id, Request $request){
  $check = DB::table('events_users')
                     ->where('user_id', '=', Auth::user()->ID)
@@ -511,6 +509,7 @@ public function schedule($event_id, Request $request){
 
         
     }
+
 
 
 

@@ -5,21 +5,17 @@
       input[type="radio"] {
          display: none;
       }
-
       label {
          color: grey;
       }
-
       .rating {
          direction: rtl;
          unicode-bidi: bidi-override;
       }
-
       label:hover,
       label:hover ~ label {
          color: orange;
       }
-
       input[type="radio"]:checked ~ label {
          color: orange;
       }
@@ -256,7 +252,7 @@
                @foreach ($curso->ratings as $valoracion)
                   <div class="row m-4 pt-4 border-bottom">  
                      <div class="col-md-2">
-                        <div class="circle"><img src="{{asset('/uploads/avatar/'.$valoracion->user->avatar)}}" style="border-radius: 60%; width: 120px; height: 120px;"></div>
+                        <div class="circle"><h2 class="text-white"> JD</h2></div>
                      </div>
                      <div class="col-md-8">
                         <div class="row">

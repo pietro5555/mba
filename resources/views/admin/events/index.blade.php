@@ -74,6 +74,7 @@
 								<td class="text-center">{{ App\Models\Events::findID($event->user_id) }}</td>
 								<td class="text-center">
 									<a class="btn btn-info editar" data-route="{{ route('admin.events.edit', $event->id) }}"><i class="fa fa-edit"></i></a>
+									<a class="btn btn-info" href="{{ route('transmitir', $event->id) }}"><i class="fa fa-video"></i></a>
 									@if ($event->status == '1' )
 										<a class="btn btn-danger" href="{{ route('admin.events.change-status', [$event->id, 0]) }}" title="Deshabilitar"><i class="fa fa-ban"></i></a>
 									@endif

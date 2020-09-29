@@ -80,9 +80,9 @@
             </div>
 
             <div class="container-fluid mt-2 p-2">
-                @foreach ($cursos as $curso)
+                
                 <div class="wrapper">
-
+                    @foreach ($cursos as $curso)
                     <div>
                         
                             <div class="card mb-4 card-courses">
@@ -96,7 +96,7 @@
                             </div>
                     </div>
 
-                    
+                    @endforeach
                     <div class="">
                         <div class="row h-100">
                             <div class="col-sm-6 col-md-12 align-self-center">
@@ -107,7 +107,7 @@
                         </div>
                     </div>
                 </div>
-                @endforeach
+                
             </div>
         @else
             <div class="title-page-course col-md"><span class="text-white">

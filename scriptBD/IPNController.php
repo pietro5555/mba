@@ -83,7 +83,13 @@ class IPNController extends Controller {
                     $datosOrden->save();
 
                     $carrito = new ShoppingCartController();
-                    $carrito->process_cart($datosOrden->id);
+                    $detalles = json_decode($datosOrden->detalles);
+                    if (isset($detalles->idmembresia)){
+                        $carrito->process_membership_buy($datosOrden->id);
+                    }else{
+                        $carrito->process_cart($datosOrden->id);
+                    }
+                    
                 }
             } catch (\Exception $e) {
                 \Mail::to($cp_debug_email)->send(new SendEmail([

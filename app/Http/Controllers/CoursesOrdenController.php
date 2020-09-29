@@ -109,8 +109,7 @@ class CoursesOrdenController extends Controller
      * @param array $data
      * @return string
      */
-    public function coinpayment($data) : string
-    {
+    public function coinpayment($data) : string{
         try {
             $transacion = [
                 'amountTotal' => $data['total'],
@@ -128,10 +127,6 @@ class CoursesOrdenController extends Controller
                     'itemSubtotalAmount' => $producto->precio // USD
                 ];
             }
-            
-            DB::table('shopping_cart')
-                ->where('user_id', '=', Auth::user()->ID)
-                ->delete();
 
             $ruta = \CoinPayment::generatelink($transacion);
             return $ruta;
@@ -172,11 +167,101 @@ class CoursesOrdenController extends Controller
                 'img' => (!empty($curso)) ? asset('uploads/images/courses/covers/'.$curso->cover) : 'no disponible'
             ];
             $totalItems += (!empty($curso)) ? $curso->price : 0;
+
+            $item->delete();
         }
         $data = [
             'total' => $totalItems,
             'detalles' => json_encode($arrayCursos)
         ];
         return $data;
+    }
+
+    public function pay_membership_stripe(Request $request){
+        try {
+            $secret_key = env('STRIPE_SECRET');
+            Stripe::setApiKey($secret_key);
+
+            $membresia = DB::table('memberships')
+                        ->first();
+
+            $customer = Customer::create(array(
+                'email' => $request->stripeEmail,
+                'source'  => $request->stripeToken
+            ));
+
+            $charge = Charge::create(array(
+                'customer' => $customer->id,
+                'amount'   => ($membresia->price * 100),
+                'currency' => 'usd'
+            ));
+
+            $datosMembresia = [
+                'idmembresia' => $membresia->id,
+                'nombre' => $membresia->name,
+                'precio' => $membresia->price,
+                'img' => asset('uploads/images/memberships/'.$membresia->image)
+            ];
+            
+            $orden = new CourseOrden();
+            $orden->user_id = Auth::user()->ID;
+            $orden->total = $membresia->price;
+            $orden->detalles = json_encode($datosMembresia);
+            $orden->idtransacion_stripe = $request->stripeToken;
+            $orden->status = 1;
+            $orden->save();
+
+            $carrito = new ShoppingCartController();
+            $carrito->process_membership_buy($orden->id);
+
+            DB::table('shopping_cart')
+                ->where('user_id', '=', Auth::user()->ID)
+                ->delete();
+
+            return redirect('/')->with('msj-exitoso', 'Tu compra de membresría ha sido completada con éxito.');
+        } catch (\Throwable $th) {
+            dd($th);
+        }
+    }
+
+    public function pay_membership_coinpayment(Request $request){
+        try {
+            $membresia = DB::table('memberships')
+                            ->first();
+           
+            $datosMembresia = [
+                'idmembresia' => $membresia->id,
+                'nombre' => $membresia->name,
+                'precio' => $membresia->price,
+                'img' => asset('uploads/images/memberships/'.$membresia->image)
+            ];
+            
+            $orden = new CourseOrden();
+            $orden->user_id = Auth::user()->ID;
+            $orden->total = $membresia->price;
+            $orden->detalles = json_encode($datosMembresia);
+            $orden->status = 0;
+            $orden->save();
+
+            $transacion = [
+                'amountTotal' => $membresia->price,
+                'note' => 'Compra membresía por '.number_format($membresia->price, 2, ',', '.').' USD',
+                'idorden' => $orden->id,
+                'buyer_email' => Auth::user()->user_email,
+                'redirect_url' => route('index')
+            ];
+
+            $transacion['items'][] = [
+                'itemDescription' => $membresia->name,
+                'itemPrice' => $membresia->price, // USD
+                'itemQty' => (INT) 1,
+                'itemSubtotalAmount' => $membresia->price // USD
+            ];
+            
+            $ruta = \CoinPayment::generatelink($transacion);
+            return redirect($ruta);
+        } catch (\Throwable $th) {
+            dd($th);
+        }
     }
 }

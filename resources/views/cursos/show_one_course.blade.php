@@ -5,21 +5,17 @@
       input[type="radio"] {
          display: none;
       }
-
       label {
          color: grey;
       }
-
       .rating {
          direction: rtl;
          unicode-bidi: bidi-override;
       }
-
       label:hover,
       label:hover ~ label {
          color: orange;
       }
-
       input[type="radio"]:checked ~ label {
          color: orange;
       }
@@ -70,31 +66,57 @@
                <div class="col-md-9">
                   <h3 class="text-white">{{ $curso->title }}</h3>
                   <div>
-                     @if (number_format($curso->promedio, 0) >= 1)
-                        <i class="fa fa-star text-warning"></i>
+                     @if ( (!Auth::guest()) && (!is_null($progresoCurso)) && (is_null($miValoracion)) ) 
+                        <p class="rating">
+                           <input id="d-radio1c" type="radio" name="points" value="5">
+                           <label for="d-radio1c" href="#ratingModal" data-toggle="modal">
+                              @if (number_format($curso->promedio, 0) >= 5) <i class="fa fa-star" style="color: orange;"></i> @else <i class="fa fa-star-o"></i>@endif
+                           </label>
+                           <input id="d-radio2c" type="radio" name="points" value="4">
+                           <label for="d-radio2c" href="#ratingModal" data-toggle="modal">
+                               @if (number_format($curso->promedio, 0) >= 4) <i class="fa fa-star" style="color: orange;"></i> @else <i class="fa fa-star-o"></i>@endif
+                           </label>
+                           <input id="d-radio3c" type="radio" name="points" value="3">
+                           <label for="d-radio3c" href="#ratingModal" data-toggle="modal">
+                               @if (number_format($curso->promedio, 0) >= 3) <i class="fa fa-star" style="color: orange;"></i> @else <i class="fa fa-star-o"></i>@endif
+                           </label>
+                           <input id="d-radio4c" type="radio" name="points" value="2">
+                           <label for="d-radio4c" href="#ratingModal" data-toggle="modal">
+                               @if (number_format($curso->promedio, 0) >= 2) <i class="fa fa-star" style="color: orange;"></i> @else <i class="fa fa-star-o"></i>@endif
+                           </label>
+                           <input id="d-radio5c" type="radio" name="points" value="1">
+                           <label for="d-radio5c" href="#ratingModal" data-toggle="modal">
+                               @if (number_format($curso->promedio, 0) >= 1) <i class="fa fa-star text" style="color: orange;"></i> @else <i class="fa fa-star-o text"></i>@endif
+                           </label>
+                        </p>
                      @else
-                        <i class="fa fa-star-o text-secondary"></i>
+                        @if (number_format($curso->promedio, 0) >= 1)
+                           <i class="fa fa-star text-warning"></i>
+                        @else
+                           <i class="fa fa-star-o text-secondary"></i>
+                        @endif
+                        @if (number_format($curso->promedio, 0) >= 2)
+                           <i class="fa fa-star text-warning"></i>
+                        @else
+                          <i class="fa fa-star-o text-secondary"></i>
+                        @endif
+                        @if (number_format($curso->promedio, 0) >= 3)
+                           <i class="fa fa-star text-warning"></i>
+                        @else
+                           <i class="fa fa-star-o text-secondary"></i>
+                        @endif
+                        @if (number_format($curso->promedio, 0) >= 4)
+                           <i class="fa fa-star text-warning"></i>
+                        @else
+                           <i class="fa fa-star-o text-secondary"></i>
+                        @endif
+                        @if (number_format($curso->promedio, 0) >= 5)
+                           <i class="fa fa-star text-warning"></i>
+                        @else
+                           <i class="fa fa-star-o text-secondary"></i>
+                        @endif
                      @endif
-                     @if (number_format($curso->promedio, 0) >= 2)
-                        <i class="fa fa-star text-warning"></i>
-                     @else
-                        <i class="fa fa-star-o text-secondary"></i>
-                     @endif
-                     @if (number_format($curso->promedio, 0) >= 3)
-                        <i class="fa fa-star text-warning"></i>
-                     @else
-                        <i class="fa fa-star-o text-secondary"></i>
-                     @endif
-                     @if (number_format($curso->promedio, 0) >= 4)
-                        <i class="fa fa-star text-warning"></i>
-                     @else
-                        <i class="fa fa-star-o text-secondary"></i>
-                     @endif
-                     @if (number_format($curso->promedio, 0) >= 5)
-                        <i class="fa fa-star text-warning"></i>
-                     @else
-                        <i class="fa fa-star-o text-secondary"></i>
-                     @endif
+                     
                   </div>
                </div>
 
@@ -142,9 +164,9 @@
                         @endif
                      @else
                      <a href="#" data-toggle="modal" class="btn btn-info play-course-button btn-block"><i class="fa fa-list"></i> VER LECCIONES</a>
-                        @if (is_null($miValoracion))
+                        <!--@if (is_null($miValoracion))
                            <a href="#ratingModal" data-toggle="modal" class="btn btn-info play-course-button btn-block"><i class="fa fa-star"></i> VALORAR</a>
-                        @endif
+                        @endif-->
                         @if ($progresoCurso->certificate == 1)
                            <a href="{{ route('client.courses.get-certificate', $curso->id) }}" class="btn btn-primary play-course-button btn-block"><i class="fas fa-certificate"></i> OBTENER CERTIFICADO</a>
                         @else
@@ -165,7 +187,7 @@
          <div class="col-md-12">
             <div class="row">
                <div class="col-md-12">
-                  <h4 class="text-white ml-5">ACERCA DEL CURSO</h4>
+                  <h4 class="text-white ml-5">ACERCA DEL CURSO </h4>
                   <hr style="border: 1px solid #707070; opacity: 1;" />
                   <div class="col-md-12">
                      <div class="col-md-12 justify-content-center p-2 ml-4" style="color: white;">
@@ -173,14 +195,14 @@
 
                         <div class="container-fluid pt-4">
                            <div class="row featurette">
-                              <div class="col-md-7 order-md-2">
+                              <div class="col-md-9 order-md-2">
                                  <h5 class="featurette-heading text-white">Mentor</h5>
                                  <h3 class="featurette-heading text-primary">{{ $curso->mentor->display_name }}</h3>
                                  <h6 class="featurette-heading text-white">{{ $curso->mentor->profession }}</h6>
                                  <p class="lead about-course-text">{{ $curso->mentor->about }}</p>
                                  <a href="#" class="text-primary">Ver perfil <i class=" fa fa-angle-right"> </i></a>
                               </div>
-                              <div class="col-md-5 order-md-1">
+                              <div class="col-md-3 order-md-1">
                                  <img src="{{ asset('uploads/avatar/'.$curso->mentor->avatar) }}" alt="" class="featurette-image img-fluid mx-auto ml-2" width="409" height="370">
                               </div>
                            </div>
@@ -218,7 +240,7 @@
                                        <div class="cuadrado"><h2 class="text-white"> @if ($cont < 10) 0{{ $cont }} @else {{ $cont }} @endif</h2></div>
                                     </div>
                                     <div class="col-md-8">
-                                       <p class="panel-title about-course-text"> <h5 class="about-course-text"> {{ $leccion->title }}</h5></p>
+                                       <h5 class="panel-title about-course-text"> <a href="{{ route('lesson.show', [$leccion->slug, $leccion->id, $curso->id]) }}" class="about-course-text">{{ $leccion->title }}</a></h5>
                                     </div>
                                     <div class="col-md-2">
                                        <img src="{{ asset('images/icons/chevron.svg') }}" class="leccion-icon float-right"> 
@@ -255,7 +277,7 @@
                @foreach ($curso->ratings as $valoracion)
                   <div class="row m-4 pt-4 border-bottom">  
                      <div class="col-md-2">
-                        <div class="circle"><img src="{{asset('/uploads/avatar/'.$valoracion->user->avatar)}}" style="border-radius: 60%; width: 120px; height: 120px;"></div>
+                        <div class="circle"><h2 class="text-white"> JD</h2></div>
                      </div>
                      <div class="col-md-8">
                         <div class="row">

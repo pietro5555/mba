@@ -61,8 +61,10 @@ class ShoppingCartController extends Controller
             $totalItems += (!empty($curso)) ? $curso->price : 0;
         }
 
+        $membresia = DB::table('memberships')
+                        ->first();
         //RETORNAR VISTA AQUÍ
-        return view('carrito_user.index')->with(compact('items', 'totalItems'));
+        return view('carrito_user.index')->with(compact('items', 'totalItems', 'membresia'));
     }
 
 
@@ -158,39 +160,59 @@ class ShoppingCartController extends Controller
         $compra->status = 1;
         $compra->save();
 
-        $items = ShoppingCart::where('user_id', '=', $datosOrden->user_id)
-                    ->orderBy('id', 'ASC')
-                    ->get();
+        $items = json_decode($datosOrden->detalles);
                     
         $fecha = date('Y-m-d H:i:s');
 
         foreach ($items as $item){
             $detalle = new PurchaseDetail();
             $detalle->purchase_id = $compra->id;
+            $detalle->course_id = $item->idcurso;
+            $detalle->amount = $item->precio;
+            $detalle->save();
 
-            if (!is_null($item->course_id)){
-                $detalle->course_id = $item->course_id;
-                $detalle->amount = $item->course->price;
-                $detalle->save();
-
-                DB::table('courses_users')
-                    ->insert(['course_id' => $item->course_id,
-                              'user_id' => $datosOrden->user_id,
-                              'progress' => 0,
-                              'start_date' => date('Y-m-d'),
-                              'created_at' => $fecha,
-                              'updated_at' => $fecha]);
-            }else if(!is_null($item->membership_id)){
-                $detalle->membership_id = $item->membership_id;
-                $detalle->amount = $item->membership->price;
-                $detalle->save();
-
-                DB::table('wp98_users')
-                    ->where('ID', '=', $usuario)
-                    ->update(['membership_id' => $item->membership_id]);
-            }
-
-            $item->delete();
+            DB::table('courses_users')
+                ->insert(['course_id' => $item->idcurso,
+                            'user_id' => $datosOrden->user_id,
+                            'progress' => 0,
+                            'start_date' => date('Y-m-d'),
+                            'created_at' => $fecha,
+                            'updated_at' => $fecha]);
         }
+    }
+
+    /**
+     * Procesar Compra de membresía una vez verificado el pago
+    */
+    public function process_membership_buy($order){
+        $datosOrden = DB::table('courses_orden')
+                        ->where('id', '=', $order)
+                        ->first();
+
+        $compra = new Purchase();
+        $compra->user_id = $datosOrden->user_id;
+        $compra->amount = $datosOrden->total;
+        if (!is_null($datosOrden->idtransacion_stripe)){
+            $compra->payment_method = 'Stripe';
+            $compra->payment_id = $datosOrden->idtransacion_stripe;
+        }else if (!is_null($datosOrden->idtransacion_coinpaymen)){
+            $compra->payment_method = 'Coinpayment';
+            $compra->payment_id = $datosOrden->idtransacion_coinpaymen;
+        }
+        $compra->date = date('Y-m-d');
+        $compra->status = 1;
+        $compra->save();
+
+        $detallesMembresia = json_decode($datosOrden->detalles);
+
+        $detalle = new PurchaseDetail();
+        $detalle->purchase_id = $compra->id;
+        $detalle->membership_id = $detallesMembresia->idmembresia;
+        $detalle->amount = $detallesMembresia->precio;
+        $detalle->save();
+
+        DB::table('wp98_users')
+            ->where('ID', '=', $datosOrden->user_id)
+            ->update(['membership_id' => $detallesMembresia->idmembresia]);
     }
 }

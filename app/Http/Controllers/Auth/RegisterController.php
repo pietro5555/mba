@@ -149,7 +149,8 @@ class RegisterController extends Controller
             'tipouser' => $data['tipouser'],
             'status' => '0',
             'correos' =>'{"pago":"1","compra":"1","pc":"1","liquidacion":"1"}',
-            'avatar' => ($rol_id != 1) ? 'avatar.png' : $this->avatarMentor($data),
+            'avatar' => ($rol_id != 2) ? 'avatar.png' : $this->avatarMentor($data),
+            'about' => $data['contenido'],
         ]);
 
         $this->insertarCampoUser($user->ID, $data);

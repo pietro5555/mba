@@ -72,13 +72,17 @@ class EventsController extends Controller
             'Authorization' => 'Bearer '.Auth::user()->streaming_token
         ];
 
+        $p =  $request->date."T".$request->time;
+        $carbon = new Carbon($p);
+        $fecha = $carbon->subHours(5); 
+        $ultFecha = $fecha->format('Y-m-d H:i:s');
         $creacionEvento = $client->request('POST', 'api/meetings', [
             'headers' => $headers,
             'form_params' => [
                 'title' => $request->title,
                 'agenda' => $request->description,
                 'description' => $request->description,
-                'start_date_time' => $request->date."T".$request->time,
+                'start_date_time' => $ultFecha,
                 'period' => $request->duration,
                 'category' =>[$request->category_id],
                 'type' => ['webinar']
@@ -89,6 +93,7 @@ class EventsController extends Controller
         
         $evento = new Events($request->all());
         $evento->uuid = $result2->meeting->uuid;
+        $evento->url_streaming = 'https://streaming.shapinetwork.com/app/live/meetings/'.$evento->uuid;
         $evento->status = 1;
         $evento->save();
 
@@ -261,18 +266,26 @@ class EventsController extends Controller
     }
 
 
-    /*Vista con la información del streaming Time/timelive*/
+/*Vista con la información del streaming Time/timelive*/
     public function timelive(Request $request){
-
+        //setlocale(LC_TIME, 'es_ES.UTF-8'); Para el server
+      setlocale(LC_TIME, 'es');//Local
+        Carbon::setLocale('es');
         $total_eventos = count(Events::all());
-        if ($request->sigEvent == '' or $request->sigEvent == null) {
+        $evento = Events::where('date', '>=', Carbon::now()->format('Y-m-d'))
+                      ->where('status', '=',1)
+                      ->get()
+                      ->first();
+        if(!empty($evento))
+        {
+            if ($request->sigEvent == '' or $request->sigEvent == null) {
             $evento = Events::where('date', '>=', Carbon::now())->first();
             if($total_eventos > 1){
                 $prox = true;
                 $i = 1;
                 $id = $evento->id;
                 while($prox){
-                    $id += $id;
+                    $id = $id+1;
                     $nextEvent = Events::where('id', $id)->get()->first();
                     if($nextEvent != null)
                         $prox = false;
@@ -306,6 +319,16 @@ class EventsController extends Controller
                 }
             }
         } 
+        }
+        else{
+            $evento= '';
+            $nextEvent = '';
+            $proximos = '';
+            $total= $total_eventos;
+            $fechaActual = Carbon::now()->format('Y-m-d');
+            return view('timelive/timelive', compact('evento', 'nextEvent', 'proximos', 'total', 'total_eventos'));
+        }
+        
           
         /*PROXIMOS EVENTOS*/
         if($total_eventos>0)
@@ -320,10 +343,9 @@ class EventsController extends Controller
             $proximos ='';
             $total =0;
         }
-        
-        
+        $fechaActual = Carbon::now()->format('Y-m-d');
         //dd($evento, $proximos);
-        return view('timelive/timelive', compact('evento', 'nextEvent', 'proximos', 'total', 'total_eventos'));
+        return view('timelive/timelive', compact('evento', 'nextEvent', 'proximos', 'total', 'total_eventos', 'fechaActual'));
 
     }
 
@@ -412,8 +434,6 @@ class EventsController extends Controller
 
 
 
-    
-
     /*LISTADO DE EVENTOS AGENDADOS POR EL USUARIO*/
 
     /*MOSTRAR CALENDARIO DE EVENTOS DEL USUARIO*/
@@ -438,7 +458,7 @@ class EventsController extends Controller
     }
 
 
-    /*AGENDAR EVENTOS DEL USUARIO*/
+  /*AGENDAR EVENTOS DEL USUARIO*/
 public function schedule($event_id, Request $request){
  $check = DB::table('events_users')
                     ->where('user_id', '=', Auth::user()->ID)
@@ -451,17 +471,14 @@ public function schedule($event_id, Request $request){
                             ->where('id', '=', $event_id)
                             ->first();
 
-            $date_event = date('Y-m-d', strtotime($events->date));
-            $time_event = date('H:i:s', strtotime($events->date));
-
             $disponibilidad = DB::table('events_users')
                                 ->where('user_id', '=', Auth::user()->ID)
-                                ->where('date', '=', $date_event)
-                                ->where('time', '=', $time_event)
+                                ->where('date', '=', $events->date)
+                                ->where('time', '=', $events->time)
                                 ->first();
 
             if (is_null($disponibilidad)){
-                Auth::user()->events()->attach($event_id, ['date' => $date_event, 'time' => $time_event]);
+                Auth::user()->events()->attach($event_id, ['date' => $events->date, 'time' => $events->time]);
                 $new_calendar = Events::where('id', '=', $event_id)
                 ->first();
         
@@ -470,6 +487,7 @@ public function schedule($event_id, Request $request){
          $calendario->titulo = $new_calendar->title;
          $calendario->contenido = $new_calendar->description;
          $calendario->inicio = $new_calendar->date;
+         $calendario->time = $new_calendar->time;
          $calendario->color = '#28a745';
          $calendario->lugar = 'Ninguno';
          $calendario->iduser = Auth::user()->ID;
@@ -491,6 +509,7 @@ public function schedule($event_id, Request $request){
 
         
     }
+
 
 
 
@@ -530,5 +549,16 @@ public function schedule($event_id, Request $request){
      
      $funciones->msjSistema('Eliminado con exito', 'success');
      return redirect()->back();
+    }
+
+    public function transmitir($id){
+        $evento = Events::find($id);
+        $fecha = $evento->date."T".$evento->time;
+        $fecha2 = "2020-09-27T18:55:00";
+        $fechaEvento = new Carbon($fecha);
+        $fechaActual = new Carbon($fecha2);
+        //dd($fecha2);
+
+        return view('transmitir')->with(compact('evento', 'fechaEvento', 'fechaActual'));
     }
 }

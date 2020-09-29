@@ -61,6 +61,11 @@
                                         <label class="control-label" style="text-align: center; color: white;">Imagen de Usuario (*)</label>
                                             <input type="file" name="avatar">
                                       </div>
+
+                                      <div class="form-group">
+                                        <label class="control-label" style="text-align: center; color: white;">Descripcion (*)</label>
+                                           <textarea class="form-control" type="textarea" name="contenido"> </textarea>
+                                      </div>
                                     </div>
                                     
                                     @foreach($campos as $campo)
@@ -284,7 +289,7 @@
 
     var opt = $('#idrang').val();
     
-    if(opt == "1"){
+    if(opt == "2"){
         $('#imagenavatar').show();
         }else{
             $('#imagenavatar').hide();

@@ -1,13 +1,15 @@
 @extends('layouts.dashboardnew')
 
 @push('script')
+	<script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
+
 	<script>
 		$(document).ready( function () {
 			$('#mytable').DataTable( {
 				responsive: true,
 			});
 
-			$('.editar').on('click',function(e){
+			/*$('.editar').on('click',function(e){
  				e.preventDefault();
 
  				var route = $(this).attr('data-route');
@@ -19,7 +21,7 @@
 	                    $("#modal-edit").modal("show");
 	                }
 	            });
-			});
+			});*/
 
 			$('.featured').on('click',function(e){
  				e.preventDefault();
@@ -36,6 +38,30 @@
  				$("#modal-image").modal("show");
 			});
 		});
+
+		function editar($id){
+			var route = $("#"+$id).attr('data-route');
+ 			$.ajax({
+	            url:route,
+	            type:'GET',
+	            success:function(ans){
+	                $("#course_id_edit").val(ans[0].id);
+	                $("#title").val(ans[0].title);
+	                $("#category_id option[value="+ans[0].category_id+"]").attr("selected", true);
+	                $("#subcategory_id option[value="+ans[0].subcategory_id+"]").attr("selected", true);
+	                $("#mentor_id option[value="+ans[0].mentor_id+"]").attr("selected", true);
+                 	CKEDITOR.instances["description"].setData(ans[0].description);
+	                $("#price").val(ans[0].price);
+	                var myArr = ans[1];
+	                $(".check-edit").each(function() {
+			            if(myArr.includes(parseInt($(this).val()))){
+			            	$(this).prop("checked", true);  
+			            }
+			        });
+			        $("#modal-edit").modal("show");
+	            }
+	        });
+		}
 	</script>
 @endpush
 
@@ -81,7 +107,7 @@
 								<td class="text-center">{{ $curso->subcategory->title }}</td>
 								<td class="text-center">{{ $curso->lessons_count }}</td>
 								<td class="text-center">
-									<a class="btn btn-info editar" data-route="{{ route('admin.courses.edit', $curso->id) }}"><i class="fa fa-edit"></i></a>
+									<a class="btn btn-info" data-route="{{ route('admin.courses.edit', $curso->id) }}" id="{{$curso->id}}" onclick="editar(this.id);"><i class="fa fa-edit"></i></a>
 									<a class="btn btn-warning" href="{{ route('admin.courses.lessons', $curso->id) }}" title="Ver Temario"><i class="fa fa-list"></i></a>
 									@if ($curso->featured == 0)
 										<a class="btn btn-success featured" href="javascript:;" data-id="{{ $curso->id }}" title="Agregar a Destacados"><i class="fa fa-star"></i></a>
@@ -158,7 +184,7 @@
 						        <div class="col-md-12">
 						            <div class="form-group">
 						                <label>Descripción</label>
-						            	<textarea class="form-control" name="description"></textarea> 
+						            	<textarea class="ckeditor form-control" name="description"></textarea> 
 						            </div>
 						        </div>
 						        <div class="col-md-12">
@@ -211,7 +237,76 @@
 			        {{ csrf_field() }}
 				    <div class="modal-body">
 				        <div class="container-fluid" id="content-modal">
-	    					
+	    					<div class="row">
+								<input type="hidden" name="course_id" id="course_id_edit">
+								<div class="col-md-12">
+									<div class="form-group">
+										<label>Título del Curso</label>
+										<input type="text" class="form-control" name="title" id="title" required>
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="form-group">
+										<label>Categoría</label>
+										<select class="form-control" name="category_id" id="category_id" required>
+											@foreach ($categorias as $categoria)
+												<option value="{{ $categoria->id }}">{{ $categoria->title }}</option>
+											@endforeach
+										</select>
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="form-group">
+										<label>Subcategoría</label>
+										<select class="form-control" name="subcategory_id" id="subcategory_id" required>
+											@foreach ($subcategorias as $subcategoria)
+												<option value="{{ $subcategoria->id }}">{{ $subcategoria->title }}</option>
+											@endforeach
+										</select>
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="form-group">
+										<label>Mentor</label>
+										<select class="form-control" name="mentor_id" id="mentor_id" required>
+											@foreach ($mentores as $mentor)
+												<option value="{{ $mentor->ID }}">{{ $mentor->user_email }}</option>
+											@endforeach
+										</select>
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="form-group">
+										<label>Descripción</label>
+										<textarea class="ckeditor form-control" name="description" id="description"></textarea> 
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="form-group">
+										<label>Imagen de Cover</label>
+										<input type="file" class="form-control" name="cover" >
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="form-group">
+										<label>Precio</label>
+										<input type="text" class="form-control" name="price" id="price">
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="form-group">
+										<label>Etiquetas Disponibles</label>
+										<div class="row">
+											@foreach ($etiquetas as $etiqueta)
+												<div class="col-sm-6 col-md-3">
+													<input type="checkbox" class="form-check-input check-edit" name="tags[]" value="{{ $etiqueta->id }}">
+													<label class="form-check-label">{{ $etiqueta->tag }}</label>
+												</div>
+											@endforeach
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 				    </div>
 	      			<div class="modal-footer">

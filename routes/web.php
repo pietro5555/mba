@@ -17,6 +17,11 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
+
+Route::get('mioficina', function(){
+  return redirect('/'); 
+});
+
 Route::get('certificado', 'HomeController@certificado');
 Route::get('/', 'HomeController@index')->name('index');
 Route::get('/certificado', "HomeController@certificado");
@@ -180,6 +185,9 @@ Route::group(['prefix' => 'installer'], function (){
     Route::get('store/{id}', 'ShoppingCartController@store')->name('shopping-cart.store');
     Route::get('delete/{id}', 'ShoppingCartController@delete')->name('shopping-cart.delete');
     Route::post('finish', 'CoursesOrdenController@procesarCompra')->name('shopping-cart.finish');
+    Route::post('pay-membership-stripe', 'CoursesOrdenController@pay_membership_stripe')->name('shopping-cart.pay-membership-stripe');
+    Route::post('pay-membership-coinpayment', 'CoursesOrdenController@pay_membership_coinpayment')->name('shopping-cart.pay-membership-coinpayment');
+    Route::get('process-cart/{orden}', 'ShoppingCartController@process_cart');
   });
   
   //Rutas de timelive
@@ -321,6 +329,8 @@ Route::group(['prefix' => 'installer'], function (){
   
         Route::group(['prefix' => 'lessons'], function(){
           Route::get('/{id}', 'LessonController@index')->name('admin.courses.lessons');
+          Route::get('show/{id}', 'LessonController@show')->name('admin.courses.lessons.show');
+          Route::get('load-video-duration/{id}/{duration?}', 'LessonController@load_video_duration')->name('admin.courses.lessons.load-video-duration');
           Route::post('store', 'LessonController@store')->name('admin.courses.lessons.store');
           Route::get('edit/{id}', 'LessonController@edit')->name('admin.courses.lessons.edit');
           Route::post('update', 'LessonController@update')->name('admin.courses.lessons.update');

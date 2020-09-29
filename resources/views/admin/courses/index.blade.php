@@ -7,7 +7,7 @@
 				responsive: true,
 			});
 
-			$('.editar').on('click',function(e){
+			/*$('.editar').on('click',function(e){
  				e.preventDefault();
 
  				var route = $(this).attr('data-route');
@@ -19,7 +19,7 @@
 	                    $("#modal-edit").modal("show");
 	                }
 	            });
-			});
+			});*/
 
 			$('.featured').on('click',function(e){
  				e.preventDefault();
@@ -36,6 +36,18 @@
  				$("#modal-image").modal("show");
 			});
 		});
+
+		function editar($id){
+			var route = $("#"+$id).attr('data-route');
+ 			$.ajax({
+	            url:route,
+	            type:'GET',
+	            success:function(ans){
+	                $("#content-modal").html(ans); 
+	                $("#modal-edit").modal("show");
+	            }
+	        });
+		}
 	</script>
 @endpush
 
@@ -81,7 +93,7 @@
 								<td class="text-center">{{ $curso->subcategory->title }}</td>
 								<td class="text-center">{{ $curso->lessons_count }}</td>
 								<td class="text-center">
-									<a class="btn btn-info editar" data-route="{{ route('admin.courses.edit', $curso->id) }}"><i class="fa fa-edit"></i></a>
+									<a class="btn btn-info" data-route="{{ route('admin.courses.edit', $curso->id) }}" id="{{$curso->id}}" onclick="editar(this.id);"><i class="fa fa-edit"></i></a>
 									<a class="btn btn-warning" href="{{ route('admin.courses.lessons', $curso->id) }}" title="Ver Temario"><i class="fa fa-list"></i></a>
 									@if ($curso->featured == 0)
 										<a class="btn btn-success featured" href="javascript:;" data-id="{{ $curso->id }}" title="Agregar a Destacados"><i class="fa fa-star"></i></a>

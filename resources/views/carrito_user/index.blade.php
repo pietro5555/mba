@@ -32,11 +32,21 @@
 <script>
     function pagarS() {
       event.preventDefault();
+     
         if (!$("#check_deacuerdo").prop('checked')) {
             alert("Debe estar de acuerdo con los términos y condiciones!");
             return false;
         }else{
           $('.stripe-button-el').click()
+        }
+    }
+    function pagarS2() {
+      event.preventDefault();
+        if (!$("#check_deacuerdo2").prop('checked')) {
+            alert("Debe estar de acuerdo con los términos y condiciones para la compra de membresía!");
+            return false;
+        }else{
+            $('.stripe2 .stripe-button-el').click()
         }
     }
     function pagarC() {
@@ -49,6 +59,7 @@
         }
     }
 
+    
     function pagarC2() {
       event.preventDefault();
         if (!$("#check_deacuerdo2").prop('checked')) {

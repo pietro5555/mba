@@ -19,6 +19,8 @@
 	                success:function(ans){
 	                	$("#event_id").val(ans.id);
 	                	$("#title").val(ans.title);
+	                	$("#category_id option[value="+ans.category_id+"]").attr("selected", true);
+	                	$("#user_id option[value="+ans.user_id+"]").attr("selected", true);
                  		CKEDITOR.instances["description"].setData(ans.description);
 	                	$("#date").val(ans.date);
 	                	$("#time").val(ans.time);
@@ -27,10 +29,6 @@
 	                }
 	            });
 			});
-
-			$('#modal-edit').on('hidden.bs.modal', function (e) {
-			  // do something...
-			})
 		});
 	</script>
 @endpush

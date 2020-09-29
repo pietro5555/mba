@@ -421,33 +421,12 @@ class CourseController extends Controller{
     public function edit($id){
         $curso = Course::find($id);
 
-        $mentores = DB::table('wp98_users')
-                        ->select('ID', 'user_email')
-                        ->where('rol_id', '=', 2)
-                        ->orderBy('user_email', 'ASC')
-                        ->get();
-
-        $categorias = DB::table('categories')
-                        ->select('id', 'title')
-                        ->orderBy('id', 'ASC')
-                        ->get();
-
-        $subcategorias = DB::table('subcategories')
-                            ->select('id', 'title')
-                            ->orderBy('id', 'ASC')
-                            ->get();
-
-        $etiquetas = DB::table('tags')
-                        ->select('id', 'tag')
-                        ->orderBy('tag', 'ASC')
-                        ->get();
-
         $etiquetasActivas = [];
         foreach ($curso->tags as $etiq){
             array_push($etiquetasActivas, $etiq->id);
         }
 
-        return view('admin.courses.editCourse')->with(compact('curso', 'mentores', 'categorias', 'subcategorias', 'etiquetas', 'etiquetasActivas'));
+        return response()->json([$curso, $etiquetasActivas]);
     }
 
     /**

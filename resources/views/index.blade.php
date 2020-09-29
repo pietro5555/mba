@@ -121,7 +121,7 @@
                 @foreach ($cursosNuevos as $cursoNuevo)
                     <div class="col-xl-4 col-lg-4 col-12" style="padding-bottom: 10px;">
                         <div class="card">
-                            <a href="{{ route('courses.show', [$cursoNuevo->slug, $cursoNuevo->id]) }}" style="color: white; cursor: auto;">
+                            <a href="{{ route('courses.show', [$cursoNuevo->slug, $cursoNuevo->id]) }}" style="color: white;">
 
                             @if (!is_null($cursoNuevo->cover))
                                 <img src="{{ asset('uploads/images/courses/covers/'.$cursoNuevo->cover) }}" class="card-img-top new-course-img" alt="...">
@@ -138,10 +138,6 @@
                                                 <div class="col text-right no-padding-sides mr-2">
                                                     <i class="far fa-user-circle"></i><br>
                                                     <span class="new-course-items-text">{{ $cursoNuevo->views}}</span>
-                                                </div>
-                                                <div class="col text-left no-padding-sides">
-                                                    <i class="far fa-thumbs-up"></i><br>
-                                                    <span class="new-course-items-text">{{ $cursoNuevo->likes}}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -160,7 +156,7 @@
     {{-- SECCIÓN PRÓXIMO STREAMING--}}
     @if (!is_null($proximoEvento))
         <div class="next-streaming">
-            <img src="{{ asset('images/banner_completo.png') }}" class="next-streaming-img">
+            <img src="{{ asset('/uploads/images/banner/'.$proximoEvento->image) }}" class="next-streaming-img">
             <div class="next-streaming-info">
             	<button type="button" class="btn btn-primary btn-next-streaming">Próximo Streaming</button><br>
                                 
@@ -185,7 +181,7 @@
             <div class="row">
                 <div class="col-xl-4 col-lg-4 col-12 pl-4 pr-4">
                     <div class="referrers-box">
-                        <i class="fa fa-user referrers-icon"></i><br>
+                        <i class="fa fa-user referrers-icon" style="color: white;"></i><br>
                         {{ $refeDirec }} Referidos
                     </div>
                     <a href="{{url('/admin')}}" style="color: white; text-decoration: none;">

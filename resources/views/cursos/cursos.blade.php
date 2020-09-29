@@ -49,7 +49,7 @@
                     <div class="row">
                         <div class="col-md-10">
                             <h4 class="text-white text-uppercase ml-4">
-                                {{$last_course->title}}
+                                <a href="{{ route('courses.show', [$last_course->slug, $last_course->id]) }}" class="text-secondary text-sm">{{$last_course->title}}</a>
                             </h4>
                             <p class="col-md-6 description-course text-justify pl-0 ml-4">
                                 {{$last_course->description}}
@@ -324,6 +324,7 @@ $tercero++;
             <div class="row" style="padding: 10px 30px;">
                 @foreach ($cursosNuevos as $cursoNuevo)
                 <div class="col-xl-4 col-lg-4 col-12" style="padding-bottom: 10px;">
+                   <a href="{{ route('courses.show', [$cursoNuevo->slug, $cursoNuevo->id]) }}" style="text-decoration: none;background-color: transparent; color: white;">
                     <div class="card">
                         @if (!is_null($cursoNuevo->cover))
                         <img src="{{ asset('uploads/images/courses/covers/'.$cursoNuevo->cover) }}" class="card-img-top new-course-img" alt="..." height="462px" width="242px">
@@ -332,7 +333,7 @@ $tercero++;
                         @endif
                         <div class="card-img-overlay d-flex flex-column">
                             <div class="mt-auto">
-                                <div class="new-course-title"><a href="{{ route('courses.show', [$cursoNuevo->slug, $cursoNuevo->id]) }}" style="color: white;">{{ $cursoNuevo->title }}</a></div>
+                                <div class="new-course-title">{{ $cursoNuevo->title }}</div>
                                 <div class="row">
                                     <div class="col-12 col-xl-6 new-course-category">{{ $cursoNuevo->category->title }}</div>
                                     <div class="col-12 col-xl-6" style="font-size: 16px;">
@@ -343,9 +344,7 @@ $tercero++;
                                                 <span class="new-course-items-text">{{$cursoNuevo->views}}</span>
                                             </div>
                                             <div class="col text-left no-padding-sides">
-                                                <a href="#" class="text-white">
                                                     <i class="far fa-thumbs-up"></i>
-                                                </a>
                                                 <br>
                                                 <span class="new-course-items-text">{{$cursoNuevo->likes}}</span>
                                             </div>
@@ -355,6 +354,7 @@ $tercero++;
                             </div>
                         </div>
                     </div>
+                  </a>
                 </div>
                 @endforeach
             </div>

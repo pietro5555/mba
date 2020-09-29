@@ -39,13 +39,13 @@
     @endif
 
     {{-- BANNER --}}
-    <!--@if (!Auth::guest())
+    @if (!Auth::guest())
         @if(!is_null($last_course))
-            <div class="container-fluid banner-course">
+            <div class="banner-course">
                 <div class="button-container">
                     <img src="{{ asset('uploads/images/courses/covers/'.$last_course->cover) }}" class="course-banner-img" alt="..." height="550px" width="1600px" class="img-fluid" />
                 </div>
-                <div class="container-fluid pl-0 pr-0 course-banner-caption">
+                <div class="pl-0 pr-0 course-banner-caption">
                     <div class="row">
                         <div class="col-md-10">
                             <h4 class="text-white text-uppercase ml-4">
@@ -54,7 +54,7 @@
                             <p class="col-md-6 description-course text-justify pl-0 ml-4">
                                 {{$last_course->description}}
                             </p>
-                            <div class="row">
+                            <!--<div class="row">
                                 <div class="col-md-12 mb-2">
                                     <a href="{{ route('courses.show', [$last_course->slug, $last_course->course_id]) }}" class="btn btn-primary float-right text-uppercase mr-2"><i class="fa fa-play"></i> Continuar curso</a>
                                 </div>
@@ -62,13 +62,13 @@
                             <div class="progress col-xs progress-course-bar">
                                 <div class="progress-bar" role="progressbar" aria-valuenow="{{$last_course->progress}}" aria-valuemin="0" aria-valuemax="100" style="width:{{$last_course->progress}}%">
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                 </div>
             </div>
         @endif
-    @endif-->
+    @endif
     {{-- FIN DEL BANNER --}}
 
     {{-- SECCIÓN TUS CURSOS--}}
@@ -80,9 +80,11 @@
             </div>
 
             <div class="container-fluid mt-2 p-2">
+                @foreach ($cursos as $curso)
                 <div class="wrapper">
+
                     <div>
-                        @foreach ($cursos as $curso)
+                        
                             <div class="card mb-4 card-courses">
                                 <img class="card-img-top" src="{{ asset('uploads/images/courses/covers/'.$curso->cover) }}" alt="card-image-cap" height="207px">
                                 <div class="card-body p-2">
@@ -92,8 +94,9 @@
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
                     </div>
+
+                    
                     <div class="">
                         <div class="row h-100">
                             <div class="col-sm-6 col-md-12 align-self-center">
@@ -104,6 +107,7 @@
                         </div>
                     </div>
                 </div>
+                @endforeach
             </div>
         @else
             <div class="title-page-course col-md"><span class="text-white">

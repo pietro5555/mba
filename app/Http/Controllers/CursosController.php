@@ -154,6 +154,8 @@ class CursosController extends Controller
         ->select('wp98_users.display_name as nombre', 'wp98_users.profession as profession' ,'wp98_users.about as biography', 'wp98_users.avatar as avatar')
         ->first();
 
+        $referedd_mentor = User::where('referred_id', $mentor_id)->count('ID');
+
          $courses= DB::table('wp98_users')
         ->join('courses', 'courses.mentor_id', '=', 'wp98_users.id')
         ->join('categories', 'categories.id', '=', 'courses.category_id')
@@ -162,7 +164,7 @@ class CursosController extends Controller
         ->get();
 
       // return dd($cursos);
-        return view('cursos.perfil_mentor', compact('courses','mentor_info'));
+        return view('cursos.perfil_mentor', compact('courses','mentor_info','referedd_mentor'));
     }
 
 

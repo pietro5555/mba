@@ -59,8 +59,7 @@
         	            <div class="carousel-item @if ($cont == 1) active @endif">
         	                <img src="{{ asset('uploads/images/courses/featured_covers/'.$cursoDestacado->featured_cover) }}" class="d-block w-100" alt="..." style="height: 550px;">
         	                <div class="carousel-caption">
-        	                    <div class="course-label">NUEVO CURSO</div>
-        						<div class="course-autor">John Doe</div>
+        						<div class="course-autor">{{$cursoDestacado->mentor->display_name}}</div>
         						<div class="course-title"> <a href="{{ route('courses.show', [$cursoDestacado->slug, $cursoDestacado->id]) }}" style="color: white;">{{ $cursoDestacado->title }}</a></div>
         	                    <div class="course-category">{{ $cursoDestacado->category->title }} | {{ $cursoDestacado->subcategory->title }}</div>
         	                </div>
@@ -121,7 +120,9 @@
             <div class="row" style="padding: 10px 30px;">
                 @foreach ($cursosNuevos as $cursoNuevo)
                     <div class="col-xl-4 col-lg-4 col-12" style="padding-bottom: 10px;">
-                        <div class="card" >
+                        <div class="card">
+                            <a href="{{ route('courses.show', [$cursoNuevo->slug, $cursoNuevo->id]) }}" style="color: white; cursor: auto;">
+
                             @if (!is_null($cursoNuevo->cover))
                                 <img src="{{ asset('uploads/images/courses/covers/'.$cursoNuevo->cover) }}" class="card-img-top new-course-img" alt="...">
                             @else
@@ -129,7 +130,7 @@
                             @endif
                             <div class="card-img-overlay d-flex flex-column">
                                 <div class="mt-auto">
-                                    <div class="new-course-title"><a href="{{ route('courses.show', [$cursoNuevo->slug, $cursoNuevo->id]) }}" style="color: white;">{{ $cursoNuevo->title }}</a></div>
+                                    <div class="new-course-title">{{ $cursoNuevo->title }}</div>
                                     <div class="row">
                                         <div class="col-12 col-xl-6 new-course-category">{{ $cursoNuevo->category->title }}</div>
                                         <div class="col-12 col-xl-6" style="font-size: 16px;">
@@ -147,6 +148,7 @@
                                     </div>
                                 </div>
                             </div>
+                          </a>
                         </div>
                     </div>
                 @endforeach
@@ -186,9 +188,11 @@
                         <i class="fa fa-user referrers-icon"></i><br>
                         {{ $refeDirec }} Referidos
                     </div>
-                    <div class="referrers-button">
-                    	Panel de referidos
-                    </div>
+                    <a href="{{url('/admin')}}" style="color: white; text-decoration: none;">
+                     <div class="referrers-button">
+                        Panel de referidos
+                     </div>
+                    </a>
                 </div>
                 <div class="col-xl-8 col-lg-8 d-none d-lg-block d-xl-block referrers-banner">
                     <div class="referrers-banner-text">EL QUE QUIERE SUPERARSE, NO VE OBSTÁCULOS, VE SUEÑOS.</div>

@@ -4,11 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str as Str;
+<<<<<<< HEAD
 use App\Models\Course; 
 use App\Models\Category; 
 use App\Models\User;
 use App\Models\Lesson;
 use DB; use Auth;
+=======
+use App\Models\Course; use App\Models\Category; use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+>>>>>>> cf8a5c5099f246de6d539f9d994b7d501ac90ccc
 
 class CourseController extends Controller{
     /**
@@ -169,9 +175,30 @@ class CourseController extends Controller{
             /*Mentores que tengan cursos*/
             $mentores = DB::table('wp98_users')
                         ->join('courses', 'courses.mentor_id', '=', 'wp98_users.id')
-                        ->join('categories', 'categories.id', '=', 'courses.category_id')
-                        ->select(array ('wp98_users.display_name as nombre', 'wp98_users.avatar as avatar', 'categories.title as categoria', 'courses.mentor_id as mentor_id'))
+                        ->select(array ('wp98_users.display_name as nombre', 'wp98_users.avatar as avatar', 'courses.mentor_id as mentor_id'))
+                        ->groupBy('courses.mentor_id', 'wp98_users.display_name', 'wp98_users.avatar')
                         ->get();
+            
+            foreach ($mentores as $mentor) {
+                $cursostmp = DB::table('courses')->where('mentor_id', $mentor->mentor_id)->get();
+                $cantCateg = count($cursostmp);
+                $cont = 0;
+                foreach ($cursostmp as $curso) {
+                    $cate = DB::table('categories')->where('id', $curso->category_id)->first();
+
+                    if ($cantCateg == 1) {
+                        $string = $cate->title;
+                    }else{
+                        if ($cont == 0) {
+                            $string = $cate->title;
+                        }else{
+                            $string = $string.', '.$cate->title;
+                        }
+                    }
+                    $cont++;
+                }
+                $mentor->categoria = $string;
+            }
         }
 
         return view('cursos.cursos')->with(compact('username','cursosDestacados', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next', 'courses', 'mentores', 'cursos', 'cursosRecomendados', 'total', 'last_course'));
@@ -294,7 +321,13 @@ class CourseController extends Controller{
     public function my_courses(){
         $cursos = Auth::user()->courses_buyed->take(12);
 
-        return view('cursos.all_courses', compact('cursos'));
+        $refeDirec = 0;
+
+        if(Auth::user()){
+            $refeDirec = User::where('referred_id', Auth::user()->ID)->count('ID');
+        }
+
+        return view('cursos.all_courses', compact('cursos', 'refeDirec'));
 
     }
 
@@ -340,8 +373,12 @@ class CourseController extends Controller{
         //Cursos favoritos de un usuario
 
         $cursos_favoritos = Auth::user()->courses_buyed()->wherePivot('favorite', '=', 1)->get();
+
+        //directos
+        $directos = User::where('referred_id', Auth::user()->ID)->count('ID');
+        
         //return $cursos_favoritos;
-         return view('timelive.favorite', compact('eventos_favoritos', 'cursos_favoritos'));
+         return view('timelive.favorite', compact('eventos_favoritos', 'cursos_favoritos','directos'));
     }
 
     /**

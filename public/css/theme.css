@@ -84,7 +84,7 @@
     padding-bottom: 30px;
 }
 .carousel-caption{
-    width: 30%;
+    width: auto;
     left: 10% !important;
     right: 0 !important;
     top: 5% !important;
@@ -150,7 +150,7 @@
 }
 .new-course-img{
     filter: brightness(80%);
-    height: 450px;
+    max-height: 230px;
 }
 .new-course-title{
     font-size: 20px; 
@@ -397,7 +397,7 @@
     font-size: 12px;
     }
     .carousel-caption{
-        width: 50%;
+        width: auto;
     }
     .course-label{
         padding-bottom: 5px; 

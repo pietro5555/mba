@@ -72,13 +72,17 @@ class EventsController extends Controller
             'Authorization' => 'Bearer '.Auth::user()->streaming_token
         ];
 
+        $p =  $request->date."T".$request->time;
+        $carbon = new Carbon($p);
+        $fecha = $carbon->subHours(5); 
+        $ultFecha = $fecha->format('Y-m-d H:i:s');
         $creacionEvento = $client->request('POST', 'api/meetings', [
             'headers' => $headers,
             'form_params' => [
                 'title' => $request->title,
                 'agenda' => $request->description,
                 'description' => $request->description,
-                'start_date_time' => $request->date."T".$request->time,
+                'start_date_time' => $ultFecha,
                 'period' => $request->duration,
                 'category' =>[$request->category_id],
                 'type' => ['webinar']
@@ -89,6 +93,7 @@ class EventsController extends Controller
         
         $evento = new Events($request->all());
         $evento->uuid = $result2->meeting->uuid;
+        $evento->url_streaming = 'https://streaming.shapinetwork.com/app/live/meetings/'.$evento->uuid;
         $evento->status = 1;
         $evento->save();
 
@@ -545,5 +550,16 @@ public function schedule($event_id, Request $request){
      
      $funciones->msjSistema('Eliminado con exito', 'success');
      return redirect()->back();
+    }
+
+    public function transmitir($id){
+        $evento = Events::find($id);
+        $fecha = $evento->date."T".$evento->time;
+        $fecha2 = "2020-09-27T18:55:00";
+        $fechaEvento = new Carbon($fecha);
+        $fechaActual = new Carbon($fecha2);
+        //dd($fecha2);
+
+        return view('transmitir')->with(compact('evento', 'fechaEvento', 'fechaActual'));
     }
 }

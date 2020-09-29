@@ -29,8 +29,13 @@ class TransmisionesController extends Controller
         Carbon::setLocale('es');
     }
 
+<<<<<<< HEAD
     //vista de transmisiones
    /* public function transmisiones(){
+=======
+ //vista de transmisiones
+    public function transmisiones(){
+>>>>>>> cf8a5c5099f246de6d539f9d994b7d501ac90ccc
         
         $anuncio =[];
          $finalizados = Events::where('status', '3')->orderBy('id', 'DESC')->take(9)->get();
@@ -53,6 +58,7 @@ class TransmisionesController extends Controller
             'title' => $banner->title,
             'fechacompleta' => $fech,
             'fecha' => $banner->date,
+            'time' => $banner->time,
 
            ];
          }
@@ -68,13 +74,15 @@ class TransmisionesController extends Controller
 
         foreach($finalizados as $fin){
          $user = User::find($fin->user_id);
-         $cursos = Course::find($fin->course_id);
-         $categoria = Category::find($cursos->category_id);
+         $cursos = Course::where('category_id', $fin->category_id)->first();
+         $categoria = Category::find($fin->category_id);
+         $comentarios = Rating::where('course_id', $cursos->id)->count('id');
          $fin->avatar = $user->avatar;
          $fin->nombre = $user->display_name;
          $fin->title_cate = $categoria->title;
 
-         //
+         //vistas, comentarios, me gusta, compartir
+         $fin->coment = $comentarios;
          $fin->views = $cursos->views;
          $fin->likes = $cursos->likes;
          $fin->shares = $cursos->shares;

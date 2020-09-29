@@ -177,8 +177,7 @@
 
 .new-course-img {
     filter: brightness(80%);
-    /*max-height: 230px;*/
-    max-height: 450px;
+    max-height: 230px;
 }
 
 .new-course-title {

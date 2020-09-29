@@ -183,6 +183,7 @@
 .new-course-title {
     font-size: 20px;
     font-weight: bold;
+    line-height: 1;
 }
 
 .new-course-category {
@@ -654,7 +655,7 @@
 .carousel-image {
     background: transparent linear-gradient(180deg, #00000000 0%, #000000 100%) 0% 0% no-repeat padding-box;
     opacity: 8;
-    height: 320px;
+    max-height: 250px;
     width: 320px;
 }
 

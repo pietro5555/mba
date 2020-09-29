@@ -66,32 +66,57 @@
                <div class="col-md-9">
                   <h3 class="text-white">{{ $curso->title }}</h3>
                   <div>
-                     @if (number_format($curso->promedio, 0) >= 1)
-                        <i class="fa fa-star text-warning"></i>
+                     @if ( (!Auth::guest()) && (!is_null($progresoCurso)) && (is_null($miValoracion)) ) 
+                        <p class="rating">
+                           <input id="d-radio1c" type="radio" name="points" value="5">
+                           <label for="d-radio1c" href="#ratingModal" data-toggle="modal">
+                              @if (number_format($curso->promedio, 0) >= 5) <i class="fa fa-star" style="color: orange;"></i> @else <i class="fa fa-star-o"></i>@endif
+                           </label>
+                           <input id="d-radio2c" type="radio" name="points" value="4">
+                           <label for="d-radio2c" href="#ratingModal" data-toggle="modal">
+                               @if (number_format($curso->promedio, 0) >= 4) <i class="fa fa-star" style="color: orange;"></i> @else <i class="fa fa-star-o"></i>@endif
+                           </label>
+                           <input id="d-radio3c" type="radio" name="points" value="3">
+                           <label for="d-radio3c" href="#ratingModal" data-toggle="modal">
+                               @if (number_format($curso->promedio, 0) >= 3) <i class="fa fa-star" style="color: orange;"></i> @else <i class="fa fa-star-o"></i>@endif
+                           </label>
+                           <input id="d-radio4c" type="radio" name="points" value="2">
+                           <label for="d-radio4c" href="#ratingModal" data-toggle="modal">
+                               @if (number_format($curso->promedio, 0) >= 2) <i class="fa fa-star" style="color: orange;"></i> @else <i class="fa fa-star-o"></i>@endif
+                           </label>
+                           <input id="d-radio5c" type="radio" name="points" value="1">
+                           <label for="d-radio5c" href="#ratingModal" data-toggle="modal">
+                               @if (number_format($curso->promedio, 0) >= 1) <i class="fa fa-star text" style="color: orange;"></i> @else <i class="fa fa-star-o text"></i>@endif
+                           </label>
+                        </p>
                      @else
-                        <a href="#ratingModal" data-toggle="modal"><i class="fa fa-star-o text-secondary"></i></a>
+                        @if (number_format($curso->promedio, 0) >= 1)
+                           <i class="fa fa-star text-warning"></i>
+                        @else
+                           <i class="fa fa-star-o text-secondary"></i>
+                        @endif
+                        @if (number_format($curso->promedio, 0) >= 2)
+                           <i class="fa fa-star text-warning"></i>
+                        @else
+                          <i class="fa fa-star-o text-secondary"></i>
+                        @endif
+                        @if (number_format($curso->promedio, 0) >= 3)
+                           <i class="fa fa-star text-warning"></i>
+                        @else
+                           <i class="fa fa-star-o text-secondary"></i>
+                        @endif
+                        @if (number_format($curso->promedio, 0) >= 4)
+                           <i class="fa fa-star text-warning"></i>
+                        @else
+                           <i class="fa fa-star-o text-secondary"></i>
+                        @endif
+                        @if (number_format($curso->promedio, 0) >= 5)
+                           <i class="fa fa-star text-warning"></i>
+                        @else
+                           <i class="fa fa-star-o text-secondary"></i>
+                        @endif
                      @endif
-                     @if (number_format($curso->promedio, 0) >= 2)
-                        <i class="fa fa-star text-warning"></i>
-                     @else
-                       <a href="#ratingModal" data-toggle="modal"><i class="fa fa-star-o text-secondary"></i></a>
-                     @endif
-                     @if (number_format($curso->promedio, 0) >= 3)
-                        <i class="fa fa-star text-warning"></i>
-                     @else
-                        <a href="#ratingModal" data-toggle="modal"><i class="fa fa-star-o text-secondary"></i></a>
-                     @endif
-                     @if (number_format($curso->promedio, 0) >= 4)
-                        <i class="fa fa-star text-warning"></i>
-                     @else
-                        <a href="#ratingModal" data-toggle="modal"><i class="fa fa-star-o text-secondary"></i></a>
-                     @endif
-                     @if (number_format($curso->promedio, 0) >= 5)
-                        <i class="fa fa-star text-warning"></i>
-                     @else
-                     <a href="#ratingModal" data-toggle="modal"><i class="fa fa-star-o text-secondary"></i></a>
-                        
-                     @endif
+                     
                   </div>
                </div>
 
@@ -139,9 +164,9 @@
                         @endif
                      @else
                      <a href="#" data-toggle="modal" class="btn btn-info play-course-button btn-block"><i class="fa fa-list"></i> VER LECCIONES</a>
-                        @if (is_null($miValoracion))
+                        <!--@if (is_null($miValoracion))
                            <a href="#ratingModal" data-toggle="modal" class="btn btn-info play-course-button btn-block"><i class="fa fa-star"></i> VALORAR</a>
-                        @endif
+                        @endif-->
                         @if ($progresoCurso->certificate == 1)
                            <a href="{{ route('client.courses.get-certificate', $curso->id) }}" class="btn btn-primary play-course-button btn-block"><i class="fas fa-certificate"></i> OBTENER CERTIFICADO</a>
                         @else
@@ -328,7 +353,7 @@
                <div class="modal-body">
                   <div class="form-group">
                      <label for="comment" style="color: white;">Comentario</label>
-                     <textarea class="form-control" name="comment" id="comment" rows="3" style="background-color: #1C1D21;" required></textarea>
+                     <textarea class="form-control" name="comment" id="comment" rows="3" style="background-color: #1C1D21;"></textarea>
                   </div>
                   <div class="form-group">
                      <div class="row">

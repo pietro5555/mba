@@ -16,7 +16,7 @@
             <button class="btn text-white btn-color-green" onclick="pagarC()">Cripto</button><br><br>
         </div>
     </div>
-    <div class="stripe d-none">
+    <div id="stripe" class="stripe d-none">
         <form action="{{route('shopping-cart.finish')}}" method="POST">
             {{ csrf_field() }}
             <input type="hidden" name="metodo" value="stripe">
@@ -56,7 +56,7 @@
                 <button class="btn text-white btn-info" onclick="pagarC2()">Cripto</button><br><br>
             </div>
         </div>
-        <div class="stripe2 d-none">
+        <div id="stripe2" class="stripe2 d-none">
             <form action="{{route('shopping-cart.pay-membership-stripe')}}" method="POST">
                 {{ csrf_field() }}
                 <script

@@ -17,4 +17,9 @@ class Lesson extends Model
     public function materials(){
         return $this->hasMany('App\Models\SupportMaterial');
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

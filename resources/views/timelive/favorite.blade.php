@@ -25,7 +25,7 @@
   <div class="container-fluid">
   <div class="row">
         @foreach ($eventos_favoritos as $favorito)
-            <div class="col-md-3" style="margin-top: 20px;">
+            <div class="col-md-3">
                 @if (!is_null($favorito->image))
                 <img src="{{ asset('uploads/images/banner/'.$favorito->image) }}" class="card-img-top" alt="..." style="height: 200px;"> 
                 @else

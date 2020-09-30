@@ -137,3 +137,8 @@ Dev: Carlos Gonzalez
 28/09/2020
 Dev:Crisleivys Gil
 *Agregado el campo subcategory_id (correr el script events)
+
+29/09/2020
+Dev:Crisleivys Gil
+*Agregado el campo time en la tabla calendarios (correr el script calendarios)
+*Creada la tabla comments (correr el script comments)

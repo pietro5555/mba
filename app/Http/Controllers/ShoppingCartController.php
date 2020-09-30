@@ -89,7 +89,7 @@ class ShoppingCartController extends Controller
             if($direcip == null){
               $total = $curso->price;          
               }else{
-              $total = $this->descuentogeneral($curso->price); 
+              $total = $this->descuentogeneral($curso->id); 
             }
             // $categoria = null;
             // $mentor = null;
@@ -355,20 +355,14 @@ class ShoppingCartController extends Controller
     }
 
 
-    public function descuentogeneral($precio){
+    public function descuentogeneral($id){
        
-       $total = $precio;
-
-       if($precio == 24){
-         $total = 9.99;
-       }elseif($precio == 22){
-         $total = 10.99;
-       }elseif($precio == 20){
-         $total = 11.99;
-       }elseif($precio == 18){
-         $total = 12.99;
-       }elseif($precio == 16){
-         $total = 13.99; 
+     $descuento = DB::table('memberships')->where('id', $id)->first();
+       
+       if($descuento != null){
+           $total = $descuento->descuento;
+       }else{
+           $total = $descuento->precio;
        }
 
        return $total;

@@ -19,7 +19,7 @@
 @push('script')
 <script type="text/javascript">
   var rangos = null
-  var productos = null
+  var productos = null 
   $(document).ready(function () {
     $.get('getrangosall', function (response) {
       rangos = JSON.parse(response)
@@ -28,7 +28,7 @@
       productos = JSON.parse(response)
     })
   })
-
+ 
   function toggle() {
     $('.mostrar').toggle('slow')
   }

@@ -8,7 +8,7 @@
                 <button type="button" class="btn btn-info btn-block hh" id="modal">
                     Editar
                 </button>
-            </div>
+            </div> 
         </div>
         <div class="box-body">
             <div class="alert alert-warning alert-dismissible" role="alert">

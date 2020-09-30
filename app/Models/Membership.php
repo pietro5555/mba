@@ -8,7 +8,7 @@ class Membership extends Model
 {
     protected $table = 'memberships';
 
-    protected $fillable = ['name', 'image', 'price'];
+    protected $fillable = ['name', 'image', 'price','descuento', 'ganancia'];
 
     public function users(){
         return $this->hasMany('App\Models\User');

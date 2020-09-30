@@ -21,11 +21,6 @@ class ShoppingCartController extends Controller
         /*Paises para el formulario*/
         $paises = Paises::all();
 
-        /* almacenamos el ID de la persona que envio el link */
-        if(!empty(request()->ref)){
-           $this->almacenar_addres();
-        }
-
         if (Auth::guest()){
 
             $items = DB::table('shopping_cart')->where('user_id', '=', request()->ip())
@@ -179,7 +174,7 @@ class ShoppingCartController extends Controller
                 $item->date = date('Y-m-d');
                 $item->save();
             }
-
+            
             return redirect('shopping-cart/memberships');
         }
     }
@@ -280,7 +275,7 @@ class ShoppingCartController extends Controller
         $detalle->membership_id = $detallesMembresia->idmembresia;
         $detalle->amount = $detallesMembresia->precio;
         $detalle->save();
-
+        
         $cursoAsociado = ShoppingCart::where('user_id', '=', $datosOrden->user_id)
                             ->orderBy('id', 'DESC')
                             ->first();
@@ -301,7 +296,7 @@ class ShoppingCartController extends Controller
             ->where('ID', '=', $datosOrden->user_id)
             ->update(['membership_id' => $detallesMembresia->idmembresia,
                       'status' => 1]);
-        
+                      
         DB::table('shopping_cart')
             ->where('user_id', '=', $datosOrden->user_id)
             ->delete();
@@ -315,6 +310,13 @@ class ShoppingCartController extends Controller
      */
     public function memberships()
     {
+        
+        /* almacenamos el ID de la persona que envio el link */
+        if(!empty(request()->ref)){
+           $this->almacenar_addres();
+        }
+        
+        
         $dataDescripcion = [
             'Principiante' => 'Accesos a todos los cursos de nivel principiante',
             'Basico' => 'Accesos a todos los cursos de nivel Basico',

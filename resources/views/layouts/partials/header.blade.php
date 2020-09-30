@@ -10,6 +10,9 @@
             <li class="nav-item active">
                 <a class="nav-link items-header" href="{{route('index')}}">INICIO</a>
             </li>
+            <li class="nav-item active">
+                <a class="nav-link items-header" href="{{route('shopping-cart.membership')}}">MEMBRESIAS</a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link items-header" href="{{ route('courses') }}">CURSOS</a>
             </li>

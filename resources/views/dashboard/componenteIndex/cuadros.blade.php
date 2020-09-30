@@ -368,12 +368,12 @@
                 </div>
 
                 <div class="col-md-9 col-xs-12 white" style="font-size: 22px; margin-top: 15px; color:#28a745;">
-                    {{route('shopping-cart.index').'?ref='.Auth::user()->ID}}
+                    {{route('shopping-cart.membership').'?ref='.Auth::user()->ID}}
 
                     <i class="far fa-copy" style="margin-right: 20px;"></i>
 
                     <small id="shoping" style="display: none;">
-                    {{route('shopping-cart.index').'?ref='.Auth::user()->ID}}
+                    {{route('shopping-cart.membership').'?ref='.Auth::user()->ID}}
                     </small>
                 </div>
             </div>

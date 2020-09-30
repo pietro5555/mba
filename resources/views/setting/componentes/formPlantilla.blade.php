@@ -36,6 +36,7 @@
                                 <span class="var">@idpatrocinio</span>
                                 <span class="var">@clave</span>
                                 <span class="var">@correo</span>
+                                <span class="var">@Nafiliacion</span>
                             </div>
                             <div class="form-group col-sm-12 ji">
                                 <div class="form-group col-sm-6">

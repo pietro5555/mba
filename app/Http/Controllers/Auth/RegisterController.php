@@ -184,8 +184,8 @@ class RegisterController extends Controller
         
         if($data['shoping'] != null){
             
-         $funciones->msjSistema('Su Registro ha sido exitoso el ID es: '.$user->ID, 'success');
-         return redirect()->back(); 
+         Auth::loginUsingId($user->ID);     
+         return redirect()->back()->with('msj-exitoso', 'Su Registro ha sido exitoso su ID es: '.$user->ID);  
 
         }elseif (Auth::guest()){
 
@@ -297,6 +297,7 @@ class RegisterController extends Controller
             $mensaje = str_replace('@correo', ' '.$data['user_email'].' ', $mensaje);
             $mensaje = str_replace('@usuario', ' '.$data['nameuser'].' ', $mensaje);
             $mensaje = str_replace('@idpatrocinio', ' '.$referido.' ', $mensaje);
+            $mensaje = str_replace('@Nafiliacion', ' '.$user->ID.' ', $mensaje);
             if (strcasecmp(env('MAIL_HOST'), 'smtp.localhost.com') !== 0) {
                 Mail::send('emails.plantilla',  ['data' => $mensaje, 'firma' => $firma], function($msj) use ($plantilla, $data){
                     $msj->subject($plantilla->titulo);

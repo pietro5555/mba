@@ -137,8 +137,13 @@ Dev: Carlos Gonzalez
 28/09/2020
 Dev:Crisleivys Gil
 *Agregado el campo subcategory_id (correr el script events)
-
+28/09/2020
+Dev: Luisana Marín
+*Modifiqué el archivo IPNController en la carpeta vendor/hexters/src/HttP/Controllers (Reemplazar archivo IPNController)
+*Poner como nulo el campo comments de la tabla ratings
 29/09/2020
 Dev:Crisleivys Gil
 *Agregado el campo time en la tabla calendarios (correr el script calendarios)
 *Creada la tabla comments (correr el script comments)
+
+

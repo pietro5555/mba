@@ -11,19 +11,10 @@
                 <a class="nav-link items-header" href="{{route('index')}}">INICIO</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link items-header" href="#">NOSOTROS</a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link items-header" href="{{ route('courses') }}">CURSOS</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link items-header" href="{{route('timelive')}}">STREAMING</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link items-header" href="#">BLOG</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link items-header" href="#">FXT LIVE</a>
+                <a class="nav-link items-header" href="{{route('transmisiones')}}">FXT LIVE</a>
             </li>
             @if (Auth::guest())
                 <li class="nav-item dropdown">

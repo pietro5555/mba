@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str as Str;
 use App\Models\Course;
 use App\Models\Category;
@@ -144,7 +144,10 @@ class CursosController extends Controller
 
        if($courses)
        {
-        return view('cursos.cursos_categorias', compact('courses', 'category_name', 'mentores', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next'));
+
+        $directos = User::where('referred_id', Auth::user()->ID)->count('ID');
+        
+        return view('cursos.cursos_categorias', compact('courses', 'category_name', 'mentores', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next','directos'));
        }
     }
 
@@ -154,7 +157,7 @@ class CursosController extends Controller
         ->select('wp98_users.display_name as nombre', 'wp98_users.profession as profession' ,'wp98_users.about as biography', 'wp98_users.avatar as avatar')
         ->first();
 
-        $referedd_mentor = User::where('referred_id', $mentor_id)->count('ID');
+         $directos = User::where('referred_id', Auth::user()->ID)->count('ID');
 
          $courses= DB::table('wp98_users')
         ->join('courses', 'courses.mentor_id', '=', 'wp98_users.id')
@@ -164,7 +167,7 @@ class CursosController extends Controller
         ->get();
 
       // return dd($cursos);
-        return view('cursos.perfil_mentor', compact('courses','mentor_info','referedd_mentor'));
+        return view('cursos.perfil_mentor', compact('courses','mentor_info','directos'));
     }
 
 

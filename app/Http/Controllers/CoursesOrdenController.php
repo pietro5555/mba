@@ -116,7 +116,7 @@ class CoursesOrdenController extends Controller
                 'note' => 'Compra curso por '.number_format($data['total'], 2, ',', '.').' USD',
                 'idorden' => $data['idorden'],
                 'buyer_email' => $data['email'],
-                'redirect_url' => route('shopping-cart.index')
+                'redirect_url' => route('courses')
             ];
             $productos = json_decode($data['productos']);
             foreach ($productos as $producto) {

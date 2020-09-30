@@ -2,11 +2,9 @@
 
 @foreach ($items as $item)
 <div class="media mb-2">
-    <img src="{{$item->curso['img']}}" class="align-self-start mr-3" alt="curso" height="200" width="150">
+    <img src="{{$item->curso['img']}}" class="align-self-start mr-3" alt="curso" style="max-height: 200px; max-width: 150px;">
     <div class="media-body">
       <h5 class="mt-0 text-white"><strong>{{$item->curso['titulo']}}</strong></h5>
-      <p>{{$item->curso['categoria']}}</p>
-      <p class="text-white"><strong>{{$item->curso['mentor']}}</strong></p>
       <br>
       <h4 class="float-righ text-right text-white">
           <small>Costo</small> <strong>{{$item->curso['precio']}} USD</strong>

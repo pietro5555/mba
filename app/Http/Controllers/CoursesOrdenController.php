@@ -11,6 +11,7 @@ use Stripe\Charge;
 use App\Models\ShoppingCart;
 use App\Models\Course;
 use App\Models\Category;
+use App\Models\Addresip;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -146,11 +147,20 @@ class CoursesOrdenController extends Controller
         $items = ShoppingCart::where('user_id', '=', $iduser)
         ->orderBy('date', 'DESC')
         ->get();
+        
+        $enlace = Addresip::where('ip', request()->ip())->first();
 
         $arrayCursos = [];
 
         $totalItems = 0;
         foreach ($items as $item) {
+            
+            if($direcip == null){
+              $precio = $curso->price;          
+              }else{
+              $precio = $curso->descuento; 
+            }
+            
             $curso = Course::find($item->course_id);
             $categoria = null;
             $mentor = null;
@@ -163,10 +173,10 @@ class CoursesOrdenController extends Controller
                 'titulo' => (!empty($curso)) ? $curso->title : 'Curso no disponible',
                 'categoria' => (!empty($categoria)) ? $categoria->title : 'Categoria no disponible',
                 'mentor' => (!empty($mentor)) ? $mentor->display_name : 'Mento no disponible',
-                'precio' => (!empty($curso)) ? $curso->price : 0,
+                'precio' => (!empty($curso)) ? $precio : 0,
                 'img' => (!empty($curso)) ? asset('uploads/images/courses/covers/'.$curso->cover) : 'no disponible'
             ];
-            $totalItems += (!empty($curso)) ? $curso->price : 0;
+            $totalItems += (!empty($curso)) ? $precio : 0;
 
             $item->delete();
         }
@@ -189,6 +199,8 @@ class CoursesOrdenController extends Controller
             Stripe::setApiKey($secret_key);
 
             $idmembresia = $this->getDataMembeship(Auth::user()->ID);
+            
+            $enlace = Addresip::where('ip', request()->ip())->first();
 
             $membresia = DB::table('memberships')->where('id', $idmembresia)->first();
 
@@ -199,20 +211,21 @@ class CoursesOrdenController extends Controller
 
             $charge = Charge::create(array(
                 'customer' => $customer->id,
-                'amount'   => ($membresia->price * 100),
+                'amount'   => (($enlace != null) ? $membresia->descuento : $membresia->price * 100),
                 'currency' => 'usd'
             ));
 
             $datosMembresia = [
                 'idmembresia' => $membresia->id,
                 'nombre' => $membresia->name,
-                'precio' => $membresia->price,
-                'img' => asset('uploads/images/memberships/'.$membresia->image)
+                'precio' => ($enlace != null) ? $membresia->descuento : $membresia->price,
+                'img' => asset('uploads/images/memberships/'.$membresia->image),
+                'links' => ($enlace != null) ? $enlace->padre : 0,
             ];
             
             $orden = new CourseOrden();
             $orden->user_id = Auth::user()->ID;
-            $orden->total = $membresia->price;
+            $orden->total = ($enlace != null) ? $membresia->descuento : $membresia->price;
             $orden->detalles = json_encode($datosMembresia);
             $orden->idtransacion_stripe = $request->stripeToken;
             $orden->status = 1;
@@ -224,6 +237,9 @@ class CoursesOrdenController extends Controller
             DB::table('shopping_cart')
                 ->where('user_id', '=', Auth::user()->ID)
                 ->delete();
+                
+            /* eliminar la direccion ip y el id de la persona que me dio el link*/
+             Addresip::where('ip', request()->ip())->delete();    
 
             return redirect('/')->with('msj-exitoso', 'Tu compra de membresría ha sido completada con éxito.');
         } catch (\Throwable $th) {
@@ -235,26 +251,28 @@ class CoursesOrdenController extends Controller
         try {
 
             $idmembresia = $this->getDataMembeship(Auth::user()->ID);
+            $enlace = Addresip::where('ip', request()->ip())->first();
 
             $membresia = DB::table('memberships')->where('id', $idmembresia)->first();
            
             $datosMembresia = [
                 'idmembresia' => $membresia->id,
                 'nombre' => $membresia->name,
-                'precio' => $membresia->price,
+                'precio' => ($enlace != null) ? $membresia->descuento : $membresia->price,
+                'links' => ($enlace != null) ? $enlace->padre : 0,
                 'img' => asset('uploads/images/memberships/'.$membresia->image)
             ];
             
             $orden = new CourseOrden();
             $orden->user_id = Auth::user()->ID;
-            $orden->total = $membresia->price;
+            $orden->total = ($enlace != null) ? $membresia->descuento : $membresia->price;
             $orden->detalles = json_encode($datosMembresia);
             $orden->status = 0;
             $orden->save();
 
             $transacion = [
-                'amountTotal' => $membresia->price,
-                'note' => 'Compra membresía por '.number_format($membresia->price, 2, ',', '.').' USD',
+                'amountTotal' => ($enlace != null) ? $membresia->descuento : $membresia->price,
+                'note' => 'Compra membresía por '.number_format(($enlace != null) ? $membresia->descuento : $membresia->price, 2, ',', '.').' USD',
                 'idorden' => $orden->id,
                 'buyer_email' => Auth::user()->user_email,
                 'redirect_url' => route('index')
@@ -262,11 +280,14 @@ class CoursesOrdenController extends Controller
 
             $transacion['items'][] = [
                 'itemDescription' => $membresia->name,
-                'itemPrice' => $membresia->price, // USD
+                'itemPrice' => ($enlace != null) ? $membresia->descuento : $membresia->price, // USD
                 'itemQty' => (INT) 1,
-                'itemSubtotalAmount' => $membresia->price // USD
+                'itemSubtotalAmount' => ($enlace != null) ? $membresia->descuento : $membresia->price // USD
             ];
             
+            /* eliminar la direccion ip y el id de la persona que me dio el link*/
+            Addresip::where('ip', request()->ip())->delete();
+         
             $ruta = \CoinPayment::generatelink($transacion);
             return redirect($ruta);
         } catch (\Throwable $th) {

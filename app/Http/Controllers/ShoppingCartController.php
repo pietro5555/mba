@@ -207,9 +207,6 @@ class ShoppingCartController extends Controller
      * Procesar Compra una vez verificado el pago
     */
     public function process_cart($order){
-           
-        /* obtener el ID de la persona que envio el link */
-        $enlace = Addresip::where('ip', request()->ip())->first();
 
         $datosOrden = DB::table('courses_orden')
                         ->where('id', '=', $order)
@@ -221,15 +218,12 @@ class ShoppingCartController extends Controller
         if (!is_null($datosOrden->idtransacion_stripe)){
             $compra->payment_method = 'Stripe';
             $compra->payment_id = $datosOrden->idtransacion_stripe;
-            $compra->link = ($enlace != null) ? $enlace->padre : 0;
         }else if (!is_null($datosOrden->idtransacion_coinpaymen)){
             $compra->payment_method = 'Coinpayment';
             $compra->payment_id = $datosOrden->idtransacion_coinpaymen;
-            $compra->link = ($enlace != null) ? $enlace->padre : 0;
         }
         $compra->date = date('Y-m-d');
         $compra->status = 1;
-        $compra->save();
 
         $items = json_decode($datosOrden->detalles);
                     
@@ -249,19 +243,17 @@ class ShoppingCartController extends Controller
                             'start_date' => date('Y-m-d'),
                             'created_at' => $fecha,
                             'updated_at' => $fecha]);
+                            
+            $compra->link = $item->links;                
         }
-
-        /* eliminar la direccion ip y el id de la persona que me dio el link*/
-        Addresip::where('ip', request()->ip())->delete();
+        
+        $compra->save();
     }
 
     /**
      * Procesar Compra de membresía una vez verificado el pago
     */
     public function process_membership_buy($order){
-
-        /* obtener el ID de la persona que envio el link */
-        $enlace = Addresip::where('ip', request()->ip())->first();
 
         $datosOrden = DB::table('courses_orden')
                         ->where('id', '=', $order)
@@ -273,17 +265,17 @@ class ShoppingCartController extends Controller
         if (!is_null($datosOrden->idtransacion_stripe)){
             $compra->payment_method = 'Stripe';
             $compra->payment_id = $datosOrden->idtransacion_stripe;
-            $compra->link = ($enlace != null) ? $enlace->padre : 0;
         }else if (!is_null($datosOrden->idtransacion_coinpaymen)){
             $compra->payment_method = 'Coinpayment';
             $compra->payment_id = $datosOrden->idtransacion_coinpaymen;
-            $compra->link = ($enlace != null) ? $enlace->padre : 0;
         }
         $compra->date = date('Y-m-d');
         $compra->status = 1;
-        $compra->save();
 
         $detallesMembresia = json_decode($datosOrden->detalles);
+        
+        $compra->link = $detallesMembresia->links;
+        $compra->save();
 
         $detalle = new PurchaseDetail();
         $detalle->purchase_id = $compra->id;
@@ -309,9 +301,6 @@ class ShoppingCartController extends Controller
             ->where('ID', '=', $datosOrden->user_id)
             ->update(['membership_id' => $detallesMembresia->idmembresia,
                       'status' => 1]);
-
-        /* eliminar la direccion ip y el id de la persona que me dio el link*/
-        Addresip::where('ip', request()->ip())->delete();
     }
 
 

@@ -58,7 +58,8 @@ class CalendarioGoogleController extends Controller
             $service = new Google_Service_Calendar($this->client);
             
             $evento = Events::find($id);  
-            $start = new Carbon($evento->date);
+            $concatenar = $evento->date.' '.$evento->time;
+            $start = new Carbon($concatenar);
             $end = $start->addMinutes($evento->duration);
 
             $calendarId = 'primary';

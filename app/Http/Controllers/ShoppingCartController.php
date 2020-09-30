@@ -178,11 +178,9 @@ class ShoppingCartController extends Controller
                 $item->course_id = $id;
                 $item->date = date('Y-m-d');
                 $item->save();
-
-                return redirect('shopping-cart')->with('msj-exitoso', 'El item ha sido agregado a su carrito de compras con éxito.');
-            }else{
-                return redirect('shopping-cart')->with('msj-informativo', 'El item ya se encuentra en su carrito de compras.');
             }
+
+            return redirect('shopping-cart/memberships');
         }
     }
 
@@ -283,24 +281,30 @@ class ShoppingCartController extends Controller
         $detalle->amount = $detallesMembresia->precio;
         $detalle->save();
 
-        /*$cursos = Course::where('subcategory_id', $detallesMembresia->idmembresia)->get();
+        $cursoAsociado = ShoppingCart::where('user_id', '=', $datosOrden->user_id)
+                            ->orderBy('id', 'DESC')
+                            ->first();
+        
+        if ($cursoAsociado->course->subcategory_id <= $detallesMembresia->idmembresia){
+            $fecha = date('Y-m-d H:i:s');
 
-        $fecha = date('Y-m-d H:i:s');
-
-        foreach ($cursos as $curso) {
             DB::table('courses_users')
-                ->insert(['course_id' => $curso->idcurso,
+                ->insert(['course_id' => $cursoAsociado->course_id,
                             'user_id' => $datosOrden->user_id,
                             'progress' => 0,
                             'start_date' => date('Y-m-d'),
                             'created_at' => $fecha,
                             'updated_at' => $fecha]);
-        }*/
+        }
 
         DB::table('wp98_users')
             ->where('ID', '=', $datosOrden->user_id)
             ->update(['membership_id' => $detallesMembresia->idmembresia,
                       'status' => 1]);
+        
+        DB::table('shopping_cart')
+            ->where('user_id', '=', $datosOrden->user_id)
+            ->delete();
     }
 
 

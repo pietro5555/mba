@@ -233,10 +233,6 @@ class CoursesOrdenController extends Controller
 
             $carrito = new ShoppingCartController();
             $carrito->process_membership_buy($orden->id);
-
-            DB::table('shopping_cart')
-                ->where('user_id', '=', Auth::user()->ID)
-                ->delete();
                 
             /* eliminar la direccion ip y el id de la persona que me dio el link*/
              Addresip::where('ip', request()->ip())->delete();    

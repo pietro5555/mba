@@ -169,6 +169,7 @@ Route::group(['prefix' => 'installer'], function (){
   //vista del login (/login)
   Route::get('/log', 'LoginController@login')->name('log');
   Route::post('/autenticar', 'LoginController@autenticacion')->name('autenticar');
+  Route::post('/autshoping', 'LoginController@autshoping')->name('aut-shoping');
   
   /* Rutas de la Landing */
   Route::get('load-more-courses-new/{ultimoId}/{accion}', 'CourseController@load_more_courses_new')->name('landing.load-more-courses-new');

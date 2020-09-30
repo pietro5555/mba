@@ -248,6 +248,7 @@ class AdminController extends Controller
         foreach($users as $user){
                 $activacion->activarUsuarios($user->ID);
                 $comi->verificarCompras($user->ID);
+                $comi->verificarAfiliados($user->ID);
          }
         }
          
@@ -258,11 +259,13 @@ class AdminController extends Controller
             if ($user['rol'] != 0) {
                 $activacion->activarUsuarios($user['ID']);
                 $comi->verificarCompras($user['ID']);
+                $comi->verificarAfiliados($user['ID']);
             }
           }
         }
         
         $comi->verificarCompras(Auth::user()->ID);
+        $comi->verificarAfiliados(Auth::user()->ID);
         
         //puntos por compras propias y de red
         /*

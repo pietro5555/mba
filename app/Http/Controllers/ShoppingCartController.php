@@ -56,19 +56,33 @@ class ShoppingCartController extends Controller
             }
             */
         }else{
-            $items = DB::table('shopping_cart')->where('user_id', '=', Auth::user()->ID)
-                        ->orwhere('user_id', '=', request()->ip())
+             
+            $this->cambioUsers();       
+
+            $iteraciones = DB::table('shopping_cart')->where('user_id', '=', Auth::user()->ID)
                         ->orderBy('date', 'DESC')
                         ->get();
             
             $cantItems = 0;
 
-            foreach ($items as $item){     
+            foreach ($iteraciones as $iterar){ 
+
+            $contador = DB::table('shopping_cart')->where('user_id', '=', Auth::user()->ID)->where('course_id', $iterar->course_id)->count('id');
+
+                if($contador == 1){
                 $cantItems++;
+                }else{
+                 $contador = DB::table('shopping_cart')->where('user_id', '=', Auth::user()->ID)->where('course_id', $iterar->course_id)->where('id', $iterar->id)->delete();
+                }
             }
+
+            $items = DB::table('shopping_cart')->where('user_id', '=', Auth::user()->ID)->orderBy('date', 'DESC')->get();
         }
+
+
         $totalItems = 0;
         foreach ($items as $item) {
+
             $curso = DB::table('memberships')->where('id', $item->course_id)->first();
             $direcip = Addresip::where('ip', request()->ip())->first();
 
@@ -91,6 +105,7 @@ class ShoppingCartController extends Controller
                 'img' => (!empty($curso)) ? asset('/uploads/images/courses/covers/'.$curso->image) : 'no disponible'
             ];
             $totalItems += (!empty($curso)) ? $total : 0;
+          
         }
 
         $membresia = null;
@@ -177,13 +192,8 @@ class ShoppingCartController extends Controller
      */
     public function delete(Request $request, $id){
         if (Auth::guest()){
-            $items = $request->session()->pull('cart');
 
-            foreach ($items as $item) {
-                if ($item != $id){
-                    $request->session()->push('cart', $item);
-                }               
-            }
+            ShoppingCart::destroy($id);
 
             return redirect('shopping-cart')->with('msj-exitoso', 'El item ha sido eliminado de su carrito de compras con éxito.');
         }else{
@@ -198,8 +208,8 @@ class ShoppingCartController extends Controller
     */
     public function process_cart($order){
            
-        /* eliminar la direccion ip y el id de la persona que me dio el link*/
-        $direcip = Addresip::where('ip', request()->ip())->delete();
+        /* obtener el ID de la persona que envio el link */
+        $enlace = Addresip::where('ip', request()->ip())->first();
 
         $datosOrden = DB::table('courses_orden')
                         ->where('id', '=', $order)
@@ -211,9 +221,11 @@ class ShoppingCartController extends Controller
         if (!is_null($datosOrden->idtransacion_stripe)){
             $compra->payment_method = 'Stripe';
             $compra->payment_id = $datosOrden->idtransacion_stripe;
+            $compra->link = ($enlace != null) ? $enlace->padre : 0;
         }else if (!is_null($datosOrden->idtransacion_coinpaymen)){
             $compra->payment_method = 'Coinpayment';
             $compra->payment_id = $datosOrden->idtransacion_coinpaymen;
+            $compra->link = ($enlace != null) ? $enlace->padre : 0;
         }
         $compra->date = date('Y-m-d');
         $compra->status = 1;
@@ -238,12 +250,19 @@ class ShoppingCartController extends Controller
                             'created_at' => $fecha,
                             'updated_at' => $fecha]);
         }
+
+        /* eliminar la direccion ip y el id de la persona que me dio el link*/
+        Addresip::where('ip', request()->ip())->delete();
     }
 
     /**
      * Procesar Compra de membresía una vez verificado el pago
     */
     public function process_membership_buy($order){
+
+        /* obtener el ID de la persona que envio el link */
+        $enlace = Addresip::where('ip', request()->ip())->first();
+
         $datosOrden = DB::table('courses_orden')
                         ->where('id', '=', $order)
                         ->first();
@@ -254,9 +273,11 @@ class ShoppingCartController extends Controller
         if (!is_null($datosOrden->idtransacion_stripe)){
             $compra->payment_method = 'Stripe';
             $compra->payment_id = $datosOrden->idtransacion_stripe;
+            $compra->link = ($enlace != null) ? $enlace->padre : 0;
         }else if (!is_null($datosOrden->idtransacion_coinpaymen)){
             $compra->payment_method = 'Coinpayment';
             $compra->payment_id = $datosOrden->idtransacion_coinpaymen;
+            $compra->link = ($enlace != null) ? $enlace->padre : 0;
         }
         $compra->date = date('Y-m-d');
         $compra->status = 1;
@@ -287,6 +308,9 @@ class ShoppingCartController extends Controller
         DB::table('wp98_users')
             ->where('ID', '=', $datosOrden->user_id)
             ->update(['membership_id' => $detallesMembresia->idmembresia]);
+
+        /* eliminar la direccion ip y el id de la persona que me dio el link*/
+        Addresip::where('ip', request()->ip())->delete();
     }
 
 
@@ -348,5 +372,17 @@ class ShoppingCartController extends Controller
        }
 
        return $total;
+    }
+
+
+    public function cambioUsers(){
+
+        $cambio = DB::table('shopping_cart')->where('user_id', '=', request()->ip())
+                        ->get();
+            foreach($cambio as $camb){
+                $cambiando = ShoppingCart::find($camb->id);
+                $cambiando->user_id = Auth::user()->ID;
+                $cambiando->save();
+            }    
     }
 }

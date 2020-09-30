@@ -8,7 +8,7 @@ class Purchase extends Model
 {
     protected $table = 'purchases';
 
-    protected $fillable = ['user_id', 'amount', 'payment_method', 'payment_id', 'date', 'status'];
+    protected $fillable = ['user_id', 'amount', 'payment_method', 'payment_id', 'date', 'status','link'];
 
     public function user(){
         return $this->belongsTo('App\Models\User', 'user_id', 'ID');

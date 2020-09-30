@@ -24,6 +24,40 @@
 <h3 class="text-white">Registrate para disfrutar de tu compra</h3>
 <h6 class="text-white">Si ya estás registrado puedes <a href="#" onclick="toggle()">entrar</a></h6>
 
+{{-- notificaciones --}}
+
+      @if($errors->any())
+        <div class="alert alert-danger">
+            <button class="close" data-close="alert"></button>
+            <span>
+                <ul class="no-margin">
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </span>
+        </div>
+        <br>
+        @endif         
+
+     @if (Session::has('msj2'))
+    <div class="alert alert-success">
+    <button class="close" data-close="alert"></button>
+        <span>
+         {{Session::get('msj2')}}
+        </span>
+    </div>
+    @endif      
+
+    @if (Session::has('msj3'))
+    <div class="alert alert-danger">
+    <button class="close" data-close="alert"></button>
+        <span>
+         {{Session::get('msj3')}}
+        </span>
+    </div>
+    @endif
+
 <div class="col-md-12 mostrar" style="margin-top: 30px;">
 <form class="login-form" method="POST" action="{{ route('aut-shoping') }}" name="formulario">
                             {{ csrf_field() }}

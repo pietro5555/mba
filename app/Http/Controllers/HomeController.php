@@ -5,9 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Str as Str;
 use Auth; 
 use DB; 
-use Hash;
+use Hash; use Mail;
 use Carbon\Carbon;
 // modelo
 use App\Models\User; use App\Models\Settings; use App\Models\Formulario; use App\Models\SettingCliente;
@@ -21,6 +22,33 @@ use PDF;
 
 class HomeController extends Controller{
 
+   public function recover_password(Request $request){
+      $usuario = DB::table('wp98_users')
+                  ->select('ID', 'display_name')
+                  ->where('user_email', '=', $request->email)
+                  ->first();
+
+      if (!is_null($usuario)){
+         $claveTemporal = strtolower(Str::random(9));
+
+         DB::table('wp98_users')
+            ->where('id', '=', $usuario->ID)
+            ->update(['password' => Hash::make($claveTemporal)]);
+
+         $data['correo'] = $request->email;
+         $data['cliente'] = $usuario->display_name;
+         $data['clave'] = $claveTemporal;
+
+         Mail::send('emails.recoverPassword',['data' => $data], function($msg) use ($data){
+            $msg->to($data['correo']);
+            $msg->subject('Recuperar Contraseña');
+         });
+
+         return redirect('/log')->with('msj-exitoso', 'Se ha enviado una clave temporal a su correo registrado.');
+      }else{
+         return redirect('/log')->with('msj-erroneo', 'El correo ingresado no se encuentra registrado.');
+      }
+   }
    public function certificado(){
       //return view('certificado.tipo1');
       $pdf = PDF::loadView('certificado.tipo2');

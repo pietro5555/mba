@@ -8,7 +8,8 @@ use App\Models\Course;
 use App\Models\Category; 
 use App\Models\User;
 use App\Models\Lesson;
-use DB; use Auth;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class CourseController extends Controller{
     /**
@@ -177,6 +178,7 @@ class CourseController extends Controller{
                 $cursostmp = DB::table('courses')->where('mentor_id', $mentor->mentor_id)->get();
                 $cantCateg = count($cursostmp);
                 $cont = 0;
+                $string = '';
                 foreach ($cursostmp as $curso) {
                     $cate = DB::table('categories')->where('id', $curso->category_id)->first();
 
@@ -375,16 +377,6 @@ class CourseController extends Controller{
          return view('timelive.favorite', compact('eventos_favoritos', 'cursos_favoritos','directos'));
     }
 
-    /**
-    * Courses / Leccion
-    */
-
-    public function lesson($lesson_slug, $lesson_id, $course_id)
-    {
-        $lesson = Lesson::where('id', '=',$lesson_id)->get()->first();
-        $all_lessons = Lesson::where('course_id', '=',  $course_id)->get();
-        return view('cursos.leccion', compact('lesson', 'all_lessons'));
-    }
 
     /**
     * Admin / Cursos / Listado de Cursos / Nuevo Curso

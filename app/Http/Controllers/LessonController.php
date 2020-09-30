@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str as Str;
-use App\Models\Course; use App\Models\Lesson;
+use App\Models\Course;
+use App\Models\Lesson;
+use App\Models\Comment;
 use DB;
-
+use Auth;
+use Carbon\Carbon;
 class LessonController extends Controller{
     /**
     * Admin / Cursos / Listado de Cursos / Temario de un Curso
@@ -99,6 +102,33 @@ class LessonController extends Controller{
         $leccion->delete();
 
         return redirect('admin/courses/lessons/'.$leccion->course_id)->with('msj-exitoso', 'La lección ha sido eliminada con éxito.');
+    }
+
+      /**
+    * Courses / Leccion
+    */
+
+    public function lesson($lesson_slug, $lesson_id, $course_id)
+    {
+        $lesson = Lesson::where('id', '=',$lesson_id)->get()->first();
+        $all_lessons = Lesson::where('course_id', '=',  $course_id)->get();
+
+        $all_comments = DB::table('comments')->where('lesson_id', '=',$lesson_id)->get();
+        return view('cursos.leccion', compact('lesson', 'all_lessons','all_comments'));
+    }
+    /*AGREGAR COMENTARIOS*/
+    public function lesson_comments(Request $request){
+
+        $lesson_comments = new Comment;
+        $lesson_comments->comment =$request->comment;
+        $lesson_comments->lesson_id =$request->lesson_id; 
+        $lesson_comments->user_id =Auth::user()->ID;
+        $lesson_comments->date = Carbon::now()->format('Y-m-d');
+        $lesson_comments->save();
+        
+
+         return redirect('courses/lesson/'.$request->lesson_slug.'/'.$request->lesson_id.'/'.$request->course_id);
+
     }
 }
 

@@ -12,7 +12,7 @@ use App\Models\ShoppingCart;
 use App\Models\Course;
 use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class CoursesOrdenController extends Controller
 {
@@ -177,13 +177,20 @@ class CoursesOrdenController extends Controller
         return $data;
     }
 
+    public function getDataMembeship($iduser)
+    {
+        $items = ShoppingCart::where('user_id', '=', $iduser)->first();
+        return $items->course_id;
+    }
+
     public function pay_membership_stripe(Request $request){
         try {
             $secret_key = env('STRIPE_SECRET');
             Stripe::setApiKey($secret_key);
 
-            $membresia = DB::table('memberships')
-                        ->first();
+            $idmembresia = $this->getDataMembeship(Auth::user()->ID);
+
+            $membresia = DB::table('memberships')->where('id', $idmembresia)->first();
 
             $customer = Customer::create(array(
                 'email' => $request->stripeEmail,
@@ -226,8 +233,10 @@ class CoursesOrdenController extends Controller
 
     public function pay_membership_coinpayment(Request $request){
         try {
-            $membresia = DB::table('memberships')
-                            ->first();
+
+            $idmembresia = $this->getDataMembeship(Auth::user()->ID);
+
+            $membresia = DB::table('memberships')->where('id', $idmembresia)->first();
            
             $datosMembresia = [
                 'idmembresia' => $membresia->id,

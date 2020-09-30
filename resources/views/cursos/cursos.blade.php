@@ -41,7 +41,25 @@
     {{-- BANNER --}}
     @if (!Auth::guest())
         @if(!is_null($last_course))
-            <div class="banner-course">
+            <div class="col-md-12 p-4">
+                <img src="{{ asset('uploads/images/courses/covers/'.$last_course->cover) }}" class="course-banner-img" alt="..." height="550px" width="1200px" class="img-fluid" />
+                <div class="col-md-12 course-banner-caption pl-0 pr-4">
+                    <a href="{{ route('courses.show', [$last_course->slug, $last_course->course_id]) }}" class="btn btn-primary float-right text-uppercase mr-2"><i class="fa fa-play"></i> Continuar curso</a>
+                    <div class="col-md-10">
+                         <h4 class="text-white text-uppercase ml-4">
+                                {{$last_course->title}}
+                            </h4>
+                            <p class="col-md-6 description-course text-justify pl-0 ml-4">
+                                {{$last_course->description}}
+                            </p>
+                    </div>
+                    <div class="progress col-xs progress-course-bar pl-0">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="{{$last_course->progress}}" aria-valuemin="0" aria-valuemax="100" style="width:{{$last_course->progress}}%">
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="banner-course">
                 <div class="button-container">
                     <img src="{{ asset('uploads/images/courses/covers/'.$last_course->cover) }}" class="course-banner-img" alt="..." height="550px" width="1600px" class="img-fluid" />
                 </div>
@@ -51,31 +69,31 @@
                             <h4 class="text-white text-uppercase ml-4">
                                 <a href="{{ route('courses.show', [$last_course->slug, $last_course->id]) }}" class="text-secondary text-sm">{{$last_course->title}}</a>
                             </h4>
-                            <p class="col-md-6 description-course text-justify pl-0 ml-4">
+                            {{-- <p class="col-md-6 description-course text-justify pl-0 ml-4">
                                 {{$last_course->description}}
-                            </p>
-                            <!--<div class="row">
+                            </p> --}}
+                            <div class="row">
                                 <div class="col-md-12 mb-2">
-                                    <a href="{{ route('courses.show', [$last_course->slug, $last_course->course_id]) }}" class="btn btn-primary float-right text-uppercase mr-2"><i class="fa fa-play"></i> Continuar curso</a>
+                                    <a href="{{ route('courses.show', [$last_course->slug, $last_course->course_id]) }}" class="btn btn-primary float-right text-uppercase mr-2"><i class="fa fa-play"></i> Ver Curso</a>
                                 </div>
                             </div>
-                            <div class="progress col-xs progress-course-bar">
+                            {{-- <div class="progress col-xs progress-course-bar">
                                 <div class="progress-bar" role="progressbar" aria-valuenow="{{$last_course->progress}}" aria-valuemin="0" aria-valuemax="100" style="width:{{$last_course->progress}}%">
                                 </div>
-                            </div>-->
+                            </div> --}}
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>-->
         @endif
     @endif
     {{-- FIN DEL BANNER --}}
 
     {{-- SECCIÓN TUS CURSOS--}}
     @if (!Auth::guest())
-        @if(!is_null($cursos))
+        @if($cursos->isNotEmpty())
             <div>
-                <div class="section-title-courses">Tus Cursos</div>
+                <div class="section-title-courses ml-2">Tus Cursos</div>
                 <hr style="border: 1px solid #707070;opacity: 1;" />
             </div>
 
@@ -110,8 +128,10 @@
                 
             </div>
         @else
-            <div class="title-page-course col-md"><span class="text-white">
-                    h4 class=""> {{$username}} <span class="text-white"> ¡No has agregado cursos!</span></h4>
+            <div class="title-page-course col-md">
+                <span class="text-white">
+                    <h4 class=""> {{$username}} <span class="text-white"> ¡No has agregado cursos!</span></h4>
+                </span>
             </div>
         @endif
     @endif
@@ -400,7 +420,7 @@ $tercero++;
     @if (!Auth::guest())
         <div class="section-landing">
             <div class="col-lg-6 offset-lg-3">
-                <h4 class=" section-title-landing text-primary text-center">TUS MENTORES</h4>
+                <h4 class=" section-title-landing text-primary text-center">MENTORES</h4>
             </div>
             <div class="container-fluid">
                 <div class="mentor-index-seccion row d-flex flex-row p-2">

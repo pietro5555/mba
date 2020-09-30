@@ -455,7 +455,27 @@ font-size: 16px;
 @media (max-width: 768px) {
     .mentor-index-seccion{
         display: block !important;
+
 }
+
+    }
+
+    
+    @media (min-width: 1366px) {
+
+        .course-banner-caption{
+            position: absolute;
+            bottom: 0 !important;
+            top:55%;
+        }
+
+}
+
+@media (min-width: 1366px) {
+    .course-banner-caption {
+        position: absolute;
+        bottom: 0 !important;
+        top: 85%;
     }
     
     @media (min-width: 1366px) {
@@ -488,6 +508,9 @@ font-size: 16px;
     padding-right: 0 !important; 
     padding-left: 0 !important; 
     padding-bottom: 30px;
+        display: inline-block;
+    position: relative;
+}
 }
 .course-banner-img{
 background: transparent linear-gradient(178deg, #00000000 0%, #000000 100%) 0% 0% no-repeat padding-box;
@@ -497,6 +520,7 @@ opacity: 0.74;
 .course-banner-caption{
     position: absolute;
     bottom: 0 !important;
+    height: 20%;
 }
 .bar-progress-banner{
     position: absolute;
@@ -1291,3 +1315,4 @@ opacity: 1;
     height: 150px;
     }
 }
+

@@ -123,4 +123,9 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Models\Evaluation', 'evaluations_users', 'user_id', 'evaluation_id')
             ->withPivot('score', 'date');
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

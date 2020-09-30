@@ -151,13 +151,13 @@ class HomeController extends Controller{
 
       $busqueda = $request->get('q');
 
-      $cursos = Course::where(function ($query) use ($busqueda){
+      $courses = Course::where(function ($query) use ($busqueda){
                      $query->where('title', 'LIKE', '%'.$busqueda.'%')
                            ->orWhere('description', 'LIKE', '%'.$busqueda.'%');
                   })->where('status', '=', 1)
                   ->get();
       
-      foreach ($cursos as $curso){
+      foreach ($courses as $curso){
          array_push($cursosIds, $curso->id);
       }
       
@@ -170,27 +170,36 @@ class HomeController extends Controller{
       foreach ($categorias as $categoria){
          foreach ($categoria->courses as $cursoCat){
             array_push($cursosIds, $cursoCat->id);
-            $cursos->push($cursoCat);
+            $courses->push($cursoCat);
          }
       }      
 
-      $page = 'search';
+      //$page = 'search';
 
-      return view('search')->with(compact('cursos', 'page'));
+      $directos = NULL;
+      if (!Auth::guest()){
+         $directos = User::where('referred_id', Auth::user()->ID)->count('ID');
+      }
+      $category_name = NULL;
+
+      return view('cursos.cursos_categorias')->with(compact('courses', 'category_name', 'directos'));
    }
 
    public function search_by_category($category_slug, $category_id, $subcategory_slug, $subcategory_id){
-      $categoria = Category::with(['courses' => function($query) use ($subcategory_id){
+      $category_name = Category::with(['courses' => function($query) use ($subcategory_id){
                               $query->where('status', '=', 1)
                                  ->where('subcategory_id', '=', $subcategory_id);
                         }])->where('id', '=', $category_id)
                         ->first();
 
-      $cursos = $categoria->courses;
+      $courses = $category_name->courses;
+
+      $directos = NULL;
+      if (!Auth::guest()){
+         $directos = User::where('referred_id', Auth::user()->ID)->count('ID');
+      }
       
-      $page = 'category';
-   
-      return view('search')->with(compact('categoria', 'cursos', 'page'));
+      return view('cursos.cursos_categorias')->with(compact('courses', 'category_name', 'directos'));
 
    }
     

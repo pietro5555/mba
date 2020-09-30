@@ -275,7 +275,7 @@ class CoursesOrdenController extends Controller
                 'note' => 'Compra membresía por '.number_format(($enlace != null) ? $membresia->descuento : $membresia->price, 2, ',', '.').' USD',
                 'idorden' => $orden->id,
                 'buyer_email' => Auth::user()->user_email,
-                'redirect_url' => route('index')
+                'redirect_url' => route('courses')
             ];
 
             $transacion['items'][] = [

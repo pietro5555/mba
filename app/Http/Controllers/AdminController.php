@@ -439,7 +439,7 @@ class AdminController extends Controller
         public function reordenarCompras(){
             
             $lista =[];
-            $listadoCompras = CourseOrden::where('user_id', Auth::user()->ID)->get();
+            $listadoCompras = CourseOrden::where('user_id', Auth::user()->ID)->orderBy('id', 'DESC')->take(10)->get();
             foreach($listadoCompras as $listaCom){
                 $lis = json_decode($listaCom->detalles);
             

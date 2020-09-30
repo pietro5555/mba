@@ -498,6 +498,17 @@
     .mentor-index-seccion {
         display: block !important;
     }
+<<<<<<< HEAD
+    
+    @media (min-width: 1366px) {
+
+        .course-banner-caption{
+            position: absolute;
+            bottom: 0 !important;
+            top:55%;
+        }
+        
+=======
 }
 
 @media (min-width: 1366px) {
@@ -505,6 +516,7 @@
         position: absolute;
         bottom: 0 !important;
         top: 85%;
+>>>>>>> a526a73e49b954bb2d29b5d9953fefa3c6f28b39
     }
 }
 
@@ -528,6 +540,9 @@
     padding-right: 0 !important;
     padding-left: 0 !important;
     padding-bottom: 30px;
+        display: inline-block;
+    position: relative;
+}
 }
 
 .course-banner-img {
@@ -538,6 +553,7 @@
 .course-banner-caption {
     position: absolute;
     bottom: 0 !important;
+    height: 20%;
 }
 
 .bar-progress-banner {
@@ -1300,4 +1316,5 @@ nav>div a.nav-item.nav-link:focus {
 .card-courses {
     background: #1C1D21;
     border: 1px solid #707070;
+        height: 300px;
 }

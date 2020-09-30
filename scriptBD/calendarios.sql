@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-09-2020 a las 08:51:44
+-- Tiempo de generación: 29-09-2020 a las 19:48:07
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.3.22
 
@@ -33,8 +33,9 @@ CREATE TABLE `calendarios` (
   `titulo` varchar(250) NOT NULL,
   `contenido` longtext NOT NULL,
   `color` varchar(250) NOT NULL,
-  `inicio` datetime NOT NULL,
+  `inicio` date NOT NULL,
   `vence` datetime DEFAULT NULL,
+  `time` time DEFAULT NULL,
   `lugar` varchar(250) NOT NULL,
   `tipo` varchar(250) DEFAULT NULL,
   `especifico` varchar(250) DEFAULT NULL,
@@ -46,8 +47,10 @@ CREATE TABLE `calendarios` (
 -- Volcado de datos para la tabla `calendarios`
 --
 
-INSERT INTO `calendarios` (`id`, `iduser`, `titulo`, `contenido`, `color`, `inicio`, `vence`, `lugar`, `tipo`, `especifico`, `created_at`, `updated_at`) VALUES
-(1, 10, 'Curso de trading en Forex gratuito.', 'Potencia tu trading con nuestro curso online gratis de Forex y CFDs. Esperamos que este programa de tan solo 3 pasos te ayude a saber todo lo que necesitas para empezar a operar, &iexcl;Compru&eacute;balo tu mismo!', '#28a745', '2020-09-28 00:00:00', NULL, 'Ninguno', NULL, NULL, '2020-09-26 01:34:13', '2020-09-26 01:34:13');
+INSERT INTO `calendarios` (`id`, `iduser`, `titulo`, `contenido`, `color`, `inicio`, `vence`, `time`, `lugar`, `tipo`, `especifico`, `created_at`, `updated_at`) VALUES
+(1, 10, 'Curso de trading en Forex gratuito.', 'Potencia tu trading con nuestro curso online gratis de Forex y CFDs. Esperamos que este programa de tan solo 3 pasos te ayude a saber todo lo que necesitas para empezar a operar, &iexcl;Compru&eacute;balo tu mismo!', '#28a745', '2020-09-28', NULL, NULL, 'Ninguno', NULL, NULL, '2020-09-26 01:34:13', '2020-09-26 01:34:13'),
+(2, 10, 'Todo lo que debes saber sobre inteligencia artificial', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras finibus ante ut arcu placerat pellentesque quis sed erat. Duis auctor tortor id maximus euismod. Mauris eu nibh lectus. Mauris vitae tincidunt tellus. Suspendisse maximus augue a leo accumsan, vel facilisis risus ornare. Vestibulum ante diam, pretium vitae convallis vel, dapibus in nunc. Vestibulum non quam sagittis nunc scelerisque tincidunt. Praesent varius vehicula justo, sit amet pellentesque ex euismod vel. Curabitur quis cursus turpis. Cras vehicula facilisis nibh quis rutrum.', '#28a745', '2020-09-27', NULL, NULL, 'Ninguno', NULL, NULL, '2020-09-26 11:22:52', '2020-09-26 11:22:52'),
+(3, 10, '¿Qué es Forex?', '<p>Morbi erat augue, rhoncus a venenatis vel, iaculis sed neque. Donec quis elit id augue pretium eleifend. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas blandit quam vitae elit volutpat tincidunt. Etiam gravida id ligula ornare aliquam. Aenean laoreet tincidunt lectus eget imperdiet. Integer ac consequat eros. In id lectus sit amet felis suscipit interdum ut sit amet tellus. Curabitur a tristique libero.</p>', '#28a745', '2020-10-01', NULL, NULL, 'Ninguno', NULL, NULL, '2020-09-28 17:07:38', '2020-09-28 17:07:38');
 
 --
 -- Índices para tablas volcadas
@@ -67,7 +70,7 @@ ALTER TABLE `calendarios`
 -- AUTO_INCREMENT de la tabla `calendarios`
 --
 ALTER TABLE `calendarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

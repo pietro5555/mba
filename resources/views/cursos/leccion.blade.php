@@ -21,6 +21,9 @@
 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel"  data-interval = "false">
   <div class="carousel-inner">
     <div class="carousel-item active">
+
+      <!--<iframe src="https://player.vimeo.com/video/76979871" width="{video_width}" height="{video_height}" frameborder="0" title="{video_title}" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>-->
+
         <video
     class="d-block w-100 leccion-curso"
     controls
@@ -192,10 +195,15 @@ class="d-block w-100 leccion-curso"
             </div>
           </a>
           <div class="media-body align-items-center">
-              <div class="col-12 box-comments">
-                  <form class="form-inline">
-              <input type="text" class="form-control" placeholder="Escribe tu comentario">
-          </form>
+              <div class="col-12 box-comments d-flex">
+              <form class="form-inline" action="{{route ('lesson.comments')}}" method="POST">
+                @csrf
+                <input type="hidden" name="lesson_slug" value="{{ $lesson->slug}}">
+                <input type="hidden" name="course_id" value="{{ $lesson->course->id}}">
+                <input type="hidden" name="lesson_id" value="{{ $lesson->id }}">
+                <input type="text" class="form-control" placeholder="Escribe tu comentario" name="comment" required>
+                <button class="btn btn-outline-success mt-2" type="submit">Enviar</button>
+              </form>
               </div>
               
           </div>
@@ -204,9 +212,11 @@ class="d-block w-100 leccion-curso"
 </div><!-- end col -->
 </div><!-- end row -->
 </div><!-- end custom-box -->
+@foreach ($all_comments as $comment)
 <div class="custombox clearfix mt-4 pb-4 border-bottom">
 <div class="row">
     <div class="col-lg-12">
+      
         <div class="comments-list">
             <div class="media">
                 <a class="media-left" href="#">
@@ -214,11 +224,12 @@ class="d-block w-100 leccion-curso"
                       <div class="perfil-comments"><h2 class="text-white"> JD</h2></div>
                   </div>
                 </a>
+                
                 <div class="media-body">
-                    <h4 class="media-heading text-white">John Doe</h4>
-                   <h7 class="media-heading about-course-text">12/03/2020</h7>
+                    <h4 class="media-heading text-white">Jhon Doe</h4>
+                   <h7 class="media-heading about-course-text">{{str_replace('-', '/', date('d-m-Y', strtotime($comment->date)))}}</h7>
                    <p class="about-course-text">
-                       Fusce felis tortor, condimentum at purus nec, vehicula malesuada lectus. Proin nec purus vel enim interdum feugiat.
+                       {{$comment->comment}}
                    </p>
                    <p class="about-course-text float-right mr-4">
                    <i class="far fa-comment-alt about-course-text" aria-hidden="true"></i> <a href="" class="about-course-text"> Responder</a>
@@ -226,90 +237,15 @@ class="d-block w-100 leccion-curso"
                    </p>
                    
                 </div>
+                
             </div>
         </div>
+       
     </div><!-- end col -->
 </div><!-- end row -->
-  </div><!-- end custom-box -->
-  <div class="custombox clearfix mt-4 pb-4 border-bottom">
-<div class="row">
-    <div class="col-lg-12">
-        <div class="comments-list">
-            <div class="media">
-                <a class="media-left" href="#">
-                    <div class="col-md-2">
-                      <div class="perfil-comments"><h2 class="text-white"> JD</h2></div>
-                  </div>
-                </a>
-                <div class="media-body">
-                    <h4 class="media-heading text-white">John Doe</h4>
-                   <h7 class="media-heading about-course-text">12/03/2020</h7>
-                   <p class="about-course-text">
-                       Fusce felis tortor, condimentum at purus nec, vehicula malesuada lectus. Proin nec purus vel enim interdum feugiat.
-                   </p>
-                   <p class="about-course-text float-right mr-4">
-                   <i class="far fa-comment-alt about-course-text" aria-hidden="true"></i> <a href="" class="about-course-text"> Responder</a>
-                       
-                   </p>
-                </div>
-            </div>
-        </div>
-    </div><!-- end col -->
-</div><!-- end row -->
-  </div><!-- end custom-box -->
-  <div class="custombox clearfix mt-4 pb-4 border-bottom">
-  <div class="row">
-      <div class="col-lg-12">
-          <div class="comments-list">
-              <div class="media">
-                  <a class="media-left" href="#">
-                      <div class="col-md-2">
-                        <div class="perfil-comments"><h2 class="text-white"> JD</h2></div>
-                    </div>
-                  </a>
-                  <div class="media-body">
-                      <h4 class="media-heading text-white">John Doe</h4>
-                     <h7 class="media-heading about-course-text">12/03/2020</h7>
-                     <p class="about-course-text">
-                         Fusce felis tortor, condimentum at purus nec, vehicula malesuada lectus. Proin nec purus vel enim interdum feugiat.
-                     </p>
-                     <p class="about-course-text float-right mr-4">
-                     <i class="far fa-comment-alt about-course-text" aria-hidden="true"></i> <a href="" class="about-course-text"> Responder</a>
-                         
-                     </p>
-                  </div>
-              </div>
-          </div>
-      </div><!-- end col -->
-  </div><!-- end row -->
-  </div><!-- end custom-box -->
-  <div class="custombox clearfix mt-4 pb-4 border-bottom">
-  <div class="row">
-      <div class="col-lg-12">
-          <div class="comments-list">
-              <div class="media">
-                  <a class="media-left" href="#">
-                      <div class="col-md-2">
-                        <div class="perfil-comments"><h2 class="text-white"> JD</h2></div>
-                    </div>
-                  </a>
-                  <div class="media-body">
-                      <h4 class="media-heading text-white">John Doe</h4>
-                     <h7 class="media-heading about-course-text">12/03/2020</h7>
-                     <p class="about-course-text">
-                         Fusce felis tortor, condimentum at purus nec, vehicula malesuada lectus. Proin nec purus vel enim interdum feugiat.
-                     </p>
-                     <p class="about-course-text float-right mr-4">
-                     <i class="far fa-comment-alt about-course-text" aria-hidden="true"></i> <a href="" class="about-course-text"> Responder</a>
-                         
-                     </p>
-
-                  </div>
-              </div>
-          </div>
-      </div><!-- end col -->
-  </div><!-- end row -->
-  </div><!-- end custom-box -->
+  </div>
+ @endforeach
+  <!-- end custom-box -->
 </div>
 <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus maximus eros malesuada arcu sagittis, et lobortis.

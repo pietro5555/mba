@@ -377,16 +377,6 @@ class CourseController extends Controller{
          return view('timelive.favorite', compact('eventos_favoritos', 'cursos_favoritos','directos'));
     }
 
-    /**
-    * Courses / Leccion
-    */
-
-    public function lesson($lesson_slug, $lesson_id, $course_id)
-    {
-        $lesson = Lesson::where('id', '=',$lesson_id)->get()->first();
-        $all_lessons = Lesson::where('course_id', '=',  $course_id)->get();
-        return view('cursos.leccion', compact('lesson', 'all_lessons'));
-    }
 
     /**
     * Admin / Cursos / Listado de Cursos / Nuevo Curso

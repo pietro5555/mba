@@ -208,7 +208,8 @@ Route::group(['prefix' => 'installer'], function (){
   Route::group(['prefix' => 'courses'], function(){
     Route::get('/', 'CourseController@index')->name('courses');
     Route::get('show/{slug}/{id}', 'CourseController@show')->name('courses.show');
-     Route::get('lesson/{slug}/{id}/{course_id}', 'CourseController@lesson')->name('lesson.show');
+     Route::get('lesson/{slug}/{id}/{course_id}', 'LessonController@lesson')->name('lesson.show');
+     Route::post('lesson/comments', 'LessonController@lesson_comments')->name('lesson.comments');
     //Route::get('recommended', 'CourseController@recommended')->name('courses.recommended');
   });
   

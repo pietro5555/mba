@@ -471,14 +471,17 @@ public function schedule($event_id, Request $request){
                             ->where('id', '=', $event_id)
                             ->first();
 
+            $date_event = date('Y-m-d', strtotime($events->date));
+            $time_event = date('H:i:s', strtotime($events->date));
+
             $disponibilidad = DB::table('events_users')
                                 ->where('user_id', '=', Auth::user()->ID)
-                                ->where('date', '=', $events->date)
-                                ->where('time', '=', $events->time)
+                                ->where('date', '=', $date_event)
+                                ->where('time', '=', $time_event)
                                 ->first();
 
             if (is_null($disponibilidad)){
-                Auth::user()->events()->attach($event_id, ['date' => $events->date, 'time' => $events->time]);
+                Auth::user()->events()->attach($event_id, ['date' => $date_event, 'time' => $time_event]);
                 $new_calendar = Events::where('id', '=', $event_id)
                 ->first();
         

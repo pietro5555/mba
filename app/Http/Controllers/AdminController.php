@@ -30,6 +30,7 @@ use App\Models\Monedadicional;
 use App\Models\Redesociales; 
 use App\Models\Pop;
 use App\Models\Component;
+use App\Models\CourseOrden;
 
 // llamado a los controlladores
 use App\Http\Controllers\IndexController;
@@ -182,6 +183,8 @@ class AdminController extends Controller
         //fin Informacion Index
             
         
+        //Compras echas
+        $listadoCompras =  $this->reordenarCompras();
         
         //anuncios
         $fechaActual = Carbon::now();
@@ -207,7 +210,7 @@ class AdminController extends Controller
         return view('dashboard.index')->with(compact('cantReferidosDirectos', 'cantReferidosIndirectos', 'cantReferidosActivos', 'fechaProxActivacion', 'new_member',
                     'cantventas', 'cantventasmont', 'fullname', 'rangos', 'cantAllUsers', 'rankingComisiones', 'rankingVentas','noticias', 'contTicket', 'moneda',
                     'nombreRol','desde', 'ordenesView', 'productosnuevos','settingPuntos','totalventas','totalcobrado','anuncios','noticias','materiales','binario',
-                    'settingEstructura','moneda1','moneda2','moneda3','adicional','redes','pop','component'
+                    'settingEstructura','moneda1','moneda2','moneda3','adicional','redes','pop','component','listadoCompras'
             ));
     }
 
@@ -430,5 +433,32 @@ class AdminController extends Controller
             }
 		}
             return redirect('admin/userrecords')->with('msj', 'Todos los usuarios han sidos borrados menos el Administrador');
+        }
+
+
+        public function reordenarCompras(){
+            
+            $lista =[];
+            $listadoCompras = CourseOrden::where('user_id', Auth::user()->ID)->get();
+            foreach($listadoCompras as $listaCom){
+                $lis = json_decode($listaCom->detalles);
+            
+            if($listaCom->idtransacion_stripe == null){
+                $guardar = $lis->nombre;
+            }elseif($listaCom->idtransacion_stripe != null){
+                foreach($lis as $incur){
+                $guardar = $incur->titulo;
+                }
+            }    
+            
+            array_push($lista, [
+            'orden' => $listaCom->id,
+            'producto' => $guardar,
+            'status' => $listaCom->status,
+            'fecha' => $listaCom->created_at,
+             ]);
+            }
+            
+            return $lista;
         }
 }

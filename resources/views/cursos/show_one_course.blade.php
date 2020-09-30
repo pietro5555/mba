@@ -160,20 +160,20 @@
                         @if (is_null(Auth::user()->membership_id))
                            <a href="{{route('shopping-cart.membership')}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> AGREGAR AL CARRITO</a>
                         @else
-                        <a href="{{route('client.courses.add', $curso->id)}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-plus-circle" aria-hidden="true"></i> AGREGAR A MIS CURSOS</a>
+                           <a href="{{route('client.courses.add', $curso->id)}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-plus-circle" aria-hidden="true"></i> AGREGAR A MIS CURSOS</a>
                         @endif
                      @else
                      <!--<a href="#" class="btn btn-info play-course-button btn-block"><i class="fa fa-list"></i> VER LECCIONES</a>
                         @if (is_null($miValoracion))
                            <a href="#ratingModal" data-toggle="modal" class="btn btn-info play-course-button btn-block"><i class="fa fa-star"></i> VALORAR</a>
-                        @endif-->
+                        @endif
                         @if ($progresoCurso->certificate == 1)
                            <a href="{{ route('client.courses.get-certificate', $curso->id) }}" class="btn btn-primary play-course-button btn-block"><i class="fas fa-certificate"></i> OBTENER CERTIFICADO</a>
                         @else
                            @if (!is_null($curso->evaluation))
                               <a href="{{ route('client.courses.take-evaluation', [$curso->slug, $curso->id]) }}" class="btn btn-primary play-course-button btn-block"><i class="far fa-file-alt"></i> PRESENTAR EVALUACIÓN</a>
                            @endif   
-                        @endif
+                        @endif-->
                      @endif
                   @endif
                </div>

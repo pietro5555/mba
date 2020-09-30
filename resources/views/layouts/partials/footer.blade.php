@@ -8,9 +8,9 @@
                     <img src="{{ asset('images/logo.png') }}" style="" class="img-logo-footer"> 2020 My Business Academy Pro All Rigth Reserved
                 </div>
                 <div class="col-md-4 text-center pt-2">
-                     <a href="" class="btn btn-social-icon btn-facebook-gris btn-rounded"><img src="{{ asset('images/icons/facebook.svg') }}" height="20px" width="20px"></a>
-                     <a href="" class="btn btn-social-icon btn-twitter-gris btn-rounded"><img src="{{ asset('images/icons/twitter.svg') }}" height="20px" width="20px"></a>
-                     <a href="" class="btn btn-social-icon btn-instagram-gris btn-rounded"><img src="{{ asset('images/icons/instagram.svg') }}" height="20px" width="20px"></a>
+                     <a href="https://m.facebook.com/MyBusinessAcademyPro/" target="_blank" class="btn btn-social-icon btn-facebook-gris btn-rounded"><img src="{{ asset('images/icons/facebook.svg') }}" height="20px" width="20px"></a>
+                     <a href="" target="_blank" class="btn btn-social-icon btn-twitter-gris btn-rounded"><img src="{{ asset('images/icons/twitter.svg') }}" height="20px" width="20px"></a>
+                     <a href="https://instagram.com/mybusinessacademypro?igshid=tdj5prrv1gx1" target="_blank" class="btn btn-social-icon btn-instagram-gris btn-rounded"><img src="{{ asset('images/icons/instagram.svg') }}" height="20px" width="20px"></a>
                 </div>
             </div>
         </div>

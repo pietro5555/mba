@@ -139,7 +139,11 @@ class EvaluationController extends Controller{
         $datosEvaluacion = Evaluation::where('id', '=', $request->evaluation_id)
                             ->with('course')
                             ->first();
-        
+    
+        $datosPrimeraLeccion = DB::table('lessons')
+                                ->where('course_id', '=', $datosEvaluacion->course_id)
+                                ->orderBy('id', 'DESC')
+                                ->first();
         if ($puntaje >= 50){
             DB::table('courses_users')
                 ->where('user_id', '=', Auth::user()->ID)
@@ -148,9 +152,9 @@ class EvaluationController extends Controller{
 
             //$this->generate_certificate($datosEvaluacion->course_id);
             
-            return redirect('courses/show/'.$datosEvaluacion->course->slug.'/'.$datosEvaluacion->course->id)->with('msj-exitoso', '¡Felicidades! Has aprobado la evaluación con '.number_format($puntaje).'%');
+            return redirect('courses/lesson/'.$datosPrimeraLeccion->slug.'/'.$datosPrimeraLeccion->id.'/'.$datosPrimeraLeccion->course_id)->with('msj-exitoso', '¡Felicidades! Has aprobado la evaluación con '.number_format($puntaje).'%');
         }else{
-            return redirect('courses/show/'.$datosEvaluacion->course->slug.'/'.$datosEvaluacion->course->id)->with('msj-erroneo', '¡Lo sentimos! Has reprobado la evaluación con '.number_format($puntaje).'%');
+            return redirect('courses/lesson/'.$datosPrimeraLeccion->slug.'/'.$datosPrimeraLeccion->id.'/'.$datosPrimeraLeccion->course_id)->with('msj-erroneo', '¡Lo sentimos! Has reprobado la evaluación con '.number_format($puntaje).'%');
         }
     }
 
@@ -158,11 +162,16 @@ class EvaluationController extends Controller{
     public function get_certificate($curso_id){
         $datosCurso = Course::where('id', '=', $curso_id)
                         ->first();
+        
+        $datosProgreso = DB::table('courses_users')
+                            ->where('user_id', '=', Auth::user()->ID)
+                            ->where('course_id', '=', $curso_id)
+                            ->first();
 
         $alumno = Auth::user()->display_name;
         $curso = $datosCurso->title;
-        $dia = date('d');
-        switch (date('m')) {
+        $dia = date('d', strtotime($datosProgreso->finish_date));
+        switch (date('m', strtotime($datosProgreso->finish_date))) {
             case '01':
                 $mes = 'Enero';
             break;
@@ -200,7 +209,7 @@ class EvaluationController extends Controller{
                 $mes = 'Diciembre';
             break;
         }
-        $ano = date('Y');
+        $ano = date('Y', strtotime($datosProgreso->finish_date));
 
         //$pdf = \App::make('dompdf.wrapper');
         $pdf = PDF::loadView('certificado.tipo1', compact('curso', 'alumno', 'dia', 'mes', 'ano'));//->setPaper('a4', 'landscape');

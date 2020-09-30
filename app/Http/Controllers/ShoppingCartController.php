@@ -26,7 +26,7 @@ class ShoppingCartController extends Controller
 
             $items = collect();
             foreach ($itemsA as $itemA) {
-                $item = Course::where('id', '=', $itemA)->first();
+                $item = DB::table('memberships')->where('id', '=', $itemA)->first();
                 $cantItems++;
 
                 $items->push($item);
@@ -44,25 +44,24 @@ class ShoppingCartController extends Controller
         }
         $totalItems = 0;
         foreach ($items as $item) {
-            $curso = Course::find($item->course_id);
-            $categoria = null;
-            $mentor = null;
-            if (!empty($curso)) {
-                $categoria = Category::find($curso->category_id);
-                $mentor = User::find($curso->mentor_id);
-            }
+            $curso = DB::table('memberships')->where('id', $item->course_id)->first();
+            // $categoria = null;
+            // $mentor = null;
+            // if (!empty($curso)) {
+            //     $categoria = Category::find($curso->category_id);
+            //     $mentor = User::find($curso->mentor_id);
+            // }
             $item->curso = [
-                'titulo' => (!empty($curso)) ? $curso->title : 'Curso no disponible',
-                'categoria' => (!empty($categoria)) ? $categoria->title : 'Categoria no disponible',
-                'mentor' => (!empty($mentor)) ? $mentor->display_name : 'Mento no disponible',
+                'titulo' => (!empty($curso)) ? $curso->name : 'Membresia no disponible',
+                // 'categoria' => (!empty($categoria)) ? $categoria->title : 'Categoria no disponible',
+                // 'mentor' => (!empty($mentor)) ? $mentor->display_name : 'Mento no disponible',
                 'precio' => (!empty($curso)) ? $curso->price : 0,
-                'img' => (!empty($curso)) ? asset('uploads/images/courses/covers/'.$curso->cover) : 'no disponible'
+                'img' => (!empty($curso)) ? asset('/uploads/images/courses/covers/'.$curso->image) : 'no disponible'
             ];
             $totalItems += (!empty($curso)) ? $curso->price : 0;
         }
 
-        $membresia = DB::table('memberships')
-                        ->first();
+        $membresia = null;
         //RETORNAR VISTA AQUÍ
         return view('carrito_user.index')->with(compact('items', 'totalItems', 'membresia'));
     }
@@ -211,8 +210,46 @@ class ShoppingCartController extends Controller
         $detalle->amount = $detallesMembresia->precio;
         $detalle->save();
 
+        $cursos = Course::where('subcategory_id', $detallesMembresia->idmembresia)->get();
+
+        $fecha = date('Y-m-d H:i:s');
+
+        foreach ($cursos as $curso) {
+            DB::table('courses_users')
+                ->insert(['course_id' => $curso->idcurso,
+                            'user_id' => $datosOrden->user_id,
+                            'progress' => 0,
+                            'start_date' => date('Y-m-d'),
+                            'created_at' => $fecha,
+                            'updated_at' => $fecha]);
+        }
+
         DB::table('wp98_users')
             ->where('ID', '=', $datosOrden->user_id)
             ->update(['membership_id' => $detallesMembresia->idmembresia]);
+    }
+
+
+    /**
+     * Lleva a la vista de las membresia para poder selecionar una
+     *
+     * @return void
+     */
+    public function memberships()
+    {
+        $dataDescripcion = [
+            'Principiante' => 'Accesos a todos los cursos de nivel principiante',
+            'Basico' => 'Accesos a todos los cursos de nivel Basico',
+            'Intermedio' => 'Accesos a todos los cursos de nivel Intermedio',
+            'Avanzado' => 'Accesos a todos los cursos de nivel Avanzado',
+            'Pro' => 'Accesos a todos los cursos de nivel Profesional',
+        ];
+        $membresias = DB::table('memberships')->get();
+
+        foreach ($membresias as $membresia) {
+            $membresia->descripcion = $dataDescripcion[$membresia->name];
+        }
+
+        return view('carrito_user.membership', compact('membresias'));
     }
 }

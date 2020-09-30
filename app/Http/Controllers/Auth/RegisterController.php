@@ -372,17 +372,21 @@ class RegisterController extends Controller
         // 0: NONE.
         $user_id_default = $settings->referred_id_default;
 
-        // Obtenemos el referido.
+         // Obtenemos el referido.
         $referido = $user_id_default;
-        if(isset($data['referred_id'])){
+        if($data['referred_id'] == null){
+            $data['referred_id'] = $referido;
             if ($this->VerificarUser($data['referred_id'])) {
                 
                 $requisitos = [
                     'error' => 'El Usuario con el ID Referido Suministrado ('.$data['referred_id'].') No Se Encuentra Registrado, Pruebe Con Otro'
                     ];
                     
+                     
                 return $requisitos;
             }
+            $referido =  $data['referred_id'];
+        }else{
             $referido =  $data['referred_id'];
         }
         $posicion = 0;

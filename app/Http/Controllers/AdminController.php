@@ -37,6 +37,7 @@ use App\Http\Controllers\RangoController;
 use App\Http\Controllers\TiendaController;
 use App\Http\Controllers\ActivacionController;
 use App\Http\Controllers\ComisionesController;
+use App\Http\Controllers\ComisionController;
 use App\Http\Controllers\TransacionesController;
 use App\Http\Controllers\PuntospersonalesController;
 use App\Http\Controllers\BinarioController;
@@ -220,6 +221,7 @@ class AdminController extends Controller
     {
         
         $activacion = new ActivacionController;
+        $comi = new ComisionController;  
         $comisiones = new ComisionesController;
         $binario = new BinarioController;
         $funciones = new IndexController;
@@ -231,15 +233,18 @@ class AdminController extends Controller
         //solo si esta activado la configuracion
         //de cryptomoneda se verifican
         //las compras en crypto
+        /*
         if($seting->btc == 1){
         $crypto->consultaCompra();
         }
+        */
         
         // todo los usuarios del admin
         if(Auth::user()->rol_id == 0){
         $users = User::where('rol_id','!=','0')->get();
         foreach($users as $user){
                 $activacion->activarUsuarios($user->ID);
+                $comi->verificarCompras($user->ID);
          }
         }
          
@@ -249,21 +254,26 @@ class AdminController extends Controller
         foreach ($todousers as $user ) {
             if ($user['rol'] != 0) {
                 $activacion->activarUsuarios($user['ID']);
+                $comi->verificarCompras($user['ID']);
             }
           }
         }
         
+        $comi->verificarCompras(Auth::user()->ID);
+        
         //puntos por compras propias y de red
+        /*
         if (!empty($settingPuntos)) {
         $personales->verificarPuntos(Auth::user()->ID);
         $personales->puntosRed(Auth::user()->ID);
         }
+        */
         
         // cobra mis comisiones
         $comisiones->ObtenerUsuarios();
         
         //verificamos el bono binario
-        $binario->BonoBinario();
+        //$binario->BonoBinario();
          
         $funciones->msjSistema('Informacion Actualizada Con Exito', 'success');
         return redirect('admin');

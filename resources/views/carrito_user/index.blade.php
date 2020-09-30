@@ -10,13 +10,15 @@
         background: #6ab742;
     }
 </style>
+
+
 <div class="title-page-one_course col-md border-bottom-2">
     <h6>Carrito</h6>
     <hr style="border: 1px solid #707070;opacity: 1;" />
 </div>
 <div class="col-12 mb-2">
     <div class="row">
-        <div class="col-12 col-md-6 d-flex align-items-center">
+        <div class="col-12 col-md-6">
             @auth
             @include('carrito_user.componente.logueado')
             @else
@@ -69,6 +71,11 @@
           $('#form-coin2').submit()
         }
     }
+
+    function toggle() {
+    $('.mostrar').toggle('slow')
+    }
+
 </script>
 
 @endsection

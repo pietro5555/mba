@@ -11,8 +11,13 @@
             </div>
               <div class="col-md-7 col-xs-7">
                 <div class="card-body"> 
+                  @if(Auth::user()->rol_id == 0)
                   <h6 class="card-title white">{{$member->display_name}}</h6>
                   <h4 class="card-title white">{{date('d-m-Y', strtotime($member->created_at))}}</h4>
+                  @else
+                  <h6 class="card-title white">{{$member['nombre']}}</h6>
+                  <h4 class="card-title white">{{date('d-m-Y', strtotime($member['fecha']))}}</h4>
+                @endif
                 </div>
               </div>
            </div> 

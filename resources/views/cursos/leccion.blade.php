@@ -87,7 +87,7 @@
                         <a class="media-left" href="#">
                           <div class="col-md-2">
                             <div class="perfil-comments">
-                              <h2 class="text-white"> JD</h2>
+                              <img src="{{ asset('uploads/avatar/'.Auth::user()->avatar) }}" alt="" class="circular--square" >
                             </div>
                           </div>
                         </a>
@@ -252,7 +252,7 @@
                 <div class="col-xl-4 col-lg-4 col-12 pl-4 pr-4">
                     <div class="referrers-box">
                         <i class="fa fa-user referrers-icon" style="color: white;"></i><br>
-                        739 Referidos
+                        {{$directos}} Referidos
                     </div>
                     <a href="{{url('/admin')}}" style="color: white; text-decoration: none;">
                      <div class="referrers-button">

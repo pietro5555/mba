@@ -269,7 +269,7 @@
                @foreach ($curso->ratings as $valoracion)
                   <div class="row m-4 pt-4 border-bottom">  
                      <div class="col-md-2">
-                        <div class="circle"><h2 class="text-white"> JD</h2></div>
+                        <div class="circle"><img src="{{ asset('uploads/avatar/'.$valoracion->user->avatar) }}" alt="" class="circle" ></div>
                      </div>
                      <div class="col-md-8">
                         <div class="row">

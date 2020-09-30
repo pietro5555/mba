@@ -438,12 +438,12 @@ class AdminController extends Controller
 
         public function reordenarCompras(){
             
-            $lista =[];
+            $lista =[]; $guardar ='';
             $listadoCompras = CourseOrden::where('user_id', Auth::user()->ID)->orderBy('id', 'DESC')->take(10)->get();
             foreach($listadoCompras as $listaCom){
                 $lis = json_decode($listaCom->detalles);
             
-            if($listaCom->idtransacion_stripe == null){
+            if($listaCom->idtransacion_coinpaymen != null){
                 $guardar = $lis->nombre;
             }elseif($listaCom->idtransacion_stripe != null){
                 foreach($lis as $incur){

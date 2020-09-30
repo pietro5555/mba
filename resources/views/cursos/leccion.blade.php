@@ -1,5 +1,14 @@
 @extends('layouts.landing')
 
+@push('styles')
+  <style>
+    .circular--square {
+        width: 5rem;
+        height: 5rem;
+      border-radius: 50%;
+    }
+  </style>
+@endpush
 @section('content')
 <div class="container-fluid">
   <div class="row justify-content-end">
@@ -20,21 +29,21 @@
   <div id="lessonsCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
     <div class="carousel-inner">
       @php $cont = 0; @endphp
-      @foreach ($all_lessons as $lesson)
-        <div class="carousel-item @if ($cont == 0) active @endif">
+      @foreach ($all_lessons as $leccion)
+        <div class="carousel-item @if ($leccion->id == $lesson->id) active @endif">
           <div class="video-container">
-            <iframe src="{{ $lesson->url }}" width="100%" height="564" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+            <iframe src="{{ $leccion->url }}" width="100%" height="564" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
           </div>
         </div>
         @php $cont++; @endphp
       @endforeach
     </div>
-    <div class="">
+    <!--<div class="">
       <a class="btn-prev text-white" href="#lessonsCarousel" role="button" data-slide="prev">Anterior</a>
     </div>
     <div>
       <a class="btn-next text-white" href="#lessonsCarousel" role="button" data-slide="next">Siguiente</a>
-    </div>
+    </div>-->
     <!--<div class="btn-play-video">
       <i class="fa fa-play-circle text-primary"></i>
     </div>-->
@@ -75,8 +84,8 @@
                           <div class="col-12 box-comments d-flex">
                             <form class="form-inline" action="{{route ('lesson.comments')}}" method="POST">
                               @csrf
-                              <input type="hidden" name="lesson_slug" value="{{ $lesson->slug}}">
-                              <input type="hidden" name="course_id" value="{{ $lesson->course->id}}">
+                              <!--<input type="hidden" name="lesson_slug" value="{{ $lesson->slug}}">
+                              <input type="hidden" name="course_id" value="{{ $lesson->course->id}}">-->
                               <input type="hidden" name="lesson_id" value="{{ $lesson->id }}">
                               <input type="text" class="form-control" placeholder="Escribe tu comentario" name="comment" required>
                               <button class="btn btn-outline-success mt-2" type="submit">Enviar</button>
@@ -90,52 +99,56 @@
                 </div><!-- end row -->
               </div><!-- end custom-box -->
               @foreach ($all_comments as $comment)
-              <div class="custombox clearfix mt-4 pb-4 border-bottom">
-                <div class="row">
-                  <div class="col-lg-12">
+                <div class="custombox clearfix mt-4 pb-4 border-bottom">
+                  <div class="row">
+                    <div class="col-lg-12">
 
-                    <div class="comments-list">
-                      <div class="media">
-                        <a class="media-left" href="#">
-                          <div class="col-md-2">
-                            <div class="perfil-comments">
-                              <h2 class="text-white"> JD</h2>
+                      <div class="comments-list">
+                        <div class="media">
+                          <a class="media-left" href="#">
+                            <div class="col-md-2">
+                              <img src="{{ asset('uploads/avatar/'.$comment->user->avatar) }}" alt="" class="circular--square" >
                             </div>
+                          </a>
+
+                          <div class="media-body">
+                            <h4 class="media-heading text-white">{{ $comment->user->display_name }}</h4>
+                            <h7 class="media-heading about-course-text">{{str_replace('-', '/', date('d-m-Y', strtotime($comment->date)))}}</h7>
+                            <p class="about-course-text">
+                              {{$comment->comment}}
+                            </p>
+                            <p class="about-course-text float-right mr-4">
+                              <i class="far fa-comment-alt about-course-text" aria-hidden="true"></i> <a href="" class="about-course-text"> Responder</a>
+
+                            </p>
+
                           </div>
-                        </a>
-
-                        <div class="media-body">
-                          <h4 class="media-heading text-white">Jhon Doe</h4>
-                          <h7 class="media-heading about-course-text">{{str_replace('-', '/', date('d-m-Y', strtotime($comment->date)))}}</h7>
-                          <p class="about-course-text">
-                            {{$comment->comment}}
-                          </p>
-                          <p class="about-course-text float-right mr-4">
-                            <i class="far fa-comment-alt about-course-text" aria-hidden="true"></i> <a href="" class="about-course-text"> Responder</a>
-
-                          </p>
 
                         </div>
-
                       </div>
-                    </div>
 
-                  </div><!-- end col -->
-                </div><!-- end row -->
-              </div>
+                    </div><!-- end col -->
+                  </div><!-- end row -->
+                </div>
               @endforeach
               <!-- end custom-box -->
             </div>
-            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-              @foreach ($all_lessons as $leccion)
-                @foreach ($leccion->materials as $material)
-                  @if ($material->type == 'Archivo')
-                    <a href="{{ asset('uploads/courses/lessons/materials/'.$material->material) }}" target="_blank">{{ $material->title }}</a>
-                  @else
-                    <a href="{{ $material->material }}" target="_blank">{{ $material->title }}</a>
-                  @endif
-                  <br>
-                @endforeach
+            <div class="tab-pane fade pl-5" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+              @foreach ($lesson->materials as $material)
+                @if ($material->type == 'Archivo')
+                  <a href="{{ asset('uploads/courses/lessons/materials/'.$material->material) }}" target="_blank">
+                    <h5 class="mb-0 font-weight-bold d-block position-relative py-2">
+                      <i class="text-primary fa fa-link"></i> {{$material->title}}
+                    </h5>
+                  </a>
+                @else
+                  <a href="{{ $material->material }}" target="_blank">
+                    <h5 class="mb-0 font-weight-bold d-block position-relative py-2">
+                      <i class="text-primary fa fa-link"></i> {{$material->title}}
+                    </h5>
+                  </a>
+                @endif
+                <br>
               @endforeach
             </div>
             <div class="tab-pane fade" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
@@ -162,7 +175,7 @@
                 @foreach($all_lessons as $lesson)
                   <div id="card{{$lesson->id}}" class="card mb-2">
                     <div class="card-header accordion-leccion-content" data-toggle="collapse" data-target="#collapse{{$lesson->id}}">
-                      <a href="javascript:; "data-target="#lessonsCarousel" data-slide-to="{{$cont2}}">
+                      <a href="{{ route('lesson.show', [$lesson->slug, $lesson->id, $lesson->course_id]) }}">
                         <h5 class="mb-0 font-weight-bold d-block position-relative collapsible-link py-2">
                           <i class="text-primary fa fa-play-circle"></i>{{$lesson->title}}
                         </h5>

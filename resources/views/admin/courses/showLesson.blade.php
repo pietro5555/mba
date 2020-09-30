@@ -29,7 +29,7 @@
 
 		<div class="box">
 			<div class="box-body">
-				<iframe src="https://player.vimeo.com/video/435854666" width="100%" height="564" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+				<iframe src="{{ $leccion->url }}" width="100%" height="564" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
 			</div>
 		</div>
 	</div>

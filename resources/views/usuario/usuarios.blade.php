@@ -121,7 +121,11 @@
           <h4>Usuarios</h4>
         <input type="checkbox" name="usuarios" id="usuarios" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
         </div>
-
+        
+        <div class="col-md-3 col-xs-6">
+          <h4>Historial Comisiones</h4>
+        <input type="checkbox" name="historialcomision" id="historialcomision" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
+        </div>
 
         <div class="col-md-3 col-xs-6">
           <h4>Red</h4>
@@ -270,6 +274,7 @@ seleccionar = function(id,nombre){
             $('#red').bootstrapToggle((item.red == 1) ? 'on' : 'off');
             $('#eventos').bootstrapToggle((item.eventos == 1) ? 'on' : 'off');
             $('#ajuste').bootstrapToggle((item.ajuste == 1) ? 'on' : 'off');
+            $('#historialcomision').bootstrapToggle((item.historialcomision == 1) ? 'on' : 'off');
            });
          })
        };  

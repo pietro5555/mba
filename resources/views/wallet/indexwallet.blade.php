@@ -76,17 +76,21 @@
                             Fecha
                         </th>
                         <th class="text-center">
-                            Descripción
+                            Descripci贸n
                         </th>
+                        @if(Auth::user()->rol_id != 0)
                         <th class="text-center">
                             Descuento
                         </th>
+                        @endif
                         <th class="text-center">
                             Ingreso
                         </th>
+                        @if(Auth::user()->rol_id != 0)
                         <th class="text-center">
                             Retiro
                         </th>
+                        @endif
                         <th class="text-center">
                             Balance
                         </th>
@@ -115,6 +119,7 @@
                         <td class="text-center">
                             {{$wallet->descripcion}}
                         </td>
+                        @if(Auth::user()->rol_id != 0)
                         <td class="text-center">
                             @if ($moneda->mostrar_a_d)
                             {{$moneda->simbolo}} {{$wallet->descuento}}
@@ -122,6 +127,7 @@
                             {{$wallet->descuento}} {{$moneda->simbolo}}
                             @endif
                         </td>
+                        @endif
                         <td class="text-center">
                             @if ($moneda->mostrar_a_d)
                             {{$moneda->simbolo}} {{$wallet->debito}}
@@ -129,6 +135,7 @@
                             {{$wallet->debito}} {{$moneda->simbolo}}
                             @endif
                         </td>
+                        @if(Auth::user()->rol_id != 0)
                         <td class="text-center">
                             @if ($moneda->mostrar_a_d)
                             {{$moneda->simbolo}} {{$wallet->credito}}
@@ -136,6 +143,7 @@
                             {{$wallet->credito}} {{$moneda->simbolo}}
                             @endif
                         </td>
+                        @endif
                         <td class="text-center" style="color:#28a745;">
                             @if ($moneda->mostrar_a_d)
                             {{$moneda->simbolo}} {{$wallet->balance}}

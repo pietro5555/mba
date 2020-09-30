@@ -50,6 +50,9 @@ class WalletController extends Controller
 		$totalcompleto =0;
 
 		if (Auth::user()->rol_id == 0) {
+
+			view()->share('title', 'Historial de Comisiones');
+
 			$wallets = Wallet::all();
 			$total = $this->calcularTotal($wallets);
 			//recargas
@@ -86,6 +89,9 @@ class WalletController extends Controller
 		$totalcompleto =0;
 
 	    if(Auth::user()->rol_id == 0){
+
+	    view()->share('title', 'Historial de Comisiones');
+
 	    $wallets = Wallet::whereDate('created_at','>=',$request->fecha1)->whereDate('created_at','<=' ,$request->fecha2)->get();
         $total = $this->calcularTotal($wallets);
 
@@ -129,6 +135,9 @@ class WalletController extends Controller
         
         //filtro usuario
         if($request->user != null){
+
+        view()->share('title', 'Historial de Comisiones');
+        	
 	    $wallets = Wallet::where('iduser', $request->user)->get();
 	    $total = $this->calcularTotal($wallets);
 

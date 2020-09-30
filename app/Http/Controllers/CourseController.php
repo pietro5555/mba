@@ -8,7 +8,8 @@ use App\Models\Course;
 use App\Models\Category; 
 use App\Models\User;
 use App\Models\Lesson;
-use DB; use Auth;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class CourseController extends Controller{
     /**
@@ -177,6 +178,7 @@ class CourseController extends Controller{
                 $cursostmp = DB::table('courses')->where('mentor_id', $mentor->mentor_id)->get();
                 $cantCateg = count($cursostmp);
                 $cont = 0;
+                $string = '';
                 foreach ($cursostmp as $curso) {
                     $cate = DB::table('categories')->where('id', $curso->category_id)->first();
 

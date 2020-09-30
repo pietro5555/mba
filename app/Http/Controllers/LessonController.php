@@ -109,9 +109,10 @@ class LessonController extends Controller{
     */
 
     public function lesson($lesson_slug, $lesson_id, $course_id){
-        $lesson = Lesson::where('id', '=',$lesson_id)->get()->first();
+        $lesson = Lesson::where('id', '=',$lesson_id)
+                    ->with('materials')
+                    ->first();
         $all_lessons = Lesson::where('course_id', '=',  $course_id)
-                        ->withCount('materials')
                         ->get();
         
         $progresoCurso = DB::table('courses_users')
@@ -119,21 +120,23 @@ class LessonController extends Controller{
                             ->where('user_id', '=', Auth::user()->ID)
                             ->first();
 
-        $all_comments = DB::table('comments')->where('lesson_id', '=',$lesson_id)->get();
+        $all_comments = Comment::where('lesson_id', $lesson_id)->with('user')->get();
+       
         return view('cursos.leccion', compact('lesson', 'all_lessons','all_comments', 'progresoCurso'));
     }
     /*AGREGAR COMENTARIOS*/
     public function lesson_comments(Request $request){
 
-        $lesson_comments = new Comment;
-        $lesson_comments->comment =$request->comment;
-        $lesson_comments->lesson_id =$request->lesson_id; 
-        $lesson_comments->user_id =Auth::user()->ID;
+        $datosLeccion = Lesson::find($request->lesson_id);
+        $lesson_comments = new Comment($request->all());
+        //$lesson_comments->comment =$request->comment;
+        //$lesson_comments->lesson_id =$request->lesson_id; 
+        $lesson_comments->user_id = Auth::user()->ID;
         $lesson_comments->date = Carbon::now()->format('Y-m-d');
         $lesson_comments->save();
         
 
-         return redirect('courses/lesson/'.$request->lesson_slug.'/'.$request->lesson_id.'/'.$request->course_id);
+         return redirect('courses/lesson/'.$datosLeccion->slug.'/'.$datosLeccion->id.'/'.$datosLeccion->course_id);
 
     }
 }

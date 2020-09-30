@@ -10,6 +10,17 @@
   </style>
 @endpush
 @section('content')
+  @if (Session::has('msj-exitoso'))
+      <div class="alert alert-success" style="margin: 5px 15px;">
+         {{ Session::get('msj-exitoso') }}
+      </div>
+   @endif
+
+   @if (Session::has('msj-erroneo'))
+      <div class="alert alert-danger" style="margin: 5px 15px;">
+         {{ Session::get('msj-erroneo') }}
+      </div>
+   @endif
 <div class="container-fluid">
   <div class="row justify-content-end">
     <div class="title-level col-xs-1 col-md-4">
@@ -190,6 +201,17 @@
                   </div>
                   @php $cont2++; @endphp
                 @endforeach
+                @if ($progresoCurso->certificate == 0)
+                  <div class="card mb-2" style="background-color: #2A91FF;">
+                    <div class="card-header accordion-leccion-content text-center" >
+                      <a href="{{ route('client.courses.take-evaluation', [$lesson->course->slug, $lesson->course_id]) }}">
+                        <h5 class="mb-0 font-weight-bold d-block position-relative py-2" style="color: white;">
+                          PRESENTAR EVALUACIÓN
+                        </h5>
+                      </a>
+                    </div>
+                  </div>
+                @endif
               </div>
             </div>
           </div>

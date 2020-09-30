@@ -31,6 +31,9 @@ class LessonController extends Controller{
     public function store(Request $request){
         $leccion = new Lesson($request->all());
         $leccion->slug = Str::slug($leccion->title);
+
+        $url = explode("https://vimeo.com/", $leccion->url);
+        $leccion->url = "https://player.vimeo.com/video/".$url[1];
         $leccion->save();
 
         return redirect('admin/courses/lessons/show/'.$leccion->id)->with('msj-exitoso', 'La lección ha sido creada con éxito.');
@@ -76,8 +79,10 @@ class LessonController extends Controller{
         $videoUpdate = 0;
         if ($request->url != $leccion->url){
             $videoUpdate = 1;
+            $url = explode("https://vimeo.com/", $request->url);
+            $leccion->url = "https://player.vimeo.com/video/".$url[1];
         }
-        $leccion->fill($request->all());
+        $leccion->title = $request->title;
         $leccion->slug = Str::slug($leccion->title);
         $leccion->save();
 

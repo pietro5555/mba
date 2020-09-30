@@ -7,6 +7,7 @@ use Illuminate\Support\Str as Str;
 use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\Comment;
+use App\Models\User;
 use DB;
 use Auth;
 use Carbon\Carbon;
@@ -126,8 +127,10 @@ class LessonController extends Controller{
                             ->first();
 
         $all_comments = Comment::where('lesson_id', $lesson_id)->with('user')->get();
+
+        $directos = User::where('referred_id', Auth::user()->ID)->get()->count('ID');
        
-        return view('cursos.leccion', compact('lesson', 'all_lessons','all_comments', 'progresoCurso'));
+        return view('cursos.leccion', compact('lesson', 'all_lessons','all_comments', 'progresoCurso','directos'));
     }
     /*AGREGAR COMENTARIOS*/
     public function lesson_comments(Request $request){

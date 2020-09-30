@@ -233,10 +233,6 @@ class CoursesOrdenController extends Controller
 
             $carrito = new ShoppingCartController();
             $carrito->process_membership_buy($orden->id);
-
-            DB::table('shopping_cart')
-                ->where('user_id', '=', Auth::user()->ID)
-                ->delete();
                 
             /* eliminar la direccion ip y el id de la persona que me dio el link*/
              Addresip::where('ip', request()->ip())->delete();    
@@ -275,7 +271,7 @@ class CoursesOrdenController extends Controller
                 'note' => 'Compra membresía por '.number_format(($enlace != null) ? $membresia->descuento : $membresia->price, 2, ',', '.').' USD',
                 'idorden' => $orden->id,
                 'buyer_email' => Auth::user()->user_email,
-                'redirect_url' => route('index')
+                'redirect_url' => route('courses')
             ];
 
             $transacion['items'][] = [

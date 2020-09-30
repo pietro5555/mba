@@ -42,7 +42,7 @@
     @if (!Auth::guest())
         @if(!is_null($last_course))
             <div class="col-md-12 p-4">
-                <img src="{{ asset('uploads/images/courses/covers/'.$last_course->cover) }}" class="course-banner-img" alt="..." height="550px" width="1200px" class="img-fluid" />
+                <img src="{{ asset('uploads/images/courses/covers/'.$last_course->cover) }}" class="course-banner-img" alt="..." class="img-fluid" />
                 <div class="col-md-12 course-banner-caption pl-0 pr-4">
                     <a href="{{ route('courses.show', [$last_course->slug, $last_course->course_id]) }}" class="btn btn-primary float-right text-uppercase mr-2"><i class="fa fa-play"></i> Continuar curso</a>
                     <div class="col-md-10">
@@ -100,9 +100,9 @@
             <div class="container-fluid mt-2 p-2">
                 
                 <div class="wrapper">
-                    @foreach ($cursos as $curso)
-                    <div>
-                        
+                    <div class="row">
+                        @foreach ($cursos as $curso)
+                        <div class="col-12 col-md-6 col-lg-4">
                             <div class="card mb-4 card-courses">
                                 <img class="card-img-top" src="{{ asset('uploads/images/courses/covers/'.$curso->cover) }}" alt="card-image-cap" height="207px">
                                 <div class="card-body p-2">
@@ -112,9 +112,9 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        @endforeach
                     </div>
-
-                    @endforeach
                     <div class="">
                         <div class="row h-100">
                             <div class="col-sm-6 col-md-12 align-self-center">

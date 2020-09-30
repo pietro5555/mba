@@ -42,18 +42,7 @@
 
    {{-- BANNER --}}
    <div class="container-fluid">
-      <video class="d-flex w-100" controls crossorigin playsinline poster="{{ asset('uploads/images/courses/covers/'.$curso->cover) }}" id="player">
-         <!-- Video files -->
-         <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4" type="video/mp4" size="576"/>
-         <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-720p.mp4" type="video/mp4" size="720"/>
-         <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-1080p.mp4" type="video/mp4" size="1080"/>
-         <!-- Caption files -->
-         <track kind="captions" label="English" srclang="en" src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.en.vtt" default/>
-         <track kind="captions" label="Français" srclang="fr" src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.fr.vtt"/>
-
-         <!-- Fallback for browsers that don't support the <video> element -->
-         <a href="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4" download>Download</a>
-      </video>
+      <img src="{{ asset('uploads/images/courses/covers/'.$curso->cover) }}"  width="100%">
    </div>
    {{-- FIN DEL BANNER --}}
    <hr style="border: 1px solid #707070;opacity: 1;" />
@@ -63,7 +52,7 @@
       <div class="row">
          <div class="col-md-12">
             <div class="row">
-               <div class="col-md-9">
+               <div class="col-md-12">
                   <h3 class="text-white">{{ $curso->title }}</h3>
                   <div>
                      @if ( (!Auth::guest()) && (!is_null($progresoCurso)) && (is_null($miValoracion)) ) 
@@ -119,13 +108,6 @@
                      
                   </div>
                </div>
-
-               @if ( (Auth::guest()) || (is_null($progresoCurso)) )
-                  <div class="col-md-3 text-center">
-                     <h5 class="text-white">COSTO</h5>
-                     <h2 class="text-success">{{ $curso->price }} USD</h2>
-                  </div>
-               @endif
             </div>
 
             <div class="row">
@@ -160,7 +142,11 @@
                         @if (is_null(Auth::user()->membership_id))
                            <a href="{{route('shopping-cart.membership')}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> AGREGAR AL CARRITO</a>
                         @else
-                           <a href="{{route('client.courses.add', $curso->id)}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-plus-circle" aria-hidden="true"></i> AGREGAR A MIS CURSOS</a>
+                           @if (Auth::user()->membership_id < $curso->subcategory_id)
+                              <a href="{{route('shopping-cart.membership')}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> AGREGAR AL CARRITO</a>
+                           @else
+                              <a href="{{route('client.courses.add', $curso->id)}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-plus-circle" aria-hidden="true"></i> AGREGAR A MIS CURSOS</a>
+                           @endif
                         @endif
                      @else
                      <!--<a href="#" class="btn btn-info play-course-button btn-block"><i class="fa fa-list"></i> VER LECCIONES</a>

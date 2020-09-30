@@ -291,7 +291,7 @@ class ShoppingCartController extends Controller
         $detalle->amount = $detallesMembresia->precio;
         $detalle->save();
 
-        $cursos = Course::where('subcategory_id', $detallesMembresia->idmembresia)->get();
+        /*$cursos = Course::where('subcategory_id', $detallesMembresia->idmembresia)->get();
 
         $fecha = date('Y-m-d H:i:s');
 
@@ -303,11 +303,12 @@ class ShoppingCartController extends Controller
                             'start_date' => date('Y-m-d'),
                             'created_at' => $fecha,
                             'updated_at' => $fecha]);
-        }
+        }*/
 
         DB::table('wp98_users')
             ->where('ID', '=', $datosOrden->user_id)
-            ->update(['membership_id' => $detallesMembresia->idmembresia]);
+            ->update(['membership_id' => $detallesMembresia->idmembresia,
+                      'status' => 1]);
 
         /* eliminar la direccion ip y el id de la persona que me dio el link*/
         Addresip::where('ip', request()->ip())->delete();
@@ -357,7 +358,8 @@ class ShoppingCartController extends Controller
 
     public function descuentogeneral($id){
        
-     $descuento = DB::table('memberships')->where('id', $id)->first();
+       
+       $descuento = DB::table('memberships')->where('id', $id)->first();
        
        if($descuento != null){
            $total = $descuento->descuento;

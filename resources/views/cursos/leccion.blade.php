@@ -54,14 +54,14 @@
       kind="captions"
       label="English"
       srclang="en"
-      src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.en.vtt"
+      src=""
       default
     />
     <track
       kind="captions"
       label="Français"
       srclang="fr"
-      src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.fr.vtt"
+      src=""
     />
   </video>
     </div>
@@ -96,14 +96,14 @@ class="d-block w-100 leccion-curso"
       kind="captions"
       label="English"
       srclang="en"
-      src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.en.vtt"
+      src=""
       default
     />
     <track
       kind="captions"
       label="Français"
       srclang="fr"
-      src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.fr.vtt"
+      src=""
     />
   </video>
     </div>
@@ -138,14 +138,14 @@ class="d-block w-100 leccion-curso"
       kind="captions"
       label="English"
       srclang="en"
-      src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.en.vtt"
+      src=""
       default
     />
     <track
       kind="captions"
       label="Français"
       srclang="fr"
-      src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.fr.vtt"
+      src=""
     />
   </video>
     </div>
@@ -221,12 +221,12 @@ class="d-block w-100 leccion-curso"
             <div class="media">
                 <a class="media-left" href="#">
                     <div class="col-md-2">
-                      <div class="perfil-comments"><h2 class="text-white"> JD</h2></div>
+                      <img src="{{ asset('uploads/avatar/'.$comment->user->avatar) }}" alt="" class="circular--square" >
                   </div>
                 </a>
-                
+
                 <div class="media-body">
-                    <h4 class="media-heading text-white">Jhon Doe</h4>
+                    <h4 class="media-heading text-white">{{$comment->user->display_name}}</h4>
                    <h7 class="media-heading about-course-text">{{str_replace('-', '/', date('d-m-Y', strtotime($comment->date)))}}</h7>
                    <p class="about-course-text">
                        {{$comment->comment}}

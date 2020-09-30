@@ -498,7 +498,6 @@
     .mentor-index-seccion {
         display: block !important;
     }
-<<<<<<< HEAD
     
     @media (min-width: 1366px) {
 
@@ -508,7 +507,6 @@
             top:55%;
         }
         
-=======
 }
 
 @media (min-width: 1366px) {
@@ -516,7 +514,6 @@
         position: absolute;
         bottom: 0 !important;
         top: 85%;
->>>>>>> a526a73e49b954bb2d29b5d9953fefa3c6f28b39
     }
 }
 
@@ -553,7 +550,7 @@
 .course-banner-caption {
     position: absolute;
     bottom: 0 !important;
-    height: 20%;
+    height: 30%;
 }
 
 .bar-progress-banner {
@@ -888,7 +885,11 @@ nav>div a.nav-item.nav-link:focus {
     background-color: #8E8E8E;
     vertical-align: middle;
 }
-
+.circular--square {
+    width: 5rem;
+    height: 5rem;
+  border-radius: 50%;
+}
 .box-comments .form-inline .form-control {
     height: 80px;
     width: 580px;

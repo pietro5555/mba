@@ -42,18 +42,15 @@
 
    {{-- BANNER --}}
    <div class="container-fluid">
-      <video class="d-flex w-100" controls crossorigin playsinline poster="{{ asset('uploads/images/courses/covers/'.$curso->cover) }}" id="player">
-         <!-- Video files -->
-         <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4" type="video/mp4" size="576"/>
-         <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-720p.mp4" type="video/mp4" size="720"/>
-         <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-1080p.mp4" type="video/mp4" size="1080"/>
-         <!-- Caption files -->
-         <track kind="captions" label="English" srclang="en" src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.en.vtt" default/>
-         <track kind="captions" label="Français" srclang="fr" src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.fr.vtt"/>
-
-         <!-- Fallback for browsers that don't support the <video> element -->
-         <a href="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4" download>Download</a>
-      </video>
+        @if (!is_null($curso->featured_cover))
+               <div style="max-width: 100%; position: relative; display: inline-block;">
+                    <img src="{{ asset('uploads/images/courses/featured_covers/'.$curso->featured_cover) }}" alt="" style=" max-width:100%; opacity: 0.5;" class="">
+                </div>
+         @else
+         <div style="max-width: 100%; position: relative; display: inline-block;">
+                    <img src="{{ asset('uploads/images/courses/covers/'.$curso->cover) }}" alt="" style=" max-width:100%; opacity: 0.5;">
+         </div>
+         @endif
    </div>
    {{-- FIN DEL BANNER --}}
    <hr style="border: 1px solid #707070;opacity: 1;" />

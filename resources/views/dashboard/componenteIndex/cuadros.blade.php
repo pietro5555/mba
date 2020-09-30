@@ -358,6 +358,28 @@
         </div>
     </div>
 
+
+    <div class="col-sm-12 col-xs-12">
+        <div class="info-box border-radius" onclick="copyToClipboard('shoping')">
+            <div class="box-body" style="padding: 15px 20px;">
+                <div class="col-md-3 col-xs-12 white" style="font-size: 22px; margin-top: 15px;">
+                    <i class="fas fa-link" style="color:#28a745; margin-right: 20px;"></i>
+                    Link de Compra
+                </div>
+
+                <div class="col-md-9 col-xs-12 white" style="font-size: 22px; margin-top: 15px; color:#28a745;">
+                    {{route('shopping-cart.index').'?ref='.Auth::user()->ID}}
+
+                    <i class="far fa-copy" style="margin-right: 20px;"></i>
+
+                    <small id="shoping" style="display: none;">
+                    {{route('shopping-cart.index').'?ref='.Auth::user()->ID}}
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+
     {{-- referido cliente --}}
     @if ($settingCliente->cliente == 1)
 

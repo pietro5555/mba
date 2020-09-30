@@ -182,12 +182,21 @@ class RegisterController extends Controller
         $permiso->PermisosAdmin($user->ID);
         }
         
-        if (Auth::guest()){
+        if($data['shoping'] != null){
+            
+         $funciones->msjSistema('Su Registro ha sido exitoso el ID es: '.$user->ID, 'success');
+         return redirect()->back(); 
+
+        }elseif (Auth::guest()){
+
         Auth::loginUsingId($user->ID);   
         return redirect('/')->with('msj-exitoso', 'Su Registro ha sido exitoso su ID es: '.$user->ID);
+
         }else{
+
          $funciones->msjSistema('Su Registro ha sido exitoso el ID es: '.$user->ID, 'success');
-         return redirect()->back();   
+         return redirect()->back();  
+
         }
     }
 

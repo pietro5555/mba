@@ -40,5 +40,19 @@ class LoginController extends Controller
          return redirect()->back()->with('msj3', 'Las Credenciales no coinciden con nuestros registros');
         }
     }
+
+
+     /*login del carrito de compras*/
+    public function autshoping(Request $datos){
+
+        if (Auth::attempt(['ID' => $datos->ID, 'password' => $datos->password])) {
+         
+          return redirect()->back();
+           
+        }else{
+            
+         return redirect()->back()->with('msj3', 'Las Credenciales no coinciden con nuestros registros');
+        }
+    }
     
 }

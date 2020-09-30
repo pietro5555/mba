@@ -151,17 +151,17 @@
                </div>
                <div class="col-md-3 mt-2 text-center">
                   @if (Auth::guest())
-                     <a href="{{route('shopping-cart.store', [$curso->id])}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> AGREGAR AL CARRITO</a>
+                     <a href="{{route('shopping-cart.membership')}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> AGREGAR AL CARRITO</a>
                   @else
                      @if (is_null($progresoCurso))
                         @if (is_null(Auth::user()->membership_id))
-                           <a href="{{route('shopping-cart.store', [$curso->id])}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> AGREGAR AL CARRITO</a>
+                           <a href="{{route('shopping-cart.membership')}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> AGREGAR AL CARRITO</a>
                         @else
                         <a href="{{route('client.courses.add', $curso->id)}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-plus-circle" aria-hidden="true"></i> AGREGAR A MIS CURSOS</a>
                         @endif
                      @else
-                     <a href="#" data-toggle="modal" class="btn btn-info play-course-button btn-block"><i class="fa fa-list"></i> VER LECCIONES</a>
-                        <!--@if (is_null($miValoracion))
+                     <!--<a href="#" class="btn btn-info play-course-button btn-block"><i class="fa fa-list"></i> VER LECCIONES</a>
+                        @if (is_null($miValoracion))
                            <a href="#ratingModal" data-toggle="modal" class="btn btn-info play-course-button btn-block"><i class="fa fa-star"></i> VALORAR</a>
                         @endif-->
                         @if ($progresoCurso->certificate == 1)
@@ -213,7 +213,7 @@
       </div>
    </div>
    {{-- FIN SECCIÓN ACERCA DEL CURSO--}}
-
+   
    {{-- SECCIÓN LECCIONES--}}
    <div class="container-fluid pt-4 pb-4">
       <div class="col-md-12 section-title-category">
@@ -237,7 +237,13 @@
                                        <div class="cuadrado"><h2 class="text-white"> @if ($cont < 10) 0{{ $cont }} @else {{ $cont }} @endif</h2></div>
                                     </div>
                                     <div class="col-md-8">
-                                       <h5 class="panel-title about-course-text"> <a href="{{ route('lesson.show', [$leccion->slug, $leccion->id, $curso->id]) }}" class="about-course-text">{{ $leccion->title }}</a></h5>
+                                       <h5 class="panel-title about-course-text"> 
+                                          @if ( (!Auth::guest()) && (!is_null($progresoCurso)) )
+                                             <a href="{{ route('lesson.show', [$leccion->slug, $leccion->id, $curso->id]) }}" class="about-course-text">{{ $leccion->title }}</a>
+                                          @else
+                                             {{ $leccion->title }}
+                                          @endif
+                                       </h5>
                                     </div>
                                     <div class="col-md-2">
                                        <img src="{{ asset('images/icons/chevron.svg') }}" class="leccion-icon float-right"> 

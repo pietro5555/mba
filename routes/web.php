@@ -184,6 +184,8 @@ Route::group(['prefix' => 'installer'], function (){
     Route::get('/', 'ShoppingCartController@index')->name('shopping-cart.index');
     Route::get('store/{id}', 'ShoppingCartController@store')->name('shopping-cart.store');
     Route::get('delete/{id}', 'ShoppingCartController@delete')->name('shopping-cart.delete');
+    Route::get('/memberships', 'ShoppingCartController@memberships')->name('shopping-cart.membership');
+    // proceso de pago
     Route::post('finish', 'CoursesOrdenController@procesarCompra')->name('shopping-cart.finish');
     Route::post('pay-membership-stripe', 'CoursesOrdenController@pay_membership_stripe')->name('shopping-cart.pay-membership-stripe');
     Route::post('pay-membership-coinpayment', 'CoursesOrdenController@pay_membership_coinpayment')->name('shopping-cart.pay-membership-coinpayment');

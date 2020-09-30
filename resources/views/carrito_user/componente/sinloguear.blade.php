@@ -48,7 +48,7 @@
 </div>
 
 
-<div class="col-xs-12 mostrar" style="display:none;">
+<div class="col-xs-12 mostrar" style="display:none; margin-top: 30px;">
    <form class="login-form" method="POST" action="{{ route('autenticacion.save-register') }}" name="formulario">
                             {{ csrf_field() }}
                                                   

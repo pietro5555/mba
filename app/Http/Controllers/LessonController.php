@@ -108,13 +108,14 @@ class LessonController extends Controller{
     * Courses / Leccion
     */
 
-    public function lesson($lesson_slug, $lesson_id, $course_id)
+  /*  public function lesson($lesson_slug, $lesson_id, $course_id)
     {
         $lesson = Lesson::where('id', $lesson_id)->get()->first();
         $all_lessons = Lesson::where('course_id', '=',  $course_id)->get();
 
         $all_comments = Comment::where('lesson_id', $lesson_id)->get();
         return view('cursos.leccion', compact('lesson', 'all_lessons','all_comments'));
+    }*/
     public function lesson($lesson_slug, $lesson_id, $course_id){
         $lesson = Lesson::where('id', '=',$lesson_id)->get()->first();
         $all_lessons = Lesson::where('course_id', '=',  $course_id)
@@ -126,7 +127,7 @@ class LessonController extends Controller{
                             ->where('user_id', '=', Auth::user()->ID)
                             ->first();
 
-        $all_comments = DB::table('comments')->where('lesson_id', '=',$lesson_id)->get();
+   $all_comments = Comment::where('lesson_id', $lesson_id)->get();
         return view('cursos.leccion', compact('lesson', 'all_lessons','all_comments', 'progresoCurso'));
     }
     /*AGREGAR COMENTARIOS*/

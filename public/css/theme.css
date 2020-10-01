@@ -429,6 +429,7 @@
 
 .course-banner-caption{
         top: 70%;
+        width: 96%;
     }
 
 }
@@ -437,6 +438,10 @@
     .course-category-caption a{
 font-size: 12px;
 bottom: 0px;
+}
+.course-banner-caption {
+    top: 55%;
+    width: 95%;
 }
     
 }
@@ -465,32 +470,23 @@ font-size: 16px;
         .course-banner-caption{
             position: absolute;
             bottom: 0 !important;
-            top:55%;
+                top: 75%;
+            width: 97%;
         }
 }
-
-@media (min-width: 1366px) {
-    .course-banner-caption {
-        position: absolute;
-        bottom: 0 !important;
-        top: 85%;
-    }
-    
-    @media (min-width: 1366px) {
-
-        .course-banner-caption{
-            position: absolute;
-            bottom: 0 !important;
-            top: 85%;
-        }
-        
-    }
 
     @media (min-width: 1400px ) {
          .course-banner-caption{
             position: absolute;
             bottom: 0 !important;
             top: 65%;
+        }
+        
+    }
+
+    @media (min-width: 320px) and (max-width: 320px){
+        .course-banner-caption{
+            display: none;
         }
         
     }
@@ -513,6 +509,7 @@ font-size: 16px;
 .course-banner-img{
 background: transparent linear-gradient(178deg, #00000000 0%, #000000 100%) 0% 0% no-repeat padding-box;
 opacity: 0.74;
+max-width: 100%;
 }
 
 .course-banner-caption{

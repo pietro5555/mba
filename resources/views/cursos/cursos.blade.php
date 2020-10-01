@@ -36,29 +36,68 @@
         <div class="title-page-course col-md"><span class="text-white">
             <h3><span class="text-white">Hola</span><span class="text-primary"> {{$username}}</span><span class="text-white"> ¡Nos alegra verte hoy!</span></h3>
         </div>
+        @if(!empty($last_course))
+        <div class="container-fluid d-sm-none">
+            <div class="row">
+                <div class="col-md-12">
+                    <h5 class="text-white text-uppercase ml-4" style="font-size: 12px;">
+                                {{$last_course->title}}
+                            </h5>
+                    <div class="btn btn-none ">
+                        <a href="{{ route('courses.show', [$last_course->slug, $last_course->course_id]) }}" class="btn btn-primary float-right text-uppercase mr-2" style="font-size: 12px;"><i class="fa fa-play"></i> Continuar curso</a>
+                    </div>
+                    
+                    <div class="progress progress-course-bar pl-0">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="{{$last_course->progress}}" aria-valuemin="0" aria-valuemax="100" style="width:{{$last_course->progress}}%">
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @else
+
+        @endif
     @endif
 
     {{-- BANNER --}}
     @if (!Auth::guest())
-        @if(!is_null($last_course))
-            <!--<div class="col-md-12 p-4">
-                <img src="{{ asset('uploads/images/courses/covers/'.$last_course->cover) }}" class="course-banner-img" alt="..." class="img-fluid" />
-                <div class="col-md-12 course-banner-caption pl-0 pr-4">
+        @if(!empty($last_course))
+
+            <div class="container-fluid col-md-12 p-4">
+                <img src="{{ asset('uploads/images/courses/covers/'.$last_course->cover) }}" class="course-banner-img img-fluid" alt="..."/>
+                <div class="container-fluid pl-0 pr-4 course-banner-caption  d-none d-sm-block d-md-block clearfix">
+                    <div class="">
+                        <div class="col-md-12">
+                            <h5 class="text-white text-uppercase ml-4" >
+                                        {{$last_course->title}}
+                            </h5>
+                            <div class="float-right mb-2">
+                                <div class="row">
+                                     <a href="{{ route('courses.show', [$last_course->slug, $last_course->course_id]) }}" class="btn btn-primary float-right text-uppercase mr-2"><i class="fa fa-play"></i> Continuar curso</a>
+                                </div>
+                               
+                            </div>
+                            
+                            <div class="pl-0 col-md-12 progress progress-course-bar">
+                                        <div class="progress-bar pl-0" role="progressbar" aria-valuenow="{{$last_course->progress}}" aria-valuemin="0" aria-valuemax="100" style="width:{{$last_course->progress}}%">
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--<div class="col-md-10 course-banner-caption pl-0 pr-4  d-none d-sm-block d-md-block">
                     <a href="{{ route('courses.show', [$last_course->slug, $last_course->course_id]) }}" class="btn btn-primary float-right text-uppercase mr-2"><i class="fa fa-play"></i> Continuar curso</a>
                     <div class="col-md-10">
                          <h4 class="text-white text-uppercase ml-4">
                                 {{$last_course->title}}
-                            </h4>
-                            <p class="col-md-6 description-course text-justify pl-0 ml-4">
-                                {{$last_course->description}}
-                            </p>
+                        </h4>
                     </div>
                     <div class="progress col-xs progress-course-bar pl-0">
                                 <div class="progress-bar" role="progressbar" aria-valuenow="{{$last_course->progress}}" aria-valuemin="0" aria-valuemax="100" style="width:{{$last_course->progress}}%">
                     </div>
                     </div>
-                </div>
-            </div>-->
+                </div>-->
+            </div>
             <!--<div class="banner-course">
                 <div class="button-container">
                     <img src="{{ asset('uploads/images/courses/covers/'.$last_course->cover) }}" class="course-banner-img" alt="..." height="550px" width="1600px" class="img-fluid" />

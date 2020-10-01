@@ -277,6 +277,7 @@ class ShoppingCartController extends Controller
         $detalle->save();
         
         $cursoAsociado = ShoppingCart::where('user_id', '=', $datosOrden->user_id)
+                            ->where('course_id', '<>', NULL)
                             ->orderBy('id', 'DESC')
                             ->first();
         

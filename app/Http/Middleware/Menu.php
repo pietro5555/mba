@@ -755,6 +755,15 @@ class Menu
                    
                 ]
             ],
+            'Historial de Compras' => [
+                'submenu' => 0,
+                'ruta' => 'admin.purchases-record',
+                'black'=> '0',
+                'icono' => 'fa fa-shopping-cart',
+                'complementoruta' => '',
+                'permisoAdmin' => (!empty($permiso)) ? $permiso->cursos : 0,
+                'activo' => 0,
+            ],
             
             /*
             'Nuevo Registro' => [

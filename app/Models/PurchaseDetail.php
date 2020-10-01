@@ -13,4 +13,8 @@ class PurchaseDetail extends Model
     public function purchase(){
         return $this->belongsTo('App\Models\Purchase');
     }
+
+    public function membership(){
+        return $this->belongsTo('App\Models\Membership');
+    }
 }

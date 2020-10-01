@@ -373,6 +373,8 @@ Route::group(['prefix' => 'installer'], function (){
       Route::get('change-status/{id}/{status}', 'EventsController@change_status')->name('admin.events.change-status');
   
     });
+
+    Route::get('purchases-record', 'ShoppingCartController@purchases_record')->name('admin.purchases-record');
   
     //Streaming
     Route::get('streaming', 'StreamingController@index')->name('streaming.index');

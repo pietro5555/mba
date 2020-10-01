@@ -17,4 +17,8 @@ class Membership extends Model
     public function shopping_carts(){
         return $this->hasMany('App\Models\ShoppingCart');
     }
+
+    public function details(){
+        return $this->hasMany('App\Models\ShoppingCart');
+    }
 }

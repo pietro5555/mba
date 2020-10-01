@@ -406,6 +406,9 @@ Route::group(['prefix' => 'installer'], function (){
         Route::post('/buscarnetwork','UsuarioController@buscarnetwork')->name('buscarnetwork');
         // descargar toda la red
         Route::get('/downloadred', 'UsuarioController@exportUsers')->name('downloadred');
+
+        // filtro por tipo de usuarios
+        Route::post('/tipofil', 'UsuarioController@tipofil')->name('tipofil');
       });
       
       // Billetera

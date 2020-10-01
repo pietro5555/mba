@@ -167,7 +167,7 @@
                         </div>
 
                         <div class="form-group has-feedback">
-                            <label for="patrocinador">ID Patrocinador (Opcional)</label>
+                            <label for="patrocinador">ID Patrocinador (Si no sabe cual es su Patrocinador coloque el ID 1)</label>
                             <input type="number" class="form-control" name="referred_id" ID="patrocinador" style="border-radius: 20px;">
                         </div>
 

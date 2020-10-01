@@ -376,4 +376,19 @@ class ShoppingCartController extends Controller
                 $cambiando->save();
             }    
     }
+
+    public function purchases_record(){
+        // TITLE
+        view()->share('title', 'Historial de Compras');
+        
+        $compras = Purchase::with(['details'])->orderBy('id', 'DESC')->get();
+        
+        foreach ($compras as $compra){
+            foreach ($compra->details as $p){
+                $compra->membership = $p->membership;
+            }
+        }
+
+        return view('admin.purchasesRecord')->with(compact('compras'));
+    }
 }

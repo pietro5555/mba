@@ -30,6 +30,7 @@ use App\Models\Monedadicional;
 use App\Models\Redesociales; 
 use App\Models\Pop;
 use App\Models\Component;
+use App\Models\CourseOrden;
 
 // llamado a los controlladores
 use App\Http\Controllers\IndexController;
@@ -37,6 +38,7 @@ use App\Http\Controllers\RangoController;
 use App\Http\Controllers\TiendaController;
 use App\Http\Controllers\ActivacionController;
 use App\Http\Controllers\ComisionesController;
+use App\Http\Controllers\ComisionController;
 use App\Http\Controllers\TransacionesController;
 use App\Http\Controllers\PuntospersonalesController;
 use App\Http\Controllers\BinarioController;
@@ -181,6 +183,8 @@ class AdminController extends Controller
         //fin Informacion Index
             
         
+        //Compras echas
+        $listadoCompras =  $this->reordenarCompras();
         
         //anuncios
         $fechaActual = Carbon::now();
@@ -206,7 +210,7 @@ class AdminController extends Controller
         return view('dashboard.index')->with(compact('cantReferidosDirectos', 'cantReferidosIndirectos', 'cantReferidosActivos', 'fechaProxActivacion', 'new_member',
                     'cantventas', 'cantventasmont', 'fullname', 'rangos', 'cantAllUsers', 'rankingComisiones', 'rankingVentas','noticias', 'contTicket', 'moneda',
                     'nombreRol','desde', 'ordenesView', 'productosnuevos','settingPuntos','totalventas','totalcobrado','anuncios','noticias','materiales','binario',
-                    'settingEstructura','moneda1','moneda2','moneda3','adicional','redes','pop','component'
+                    'settingEstructura','moneda1','moneda2','moneda3','adicional','redes','pop','component','listadoCompras'
             ));
     }
 
@@ -220,6 +224,7 @@ class AdminController extends Controller
     {
         
         $activacion = new ActivacionController;
+        $comi = new ComisionController;  
         $comisiones = new ComisionesController;
         $binario = new BinarioController;
         $funciones = new IndexController;
@@ -231,15 +236,19 @@ class AdminController extends Controller
         //solo si esta activado la configuracion
         //de cryptomoneda se verifican
         //las compras en crypto
+        /*
         if($seting->btc == 1){
         $crypto->consultaCompra();
         }
+        */
         
         // todo los usuarios del admin
         if(Auth::user()->rol_id == 0){
         $users = User::where('rol_id','!=','0')->get();
         foreach($users as $user){
                 $activacion->activarUsuarios($user->ID);
+                $comi->verificarCompras($user->ID);
+                $comi->verificarAfiliados($user->ID);
          }
         }
          
@@ -249,21 +258,28 @@ class AdminController extends Controller
         foreach ($todousers as $user ) {
             if ($user['rol'] != 0) {
                 $activacion->activarUsuarios($user['ID']);
+                $comi->verificarCompras($user['ID']);
+                $comi->verificarAfiliados($user['ID']);
             }
           }
         }
         
+        $comi->verificarCompras(Auth::user()->ID);
+        $comi->verificarAfiliados(Auth::user()->ID);
+        
         //puntos por compras propias y de red
+        /*
         if (!empty($settingPuntos)) {
         $personales->verificarPuntos(Auth::user()->ID);
         $personales->puntosRed(Auth::user()->ID);
         }
+        */
         
         // cobra mis comisiones
         $comisiones->ObtenerUsuarios();
         
         //verificamos el bono binario
-        $binario->BonoBinario();
+        //$binario->BonoBinario();
          
         $funciones->msjSistema('Informacion Actualizada Con Exito', 'success');
         return redirect('admin');
@@ -420,5 +436,29 @@ class AdminController extends Controller
             }
 		}
             return redirect('admin/userrecords')->with('msj', 'Todos los usuarios han sidos borrados menos el Administrador');
+        }
+
+
+        public function reordenarCompras(){
+            
+            $lista =[]; $guardar ='';
+            if(Auth::user()->rol_id != 0){
+             $listadoCompras = CourseOrden::where('user_id', Auth::user()->ID)->orderBy('id', 'DESC')->take(10)->get();
+             }else{
+              $listadoCompras = CourseOrden::orderBy('id', 'DESC')->take(10)->get();  
+            }
+            foreach($listadoCompras as $listaCom){
+                
+             $lis = json_decode($listaCom->detalles);
+            
+            array_push($lista, [
+            'orden' => $listaCom->id,
+            'producto' => $lis->nombre,
+            'status' => $listaCom->status,
+            'fecha' => $listaCom->created_at,
+             ]);
+            }
+            
+            return $lista;
         }
 }

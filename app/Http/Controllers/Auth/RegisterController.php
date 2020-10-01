@@ -182,12 +182,21 @@ class RegisterController extends Controller
         $permiso->PermisosAdmin($user->ID);
         }
         
-        if (Auth::guest()){
+        if($data['shoping'] != null){
+            
+         Auth::loginUsingId($user->ID);     
+         return redirect()->back()->with('msj-exitoso', 'Su Registro ha sido exitoso su ID es: '.$user->ID);  
+
+        }elseif (Auth::guest()){
+
         Auth::loginUsingId($user->ID);   
         return redirect('/')->with('msj-exitoso', 'Su Registro ha sido exitoso su ID es: '.$user->ID);
+
         }else{
+
          $funciones->msjSistema('Su Registro ha sido exitoso el ID es: '.$user->ID, 'success');
-         return redirect()->back();   
+         return redirect()->back();  
+
         }
     }
 
@@ -288,6 +297,7 @@ class RegisterController extends Controller
             $mensaje = str_replace('@correo', ' '.$data['user_email'].' ', $mensaje);
             $mensaje = str_replace('@usuario', ' '.$data['nameuser'].' ', $mensaje);
             $mensaje = str_replace('@idpatrocinio', ' '.$referido.' ', $mensaje);
+            $mensaje = str_replace('@Nafiliacion', ' '.$user->ID.' ', $mensaje);
             if (strcasecmp(env('MAIL_HOST'), 'smtp.localhost.com') !== 0) {
                 Mail::send('emails.plantilla',  ['data' => $mensaje, 'firma' => $firma], function($msj) use ($plantilla, $data){
                     $msj->subject($plantilla->titulo);
@@ -362,17 +372,21 @@ class RegisterController extends Controller
         // 0: NONE.
         $user_id_default = $settings->referred_id_default;
 
-        // Obtenemos el referido.
+         // Obtenemos el referido.
         $referido = $user_id_default;
-        if(isset($data['referred_id'])){
+        if($data['referred_id'] == null){
+            $data['referred_id'] = $referido;
             if ($this->VerificarUser($data['referred_id'])) {
                 
                 $requisitos = [
                     'error' => 'El Usuario con el ID Referido Suministrado ('.$data['referred_id'].') No Se Encuentra Registrado, Pruebe Con Otro'
                     ];
                     
+                     
                 return $requisitos;
             }
+            $referido =  $data['referred_id'];
+        }else{
             $referido =  $data['referred_id'];
         }
         $posicion = 0;

@@ -22,14 +22,21 @@
 
 @section('content')
 <div class="col-md-12 "><span>
-          <h6 class="mt-3" style="color:#707070; "><span>Cursos > </span><span> {{ $category_name->title }} </span></h6>
+          <h6 class="mt-3" style="color:#707070; ">
+            <span>Cursos > </span>
+            @if (!is_null ($category_name)) <span> {{ $category_name->title }} @else Búsqueda @endif</span>
+          </h6>
           <hr style="border: 1px solid #707070;opacity: 1;" />
        </div>
     <div class="container-fluid">
         
         <div class="col mb-4 mt-4">
             <div class="title-page-course col-md"><span class="text-white">
-            <h2>Cursos  Online de<span class="text-primary"> "{{$category_name->title}}"</span></h2>
+                @if (!is_null ($category_name))
+                    <h2>Cursos Online de<span class="text-primary"> "{{$category_name->title}}"</span></h2>
+                @else
+                    <h2>Cursos Online <span class="text-primary">relacionados</span></h2>
+                @endif
             </div>
         </div>     
              

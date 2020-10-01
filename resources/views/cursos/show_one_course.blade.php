@@ -42,18 +42,7 @@
 
    {{-- BANNER --}}
    <div class="container-fluid">
-      <video class="d-flex w-100" controls crossorigin playsinline poster="{{ asset('uploads/images/courses/covers/'.$curso->cover) }}" id="player">
-         <!-- Video files -->
-         <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4" type="video/mp4" size="576"/>
-         <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-720p.mp4" type="video/mp4" size="720"/>
-         <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-1080p.mp4" type="video/mp4" size="1080"/>
-         <!-- Caption files -->
-         <track kind="captions" label="English" srclang="en" src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.en.vtt" default/>
-         <track kind="captions" label="Français" srclang="fr" src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.fr.vtt"/>
-
-         <!-- Fallback for browsers that don't support the <video> element -->
-         <a href="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4" download>Download</a>
-      </video>
+      <img src="{{ asset('uploads/images/courses/covers/'.$curso->cover) }}"  width="100%">
    </div>
    {{-- FIN DEL BANNER --}}
    <hr style="border: 1px solid #707070;opacity: 1;" />
@@ -63,7 +52,7 @@
       <div class="row">
          <div class="col-md-12">
             <div class="row">
-               <div class="col-md-9">
+               <div class="col-md-12">
                   <h3 class="text-white">{{ $curso->title }}</h3>
                   <div>
                      @if ( (!Auth::guest()) && (!is_null($progresoCurso)) && (is_null($miValoracion)) ) 
@@ -119,13 +108,6 @@
                      
                   </div>
                </div>
-
-               @if ( (Auth::guest()) || (is_null($progresoCurso)) )
-                  <div class="col-md-3 text-center">
-                     <h5 class="text-white">COSTO</h5>
-                     <h2 class="text-success">{{ $curso->price }} USD</h2>
-                  </div>
-               @endif
             </div>
 
             <div class="row">
@@ -158,22 +140,26 @@
                   @else
                      @if (is_null($progresoCurso))
                         @if (is_null(Auth::user()->membership_id))
-                           <a href="{{route('shopping-cart.membership')}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> AGREGAR AL CARRITO</a>
+                           <a href="{{route('shopping-cart.store', $curso->id)}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> AGREGAR AL CARRITO</a>
                         @else
-                        <a href="{{route('client.courses.add', $curso->id)}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-plus-circle" aria-hidden="true"></i> AGREGAR A MIS CURSOS</a>
+                           @if (Auth::user()->membership_id < $curso->subcategory_id)
+                              <a href="{{route('shopping-cart.store', $curso->id)}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> AGREGAR AL CARRITO</a>
+                           @else
+                              <a href="{{route('client.courses.add', $curso->id)}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-plus-circle" aria-hidden="true"></i> AGREGAR A MIS CURSOS</a>
+                           @endif
                         @endif
                      @else
-                     <a href="#" data-toggle="modal" class="btn btn-info play-course-button btn-block"><i class="fa fa-list"></i> VER LECCIONES</a>
-                        <!--@if (is_null($miValoracion))
+                     <!--<a href="#" class="btn btn-info play-course-button btn-block"><i class="fa fa-list"></i> VER LECCIONES</a>
+                        @if (is_null($miValoracion))
                            <a href="#ratingModal" data-toggle="modal" class="btn btn-info play-course-button btn-block"><i class="fa fa-star"></i> VALORAR</a>
-                        @endif-->
+                        @endif
                         @if ($progresoCurso->certificate == 1)
                            <a href="{{ route('client.courses.get-certificate', $curso->id) }}" class="btn btn-primary play-course-button btn-block"><i class="fas fa-certificate"></i> OBTENER CERTIFICADO</a>
                         @else
                            @if (!is_null($curso->evaluation))
                               <a href="{{ route('client.courses.take-evaluation', [$curso->slug, $curso->id]) }}" class="btn btn-primary play-course-button btn-block"><i class="far fa-file-alt"></i> PRESENTAR EVALUACIÓN</a>
                            @endif   
-                        @endif
+                        @endif-->
                      @endif
                   @endif
                </div>
@@ -216,7 +202,7 @@
       </div>
    </div>
    {{-- FIN SECCIÓN ACERCA DEL CURSO--}}
-
+   
    {{-- SECCIÓN LECCIONES--}}
    <div class="container-fluid pt-4 pb-4">
       <div class="col-md-12 section-title-category">
@@ -240,7 +226,13 @@
                                        <div class="cuadrado"><h2 class="text-white"> @if ($cont < 10) 0{{ $cont }} @else {{ $cont }} @endif</h2></div>
                                     </div>
                                     <div class="col-md-8">
-                                       <h5 class="panel-title about-course-text"> <a href="{{ route('lesson.show', [$leccion->slug, $leccion->id, $curso->id]) }}" class="about-course-text">{{ $leccion->title }}</a></h5>
+                                       <h5 class="panel-title about-course-text"> 
+                                          @if ( (!Auth::guest()) && (!is_null($progresoCurso)) )
+                                             <a href="{{ route('lesson.show', [$leccion->slug, $leccion->id, $curso->id]) }}" class="about-course-text">{{ $leccion->title }}</a>
+                                          @else
+                                             {{ $leccion->title }}
+                                          @endif
+                                       </h5>
                                     </div>
                                     <div class="col-md-2">
                                        <img src="{{ asset('images/icons/chevron.svg') }}" class="leccion-icon float-right"> 
@@ -277,7 +269,7 @@
                @foreach ($curso->ratings as $valoracion)
                   <div class="row m-4 pt-4 border-bottom">  
                      <div class="col-md-2">
-                        <div class="circle"><h2 class="text-white"> JD</h2></div>
+                        <div class="circle"><img src="{{ asset('uploads/avatar/'.$valoracion->user->avatar) }}" alt="" class="circle" ></div>
                      </div>
                      <div class="col-md-8">
                         <div class="row">

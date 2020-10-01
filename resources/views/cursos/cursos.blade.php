@@ -49,7 +49,7 @@
     {{-- BANNER --}}
     @if (!Auth::guest())
         @if(!is_null($last_course))
-            <div class="col-md-12 p-4">
+            <!--<div class="col-md-12 p-4">
                 <img src="{{ asset('uploads/images/courses/covers/'.$last_course->cover) }}" class="course-banner-img" alt="..." class="img-fluid" />
                 <div class="col-md-12 course-banner-caption pl-0 pr-4">
                     <a href="{{ route('courses.show', [$last_course->slug, $last_course->course_id]) }}" class="btn btn-primary float-right text-uppercase mr-2"><i class="fa fa-play"></i> Continuar curso</a>
@@ -66,7 +66,7 @@
                     </div>
                     </div>
                 </div>
-            </div>
+            </div>-->
             <!--<div class="banner-course">
                 <div class="button-container">
                     <img src="{{ asset('uploads/images/courses/covers/'.$last_course->cover) }}" class="course-banner-img" alt="..." height="550px" width="1600px" class="img-fluid" />
@@ -92,13 +92,48 @@
                         </div>
                     </div>
                 </div>
-            </div>-->
+            </div>
         @endif
-    @endif
+    @endif-->
     {{-- FIN DEL BANNER --}}
-
     {{-- SECCIÓN TUS CURSOS--}}
     @if (!Auth::guest())
+        @if($cursos->isNotEmpty())
+            <div class="row">
+                <div class="col-12">
+                    <div class="section-title-courses ml-2">Tus Cursos</div>
+                    <hr style="border: 1px solid #707070;opacity: 1;" />
+                </div>
+                @foreach ($cursos as $curso)
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <div class="card mb-4 card-courses">
+                            <img class="card-img-top" src="{{ asset('uploads/images/courses/covers/'.$curso->cover) }}" alt="card-image-cap" height="207px">
+                            <div class="card-body p-2">
+                                <div class="row align-items-start">
+                                    <h6 class="col-10"><a href="{{ route('courses.show', [$curso->slug, $curso->id]) }}" class="text-secondary text-sm">{{$curso->title}}</a></h6>
+                                    <div class="col-2"><img src="{{ asset('images/icons/video-player-blue.svg') }}" alt="" height="20px" width="20px"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+                <div class="col-12 text-center">
+                    <div class="card-block text-primary">
+                        <a href="{{ route('client.my-courses') }}" class="font-weight-bold">Ver todos mis cursos <i class="text-primary fa fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        @else
+            <div class="title-page-course col-md">
+                <span class="text-white">
+                    <h4 class=""> {{$username}} <span class="text-white"> ¡No has agregado cursos!</span></h4>
+                </span>
+            </div>
+        @endif
+    @endif
+    
+    {{-- SECCIÓN TUS CURSOS--}}
+    <!--@if (!Auth::guest())
         @if($cursos->isNotEmpty())
             <div>
                 <div class="section-title-courses ml-2">Tus Cursos</div>
@@ -142,12 +177,12 @@
                 </span>
             </div>
         @endif
-    @endif
+    @endif-->
     {{-- FIN SECCIÓN TUS CURSOS--}}
 
     {{-- SECCIÓN RECOMENDACIONES--}}
 
-<div class="section-landing" style="background-color: #121317;">
+<div class="section-landing mt-3" style="background-color: #121317;">
 
     <div class="col">
             @if (Auth::guest())

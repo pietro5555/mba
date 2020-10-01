@@ -16,7 +16,7 @@
     @include('dashboard.componenteIndex.productosyrangos')
     
     {{-- seccion de nuevos miembros y de ultimos pedidos --}}
-    @include('dashboard.componenteIndex.pedidosymiembros')
+    {{--@include('dashboard.componenteIndex.pedidosymiembros')--}}
 
     
     {{-- seccion de noticias y materiales --}}

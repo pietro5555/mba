@@ -7,6 +7,7 @@ use Illuminate\Support\Str as Str;
 use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\Comment;
+use App\Models\User;
 use DB;
 use Auth;
 use Carbon\Carbon;
@@ -31,6 +32,9 @@ class LessonController extends Controller{
     public function store(Request $request){
         $leccion = new Lesson($request->all());
         $leccion->slug = Str::slug($leccion->title);
+
+        $url = explode("https://vimeo.com/", $leccion->url);
+        $leccion->url = "https://player.vimeo.com/video/".$url[1];
         $leccion->save();
 
         return redirect('admin/courses/lessons/show/'.$leccion->id)->with('msj-exitoso', 'La lección ha sido creada con éxito.');
@@ -76,8 +80,10 @@ class LessonController extends Controller{
         $videoUpdate = 0;
         if ($request->url != $leccion->url){
             $videoUpdate = 1;
+            $url = explode("https://vimeo.com/", $request->url);
+            $leccion->url = "https://player.vimeo.com/video/".$url[1];
         }
-        $leccion->fill($request->all());
+        $leccion->title = $request->title;
         $leccion->slug = Str::slug($leccion->title);
         $leccion->save();
 
@@ -108,26 +114,37 @@ class LessonController extends Controller{
     * Courses / Leccion
     */
 
-    public function lesson($lesson_slug, $lesson_id, $course_id)
-    {
-        $lesson = Lesson::where('id', '=',$lesson_id)->get()->first();
-        $all_lessons = Lesson::where('course_id', '=',  $course_id)->get();
+    public function lesson($lesson_slug, $lesson_id, $course_id){
+        $lesson = Lesson::where('id', '=',$lesson_id)
+                    ->with('materials')
+                    ->first();
+        $all_lessons = Lesson::where('course_id', '=',  $course_id)
+                        ->get();
+        
+        $progresoCurso = DB::table('courses_users')
+                            ->where('course_id', '=', $course_id)
+                            ->where('user_id', '=', Auth::user()->ID)
+                            ->first();
 
-        $all_comments = DB::table('comments')->where('lesson_id', '=',$lesson_id)->get();
-        return view('cursos.leccion', compact('lesson', 'all_lessons','all_comments'));
+        $all_comments = Comment::where('lesson_id', $lesson_id)->with('user')->get();
+
+        $directos = User::where('referred_id', Auth::user()->ID)->get()->count('ID');
+       
+        return view('cursos.leccion', compact('lesson', 'all_lessons','all_comments', 'progresoCurso','directos'));
     }
     /*AGREGAR COMENTARIOS*/
     public function lesson_comments(Request $request){
 
-        $lesson_comments = new Comment;
-        $lesson_comments->comment =$request->comment;
-        $lesson_comments->lesson_id =$request->lesson_id; 
-        $lesson_comments->user_id =Auth::user()->ID;
+        $datosLeccion = Lesson::find($request->lesson_id);
+        $lesson_comments = new Comment($request->all());
+        //$lesson_comments->comment =$request->comment;
+        //$lesson_comments->lesson_id =$request->lesson_id; 
+        $lesson_comments->user_id = Auth::user()->ID;
         $lesson_comments->date = Carbon::now()->format('Y-m-d');
         $lesson_comments->save();
         
 
-         return redirect('courses/lesson/'.$request->lesson_slug.'/'.$request->lesson_id.'/'.$request->course_id);
+         return redirect('courses/lesson/'.$datosLeccion->slug.'/'.$datosLeccion->id.'/'.$datosLeccion->course_id);
 
     }
 }

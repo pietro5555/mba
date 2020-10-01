@@ -59,6 +59,7 @@ CREATE TABLE `settingpermiso` (
   `red` tinyint(4) DEFAULT 0,
   `eventos` tinyint(4) DEFAULT 0,
   `entradas` tinyint(4) DEFAULT 0,
+  `historialcomision` tinyint(4) DEFAULT 0,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
@@ -67,8 +68,8 @@ CREATE TABLE `settingpermiso` (
 -- Volcado de datos para la tabla `settingpermiso`
 --
 
-INSERT INTO `settingpermiso` (`id`, `iduser`, `nameuser`, `cursos`, `nuevo_registro`, `red_usuario`, `vision_usuario`, `billetera`, `pago`, `informes`, `tickets`, `buzon`, `ranking`, `historial_actividades`, `email_marketing`, `administrar_redes`, `soporte`, `ajuste`, `herramienta`, `calendario`, `correos`, `prospeccion`, `puntos`, `binario`, `usuario`, `tienda`, `transacciones`, `usuarios`, `red`, `eventos`, `entradas`, `created_at`, `updated_at`) VALUES
-(1, 1, '1', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, '2020-09-11 19:42:10', '2020-03-26 20:49:07');
+INSERT INTO `settingpermiso` (`id`, `iduser`, `nameuser`, `cursos`, `nuevo_registro`, `red_usuario`, `vision_usuario`, `billetera`, `pago`, `informes`, `tickets`, `buzon`, `ranking`, `historial_actividades`, `email_marketing`, `administrar_redes`, `soporte`, `ajuste`, `herramienta`, `calendario`, `correos`, `prospeccion`, `puntos`, `binario`, `usuario`, `tienda`, `transacciones`, `usuarios`, `red`, `eventos`, `entradas`, `historialcomision`, `created_at`, `updated_at`) VALUES
+(1, 1, '1', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, '2020-09-11 19:42:10', '2020-03-26 20:49:07');
 
 --
 -- Índices para tablas volcadas

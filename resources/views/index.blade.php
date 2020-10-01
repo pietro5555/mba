@@ -20,6 +20,14 @@
     </script>
 @endpush
 
+@push('styles')
+    <style>
+        #new-courses-section .card-img-overlay:hover{
+            text-decoration: underline;
+        }
+    </style>
+@endpush
+
 @section('content')
     @if (Session::has('msj-exitoso'))
         <div class="alert alert-success alert-dismissible fade show mt-2" role="alert">
@@ -117,7 +125,7 @@
                 </div>
             </div>
                    
-            <div class="row" style="padding: 10px 30px;">
+            <div id="newers" class="row" style="padding: 10px 30px;">
                 @foreach ($cursosNuevos as $cursoNuevo)
                     <div class="col-xl-4 col-lg-4 col-12" style="padding-bottom: 10px;">
                         <div class="card">

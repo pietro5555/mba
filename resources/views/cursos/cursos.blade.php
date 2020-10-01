@@ -19,6 +19,14 @@
     </script>
 @endpush
 
+@push('styles')
+    <style>
+        #new-courses-section .card-img-overlay:hover{
+            text-decoration: underline;
+        }
+    </style>
+@endpush
+
 @section('content')
     @if (Session::has('msj-exitoso'))
         <div class="alert alert-success" style="margin: 5px 15px;">
@@ -382,9 +390,9 @@ $tercero++;
                    <a href="{{ route('courses.show', [$cursoNuevo->slug, $cursoNuevo->id]) }}" style="text-decoration: none;background-color: transparent; color: white;">
                     <div class="card">
                         @if (!is_null($cursoNuevo->cover))
-                        <img src="{{ asset('uploads/images/courses/covers/'.$cursoNuevo->cover) }}" class="card-img-top new-course-img" alt="..." height="462px" width="242px">
+                        <img src="{{ asset('uploads/images/courses/covers/'.$cursoNuevo->cover) }}" class="card-img-top new-course-img" alt="...">
                         @else
-                        <img src="{{ asset('uploads/images/courses/covers/default.jpg') }}" class="card-img-top new-course-img" alt="..." height="462px" width="242px">
+                        <img src="{{ asset('uploads/images/courses/covers/default.jpg') }}" class="card-img-top new-course-img" alt="...">
                         @endif
                         <div class="card-img-overlay d-flex flex-column">
                             <div class="mt-auto">

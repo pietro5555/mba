@@ -14,6 +14,7 @@ use Auth;
 use Carbon\Carbon;
 // llamado a los modelos
 use App\Models\User; 
+use App\Models\Paises; 
 use App\Models\Settings; 
 use App\Models\Formulario; 
 use App\Models\Notification;
@@ -252,7 +253,8 @@ class RegisterController extends Controller
      * @return {view}
      */
     public function newRegister()
-    {
+    {   
+        $paises = Paises::all();
         $settings = Settings::first();
         $estructura='';
         $settingEstructura = SettingsEstructura::find(1);
@@ -266,9 +268,9 @@ class RegisterController extends Controller
             array_push($valoresSelect, OpcionesSelect::find($campo['id']));
         }
         if (!empty(Auth::user()->ID)){
-            return view('auth.register')->with(compact('campos', 'valoresSelect', 'settings', 'patrocinadores'));
+            return view('auth.register')->with(compact('campos', 'valoresSelect', 'settings', 'patrocinadores','paises'));
         }else{
-            return view('auth.register2')->with(compact('campos', 'valoresSelect', 'settings', 'patrocinadores','estructura'));
+            return view('auth.register2')->with(compact('campos', 'valoresSelect', 'settings', 'patrocinadores','estructura','paises'));
         }
       
     }

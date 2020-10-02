@@ -377,6 +377,8 @@ Route::group(['prefix' => 'installer'], function (){
     });
 
     Route::get('purchases-record', 'ShoppingCartController@purchases_record')->name('admin.purchases-record');
+    Route::post('purchases-filtre', 'ShoppingCartController@purchases_filtre')->name('admin.purchases-filtre');
+    Route::post('purchases-forma', 'ShoppingCartController@purchases_forma')->name('admin.purchases-forma');
   
     //Streaming
     Route::get('streaming', 'StreamingController@index')->name('streaming.index');

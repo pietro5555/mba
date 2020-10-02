@@ -175,7 +175,7 @@ class ShoppingCartController extends Controller
                 $item->save();
             }
             
-            return redirect('shopping-cart/memberships');
+            return redirect('shopping-cart');
         }
     }
 

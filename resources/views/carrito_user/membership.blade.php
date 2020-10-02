@@ -53,7 +53,7 @@
                         @if ($membresia->id == 1)
                             <a href="{{route('shopping-cart.store', $membresia->id)}}" class="btn btn-color-green text-white">Seleccionar Membresia</a>
                         @else
-                            <button class="btn btn-color-green text-white" disabled>Seleccionar Membresia</button>
+                        <a href="{{route('shopping-cart.store', $membresia->id)}}" class="btn btn-color-green text-white">Seleccionar Membresia</a>
                         @endif
                   @endauth
                 </div>

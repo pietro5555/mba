@@ -72,6 +72,49 @@ class UsuarioController extends Controller
         }
         return view('usuario.userRecords')->with(compact('usuarios','estructura'));   
     }
+
+
+
+    public function tipofil(Request $datos){
+      
+      view()->share('title', 'Listado de Usuarios');
+      
+        $estructura='';
+        $funciones = new IndexController;
+        $settingEstructura = SettingsEstructura::find(1);
+        if(!empty($settingEstructura)){
+            if($settingEstructura->tipoestructura == 'binaria'){
+        $estructura = $settingEstructura->tipoestructura;
+            }
+        }
+
+        $usuarios = User::where('rol_id', $datos->tipo)->get();
+
+        foreach ($usuarios as $llave) {
+            
+        $nivel = $this->coincidirNivel($llave->ID);    
+          if ($llave->ID != 1) {
+            $referido = 'Administrador';
+            if ($llave->referred_id != 0) {
+                $usuario = User::find($llave->referred_id);
+                $referido = (!empty($usuario->display_name)) ? $usuario->display_name : 'Usuario no Disponible';
+            }
+            $usercampo = DB::table('user_campo')->where('ID', '=', $llave->ID)->get()->first();
+            $rol = Rol::find($llave->rol_id);
+            $llave->nombre_referido = $referido;
+            $llave->pais = (!empty($usercampo->pais)) ? $usercampo->pais : '';
+            $llave->rol = $rol->name;
+            $llave->nivel = $nivel;
+          }else{
+            $llave->nombre_referido = 'Administrador';
+            $llave->pais = 'Administrador';
+            $llave->rol = 'Administrador';
+            $llave->nivel = $nivel;
+          }
+        }
+
+        return view('usuario.userRecords')->with(compact('usuarios','estructura')); 
+    }
     
     /*
     * buscamos el nivel de cada usuario 

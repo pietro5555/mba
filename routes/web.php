@@ -274,8 +274,10 @@ Route::group(['prefix' => 'installer'], function (){
     Route::group(['prefix' => 'red'], function(){
           Route::get('/listado', 'RedController@index')->name('admin-red-index');
           Route::post('/filtrered', 'RedController@filtrered')->name('admin-red-filtre');
-
-          // vista de referidos directos e indirectos
+      
+       //filtro por rango  
+      Route::post('/filtrerango', 'RedController@filtrerango')->name('admin-filtrerango'); 
+      // vista de referidos directos e indirectos
       Route::get('/direct', 'RedController@direct')->name('red.directos');
       //filtros de referidos directos e indirectos
       Route::post('/filtrere', 'RedController@filtre')->name('red.filtre');
@@ -406,6 +408,9 @@ Route::group(['prefix' => 'installer'], function (){
         Route::post('/buscarnetwork','UsuarioController@buscarnetwork')->name('buscarnetwork');
         // descargar toda la red
         Route::get('/downloadred', 'UsuarioController@exportUsers')->name('downloadred');
+
+        // filtro por tipo de usuarios
+        Route::post('/tipofil', 'UsuarioController@tipofil')->name('tipofil');
       });
       
       // Billetera

@@ -41,7 +41,28 @@ class RedController extends Controller
          }
       return view('red.listado', compact('listado','red'));
    }
+   
 
+    public function filtrerango(Request $datos){
+      
+      view()->share('title', 'Red');
+
+      $red = User::where('ID', '!=', '1')->get();
+      $listado = User::where('ID', '!=', '1')->where('rol_id', $datos->rango)->get();
+
+      foreach ($listado as $list) {
+
+            $patrocinador = User::where('ID', $list->referred_id)->first();
+            $rol = Rol::where('id', $list->rol_id)->first();
+            $directos = User::where('referred_id', $list->ID)->count('ID');
+
+            $list->patrocinador = ($patrocinador == null) ? 'N/A' : $patrocinador->display_name;
+            $list->rol_id = $rol->name;
+            $list->status = ($list->status == 0) ? 'Inactivo' : 'Activo';
+            $list->directos = $directos;
+         }
+      return view('red.listado', compact('listado','red'));
+   }
 
    public function filtrered(Request $datos){
         

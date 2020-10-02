@@ -21,11 +21,6 @@ class ShoppingCartController extends Controller
         /*Paises para el formulario*/
         $paises = Paises::all();
 
-        /* almacenamos el ID de la persona que envio el link */
-        if(!empty(request()->ref)){
-           $this->almacenar_addres();
-        }
-
         if (Auth::guest()){
 
             $items = DB::table('shopping_cart')->where('user_id', '=', request()->ip())
@@ -89,7 +84,7 @@ class ShoppingCartController extends Controller
             if($direcip == null){
               $total = $curso->price;          
               }else{
-              $total = $this->descuentogeneral($curso->price); 
+              $total = $this->descuentogeneral($curso->id); 
             }
             // $categoria = null;
             // $mentor = null;
@@ -178,11 +173,9 @@ class ShoppingCartController extends Controller
                 $item->course_id = $id;
                 $item->date = date('Y-m-d');
                 $item->save();
-
-                return redirect('shopping-cart')->with('msj-exitoso', 'El item ha sido agregado a su carrito de compras con éxito.');
-            }else{
-                return redirect('shopping-cart')->with('msj-informativo', 'El item ya se encuentra en su carrito de compras.');
             }
+            
+            return redirect('shopping-cart/memberships');
         }
     }
 
@@ -207,9 +200,6 @@ class ShoppingCartController extends Controller
      * Procesar Compra una vez verificado el pago
     */
     public function process_cart($order){
-           
-        /* obtener el ID de la persona que envio el link */
-        $enlace = Addresip::where('ip', request()->ip())->first();
 
         $datosOrden = DB::table('courses_orden')
                         ->where('id', '=', $order)
@@ -221,15 +211,12 @@ class ShoppingCartController extends Controller
         if (!is_null($datosOrden->idtransacion_stripe)){
             $compra->payment_method = 'Stripe';
             $compra->payment_id = $datosOrden->idtransacion_stripe;
-            $compra->link = ($enlace != null) ? $enlace->padre : 0;
         }else if (!is_null($datosOrden->idtransacion_coinpaymen)){
             $compra->payment_method = 'Coinpayment';
             $compra->payment_id = $datosOrden->idtransacion_coinpaymen;
-            $compra->link = ($enlace != null) ? $enlace->padre : 0;
         }
         $compra->date = date('Y-m-d');
         $compra->status = 1;
-        $compra->save();
 
         $items = json_decode($datosOrden->detalles);
                     
@@ -249,19 +236,17 @@ class ShoppingCartController extends Controller
                             'start_date' => date('Y-m-d'),
                             'created_at' => $fecha,
                             'updated_at' => $fecha]);
+                            
+            $compra->link = $item->links;                
         }
-
-        /* eliminar la direccion ip y el id de la persona que me dio el link*/
-        Addresip::where('ip', request()->ip())->delete();
+        
+        $compra->save();
     }
 
     /**
      * Procesar Compra de membresía una vez verificado el pago
     */
     public function process_membership_buy($order){
-
-        /* obtener el ID de la persona que envio el link */
-        $enlace = Addresip::where('ip', request()->ip())->first();
 
         $datosOrden = DB::table('courses_orden')
                         ->where('id', '=', $order)
@@ -273,31 +258,34 @@ class ShoppingCartController extends Controller
         if (!is_null($datosOrden->idtransacion_stripe)){
             $compra->payment_method = 'Stripe';
             $compra->payment_id = $datosOrden->idtransacion_stripe;
-            $compra->link = ($enlace != null) ? $enlace->padre : 0;
         }else if (!is_null($datosOrden->idtransacion_coinpaymen)){
             $compra->payment_method = 'Coinpayment';
             $compra->payment_id = $datosOrden->idtransacion_coinpaymen;
-            $compra->link = ($enlace != null) ? $enlace->padre : 0;
         }
         $compra->date = date('Y-m-d');
         $compra->status = 1;
-        $compra->save();
 
         $detallesMembresia = json_decode($datosOrden->detalles);
+        
+        $compra->link = $detallesMembresia->links;
+        $compra->save();
 
         $detalle = new PurchaseDetail();
         $detalle->purchase_id = $compra->id;
         $detalle->membership_id = $detallesMembresia->idmembresia;
         $detalle->amount = $detallesMembresia->precio;
         $detalle->save();
+        
+        $cursoAsociado = ShoppingCart::where('user_id', '=', $datosOrden->user_id)
+                            ->where('course_id', '<>', NULL)
+                            ->orderBy('id', 'DESC')
+                            ->first();
+        
+        if ($cursoAsociado->course->subcategory_id <= $detallesMembresia->idmembresia){
+            $fecha = date('Y-m-d H:i:s');
 
-        $cursos = Course::where('subcategory_id', $detallesMembresia->idmembresia)->get();
-
-        $fecha = date('Y-m-d H:i:s');
-
-        foreach ($cursos as $curso) {
             DB::table('courses_users')
-                ->insert(['course_id' => $curso->idcurso,
+                ->insert(['course_id' => $cursoAsociado->course_id,
                             'user_id' => $datosOrden->user_id,
                             'progress' => 0,
                             'start_date' => date('Y-m-d'),
@@ -307,10 +295,12 @@ class ShoppingCartController extends Controller
 
         DB::table('wp98_users')
             ->where('ID', '=', $datosOrden->user_id)
-            ->update(['membership_id' => $detallesMembresia->idmembresia]);
-
-        /* eliminar la direccion ip y el id de la persona que me dio el link*/
-        Addresip::where('ip', request()->ip())->delete();
+            ->update(['membership_id' => $detallesMembresia->idmembresia,
+                      'status' => 1]);
+                      
+        DB::table('shopping_cart')
+            ->where('user_id', '=', $datosOrden->user_id)
+            ->delete();
     }
 
 
@@ -321,6 +311,13 @@ class ShoppingCartController extends Controller
      */
     public function memberships()
     {
+        
+        /* almacenamos el ID de la persona que envio el link */
+        if(!empty(request()->ref)){
+           $this->almacenar_addres();
+        }
+        
+        
         $dataDescripcion = [
             'Principiante' => 'Accesos a todos los cursos de nivel principiante',
             'Basico' => 'Accesos a todos los cursos de nivel Basico',
@@ -355,20 +352,15 @@ class ShoppingCartController extends Controller
     }
 
 
-    public function descuentogeneral($precio){
+    public function descuentogeneral($id){
        
-       $total = $precio;
-
-       if($precio == 24){
-         $total = 9.99;
-       }elseif($precio == 22){
-         $total = 10.99;
-       }elseif($precio == 20){
-         $total = 11.99;
-       }elseif($precio == 18){
-         $total = 12.99;
-       }elseif($precio == 16){
-         $total = 13.99; 
+       
+       $descuento = DB::table('memberships')->where('id', $id)->first();
+       
+       if($descuento != null){
+           $total = $descuento->descuento;
+       }else{
+           $total = $descuento->precio;
        }
 
        return $total;
@@ -384,5 +376,20 @@ class ShoppingCartController extends Controller
                 $cambiando->user_id = Auth::user()->ID;
                 $cambiando->save();
             }    
+    }
+
+    public function purchases_record(){
+        // TITLE
+        view()->share('title', 'Historial de Compras');
+        
+        $compras = Purchase::with(['details'])->orderBy('id', 'DESC')->get();
+        
+        foreach ($compras as $compra){
+            foreach ($compra->details as $p){
+                $compra->membership = $p->membership;
+            }
+        }
+
+        return view('admin.purchasesRecord')->with(compact('compras'));
     }
 }

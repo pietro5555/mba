@@ -42,6 +42,7 @@
 
    {{-- BANNER --}}
    <div class="container-fluid">
+<<<<<<< HEAD
         @if (!is_null($curso->featured_cover))
                <div style="max-width: 100%; position: relative; display: inline-block;">
                     <img src="{{ asset('uploads/images/courses/featured_covers/'.$curso->featured_cover) }}" alt="" style=" max-width:100%; opacity: 0.5;" class="">
@@ -51,6 +52,9 @@
                     <img src="{{ asset('uploads/images/courses/covers/'.$curso->cover) }}" alt="" style=" max-width:100%; opacity: 0.5;">
          </div>
          @endif
+=======
+      <img src="{{ asset('uploads/images/courses/covers/'.$curso->cover) }}"  width="100%">
+>>>>>>> 1dfe67a69b0ea9e5caa092d556aa96646d8f7f64
    </div>
    {{-- FIN DEL BANNER --}}
    <hr style="border: 1px solid #707070;opacity: 1;" />
@@ -60,7 +64,7 @@
       <div class="row">
          <div class="col-md-12">
             <div class="row">
-               <div class="col-md-9">
+               <div class="col-md-12">
                   <h3 class="text-white">{{ $curso->title }}</h3>
                   <div>
                      @if ( (!Auth::guest()) && (!is_null($progresoCurso)) && (is_null($miValoracion)) ) 
@@ -116,13 +120,6 @@
                      
                   </div>
                </div>
-
-               @if ( (Auth::guest()) || (is_null($progresoCurso)) )
-                  <div class="col-md-3 text-center">
-                     <h5 class="text-white">COSTO</h5>
-                     <h2 class="text-success">{{ $curso->price }} USD</h2>
-                  </div>
-               @endif
             </div>
 
             <div class="row">
@@ -155,22 +152,26 @@
                   @else
                      @if (is_null($progresoCurso))
                         @if (is_null(Auth::user()->membership_id))
-                           <a href="{{route('shopping-cart.membership')}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> AGREGAR AL CARRITO</a>
+                           <a href="{{route('shopping-cart.store', $curso->id)}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> AGREGAR AL CARRITO</a>
                         @else
-                        <a href="{{route('client.courses.add', $curso->id)}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-plus-circle" aria-hidden="true"></i> AGREGAR A MIS CURSOS</a>
+                           @if (Auth::user()->membership_id < $curso->subcategory_id)
+                              <a href="{{route('shopping-cart.store', $curso->id)}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> AGREGAR AL CARRITO</a>
+                           @else
+                              <a href="{{route('client.courses.add', $curso->id)}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-plus-circle" aria-hidden="true"></i> AGREGAR A MIS CURSOS</a>
+                           @endif
                         @endif
                      @else
                      <!--<a href="#" class="btn btn-info play-course-button btn-block"><i class="fa fa-list"></i> VER LECCIONES</a>
                         @if (is_null($miValoracion))
                            <a href="#ratingModal" data-toggle="modal" class="btn btn-info play-course-button btn-block"><i class="fa fa-star"></i> VALORAR</a>
-                        @endif-->
+                        @endif
                         @if ($progresoCurso->certificate == 1)
                            <a href="{{ route('client.courses.get-certificate', $curso->id) }}" class="btn btn-primary play-course-button btn-block"><i class="fas fa-certificate"></i> OBTENER CERTIFICADO</a>
                         @else
                            @if (!is_null($curso->evaluation))
                               <a href="{{ route('client.courses.take-evaluation', [$curso->slug, $curso->id]) }}" class="btn btn-primary play-course-button btn-block"><i class="far fa-file-alt"></i> PRESENTAR EVALUACIÓN</a>
                            @endif   
-                        @endif
+                        @endif-->
                      @endif
                   @endif
                </div>
@@ -280,7 +281,7 @@
                @foreach ($curso->ratings as $valoracion)
                   <div class="row m-4 pt-4 border-bottom">  
                      <div class="col-md-2">
-                        <div class="circle"><h2 class="text-white"> JD</h2></div>
+                        <div class="circle"><img src="{{ asset('uploads/avatar/'.$valoracion->user->avatar) }}" alt="" class="circle" ></div>
                      </div>
                      <div class="col-md-8">
                         <div class="row">

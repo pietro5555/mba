@@ -537,6 +537,7 @@ class SettingController extends Controller
                     'red' => $datos->red,
                     'cursos' => $datos->cursos,
                     'eventos' => $datos->eventos,
+                    'historialcomision' => $datos->historialcomision,
 				]);
 			} else {
 				Permiso::create([
@@ -569,6 +570,7 @@ class SettingController extends Controller
                     'red' => $datos->red,
                     'cursos' => $datos->cursos,
                     'eventos' => $datos->eventos,
+                    'historialcomision' => $datos->historialcomision,
 				]);
 			}
 				return redirect()->back()->with('msj', 'Permisos al Usuario '.$datos->nameuser.' Actualizados');

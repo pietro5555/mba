@@ -8,13 +8,17 @@ class Membership extends Model
 {
     protected $table = 'memberships';
 
-    protected $fillable = ['name', 'image', 'price'];
+    protected $fillable = ['name', 'image', 'price','descuento', 'ganancia'];
 
     public function users(){
         return $this->hasMany('App\Models\User');
     }
 
     public function shopping_carts(){
+        return $this->hasMany('App\Models\ShoppingCart');
+    }
+
+    public function details(){
         return $this->hasMany('App\Models\ShoppingCart');
     }
 }

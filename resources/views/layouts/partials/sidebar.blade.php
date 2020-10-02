@@ -50,7 +50,9 @@
                      @endif
                     @endif
                     <a href="#" class="list-group-item bg-dark-gray" style="color: white;"><i class="far fa-question-circle"></i> Ayuda</a>
-                   
+                    @guest
+                    <a type="button" class="btn btn-primary btn-register-header d-md-block" href="{{ route('log') }}">REGISTRARME</a> <!--/login-->
+                    @endguest
                 </div>
             </div>
             <!-- /#sidebar-wrapper -->

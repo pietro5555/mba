@@ -145,7 +145,10 @@ class CursosController extends Controller
        if($courses)
        {
 
-        $directos = User::where('referred_id', Auth::user()->ID)->count('ID');
+        $directos = NULL;
+        if (!Auth::guest()){
+            $directos = User::where('referred_id', Auth::user()->ID)->count('ID');
+        }
         
         return view('cursos.cursos_categorias', compact('courses', 'category_name', 'mentores', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next','directos'));
        }

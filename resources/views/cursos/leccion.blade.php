@@ -1,7 +1,31 @@
 @extends('layouts.landing')
 
+@push('styles')
+  <style>
+    .circular--square {
+        width: 5rem;
+        height: 5rem;
+      border-radius: 50%;
+    }
+  </style>
+@endpush
 @section('content')
+<<<<<<< HEAD
    <div class="container-fluid">
+=======
+  @if (Session::has('msj-exitoso'))
+      <div class="alert alert-success" style="margin: 5px 15px;">
+         {{ Session::get('msj-exitoso') }}
+      </div>
+   @endif
+
+   @if (Session::has('msj-erroneo'))
+      <div class="alert alert-danger" style="margin: 5px 15px;">
+         {{ Session::get('msj-erroneo') }}
+      </div>
+   @endif
+<div class="container-fluid">
+>>>>>>> 1dfe67a69b0ea9e5caa092d556aa96646d8f7f64
   <div class="row justify-content-end">
     <div class="title-level col-xs-1 col-md-4">
       <h5>Nivel: {{$lesson->course->subcategory->title}}</h5>
@@ -20,21 +44,25 @@
   <div id="lessonsCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
     <div class="carousel-inner">
       @php $cont = 0; @endphp
-      @foreach ($all_lessons as $lesson)
-        <div class="carousel-item @if ($cont == 0) active @endif">
+      @foreach ($all_lessons as $leccion)
+        <div class="carousel-item @if ($leccion->id == $lesson->id) active @endif">
           <div class="video-container">
-            <iframe src="{{ $lesson->url }}" width="100%" height="564" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+            <iframe src="{{ $leccion->url }}" width="100%" height="564" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
           </div>
         </div>
         @php $cont++; @endphp
       @endforeach
     </div>
-    <div class="">
+    <!--<div class="">
       <a class="btn-prev text-white" href="#lessonsCarousel" role="button" data-slide="prev">Anterior</a>
     </div>
  <div>
       <a class="btn-next text-white" href="#lessonsCarousel" role="button" data-slide="next">Siguiente</a>
+<<<<<<< HEAD
   </div>
+=======
+    </div>-->
+>>>>>>> 1dfe67a69b0ea9e5caa092d556aa96646d8f7f64
     <!--<div class="btn-play-video">
       <i class="fa fa-play-circle text-primary"></i>
     </div>-->
@@ -68,6 +96,7 @@
               <div class="col-md-2">
                 <div class="perfil-comments"><h2 class="text-white"> JD</h2></div>
             </div>
+<<<<<<< HEAD
           </a>
           <div class="media-body align-items-center">
               <div class="col-12 box-comments d-flex">
@@ -99,6 +128,145 @@
                       <img src="{{ asset('uploads/avatar/'.$comment->user->avatar) }}" alt="" class="circular--square" >
                   </div>
                 </a>
+=======
+            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+              <div class="custombox clearfix">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="comments-list">
+                      <div class="media">
+                        <a class="media-left" href="#">
+                          <div class="col-md-2">
+                            <div class="perfil-comments">
+                              <img src="{{ asset('uploads/avatar/'.Auth::user()->avatar) }}" alt="" class="circular--square" >
+                            </div>
+                          </div>
+                        </a>
+                        <div class="media-body align-items-center">
+                          <div class="col-12 box-comments d-flex">
+                            <form class="form-inline" action="{{route ('lesson.comments')}}" method="POST">
+                              @csrf
+                              <!--<input type="hidden" name="lesson_slug" value="{{ $lesson->slug}}">
+                              <input type="hidden" name="course_id" value="{{ $lesson->course->id}}">-->
+                              <input type="hidden" name="lesson_id" value="{{ $lesson->id }}">
+                              <input type="text" class="form-control" placeholder="Escribe tu comentario" name="comment" required>
+                              <button class="btn btn-outline-success mt-2" type="submit">Enviar</button>
+                            </form>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div><!-- end col -->
+                </div><!-- end row -->
+              </div><!-- end custom-box -->
+              @foreach ($all_comments as $comment)
+                <div class="custombox clearfix mt-4 pb-4 border-bottom">
+                  <div class="row">
+                    <div class="col-lg-12">
+
+                      <div class="comments-list">
+                        <div class="media">
+                          <a class="media-left" href="#">
+                            <div class="col-md-2">
+                              <img src="{{ asset('uploads/avatar/'.$comment->user->avatar) }}" alt="" class="circular--square" >
+                            </div>
+                          </a>
+
+                          <div class="media-body">
+                            <h4 class="media-heading text-white">{{ $comment->user->display_name }}</h4>
+                            <h7 class="media-heading about-course-text">{{str_replace('-', '/', date('d-m-Y', strtotime($comment->date)))}}</h7>
+                            <p class="about-course-text">
+                              {{$comment->comment}}
+                            </p>
+                            <p class="about-course-text float-right mr-4">
+                              <i class="far fa-comment-alt about-course-text" aria-hidden="true"></i> <a href="" class="about-course-text"> Responder</a>
+
+                            </p>
+
+                          </div>
+
+                        </div>
+                      </div>
+
+                    </div><!-- end col -->
+                  </div><!-- end row -->
+                </div>
+              @endforeach
+              <!-- end custom-box -->
+            </div>
+            <div class="tab-pane fade pl-5" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+              @foreach ($lesson->materials as $material)
+                @if ($material->type == 'Archivo')
+                  <a href="{{ asset('uploads/courses/lessons/materials/'.$material->material) }}" target="_blank">
+                    <h5 class="mb-0 font-weight-bold d-block position-relative py-2">
+                      <i class="text-primary fa fa-link"></i> {{$material->title}}
+                    </h5>
+                  </a>
+                @else
+                  <a href="{{ $material->material }}" target="_blank">
+                    <h5 class="mb-0 font-weight-bold d-block position-relative py-2">
+                      <i class="text-primary fa fa-link"></i> {{$material->title}}
+                    </h5>
+                  </a>
+                @endif
+                <br>
+              @endforeach
+            </div>
+            <div class="tab-pane fade" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
+              @if ($progresoCurso->certificate == 1)
+                <a href="{{ route('client.courses.get-certificate', $progresoCurso->course_id) }}" class="btn btn-primary play-course-button btn-block"><i class="fas fa-certificate"></i> OBTENER CERTIFICADO</a>
+              @else
+                Debe finalizar el curso para generar el certificado...
+              @endif
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <nav>
+            <div class="nav nav-tabs nav-fill justify-content-center font-weight-bold btn-cont-course align-items-center" id="nav-tab" role="tablist">
+              <h5 class="text-white">CONTENIDO DEL CURSO</h5>
+            </div>
+          </nav>
+          <div class="row">
+            <div class="col-lg-12 mx-auto mt-2 mb-2">
+              <!-- Accordion -->
+              <div id="accordionContentLeccion" class="accordion-leccion">
+                @php $cont2 = 0; @endphp
+                <!-- Accordion item 1 -->
+                @foreach($all_lessons as $lesson)
+                  <div id="card{{$lesson->id}}" class="card mb-2">
+                    <div class="card-header accordion-leccion-content" data-toggle="collapse" data-target="#collapse{{$lesson->id}}">
+                      <a href="{{ route('lesson.show', [$lesson->slug, $lesson->id, $lesson->course_id]) }}">
+                        <h5 class="mb-0 font-weight-bold d-block position-relative collapsible-link py-2">
+                          <i class="text-primary fa fa-play-circle"></i>{{$lesson->title}}
+                        </h5>
+                      </a>
+                      <h6 class="mb-0 ml-4 d-block py-2"><i class="fa fa-clock-o" aria-hidden="true"></i> {{$lesson->duration}} m</h6>
+                    </div>
+                    <div id="collapse{{$lesson->id}}" class="card-body collapse" data-parent="#accordionContentLeccion">
+                      <p class="card-text about-course-text ">
+                        {{$lesson->description}}
+                      </p>
+                    </div>
+                  </div>
+                  @php $cont2++; @endphp
+                @endforeach
+                @if ($progresoCurso->certificate == 0)
+                  <div class="card mb-2" style="background-color: #2A91FF;">
+                    <div class="card-header accordion-leccion-content text-center" >
+                      <a href="{{ route('client.courses.take-evaluation', [$lesson->course->slug, $lesson->course_id]) }}">
+                        <h5 class="mb-0 font-weight-bold d-block position-relative py-2" style="color: white;">
+                          PRESENTAR EVALUACIÓN
+                        </h5>
+                      </a>
+                    </div>
+                  </div>
+                @endif
+              </div>
+            </div>
+          </div>
+>>>>>>> 1dfe67a69b0ea9e5caa092d556aa96646d8f7f64
 
                 <div class="media-body">
                     <h4 class="media-heading text-white">{{$comment->user->display_name}}</h4>
@@ -168,10 +336,17 @@
     @if (!Auth::guest())
         <div style="padding-top: 30px;">
             <div class="row">
+<<<<<<< HEAD
                 <div class="col-4 " style="padding-left: 30px;">
                     <div style="text-align: center; font-size: 34px; color: white; font-weight: bold; border: solid #919191 1px; background-color: #222326; margin-bottom: 10px; height: 330px; padding: 120px 15px;">
                         <i class="fa fa-user"></i><br>
                         739 Referidos
+=======
+                <div class="col-xl-4 col-lg-4 col-12 pl-4 pr-4">
+                    <div class="referrers-box">
+                        <i class="fa fa-user referrers-icon" style="color: white;"></i><br>
+                        {{$directos}} Referidos
+>>>>>>> 1dfe67a69b0ea9e5caa092d556aa96646d8f7f64
                     </div>
                     <div style="text-align: center; font-size: 25px; color: white; font-weight: bold; background-color: #6AB742; height: 60px; padding: 10px 10px;">
                         Panel de referidos

@@ -29,19 +29,28 @@
             </thead>
             <tbody>
              
-              @foreach ($ordenesView as $compra)
+              @foreach ($listadoCompras as $compra)
               <tr>
                 <td class="ajustext" style="border-top: 0;">
-                 {{$compra['ordenID']}}
+                 {{$compra['orden']}}
+                </td>
+                
+                <td class="ajustext" style="border-top: 0;">
+                 {{$compra['producto']}}
+                </td>
+                
+                
+                <td class="ajustext" style="border-top: 0;">
+                  @if($compra['status'] == 0)
+                  Procesando
+                  @elseif($compra['status'] == 1)
+                  Completado
+                  @else
+                  Cancelado
+                  @endif
                 </td>
                 <td class="ajustext" style="border-top: 0;">
-                 {{$compra['items']}}
-                </td>
-                <td class="ajustext" style="border-top: 0;">
-                  {{$compra['estadoCompra']}}
-                </td>
-                <td class="ajustext" style="border-top: 0;">
-                  {{date('d-m-Y', strtotime($compra['fechaOrden']))}}
+                  {{date('d-m-Y', strtotime($compra['fecha']))}}
                 </td>
               </tr>
               @endforeach

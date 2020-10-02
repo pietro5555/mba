@@ -151,3 +151,11 @@ Dev:Crisleivys Gil
 *Agregado el campo time en la tabla calendarios (correr el script calendarios)
 *Creada la tabla comments (correr el script comments)
 
+
+ÚLTIMA ACTUALIZACIÓN DEL SERVIDOR: 30/09/2020
+----------------------------------------------
+30/09/2020
+Dev:Pietro
+*Agregado el campo historialcomision (correr el script settingspermiso)
+
+

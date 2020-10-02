@@ -695,6 +695,16 @@ class Menu
                 'permisoAdmin' => (!empty($permiso)) ? $permiso->red : 0,
                 'activo' => 0,
             ],
+
+            'Historial de comisiones' => [
+                'submenu' => 0,
+                'ruta' => 'wallet-index',
+                'black'=> '0',
+                'icono' => 'fas fa-landmark',
+                'complementoruta' => '',
+                'permisoAdmin' => (!empty($permiso)) ? $permiso->historialcomision  : 0,
+                'activo' => 0,
+            ],
             
             'Cursos' => [
                 'submenu' => 1,
@@ -744,6 +754,15 @@ class Menu
                     ],
                    
                 ]
+            ],
+            'Historial de Compras' => [
+                'submenu' => 0,
+                'ruta' => 'admin.purchases-record',
+                'black'=> '0',
+                'icono' => 'fa fa-shopping-cart',
+                'complementoruta' => '',
+                'permisoAdmin' => (!empty($permiso)) ? $permiso->cursos : 0,
+                'activo' => 0,
             ],
             
             /*

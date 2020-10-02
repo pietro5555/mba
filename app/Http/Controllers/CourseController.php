@@ -213,10 +213,10 @@ class CourseController extends Controller{
                     ->orderBy('id', 'DESC')->get();
 
         $mentores = DB::table('wp98_users')
-                            ->select('ID', 'user_email')
-                            ->where('rol_id', '=', 2)
-                            ->orderBy('user_email', 'ASC')
-                            ->get();
+                    ->select('ID', 'display_name')
+                    ->where('rol_id', '=', 2)
+                    ->orderBy('display_name', 'ASC')
+                    ->get();
 
             $categorias = DB::table('categories')
                             ->select('id', 'title')

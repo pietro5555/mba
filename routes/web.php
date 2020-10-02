@@ -30,6 +30,7 @@ Route::get('search', 'HomeController@search')->name('search');
 Route::get('search-by-category/{category_slug}/{category_id}/{subcategory_slug}/{subcategory_id}', 'HomeController@search_by_category')->name('search-by-category');
 
 Auth::routes();
+Route::post('recover-password', 'HomeController@recover_password')->name('recover-password');
 
 // configuracion inicial
 Route::group(['prefix' => 'installer'], function (){
@@ -372,6 +373,8 @@ Route::group(['prefix' => 'installer'], function (){
       Route::get('change-status/{id}/{status}', 'EventsController@change_status')->name('admin.events.change-status');
   
     });
+
+    Route::get('purchases-record', 'ShoppingCartController@purchases_record')->name('admin.purchases-record');
   
     //Streaming
     Route::get('streaming', 'StreamingController@index')->name('streaming.index');

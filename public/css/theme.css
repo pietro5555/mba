@@ -151,7 +151,7 @@
 }
 .new-course-img{
     filter: brightness(80%);
-    max-height: 230px;
+    height: auto;
 }
 .new-course-title{
     font-size: 20px; 

@@ -1,15 +1,5 @@
 @extends('layouts.dashboardnew')
 
-@push('script')
-	<script>
-		$(document).ready( function () {
-			$('#mytable').DataTable( {
-				responsive: true,
-			});
-		});
-	</script>
-@endpush
-
 @section('content')
 	<div class="col-xs-12">
 		@if (Session::has('msj-exitoso'))
@@ -129,3 +119,5 @@
 		</div>
 	</div>
 @endsection
+
+@include('usuario.componentes.scripBotones')

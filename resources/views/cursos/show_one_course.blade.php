@@ -42,7 +42,6 @@
 
    {{-- BANNER --}}
    <div class="container-fluid">
-<<<<<<< HEAD
         @if (!is_null($curso->featured_cover))
                <div style="max-width: 100%; position: relative; display: inline-block;">
                     <img src="{{ asset('uploads/images/courses/featured_covers/'.$curso->featured_cover) }}" alt="" style=" max-width:100%; opacity: 0.5;" class="">
@@ -52,9 +51,6 @@
                     <img src="{{ asset('uploads/images/courses/covers/'.$curso->cover) }}" alt="" style=" max-width:100%; opacity: 0.5;">
          </div>
          @endif
-=======
-      <img src="{{ asset('uploads/images/courses/covers/'.$curso->cover) }}"  width="100%">
->>>>>>> 1dfe67a69b0ea9e5caa092d556aa96646d8f7f64
    </div>
    {{-- FIN DEL BANNER --}}
    <hr style="border: 1px solid #707070;opacity: 1;" />

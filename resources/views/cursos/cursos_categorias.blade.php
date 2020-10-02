@@ -44,11 +44,11 @@
             @if ($courses->count() > 0)
                 @foreach ($courses as $curso)
 
-                <div class="col-md-4 mt-1 img-course-cat">
+                <div class="col-md-4 mt-1 img-course-cat border-0">
                     @if (!is_null($curso->cover))
-                        <img src="{{ asset('uploads/images/courses/covers/'.$curso->cover) }}" class="card-img-top img-opacity" alt="..."> 
+                        <img src="{{ asset('uploads/images/courses/covers/'.$curso->cover) }}" class="border-0 card-img-top img-opacity p-2" alt="..." style="border-top-left-radius: 0px !important; border-top-right-radius:0px !important;"> 
                         @else
-                            <img src="{{ asset('uploads/images/courses/covers/default.jpg') }}" class="card-img-top img-opacity" alt="...">
+                            <img src="{{ asset('uploads/images/courses/covers/default.jpg') }}" class="border-0 card-img-top img-opacity p-2" alt="..." style="border-top-left-radius: 0px !important; border-top-right-radius:0px !important;">
                         @endif
                    <div class="card-img-overlay clearfix">
                     <div class="row ml-0 d-flex h-100">
@@ -61,7 +61,6 @@
                         <div class="col-md-3 my-auto" style="margin-bottom: 0px !important">
                             <h6 class="text-white w-100">
                                 <i class="far fa-user-circle text-center"><p style="font-size: 10px;">{{ $curso->views }}</p></i>
-                                <i class="far fa-thumbs-up text-center"><p style="font-size: 10px;">{{ $curso->likes }}</p></i>
                             </h6>           
                         </div>
                     </div>

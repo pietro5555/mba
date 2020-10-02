@@ -534,7 +534,6 @@ bottom: 1em;
 }
 
 .img-opacity{
-height: 328px;
     background: transparent linear-gradient(360deg, #1C1D21 0%, #1C1D21 29%, #00000046 100%) 0% 0% no-repeat padding-box;
     opacity: 0.7;
 }
@@ -1230,6 +1229,7 @@ opacity: 0.7;
 background: transparent linear-gradient(180deg, #1C1D2100 0%, var(--unnamed-color-1c1d21) 100%) 0% 0% no-repeat padding-box;
 background: transparent linear-gradient(180deg, #1C1D2100 0%, #1C1D21 100%) 0% 0% no-repeat padding-box;
 opacity: 1;
+max-width: 350px;
 }
 
 .text-prox-events{

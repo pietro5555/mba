@@ -146,7 +146,7 @@
                 @foreach ($cursos as $curso)
                     <div class="col-12 col-md-6 col-lg-3">
                         <div class="card mb-4 card-courses">
-                            <img class="card-img-top" src="{{ asset('uploads/images/courses/covers/'.$curso->cover) }}" alt="card-image-cap" height="207px">
+                            <img class="card-img-top" src="{{ asset('uploads/images/courses/covers/'.$curso->cover) }}" alt="card-image-cap">
                             <div class="card-body p-2">
                                 <div class="row align-items-start">
                                     <h6 class="col-10"><a href="{{ route('courses.show', [$curso->slug, $curso->id]) }}" class="text-secondary text-sm">{{$curso->title}}</a></h6>
@@ -186,7 +186,7 @@
                         @foreach ($cursos as $curso)
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="card mb-4 card-courses">
-                                <img class="card-img-top" src="{{ asset('uploads/images/courses/covers/'.$curso->cover) }}" alt="card-image-cap" height="207px">
+                                <img class="card-img-top" src="{{ asset('uploads/images/courses/covers/'.$curso->cover) }}" alt="card-image-cap">
                                 <div class="card-body p-2">
                                     <div class="row align-items-start">
                                         <h6 class="col-sm"><a href="{{ route('courses.show', [$curso->slug, $curso->id]) }}" class="text-secondary text-sm">{{$curso->title}}</a></h6>
@@ -220,7 +220,7 @@
     {{-- FIN SECCIÓN TUS CURSOS--}}
 
     {{-- SECCIÓN RECOMENDACIONES--}}
-
+@if(!empty($cursosRecomendados))
 <div class="section-landing mt-3" style="background-color: #121317;">
 
     <div class="col">
@@ -253,9 +253,9 @@ $contador++;
 
 <div class="col-md-4" style="margin-top: 20px;">
   @if (!is_null($recommended->mentor->avatar))
- <img src="{{ asset('uploads/avatar/'.$recommended->mentor->avatar) }}" class="card-img-top img-prox-events" alt="..." style="height: 320px;">
+ <img src="{{ asset('uploads/avatar/'.$recommended->mentor->avatar) }}" class="card-img-top img-prox-events" alt="...">
  @else
- <img src="{{ asset('uploads/images/avatar/default.jpg') }}" class="card-img-top" alt="..." height="200px">
+ <img src="{{ asset('uploads/images/avatar/default.jpg') }}" class="card-img-top img-prox-events" alt="...">
   @endif
  <div class="card-img-overlay clearfix">
 <div>
@@ -272,9 +272,6 @@ $contador++;
         <h6 class="text-white w-100">
             <i class="far fa-user-circle text-center">
                 <p style="font-size: 10px;">{{ $recommended->views }}</p>
-            </i>
-            <i class="far fa-thumbs-up text-center">
-                <p style="font-size: 10px;">{{ $recommended->likes }}</p>
             </i>
         </h6>
     </div>
@@ -302,9 +299,9 @@ $segundo++;
 
 <div class="col-md-4" style="margin-top: 20px;">
   @if (!is_null($recommended->mentor->avatar))
- <img src="{{ asset('uploads/avatar/'.$recommended->mentor->avatar) }}" class="card-img-top img-prox-events" alt="..." style="height: 320px;">
+ <img src="{{ asset('uploads/avatar/'.$recommended->mentor->avatar) }}" class="card-img-top img-prox-events" alt="...">
  @else
- <img src="{{ asset('uploads/images/avatar/default.jpg') }}" class="card-img-top" alt="..." height="200px">
+ <img src="{{ asset('uploads/images/avatar/default.jpg') }}" class="card-img-top img-prox-events" alt="...">
   @endif
 <div class="card-img-overlay clearfix">
 <div>
@@ -321,9 +318,6 @@ $segundo++;
         <h6 class="text-white w-100">
             <i class="far fa-user-circle text-center">
                 <p style="font-size: 10px;">{{ $recommended->views }}</p>
-            </i>
-            <i class="far fa-thumbs-up text-center">
-                <p style="font-size: 10px;">{{ $recommended->likes }}</p>
             </i>
         </h6>
     </div>
@@ -349,9 +343,9 @@ $tercero++;
 
 <div class="col-md-4" style="margin-top: 20px;">
   @if (!is_null($recommended->mentor->avatar))
- <img src="{{ asset('uploads/avatar/'.$recommended->mentor->avatar) }}" class="card-img-top img-prox-events" alt="..." style="height: 320px;">
+ <img src="{{ asset('uploads/avatar/'.$recommended->mentor->avatar) }}" class="card-img-top img-prox-events" alt="...">
  @else
- <img src="{{ asset('uploads/images/avatar/default.jpg') }}" class="card-img-top" alt="..." height="200px">
+ <img src="{{ asset('uploads/images/avatar/default.jpg') }}" class="card-img-top img-prox-events" alt="...">
   @endif
 <div class="card-img-overlay clearfix">
 <div>
@@ -368,9 +362,6 @@ $tercero++;
         <h6 class="text-white w-100">
             <i class="far fa-user-circle text-center">
                 <p style="font-size: 10px;">{{ $recommended->views }}</p>
-            </i>
-            <i class="far fa-thumbs-up text-center">
-                <p style="font-size: 10px;">{{ $recommended->likes }}</p>
             </i>
         </h6>
     </div>
@@ -406,6 +397,12 @@ $tercero++;
 @endif
 <!--Carrusel-->
 </div>  
+@else
+<div class="row">
+  No se encontraron cursos recomendados...
+</div>
+
+@endif
 
     {{--FIN SECCIÓN RECOMENDACIONES--}}
 
@@ -466,6 +463,7 @@ $tercero++;
 
 
     {{-- SECCIÓN CURSOS POR CATEGORÍA --}}
+    @if(!empty($courses))
     <div class="">
         <div class="container-fluid">
             <div class="col section-title-category">
@@ -496,6 +494,12 @@ $tercero++;
             </div>
         </div>
     </div>
+    @else
+    <div class="row">
+      No se encontraron mentores...
+    </div>
+    
+    @endif
     {{-- FIN SECCIÓN CURSOS POR CATEGORÍA--}}
 
     {{-- SECCIÓN TUS MENTORES--}}

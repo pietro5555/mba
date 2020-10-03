@@ -271,7 +271,7 @@ $contador++;
     <div class="col-md-3 my-auto" style="margin-bottom: 7px !important">
         <h6 class="text-white w-100">
             <i class="far fa-user-circle text-center">
-                <p style="font-size: 10px;">{{ $recommended->views }}</p>
+                <p style="font-size: 10px;">{{ $recommended->users->count() }}</p>
             </i>
         </h6>
     </div>
@@ -317,7 +317,7 @@ $segundo++;
     <div class="col-md-3 my-auto" style="margin-bottom: 7px !important">
         <h6 class="text-white w-100">
             <i class="far fa-user-circle text-center">
-                <p style="font-size: 10px;">{{ $recommended->views }}</p>
+                <p style="font-size: 10px;">{{ $recommended->users->count() }}</p>
             </i>
         </h6>
     </div>
@@ -361,7 +361,7 @@ $tercero++;
     <div class="col-md-3 my-auto" style="margin-bottom: 7px !important">
         <h6 class="text-white w-100">
             <i class="far fa-user-circle text-center">
-                <p style="font-size: 10px;">{{ $recommended->views }}</p>
+                <p style="font-size: 10px;">{{ $recommended->users->count() }}</p>
             </i>
         </h6>
     </div>
@@ -440,12 +440,7 @@ $tercero++;
                                             <div class="col text-right no-padding-sides mr-2">
 
                                                 <i class="far fa-user-circle"></i><br>
-                                                <span class="new-course-items-text">{{$cursoNuevo->views}}</span>
-                                            </div>
-                                            <div class="col text-left no-padding-sides">
-                                                    <i class="far fa-thumbs-up"></i>
-                                                <br>
-                                                <span class="new-course-items-text">{{$cursoNuevo->likes}}</span>
+                                                <span class="new-course-items-text">{{$cursoNuevo->users->count()}}</span>
                                             </div>
                                         </div>
                                     </div>

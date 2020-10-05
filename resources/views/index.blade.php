@@ -8,16 +8,24 @@
             }else{
                 var route = $(".btn-arrow-previous").attr('data-route');
             }
-            
+
             $.ajax({
                 url:route,
                 type:'GET',
                 success:function(ans){
-                    $("#new-courses-section").html(ans); 
+                    $("#new-courses-section").html(ans);
                 }
             });
         }
     </script>
+@endpush
+
+@push('styles')
+    <style>
+        #new-courses-section .card-img-overlay:hover{
+            text-decoration: underline;
+        }
+    </style>
 @endpush
 
 @section('content')
@@ -38,7 +46,7 @@
             </button>
         </div>
     @endif
-  
+
 	{{-- SLIDER --}}
     @if ($cursosDestacados->count() > 0)
     	<div class="container-fluid courses-slider">
@@ -81,7 +89,7 @@
     @endif
     {{-- FIN DEL SLIDER --}}
 
-	{{-- SECCIÓN TU AVANCE (USUARIOS LOGGUEADOS) 
+	{{-- SECCIÓN TU AVANCE (USUARIOS LOGGUEADOS)
 	@if (!Auth::guest())
         <div class="section-landing">
             <div class="section-title-landing">TU AVANCE</div>
@@ -116,8 +124,8 @@
                     <button type="button" class="btn btn-outline-success btn-arrow btn-arrow-next" @if ($next == 0) disabled @endif data-route="{{ route('landing.load-more-courses-new', [$idEnd, 'next'] ) }}"  onclick="loadMoreCoursesNew('next');"><i class="fas fa-chevron-right"></i></button>
                 </div>
             </div>
-                   
-            <div class="row" style="padding: 10px 30px;">
+
+            <div id="newers" class="row" style="padding: 10px 30px;">
                 @foreach ($cursosNuevos as $cursoNuevo)
                     <div class="col-xl-4 col-lg-4 col-12" style="padding-bottom: 10px;">
                         <div class="card">
@@ -137,7 +145,7 @@
                                             <div class="row row-cols-3">
                                                 <div class="col text-right no-padding-sides mr-2">
                                                     <i class="far fa-user-circle"></i><br>
-                                                    <span class="new-course-items-text">{{ $cursoNuevo->views}}</span>
+                                                    <span class="new-course-items-text">{{ $cursoNuevo->users->count()}}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -159,8 +167,8 @@
             <img src="{{ asset('/uploads/images/banner/'.$proximoEvento->image) }}" class="next-streaming-img">
             <div class="next-streaming-info">
             	<button type="button" class="btn btn-primary btn-next-streaming">Próximo Streaming</button><br>
-                                
-                <div class="next-streaming-title">{{ $proximoEvento->title }}</div> 
+
+                <div class="next-streaming-title">{{ $proximoEvento->title }}</div>
                 <div class="next-streaming-date">
                     <i class="fa fa-calendar"></i> {{ $proximoEvento->weekend_day }} {{ $proximoEvento->date_day }} de {{ $proximoEvento->month }}
                     <i class="fa fa-clock"></i> {{ date('H:i A', strtotime($proximoEvento->date)) }}
@@ -174,7 +182,7 @@
         </div><br><br>
     @endif
     {{-- FIN SECCIÓN PRÓXIMO STREAMING--}}
-	
+
 	{{-- SECCIÓN REFERIDOS (USUARIOS LOGGUEADOS) --}}
     @if (!Auth::guest())
         <div class="pt-4">

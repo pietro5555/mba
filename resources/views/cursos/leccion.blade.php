@@ -28,9 +28,9 @@
     </div>
     <div class="col-xs-1 col-md-4 text-center ">
       <div class="icon-social-media">
-        <a href="" class="btn btn-social-icon btn-facebook btn-rounded"><img src="{{ asset('images/icons/facebook.svg') }}" height="20px" width="20px"></a>
-        <a href="" class="btn btn-social-icon btn-twitter btn-rounded"><img src="{{ asset('images/icons/twitter.svg') }}" height="20px" width="20px"></a>
-        <a href="" class="btn btn-social-icon btn-instagram btn-rounded"><img src="{{ asset('images/icons/instagram.svg') }}" height="20px" width="20px"></a>
+        <a href="https://m.facebook.com/MyBusinessAcademyPro/" target="_blank" class="btn btn-social-icon btn-facebook btn-rounded"><img src="{{ asset('images/icons/facebook.svg') }}" height="20px" width="20px"></a>
+        <a href="" class="btn btn-social-icon btn-twitter btn-rounded" target="_blank"><img src="{{ asset('images/icons/twitter.svg') }}" height="20px" width="20px"></a>
+        <a href="https://instagram.com/mybusinessacademypro?igshid=tdj5prrv1gx1" target="_blank" class="btn btn-social-icon btn-instagram btn-rounded"><img src="{{ asset('images/icons/instagram.svg') }}" height="20px" width="20px"></a>
       </div>
     </div>
   </div>
@@ -244,7 +244,7 @@
   {{-- FIN DE SECCIÓN REFERIDOS (USUARIOS LOGGUEADOS) --}}
   </div>
 </div>-->
-  
+
     {{-- SECCIÓN REFERIDOS (USUARIOS LOGGUEADOS) --}}
     @if (!Auth::guest())
         <div class="pt-4">
@@ -252,7 +252,7 @@
                 <div class="col-xl-4 col-lg-4 col-12 pl-4 pr-4">
                     <div class="referrers-box">
                         <i class="fa fa-user referrers-icon" style="color: white;"></i><br>
-                        {{$directos}} Referidos
+                        {{ $directos ?? '' }} Referidos
                     </div>
                     <a href="{{url('/admin')}}" style="color: white; text-decoration: none;">
                      <div class="referrers-button">

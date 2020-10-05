@@ -3,11 +3,44 @@
 @section('content')
 
 <div class="col-xs-12">
+    <div class="box box-info">
+        <div class="box-body">
+        	<h4 class="box-title white">
+              <span class="info-box-icon-users">
+               <i class="fas fa-user white"></i>
+               </span>
+        	    <p style="padding: 10px 50px;"> Buscar Usuarios</p>
+        	</h4>
+
+            <form method="POST" action="{{ route('tipofil') }}">
+                {{ csrf_field() }}
+               
+                <div class="form-group has-feedback date col-xs-12 col-md-4">
+                    <label class="control-label" style="color: white;">Tipo Usuarios</label>
+                    <select name="tipo" class="form-control">
+                        <option value="0">Adminsitrador</option>
+                        <option value="1">Moderador</option>
+                        <option value="2">Mentor</option>
+                        <option value="3">Cliente</option>
+                      </select>
+                </div>
+                
+                <div class="form-group has-feedback date col-xs-12 col-md-2" style="margin-top: 25px;">
+                    <button class="btn btn-success" type="submit">
+                        buscar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="col-xs-12">
 	<div class="box">
 		<div class="box-body">
-			<a href="{{route('downloadred')}}" class="btn btn-info descargar">Descargar Red</a>
+			<a href="{{route('downloadred')}}" class="btn btn-info btn-block descargar">Descargar Red</a>
 			
-			<button data-toggle="modal" data-target="#editar" class="btn btn-info">Editar la contraseña de todos</button>
+			<button data-toggle="modal" data-target="#editar" class="btn btn-info btn-block">Editar la contraseña de todos</button>
 			
 			<br class="col-xs-12">
 			<table id="mytable" class="table">
@@ -29,7 +62,7 @@
 							Referifo Por
 						</th>
 						<th class="text-center">
-							Rango
+							Tipo
 						</th>
 						<th class="text-center">
 							Estatus

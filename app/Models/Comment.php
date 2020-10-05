@@ -16,8 +16,8 @@ class Comment extends Model
         return $this->belongsTo(Lesson::class);
     }
 
-
     public function user(){
-        return $this->belongsTo('App\Models\User', 'user_id', 'ID');
+
+        return $this->belongsTo(User::class, 'user_id', 'ID');
     }
 }

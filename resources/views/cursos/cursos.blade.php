@@ -19,6 +19,14 @@
     </script>
 @endpush
 
+@push('styles')
+    <style>
+        #new-courses-section .card-img-overlay:hover{
+            text-decoration: underline;
+        }
+    </style>
+@endpush
+
 @section('content')
     @if (Session::has('msj-exitoso'))
         <div class="alert alert-success" style="margin: 5px 15px;">
@@ -36,29 +44,68 @@
         <div class="title-page-course col-md"><span class="text-white">
             <h3><span class="text-white">Hola</span><span class="text-primary"> {{$username}}</span><span class="text-white"> ¡Nos alegra verte hoy!</span></h3>
         </div>
+        @if(!empty($last_course))
+        <div class="container-fluid d-sm-none">
+            <div class="row">
+                <div class="col-md-12">
+                    <h5 class="text-white text-uppercase ml-4" style="font-size: 12px;">
+                                {{$last_course->title}}
+                            </h5>
+                    <div class="btn btn-none ">
+                        <a href="{{ route('courses.show', [$last_course->slug, $last_course->course_id]) }}" class="btn btn-primary float-right text-uppercase mr-2" style="font-size: 12px;"><i class="fa fa-play"></i> Continuar curso</a>
+                    </div>
+                    
+                    <div class="progress progress-course-bar pl-0">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="{{$last_course->progress}}" aria-valuemin="0" aria-valuemax="100" style="width:{{$last_course->progress}}%">
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @else
+
+        @endif
     @endif
 
     {{-- BANNER --}}
     @if (!Auth::guest())
-        @if(!is_null($last_course))
-            <!--<div class="col-md-12 p-4">
-                <img src="{{ asset('uploads/images/courses/covers/'.$last_course->cover) }}" class="course-banner-img" alt="..." class="img-fluid" />
-                <div class="col-md-12 course-banner-caption pl-0 pr-4">
+        @if(!empty($last_course))
+
+            <div class="container-fluid col-md-12 p-4">
+                <img src="{{ asset('uploads/images/courses/covers/'.$last_course->cover) }}" class="course-banner-img img-fluid" alt="..."/>
+                <div class="container-fluid pl-0 pr-4 course-banner-caption  d-none d-sm-block d-md-block clearfix">
+                    <div class="">
+                        <div class="col-md-12">
+                            <h5 class="text-white text-uppercase ml-4" >
+                                        {{$last_course->title}}
+                            </h5>
+                            <div class="float-right mb-2">
+                                <div class="row">
+                                     <a href="{{ route('courses.show', [$last_course->slug, $last_course->course_id]) }}" class="btn btn-primary float-right text-uppercase mr-2"><i class="fa fa-play"></i> Continuar curso</a>
+                                </div>
+                               
+                            </div>
+                            
+                            <div class="pl-0 col-md-12 progress progress-course-bar">
+                                        <div class="progress-bar pl-0" role="progressbar" aria-valuenow="{{$last_course->progress}}" aria-valuemin="0" aria-valuemax="100" style="width:{{$last_course->progress}}%">
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--<div class="col-md-10 course-banner-caption pl-0 pr-4  d-none d-sm-block d-md-block">
                     <a href="{{ route('courses.show', [$last_course->slug, $last_course->course_id]) }}" class="btn btn-primary float-right text-uppercase mr-2"><i class="fa fa-play"></i> Continuar curso</a>
                     <div class="col-md-10">
                          <h4 class="text-white text-uppercase ml-4">
                                 {{$last_course->title}}
-                            </h4>
-                            <p class="col-md-6 description-course text-justify pl-0 ml-4">
-                                {{$last_course->description}}
-                            </p>
+                        </h4>
                     </div>
                     <div class="progress col-xs progress-course-bar pl-0">
                                 <div class="progress-bar" role="progressbar" aria-valuenow="{{$last_course->progress}}" aria-valuemin="0" aria-valuemax="100" style="width:{{$last_course->progress}}%">
                     </div>
                     </div>
-                </div>
-            </div>-->
+                </div>-->
+            </div>
             <!--<div class="banner-course">
                 <div class="button-container">
                     <img src="{{ asset('uploads/images/courses/covers/'.$last_course->cover) }}" class="course-banner-img" alt="..." height="550px" width="1600px" class="img-fluid" />
@@ -99,7 +146,7 @@
                 @foreach ($cursos as $curso)
                     <div class="col-12 col-md-6 col-lg-3">
                         <div class="card mb-4 card-courses">
-                            <img class="card-img-top" src="{{ asset('uploads/images/courses/covers/'.$curso->cover) }}" alt="card-image-cap" height="207px">
+                            <img class="card-img-top" src="{{ asset('uploads/images/courses/covers/'.$curso->cover) }}" alt="card-image-cap">
                             <div class="card-body p-2">
                                 <div class="row align-items-start">
                                     <h6 class="col-10"><a href="{{ route('courses.show', [$curso->slug, $curso->id]) }}" class="text-secondary text-sm">{{$curso->title}}</a></h6>
@@ -139,7 +186,7 @@
                         @foreach ($cursos as $curso)
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="card mb-4 card-courses">
-                                <img class="card-img-top" src="{{ asset('uploads/images/courses/covers/'.$curso->cover) }}" alt="card-image-cap" height="207px">
+                                <img class="card-img-top" src="{{ asset('uploads/images/courses/covers/'.$curso->cover) }}" alt="card-image-cap">
                                 <div class="card-body p-2">
                                     <div class="row align-items-start">
                                         <h6 class="col-sm"><a href="{{ route('courses.show', [$curso->slug, $curso->id]) }}" class="text-secondary text-sm">{{$curso->title}}</a></h6>
@@ -173,7 +220,7 @@
     {{-- FIN SECCIÓN TUS CURSOS--}}
 
     {{-- SECCIÓN RECOMENDACIONES--}}
-
+@if(!empty($cursosRecomendados))
 <div class="section-landing mt-3" style="background-color: #121317;">
 
     <div class="col">
@@ -206,9 +253,9 @@ $contador++;
 
 <div class="col-md-4" style="margin-top: 20px;">
   @if (!is_null($recommended->mentor->avatar))
- <img src="{{ asset('uploads/avatar/'.$recommended->mentor->avatar) }}" class="card-img-top img-prox-events" alt="..." style="height: 320px;">
+ <img src="{{ asset('uploads/avatar/'.$recommended->mentor->avatar) }}" class="card-img-top img-prox-events" alt="...">
  @else
- <img src="{{ asset('uploads/images/avatar/default.jpg') }}" class="card-img-top" alt="..." height="200px">
+ <img src="{{ asset('uploads/images/avatar/default.jpg') }}" class="card-img-top img-prox-events" alt="...">
   @endif
  <div class="card-img-overlay clearfix">
 <div>
@@ -224,10 +271,7 @@ $contador++;
     <div class="col-md-3 my-auto" style="margin-bottom: 7px !important">
         <h6 class="text-white w-100">
             <i class="far fa-user-circle text-center">
-                <p style="font-size: 10px;">{{ $recommended->views }}</p>
-            </i>
-            <i class="far fa-thumbs-up text-center">
-                <p style="font-size: 10px;">{{ $recommended->likes }}</p>
+                <p style="font-size: 10px;">{{ $recommended->users->count() }}</p>
             </i>
         </h6>
     </div>
@@ -255,9 +299,9 @@ $segundo++;
 
 <div class="col-md-4" style="margin-top: 20px;">
   @if (!is_null($recommended->mentor->avatar))
- <img src="{{ asset('uploads/avatar/'.$recommended->mentor->avatar) }}" class="card-img-top img-prox-events" alt="..." style="height: 320px;">
+ <img src="{{ asset('uploads/avatar/'.$recommended->mentor->avatar) }}" class="card-img-top img-prox-events" alt="...">
  @else
- <img src="{{ asset('uploads/images/avatar/default.jpg') }}" class="card-img-top" alt="..." height="200px">
+ <img src="{{ asset('uploads/images/avatar/default.jpg') }}" class="card-img-top img-prox-events" alt="...">
   @endif
 <div class="card-img-overlay clearfix">
 <div>
@@ -273,10 +317,7 @@ $segundo++;
     <div class="col-md-3 my-auto" style="margin-bottom: 7px !important">
         <h6 class="text-white w-100">
             <i class="far fa-user-circle text-center">
-                <p style="font-size: 10px;">{{ $recommended->views }}</p>
-            </i>
-            <i class="far fa-thumbs-up text-center">
-                <p style="font-size: 10px;">{{ $recommended->likes }}</p>
+                <p style="font-size: 10px;">{{ $recommended->users->count() }}</p>
             </i>
         </h6>
     </div>
@@ -302,9 +343,9 @@ $tercero++;
 
 <div class="col-md-4" style="margin-top: 20px;">
   @if (!is_null($recommended->mentor->avatar))
- <img src="{{ asset('uploads/avatar/'.$recommended->mentor->avatar) }}" class="card-img-top img-prox-events" alt="..." style="height: 320px;">
+ <img src="{{ asset('uploads/avatar/'.$recommended->mentor->avatar) }}" class="card-img-top img-prox-events" alt="...">
  @else
- <img src="{{ asset('uploads/images/avatar/default.jpg') }}" class="card-img-top" alt="..." height="200px">
+ <img src="{{ asset('uploads/images/avatar/default.jpg') }}" class="card-img-top img-prox-events" alt="...">
   @endif
 <div class="card-img-overlay clearfix">
 <div>
@@ -320,10 +361,7 @@ $tercero++;
     <div class="col-md-3 my-auto" style="margin-bottom: 7px !important">
         <h6 class="text-white w-100">
             <i class="far fa-user-circle text-center">
-                <p style="font-size: 10px;">{{ $recommended->views }}</p>
-            </i>
-            <i class="far fa-thumbs-up text-center">
-                <p style="font-size: 10px;">{{ $recommended->likes }}</p>
+                <p style="font-size: 10px;">{{ $recommended->users->count() }}</p>
             </i>
         </h6>
     </div>
@@ -359,6 +397,12 @@ $tercero++;
 @endif
 <!--Carrusel-->
 </div>  
+@else
+<div class="row">
+  No se encontraron cursos recomendados...
+</div>
+
+@endif
 
     {{--FIN SECCIÓN RECOMENDACIONES--}}
 
@@ -382,9 +426,9 @@ $tercero++;
                    <a href="{{ route('courses.show', [$cursoNuevo->slug, $cursoNuevo->id]) }}" style="text-decoration: none;background-color: transparent; color: white;">
                     <div class="card">
                         @if (!is_null($cursoNuevo->cover))
-                        <img src="{{ asset('uploads/images/courses/covers/'.$cursoNuevo->cover) }}" class="card-img-top new-course-img" alt="..." height="462px" width="242px">
+                        <img src="{{ asset('uploads/images/courses/covers/'.$cursoNuevo->cover) }}" class="card-img-top new-course-img" alt="...">
                         @else
-                        <img src="{{ asset('uploads/images/courses/covers/default.jpg') }}" class="card-img-top new-course-img" alt="..." height="462px" width="242px">
+                        <img src="{{ asset('uploads/images/courses/covers/default.jpg') }}" class="card-img-top new-course-img" alt="...">
                         @endif
                         <div class="card-img-overlay d-flex flex-column">
                             <div class="mt-auto">
@@ -396,12 +440,7 @@ $tercero++;
                                             <div class="col text-right no-padding-sides mr-2">
 
                                                 <i class="far fa-user-circle"></i><br>
-                                                <span class="new-course-items-text">{{$cursoNuevo->views}}</span>
-                                            </div>
-                                            <div class="col text-left no-padding-sides">
-                                                    <i class="far fa-thumbs-up"></i>
-                                                <br>
-                                                <span class="new-course-items-text">{{$cursoNuevo->likes}}</span>
+                                                <span class="new-course-items-text">{{$cursoNuevo->users->count()}}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -419,6 +458,7 @@ $tercero++;
 
 
     {{-- SECCIÓN CURSOS POR CATEGORÍA --}}
+    @if(!empty($courses))
     <div class="">
         <div class="container-fluid">
             <div class="col section-title-category">
@@ -449,6 +489,12 @@ $tercero++;
             </div>
         </div>
     </div>
+    @else
+    <div class="row">
+      No se encontraron mentores...
+    </div>
+    
+    @endif
     {{-- FIN SECCIÓN CURSOS POR CATEGORÍA--}}
 
     {{-- SECCIÓN TUS MENTORES--}}

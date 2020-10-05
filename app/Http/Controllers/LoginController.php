@@ -19,10 +19,12 @@ class LoginController extends Controller
 {
     
     /*login del sistema*/
-    public function login(){
-        
+    public function login(Request $request){
+
+        $status = $request->all();
+        //return $status; 
         $paises = Paises::all();
-        return view('login.login', compact('paises'));
+        return view('login.login', compact('paises', 'status'));
     }
 
 

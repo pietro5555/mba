@@ -175,7 +175,7 @@ class ShoppingCartController extends Controller
                 $item->save();
             }
             
-            return redirect('shopping-cart/memberships');
+            return redirect('shopping-cart');
         }
     }
 
@@ -383,6 +383,39 @@ class ShoppingCartController extends Controller
         view()->share('title', 'Historial de Compras');
         
         $compras = Purchase::with(['details'])->orderBy('id', 'DESC')->get();
+        
+        foreach ($compras as $compra){
+            foreach ($compra->details as $p){
+                $compra->membership = $p->membership;
+            }
+        }
+
+        return view('admin.purchasesRecord')->with(compact('compras'));
+    }
+
+
+     /*filtro por fechas*/
+    public function purchases_filtre(Request $datos){
+        // TITLE
+        view()->share('title', 'Historial de Compras');
+        
+        $compras = Purchase::with(['details'])->whereDate('date', '>=', $datos->fecha1)->whereDate('date', '<=', $datos->fecha2)->orderBy('id', 'DESC')->get();
+        
+        foreach ($compras as $compra){
+            foreach ($compra->details as $p){
+                $compra->membership = $p->membership;
+            }
+        }
+
+        return view('admin.purchasesRecord')->with(compact('compras'));
+    }
+    
+    /*filtro por tipo de pago*/
+    public function purchases_forma(Request $datos){
+        // TITLE
+        view()->share('title', 'Historial de Compras');
+        
+        $compras = Purchase::with(['details'])->where('payment_method', $datos->lista)->orderBy('id', 'DESC')->get();
         
         foreach ($compras as $compra){
             foreach ($compra->details as $p){

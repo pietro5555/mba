@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `shopping_cart` (
   `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
+  `user_id` text NOT NULL,
   `course_id` int(11) DEFAULT NULL,
   `membership_id` int(11) DEFAULT NULL,
   `date` date NOT NULL,

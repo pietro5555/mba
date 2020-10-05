@@ -340,7 +340,7 @@ class CourseController extends Controller{
                       'start_date' => date('Y-m-d'), 'certificate' => 0, 'favorite' => 0,
                       'created_at' => $fecha, 'updated_at' => $fecha]);*/
 
-        return redirect('courses/show/'.$curso->slug.'/'.$curso->id)->with('msj-exitoso', 'El curso ha sido agregado a su lista con éxito.');
+                      return redirect('courses/lesson/'.$lesson->slug.'/'.$lesson->id.'/'.$curso->id)->with('msj-exitoso', 'El curso ha sido agregado a su lista con éxito.');
     }
 
     /*CURSO FAVORITO*/

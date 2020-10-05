@@ -1,6 +1,6 @@
 @php
     $categoriasSidebar = \App\Models\Category::orderBy('id', 'ASC')->get();
-        
+
         $subcategoriasSidebar = \App\Models\Subcategory::orderBy('id', 'ASC')->get();
 @endphp
 
@@ -12,7 +12,7 @@
                             <img src="{{ asset('images/logo.png') }}" style="width: 40px; height: 40px;">
                         </div>
                         <div class="col-9">
-                            <div style="color: white; font-size: 16px; font-weight: bold;">My Business</div> 
+                            <div style="color: white; font-size: 16px; font-weight: bold;">My Business</div>
                             <div style="color: white; font-size: 11px; ">A c a d e m y  p r o</div>
                         </div>
                     </div>
@@ -22,14 +22,18 @@
                     @if(Auth::user())
                         <a href="{{route('transmisiones')}}" class="list-group-item bg-dark-gray" style="color: white;"><i class="fas fa-asterisk"></i> FTX Live</a>
                         <a href="{{ route('courses') }}" class="list-group-item bg-dark-gray" style="color: white;"><i class="fas fa-user-circle"></i> Cursos</a>
-                        <a href="{{url('/admin')}}" class="list-group-item bg-dark-gray" style="color: white;"><i class="fas fa-user"></i> Referidos</a>
+                        <a href="{{url('/admin')}}" class="list-group-item bg-dark-gray" style="color: white;"><i class="fas fa-user"></i> Backoffice</a>
                     @endif
                     <a class="list-group-item bg-dark-gray" data-toggle="collapse" href="#searchDiv" style="color: white;"><i class="fa fa-search"></i> Explorar</a>
                     <div class="collapse" id="searchDiv" style="padding-left: 10px; padding-right: 10px;">
-                        <form action="{{ route('search') }}" method="GET">
-                            <div class="form-group">
+                        <form action="{{ route('search') }}" method="GET" class="form-inline d-flex justify-content-center md-form form-sm active-pink-2 mt-2">
+                            <input class="form-control form-control-sm w-75 border-0" type="text" placeholder="Buscar"
+                            aria-label="Buscar">
+                            <button class="btn btn-none border-0" type="submit"><i class="fas fa-search text-white" aria-hidden="true"></i></button>
+                            <!--<div class="input-group">
                                 <input type="text" class="form-control" id="search" name="q" placeholder="Buscar...">
-                            </div>
+                                <button class="btn btn-light ml-auto"><i class="fas fa-search text-primary"></i></button>
+                            </div>-->
                         </form>
                     </div>
                     <a class="list-group-item bg-dark-gray" data-toggle="collapse" href="#categoriesDiv" style="color: white;"><i class="fas fa-border-all"></i> Categorías <i class="fas fa-angle-down"></i></a>
@@ -43,14 +47,17 @@
                             </div>
                         @endforeach
                     </div>
-                    
+
                     @if(Auth::user())
                      @if(Auth::user()->rol_id == 0)
                     <a href="{{route('setting-logo')}}" class="list-group-item bg-dark-gray" style="color: white;"><i class="fa fa-gear"></i> Ajustes</a>
                      @endif
                     @endif
                     <a href="#" class="list-group-item bg-dark-gray" style="color: white;"><i class="far fa-question-circle"></i> Ayuda</a>
-                   
+                    @guest
+                    <a type="button" class="btn btn-primary btn-register-header d-md-block m-2" href="{{ route('log').'?act=0' }}">INICIAR SESIÓN</a> <!--/login-->
+                    <a type="button" class="btn btn-primary btn-register-header d-md-block m-2" href="{{ route('log').'?act=1' }}">REGISTRARME</a> <!--/login-->
+                    @endguest
                 </div>
             </div>
             <!-- /#sidebar-wrapper -->

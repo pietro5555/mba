@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark-gray border-bottom" style="height: 70px;">
     <button class="btn btn-primary" id="menu-toggle" style="background-color: #1D94FF !important;"><!--<span class="navbar-toggler-icon"></span>--><i class="fas fa-bars"></i></button>
 
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarItems" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler d-none" type="button" data-toggle="collapse" data-target="#navbarItems" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -30,7 +30,10 @@
                     </div>
                 </li>
                 <li class="nav-item li-register-button">
-                    <a type="button" class="btn btn-primary btn-register-header" href="{{ route('log') }}">REGISTRARME</a> <!--/login-->
+                    <a type="button" class="btn btn-primary btn-register-header" href="{{ route('log').'?act=0' }}">INICIAR SESIÓN</a> <!--/login-->
+                </li>
+                <li class="nav-item li-register-button">
+                    <a type="button" class="btn btn-primary btn-register-header" href="{{ route('log').'?act=1' }}">REGISTRARME</a> <!--/login-->
                 </li>
             @else
                 <li class="nav-item dropdown li-language" id="li-language-larger">
@@ -47,7 +50,7 @@
                 <li class="nav-item" id="li-language-small" style="display: none;">
                     <a class="nav-link items-header" href="#">IDIOMA</a>
                 </li>
-                
+
                 {{--<li class="nav-item" id="li-search-larger" style="padding-right: 5px;">
                     <a class="nav-link items-header" href="#"><i class="fa fa-search"></i></a>
                 </li>
@@ -65,7 +68,7 @@
                 </li>
                 <li class="nav-item dropdown" id="li-notifications-larger">
                     <a class="nav-link items-header" role="button" data-toggle="dropdown" data-target="#"><i class="fa fa-bell"></i> <span class="badge badge-pill badge-primary badge-header">3</span></a>
-                    
+
                     @include('layouts.partials.notificationsDropdown')
                 </li>
                 <li class="nav-item" id="li-notifications-small" style="display: none;">
@@ -74,7 +77,7 @@
 
                 <li class="nav-item dropdown dropleft" id="li-user-larger" style="padding-right: 10px;">
                     <img class="dropdown-toggle items-header" id="navbarDropdown2" role="button" data-toggle="dropdown" src="{{ asset('images/logo.png') }}" alt="" width="40" height="40">
-                
+
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="{{ route('logout') }}"
             onclick="event.preventDefault();
@@ -85,6 +88,7 @@
                  <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                      @csrf
                  </form>
+                 <a class="dropdown-item" href="{{route ('admin.user.edit')}}">Ver perfil <i class=" fa fa-angle-right"> </i><a/>
                     </div>
                 </li>
             @endif

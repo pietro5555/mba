@@ -26,11 +26,7 @@
                                 <div class="row row-cols-3">
                                     <div class="col text-right no-padding-sides mr-2">
                                         <i class="far fa-user-circle"></i><br>
-                                        <span class="new-course-items-text">{{$cursoNuevo->views}}</span>
-                                    </div>
-                                    <div class="col text-left no-padding-sides">
-                                        <i class="far fa-thumbs-up"></i><br>
-                                        <span class="new-course-items-text">{{$cursoNuevo->likes}}</span>
+                                        <span class="new-course-items-text">{{$cursoNuevo->users->count()}}</span>
                                     </div>
                                 </div>
                             </div>

@@ -78,11 +78,11 @@
 
                 <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link color-navs" id="acceso-tab" data-toggle="tab" href="#acceso" role="tab" aria-controls="acceso" aria-selected="true" style="border-top-left-radius: 1.25rem;
+                        <a class="nav-link {{(request()->act == 0) ? 'active' : ' '}} color-navs" id="acceso-tab" data-toggle="tab" href="#acceso" role="tab" aria-controls="acceso" aria-selected="true" style="border-top-left-radius: 1.25rem;
     border-top-right-radius: 1.25rem; padding: 12px;">Acceso</a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link active color-navs" id="registro-tab" data-toggle="tab" href="#registro" role="tab" aria-controls="registro" aria-selected="false" style="border-top-left-radius: 1.25rem;
+                        <a class="nav-link {{(request()->act == 1) ? 'active' : ' '}} color-navs" id="registro-tab" data-toggle="tab" href="#registro" role="tab" aria-controls="registro" aria-selected="false" style="border-top-left-radius: 1.25rem;
     border-top-right-radius: 1.25rem; padding: 12px;">Registro</a>
                     </li>
 
@@ -91,7 +91,7 @@
 
                 <div class="tab-content" id="myTabContent">
                     {{-- login --}}
-                    <div class="tab-pane fade" id="acceso" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="tab-pane fade {{(request()->act == 0) ? 'active show' : ' '}}" id="acceso" role="tabpanel" aria-labelledby="home-tab">
 
                         <form class="login-form" method="POST" action="{{ route('autenticar') }}" name="formulario">
                             {{ csrf_field() }}
@@ -139,7 +139,7 @@
                 </div>
 
                 {{-- registro--}}
-                <div class="tab-pane fade active show" id="registro" role="tabpanel" aria-labelledby="profile-tab">
+                <div class="tab-pane fade {{(request()->act == 1) ? 'active show' : ' '}} " id="registro" role="tabpanel" aria-labelledby="profile-tab">
 
 
                     <form class="login-form" method="POST" action="{{ route('autenticacion.save-register') }}" name="formulario">
@@ -166,10 +166,17 @@
                             <input type="password" class="form-control" name="password_confirmation" ID="txtPassword" style="border-radius: 20px;">
                         </div>
 
-                        <div class="form-group has-feedback">
+                        @if(empty(request()->ref))
+                            <div class="form-group has-feedback">
                             <label for="patrocinador">ID Patrocinador (Opcional)</label>
                             <input type="number" class="form-control" name="referred_id" ID="patrocinador" style="border-radius: 20px;">
                         </div>
+                        @else
+                            <div class="form-group has-feedback">
+                            <label for="patrocinador">ID Patrocinador (Opcional)</label>
+                            <input type="number" class="form-control" name="referred_id" value="{{request()->ref}}" ID="patrocinador" style="border-radius: 20px;" readonly>
+                        </div>
+                        @endif
 
                         <div class="form-group has-feedback">
                             <label for="usr">País</label>

@@ -42,7 +42,15 @@
 
    {{-- BANNER --}}
    <div class="container-fluid">
-      <img src="{{ asset('uploads/images/courses/covers/'.$curso->cover) }}"  width="100%">
+        @if (!is_null($curso->featured_cover))
+               <div style="max-width: 100%; position: relative; display: inline-block;">
+                    <img src="{{ asset('uploads/images/courses/featured_covers/'.$curso->featured_cover) }}" alt="" style=" max-width:100%; opacity: 0.5;" class="">
+                </div>
+         @else
+         <div style="max-width: 100%; position: relative; display: inline-block;">
+                    <img src="{{ asset('uploads/images/courses/covers/'.$curso->cover) }}" alt="" style=" max-width:100%; opacity: 0.5;">
+         </div>
+         @endif
    </div>
    {{-- FIN DEL BANNER --}}
    <hr style="border: 1px solid #707070;opacity: 1;" />

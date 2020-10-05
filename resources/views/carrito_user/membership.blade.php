@@ -31,7 +31,31 @@
                   <h4 class="card-text color-green">
                       <strong>{{$membresia->price}} USD</strong>
                   </h4>
-                  <a href="{{route('shopping-cart.store', $membresia->id)}}" class="btn btn-color-green text-white">Seleccionar Membresia</a>
+                  @auth
+                    @if (!empty(Auth::user()->membership_id))
+                        @if ((Auth::user()->membership_id +1) >= $membresia->id)
+                            @if (Auth::user()->membership_id == $membresia->id)
+                                <button class="btn btn-color-green text-white" disabled>Activa</button>    
+                            @else
+                                <a href="{{route('shopping-cart.store', $membresia->id)}}" class="btn btn-color-green text-white">Seleccionar Membresia</a>
+                            @endif
+                        @else
+                            <button class="btn btn-color-green text-white" disabled>Seleccionar Membresia</button>
+                        @endif
+                    @else
+                        @if ($membresia->id == 1)
+                            <a href="{{route('shopping-cart.store', $membresia->id)}}" class="btn btn-color-green text-white">Seleccionar Membresia</a>
+                        @else
+                            <button class="btn btn-color-green text-white" disabled>Seleccionar Membresia</button>
+                        @endif    
+                    @endif
+                  @else    
+                        @if ($membresia->id == 1)
+                            <a href="{{route('shopping-cart.store', $membresia->id)}}" class="btn btn-color-green text-white">Seleccionar Membresia</a>
+                        @else
+                        <a href="{{route('shopping-cart.store', $membresia->id)}}" class="btn btn-color-green text-white">Seleccionar Membresia</a>
+                        @endif
+                  @endauth
                 </div>
               </div>
         </div>

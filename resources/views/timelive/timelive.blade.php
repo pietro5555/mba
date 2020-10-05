@@ -130,7 +130,7 @@ countdown('{{($evento != null) ? $evento->date : $fechaActual ?? ''}}', 'clock')
      </div>
 </div>
 
-<div class="row">
+<div class="row ml-1 mb-1">
 
 <div class="col-md-8">
   <h3 style="color: #2A91FF; margin-top: 20px;">{{$evento->title}}</h3>
@@ -154,7 +154,7 @@ countdown('{{($evento != null) ? $evento->date : $fechaActual ?? ''}}', 'clock')
    <div class="col-md-6" style="margin-bottom: 10px;">
        <a href="{{route('oauthCallback', ['id' => $evento->id])}}" class="btn gris-boton btn-block"><i class="fas fa-calendar-alt" style="color:#2A91FF"></i> Google Calendar</a>
    </div>
-
+  @if (!empty ($nextEvent))
    <div class="col-md-6" style="margin-bottom: 10px;">
     <form action="{{route('timelive')}}" method="GET">
       @csrf
@@ -163,12 +163,12 @@ countdown('{{($evento != null) ? $evento->date : $fechaActual ?? ''}}', 'clock')
       <button class="btn btn-secondary btn-block" type="submit">PROXIMO LIVE <i class="fas fa-angle-right"></i></button>
     </form>
    </div>
-
+  @endif
    
-   <div class="col-md-6" style="margin-bottom: 10px;">
+   <!--<div class="col-md-6" style="margin-bottom: 10px;">
     
         <a href="{{route('event.favorite', $evento->id)}}" class="btn btn-secondary btn-block"><i class="far fa-heart"></i> FAVORITOS</a>
-   </div>
+   </div>-->
 </div>
 
    </div>
@@ -179,12 +179,12 @@ countdown('{{($evento != null) ? $evento->date : $fechaActual ?? ''}}', 'clock')
 
 
 
-  <div class="col-md-4 col-xs-12" style="margin-top: 20px;">
+  <div class="col-md-4 col-xs-12 " style="margin-top: 20px;">
      <div style="margin-right: 10px; margin-left: 10px;">
           @if (!is_null($evento->mentor->avatar))
-            <img src="{{ asset('uploads/images/avatar/'.$evento->mentor->avatar) }}" class="card-img-top" alt="..." height="200px"> 
+            <img src="{{ asset('uploads/images/avatar/'.$evento->mentor->avatar) }}" class="card-img-top" alt="..."> 
           @else
-          <img src="{{ asset('uploads/images/avatar/default.jpg') }}" class="card-img-top" alt="..." height="200px">
+          <img src="{{ asset('uploads/images/avatar/default.jpg') }}" class="card-img-top" alt="...">
           @endif
           <p style="color: white;">Invitado</p>
           <h5 style="color:#2A91FF; margin-top: -20px;">{{$evento->mentor->display_name}}</h5>
@@ -225,9 +225,9 @@ $contador++;
 
 <div class="col-md-4" style="margin-top: 20px;">
   @if (!is_null($prox->mentor->avatar))
- <img src="{{ asset('uploads/avatar/'.$prox->mentor->avatar) }}" class="card-img-top img-prox-events" alt="..." style="height: 320px;">
+ <img src="{{ asset('uploads/avatar/'.$prox->mentor->avatar) }}" class="card-img-top img-prox-events" alt="...">
  @else
- <img src="{{ asset('uploads/images/avatar/default.jpg') }}" class="card-img-top" alt="..." height="200px">
+ <img src="{{ asset('uploads/avatar/default.jpg') }}" class="card-img-top img-prox-events" alt="...">
   @endif
  <div class="card-img-overlay" style="margin-left: 10px; margin-right: 10px;">
   <form action="{{route('timelive')}}" method="GET">
@@ -263,9 +263,9 @@ $segundo++;
 
 <div class="col-md-4" style="margin-top: 20px;">
   @if (!is_null($prox->mentor->avatar))
- <img src="{{ asset('uploads/avatar/'.$prox->mentor->avatar) }}" class="card-img-top img-prox-events" alt="..." style="height: 320px;">
+ <img src="{{ asset('uploads/avatar/'.$prox->mentor->avatar) }}" class="card-img-top img-prox-events" alt="...">
  @else
- <img src="{{ asset('uploads/images/avatar/default.jpg') }}" class="card-img-top" alt="..." height="200px">
+ <img src="{{ asset('uploads/images/avatar/default.jpg') }}" class="card-img-top" alt="...">
   @endif
  <div class="card-img-overlay" style="margin-left: 10px; margin-right: 10px;">
  <form action="{{route('timelive')}}" method="GET">

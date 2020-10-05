@@ -99,11 +99,35 @@
 <div class="container-fluid">
 <div class="row">
         @foreach ($eventos_agendados as $agendado)
-            <div class="col-md-3" style="margin-top: 20px;">
+         <div class="col-md-4 mt-1 img-course-cat border-0">
+                    @if (!is_null($agendado->image))
+                    <img src="{{ asset('uploads/images/banner/'.$agendado->image) }}" class="card-img-top" alt="..."> 
+                    @else
+                        <img src="{{ asset('uploads/images/banner/default.png') }}" class="card-img-top" alt="...">
+                    @endif
+                   <div class="card-img-overlay clearfix">
+                    <div class="row ml-0 d-flex h-100">
+                        <div class="col-md-9 my-auto" style="margin-bottom: 0px !important">
+                            <h6 class="col-sm w-100 pl-0" style="font-size: 14px"><i class="text-success fa fa-play-circle"></i> <a href="" class="text-white"> {{ $agendado->title }}</a></h6>
+                            <h6 class="ml-2 text-white" style="font-size: 12px">
+                                
+                            </h6>
+                         </div>
+                        <div class="col-md-3 my-auto" style="margin-bottom: 0px !important">
+                            <h6 class="text-white w-100">
+                                <i class="far fa-calendar text-center"><p style="font-size: 10px;">{{strftime("%d de %B",strtotime($agendado->date) )}}</p></i>
+                            </h6>           
+                        </div>
+                    </div>
+                    </div>
+          </div>
+
+
+           <!-- <div class="col-md-3 bg-success" style="margin-top: 20px;">
                 @if (!is_null($agendado->image))
-                <img src="{{ asset('uploads/images/banner/'.$agendado->image) }}" class="card-img-top" alt="..." style="height: 200px;"> 
+                <img src="{{ asset('uploads/images/banner/'.$agendado->image) }}" class="card-img-top" alt="..."> 
                 @else
-                    <img src="{{ asset('uploads/images/banner/default.png') }}" class="card-img-top" alt="..." height="200px">
+                    <img src="{{ asset('uploads/images/banner/default.png') }}" class="card-img-top" alt="...">
                 @endif
                 <div class="card-body" style="background-color: #2f343a; height: 150px">
                     <h6 class="card-title text-white" style="margin-top: -15px;"> <i class="far fa-play-circle" style="font-size: 16px; color: #6fd843;"></i> {{ $agendado->title }}</h6>
@@ -114,7 +138,7 @@
                     <a href="{{route('event.favorite', $agendado->event_id)}}" class="float-right"><i class="far fa-heart text-secondary" height="20px" width="20px"></i></a>
                     @endif
                 </div>
-            </div>
+            </div>-->
         @endforeach
 </div>
 </div>
@@ -126,7 +150,7 @@
 <div class="container-fluid m-2">
   <div class="row justify-content-center">
     <div class="col-md-12">
-    <div class="box box-info">
+    <div class="box box-info bg-primary">
         <div class="box-body"> 
             <div id="calendario"></div>
             

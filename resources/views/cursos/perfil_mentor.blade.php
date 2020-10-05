@@ -5,8 +5,8 @@
     <div class="col-md-12 mb-2">
          <div class="title-page-course col-md"><span class="text-white">
     <h3><span class="text-white"></span><span class="text-primary"></span></h3>
-</div>   
- 
+</div>
+
 
 
 
@@ -19,7 +19,7 @@
         <p class="lead about-course-text">{{$mentor_info->biography}}</p>
       </div>
       <div class="col-md-5 order-md-1">
-        <img src="{{ asset('uploads/images/avatar/'.$mentor_info->avatar) }}" alt="" class="featurette-image mx-auto ml-2" width="370" height="370">
+        <img src="{{ asset('uploads/avatar/'.$mentor_info->avatar) }}" alt="" class="featurette-image mx-auto ml-2" width="370" height="370">
       </div>
 </div>
 </div>
@@ -44,7 +44,7 @@
                 <div class="row align-items-start">
                     <div class="col-9"><p class="text-course-mentor"><a href="{{ route('courses.show', [$course->slug, $course->id]) }}" style="color: white;">{{$course->course_title}}</a></p></div>
                      <div class="col-3"><i class="text-primary fa fa-play-circle"></i></div>
-                </div>                     
+                </div>
                 </div>
         </div>
         @endforeach
@@ -55,7 +55,7 @@
     {{-- FIN SECCIÓN TUS CURSOS--}}
 
         {{-- SECCIÓN REFERIDOS (USUARIOS LOGGUEADOS) --}}
-    @if (!Auth::guest()) 
+    @if (!Auth::guest())
     <div class="pt-4">
             <div class="row">
                 <div class="col-xl-4 col-lg-4 col-12 pl-4 pr-4">

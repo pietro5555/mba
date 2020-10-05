@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
-use App\Models\Course; use App\Models\Events; use App\Models\Note; use App\Models\EventResources; 
-use App\Models\Category; use App\Models\Subcategory; use App\Models\Calendario; 
+use App\Models\Course; use App\Models\Events; use App\Models\Note; use App\Models\EventResources;
+use App\Models\Category; use App\Models\Subcategory; use App\Models\Calendario;
 use DB; use Auth; use Carbon\Carbon; use DateTime;
 
 class EventsController extends Controller
@@ -14,16 +14,16 @@ class EventsController extends Controller
     function __construct(){
         // TITLE
         view()->share('title', 'Eventos');
-        Carbon::setLocale('es'); 
+        Carbon::setLocale('es');
         $this->middleware('auth');
-        
+
     }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(){   
+    public function index(){
         $events = Events::orderBy('id', 'DESC')->get();
 
         $mentores = DB::table('wp98_users')
@@ -74,7 +74,7 @@ class EventsController extends Controller
 
         $p =  $request->date."T".$request->time;
         $carbon = new Carbon($p);
-        $fecha = $carbon->subHours(5); 
+        $fecha = $carbon->subHours(5);
         $ultFecha = $fecha->format('Y-m-d H:i:s');
         $creacionEvento = $client->request('POST', 'api/meetings', [
             'headers' => $headers,
@@ -88,9 +88,9 @@ class EventsController extends Controller
                 'type' => ['webinar']
             ]
         ]);
-        
+
         $result2 = json_decode($creacionEvento->getBody());
-        
+
         $evento = new Events($request->all());
         $evento->uuid = $result2->meeting->uuid;
         $evento->url_streaming = 'https://streaming.shapinetwork.com/app/live/meetings/'.$evento->uuid;
@@ -104,7 +104,7 @@ class EventsController extends Controller
             $evento->image = $name;
             $evento->save();
         }
-        
+
         return redirect('admin/events')->with('msj-exitoso', 'El evento '.$evento->title.' ha sido creado con éxito.');
     }
 
@@ -124,7 +124,7 @@ class EventsController extends Controller
         return view('live.live', compact ('event','notes', 'menuResource'));
     }
 
-    
+
 
     /**
      * Show the form for editing the specified resource.
@@ -148,7 +148,7 @@ class EventsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request){ 
+    public function update(Request $request){
         $evento = Events::find($request->event_id);
 
         $client = new Client(['base_uri' => 'https://streaming.shapinetwork.com']);
@@ -188,7 +188,7 @@ class EventsController extends Controller
                 'type' => ['webinar', 'video_conference']
             ]
         ]);
-        
+
         $evento->fill($request->all());
         if ($request->hasFile('banner')){
             $file = $request->file('banner');
@@ -245,7 +245,7 @@ class EventsController extends Controller
             }
         }else{
             return redirect('/')->with('msj-erroneo', 'Ya este evento se encuentra registrado en su agenda.');
-    
+
         }
     }
 
@@ -271,15 +271,19 @@ class EventsController extends Controller
         //setlocale(LC_TIME, 'es_ES.UTF-8'); Para el server
       setlocale(LC_TIME, 'es');//Local
         Carbon::setLocale('es');
-        $total_eventos = count(Events::all());
+        //$total_eventos = count(Events::all());
+        $total_eventos = Events::where('date', '>=', Carbon::now()->format('Y-m-d'))
+        ->where('status','1')->count();
         $evento = Events::where('date', '>=', Carbon::now()->format('Y-m-d'))
                       ->where('status', '=',1)
                       ->get()
                       ->first();
+        
+
         if(!empty($evento))
         {
+            //return dd($evento, !empty($evento));
             if ($request->sigEvent == '' or $request->sigEvent == null) {
-            $evento = Events::where('date', '>=', Carbon::now())->first();
             if($total_eventos > 1){
                 $prox = true;
                 $i = 1;
@@ -294,7 +298,7 @@ class EventsController extends Controller
                 $nextEvent = null;
             }
         } else {
-            
+
             $lastEvent = Events::all()->last();
             $evento = Events::find($request->sigEvent);
 
@@ -318,7 +322,7 @@ class EventsController extends Controller
                     $nextEvent = null;
                 }
             }
-        } 
+        }
         }
         else{
             $evento= '';
@@ -328,8 +332,8 @@ class EventsController extends Controller
             $fechaActual = Carbon::now()->format('Y-m-d');
             return view('timelive/timelive', compact('evento', 'nextEvent', 'proximos', 'total', 'total_eventos'));
         }
-        
-          
+
+
         /*PROXIMOS EVENTOS*/
         if($total_eventos>0)
         {
@@ -354,7 +358,7 @@ class EventsController extends Controller
 
        $dia ='';
        $fech = Carbon::parse($fecha)->format('l');
-       
+
        if($fech == 'Saturday'){
          $dia='Sábado';
        }elseif($fech == 'Sunday'){
@@ -379,7 +383,7 @@ class EventsController extends Controller
 
        $mes ='';
        $fech = Carbon::parse($fecha)->format('F');
-       
+
        if($fech == 'January'){
          $mes='Enero';
        }elseif($fech == 'February'){
@@ -408,7 +412,7 @@ class EventsController extends Controller
 
 
        return $mes;
-    } 
+    }
 
     /*EVENTO FAVORITO*/
     public function event_favorite($event_id){
@@ -451,7 +455,7 @@ class EventsController extends Controller
         ->where('events_users.user_id', '=', Auth::user()->ID)
         ->get();
 
-        
+
       //  return dd($user_calendar);
 
         return view('agendar/calendar',compact('usuario','eventos_agendados', 'user_calendar'));
@@ -484,7 +488,7 @@ public function schedule($event_id, Request $request){
                 Auth::user()->events()->attach($event_id, ['date' => $date_event, 'time' => $time_event]);
                 $new_calendar = Events::where('id', '=', $event_id)
                 ->first();
-        
+
 
          $calendario = new Calendario();
          $calendario->titulo = $new_calendar->title;
@@ -506,11 +510,11 @@ public function schedule($event_id, Request $request){
             }
         }else{
             return redirect()->back()->with('msj-erroneo', 'Este evento se encuentra registrado en su agenda.');
-    
+
         }
 
 
-        
+
     }
 
 
@@ -519,13 +523,13 @@ public function schedule($event_id, Request $request){
 
     //modificamos algun dato del calendario
     public function modificar(Request $request){
-        
+
         $funciones = new IndexController;
-        
+
     if($request->inicio > $request->vence){
           $funciones->msjSistema('La fecha de inicio debe ser mayor a la fecha final', 'danger');
-          return redirect()->back();  
-        }     
+          return redirect()->back();
+        }
 
      $calendar = Calendario::find($request->ID);
      $calendar->titulo = $request->titulo;
@@ -537,19 +541,19 @@ public function schedule($event_id, Request $request){
      $calendar->tipo = $request->detalle;
      $calendar->especifico = $request->usuario;
      $calendar->save();
-     
+
      $funciones->msjSistema('Modificado con exito', 'success');
      return redirect()->back();
     }
-    
+
     //eliminamos datos del calendario
     public function eliminar(Request $request){
-        
+
         $funciones = new IndexController;
 
      $calendar = Calendario::find($request->ID);
      $calendar->delete();
-     
+
      $funciones->msjSistema('Eliminado con exito', 'success');
      return redirect()->back();
     }

@@ -12,8 +12,9 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Rol;
 use App\Models\User;
 use App\Models\EventResources;
-use App\Models\Course; 
+use App\Models\Course;
 use App\Models\Events;
+use App\Models\Calendario;
 use App\Models\Permiso;
 use App\Models\Category;
 
@@ -25,13 +26,13 @@ class TransmisionesController extends Controller
 
     function __construct()
     {
-        
+
         Carbon::setLocale('es');
     }
 
    //vista de transmisiones
    /* public function transmisiones(){
-        
+
         $anuncio =[];
          $finalizados = Events::where('status', '3')->orderBy('id', 'DESC')->take(9)->get();
          $banner = Events::where('status', '1')->where('image','!=',null)->take(1)->first();
@@ -123,6 +124,20 @@ class TransmisionesController extends Controller
 
             if (is_null($disponibilidad)){
                 Auth::user()->events()->attach($evento, ['date' => $fechaEvento, 'time' => $horaEvento]);
+                //Agendar evento en el calendario
+                $new_calendar = Events::where('id', '=', $evento)
+                ->first();
+
+
+                $calendario = new Calendario();
+                $calendario->titulo = $new_calendar->title;
+                $calendario->contenido = $new_calendar->description;
+                $calendario->inicio = $new_calendar->date;
+                $calendario->time = $new_calendar->time;
+                $calendario->color = '#28a745';
+                $calendario->lugar = 'Ninguno';
+                $calendario->iduser = Auth::user()->ID;
+                $calendario->save();
 
                 return redirect()->back()->with('msj', 'El evento ha sido reservado en su agenda con éxito.');
             }else{
@@ -130,18 +145,18 @@ class TransmisionesController extends Controller
             }
         }else{
             return redirect()->back()->with('msj2', 'Ya este evento se encuentra registrado en su agenda.');
-    
+
         }
     }
 
 
- 
+
 
      public function dias($fecha){
 
        $dia ='';
        $fech = Carbon::parse($fecha)->format('l');
-       
+
        if($fech == 'Saturday'){
          $dia='Sábado';
        }elseif($fech == 'Sunday'){
@@ -166,7 +181,7 @@ class TransmisionesController extends Controller
 
        $mes ='';
        $fech = Carbon::parse($fecha)->format('F');
-       
+
        if($fech == 'January'){
          $mes='Enero';
        }elseif($fech == 'February'){
@@ -195,8 +210,8 @@ class TransmisionesController extends Controller
 
 
        return $mes;
-    } 
+    }
 
-    
+
 
 }

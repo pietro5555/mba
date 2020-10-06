@@ -39,7 +39,7 @@
             {{ Session::get('msj-erroneo') }}
         </div>
     @endif
-    
+
     @if (!Auth::guest())
         <div class="title-page-course col-md"><span class="text-white">
             <h3><span class="text-white">Hola</span><span class="text-primary"> {{$username}}</span><span class="text-white"> ¡Nos alegra verte hoy!</span></h3>
@@ -54,7 +54,7 @@
                     <div class="btn btn-none ">
                         <a href="{{ route('courses.show', [$last_course->slug, $last_course->course_id]) }}" class="btn btn-primary float-right text-uppercase mr-2" style="font-size: 12px;"><i class="fa fa-play"></i> Continuar curso</a>
                     </div>
-                    
+
                     <div class="progress progress-course-bar pl-0">
                                 <div class="progress-bar" role="progressbar" aria-valuenow="{{$last_course->progress}}" aria-valuemin="0" aria-valuemax="100" style="width:{{$last_course->progress}}%">
                     </div>
@@ -83,9 +83,9 @@
                                 <div class="row">
                                      <a href="{{ route('courses.show', [$last_course->slug, $last_course->course_id]) }}" class="btn btn-primary float-right text-uppercase mr-2"><i class="fa fa-play"></i> Continuar curso</a>
                                 </div>
-                               
+
                             </div>
-                            
+
                             <div class="pl-0 col-md-12 progress progress-course-bar">
                                         <div class="progress-bar pl-0" role="progressbar" aria-valuenow="{{$last_course->progress}}" aria-valuemin="0" aria-valuemax="100" style="width:{{$last_course->progress}}%">
                             </div>
@@ -136,7 +136,7 @@
     @endif-->
     {{-- FIN DEL BANNER --}}
     {{-- SECCIÓN TUS CURSOS--}}
-    @if (!Auth::guest())
+    <!--@if (!Auth::guest())
         @if($cursos->isNotEmpty())
             <div class="row">
                 <div class="col-12">
@@ -169,45 +169,51 @@
                 </span>
             </div>
         @endif
-    @endif
-    
-    {{-- SECCIÓN TUS CURSOS--}}
-    <!--@if (!Auth::guest())
-        @if($cursos->isNotEmpty())
-            <div>
-                <div class="section-title-courses ml-2">Tus Cursos</div>
-                <hr style="border: 1px solid #707070;opacity: 1;" />
-            </div>
+    @endif-->
 
-            <div class="container-fluid mt-2 p-2">
-                
-                <div class="wrapper">
-                    <div class="row">
-                        @foreach ($cursos as $curso)
-                        <div class="col-12 col-md-6 col-lg-4">
-                            <div class="card mb-4 card-courses">
-                                <img class="card-img-top" src="{{ asset('uploads/images/courses/covers/'.$curso->cover) }}" alt="card-image-cap">
-                                <div class="card-body p-2">
-                                    <div class="row align-items-start">
-                                        <h6 class="col-sm"><a href="{{ route('courses.show', [$curso->slug, $curso->id]) }}" class="text-secondary text-sm">{{$curso->title}}</a></h6>
-                                        <div class="col-3"><img src="{{ asset('images/icons/video-player-blue.svg') }}" alt="" height="20px" width="20px"></div>
-                                    </div>
-                                </div>
+    {{-- SECCIÓN TUS CURSOS--}}
+    @if (!Auth::guest())
+        @if($cursos->isNotEmpty())
+            <div class="row">
+                <div class="col-12">
+                    <div class="section-title-courses ml-2">Tus Cursos</div>
+                    <hr style="border: 1px solid #707070;opacity: 1;" />
+                </div>
+                <div class="container-fluid m-2">
+                    <div class="wrapper">
+                    @foreach ($cursos as $curso)
+                      <div>
+
+                         <div class="card m-2 mb-4 card-courses">
+
+                            <img class="card-img-top" src="{{ asset('uploads/images/courses/covers/'.$curso->cover) }}" alt="card-image-cap">
+                            <div class="card-body p-2">
+                            <div class="row align-items-start">
+                                <h6 class="col-sm"><a href="{{ route('courses.show', [$curso->slug, $curso->id]) }}" class="text-secondary text-sm">{{$curso->title}}</a>
+                                </h6>
+
+                                 <div class="col-3 m-2"><img src="{{ asset('images/icons/video-player-blue.svg') }}" alt="" height="20px" width="20px"></div>
                             </div>
-                        </div>
-                        @endforeach
+                            </div>
+                       </div>
                     </div>
-                    <div class="">
+                    @endforeach
+                     <div class="">
                         <div class="row h-100">
                             <div class="col-sm-6 col-md-12 align-self-center">
                                 <div class="card-block w-50 text-primary">
                                     <a href="{{ route('client.my-courses') }}" class="font-weight-bold">Ver todos mis cursos <i class="text-primary fa fa-arrow-right"></i></a>
+                                    </div>
+                                <div>
+
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                
+
+                    </div>
+
+                 </div>
             </div>
         @else
             <div class="title-page-course col-md">
@@ -216,7 +222,7 @@
                 </span>
             </div>
         @endif
-    @endif-->
+    @endif
     {{-- FIN SECCIÓN TUS CURSOS--}}
 
     {{-- SECCIÓN RECOMENDACIONES--}}
@@ -237,7 +243,7 @@
 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
 
  <div class="carousel-inner">
-  
+
   <div class="carousel-item active">
     <div class="row">
 
@@ -396,7 +402,7 @@ $tercero++;
 
 @endif
 <!--Carrusel-->
-</div>  
+</div>
 @else
 <div class="row">
   No se encontraron cursos recomendados...
@@ -493,7 +499,7 @@ $tercero++;
     <div class="row">
       No se encontraron mentores...
     </div>
-    
+
     @endif
     {{-- FIN SECCIÓN CURSOS POR CATEGORÍA--}}
 

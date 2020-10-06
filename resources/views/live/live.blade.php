@@ -12,22 +12,20 @@
   <div class="row">
     <div class="col-md-12">
       <div class="row">
-        <div class="col-md-6 my-auto">
-          <h4 class="text-blue">
-            {{ $event->title }} / ESPECIALISTA
-          </h4>
+        <div class="col-md my-auto">
+          <h5 class="text-blue mt-2">
+            {{ $event->title }} / {{$event->mentor->display_name}}
+          </h5>
         </div>
         <div class="col-md-6">
           <div class="row">
-            <div class="col-md-6 title-level">
-              <h6 class="">Nivel: Principiante</h6>
+            <div class="col-md title-level">
+              <h6 class="">Nivel: {{$event->subcategory->title}}</h6>
             </div>
             <div class="col-md-6 text-center pt-1 my-auto">
-              <div class="">
               <a href="" class="btn btn-social-icon btn-facebook btn-rounded"><img src="{{ asset('images/icons/facebook.svg') }}" height="20px" width="20px"></a>
               <a href="" class="btn btn-social-icon btn-twitter btn-rounded"><img src="{{ asset('images/icons/twitter.svg') }}" height="20px" width="20px"></a>
               <a href="" class="btn btn-social-icon btn-instagram btn-rounded"><img src="{{ asset('images/icons/instagram.svg') }}" height="20px" width="20px"></a>
-            </div>
             </div>
           </div>
         </div>
@@ -108,21 +106,21 @@
             </nav>
             <div class="col-md-10 pl-0">
               <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade" id="nav-mentor" role="tabpanel" aria-labelledby="nav-mentor-tab">
-                 <div class="container-fluid">
+                <div class="tab-pane fade show active" id="nav-mentor" role="tabpanel" aria-labelledby="nav-mentor-tab">
+                 <div class="container-fluid mb-2">
                         <div class="row featurette">
                               <div class="col-md-7 order-md-2">
                                 <h5 class="featurette-heading text-white">Mentor</h5>
-                                <h3 class="featurette-heading text-primary">Nombre y Apellido</h3>
-                                <h6 class="featurette-heading text-white">Conferencista Experto en Liderazgo</h6>
-                                <p class="lead about-course-text">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-                                <a href="" class="text-primary">Ver perfil <i class=" fa fa-angle-right"> </i></a>
+                              <h3 class="featurette-heading text-primary">{{$event->mentor->display_name}}</h3>
+                                <h6 class="featurette-heading text-white">{{$event->mentor->profession}}</h6>
+                                <p class="lead about-course-text text-justify">{{$event->mentor->about}}.</p>
+                                <a href="{{ url('courses/mentor/'.$event->mentor->ID) }}" class="text-primary">Ver perfil <i class=" fa fa-angle-right"> </i></a>
                               </div>
-                              <div class="col-md-5 order-md-1">
-                                <img src="{{ asset('images/mentor-course.png') }}" alt="" class="featurette-image img-fluid mx-auto ml-2" width="409" height="370">
+                              <div class="col-md-5 order-md-1 pl-0">
+                                    <img src="{{ asset('uploads/avatar/'.$event->mentor->avatar) }}" alt="" class="featurette-image img-fluid mx-auto ml-2">
                               </div>
                         </div>
-                        </div>
+                </div>
                 </div>
                 <div class="tab-pane fade pl-2" id="nav-agenda" role="tabpanel" aria-labelledby="nav-agenda-tab">
                 Sección Próxima agenda en construcción
@@ -131,18 +129,19 @@
                 Sección Favoritos en construcción
               </div>
               <!--Seccion de Anotaciones-->
-              <div class="tab-pane fade show active" id="nav-anotaciones" role="tabpanel" aria-labelledby="nav-anotaciones-tab">
+              <div class="tab-pane fade" id="nav-anotaciones" role="tabpanel" aria-labelledby="nav-anotaciones-tab">
                 <div class="container-fluid">
                   <div class="row">
-                    <div class="col-md-12">
-                      <div class="comments-list">
-                        <div class="media">
+                    <div class="col-md-12 pl-0">
+                      <div class="pl-0 comments-list">
+                        <div class="media pl-0">
                           <div class="media-body">
-                            <div class="col-12 box-comments">
+                            <div class="col-12 box-comments pl-0">
                               <div class="card card-anotaciones pb-2">
                               <div class="card-body p-0">
                                 <form method="POST" action="{{ route('live.anotaciones') }}" class="m-2">
                                   @csrf
+                                  <input id="event_id" name="event_id" type="hidden" value="{{ $event->id }}">
                                 <div class="form-group notes-form-title">
                                   <input type="text" id="title" placeholder="Título" class="col-md-6 form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" name="title" value="{{ old('title') }}" required autofocus>
                                 </div>
@@ -159,33 +158,39 @@
                       </div>
                     </div>
                   </div>
+                  <div class="row">
+
+                  <div class="col-md-10 pl-0 mb-2">
+                        <h4 class="title-note pb-2">Notas Guardadas</h4>
+                        @foreach ($notes as $note)
+                                  <div class="accordion accordionNotes mb-2" id="accordionNote{{$note->id}}">
+                                    <div class="card">
+                                      <div class="card-header" id="heading{{$note->id}}">
+                                        <p class="mb-2 mt-2" data-toggle="collapse" data-target="#collapse{{$note->id}}" aria-expanded="true" aria-controls="collapse{{$note->id}}">
+                                          {{$note->title}}
+                                          <img src="{{ asset('images/icons/chevron-black.svg') }}" height="20px" width="20px" class="float-right">
+                                        </p>
+                                       </div>
+
+                             <div id="collapse{{$note->id}}" class="collapse" aria-labelledby="heading{{$note->id}}" data-parent="#accordionNote{{$note->id}}">
+                               <div class="card-body  mb-2">
+                               {{$note->content}}
+                                </div>
+                             </div>
+                           </div>
+                         </div>
+                         @endforeach
+                      </div><!--end Notas-->
+                  </div>
+
+
+
                 </div>
               </div><!--End Seccion Anotaciones-->
               </div><!--End tab-content-->
             </div><!--End col -->
             <!--Notas-->
-            @foreach ($notes as $note)
 
-            <div class="col-md-10 pl-0">
-              <h4 class="title-note pb-2">Notas Guardadas</h4>
-                        <div class="accordion accordionNotes" id="accordionNoteOne">
-                          <div class="card">
-                            <div class="card-header" id="headingOne">
-                              <p class="mb-2 mt-2" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                {{$note->title}}
-                                <img src="{{ asset('images/icons/chevron-black.svg') }}" height="20px" width="20px" class="float-right">
-                              </p>
-                             </div>
-
-                   <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionNoteOne">
-                     <div class="card-body">
-                     {{$note->content}}
-                      </div>
-                   </div>
-                 </div>
-               </div>
-            </div><!--end Notas-->
-            @endforeach
 
         </div><!--End col -->
         <!--Menu y Chat-->
@@ -194,19 +199,19 @@
             <div class="col-md-12">
               <div class="row">
                 <div class="col">
-                  <div class="col vertical-menu">        
-                  <nav >
+                  <div class="col vertical-menu">
+                  <nav class="mb-1">
                   <div class="nav nav-tabs nav-fill" id="nav-tab-chat" role="tablist">
 
-                  @foreach($menuResource as $menu)
+                  <!--@foreach($menuResource as $menu)
                     <a class="nav-item nav-link active" id="nav-settings-tab" data-toggle="tab"  href="#nav-settings" role="tab" aria-controls="nav-settings" aria-selected="true">
                       <img src="{{ asset('images/icons/settings.svg') }}" height="30px" class="">
                       <h6 class="text-center d-none d-sm-none d-md-block">{{ $menu->resources->title }}</h6>
                     </a>
-                  @endforeach
+                  @endforeach-->
 
 
-                    <!-- <a class="nav-item nav-link active" id="nav-settings-tab" data-toggle="tab"  href="#nav-settings" role="tab" aria-controls="nav-settings" aria-selected="true">
+                   <a class="nav-item nav-link active" id="nav-settings-tab" data-toggle="tab"  href="#nav-settings" role="tab" aria-controls="nav-settings" aria-selected="true">
                     <img src="{{ asset('images/icons/settings.svg') }}" height="30px" class="">
                     <h6 class="text-center d-none d-sm-none d-md-block">Configuración</h6>
                     </a>
@@ -230,7 +235,7 @@
                     <a class="nav-item nav-link" id="nav-archives-tab" data-toggle="tab" href="#nav-archives" role="tab" aria-controls="nav-archives" aria-selected="false"><img src="{{ asset('images/icons/documentos.svg') }}" height="30px" class="">
                   <h6 class="text-center d-none d-sm-none d-md-block">Archivos</h6></a>
                     <a class="nav-item nav-link" id="nav-ofertas-tab" data-toggle="tab" href="#nav-ofertas" role="tab" aria-controls="nav-ofertas" aria-selected="false"><img src="{{ asset('images/icons/descuento.svg') }}" height="30px" class="">
-                  <h6 class="text-center d-none d-sm-none d-md-block">Ofertas</h6></a> -->
+                  <h6 class="text-center d-none d-sm-none d-md-block">Ofertas</h6></a>
               </div>
               </nav>
             </div><!--End menu vertical-->
@@ -238,27 +243,27 @@
                 <div class="col pl-0 pr-0 mr-2">
                   <div class="tab-content" id="nav-chat-tabContent">
               <div class="tab-pane fade pl-2 active show" id="nav-settings" role="tabpanel" aria-labelledby="nav-settings-tab">
-                    <div style="text-align: right;">
-                      <a data-toggle="modal" data-target="#modal-settings-survey" class="btn btn-primary"><i class="fa fa-plus-circle"></i> Agregar Encuesta</a>
+                    <div>
+                      <a data-toggle="modal" data-target="#modal-settings-survey" class="btn btn-primary btn-block"><i class="fa fa-plus-circle"></i> Agregar Encuesta</a>
                     </div> <br>
-                    <div style="text-align: right;">
-                      <a data-toggle="modal" data-target="#modal-settings-presentation" class="btn btn-primary"><i class="fa fa-plus-circle"></i> Agregar Presentación</a>
+                    <div>
+                      <a data-toggle="modal" data-target="#modal-settings-presentation" class="btn btn-primary btn-block"><i class="fa fa-plus-circle"></i> Agregar Presentación</a>
                     </div> <br>
-                    <div style="text-align: right;">
-                      <a data-toggle="modal" data-target="#modal-settings" class="btn btn-primary"><i class="fa fa-plus-circle"></i> Agregar Video</a>
+                    <div>
+                      <a data-toggle="modal" data-target="#modal-settings" class="btn btn-primary btn-block"><i class="fa fa-plus-circle"></i> Agregar Video</a>
                     </div> <br>
-                    <div style="text-align: right;">
-                      <a data-toggle="modal" data-target="#modal-settings-file" class="btn btn-primary"><i class="fa fa-plus-circle"></i> Agregar Archivos</a>
+                    <div>
+                      <a data-toggle="modal" data-target="#modal-settings-file" class="btn btn-primary btn-block"><i class="fa fa-plus-circle"></i> Agregar Archivos</a>
                     </div> <br>
-                    <div style="text-align: right;">
-                      <a data-toggle="modal" data-target="#modal-settings-enable" class="btn btn-primary"><i class="fa fa-check"></i> Habilitar recursos</a>
+                    <div>
+                      <a data-toggle="modal" data-target="#modal-settings-enable" class="btn btn-primary btn-block"><i class="fa fa-check"></i> Habilitar recursos</a>
                     </div>
               </div>
               <div class="tab-pane fade pl-2" id="nav-participantes" role="tabpanel" aria-labelledby="nav-participantes-tab">
                     Sección para participantes
               </div>
             <!--Chat list-->
-            <div class="chat-list tab-pane fade pl-2" id="nav-chat" role="tabpanel" aria-labelledby="nav-chat-tab" scroll="auto"> 
+            <div class="chat-list tab-pane fade pl-2" id="nav-chat" role="tabpanel" aria-labelledby="nav-chat-tab" scroll="auto">
 
                       <div class="form-row">
                         <div class="col pt-2 logo-user">
@@ -269,7 +274,7 @@
                          </div>
 
                          <div class="col-m-12">
-                           <div class="mensaje">                              
+                           <div class="mensaje">
                             </textarea>
                             <p class="contenido-anfitrion p-1">
                              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -334,8 +339,8 @@
                        <div class="card card-anotaciones pb-2">
                               <div class="card-body p-0">
                                 <h5 class="card-title">
-                                <p class="card-text" align="right">
-                                  <textarea class="place pt-2" name="nota" rows="4" style="">Escribe tu mensaje</textarea>
+                                <p class="card-text">
+                                  <textarea class="place pt-2" name="nota" rows="8" cols="8">Escribe tu mensaje</textarea>
                                   <div class="col-12">
                                     <div class="row p-1">
                                     <div class="col">
@@ -394,18 +399,18 @@
                                   <span>
                                     <i class="em em-face_vomiting small" aria-role="presentation" aria-label="FACE WITH OPEN MOUTH VOMITING"></i>
                                   </span>
-                                   
+
                                   </div>
-                                  
-                                  
-                                  
-                                  
+
+
+
+
                                       </div>
-                                      
+
                                     </div>
                                   </div>
-                                  
-                                   
+
+
 
                                   <button type="button" class="btn btn-success float-right btn-sm mr-2">Enviar</button>
                                 </p>
@@ -422,7 +427,7 @@
 
                             </div>
                           </div>
-                           
+
                          </div>
                        </div>
 
@@ -440,21 +445,21 @@
                     Sección para archivos
                   </div>
                   <div class="tab-pane fade pl-2" id="nav-ofertas" role="tabpanel" aria-labelledby="nav-ofertas-tab">
-                    Sección para ofertas 
+                    Sección para ofertas
                   </div>
-            </div><!--End tab-content--> 
+            </div><!--End tab-content-->
                 </div>
-                
+
               </div>
-              
+
             </div>
           </div>
         </div><!--End Menu y Chat-->
-        
+
       </div>
     </div>
   </div>
-  
+
 </div>
 
 <!-- Modal Agregar recursos video -->
@@ -465,7 +470,7 @@
         			<h5 class="modal-title" id="exampleModalLabel">Agregar video</h5>
       			</div>
       			<form action="{{ route('set.event.store', [1]) }}" method="POST">
-			        {{ csrf_field() }} 
+			        {{ csrf_field() }}
 				    <div class="modal-body">
 				        <div class="container-fluid">
 	    					<div class="row">
@@ -478,7 +483,7 @@
 						    </div>
 						</div>
             <input type="hidden" name="type" value='video' required>
-				        
+
 				    </div>
 	      			<div class="modal-footer">
 	        			<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -497,7 +502,7 @@
         			<h5 class="modal-title" id="exampleModalLabel">Agregar Archivos</h5>
       			</div>
       			<form action="{{ route('set.event.store', [1]) }}" method="POST" enctype="multipart/form-data" >
-			        {{ csrf_field() }} 
+			        {{ csrf_field() }}
 				    <div class="modal-body">
 				        <div class="container-fluid">
 	    					<div class="row">
@@ -510,7 +515,7 @@
 						    </div>
 						</div>
             <input type="hidden" name="type" value='file' required>
-				        
+
 				    </div>
 	      			<div class="modal-footer">
 	        			<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -529,7 +534,7 @@
         			<h5 class="modal-title" id="exampleModalLabel">Agregar Presentación</h5>
       			</div>
       			<form action="{{ route('set.event.store', [1]) }}" method="POST" enctype="multipart/form-data" >
-			        {{ csrf_field() }} 
+			        {{ csrf_field() }}
 				    <div class="modal-body">
 				        <div class="container-fluid">
 	    					<div class="row">
@@ -542,7 +547,7 @@
 						    </div>
 						</div>
             <input type="hidden" name="type" value='presentation' required>
-				        
+
 				    </div>
 	      			<div class="modal-footer">
 	        			<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -561,7 +566,7 @@
         			<h5 class="modal-title" id="exampleModalLabel">Agregar Encuesta</h5>
       			</div>
       			<form action="{{ route('set.event.store', [1]) }}" method="POST" id="formQuestion">
-			        {{ csrf_field() }} 
+			        {{ csrf_field() }}
 				    <div class="modal-body">
 				        <div class="container-fluid">
 	    					<div class="row">
@@ -581,7 +586,7 @@
 						</div>
             <input type="hidden" name="type" value='survey' required>
             <input type="hidden" name="questions" class="questionsArray">
-				        
+
 				    </div>
 	      			<div class="modal-footer">
 	        			<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -600,7 +605,7 @@
         			<h5 class="modal-title" id="exampleModalLabel">Configuraciones del Evento</h5>
       			</div>
       			<form action="{{ route('admin.courses.add-subcategory') }}" method="POST">
-			        {{ csrf_field() }} 
+			        {{ csrf_field() }}
 				    <div class="modal-body">
 				        <div class="container-fluid">
 	    					<div class="row">
@@ -609,7 +614,7 @@
 						        </div>
 						    </div>
 						</div>
-				        
+
 				    </div>
 	      			<div class="modal-footer">
 	        			<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -619,7 +624,7 @@
   		</div>
 	</div>
 
- 
+
 @endsection
 
 @push('scripts')
@@ -631,13 +636,13 @@
         campo = '<div id="content_' + nextinput + '" class="form-group"> <label>Escribe la pregunta #'+nextinput+'</label> <div class="contentQuestion"> <textarea required class="form-control mr-2 fieldSurvey" id="q'+nextinput+'"&nbsp; name="q' + nextinput + '"&nbsp; ></textarea> <span> <a title="Eliminar pregunta"  class="btn btn-danger btn-circle " onclick="removeQuestion('+nextinput+')"><i class="fa fa-ban"></i></a> </span> </div> </div>';
         $(".msjError").remove();
         $("#list_question").append(campo);
-    
+
     });
 
-   
-    
 
-    
+
+
+
 
     $('.sendFormQuestion').on('click',function(e){
       e.preventDefault();
@@ -651,7 +656,7 @@
       })
       $(".questionsArray").val(questionArray)
 
-      if(!valida) 
+      if(!valida)
         $("#formQuestion").submit();
       else
         msjError = '<p class="msjError" style="color: red">No pude enviar campos vacios!</>';
@@ -661,7 +666,7 @@
      removeQuestion = function(q) {
       $('#content_'+q).remove()
     }
-    
+
 
   </script>
 @endpush

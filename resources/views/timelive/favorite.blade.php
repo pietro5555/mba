@@ -27,25 +27,24 @@
         @foreach ($eventos_favoritos as $favorito)
             <div class="col-md-3">
                 @if (!is_null($favorito->image))
-                <img src="{{ asset('uploads/images/banner/'.$favorito->image) }}" class="card-img-top" alt="..." style="height: 200px;"> 
+                <img src="{{ asset('uploads/images/banner/'.$favorito->image) }}" class="card-img-top" alt="..." style="height: 200px;">
                 @else
                     <img src="{{ asset('uploads/images/banner/default.png') }}" class="card-img-top" alt="..." height="200px">
                 @endif
                 <div class="card-body" style="background-color: #2f343a;">
                     <h6 class="card-title text-white" style="margin-top: -15px;"> <i class="far fa-play-circle" style="font-size: 16px; color: #6fd843;"></i> {{ $favorito->title }}</h6>
                     <h6 class="text-secondary">   {{strftime("%d de %B",strtotime($favorito->date) )}}</h6>
-                    <h6 class="text-right"><img src="{{ asset('images/icons/heart.svg') }}" alt="" height="20px" width="20px"></h6>
                 </div>
             </div>
         @endforeach
 </div>
 </div>
- 
+
   @else
 
 <div><h5 class="mt-5 mb-5 text-primary">No se encontraron eventos favoritos</h5></div>
 
-@endif 
+@endif
 </div>
 
 
@@ -58,7 +57,7 @@
         @foreach ($cursos_favoritos as $favorito)
             <div class="col-md-4 mt-1">
                     @if (!is_null($favorito->cover))
-                    <img src="{{ asset('uploads/images/courses/covers/'.$favorito->cover) }}" class="card-img-top img-opacity" alt="..."> 
+                    <img src="{{ asset('uploads/images/courses/covers/'.$favorito->cover) }}" class="card-img-top img-opacity" alt="...">
                     @else
                         <img src="{{ asset('uploads/images/courses/covers/default.jpg') }}" class="card-img-top img-opacity" alt="...">
                     @endif
@@ -81,8 +80,8 @@
                                                 <i class="far fa-thumbs-up text-white"><p class="text-center text-white" style="font-size: 10px;">{{ $favorito->likes }}</p></i>
                                             </div>
                                         </div>
-                                                            
-                                        
+
+
                                     </div>
                                 </div>
                                 <div class="row">
@@ -108,7 +107,7 @@
 
 <div class="section-title-landing text-center"><h5 class="mt-5 mb-5">No se encontraron cursos favoritos</h5></div>
 
-@endif 
+@endif
 </div>
 
 
@@ -122,11 +121,11 @@
                         <i class="fa fa-user"></i><br>
                         {{$directos}} Referidos
                     </div>
-                   <a href="{{url('/admin')}}" style="text-decoration: none;"> 
+                   <a href="{{url('/admin')}}" style="text-decoration: none;">
                     <div style="text-align: center; font-size: 25px; color: white; font-weight: bold; background-color: #6AB742; height: 60px; padding: 10px 10px;">
                         Panel de referidos
                     </div>
-                   </a> 
+                   </a>
                 </div>
                 <div class="col-8" style=" background:url('http://localhost:8000/images/banner_referidos.png');">
                     <!--<img src="{{ asset('images/banner_referidos.png') }}" alt="" style="height: 400px; width:100%; opacity: 1; background: transparent linear-gradient(90deg, #2A91FF 0%, #2276D0A1 54%, #15498000 100%) 0% 0% no-repeat padding-box;">-->

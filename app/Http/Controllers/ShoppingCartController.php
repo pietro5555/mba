@@ -276,7 +276,7 @@ class ShoppingCartController extends Controller
         $detalle->amount = $detallesMembresia->precio;
         $detalle->save();
         
-        $cursoAsociado = ShoppingCart::where('user_id', '=', $datosOrden->user_id)
+        /*$cursoAsociado = ShoppingCart::where('user_id', '=', $datosOrden->user_id)
                             ->where('course_id', '<>', NULL)
                             ->orderBy('id', 'DESC')
                             ->first();
@@ -291,7 +291,7 @@ class ShoppingCartController extends Controller
                             'start_date' => date('Y-m-d'),
                             'created_at' => $fecha,
                             'updated_at' => $fecha]);
-        }
+        }*/
 
         DB::table('wp98_users')
             ->where('ID', '=', $datosOrden->user_id)

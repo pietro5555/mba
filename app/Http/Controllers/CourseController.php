@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str as Str;
-use App\Models\Course; 
-use App\Models\Category; 
+use App\Models\Course;
+use App\Models\Category;
 use App\Models\User;
 use App\Models\Lesson;
 use Illuminate\Support\Facades\Auth;
@@ -109,7 +109,7 @@ class CourseController extends Controller{
             $idEnd = $curso->id;
             $cont++;
         }
-             
+
         if ($cursosNuevos->count() > 0){
             if ($idStart == $ultCurso->id){
                 $previous = 0;
@@ -118,12 +118,12 @@ class CourseController extends Controller{
                 $next = 0;
             }
         }
-            
+
         /*Cursos por categoria con el numero de cursos asociados*/
         $courses = Category::withCount('courses')
                         ->take(9)
                         ->get();
-       
+
         $cursosArray = [];
 
         $cursosMasComprados = DB::table('courses_users')
@@ -133,7 +133,7 @@ class CourseController extends Controller{
                                 ->get();
 
         $cursosRecomendados = collect();
-        
+
         foreach ($cursosMasComprados as $cursoComprado){
             array_push($cursosArray, $cursoComprado->course_id);
 
@@ -145,7 +145,7 @@ class CourseController extends Controller{
         $cursosMasVistos = Course::where('views', '>', 0)
                                 ->whereNotIn('id', $cursosArray)
                                 ->orderBy('views', 'DESC')
-                                ->get(); 
+                                ->get();
 
         foreach ($cursosMasVistos as $cursoVisto){
             $cursosRecomendados->push($cursoVisto);
@@ -166,14 +166,14 @@ class CourseController extends Controller{
                                 ->where('courses_users.user_id', '=', Auth::user()->ID )
                                 ->orderBy('courses_users.updated_at', 'DESC')
                                 ->first();
-            
+
             /*Mentores que tengan cursos*/
             $mentores = DB::table('wp98_users')
                         ->join('courses', 'courses.mentor_id', '=', 'wp98_users.id')
                         ->select(array ('wp98_users.display_name as nombre', 'wp98_users.avatar as avatar', 'courses.mentor_id as mentor_id'))
                         ->groupBy('courses.mentor_id', 'wp98_users.display_name', 'wp98_users.avatar')
                         ->get();
-            
+
             foreach ($mentores as $mentor) {
                 $cursostmp = DB::table('courses')->where('mentor_id', $mentor->mentor_id)->get();
                 $cantCateg = count($cursostmp);
@@ -188,7 +188,11 @@ class CourseController extends Controller{
                         if ($cont == 0) {
                             $string = $cate->title;
                         }else{
-                            $string = $string.', '.$cate->title;
+                            if($string != $cate->title)
+                            {
+                                $string = $string.', '.$cate->title;
+                            }
+
                         }
                     }
                     $cont++;
@@ -241,21 +245,21 @@ class CourseController extends Controller{
     */
     public function show($slug, $id){
         $curso = Course::where('id', '=', $id)
-                    ->withCount(['lessons', 'ratings', 'users', 
+                    ->withCount(['lessons', 'ratings', 'users',
                         'ratings as promedio' => function ($query){
                             $query->select(DB::raw('avg(points)'));
                         }
                     ])->with('evaluation')
                     ->first();
-        
+
         $dur = 0;
         foreach ($curso->lessons as $leccion){
             $dur += $leccion->duration;
-        } 
+        }
         $curso->duration = $dur;
         if ($dur > 0){
             $tiempo = explode(".", $dur);
-            $segundos = $tiempo[0]*60 + $tiempo[1]; 
+            $segundos = $tiempo[0]*60 + $tiempo[1];
             $curso->hours = floor($segundos/ 3600);
             $curso->minutes = floor(($segundos - ($curso->hours * 3600)) / 60);
             $curso->seconds = $segundos - ($curso->hours * 3600) - ($curso->minutes * 60);
@@ -302,7 +306,7 @@ class CourseController extends Controller{
         $cursosMasVistos = Course::where('views', '>', 0)
                                 ->whereNotIn('id', $cursosArray)
                                 ->orderBy('views', 'DESC')
-                                ->get(); 
+                                ->get();
 
         foreach ($cursosMasVistos as $cursoVisto){
             $cursosRecomendados->push($cursoVisto);
@@ -336,7 +340,7 @@ class CourseController extends Controller{
         $curso->users()->attach(Auth::user()->ID, ['progress' => 0, 'start_date' => date('Y-m-d'), 'certificate' => 0, 'favorite' => 0]);
 
         /*DB::table('courses_users')
-            ->insert(['course_id' => $id, 'user_id' => Auth::user()->ID, 'progress' => 0, 
+            ->insert(['course_id' => $id, 'user_id' => Auth::user()->ID, 'progress' => 0,
                       'start_date' => date('Y-m-d'), 'certificate' => 0, 'favorite' => 0,
                       'created_at' => $fecha, 'updated_at' => $fecha]);*/
 
@@ -352,7 +356,7 @@ class CourseController extends Controller{
         ->where('course_id', '=',$course_id)
         ->where('user_id', '=', $user_id)
         ->update(['favorite' => 1]);
-        
+
         return redirect()->action('CourseController@favorites');
 
     }
@@ -372,7 +376,7 @@ class CourseController extends Controller{
 
         //directos
         $directos = User::where('referred_id', Auth::user()->ID)->count('ID');
-        
+
         //return $cursos_favoritos;
          return view('timelive.favorite', compact('eventos_favoritos', 'cursos_favoritos','directos'));
     }
@@ -393,7 +397,7 @@ class CourseController extends Controller{
             $curso->cover = $name;
             $curso->cover_name = $file->getClientOriginalName();
         }
-        
+
         $curso->save();
 
         if (!is_null($request->tags)){

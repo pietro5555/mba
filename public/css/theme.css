@@ -10,11 +10,11 @@
     font-size: 17px;
 }
 .badge-header{
-    padding-left: 0.4em; 
-    padding-right: 0.4em; 
-    vertical-align: top; 
+    padding-left: 0.4em;
+    padding-right: 0.4em;
+    vertical-align: top;
     font-size: 10px;
-    position:relative; 
+    position:relative;
     left: -10px;
 }
 .dropdown-notifications{
@@ -41,7 +41,7 @@
 }
 .footer{
     padding:5px 15px;
-    border-radius: 0px 0px 3px 3px; 
+    border-radius: 0px 0px 3px 3px;
     background-color: #1C1D21;
     position: fixed;
 }
@@ -51,7 +51,7 @@
 }
 
 .notification-box{
-    padding: 10px 0px; 
+    padding: 10px 0px;
 }
 .bg-gray{
     background-color: #eee;
@@ -62,7 +62,7 @@
     height: 35px;
 }
 .section-landing{
-    padding: 20px 40px; 
+    padding: 20px 40px;
     background-color: #1C1D21;
     color: white;
     font-size: 24px;
@@ -80,8 +80,8 @@
 }
 .courses-slider{
     z-index: 0;
-    padding-right: 0 !important; 
-    padding-left: 0 !important; 
+    padding-right: 0 !important;
+    padding-left: 0 !important;
     padding-bottom: 30px;
 }
 .carousel-caption{
@@ -94,25 +94,25 @@
 }
 .course-label{
     color: #2A91FF;
-    font-weight: bold; 
-    padding-bottom: 30px; 
+    font-weight: bold;
+    padding-bottom: 30px;
     font-size: 24px;
 }
 .course-autor{
-    color: #727272; 
-    font-weight: bold; 
+    color: #727272;
+    font-weight: bold;
     font-size: 35px;
 }
 .course-title{
-    color: #FFFFFF; 
-    font-weight: bold; 
-    font-size: 60px; 
-    line-height: 60px; 
+    color: #FFFFFF;
+    font-weight: bold;
+    font-size: 60px;
+    line-height: 60px;
     padding: 20px 0;
 }
 .course-category{
-    color: #727272; 
-    font-weight: bold; 
+    color: #727272;
+    font-weight: bold;
     font-size: 22px;
 }
 .btn-outline-success:hover {
@@ -121,13 +121,13 @@
     border-color: #6AB742;
 }
 .btn-register-header{
-    border-radius: 25px !important; 
-    font-weight: bold; 
+    border-radius: 25px !important;
+    font-weight: bold;
     width: 180px;
 }
 .btn-language{
-    border-radius: 25px !important; 
-    font-weight: bold; 
+    border-radius: 25px !important;
+    font-weight: bold;
     width: 120px;
 }
 .new-courses-section{
@@ -140,13 +140,13 @@
     border-radius: 0px;
 }
 .btn-arrow-next{
-    border-radius: 0px; 
-    border-color: #6AB742; 
+    border-radius: 0px;
+    border-color: #6AB742;
     color: #6AB742;
 }
 .btn-arrow-next-lmcourses{
-    border-radius: 0px; 
-    border-color: #2A91FF; 
+    border-radius: 0px;
+    border-color: #2A91FF;
     color: #2A91FF;
 }
 .new-course-img{
@@ -154,88 +154,88 @@
     height: auto;
 }
 .new-course-title{
-    font-size: 20px; 
+    font-size: 20px;
     font-weight: bold;
     line-height: 1;
 }
 .new-course-category{
-    font-size: 16px; 
+    font-size: 16px;
     font-weight: bold;
 }
 .no-padding-sides{
-    padding-right: 0 !important; 
+    padding-right: 0 !important;
     padding-left: 0 !important;
 }
 .new-course-items-text{
     font-size: 10px;
 }
 .next-streaming{
-    width: 100%; 
-    position: relative; 
+    width: 100%;
+    position: relative;
     display: inline-block;
 }
 .next-streaming-img{
-    width:100%; 
+    width:100%;
     opacity: 0.5;
 }
 .next-streaming-info{
-    position: absolute; 
-    top: 2%; 
+    position: absolute;
+    top: 2%;
     left: 5%;
-    color: white; 
-    font-size: 70px; 
+    color: white;
+    font-size: 70px;
     font-weight: bold;
 }
 .btn-next-streaming{
-    font-weight: bold; 
+    font-weight: bold;
     width: 180px;
 }
 .next-streaming-title{
-    width: 60%; 
+    width: 60%;
     line-height: 70px;
 }
 .next-streaming-date{
-    font-size: 25px; 
+    font-size: 25px;
     font-weight: 500;
 }
 .next-streaming-reserve{
-    font-size: 35px; 
+    font-size: 35px;
     padding-top: 60px;
 }
 .referrers-box{
-    text-align: center; 
-    font-size: 38px; 
-    color: white; 
-    font-weight: bold; 
-    border: solid #919191 1px; 
-    background-color: #222326; 
-    margin-bottom: 10px; 
-    height: 330px; 
+    text-align: center;
+    font-size: 38px;
+    color: white;
+    font-weight: bold;
+    border: solid #919191 1px;
+    background-color: #222326;
+    margin-bottom: 10px;
+    height: 330px;
     padding: 120px 15px;
 }
 .referrers-icon{
     color: #2A91FF;
 }
 .referrers-button{
-    text-align: center; 
-    font-size: 30px; 
-    color: white; 
-    font-weight: bold; 
-    background-color: #6AB742; 
+    text-align: center;
+    font-size: 30px;
+    color: white;
+    font-weight: bold;
+    background-color: #6AB742;
     padding: 20px 10px;
 }
 .referrers-banner{
     background:url('https://shapinetwork.com/images/banner_referidos.png');
 }
 .referrers-banner-text{
-    font-size: 40px; 
-    width: 50%; 
-    padding: 80px 40px 80px 60px; 
-    color: white; 
+    font-size: 40px;
+    width: 50%;
+    padding: 80px 40px 80px 60px;
+    color: white;
     line-height: 55px;
 }
 .li-language{
-    padding-left: 10px; 
+    padding-left: 10px;
     padding-right: 10px;
 }
 .li-register-button{
@@ -249,12 +249,12 @@
         padding: 5px;
     }
     .btn-register-header{
-        border-radius: 25px !important; 
-        font-weight: bold; 
+        border-radius: 25px !important;
+        font-weight: bold;
         width: 140px;
     }
     .li-language{
-        padding-left: 5px; 
+        padding-left: 5px;
         padding-right: 5px;
     }
     .btn-language{
@@ -262,8 +262,8 @@
         font-size: 12px;
     }
     .referrers-banner-text{
-        font-size: 40px; 
-        padding: 80px 40px 20px 60px; 
+        font-size: 40px;
+        padding: 80px 40px 20px 60px;
         line-height: 40px;
     }
 }
@@ -272,7 +272,7 @@
         font-size: 12px;
     }
     .li-language{
-        padding-left: 0; 
+        padding-left: 0;
         padding-right: 0;
     }
     .btn-language{
@@ -284,21 +284,21 @@
         width: 120px;
     }
     .course-label{
-        padding-bottom: 15px; 
+        padding-bottom: 15px;
     }
     .course-autor{
         font-size: 30px;
     }
-    .course-title{ 
-        font-size: 45px; 
-        line-height: 45px; 
+    .course-title{
+        font-size: 45px;
+        line-height: 45px;
         padding: 15px 0;
     }
     .course-category{
         font-size: 20px;
     }
     .next-streaming-title{
-        width: 50%; 
+        width: 50%;
         font-size: 60px;
         line-height: 60px;
     }
@@ -308,13 +308,13 @@
 }
 @media (max-width: 1100px) {
     .referrers-box{
-        font-size: 34px;  
+        font-size: 34px;
         padding: 100px 15px;
     }
 }
 @media (min-width: 451px) and (max-width: 980px) {
     .referrers-box{
-        font-size: 34px;  
+        font-size: 34px;
         padding: 100px 15px;
     }
     #navbarItems{
@@ -358,28 +358,28 @@
         display: block !important;
     }
     .li-language{
-        padding-left: 0; 
+        padding-left: 0;
         padding-right: 0;
     }
     .carousel-caption{
         width: 50%;
     }
     .course-label{
-        padding-bottom: 10px; 
+        padding-bottom: 10px;
         font-size: 20px;
     }
     .course-autor{
         font-size: 25px;
     }
-    .course-title{ 
-        font-size: 30px; 
-        line-height: 30px; 
+    .course-title{
+        font-size: 30px;
+        line-height: 30px;
         padding: 10px 0;
     }
     .course-category{
         font-size: 17px;
     }
-    .next-streaming-title{ 
+    .next-streaming-title{
         font-size: 50px;
         line-height: 50px;
     }
@@ -401,22 +401,22 @@
         width: auto;
     }
     .course-label{
-        padding-bottom: 5px; 
+        padding-bottom: 5px;
         font-size: 16px;
     }
     .course-autor{
         font-size: 20px;
     }
-    .course-title{ 
-        font-size: 25px; 
-        line-height: 25px; 
+    .course-title{
+        font-size: 25px;
+        line-height: 25px;
         padding: 10px 0;
     }
     .course-category{
         font-size: 14px;
     }
     .next-streaming-title{
-        width: 50%; 
+        width: 50%;
         font-size: 30px;
         line-height: 30px;
     }
@@ -443,7 +443,7 @@ bottom: 0px;
     top: 55%;
     width: 95%;
 }
-    
+
 }
 
 @media  (min-width: 1024px) {
@@ -464,7 +464,7 @@ font-size: 16px;
 }
 
     }
-    
+
     @media (min-width: 1366px) {
 
         .course-banner-caption{
@@ -481,26 +481,26 @@ font-size: 16px;
             bottom: 0 !important;
             top: 65%;
         }
-        
+
     }
 
     @media (min-width: 320px) and (max-width: 320px){
         .course-banner-caption{
             display: none;
         }
-        
+
     }
 
 .title-page-course{
     color: #FFFF;
-    font-weight: bold; 
-    padding-bottom: 30px; 
+    font-weight: bold;
+    padding-bottom: 30px;
     font-size: 24px;
     margin-top:30px;
 }
 .banner-course{
-    padding-right: 0 !important; 
-    padding-left: 0 !important; 
+    padding-right: 0 !important;
+    padding-left: 0 !important;
     padding-bottom: 30px;
         display: inline-block;
     position: relative;
@@ -523,7 +523,7 @@ max-width: 100%;
 }
 .title-course{
     color: #FFFF;
-    font-weight: bold; 
+    font-weight: bold;
     font-size: 24px;
 }
 
@@ -568,7 +568,7 @@ bottom: 1em;
 }
 .section-mentors
 {
-   padding: 20px 40px; 
+   padding: 20px 40px;
     background-color: #222326;
     color: white;
     font-size: 24px;
@@ -611,10 +611,10 @@ font-size: 2vw;
 {
 background: transparent linear-gradient(180deg, #00000083 0%, #000000 100%) 0% 0% no-repeat padding-box;
 opacity: 0.75;
--webkit-box-shadow: none; 
-box-shadow: none; 
-border: 1px; 
-border-radius: 20px; 
+-webkit-box-shadow: none;
+box-shadow: none;
+border: 1px;
+border-radius: 20px;
 height: 242px;
 }
 
@@ -635,7 +635,7 @@ width: 320px;
 }
 .card-carousel-text{
 position: absolute;
-bottom: 0;      
+bottom: 0;
 }
 
 .subtitle-cat
@@ -675,8 +675,8 @@ text-transform:uppercase;
 
 .title-page-one_course{
     color: #8E8E8E;
-    font-weight: bold; 
-    padding-bottom: 30px; 
+    font-weight: bold;
+    padding-bottom: 30px;
     font-size: 26px;
     margin-top:30px;
 }
@@ -1086,7 +1086,7 @@ border-bottom: 1px solid #707070;
 {
     border-radius: 0rem;
     border: none;
-    background: #545762; 
+    background: #545762;
     color: #fff;
 }
 .accordionNotes .card-header{
@@ -1147,26 +1147,26 @@ border-bottom: 1px solid #707070;
       }
 
       .nombre-jd{
-       color:#2A91FF; 
+       color:#2A91FF;
        font-weight: bold;
       }
 
-     
+
       .nombre-anfitrion{
-        color:#6AB742; 
+        color:#6AB742;
         font-weight: bold;
       }
 
       .mensaje{
-        background-color: #545762; 
-        color: #CECECE; 
+        background-color: #545762;
+        color: #CECECE;
         border-radius: 10px;
         width: 100%;
       }
 
       .contenido-anfitrion{
-        background-color: #545762; 
-        color: #CECECE; 
+        background-color: #545762;
+        color: #CECECE;
         border-radius: 10px;
         width: 100%;
       }
@@ -1188,12 +1188,12 @@ border-bottom: 1px solid #707070;
 
 /*CALENDARIO*/
 .box.box-info {
-    border-top-color: #007bff;
+    border-top-color: rgb(23, 21, 21);
 }
 .box {
     position: relative;
     border-radius: 3px;
-    background: #ffffff;
+    background:rgb(23, 21, 21);
     border-top: 3px solid #007bff;
     margin-bottom: 20px;
     width: 100%;
@@ -1212,13 +1212,22 @@ border-bottom: 1px solid #707070;
 }
 
 .fc-unthemed td.fc-today {
-    background: #ffff;
+    background: #58666e;
 }
 .fc-day-grid-event .fc-content {
     white-space: normal;
     overflow: hidden;
 }
+.fc-center{
+    color: white;
+}
+.fc-day-number{
+    color: white;
+}
 
+.fc-day-header span{
+color: white;
+}
 .img-banner-live{
     background: transparent linear-gradient(360deg, #1C1D21 0%, #1C1D21 29%, #00000046 100%) 0% 0% no-repeat padding-box;
 opacity: 0.7;
@@ -1287,11 +1296,11 @@ max-width: 350px;
     }
 
     .next-streaming-info{
-    position: absolute; 
-    top: 2%; 
+    position: absolute;
+    top: 2%;
     left: 5%;
-    color: white; 
-    font-size: 35px; 
+    color: white;
+    font-size: 35px;
     font-weight: bold;
     }
 
@@ -1311,6 +1320,10 @@ max-width: 350px;
     background-color: #222326;
     margin-bottom: 10px;
     height: 150px;
+    }
+
+    .wrapper{
+        display: block;
     }
 }
 

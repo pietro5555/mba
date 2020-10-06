@@ -278,7 +278,7 @@ class EventsController extends Controller
                       ->where('status', '=',1)
                       ->get()
                       ->first();
-        
+
 
         if(!empty($evento))
         {

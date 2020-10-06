@@ -6,6 +6,7 @@
     <script>
 
       const getRemainingTime = deadline => {
+  let objFecha = new Date()       
   let now = new Date(objFecha.getUTCFullYear(), objFecha.getUTCMonth(), objFecha.getUTCDate(), objFecha.getUTCHours(), objFecha.getUTCMinutes(), objFecha.getUTCSeconds()),
       remainTime = (new Date(deadline) - now + 1000) / 1000,
       remainSeconds = ('0' + Math.floor(remainTime % 60)).slice(-2),

@@ -242,20 +242,20 @@
             <div class="col-12 mt-4">
                 <div class="progress">
                     @if (Auth::user()->membership_id >= 0)
-                    <div class="progress-bar progress-bar-striped progress-bar-animated punto" role="progressbar" style="width: 20%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="progress-bar progress-bar-striped punto" role="progressbar" style="width: 20%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
                     @endif
                     @if(Auth::user()->membership_id >= 2)
-                    <div class="progress-bar progress-bar-striped progress-bar-animated punto invertido" role="progressbar" style="width: 20%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="progress-bar progress-bar-striped punto invertido" role="progressbar" style="width: 20%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
                     @endif
                     @if(Auth::user()->membership_id >= 3)
-                    <div class="progress-bar progress-bar-striped progress-bar-animated punto invertido" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="progress-bar progress-bar-striped punto invertido" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
                     @endif
                     @if(Auth::user()->membership_id >= 4)
-                    <div class="progress-bar progress-bar-striped progress-bar-animated punto invertido" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="progress-bar progress-bar-striped punto invertido" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
                     @endif
                     @if(Auth::user()->membership_id >= 5)
-                    <div class="progress-bar progress-bar-striped progress-bar-animated punto invertido" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                    <div class="progress-bar progress-bar-striped progress-bar-animated punto-end bg-danger " role="progressbar" style="width: 0%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="progress-bar progress-bar-striped punto invertido" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="progress-bar progress-bar-striped punto-end bg-danger " role="progressbar" style="width: 0%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
                     @endif
             </div>
             </div>

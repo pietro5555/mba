@@ -44,7 +44,12 @@
 		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 		<script src="{{ asset('bootstrap-4.5.1/js/bootstrap.min.js') }}"></script>
         <script src="{{ asset('bootstrap-4.5.1/js/bootstrap.bundle.min.js') }}"></script>
-
+        <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+        <script type="text/javascript">
+            function googleTranslateElementInit() {
+                new google.translate.TranslateElement({pageLanguage: 'pt', includedLanguages: 'en, es', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, gaTrack: true}, 'google_translate_element');
+                    }
+            </script>
         @stack('scripts')
     </body>
 </html>

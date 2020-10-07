@@ -90,125 +90,125 @@
           <input type="hidden" name="nameuser" id="nom">
 
        
-        <div class="col-md-3 col-xs-6">
+        <div class="col-md-4 col-xs-6">
           <h4>Cursos</h4>
         <input type="checkbox" name="cursos" id="cursos" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
         </div>
         
-        <div class="col-md-3 col-xs-6">
+        <div class="col-md-4 col-xs-6">
         <h4>Entradas</h4>
         <input type="checkbox" name="entradas" id="entradas" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
         </div>
         
-        <div class="col-md-3 col-xs-6">
+        <div class="col-md-4 col-xs-6">
           <h4>Lista Usuarios</h4>
         <input type="checkbox" name="usuario" id="usuario" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
         </div>
 
-        <div class="col-md-3 col-xs-6">
+        <div class="col-md-4 col-xs-6">
           <h4>Usuarios</h4>
         <input type="checkbox" name="usuarios" id="usuarios" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
         </div>
         
-        <div class="col-md-3 col-xs-6">
+        <div class="col-md-4 col-xs-6">
           <h4>Historial Comisiones</h4>
         <input type="checkbox" name="historialcomision" id="historialcomision" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
         </div>
 
-        <div class="col-md-3 col-xs-6">
+        <div class="col-md-4 col-xs-6">
           <h4>Red</h4>
         <input type="checkbox" name="red" id="red" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
         </div>
 
-        <div class="col-md-3 col-xs-6">
+        <div class="col-md-4 col-xs-6">
           <h4>Eventos</h4>
         <input type="checkbox" name="eventos" id="eventos" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
         </div>
 
-        <div class="col-md-3 col-xs-6">
+        <div class="col-md-4 col-xs-6">
           <h4>Ajuste</h4>
         <input type="checkbox" name="ajuste" id="ajuste" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
         </div>
 
-        {{--<div class="col-md-3 col-xs-6">
+        {{--<div class="col-md-4 col-xs-6">
           <h4>Registro</h4>
         <input type="checkbox" name="nuevo_registro" id="nuevo_registro" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
         </div>
 
-        <div class="col-md-3 col-xs-6">
+        <div class="col-md-4 col-xs-6">
           <h4>Red Usuario</h4>
         <input type="checkbox" name="red_usuario" id="red_usuario" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
         </div>
 
-        <div class="col-md-3 col-xs-6">
+        <div class="col-md-4 col-xs-6">
           <h4>Vision Usuario</h4>
         <input type="checkbox" name="vision_usuario" id="vision_usuario" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
         </div>
 
-        <div class="col-md-3 col-xs-6">
+        <div class="col-md-4 col-xs-6">
           <h4>Billetera</h4>
         <input type="checkbox" name="billetera" id="billetera" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
         </div>
 
-        <div class="col-md-3 col-xs-6">
+        <div class="col-md-4 col-xs-6">
           <h4>Pagos</h4>
         <input type="checkbox" name="pago" id="pago" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
         </div>
 
-        <div class="col-md-3 col-xs-6">
+        <div class="col-md-4 col-xs-6">
           <h4>Informes</h4>
         <input type="checkbox" name="informes" id="informes" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
         </div>
 
-        <div class="col-md-3 col-xs-6">
+        <div class="col-md-4 col-xs-6">
           <h4>Tickets</h4>
         <input type="checkbox" name="tickets" id="tickets" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
         </div>
 
-        <div class="col-md-3 col-xs-6">
+        <div class="col-md-4 col-xs-6">
           <h4>Correos</h4>
         <input type="checkbox" name="correos" id="correos" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
         </div>
 
-        <div class="col-md-3 col-xs-6">
+        <div class="col-md-4 col-xs-6">
           <h4>Ranking</h4>
         <input type="checkbox" name="ranking" id="ranking" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
         </div>
 
-        <div class="col-md-3 col-xs-6">
+        <div class="col-md-4 col-xs-6">
           <h4>Historial</h4>
         <input type="checkbox" name="historial_actividades" id="historial_actividades" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
         </div>
 
-        <div class="col-md-3 col-xs-6">
+        <div class="col-md-4 col-xs-6">
           <h4>Soporte</h4>
         <input type="checkbox" name="soporte" id="soporte" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
         </div>
 
 
-        <div class="col-md-3 col-xs-6">
+        <div class="col-md-4 col-xs-6">
           <h4>Herramientas</h4>
         <input type="checkbox" name="herramienta" id="herramienta" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
         </div>
 
-        <div class="col-md-3 col-xs-6">
+        <div class="col-md-4 col-xs-6">
           <h4>Calendario</h4>
         <input type="checkbox" name="calendario" id="calendario" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
         </div>
 
-        <div class="col-md-3 col-xs-6">
+        <div class="col-md-4 col-xs-6">
           <h4>Prospeccion</h4>
         <input type="checkbox" name="prospeccion" id="prospeccion" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
         </div>
 
 
-        <div class="col-md-3 col-xs-6">
+        <div class="col-md-4 col-xs-6">
           <h4>Tienda</h4>
         <input type="checkbox" name="tienda" id="tienda" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
         </div>
 
 
-        <div class="col-md-3 col-xs-6">
+        <div class="col-md-4 col-xs-6">
           <h4>Transacciones</h4>
         <input type="checkbox" name="transacciones" id="transacciones" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
         </div>--}}

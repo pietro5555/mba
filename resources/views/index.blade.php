@@ -31,7 +31,7 @@
             position: absolute;
             width: 20px;
             height: 20px;
-            background: #222326;;
+            background: #222326;
             border-radius: 50%;
             margin-left: -7px;
             z-index: 2;
@@ -52,7 +52,7 @@
             position: absolute;
             width: 20px;
             height: 20px;
-            background: white;
+            background: #222326;
             border-radius: 50%;
             margin-left: -10px;
             z-index: 2;
@@ -63,7 +63,7 @@
             position: absolute;
             width: 30px;
             height: 30px;
-            background: rgba(0,123,255,1);
+            background: rgba(40,167,70,1);
             border-radius: 50%;
             right: 0;
         }
@@ -241,15 +241,19 @@
             </div>
             <div class="col-12 mt-4">
                 <div class="progress">
-                    @if (Auth::user()->membership_id >= 1)
+                    @if (Auth::user()->membership_id >= 0)
                     <div class="progress-bar progress-bar-striped progress-bar-animated punto" role="progressbar" style="width: 20%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
-                    @elseif(Auth::user()->membership_id >= 2)
-                    <div class="progress-bar progress-bar-striped progress-bar-animated punto bg-success" role="progressbar" style="width: 20%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-                    @elseif(Auth::user()->membership_id >= 3)
+                    @endif
+                    @if(Auth::user()->membership_id >= 2)
+                    <div class="progress-bar progress-bar-striped progress-bar-animated punto invertido" role="progressbar" style="width: 20%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                    @endif
+                    @if(Auth::user()->membership_id >= 3)
                     <div class="progress-bar progress-bar-striped progress-bar-animated punto invertido" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                    @elseif(Auth::user()->membership_id >= 4)
-                    <div class="progress-bar progress-bar-striped progress-bar-animated punto bg-success" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                    @elseif(Auth::user()->membership_id >= 5)
+                    @endif
+                    @if(Auth::user()->membership_id >= 4)
+                    <div class="progress-bar progress-bar-striped progress-bar-animated punto invertido" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                    @endif
+                    @if(Auth::user()->membership_id >= 5)
                     <div class="progress-bar progress-bar-striped progress-bar-animated punto invertido" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
                     <div class="progress-bar progress-bar-striped progress-bar-animated punto-end bg-danger " role="progressbar" style="width: 0%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
                     @endif

@@ -75,79 +75,88 @@ class TransmisionesController extends Controller
         return view('transmision.transmision',compact('proximas','total','anuncio','finalizados'));
     }*/
 
-    public function transmisiones(){
+   public function transmisiones(){
       //setlocale(LC_TIME, 'es_ES.UTF-8'); Para el server
       setlocale(LC_TIME, 'es');//Local
-        Carbon::setLocale('es');
+      Carbon::setLocale('es');
       $mytime = Carbon::now();
       //return dd ($mytime->toDateTimeString());
 
       $evento_actual = Events::where('date', '>=', Carbon::now()->format('Y-m-d'))
-                      ->where('status', '=',1)
-                      ->get()
-                      ->first();
+                        ->where('status', '=',1)
+                        ->get()
+                        ->first();
 
-       $proximos = Events::where('date', '>', Carbon::now()->format('Y-m-d'))
-                      ->where('id', '!=', ($evento_actual == null) ? 0 : $evento_actual->id)
-                      ->where('status', '=',1)
-                      ->get();
+      $proximos = Events::where('date', '>', Carbon::now()->format('Y-m-d'))
+                     ->where('id', '!=', ($evento_actual == null) ? 0 : $evento_actual->id)
+                     ->where('status', '=',1)
+                     ->get();
 
-      $finalizados = Events::where('status', '=',3)
-                      ->get();
+      $finalizados = Events::where('status', '=',3)->get();
+
       $total = count($proximos);
 
-       return view('transmision.transmision',compact('evento_actual','proximos','total','finalizados'));
-    }
+      $misEventosArray = [];
+      if (!Auth::guest()){
+         $misEventos = DB::table('events_users')
+                        ->select('event_id')
+                        ->where('user_id', '=', Auth::user()->ID)
+                        ->get();
+
+         foreach ($misEventos as $miEvento){
+            array_push($misEventosArray, $miEvento->event_id);
+         }
+      }
+
+      return view('transmision.transmision',compact('evento_actual','proximos','total','finalizados', 'misEventosArray'));
+   }
 
 
-
-     public function agendar($evento){
-        $check = DB::table('events_users')
+   public function agendar($evento){
+      $check = DB::table('events_users')
                     ->where('user_id', '=', Auth::user()->ID)
                     ->where('event_id', '=', $evento)
                     ->first();
 
-        if (is_null($check)){
-            $datosEvento = DB::table('events')
-                            ->select('date')
-                            ->where('id', '=', $evento)
-                            ->first();
+      if (is_null($check)){
+         $datosEvento = DB::table('events')
+                           ->select('date')
+                           ->where('id', '=', $evento)
+                           ->first();
 
-            $fechaEvento = date('Y-m-d', strtotime($datosEvento->date));
-            $horaEvento = date('H:i:s', strtotime($datosEvento->date));
+         $fechaEvento = date('Y-m-d', strtotime($datosEvento->date));
+         $horaEvento = date('H:i:s', strtotime($datosEvento->date));
 
-            $disponibilidad = DB::table('events_users')
-                                ->where('user_id', '=', Auth::user()->ID)
-                                ->where('date', '=', $fechaEvento)
-                                ->where('time', '=', $horaEvento)
-                                ->first();
+         $disponibilidad = DB::table('events_users')
+                              ->where('user_id', '=', Auth::user()->ID)
+                              ->where('date', '=', $fechaEvento)
+                              ->where('time', '=', $horaEvento)
+                              ->first();
 
-            if (is_null($disponibilidad)){
-                Auth::user()->events()->attach($evento, ['date' => $fechaEvento, 'time' => $horaEvento]);
-                //Agendar evento en el calendario
-                $new_calendar = Events::where('id', '=', $evento)
-                ->first();
+         if (is_null($disponibilidad)){
+            Auth::user()->events()->attach($evento, ['date' => $fechaEvento, 'time' => $horaEvento]);
+            
+            //Agendar evento en el calendario
+            $new_calendar = Events::where('id', '=', $evento)->first();
 
+            $calendario = new Calendario();
+            $calendario->titulo = $new_calendar->title;
+            $calendario->contenido = $new_calendar->description;
+            $calendario->inicio = $new_calendar->date;
+            $calendario->time = $new_calendar->time;
+            $calendario->color = '#28a745';
+            $calendario->lugar = 'Ninguno';
+            $calendario->iduser = Auth::user()->ID;
+            $calendario->save();
 
-                $calendario = new Calendario();
-                $calendario->titulo = $new_calendar->title;
-                $calendario->contenido = $new_calendar->description;
-                $calendario->inicio = $new_calendar->date;
-                $calendario->time = $new_calendar->time;
-                $calendario->color = '#28a745';
-                $calendario->lugar = 'Ninguno';
-                $calendario->iduser = Auth::user()->ID;
-                $calendario->save();
-
-                return redirect()->back()->with('msj', 'El evento ha sido reservado en su agenda con éxito.');
-            }else{
-                return redirect()->back()->with('msj2', 'No se puede agendar este evento porque ya posee en su agenda otro evento en la misma fecha y hora.');
-            }
-        }else{
-            return redirect()->back()->with('msj2', 'Ya este evento se encuentra registrado en su agenda.');
-
-        }
-    }
+            return redirect()->back()->with('msj', 'El evento ha sido reservado en su agenda con éxito.');
+         }else{
+            return redirect()->back()->with('msj2', 'No se puede agendar este evento porque ya posee en su agenda otro evento en la misma fecha y hora.');
+         }
+      }else{
+         return redirect()->back()->with('msj2', 'Ya este evento se encuentra registrado en su agenda.');
+      }
+   }
 
 
 

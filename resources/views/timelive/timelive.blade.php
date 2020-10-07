@@ -6,7 +6,7 @@
     <script>
 
       const getRemainingTime = deadline => {
-  let objFecha = new Date()       
+  let objFecha = new Date()
   let now = new Date(objFecha.getUTCFullYear(), objFecha.getUTCMonth(), objFecha.getUTCDate(), objFecha.getUTCHours(), objFecha.getUTCMinutes(), objFecha.getUTCSeconds()),
       remainTime = (new Date(deadline) - now + 1000) / 1000,
       remainSeconds = ('0' + Math.floor(remainTime % 60)).slice(-2),
@@ -36,12 +36,12 @@ const countdown = (deadline,elem) => {
       $('#'+elem).append(
         '<h1>El live ya a Iniciado</h1>'
         );
-    }else{ 
+    }else{
 
      $('#'+elem).append(
 
             '<p class="p-1 bd-highlight" style="font-size: 66px;">'+
-             t.remainDays +   
+             t.remainDays +
                 '<p style="margin-left: -40px; margin-top: 100px;">DIAS</p>'+
             '</p>'+
 
@@ -59,8 +59,8 @@ const countdown = (deadline,elem) => {
             '</p>'+
 
             '<p class="p-1 bd-highlight" style="font-size: 66px;">'+
-               t.remainMinutes + 
-            
+               t.remainMinutes +
+
                 '<p style="margin-left: -80px; margin-top: 100px;">MINUTOS</p>'+
             '</p>'+
 
@@ -86,7 +86,7 @@ countdown('{{($evento != null) ? $evento->date.' '.$evento->time : $fechaActual}
 
 @if(!empty($evento))
 <div>
-  
+
 @if (Session::has('msj-exitoso'))
         <div class="alert alert-success alert-dismissible fade show mt-2" role="alert">
             <strong>{{ Session::get('msj-exitoso') }}</strong>
@@ -112,17 +112,17 @@ countdown('{{($evento != null) ? $evento->date.' '.$evento->time : $fechaActual}
     <div class="col-md-12">
 
         @if (!is_null($evento->image))
-            <img src="{{ asset('uploads/images/banner/'.$evento->image) }}" class="card-img-top img-banner-live" alt="..."> 
+            <img src="{{ asset('uploads/images/banner/'.$evento->image) }}" class="card-img-top img-banner-live" alt="...">
           @else
           <img src="{{ asset('uploads/images/banner/default.jpg') }}" class="card-img-top img-fluid img-banner-live" alt="...">
           @endif
 
         <div class="card-img-overlay counter-caption">
-            
+
             <h6 class="card-title text-white text-center">TIEMPO PARA INICIAR EL LIVE</h6>
 
           <div class="d-flex justify-content-center bd-highlight mb-1 text-white" id="clock">
-           
+
 
            </div>
 
@@ -141,10 +141,32 @@ countdown('{{($evento != null) ? $evento->date.' '.$evento->time : $fechaActual}
    </p>
 
    <div style="margin-top: 60px;">
-   
+
 <div class="row">
    <div class="col-md-6" style="margin-bottom: 10px;">
-       <a href="{{route ('schedule.event',[$evento->id]) }}" class="btn btn-primary btn-block">AGENDAR LIVE</a>
+      @if (Auth::guest())
+         {{-- USUARIOS INVITADOS --}}
+         <a href="{{route('shopping-cart.membership')}}" class="btn btn-success  btn-block"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar al Carrito</a>
+      @else
+         @if (is_null(Auth::user()->membership_id))
+            {{-- USUARIOS LOGUEADOS SIN MEMBRESÍA --}}
+            <a href="{{route('shopping-cart.membership')}}" class="btn btn-success btn-block"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar al Carrito</a>
+         @else
+            @if ($evento->subcategory_id > Auth::user()->membership_id)
+               {{-- USUARIOS LOGUEADOS CON MEMBRESÍA MENOR A LA SUBCATEGORÍA DEL EVENTO--}}
+               <a href="{{route('shopping-cart.membership')}}" class="btn btn-success"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar al Carrito</a>
+            @else
+               @if (is_null($checkEvento))
+                  {{-- USUARIOS LOGUEADOS CON MEMBRESÍA MAYOR O IGUAL A LA SUBCATEGORÍA DEL EVENTO Y QUE NO TIENEN EL EVENTO AGENDADO AÚN--}}
+                  <a href="{{route ('schedule.event',[$evento->id]) }}" class="btn btn-primary btn-block">AGENDAR LIVE</a>
+               @else
+                  {{-- EL USUARIO YA TIENE EL EVENTO AGENDADO--}}
+                  <a href="{{route('show.event', $evento->id)}}" class="btn btn-success btn-block">Ir Al Evento</a>
+               @endif
+            @endif
+         @endif
+      @endif
+
        <!--<button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#AgendarLiveModal">
         AGENDAR LIVE
       </button>-->
@@ -160,14 +182,14 @@ countdown('{{($evento != null) ? $evento->date.' '.$evento->time : $fechaActual}
     <form action="{{route('timelive')}}" method="GET">
       @csrf
       <input id="sigEvent" name="sigEvent" type="hidden" value="{{ $nextEvent->id }}">
-      
+
       <button class="btn btn-secondary btn-block" type="submit">PROXIMO LIVE <i class="fas fa-angle-right"></i></button>
     </form>
    </div>
   @endif
-   
+
    <!--<div class="col-md-6" style="margin-bottom: 10px;">
-    
+
         <a href="{{route('event.favorite', $evento->id)}}" class="btn btn-secondary btn-block"><i class="far fa-heart"></i> FAVORITOS</a>
    </div>-->
 </div>
@@ -183,7 +205,7 @@ countdown('{{($evento != null) ? $evento->date.' '.$evento->time : $fechaActual}
   <div class="col-md-4 col-xs-12 " style="margin-top: 20px;">
      <div style="margin-right: 10px; margin-left: 10px;">
           @if (!is_null($evento->mentor->avatar))
-            <img src="{{ asset('uploads/images/avatar/'.$evento->mentor->avatar) }}" class="card-img-top" alt="..."> 
+            <img src="{{ asset('uploads/images/avatar/'.$evento->mentor->avatar) }}" class="card-img-top" alt="...">
           @else
           <img src="{{ asset('uploads/images/avatar/default.jpg') }}" class="card-img-top" alt="...">
           @endif
@@ -196,7 +218,7 @@ countdown('{{($evento != null) ? $evento->date.' '.$evento->time : $fechaActual}
     </div>
   </div>
 
-</div>     
+</div>
 
 <div class="section-landing" style="background-color: #121317;">
 
@@ -210,7 +232,7 @@ countdown('{{($evento != null) ? $evento->date.' '.$evento->time : $fechaActual}
 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
 
  <div class="carousel-inner">
-  
+
   <div class="carousel-item active">
     <div class="row">
 
@@ -238,7 +260,7 @@ $contador++;
 </form>
   <p class="card-text font-weight-bold mr-2" style="margin-top: -10px; font-size: 12px;"> <i class="far fa-calendar mr-2" style="font-size: 18px;"> </i>
     {{\Carbon\Carbon::parse($prox->date)->formatLocalized(' %d de %B')}}
-   <i class="far fa-clock ml-2" style="font-size: 18px;"></i>{{\Carbon\Carbon::parse($prox->date)->format('g:i a')}} 
+   <i class="far fa-clock ml-2" style="font-size: 18px;"></i>{{\Carbon\Carbon::parse($prox->date)->format('g:i a')}}
    </p>
   <a href="{{route ('schedule.event',[$prox->id]) }}" class="btn btn-success btn-block">Agendar</a>
   </div>
@@ -275,8 +297,8 @@ $segundo++;
   <button class="btn text-left" type="submit" style="margin-top: 150px; color: #2A91FF;"><h5>{{$prox->title}}</h5></button>
 </form>
   <p class="card-text font-weight-bold mr-2" style="margin-top: -10px; font-size: 12px;"> <i class="far fa-calendar mr-2" style="font-size: 18px;"> </i>
-    {{strftime("%A, %d de %B", strtotime($prox->date))}} 
-   <i class="far fa-clock ml-2" style="font-size: 18px;"></i>{{\Carbon\Carbon::parse($prox->date)->format('g:i a')}} 
+    {{strftime("%A, %d de %B", strtotime($prox->date))}}
+   <i class="far fa-clock ml-2" style="font-size: 18px;"></i>{{\Carbon\Carbon::parse($prox->date)->format('g:i a')}}
    </p>
   <a href="{{route ('schedule.event',[$prox->id]) }}" class="btn btn-success btn-block">Agendar</a>
   </div>
@@ -292,12 +314,12 @@ $segundo++;
 
 @if($total >= 3)
 <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-<img src="{{ asset('images/icons/left-arrow.svg') }}" alt="" height="30px" width="30px" aria-hidden="true"> 
+<img src="{{ asset('images/icons/left-arrow.svg') }}" alt="" height="30px" width="30px" aria-hidden="true">
 <span class="sr-only">Previous</span>
 </a>
 
 <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-<img src="{{ asset('images/icons/right-arrow.svg') }}" alt="" height="30px" width="30px" aria-hidden="true"> 
+<img src="{{ asset('images/icons/right-arrow.svg') }}" alt="" height="30px" width="30px" aria-hidden="true">
 <span class="sr-only">Next</span>
 </a>
 @endif
@@ -311,13 +333,13 @@ $segundo++;
 
 @endif
 <!--Carrusel-->
-</div>  
+</div>
 
 @else
 
 <div class="section-title-landing" style="padding-top: 20px; margin-bottom: 20px; text-align: center;">NO HAY EVENTOS PENDIENTES</div>
 
-@endif   
+@endif
 
 
 

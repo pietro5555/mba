@@ -13,6 +13,7 @@
         "brotzka/laravel-dotenv-editor": "^2.1",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
+        "google/apiclient": "^2.7",
         "guzzlehttp/guzzle": "^6.3",
         "hexters/coinpayment": "^2.0",
         "laravel/cashier": "^12.3",
@@ -20,8 +21,7 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.4",
         "maatwebsite/excel": "^3.1",
-        "pragmarx/google2fa-laravel": "^1.4",
-        "google/apiclient": "^2.7"
+        "pragmarx/google2fa-laravel": "^1.4"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

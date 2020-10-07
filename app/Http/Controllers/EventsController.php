@@ -122,7 +122,15 @@ class EventsController extends Controller
         $event = Events::find($event_id);
         $menuResource = $event->getResource();
         $resources_survey = SetEvent::where('event_id', $event_id)->where('type', 'survey')->get()->first();
-        $surveys = Survey::where('content_event_id', $resources_survey ->id)->get();
+        if (!empty($resources_survey))
+        {
+            $surveys = Survey::where('content_event_id', $resources_survey->id)->get();
+        }
+        else
+        {
+            $surveys = null;
+        }
+
        // return dd ($resources_survey , $surveys);
         // return response()->json([$menuResource], 201);
 
@@ -279,7 +287,7 @@ class EventsController extends Controller
       //$total_eventos = count(Events::all());
       $total_eventos = Events::where('date', '>=', Carbon::now()->format('Y-m-d'))
                            ->where('status','1')->count();
-      
+
       $evento = Events::where('date', '>=', Carbon::now()->format('Y-m-d'))
                   ->where('status', '=',1)
                   ->get()
@@ -345,7 +353,7 @@ class EventsController extends Controller
          $proximos ='';
          $total =0;
       }
-      
+
       $fechaActual = Carbon::now()->format('Y-m-d');
       $checkEvento = NULL;
       if (!Auth::guest()){
@@ -354,7 +362,7 @@ class EventsController extends Controller
                         ->where('user_id', '=', Auth::user()->ID)
                         ->first();
       }
-     
+
       //dd($evento, $proximos);
       return view('timelive/timelive', compact('evento', 'nextEvent', 'proximos', 'total', 'total_eventos', 'fechaActual', 'checkEvento'));
     }

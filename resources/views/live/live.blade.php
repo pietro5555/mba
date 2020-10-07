@@ -386,6 +386,12 @@
                                 @endforeach
                                 <button class="btn btn-smal btn-success float-right" type="submit">Enviar</button>
                         </form>
+                        @else
+                        <div>
+                            <h6 class="text-primary">
+                                    No hay encuestas asignadas.
+                            </h6>
+                        </div>
                         @endif
                     @endif
                 </div>

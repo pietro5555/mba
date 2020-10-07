@@ -67,6 +67,7 @@
         	            <div class="carousel-item @if ($cont == 1) active @endif">
         	                <img src="{{ asset('uploads/images/courses/featured_covers/'.$cursoDestacado->featured_cover) }}" class="d-block w-100" alt="...">
         	                <div class="carousel-caption">
+                                <p style="color:#007bff; font-size: 22px; font-weight: bold; margin-top: -20px;">NUEVO CURSO</p>
         						<div class="course-autor">{{$cursoDestacado->mentor->display_name}}</div>
         						<div class="course-title"> <a href="{{ route('courses.show', [$cursoDestacado->slug, $cursoDestacado->id]) }}" style="color: white;">{{ $cursoDestacado->title }}</a></div>
         	                    <div class="course-category">{{ $cursoDestacado->category->title }} | {{ $cursoDestacado->subcategory->title }}</div>

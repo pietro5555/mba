@@ -168,12 +168,12 @@
 
                         @if(empty(request()->ref))
                             <div class="form-group has-feedback">
-                            <label for="patrocinador">ID Patrocinador (Opcional)</label>
+                            <label for="patrocinador">ID Patrocinador (Si no sabe cual es su patrocinador por favor coloque 1)</label>
                             <input type="number" class="form-control" name="referred_id" ID="patrocinador" style="border-radius: 20px;">
                         </div>
                         @else
                             <div class="form-group has-feedback">
-                            <label for="patrocinador">ID Patrocinador (Opcional)</label>
+                            <label for="patrocinador">ID Patrocinador (Si no sabe cual es su patrocinador por favor coloque 1)</label>
                             <input type="number" class="form-control" name="referred_id" value="{{request()->ref}}" ID="patrocinador" style="border-radius: 20px;" readonly>
                         </div>
                         @endif
@@ -187,21 +187,6 @@
                                 @endforeach
                             </select>
                         </div>
-
-
-                        {{-- de momento no va --}}
-                        {{--<div class="d-flex justify-content-center">
-
-                               <a class="btn btn-light" href="{{ route('social.auth', 'facebook') }}" style="margin-right: 10px; font-size: 12px;">
-                        <img src="{{asset('/vivo/facebook.png')}}" style="width: 25px;height: 25px;margin-right: 5px;">
-                        Acceder con Facebook
-                        </a>
-
-                        <a class="btn btn-light" href="{{ route('social.auth', 'google') }}" style="font-size: 12px; line-height: 25px;"><img src="{{asset('/vivo/google.png')}}" style="width: 20px;height: 20px;">
-                            Acceder con Google
-                        </a>
-
-                </div>--}}
 
 
                 <div class="form-check text-left" style="margin-bottom: 20px;">

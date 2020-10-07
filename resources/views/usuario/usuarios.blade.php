@@ -28,9 +28,6 @@
             <th class="text-center">
               Estatus
             </th>
-            <th class="text-center">
-              Nivel
-            </th>
                        
             @if($tipo == 1)
             <th class="text-center">
@@ -65,9 +62,6 @@
               @endif
             </td>
             
-            <td class="text-center">
-            {{$usuario->nivel}}
-            </td>
             
             @if($tipo == 1)
             <td class="text-center">

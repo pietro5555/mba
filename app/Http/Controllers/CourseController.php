@@ -398,6 +398,13 @@ class CourseController extends Controller{
             $curso->cover_name = $file->getClientOriginalName();
         }
 
+        if ($request->hasFile('thumbnail_cover')){
+            $file2 = $request->file('thumbnail_cover');
+            $name2 = $curso->id."-thumbnail.".$file2->getClientOriginalExtension();
+            $file2->move(public_path().'/uploads/images/courses/covers', $name2);
+            $curso->thumbnail_cover = $name2;
+        }
+
         $curso->save();
 
         if (!is_null($request->tags)){
@@ -439,6 +446,13 @@ class CourseController extends Controller{
             $file->move(public_path().'/uploads/images/courses/covers', $name);
             $curso->cover = $name;
             $curso->cover_name = $file->getClientOriginalName();
+        }
+
+        if ($request->hasFile('thumbnail_cover')){
+            $file2 = $request->file('thumbnail_cover');
+            $name2 = $curso->id."-thumbnail.".$file2->getClientOriginalExtension();
+            $file2->move(public_path().'/uploads/images/courses/covers', $name2);
+            $curso->thumbnail_cover = $name2;
         }
 
         $curso->save();

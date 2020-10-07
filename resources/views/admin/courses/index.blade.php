@@ -195,6 +195,12 @@
 						        </div>
 						        <div class="col-md-12">
 						            <div class="form-group">
+						                <label>Imagen Miniaturar</label>
+						            	<input type="file" class="form-control" name="thumbnail_cover">
+						            </div>
+						        </div>
+						        <div class="col-md-12">
+						            <div class="form-group">
 						                <label>Precio</label>
 						            	<input type="text" class="form-control" name="price">
 						            </div>
@@ -287,6 +293,12 @@
 										<input type="file" class="form-control" name="cover" >
 									</div>
 								</div>
+								<div class="col-md-12">
+						            <div class="form-group">
+						                <label>Imagen Miniaturar</label>
+						            	<input type="file" class="form-control" name="thumbnail_cover" >
+						            </div>
+						        </div>
 								<div class="col-md-12">
 									<div class="form-group">
 										<label>Precio</label>

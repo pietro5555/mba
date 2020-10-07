@@ -160,5 +160,8 @@ Dev:Pietro
 
 ÚLTIMA ACTUALIZACIÓN DEL SERVIDOR: 06/10/2020
 ----------------------------------------------
+07/10/2020
+Dev:Luisana Marín
+*Agregado el campo thumbnail_cover a la tabla courses (correr el script courses)
 
 

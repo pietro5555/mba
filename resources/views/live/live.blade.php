@@ -198,11 +198,11 @@
         <div class="nav flex-column nav-pills mt-2 menu-vertical-anotaciones" id="v-pills-tab" role="tablist" aria-orientation="vertical">
             <!--Solo se muestra para mentores-->
             @if(Auth::user()->rol_id ==2)
-                <a class="nav-link active text-white text-center" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="true"><img src="{{ asset('images/icons/settings.svg') }}" height="30px" class=""><h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Configuración</h6></a>
+                <a class="nav-link  text-white text-center" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="true"><img src="{{ asset('images/icons/settings.svg') }}" height="30px" class=""><h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Configuración</h6></a>
                 <a class="nav-link text-white text-center" id="v-pills-students-tab" data-toggle="pill" href="#v-pills-students" role="tab" aria-controls="v-pills-students" aria-selected="false"> <img src="{{ asset('images/icons/person.svg') }}" height="30px" class="">
                     <h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Participantes</h6></a>
             @endif
-                <a class="nav-link text-white text-center" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false"> <img src="{{ asset('images/icons/comment.svg') }}" height="30px" class="">
+                <a class="nav-link active text-white text-center" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false"> <img src="{{ asset('images/icons/comment.svg') }}" height="30px" class="">
                     <h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Chat</h6></a>
                 <a class="nav-link text-white text-center" id="v-pills-survey-tab" data-toggle="pill" href="#v-pills-survey" role="tab" aria-controls="v-pills-survey" aria-selected="false"><img src="{{ asset('images/icons/lista.svg') }}" height="30px" class="">
                     <h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Encuesta</h6></a>
@@ -216,7 +216,7 @@
                     <h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Ofertas</h6></a>
         </div>
         <div class="tab-content mt-2" id="v-pills-tabContent">
-                <div class="tab-pane fade show active ml-2" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+                <div class="tab-pane fade  ml-2" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
                     <div>
                     <a data-toggle="modal" data-target="#modal-settings-survey" class="btn btn-primary btn-block"><i class="fa fa-plus-circle"></i> Agregar Encuesta</a>
                     </div> <br>
@@ -235,7 +235,7 @@
 
                 </div>
                 <div class="tab-pane fade ml-2" id="v-pills-students" role="tabpanel" aria-labelledby="v-pills-students-tab">Seccion Participantes</div>
-                <div class="tab-pane fade ml-2" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                <div class="tab-pane show active fade ml-2" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
                     <div>
                             <div class="row ml-1">
                                     <div class="col pt-2 logo-user">

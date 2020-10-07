@@ -168,12 +168,12 @@
 
                         @if(empty(request()->ref))
                             <div class="form-group has-feedback">
-                            <label for="patrocinador">ID Patrocinador (Si no sabe cual es su patrocinador por favor coloque 1)</label>
+                            <label for="patrocinador">ID Patrocinador (Si no sabe cual es su patrocinador por favor coloque el ID 1)</label>
                             <input type="number" class="form-control" name="referred_id" ID="patrocinador" style="border-radius: 20px;">
                         </div>
                         @else
                             <div class="form-group has-feedback">
-                            <label for="patrocinador">ID Patrocinador (Si no sabe cual es su patrocinador por favor coloque 1)</label>
+                            <label for="patrocinador">ID Patrocinador (Si no sabe cual es su patrocinador por favor coloque el ID 1)</label>
                             <input type="number" class="form-control" name="referred_id" value="{{request()->ref}}" ID="patrocinador" style="border-radius: 20px;" readonly>
                         </div>
                         @endif

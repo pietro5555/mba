@@ -31,7 +31,7 @@
             position: absolute;
             width: 20px;
             height: 20px;
-            background: white;
+            background: #222326;;
             border-radius: 50%;
             margin-left: -7px;
             z-index: 2;
@@ -87,7 +87,22 @@
             background: -ms-linear-gradient(left, rgba(0,6,191,1) 0%, rgba(40,167,70,1) 0%, rgba(0,123,253,0.99) 99%, rgba(0,123,255,0.99) 100%);
             background: linear-gradient(to right, rgba(0,6,191,1) 0%, rgba(40,167,70,1) 0%, rgba(0,123,253,0.99) 99%, rgba(0,123,255,0.99) 100%);
             filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0006bf', endColorstr='#007bff', GradientType=1 );
+        }
 
+        .progress {
+            display: -ms-flexbox;
+            display: flex;
+            height: 0.6rem;
+            overflow: hidden;
+            line-height: 0;
+            font-size: .75rem;
+            background-color: #8E8E8E;
+            border-radius: .25rem;
+        }
+
+        .progress-bar-striped {
+            background-size: 1rem 1rem;
+            background: transparent linear-gradient(90deg, #2A91FF 0%, #257EDB 61%, #6AB742 100%) 0% 0% no-repeat padding-box;
         }
 
         .punto.bg-info::after{                        

@@ -137,13 +137,21 @@ class HomeController extends Controller{
          }
       }
 
-      $membresia = Auth::user()->membership->name;
-      $idmembresia = (Auth::user()->membership_id == 5) ? 5 : (Auth::user()->membership_id+1);
-      $membresia2 = Auth::user()->membership->where('id', ($idmembresia))->first()->name;
+      $membresia = 'Sin Nivel';
+      $membresia2 = 'Principiante';
+      $cursos = 0;
+      if (!empty(Auth::user()->membership)) {
+         $membresia = Auth::user()->membership->name;
+         $idmembresia = (Auth::user()->membership_id == 5) ? 5 : (Auth::user()->membership_id+1);
+         $membresia2 = Auth::user()->membership->where('id', ($idmembresia))->first()->name;   
+         $cursos = Auth::user()->courses_buyed->count();
+      }
+      
+
       $avance = [
          'nivel' => $membresia,
          'proximo' => $membresia2,
-         'cursos' => Auth::user()->courses_buyed->count()
+         'cursos' => $cursos
       ];
 
       //linea de referidos Directos

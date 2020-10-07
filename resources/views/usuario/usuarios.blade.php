@@ -23,13 +23,7 @@
               Referifo Por
             </th>
             <th class="text-center">
-              Rango
-            </th>
-            <th class="text-center">
               Estatus
-            </th>
-            <th class="text-center">
-              Nivel
             </th>
                        
             @if($tipo == 1)
@@ -55,9 +49,6 @@
               {{ $usuario->patrocinador }}
             </td>
             <td class="text-center">
-              {{$usuario->rol}}
-            </td>
-            <td class="text-center">
               @if ($usuario->status == 1)
               Activo
               @else
@@ -65,9 +56,6 @@
               @endif
             </td>
             
-            <td class="text-center">
-            {{$usuario->nivel}}
-            </td>
             
             @if($tipo == 1)
             <td class="text-center">

@@ -67,9 +67,6 @@
 						<th class="text-center">
 							Estatus
 						</th>
-						<th class="text-center">
-							Nivel
-						</th>
 						@if($estructura == 'binaria')
 						<th class="text-center">Lado</th>
 						@endif
@@ -105,10 +102,6 @@
 							@else
 							Inactivo
 							@endif
-						</td>
-						
-						<td class="text-center">
-						{{$usuario->nivel}}
 						</td>
 						
 						@if($estructura == 'binaria')

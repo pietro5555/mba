@@ -290,15 +290,9 @@
                                 <div class="mt-auto">
                                     <div class="new-course-title">{{ $cursoNuevo->title }}</div>
                                     <div class="row">
-                                        <div class="col-12 col-xl-6 new-course-category">{{ $cursoNuevo->category->title }}</div>
-                                        <div class="col-12 col-xl-6" style="font-size: 16px;">
-                                            <div class="row row-cols-3">
-                                                <div class="col text-right no-padding-sides mr-2">
-                                                    <i class="far fa-user-circle"></i><br>
-                                                    <span class="new-course-items-text">{{ $cursoNuevo->users->count()}}</span>
-                                                </div>
-                                            </div>
-                                        </div>
+                                       <div class="col-md-12">
+                                           <p style="float: right;"> <i class="far fa-user-circle"> {{ $cursoNuevo->users->count()}}</i></p>
+                                       </div>
                                     </div>
                                 </div>
                             </div>
@@ -325,7 +319,7 @@
                 </div>
                 @if (!Auth::guest())
                     <div class="next-streaming-reserve">
-                        <a href="{{ route('landing.book-event', $proximoEvento->id) }}">Reservar Plaza <i class="fas fa-chevron-right"></i></a>
+                        <a href="{{ route('show.event', $proximoEvento->id) }}">Reservar Plaza <i class="fas fa-chevron-right"></i></a>
                     </div>
                 @endif
             </div>

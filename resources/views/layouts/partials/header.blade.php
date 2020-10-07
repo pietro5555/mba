@@ -29,11 +29,13 @@
                         <a class="dropdown-item" href="#">Inglés</a>
                     </div>
                 </li>
-                <li class="nav-item li-register-button">
-                    <a type="button" class="btn btn-primary btn-register-header" href="{{ route('log').'?act=0' }}">INICIAR SESIÓN</a> <!--/login-->
-                </li>
+
                 <li class="nav-item li-register-button">
                     <a type="button" class="btn btn-primary btn-register-header" href="{{ route('log').'?act=1' }}">REGISTRARME</a> <!--/login-->
+                </li>
+                
+                <li class="nav-item li-register-button">
+                    <a type="button" class="btn btn-primary btn-register-header" href="{{ route('log').'?act=0' }}">INICIAR SESIÓN</a> <!--/login-->
                 </li>
             @else
                 <li class="nav-item dropdown li-language" id="li-language-larger">

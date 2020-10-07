@@ -136,14 +136,23 @@ class HomeController extends Controller{
             case '12': $proximoEvento->month = 'Diciembre'; break;
          }
       }
-         
+
+      $membresia = Auth::user()->membership->name;
+      $idmembresia = (Auth::user()->membership_id == 5) ? 5 : (Auth::user()->membership_id+1);
+      $membresia2 = Auth::user()->membership->where('id', ($idmembresia))->first()->name;
+      $avance = [
+         'nivel' => $membresia,
+         'proximo' => $membresia2,
+         'cursos' => Auth::user()->courses_buyed->count()
+      ];
+
       //linea de referidos Directos
       $refeDirec =0;
       if(Auth::user()){
          $refeDirec = User::where('referred_id', Auth::user()->ID)->count('ID');
       }
 
-      return view('index')->with(compact('cursosDestacados', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next', 'refeDirec', 'proximoEvento'));
+      return view('index')->with(compact('cursosDestacados', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next', 'refeDirec', 'proximoEvento', 'avance'));
    }
 
    public function search(Request $request){

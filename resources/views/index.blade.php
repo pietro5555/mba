@@ -25,6 +25,101 @@
         #new-courses-section .card-img-overlay:hover{
             text-decoration: underline;
         }
+
+        .punto::before{
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            margin-left: -7px;
+            z-index: 2;
+        }
+
+        .punto::after{
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: rgba(0,123,255,1);
+            border-radius: 50%;
+            margin-left: -12px;
+        }
+
+        .punto-end::before{
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            margin-left: -10px;
+            z-index: 2;
+        }
+
+        .punto-end::after{
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: rgba(0,123,255,1);
+            border-radius: 50%;
+            right: 0;
+        }
+        .punto.bg-success::after{                        
+            background: rgba(0,123,255,0.99);
+            background: -moz-linear-gradient(left, rgba(0,123,255,0.99) 0%, rgba(0,123,253,0.99) 1%, rgba(40,167,69,1) 100%);
+            background: -webkit-gradient(left top, right top, color-stop(0%, rgba(0,123,255,0.99)), color-stop(1%, rgba(0,123,253,0.99)), color-stop(100%, rgba(40,167,69,1)));
+            background: -webkit-linear-gradient(left, rgba(0,123,255,0.99) 0%, rgba(0,123,253,0.99) 1%, rgba(40,167,69,1) 100%);
+            background: -o-linear-gradient(left, rgba(0,123,255,0.99) 0%, rgba(0,123,253,0.99) 1%, rgba(40,167,69,1) 100%);
+            background: -ms-linear-gradient(left, rgba(0,123,255,0.99) 0%, rgba(0,123,253,0.99) 1%, rgba(40,167,69,1) 100%);
+            background: linear-gradient(to right, rgba(0,123,255,0.99) 0%, rgba(0,123,253,0.99) 1%, rgba(40,167,69,1) 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#007bff', endColorstr='#28a745', GradientType=1 );
+        }
+
+        .punto.invertido::after{
+            background: rgba(0,6,191,1);
+            background: -moz-linear-gradient(left, rgba(0,6,191,1) 0%, rgba(40,167,70,1) 0%, rgba(0,123,253,0.99) 99%, rgba(0,123,255,0.99) 100%);
+            background: -webkit-gradient(left top, right top, color-stop(0%, rgba(0,6,191,1)), color-stop(0%, rgba(40,167,70,1)), color-stop(99%, rgba(0,123,253,0.99)), color-stop(100%, rgba(0,123,255,0.99)));
+            background: -webkit-linear-gradient(left, rgba(0,6,191,1) 0%, rgba(40,167,70,1) 0%, rgba(0,123,253,0.99) 99%, rgba(0,123,255,0.99) 100%);
+            background: -o-linear-gradient(left, rgba(0,6,191,1) 0%, rgba(40,167,70,1) 0%, rgba(0,123,253,0.99) 99%, rgba(0,123,255,0.99) 100%);
+            background: -ms-linear-gradient(left, rgba(0,6,191,1) 0%, rgba(40,167,70,1) 0%, rgba(0,123,253,0.99) 99%, rgba(0,123,255,0.99) 100%);
+            background: linear-gradient(to right, rgba(0,6,191,1) 0%, rgba(40,167,70,1) 0%, rgba(0,123,253,0.99) 99%, rgba(0,123,255,0.99) 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0006bf', endColorstr='#007bff', GradientType=1 );
+
+        }
+
+        .punto.bg-info::after{                        
+            background: rgba(40,167,70,0.99);
+            background: -moz-linear-gradient(left, rgba(40,167,70,0.99) 0%, rgba(40,167,71,0.99) 1%, rgba(23,163,184,1) 100%);
+            background: -webkit-gradient(left top, right top, color-stop(0%, rgba(40,167,70,0.99)), color-stop(1%, rgba(40,167,71,0.99)), color-stop(100%, rgba(23,163,184,1)));
+            background: -webkit-linear-gradient(left, rgba(40,167,70,0.99) 0%, rgba(40,167,71,0.99) 1%, rgba(23,163,184,1) 100%);
+            background: -o-linear-gradient(left, rgba(40,167,70,0.99) 0%, rgba(40,167,71,0.99) 1%, rgba(23,163,184,1) 100%);
+            background: -ms-linear-gradient(left, rgba(40,167,70,0.99) 0%, rgba(40,167,71,0.99) 1%, rgba(23,163,184,1) 100%);
+            background: linear-gradient(to right, rgba(40,167,70,0.99) 0%, rgba(40,167,71,0.99) 1%, rgba(23,163,184,1) 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#28a746', endColorstr='#17a3b8', GradientType=1 );
+        }
+        .punto.bg-warning::after{                        
+            background: rgba(23,163,184,0.99);
+            background: -moz-linear-gradient(left, rgba(23,163,184,0.99) 0%, rgba(25,163,182,0.99) 1%, rgba(255,193,7,1) 100%);
+            background: -webkit-gradient(left top, right top, color-stop(0%, rgba(23,163,184,0.99)), color-stop(1%, rgba(25,163,182,0.99)), color-stop(100%, rgba(255,193,7,1)));
+            background: -webkit-linear-gradient(left, rgba(23,163,184,0.99) 0%, rgba(25,163,182,0.99) 1%, rgba(255,193,7,1) 100%);
+            background: -o-linear-gradient(left, rgba(23,163,184,0.99) 0%, rgba(25,163,182,0.99) 1%, rgba(255,193,7,1) 100%);
+            background: -ms-linear-gradient(left, rgba(23,163,184,0.99) 0%, rgba(25,163,182,0.99) 1%, rgba(255,193,7,1) 100%);
+            background: linear-gradient(to right, rgba(23,163,184,0.99) 0%, rgba(25,163,182,0.99) 1%, rgba(255,193,7,1) 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#17a3b8', endColorstr='#ffc107', GradientType=1 );
+        }
+        .punto.bg-danger::after{            
+            background: rgba(255,193,7,0.99);
+            background: -moz-linear-gradient(left, rgba(255,193,7,0.99) 0%, rgba(255,192,8,0.99) 1%, rgba(220,53,69,1) 100%);
+            background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255,193,7,0.99)), color-stop(1%, rgba(255,192,8,0.99)), color-stop(100%, rgba(220,53,69,1)));
+            background: -webkit-linear-gradient(left, rgba(255,193,7,0.99) 0%, rgba(255,192,8,0.99) 1%, rgba(220,53,69,1) 100%);
+            background: -o-linear-gradient(left, rgba(255,193,7,0.99) 0%, rgba(255,192,8,0.99) 1%, rgba(220,53,69,1) 100%);
+            background: -ms-linear-gradient(left, rgba(255,193,7,0.99) 0%, rgba(255,192,8,0.99) 1%, rgba(220,53,69,1) 100%);
+            background: linear-gradient(to right, rgba(255,193,7,0.99) 0%, rgba(255,192,8,0.99) 1%, rgba(220,53,69,1) 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffc107', endColorstr='#dc3545', GradientType=1 );
+        }
     </style>
 @endpush
 
@@ -112,6 +207,45 @@
         </div><BR><BR>
     @endif
    {{-- FIN DE SECCIÓN TU AVANCE (USUARIOS LOGGUEADOS) --}}
+
+   @auth
+   <div class="col-12 section-landing new-courses-section">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-title-landing new-courses-section-title">TU AVANCE</div>
+            </div>
+            <div class="col-12 col-md-6">
+                <h4 class="text-left">
+                    Nivel: <span>{{$avance['nivel']}}</span>
+                </h4>
+            </div>
+            <div class="col-12 col-md-6">
+            <h4 class="text-right">
+                Próximo Nivel: <span>{{$avance['proximo']}}</span>
+            </h4>
+            </div>
+            <div class="col-12 mt-4">
+                <div class="progress">
+                    @if (Auth::user()->membership_id >= 1)
+                    <div class="progress-bar progress-bar-striped progress-bar-animated punto" role="progressbar" style="width: 20%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                    @elseif(Auth::user()->membership_id >= 2)
+                    <div class="progress-bar progress-bar-striped progress-bar-animated punto bg-success" role="progressbar" style="width: 20%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                    @elseif(Auth::user()->membership_id >= 3)
+                    <div class="progress-bar progress-bar-striped progress-bar-animated punto invertido" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                    @elseif(Auth::user()->membership_id >= 4)
+                    <div class="progress-bar progress-bar-striped progress-bar-animated punto bg-success" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                    @elseif(Auth::user()->membership_id >= 5)
+                    <div class="progress-bar progress-bar-striped progress-bar-animated punto invertido" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="progress-bar progress-bar-striped progress-bar-animated punto-end bg-danger " role="progressbar" style="width: 0%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                    @endif
+            </div>
+            </div>
+            <div class="col-12 mt-4">
+                <h4 class="">Cursos Realizados: {{$avance['cursos']}}</h4>
+            </div>
+        </div>
+    </div>
+   @endauth
 
     {{-- SECCIÓN CURSOS MAS NUEVOS --}}
     @if ($cursosNuevos->count() > 0)

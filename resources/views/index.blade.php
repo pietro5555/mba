@@ -304,7 +304,7 @@
                 </div>
                 @if (!Auth::guest())
                     <div class="next-streaming-reserve">
-                        <a href="{{ route('landing.book-event', $proximoEvento->id) }}">Reservar Plaza <i class="fas fa-chevron-right"></i></a>
+                        <a href="{{ route('show.event', $proximoEvento->id) }}">Reservar Plaza <i class="fas fa-chevron-right"></i></a>
                     </div>
                 @endif
             </div>

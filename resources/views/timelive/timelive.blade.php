@@ -144,7 +144,29 @@ countdown('{{($evento != null) ? $evento->date.' '.$evento->time : $fechaActual}
    
 <div class="row">
    <div class="col-md-6" style="margin-bottom: 10px;">
-       <a href="{{route ('schedule.event',[$evento->id]) }}" class="btn btn-primary btn-block">AGENDAR LIVE</a>
+      @if (Auth::guest())
+         {{-- USUARIOS INVITADOS --}}
+         <a href="{{route('shopping-cart.membership')}}" class="btn btn-success"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar al Carrito</a>
+      @else
+         @if (is_null(Auth::user()->membership_id))
+            {{-- USUARIOS LOGUEADOS SIN MEMBRESÍA --}}
+            <a href="{{route('shopping-cart.membership')}}" class="btn btn-success"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar al Carrito</a>
+         @else
+            @if ($evento->subcategory_id > Auth::user()->membership_id)
+               {{-- USUARIOS LOGUEADOS CON MEMBRESÍA MENOR A LA SUBCATEGORÍA DEL EVENTO--}}
+               <a href="{{route('shopping-cart.membership')}}" class="btn btn-success"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar al Carrito</a>
+            @else
+               @if (is_null($checkEvento))
+                  {{-- USUARIOS LOGUEADOS CON MEMBRESÍA MAYOR O IGUAL A LA SUBCATEGORÍA DEL EVENTO Y QUE NO TIENEN EL EVENTO AGENDADO AÚN--}}
+                  <a href="{{route ('schedule.event',[$evento->id]) }}" class="btn btn-primary btn-block">AGENDAR LIVE</a>
+               @else
+                  {{-- EL USUARIO YA TIENE EL EVENTO AGENDADO--}}
+                  <a href="{{route('show.event', $evento->id)}}" class="btn btn-success btn-block">Ir Al Evento</a>
+               @endif
+            @endif
+         @endif
+      @endif
+       
        <!--<button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#AgendarLiveModal">
         AGENDAR LIVE
       </button>-->

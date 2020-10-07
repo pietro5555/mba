@@ -167,7 +167,7 @@
         <div class="next-streaming">
             <img src="{{ asset('/uploads/images/banner/'.$proximoEvento->image) }}" class="next-streaming-img">
             <div class="next-streaming-info">
-            	<button type="button" class="btn btn-primary btn-next-streaming">Próximo Streaming</button><br>
+            	<a href="{{route('transmisiones')}}" type="button" class="btn btn-primary btn-next-streaming">Próximo Streaming</a><br>
 
                 <div class="next-streaming-title">{{ $proximoEvento->title }}</div>
                 <div class="next-streaming-date">

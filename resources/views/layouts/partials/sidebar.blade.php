@@ -53,7 +53,6 @@
                     <a href="{{route('setting-logo')}}" class="list-group-item bg-dark-gray" style="color: white;"><i class="fa fa-gear"></i> Ajustes</a>
                      @endif
                     @endif
-                    <a href="#" class="list-group-item bg-dark-gray" style="color: white;"><i class="far fa-question-circle"></i> Ayuda</a>
                     @guest
                     <a type="button" class="btn btn-primary btn-register-header d-md-block m-2" href="{{ route('log').'?act=0' }}">INICIAR SESIÓN</a> <!--/login-->
                     <a type="button" class="btn btn-primary btn-register-header d-md-block m-2" href="{{ route('log').'?act=1' }}">REGISTRARME</a> <!--/login-->

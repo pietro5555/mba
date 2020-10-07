@@ -213,12 +213,17 @@
         <input type="checkbox" name="transacciones" id="transacciones" data-toggle="toggle" data-on="Activo" data-off="Inactivo" data-onstyle="info" data-offstyle="danger" data-width="100">
         </div>--}}
 
-               
+          
+          <div class="col-md-12" style="margin-top: 20px;">     
               <button type="submit" class="btn btn-primary btn-block">Aceptar</button>
+          </div>
+
         </form>
       </div>
       <div class="modal-footer">
+        <div class="col-md-12" style="margin-top: 20px;"> 
         <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+      </div>
       </div>
     </div>
   </div>

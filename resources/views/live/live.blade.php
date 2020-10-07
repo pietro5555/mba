@@ -95,7 +95,7 @@
   <div class="row">
     <div class="col-md-12 pl-0">
       <div class="row ml-0">
-        <div class="col-md-8">
+        <div class="col-md-8 pl-0">
           <nav class="mb-2"><!--Menu de navegacion -->
             <div class="nav nav-tabs nav-fill font-weight-bold" id="nav-tab" role="tablist">
               <a class="nav-item nav-link active mr-1 mt-2 text-center" id="nav-mentor-tab" data-toggle="tab" href="#nav-mentor" role="tab" aria-controls="nav-mentor" aria-selected="true">Info del Especialista</a>
@@ -194,157 +194,111 @@
 
         </div><!--End col -->
         <!--Menu y Chat-->
-        <div class="col-md-4 " style='margin-left: -45px !important;'>
-          <div class="row mt-2">
-            <div class="col-md-12">
-              <div class="row">
-                <div class="col">
-                  <div class="col vertical-menu">
-                  <nav class="mb-1">
-                  <div class="nav nav-tabs nav-fill" id="nav-tab-chat" role="tablist">
 
-                  <!--@foreach($menuResource as $menu)
-                    <a class="nav-item nav-link active" id="nav-settings-tab" data-toggle="tab"  href="#nav-settings" role="tab" aria-controls="nav-settings" aria-selected="true">
-                      <img src="{{ asset('images/icons/settings.svg') }}" height="30px" class="">
-                      <h6 class="text-center d-none d-sm-none d-md-block">{{ $menu->resources->title }}</h6>
-                    </a>
-                  @endforeach-->
-
-
-                   <a class="nav-item nav-link active" id="nav-settings-tab" data-toggle="tab"  href="#nav-settings" role="tab" aria-controls="nav-settings" aria-selected="true">
-                    <img src="{{ asset('images/icons/settings.svg') }}" height="30px" class="">
-                    <h6 class="text-center d-none d-sm-none d-md-block">Configuración</h6>
-                    </a>
-                    <a class="nav-item nav-link" id="nav-participantes-tab" data-toggle="tab" href="#nav-participantes" role="tab" aria-controls="nav-participantes" aria-selected="false">
-                    <img src="{{ asset('images/icons/person.svg') }}" height="30px" class="">
-                    <h6 class="text-center d-none d-sm-none d-md-block">Participantes</h6></a>
-
-                    <a class="nav-item nav-link" id="nav-chat-tab" data-toggle="tab" href="#nav-chat" role="tab" aria-controls="nav-chat" aria-selected="false">
-                    <img src="{{ asset('images/icons/comment.svg') }}" height="30px" class="">
-                    <h6 class="text-center d-none d-sm-none d-md-block">Chat</h6></a>
-
-                    <a class="nav-item nav-link" id="nav-encuesta-tab" data-toggle="tab" href="#nav-encuesta" role="tab" aria-controls="nav-encuesta" aria-selected="false">
-                    <img src="{{ asset('images/icons/lista.svg') }}" height="30px" class="">
-                    <h6 class="text-center d-none d-sm-none d-md-block">Encuesta</h6></a>
-                    <a class="nav-item nav-link" id="nav-presentation-tab" data-toggle="tab" href="#nav-presentation" role="tab" aria-controls="nav-presentation" aria-selected="false">
-                    <img src="{{ asset('images/icons/presentacion.svg') }}" height="30px" class="">
-                    <h6 class="text-center d-none d-sm-none d-md-block">Presentación</h6></a>
-                    <a class="nav-item nav-link" id="nav-video-tab" data-toggle="tab" href="#nav-video" role="tab" aria-controls="nav-video" aria-selected="false">
-                    <img src="{{ asset('images/icons/video.svg') }}" height="30px" class="">
-                  <h6 class="text-center d-none d-sm-none d-md-block">Vídeo</h6></a>
-                    <a class="nav-item nav-link" id="nav-archives-tab" data-toggle="tab" href="#nav-archives" role="tab" aria-controls="nav-archives" aria-selected="false"><img src="{{ asset('images/icons/documentos.svg') }}" height="30px" class="">
-                  <h6 class="text-center d-none d-sm-none d-md-block">Archivos</h6></a>
-                    <a class="nav-item nav-link" id="nav-ofertas-tab" data-toggle="tab" href="#nav-ofertas" role="tab" aria-controls="nav-ofertas" aria-selected="false"><img src="{{ asset('images/icons/descuento.svg') }}" height="30px" class="">
-                  <h6 class="text-center d-none d-sm-none d-md-block">Ofertas</h6></a>
-              </div>
-              </nav>
-            </div><!--End menu vertical-->
-                </div>
-                <div class="col pl-0 pr-0 mr-2">
-                  <div class="tab-content" id="nav-chat-tabContent">
-              <div class="tab-pane fade pl-2 active show" id="nav-settings" role="tabpanel" aria-labelledby="nav-settings-tab">
+        <div class="nav flex-column nav-pills mt-2 menu-vertical-anotaciones" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <!--Solo se muestra para mentores-->
+            @if(Auth::user()->rol_id ==2)
+                <a class="nav-link active text-white text-center" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="true"><img src="{{ asset('images/icons/settings.svg') }}" height="30px" class=""><h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Configuración</h6></a>
+                <a class="nav-link text-white text-center" id="v-pills-students-tab" data-toggle="pill" href="#v-pills-students" role="tab" aria-controls="v-pills-students" aria-selected="false"> <img src="{{ asset('images/icons/person.svg') }}" height="30px" class="">
+                    <h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Participantes</h6></a>
+            @endif
+                <a class="nav-link text-white text-center" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false"> <img src="{{ asset('images/icons/comment.svg') }}" height="30px" class="">
+                    <h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Chat</h6></a>
+                <a class="nav-link text-white text-center" id="v-pills-survey-tab" data-toggle="pill" href="#v-pills-survey" role="tab" aria-controls="v-pills-survey" aria-selected="false"><img src="{{ asset('images/icons/lista.svg') }}" height="30px" class="">
+                    <h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Encuesta</h6></a>
+                <a class="nav-link text-white text-center" id="v-pills-presentation-tab" data-toggle="pill" href="#v-pills-presentation" role="tab" aria-controls="v-pills-presentation" aria-selected="false"> <img src="{{ asset('images/icons/presentacion.svg') }}" height="30px" class="">
+                    <h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Presentación</h6></a>
+                <a class="nav-link text-white text-center" id="v-pills-video-tab" data-toggle="pill" href="#v-pills-video" role="tab" aria-controls="v-pills-video" aria-selected="false"><img src="{{ asset('images/icons/video.svg') }}" height="30px" class="">
+                    <h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Vídeo</h6></a>
+                <a class="nav-link text-white text-center" id="v-pills-documents-tab" data-toggle="pill" href="#v-pills-documents" role="tab" aria-controls="v-pills-documents" aria-selected="false"><img src="{{ asset('images/icons/documentos.svg') }}" height="30px" class="">
+                    <h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Archivos</h6></a>
+                <a class="nav-link text-white text-center" id="v-pills-offers-tab" data-toggle="pill" href="#v-pills-offers" role="tab" aria-controls="v-pills-offers" aria-selected="false"><img src="{{ asset('images/icons/descuento.svg') }}" height="30px" class="">
+                    <h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Ofertas</h6></a>
+        </div>
+        <div class="tab-content mt-2" id="v-pills-tabContent">
+                <div class="tab-pane fade show active ml-2" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
                     <div>
-                      <a data-toggle="modal" data-target="#modal-settings-survey" class="btn btn-primary btn-block"><i class="fa fa-plus-circle"></i> Agregar Encuesta</a>
+                    <a data-toggle="modal" data-target="#modal-settings-survey" class="btn btn-primary btn-block"><i class="fa fa-plus-circle"></i> Agregar Encuesta</a>
                     </div> <br>
                     <div>
-                      <a data-toggle="modal" data-target="#modal-settings-presentation" class="btn btn-primary btn-block"><i class="fa fa-plus-circle"></i> Agregar Presentación</a>
+                    <a data-toggle="modal" data-target="#modal-settings-presentation" class="btn btn-primary btn-block"><i class="fa fa-plus-circle"></i> Agregar Presentación</a>
                     </div> <br>
                     <div>
-                      <a data-toggle="modal" data-target="#modal-settings" class="btn btn-primary btn-block"><i class="fa fa-plus-circle"></i> Agregar Video</a>
+                    <a data-toggle="modal" data-target="#modal-settings" class="btn btn-primary btn-block"><i class="fa fa-plus-circle"></i> Agregar Video</a>
                     </div> <br>
                     <div>
-                      <a data-toggle="modal" data-target="#modal-settings-file" class="btn btn-primary btn-block"><i class="fa fa-plus-circle"></i> Agregar Archivos</a>
+                    <a data-toggle="modal" data-target="#modal-settings-file" class="btn btn-primary btn-block"><i class="fa fa-plus-circle"></i> Agregar Archivos</a>
                     </div> <br>
                     <div>
-                      <a data-toggle="modal" data-target="#modal-settings-enable" class="btn btn-primary btn-block"><i class="fa fa-check"></i> Habilitar recursos</a>
+                    <a data-toggle="modal" data-target="#modal-settings-enable" class="btn btn-primary btn-block"><i class="fa fa-check"></i> Habilitar recursos</a>
                     </div>
-              </div>
-              <div class="tab-pane fade pl-2" id="nav-participantes" role="tabpanel" aria-labelledby="nav-participantes-tab">
-                    Sección para participantes
-              </div>
-            <!--Chat list-->
-            <div class="chat-list tab-pane fade pl-2" id="nav-chat" role="tabpanel" aria-labelledby="nav-chat-tab" scroll="auto">
 
-                      <div class="form-row">
-                        <div class="col pt-2 logo-user">
-                          <div class="logo-username-green">A</div>
-                        </div>
-                         <div class="col pt-2">
-                           <p class="nombre-anfitrion">Anfitrion</p>
-                         </div>
+                </div>
+                <div class="tab-pane fade ml-2" id="v-pills-students" role="tabpanel" aria-labelledby="v-pills-students-tab">Seccion Participantes</div>
+                <div class="tab-pane fade ml-2" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                    <div>
+                            <div class="row ml-1">
+                                    <div class="col pt-2 logo-user">
+                                            <div ><img src="{{ asset('uploads/avatar/'.$event->mentor->avatar) }}" alt="" class="rounded-circle logo-username-green"></div>
+                                    </div>
+                                    <div class="col pt-2">
+                                       <p class="nombre-anfitrion">{{$event->mentor->display_name}}</p>
+                                    </div>
 
-                         <div class="col-m-12">
-                           <div class="mensaje">
-                            </textarea>
-                            <p class="contenido-anfitrion p-1">
-                             Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                             </p>
-                           </div>
-                         </div>
-                       </div>
+                            </div>
+                            <div class="ml-1">
+                                <textarea class="contenido-anfitrion border-0" name="" id="" cols="24" rows="5" readonly>Lorem ipsum dolor sit amet consectetur adipisicing elit.</textarea>
+                            </div>
+                    </div>
+                    <div>
+                            <div class="row ml-1">
+                                    <div class="col pt-2 logo-user">
+                                            <div ><img src="{{ asset('uploads/avatar/'.Auth::user()->avatar) }}" alt="" class="rounded-circle logo-username-green"></div>
+                                    </div>
+                                    <div class="col pt-2">
+                                            <p class="nombre-jd">{{Auth::user()->display_name}}</p>
+                                    </div>
 
+                            </div>
+                            <div class="ml-1">
+                                <textarea class="contenido-anfitrion border-0" name="" id="" cols="24" rows="5" readonly>Lorem ipsum dolor sit amet consectetur adipisicing elit.</textarea>
+                            </div>
+                    </div>
+                    <div>
+                            <div class="row ml-1">
+                                    <div class="col pt-2 logo-user">
+                                            <div ><img src="{{ asset('uploads/avatar/'.$event->mentor->avatar) }}" alt="" class="rounded-circle logo-username-green"></div>
+                                    </div>
+                                    <div class="col pt-2">
+                                       <p class="nombre-anfitrion">{{$event->mentor->display_name}}</p>
+                                    </div>
 
-                       <div class="form-row">
-                        <div class="col logo-user">
-                          <div class="logo-username-blue">JD</div>
-                        </div>
-                         <div class="col">
-                           <p class="nombre-jd">John Doe</p>
-                         </div>
+                            </div>
+                            <div class="ml-1">
+                                <textarea class="contenido-anfitrion border-0 disabled" name="" id="" cols="24" rows="5" readonly>Lorem ipsum dolor sit amet consectetur adipisicing elit.</textarea>
+                            </div>
+                    </div>
+                    <div>
+                            <div class="row ml-1">
+                                    <div class="col pt-2 logo-user">
+                                            <div ><img src="{{ asset('uploads/avatar/'.Auth::user()->avatar) }}" alt="" class="rounded-circle logo-username-green"></div>
+                                    </div>
+                                    <div class="col pt-2">
+                                            <p class="nombre-jd">{{Auth::user()->display_name}}</p>
+                                    </div>
 
-                         <div class="col-m-12">
-                           <div  class="mensaje">
-                            <p class="contenido-anfitrion p-1">
-                             Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                             </p>
-                           </div>
-                         </div>
-                       </div>
+                            </div>
+                            <div class="ml-1">
+                                <textarea class="contenido-anfitrion border-0" name="" id="" cols="24" rows="5" readonly>Lorem ipsum dolor sit amet consectetur adipisicing elit.</textarea>
+                            </div>
+                    </div>
+                    <div class="card card-anotaciones">
+                        <form action="">
+                            <textarea name="" id="" cols="25" rows="3">Escribe tu mensaje</textarea>
 
-
-                       <div class="form-row">
-                        <div class="col logo-user">
-                          <div class="logo-username-green">A</div>
-                        </div>
-                         <div class="col">
-                           <p class="nombre-anfitrion">Anfitrion</p>
-                         </div>
-
-                         <div class="col-m-12">
-                           <div class="mensaje">
-                            <p class="contenido-anfitrion p-1">
-                             Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                             </p>
-                           </div>
-                         </div>
-                       </div>
-
-
-                       <div class="form-row">
-                        <div class="col logo-user">
-                          <div class="logo-username-blue">JD</div>
-                        </div>
-                         <div class="col">
-                           <p class="nombre-jd">John Doe</p>
-                         </div>
-
-                         <div class="col-m-12">
-                           <div  class="mensaje">
-                            <p class="contenido-anfitrion p-1">
-                             Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                             </p>
-                           </div>
-                         </div>
-                       </div>
-                       <div class="card card-anotaciones pb-2">
-                              <div class="card-body p-0">
-                                <h5 class="card-title">
-                                <p class="card-text">
-                                  <textarea class="place pt-2" name="nota" rows="8" cols="8">Escribe tu mensaje</textarea>
-                                  <div class="col-12">
-                                    <div class="row p-1">
-                                    <div class="col">
-                                      <div class="row">
+                        </form>
+                        <div class="card-body">
+                                <div class="row">
                                         <span>
                                           <i class="em em-angry small" aria-role="presentation" aria-label="ANGRY FACE"></i>
                                         </span>
@@ -375,86 +329,71 @@
                                    <span>
                                      <i class="em em-clap small" aria-role="presentation" aria-label="CLAPPING HANDS SIGN"></i>
                                    </span>
-                                   <span>
-                                     <i class="em em-cry small" aria-role="presentation" aria-label="CRYING FACE"> </i>
-                                   </span>
-                                   <span>
-                                     <i class="em em-eyes small" aria-role="presentation" aria-label="EYES"></i>
-                                   </span>
-                                   <span>
-                                     <i class="em em-face_with_rolling_eyes small" aria-role="presentation" aria-label="FACE WITH ROLLING EYES"></i>
-                                   </span>
-                                  <span>
-                                    <i class="em em-exploding_head small" aria-role="presentation" aria-label="SHOCKED FACE WITH EXPLODING HEAD"></i>
-                                  </span>
-                                  <span>
-                                    <i class="em em-face_with_raised_eyebrow small" aria-role="presentation" aria-label="FACE WITH ONE EYEBROW RAISED"></i>
-                                  </span>
-                                  <span>
-                                    <i class="em em-dizzy_face small" aria-role="presentation" aria-label="DIZZY FACE"></i>
-                                  </span>
-                                  <span>
-                                    <i class="em em-face_with_monocle small" aria-role="presentation" aria-label="FACE WITH MONOCLE"></i>
-                                  </span>
-                                  <span>
-                                    <i class="em em-face_vomiting small" aria-role="presentation" aria-label="FACE WITH OPEN MOUTH VOMITING"></i>
-                                  </span>
-
                                   </div>
-
-
-
-
-                                      </div>
-
-                                    </div>
+                                  <div class="row">
+                                        <span>
+                                                <i class="em em-cry small" aria-role="presentation" aria-label="CRYING FACE"> </i>
+                                              </span>
+                                              <span>
+                                                <i class="em em-eyes small" aria-role="presentation" aria-label="EYES"></i>
+                                              </span>
+                                              <span>
+                                                <i class="em em-face_with_rolling_eyes small" aria-role="presentation" aria-label="FACE WITH ROLLING EYES"></i>
+                                              </span>
+                                             <span>
+                                               <i class="em em-exploding_head small" aria-role="presentation" aria-label="SHOCKED FACE WITH EXPLODING HEAD"></i>
+                                             </span>
+                                             <span>
+                                               <i class="em em-face_with_raised_eyebrow small" aria-role="presentation" aria-label="FACE WITH ONE EYEBROW RAISED"></i>
+                                             </span>
+                                             <span>
+                                               <i class="em em-dizzy_face small" aria-role="presentation" aria-label="DIZZY FACE"></i>
+                                             </span>
+                                             <span>
+                                               <i class="em em-face_with_monocle small" aria-role="presentation" aria-label="FACE WITH MONOCLE"></i>
+                                             </span>
+                                             <span>
+                                                    <i class="em em-bookmark small" aria-role="presentation" aria-label="BOOKMARK"></i>
+                                             </span>
+                                             <span>
+                                                    <i class="em em-blue_book small" aria-role="presentation" aria-label="BLUE BOOK"></i>
+                                             </span>
+                                             <span>
+                                                    <i class="em em-100 small" aria-role="presentation" aria-label="HUNDRED POINTS SYMBOL"></i>
+                                             </span>
                                   </div>
+                        </div>
 
+                        <div class="card-footer p-1 border-0">
+                            <button class="btn btn-success float-right" type="submit">Enviar</button>
+                        </div>
+                    </div>
 
-
-                                  <button type="button" class="btn btn-success float-right btn-sm mr-2">Enviar</button>
-                                </p>
-                            </div>
-                          </div>
-
-                       <div class="col mb-2">
-                         <div class="row">
-                          <div class="col">
-                            <div class="row">
-                              <div class="col">
-
-                              </div>
-
-                            </div>
-                          </div>
-
-                         </div>
-                       </div>
-
-                    </div> <!--End chat-list-->
-                    <div class="tab-pane fade pl-2" id="nav-encuesta" role="tabpanel" aria-labelledby="nav-encuesta-tab">
-                    Sección para encuesta
-                  </div>
-                  <div class="tab-pane fade pl-2" id="nav-presentation" role="tabpanel" aria-labelledby="nav-presentation-tab">
-                  Sección para presentación
-                  </div>
-                  <div class="tab-pane fade pl-2" id="nav-video" role="tabpanel" aria-labelledby="nav-video-tab">
-                    Sección para vídeo
-                  </div>
-                  <div class="tab-pane fade pl-2" id="nav-archives" role="tabpanel" aria-labelledby="nav-archives-tab">
-                    Sección para archivos
-                  </div>
-                  <div class="tab-pane fade pl-2" id="nav-ofertas" role="tabpanel" aria-labelledby="nav-ofertas-tab">
-                    Sección para ofertas
-                  </div>
-            </div><!--End tab-content-->
                 </div>
+                <div class="tab-pane fade ml-2" id="v-pills-survey" role="tabpanel" aria-labelledby="v-pills-survey-tab">
+                    @if(Auth::user()->rol_id==3)
+                        @if(!empty($surveys))
+                        <div>
+                                <h5 class="text-primary">Responde estas preguntas</h5>
+                        </div>
 
-              </div>
-
-            </div>
-          </div>
-        </div><!--End Menu y Chat-->
+                        <form style="max-width:230px;">
+                                @foreach($surveys as $survey)
+                                <div class="mb-2 form-group">
+                                  <label for="label-question{{$survey->question}}">{{$survey->question}}</label>
+                                  <input type="text" class="form-control" id="question{{$survey->question}}" placeholder="">
+                                </div>
+                                @endforeach
+                                <button class="btn btn-smal btn-success float-right" type="submit">Enviar</button>
+                        </form>
+                        @endif
+                    @endif
+                </div>
+                <div class="tab-pane fade ml-2" id="v-pills-presentation" role="tabpanel" aria-labelledby="v-pills-presentation-tab">Seccion Presentacion</div>
+                <div class="tab-pane fade ml-2" id="v-pills-video" role="tabpanel" aria-labelledby="v-pills-video-tab">Seccion Video</div>
+                <div class="tab-pane fade ml-2" id="v-pills-documents" role="tabpanel" aria-labelledby="v-pills-documents-tab">Seccion Archivos</div>
+                <div class="tab-pane fade ml-2" id="v-pills-offers" role="tabpanel" aria-labelledby="v-pills-offers-tab">Seccion Ofertas</div>
+        </div>
 
       </div>
     </div>

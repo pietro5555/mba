@@ -1326,4 +1326,11 @@ max-width: 350px;
         display: block;
     }
 }
+/*Estilos menu vertical de anotaciones */
+.menu-vertical-anotaciones{
+background: #363840;
+}
 
+.menu-vertical-anotaciones .nav-link.active, .nav-pills .show>.nav-link {
+    background: #212529;
+}

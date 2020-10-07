@@ -20,6 +20,7 @@ class Resources extends Model
      */
     protected $fillable = [
         'title',
+        'slug',
         'icon',
         'status'
     ];

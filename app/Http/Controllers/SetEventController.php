@@ -7,8 +7,9 @@ use Illuminate\Http\Request;
 
 
 //Modelos
-use App\Models\SetEvent; 
-
+use App\Models\SetEvent;
+use App\Models\Events;
+use App\Models\Note;
 
 class SetEventController extends Controller
 {
@@ -113,12 +114,13 @@ class SetEventController extends Controller
 
 
         }
+        $event = Events::find($event_id);
+        $notes = Note::all();
 
-        
+        return redirect()->route('show.event', $event_id)->with('msj-exitoso', 'El Recurso ha sido creado con éxito.');
+        //return redirect('live.live', compact ('event', 'notes'))->with('msj-exitoso', 'El Recurso ha sido creado con éxito.');
 
-        return redirect('/anotaciones')->with('msj-exitoso', 'El Recurso ha sido creado con éxito.');
-
-    }    
+    }
     /**
      * Display the specified resource.
      *

@@ -158,7 +158,7 @@ countdown('{{($evento != null) ? $evento->date.' '.$evento->time : $fechaActual}
             @else
                @if (is_null($checkEvento))
                   {{-- USUARIOS LOGUEADOS CON MEMBRESÍA MAYOR O IGUAL A LA SUBCATEGORÍA DEL EVENTO Y QUE NO TIENEN EL EVENTO AGENDADO AÚN--}}
-                  <a href="{{route ('schedule.event',[$evento->id]) }}" class="btn btn-primary btn-block">AGENDAR LIVE</a>
+                  <a href="{{ route('schedule.event',[$evento->id]) }}" class="btn btn-primary btn-block">AGENDAR LIVE</a>
                @else
                   {{-- EL USUARIO YA TIENE EL EVENTO AGENDADO--}}
                   <a href="{{route('show.event', $evento->id)}}" class="btn btn-success btn-block">Ir Al Evento</a>

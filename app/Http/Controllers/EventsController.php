@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Crypt;
 use App\Models\Course; use App\Models\Events; use App\Models\Note; use App\Models\EventResources;
 use App\Models\Category; use App\Models\Subcategory; use App\Models\Calendario;
 use App\Models\SetEvent;
@@ -477,63 +478,120 @@ class EventsController extends Controller
 
 
   /*AGENDAR EVENTOS DEL USUARIO*/
-public function schedule($event_id, Request $request){
- $check = DB::table('events_users')
+   public function schedule($event_id, Request $request){
+      $check = DB::table('events_users')
                     ->where('user_id', '=', Auth::user()->ID)
                     ->where('event_id', '=', $event_id)
                     ->first();
 
-        if (is_null($check)){
-            $events = DB::table('events')
-                            ->select('date')
-                            ->where('id', '=', $event_id)
-                            ->first();
+      if (is_null($check)){
+         $events = DB::table('events')
+                     ->select('date')
+                     ->where('id', '=', $event_id)
+                     ->first();
 
-            $date_event = date('Y-m-d', strtotime($events->date));
-            $time_event = date('H:i:s', strtotime($events->date));
+         $date_event = date('Y-m-d', strtotime($events->date));
+         $time_event = date('H:i:s', strtotime($events->date));
 
-            $disponibilidad = DB::table('events_users')
-                                ->where('user_id', '=', Auth::user()->ID)
-                                ->where('date', '=', $date_event)
-                                ->where('time', '=', $time_event)
-                                ->first();
+         $disponibilidad = DB::table('events_users')
+                              ->where('user_id', '=', Auth::user()->ID)
+                              ->where('date', '=', $date_event)
+                              ->where('time', '=', $time_event)
+                              ->first();
 
-            if (is_null($disponibilidad)){
-                Auth::user()->events()->attach($event_id, ['date' => $date_event, 'time' => $time_event]);
-                $new_calendar = Events::where('id', '=', $event_id)
-                ->first();
+         if (is_null($disponibilidad)){
+            $streamingConnect = new App\Http\Controllers\StreamingController();
 
-
-         $calendario = new Calendario();
-         $calendario->titulo = $new_calendar->title;
-         $calendario->contenido = $new_calendar->description;
-         $calendario->inicio = $new_calendar->date;
-         $calendario->time = $new_calendar->time;
-         $calendario->color = '#28a745';
-         $calendario->lugar = 'Ninguno';
-         $calendario->iduser = Auth::user()->ID;
-         $calendario->save();
-
-        //return redirect('agendar/calendar');
-
-        return redirect()->action('EventsController@calendar');
-
-
-        }else{
-                return redirect()->back()->with('msj-erroneo', 'No se puede agendar este evento porque ya posee en su agenda otro evento en la misma fecha y hora.');
+            if (!is_null($streamingConnect->verify_user(Auth::user()->email))){
+               
             }
-        }else{
-            return redirect()->back()->with('msj-erroneo', 'Este evento se encuentra registrado en su agenda.');
+            
 
-        }
+            $invitar = false;
+            if (!is_null($userStreaming)){
+               $contactId = DB::table('streaming.contacts')
+                              ->select('id')
+                              ->where('user_id', '=', $userStreaming->id)
+                              ->first();
 
+               $invitar = true;
+            }else{
+               $creacionUsuario = $client->request('POST', 'api/auth/register', [
+                  'headers' => $headers,
+                  'form_params' => [
+                     'name' => Auth::user()->display_name,
+                     'email' => Auth::user()->user_email,
+                     'username' => Auth::user()->display_name,
+                     'password' => decrypt(Auth::user()->clave)
+                  ]
+               ]);
 
+               $result2 = json_decode($creacionUsuario->getBody());
 
-    }
+               if ($result2->status == 'success'){
+                  DB::table('streaming.users')
+                        ->where('email', '=', Auth::user()->user_email)
+                        ->update(['status' => 'activated']);
 
+                  $creacionContacto = $client->request('POST', 'api/contacts', [
+                     'headers' => $headers,
+                     'form_params' => [
+                        'name' => Auth::user()->display_name,
+                        'email' => Auth::user()->user_email
+                     ]
+                  ]);
 
+                  $result3 = json_decode($creacionContacto->getBody());
+                  if ($result3->status == 'success'){
+                     $contactId = DB::table('streaming.contacts')
+                                    ->select('id')
+                                    ->where('uuid', '=', $result3->contact->uuid)
+                                    ->first();
 
+                     $invitar = true;
+                  }
+               }
+            }
 
+            if ($invitar == true){
+               $evento = Event::find($event_id);
+
+               $streamingEvent = DB::table('streaming.meetings')
+                                    ->select('id')
+                                    ->where('uuid', '=', $evento->uuid)
+                                    ->first();
+
+               $fecha = date('Y-m-d H:i:s');
+               DB::table('streaming.meeting_invitees')
+                  ->insert(['uuid' => Str::uuid(), 'meeting_id' => $streamingEvent->id, 'contact_id' => $contactId, 'created_at' => $fecha, 'updated_at' => $fecha]);
+
+               Auth::user()->events()->attach($event_id, ['date' => $date_event, 'time' => $time_event]);
+            
+               $new_calendar = Events::where('id', '=', $event_id)->first();
+
+               $calendario = new Calendario();
+               $calendario->titulo = $new_calendar->title;
+               $calendario->contenido = $new_calendar->description;
+               $calendario->inicio = $new_calendar->date;
+               $calendario->time = $new_calendar->time;
+               $calendario->color = '#28a745';
+               $calendario->lugar = 'Ninguno';
+               $calendario->iduser = Auth::user()->ID;
+               $calendario->save();
+
+               //return redirect('agendar/calendar');
+
+               return redirect()->action('EventsController@calendar');
+            }else{
+               return redirect()->back()->with('msj-erroneo', 'Ha ocurrido un error en la agenda del evento. Por favor, intente nuevamente.');
+            }
+         }else{
+            return redirect()->back()->with('msj-erroneo', 'No se puede agendar este evento porque ya posee en su agenda otro evento en la misma fecha y hora.');
+         }
+      }else{
+         return redirect()->back()->with('msj-erroneo', 'Este evento se encuentra registrado en su agenda.');
+      }
+   }
 
     //modificamos algun dato del calendario
     public function modificar(Request $request){

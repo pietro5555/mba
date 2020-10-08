@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-
+Route::get('prueba-user', 'StreamingController@store_user');
 Route::get('mioficina', function(){
   return redirect('/'); 
 });

@@ -41,7 +41,7 @@
    </div>
 
    {{-- BANNER --}}
-   <div class="container-fluid">
+   <div class="container-fluid p-0">
         @if (!is_null($curso->featured_cover))
                <div style="max-width: 100%; position: relative; display: inline-block;">
                     <img src="{{ asset('uploads/images/courses/featured_covers/'.$curso->featured_cover) }}" alt="" style=" max-width:100%; opacity: 0.5;" class="">
@@ -53,7 +53,7 @@
          @endif
    </div>
    {{-- FIN DEL BANNER --}}
-   <hr style="border: 1px solid #707070;opacity: 1;" />
+   <hr class="m-0" style="border: 1px solid #707070;opacity: 1;" />
 
    {{-- SECCIÓN ACERCA DEL CURSO--}}
    <div class="container-fluid">
@@ -61,7 +61,7 @@
          <div class="col-md-12">
             <div class="row">
                <div class="col-md-12">
-                  <h3 class="text-white">{{ $curso->title }}</h3>
+                  <h1 class="text-white">{{ $curso->title }}</h1>
                   <div>
                      @if ( (!Auth::guest()) && (!is_null($progresoCurso)) && (is_null($miValoracion)) ) 
                         <p class="rating">
@@ -144,16 +144,16 @@
                </div>
                <div class="col-md-3 mt-2 text-center">
                   @if (Auth::guest())
-                     <a href="{{route('shopping-cart.membership')}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> AGREGAR AL CARRITO</a>
+                     <a href="{{route('shopping-cart.membership')}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> ADQUIRIR MEMBRESIA</a>
                   @else
                      @if (is_null($progresoCurso))
                         @if (is_null(Auth::user()->membership_id))
-                           <a href="{{route('shopping-cart.store', $curso->id)}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> AGREGAR AL CARRITO</a>
+                           <a href="{{route('shopping-cart.store', $curso->id)}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> ADQUIRIR MEMBRESIA</a>
                         @else
                            @if (Auth::user()->membership_id < $curso->subcategory_id)
-                              <a href="{{route('shopping-cart.store', $curso->id)}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> AGREGAR AL CARRITO</a>
+                              <a href="{{route('shopping-cart.store', $curso->id)}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> ACTUALIZAR MEMBRESIA</a>
                            @else
-                              <a href="{{route('client.courses.add', $curso->id)}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-plus-circle" aria-hidden="true"></i> AGREGAR A MIS CURSOS</a>
+                              <a href="{{route('client.courses.add', $curso->id)}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-plus-circle" aria-hidden="true"></i> INICIAR CURSO</a>
                            @endif
                         @endif
                      @else

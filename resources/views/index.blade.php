@@ -241,7 +241,7 @@
             </div>
             <div class="col-12 mt-4">
                 <div class="progress">
-                    @if (Auth::user()->membership_id >= 0)
+                    @if (Auth::user()->membership_id >= 1)
                     <div class="progress-bar progress-bar-striped punto" role="progressbar" style="width: 20%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
                     @endif
                     @if(Auth::user()->membership_id >= 2)

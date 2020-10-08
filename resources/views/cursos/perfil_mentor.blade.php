@@ -53,27 +53,4 @@
      </div>
 
     {{-- FIN SECCIÓN TUS CURSOS--}}
-
-        {{-- SECCIÓN REFERIDOS (USUARIOS LOGGUEADOS) --}}
-    @if (!Auth::guest())
-    <div class="pt-4">
-            <div class="row">
-                <div class="col-xl-4 col-lg-4 col-12 pl-4 pr-4">
-                    <div class="referrers-box">
-                        <i class="fa fa-user referrers-icon" style="color: white;"></i><br>
-                        {{ $directos }} Referidos
-                    </div>
-                    <a href="{{url('/admin')}}" style="color: white; text-decoration: none;">
-                     <div class="referrers-button">
-                        Panel de referidos
-                     </div>
-                    </a>
-                </div>
-                <div class="col-xl-8 col-lg-8 d-none d-lg-block d-xl-block referrers-banner">
-                    <div class="referrers-banner-text">EL QUE QUIERE SUPERARSE, NO VE OBSTÁCULOS, VE SUEÑOS.</div>
-                </div>
-            </div>
-        </div><br><br>
-    @endif
-    {{-- FIN DE SECCIÓN REFERIDOS (USUARIOS LOGGUEADOS) --}}
 @endsection

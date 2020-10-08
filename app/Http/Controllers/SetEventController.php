@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use DB;
 use Illuminate\Http\Request;
+use Auth;
 
 
 //Modelos
 use App\Models\SetEvent;
 use App\Models\Events;
 use App\Models\Note;
+use App\Models\Survey;
 
 class SetEventController extends Controller
 {
@@ -97,15 +99,28 @@ class SetEventController extends Controller
                         'type' => 'survey',
                         'event_id' => $event_id
                     ]);
-
-                    $questions = explode(',', $request->input('questions'));
-
-                    foreach ($questions as $question) {
+                    $question =  $request->q1;
+                    $responses = explode(',', $request->input('questions'));
+                    
+                    
+                    $question_save = new Survey;
+                    $question_save->question =  $question;
+                    $question_save->content_event_id = $dataE->id;
+                    $question_save->save();
+                    foreach ($responses as $response) {
+                        DB::table('survey_options_response')->insert([
+                            'response' => $response,
+                            'survey_options_id' => $question_save->id,
+                            'user_id' => Auth::user()->ID
+                        ]);
+                    }
+                  //  return dd ($responses, $question, $question_save, $question_save->id);
+                   /* foreach ($questions as $question) {
                         DB::table('survey_options')->insert([
                             'question' => $question,
                             'content_event_id' => $dataE->id
                         ]);
-                    }
+                    }*/
 
                     break;
 

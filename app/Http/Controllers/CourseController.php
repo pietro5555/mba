@@ -204,6 +204,14 @@ class CourseController extends Controller{
         return view('cursos.cursos')->with(compact('username','cursosDestacados', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next', 'courses', 'mentores', 'cursos', 'cursosRecomendados', 'total', 'last_course'));
     }
 
+    /*Ver todos los cursos */
+    public function show_all_courses()
+    {
+        $courses = Course::paginate(8);
+        return view('cursos.show_all_courses', compact('courses'));
+
+    }
+
     /**
      * Admin / Cursos / Listado de Cursos
      */

@@ -138,7 +138,7 @@
                   <div class="carousel-item">
                      <div class="row">
                         @php $segundo =0; @endphp
-                        @foreach($proximas as $proxima)
+                        @foreach($proximos as $proxima)
                            @php $segundo++; @endphp
                            @if($segundo >= 4)
                               <div class="col-md-4" style="margin-top: 20px;">

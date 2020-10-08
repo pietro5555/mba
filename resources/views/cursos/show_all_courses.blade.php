@@ -22,19 +22,19 @@
 
 @section('content')
     <div class="" style="background: linear-gradient(to bottom, #222326 50%, #1C1D21 50.1%);">
-        <div class="col mb-4 mt-4">
+        <div class="col mb-4 mt-2">
             <div class="title-page-course col-md-12"><span class="text-white">
-            <h2>Mis cursos</h2>
+            <h2>Todos los Cursos</h2>
             </div>
         </div>
 
-        <div class="row">
-            @if ($cursos->count() > 0)
-                @foreach ($cursos  as $curso)
+        <div class="row p-4">
+            @if ($courses->count() > 0)
+                @foreach ($courses  as $course)
 
-                <div class="col-md-4 mt-1">
-                    @if (!is_null($curso->thumbnail_cover))
-                        <img src="{{ asset('uploads/images/courses/covers/'.$curso->thumbnail_cover) }}" class="card-img-top img-opacity" alt="...">
+                <div class="col-md-3 mt-1">
+                    @if (!is_null($course->thumbnail_cover))
+                        <img src="{{ asset('uploads/images/courses/covers/'.$course->thumbnail_cover) }}" class="card-img-top img-opacity" alt="...">
                         @else
                             <img src="{{ asset('uploads/images/courses/covers/default.jpg') }}" class="card-img-top img-opacity" alt="...">
                         @endif
@@ -45,13 +45,13 @@
                                 <div class="row">
                                     <div class="col-md-9 p-0">
                                         <h6>
-                                            <a href="{{ route('courses.show', [$curso->slug, $curso->id]) }}" class="text-white"><i class="text-success fa fa-play-circle"></i>{{ $curso->title }}</a>
+                                            <a href="{{ route('courses.show', [$course->slug, $course->id]) }}" class="text-white"><i class="text-success fa fa-play-circle"></i>{{ $course->title }}</a>
                                         </h6>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <i class="far fa-user-circle text-white"><p class="text-center text-white" style="font-size: 10px;">{{ $curso->users->count() }}</p></i>
+                                                <i class="far fa-user-circle text-white"><p class="text-center text-white" style="font-size: 10px;">{{ $course->users->count() }}</p></i>
                                             </div>
                                         </div>
 
@@ -61,37 +61,29 @@
                                 <div class="row">
                                     <div class="col-md-10">
                                         <h6>
-                                            <a href="{{ route('courses.show', [$curso->slug, $curso->id]) }}" class="subtitle-cat">{{ $curso->category->title }} </a>
+                                            <a href="{{ route('courses.show', [$course->slug, $course->id]) }}" class="subtitle-cat">{{ $course->category->title }} </a>
                                         </h6>
                                     </div>
-                                    <!--<div class="col-md-2">
-
-                                        @if ($curso->pivot->favorite ==1)
-                                        <h6 class="text-right"><img src="{{ asset('images/icons/heart.svg') }}" alt="" height="20px" width="20px"></h6>
-                                        @else
-                                        <a href="{{route('courses.favorite', $curso->id)}}" class="float-right"><i class="far fa-heart text-secondary" height="20px" width="20px"></i></a>
-                                        @endif
-                                    </div>-->
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!--<div class="row card-carousel-text">
                         <div class="col-md-9">
-                            <h6 class=""><i class="text-success fa fa-play-circle"></i> <a href="{{ route('courses.show', [$curso->slug, $curso->id]) }}" class="text-white">{{ $curso->title }}</a></h6>
+                            <h6 class=""><i class="text-success fa fa-play-circle"></i> <a href="{{ route('courses.show', [$course->slug, $course->id]) }}" class="text-white">{{ $course->title }}</a></h6>
                             <h6 class="ml-2">
-                                <a href="{{ route('courses.show', [$curso->slug, $curso->id]) }}" class="subtitle-cat">{{ $curso->category->title }} </a>
-                                @if ($curso->favorite ==1)
+                                <a href="{{ route('courses.show', [$course->slug, $course->id]) }}" class="subtitle-cat">{{ $course->category->title }} </a>
+                                @if ($course->favorite ==1)
                                 <h6 class="text-right"><img src="{{ asset('images/icons/heart.svg') }}" alt="" height="20px" width="20px"></h6>
                                 @else
-                                <a href="{{route('event.favorite', $curso->id)}}" class="float-right"><i class="far fa-heart text-secondary" height="20px" width="20px"></i></a>
+                                <a href="{{route('event.favorite', $course->id)}}" class="float-right"><i class="far fa-heart text-secondary" height="20px" width="20px"></i></a>
                                 @endif
                             </h6>
                          </div>
                         <div class="col-md-3">
                             <h6>
-                                <i class="far fa-user-circle"><p style="font-size: 10px;">{{ $curso->views }}</p></i>
-                                <i class="far fa-thumbs-up"><p style="font-size: 10px;">{{ $curso->likes }}</p></i>
+                                <i class="far fa-user-circle"><p style="font-size: 10px;">{{ $course->views }}</p></i>
+                                <i class="far fa-thumbs-up"><p style="font-size: 10px;">{{ $course->likes }}</p></i>
                             </h6>
                         </div>
                     </div>-->
@@ -101,12 +93,17 @@
             @else
             <div class="container-fluid">
                 <h3>
-                    No se encontraron cursos relacionados con la búsqueda...
+                    No se encontraron courses relacionados con la búsqueda...
                 </h3>
             </div>
 
             @endif
         </div>
+        
+        <div class="text-white text-center">
+            <a class="">{{ $courses->links() }}</a>
+            </div>
+        
     </div>
 
 

@@ -213,6 +213,7 @@ Route::group(['prefix' => 'installer'], function (){
      Route::get('lesson/{slug}/{id}/{course_id}', 'LessonController@lesson')->name('lesson.show');
      Route::post('lesson/comments', 'LessonController@lesson_comments')->name('lesson.comments');
     //Route::get('recommended', 'CourseController@recommended')->name('courses.recommended');
+    Route::get('all', 'CourseController@show_all_courses')->name('courses.show.all');
   });
   
   /*** RUTAS PARA LOS CLIENTES ***/

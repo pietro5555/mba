@@ -36,7 +36,8 @@
                             </div>-->
                         </form>
                     </div>
-                    <a class="list-group-item bg-dark-gray" data-toggle="collapse" href="#categoriesDiv" style="color: white;"><i class="fas fa-border-all"></i> Categorías <i class="fas fa-angle-down"></i></a>
+                    <a href="{{ route('courses.show.all') }}" class="list-group-item bg-dark-gray" style="color: white;"><i class="fas fa-border-all"></i> Ver todos los cursos</a>
+                   <!-- <a class="list-group-item bg-dark-gray" data-toggle="collapse" href="#categoriesDiv" style="color: white;"><i class="fas fa-border-all"></i> Ver todos los cursos <i class="fas fa-angle-down"></i></a>
                     <div class="collapse" id="categoriesDiv" style="padding-left: 15px;">
                         @foreach ($categoriasSidebar as $categoria)
                             <a class="list-group-item bg-dark-gray" data-toggle="collapse" href="#subcategories-{{$categoria->id}}" style="color: white;"><i class="{{ $categoria->icon }}"></i> {{ $categoria->title }} </a>
@@ -46,7 +47,7 @@
                                 @endforeach
                             </div>
                         @endforeach
-                    </div>
+                    </div>-->
 
                     @if(Auth::user())
                      @if(Auth::user()->rol_id == 0)

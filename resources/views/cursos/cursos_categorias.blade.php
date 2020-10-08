@@ -45,8 +45,8 @@
                 @foreach ($courses as $curso)
 
                 <div class="col-md-4 mt-1 img-course-cat border-0">
-                    @if (!is_null($curso->cover))
-                        <img src="{{ asset('uploads/images/courses/covers/'.$curso->cover) }}" class="border-0 card-img-top img-opacity p-2" alt="..." style="border-top-left-radius: 0px !important; border-top-right-radius:0px !important;"> 
+                    @if (!is_null($curso->thumbnail_cover))
+                        <img src="{{ asset('uploads/images/courses/covers/'.$curso->thumbnail_cover) }}" class="border-0 card-img-top img-opacity p-2" alt="..." style="border-top-left-radius: 0px !important; border-top-right-radius:0px !important;"> 
                         @else
                             <img src="{{ asset('uploads/images/courses/covers/default.jpg') }}" class="border-0 card-img-top img-opacity p-2" alt="..." style="border-top-left-radius: 0px !important; border-top-right-radius:0px !important;">
                         @endif

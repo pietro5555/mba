@@ -9,6 +9,34 @@
 
 <div class="bg-dark-gray">
 <div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12 d-flex">
+            <div class="row d-flex align-items-center mb-0">
+                <div class="col-md text-blue">
+                    <h5>{{ $event->title }} / {{$event->mentor->display_name}}</h5>
+
+                </div>
+                <div class="col-md clearfix">
+                    <div class="row">
+                        <div>
+                                <h5 class="title-level">Nivel: {{$event->subcategory->title}}</h5>
+                        </div>
+
+                            <div class="ml-auto p-2">
+                                    <a href="https://m.facebook.com/MyBusinessAcademyPro/" class="btn btn-social-icon btn-facebook btn-rounded" target="_blank"><img src="{{ asset('images/icons/facebook.svg') }}" height="20px" width="20px"></a>
+                                    <a href="" class="btn btn-social-icon btn-twitter btn-rounded" target="_blank"><img src="{{ asset('images/icons/twitter.svg') }}" height="20px" width="20px"></a>
+                                    <a href="https://instagram.com/mybusinessacademypro?igshid=tdj5prrv1gx1" class="btn btn-social-icon btn-instagram btn-rounded" target="_blank"><img src="{{ asset('images/icons/instagram.svg') }}" height="20px" width="20px"></a>
+
+                            </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<div class="container-fluid">
   <div class="row">
     <div class="col-md-12">
       <div class="row">
@@ -32,7 +60,7 @@
       </div>
     </div>
   </div>
-</div>
+</div>-->
 <video
     class="d-block w-100 leccion-curso"
     controls
@@ -95,12 +123,12 @@
   <div class="row">
     <div class="col-md-12 pl-0">
       <div class="row ml-0">
-        <div class="col-md-8 pl-0">
+        <div class="col-md-6 pl-0">
           <nav class="mb-2"><!--Menu de navegacion -->
             <div class="nav nav-tabs nav-fill font-weight-bold" id="nav-tab" role="tablist">
               <a class="nav-item nav-link active mr-1 mt-2 text-center" id="nav-mentor-tab" data-toggle="tab" href="#nav-mentor" role="tab" aria-controls="nav-mentor" aria-selected="true">Info del Especialista</a>
-              <a class="nav-item nav-link mr-1 mt-2 text-center" id="nav-agenda-tab" data-toggle="tab" href="#nav-agenda" role="tab" aria-controls="nav-agenda" aria-selected="false">Próxima Agenda</a>
-              <a class="nav-item nav-link mr-1 mt-2 text-center" id="nav-favoritos-tab" data-toggle="tab" href="#nav-favoritos" role="tab" aria-controls="nav-favoritos" aria-selected="false">Favoritos</a>
+              <!--<a class="nav-item nav-link mr-1 mt-2 text-center" id="nav-agenda-tab" data-toggle="tab" href="#nav-agenda" role="tab" aria-controls="nav-agenda" aria-selected="false">Próxima Agenda</a>
+              <a class="nav-item nav-link mr-1 mt-2 text-center" id="nav-favoritos-tab" data-toggle="tab" href="#nav-favoritos" role="tab" aria-controls="nav-favoritos" aria-selected="false">Favoritos</a>-->
               <a class="nav-item nav-link mr-1 mt-2 text-center" id="nav-anotaciones-tab" data-toggle="tab" href="#nav-anotaciones" role="tab" aria-controls="nav-anotaciones" aria-selected="false">Anotaciones</a>
             </div>
             </nav>
@@ -109,14 +137,14 @@
                 <div class="tab-pane fade show active" id="nav-mentor" role="tabpanel" aria-labelledby="nav-mentor-tab">
                  <div class="container-fluid mb-2">
                         <div class="row featurette">
-                              <div class="col-md-7 order-md-2">
+                              <div class="col-sm-8 col-md-7 order-sm-2 order-md-2">
                                 <h5 class="featurette-heading text-white">Mentor</h5>
                               <h3 class="featurette-heading text-primary">{{$event->mentor->display_name}}</h3>
                                 <h6 class="featurette-heading text-white">{{$event->mentor->profession}}</h6>
                                 <p class="lead about-course-text text-justify">{{$event->mentor->about}}.</p>
                                 <a href="{{ url('courses/mentor/'.$event->mentor->ID) }}" class="text-primary">Ver perfil <i class=" fa fa-angle-right"> </i></a>
                               </div>
-                              <div class="col-md-5 order-md-1 pl-0">
+                              <div class="col-sm-4 order-sm-1 col-md-5 order-md-1 pl-0">
                                     <img src="{{ asset('uploads/avatar/'.$event->mentor->avatar) }}" alt="" class="featurette-image img-fluid mx-auto ml-2">
                               </div>
                         </div>
@@ -197,7 +225,7 @@
 
         <div class="nav flex-column nav-pills mt-2 menu-vertical-anotaciones" id="v-pills-tab" role="tablist" aria-orientation="vertical">
             <!--Solo se muestra para mentores-->
-            @if(Auth::user()->rol_id ==2)
+            @if(Auth::user()->rol_id ==3)
                 <a class="nav-link  text-white text-center" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="true"><img src="{{ asset('images/icons/settings.svg') }}" height="30px" class=""><h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Configuración</h6></a>
                 <a class="nav-link text-white text-center" id="v-pills-students-tab" data-toggle="pill" href="#v-pills-students" role="tab" aria-controls="v-pills-students" aria-selected="false"> <img src="{{ asset('images/icons/person.svg') }}" height="30px" class="">
                     <h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Participantes</h6></a>
@@ -519,16 +547,19 @@
                       <div id="list_question">
                           <div class="form-group">
                               <label>Escribe la pregunta #1</label>
-                              <textarea required class="form-control fieldSurvey" name="q1" id="q1"></textarea>
+                              <textarea required class="form-control fieldQuestion" name="q1" id="q1"></textarea>
                           </div>
+                          <div class="form-group">
+                                <label>Escribe la respuesta</label>
+                                <textarea required class="form-control fieldSurvey" name="r1" id="r1"></textarea>
+                            </div>
                       </div>
                     </div>
-
                     <div class="col-md-12">
-                      <a title="Agregar una pregunta más"  class="btn btn-primary btn-circle addQuestion"><i class="fa fa-plus-circle"></i></a>
-						        </div>
-						    </div>
-						</div>
+                            <a title="Agregar una respuesta más"  class="btn btn-success btn-circle addResponse"><i class="fa fa-plus-circle"></i></a>
+                    </div>
+					</div>
+					</div>
             <input type="hidden" name="type" value='survey' required>
             <input type="hidden" name="questions" class="questionsArray">
 
@@ -575,10 +606,10 @@
 @push('scripts')
   <script type="text/javascript">
     let  nextinput = 1;
-    $('.addQuestion').on('click',function(e){
+    $('.addResponse').on('click',function(e){
         e.preventDefault();
         nextinput++;
-        campo = '<div id="content_' + nextinput + '" class="form-group"> <label>Escribe la pregunta #'+nextinput+'</label> <div class="contentQuestion"> <textarea required class="form-control mr-2 fieldSurvey" id="q'+nextinput+'"&nbsp; name="q' + nextinput + '"&nbsp; ></textarea> <span> <a title="Eliminar pregunta"  class="btn btn-danger btn-circle " onclick="removeQuestion('+nextinput+')"><i class="fa fa-ban"></i></a> </span> </div> </div>';
+        campo = '<div id="content_' + nextinput + '" class="form-group"> <label>Escribe la respuesta #'+nextinput+'</label> <div class="contentQuestion"> <textarea required class="form-control mr-2 fieldSurvey" id="r'+nextinput+'"&nbsp; name="r' + nextinput + '"&nbsp; ></textarea> <span> <a title="Eliminar pregunta"  class="btn btn-danger btn-circle " onclick="removeQuestion('+nextinput+')"><i class="fa fa-ban"></i></a> </span> </div> </div>';
         $(".msjError").remove();
         $("#list_question").append(campo);
 

@@ -92,7 +92,6 @@
 						<tr>
 							<th class="text-center">#</th>
 							<th class="text-center">Título</th>
-							<th class="text-center">Categoría</th>
 							<th class="text-center">Subcategoría</th>
 							<th class="text-center">Lecciones</th>
 							<th class="text-center">Acción</th>
@@ -103,7 +102,6 @@
 							<tr>
 								<td class="text-center">{{ $curso->id }}</td>
 								<td class="text-center">{{ $curso->title }}</td>
-								<td class="text-center">{{ $curso->category->title }}</td>
 								<td class="text-center">{{ $curso->subcategory->title }}</td>
 								<td class="text-center">{{ $curso->lessons_count }}</td>
 								<td class="text-center">

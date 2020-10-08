@@ -470,7 +470,7 @@ font-size: 16px;
         .course-banner-caption{
             position: absolute;
             bottom: 0 !important;
-                top: 75%;
+                top: 65%;
             width: 97%;
         }
 }
@@ -494,7 +494,6 @@ font-size: 16px;
 .title-page-course{
     color: #FFFF;
     font-weight: bold;
-    padding-bottom: 30px;
     font-size: 24px;
     margin-top:30px;
 }
@@ -505,11 +504,10 @@ font-size: 16px;
         display: inline-block;
     position: relative;
 }
-}
+
 .course-banner-img{
 background: transparent linear-gradient(178deg, #00000000 0%, #000000 100%) 0% 0% no-repeat padding-box;
 opacity: 0.74;
-max-width: 100%;
 }
 
 .course-banner-caption{
@@ -539,7 +537,11 @@ bottom: 1em;
 }
 .description-course{
     color: #DEDADA;
-    opacity: 1;
+     display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  width: 50%;
+  margin: auto;
 }
 
 .play-course-button{
@@ -550,6 +552,7 @@ bottom: 1em;
 .section-title-courses{
     font-weight: bold;
     color: #2A91FF;
+    padding-top: 20px;
 }
 
 .card-deck .card {
@@ -1333,4 +1336,7 @@ background: #363840;
 
 .menu-vertical-anotaciones .nav-link.active, .nav-pills .show>.nav-link {
     background: #212529;
+}
+.img-thumbnail{
+    background-color: none;
 }

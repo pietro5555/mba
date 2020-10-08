@@ -50,7 +50,7 @@
                 <div class="col-md-12">
                     <h5 class="text-white text-uppercase ml-4" style="font-size: 12px;">
                                 {{$last_course->title}}
-                            </h5>
+                    </h5>
                     <div class="btn btn-none ">
                         <a href="{{ route('courses.show', [$last_course->slug, $last_course->course_id]) }}" class="btn btn-primary float-right text-uppercase mr-2" style="font-size: 12px;"><i class="fa fa-play"></i> Continuar curso</a>
                     </div>
@@ -71,22 +71,25 @@
     @if (!Auth::guest())
         @if(!empty($last_course))
 
-            <div class="container-fluid col-md-12 p-4">
+            <div class="container-fluid col-md-12 p-0">
                 <img src="{{ asset('uploads/images/courses/covers/'.$last_course->cover) }}" class="course-banner-img img-fluid" alt="..."/>
-                <div class="container-fluid pl-0 pr-4 course-banner-caption  d-none d-sm-block d-md-block clearfix">
+                <div class="container-fluid pl-0 pr-0 course-banner-caption  d-none d-sm-block d-md-block clearfix">
                     <div class="">
-                        <div class="col-md-12">
-                            <h5 class="text-white text-uppercase ml-4" >
+                        <div class="col-md-12 p-0">
+                            <h4 class="text-white text-uppercase ml-4 font-weight-bold" >
                                         {{$last_course->title}}
-                            </h5>
+                            </h4>
+                            <p class="col-md-6 description-course text-justify pl-0 ml-4">
+                                    {{$last_course->description}}
+                            </p>
                             <div class="float-right mb-2">
                                 <div class="row">
-                                     <a href="{{ route('courses.show', [$last_course->slug, $last_course->course_id]) }}" class="btn btn-primary float-right text-uppercase mr-2"><i class="fa fa-play"></i> Continuar curso</a>
+                                     <a href="{{ route('courses.show', [$last_course->slug, $last_course->course_id]) }}" class="btn btn-primary float-right text-uppercase mr-4"><i class="fa fa-play"></i> Continuar curso</a>
                                 </div>
 
                             </div>
 
-                            <div class="pl-0 col-md-12 progress progress-course-bar">
+                            <div class="pl-0 pr-0 col-md-12 progress progress-course-bar">
                                         <div class="progress-bar pl-0" role="progressbar" aria-valuenow="{{$last_course->progress}}" aria-valuemin="0" aria-valuemax="100" style="width:{{$last_course->progress}}%">
                             </div>
                             </div>
@@ -176,8 +179,11 @@
         @if($cursos->isNotEmpty())
             <div class="row">
                 <div class="col-12">
-                    <div class="section-title-courses ml-2">Tus Cursos</div>
-                    <hr style="border: 1px solid #707070;opacity: 1;" />
+                    <div class="section-title-courses ml-2">
+                        <h3 class="">Tus Cursos</h3>
+                        <hr style="margin-top:0px; border: 1px solid #707070;opacity: 1;" />
+                        </div>
+                    
                 </div>
                 <div class="container-fluid m-2">
                     <div class="wrapper">
@@ -186,7 +192,7 @@
 
                          <div class="card m-2 mb-4 card-courses">
 
-                            <img class="card-img-top" src="{{ asset('uploads/images/courses/covers/'.$curso->cover) }}" alt="card-image-cap">
+                            <img class="card-img-top" src="{{ asset('uploads/avatar/'.$curso->mentor->avatar) }}" alt="card-image-cap">
                             <div class="card-body p-2">
                             <div class="row align-items-start">
                                 <h6 class="col-sm"><a href="{{ route('courses.show', [$curso->slug, $curso->id]) }}" class="text-secondary text-sm">{{$curso->title}}</a>
@@ -200,14 +206,12 @@
                     @endforeach
                      <div class="">
                         <div class="row h-100">
-                            <div class="col-sm-6 col-md-12 align-self-center">
-                                <div class="card-block w-50 text-primary">
-                                    <a href="{{ route('client.my-courses') }}" class="font-weight-bold">Ver todos mis cursos <i class="text-primary fa fa-arrow-right"></i></a>
-                                    </div>
-                                <div>
-
+                                <div class="card-block w-50 text-primary align-self-center">
+                                    <a href="{{ route('client.my-courses') }}" class="font-weight-bold">Ver todos mis cursos</a>
                                 </div>
-                            </div>
+                                <div class="align-self-center">
+                                        <i class="text-primary fa fa-arrow-right"></i>
+                                </div>
                         </div>
                     </div>
 
@@ -258,21 +262,18 @@ $contador++;
 @if($contador <= 3)
 
 <div class="col-md-4" style="margin-top: 20px;">
-  @if (!is_null($recommended->mentor->avatar))
- <img src="{{ asset('uploads/avatar/'.$recommended->mentor->avatar) }}" class="card-img-top img-prox-events" alt="...">
+  @if (!is_null($recommended->cover))
+ <img src="{{ asset('uploads/images/courses/covers/'.$recommended->cover) }}" class="card-img-top img-prox-events" alt="...">
  @else
- <img src="{{ asset('uploads/images/avatar/default.jpg') }}" class="card-img-top img-prox-events" alt="...">
+ <img src="{{ asset('uploads/images/courses/covers/default.jpg') }}" class="card-img-top img-prox-events" alt="...">
   @endif
  <div class="card-img-overlay clearfix">
 <div>
-    <h6 class="card-title" style="font-size: 14px">{{$recommended->mentor->display_name}}</h6>
+    <h6 class="card-title" style="font-size: 12px">{{$recommended->mentor->display_name}}</h6>
 </div>
 <div class="row ml-0 d-flex h-100">
     <div class="col-md-9 my-auto" style="margin-bottom: 7px !important">
         <h6 class="col-sm w-100 pl-0" style="font-size: 14px"><img src="{{ asset('images/icons/video-player-green.svg') }}" alt="" height="20px" width="20px"> <a href="{{ route('courses.show', [$recommended->slug, $recommended->id]) }}" class="text-white"> {{$recommended->title}}</a></h6>
-        <h6 class="ml-2 text-white" style="font-size: 12px">
-            {{$recommended->category->title}}
-        </h6>
     </div>
     <div class="col-md-3 my-auto" style="margin-bottom: 7px !important">
         <h6 class="text-white w-100">
@@ -304,8 +305,8 @@ $segundo++;
 @if($segundo >= 4 && $segundo <= 6)
 
 <div class="col-md-4" style="margin-top: 20px;">
-  @if (!is_null($recommended->mentor->avatar))
- <img src="{{ asset('uploads/avatar/'.$recommended->mentor->avatar) }}" class="card-img-top img-prox-events" alt="...">
+  @if (!is_null($recommended->cover))
+ <img src="{{ asset('uploads/images/courses/covers/'.$recommended->cover) }}" class="card-img-top img-prox-events" alt="...">
  @else
  <img src="{{ asset('uploads/images/avatar/default.jpg') }}" class="card-img-top img-prox-events" alt="...">
   @endif
@@ -316,9 +317,6 @@ $segundo++;
 <div class="row ml-0 d-flex h-100">
     <div class="col-md-9 my-auto" style="margin-bottom: 7px !important">
         <h6 class="col-sm w-100 pl-0" style="font-size: 14px"><img src="{{ asset('images/icons/video-player-green.svg') }}" alt="" height="20px" width="20px"> <a href="{{ route('courses.show', [$recommended->slug, $recommended->id]) }}" class="text-white"> {{$recommended->title}}</a></h6>
-        <h6 class="ml-2 text-white" style="font-size: 12px">
-            {{$recommended->category->title}}
-        </h6>
     </div>
     <div class="col-md-3 my-auto" style="margin-bottom: 7px !important">
         <h6 class="text-white w-100">
@@ -348,8 +346,8 @@ $tercero++;
 @if($tercero >= 7 && $tercero <= 9)
 
 <div class="col-md-4" style="margin-top: 20px;">
-  @if (!is_null($recommended->mentor->avatar))
- <img src="{{ asset('uploads/avatar/'.$recommended->mentor->avatar) }}" class="card-img-top img-prox-events" alt="...">
+  @if (!is_null($recommended->cover))
+ <img src="{{ asset('uploads/images/courses/covers/'.$recommended->cover) }}" class="card-img-top img-prox-events" alt="...">
  @else
  <img src="{{ asset('uploads/images/avatar/default.jpg') }}" class="card-img-top img-prox-events" alt="...">
   @endif
@@ -360,9 +358,6 @@ $tercero++;
 <div class="row ml-0 d-flex h-100">
     <div class="col-md-9 my-auto" style="margin-bottom: 7px !important">
         <h6 class="col-sm w-100 pl-0" style="font-size: 14px"><img src="{{ asset('images/icons/video-player-green.svg') }}" alt="" height="20px" width="20px"> <a href="{{ route('courses.show', [$recommended->slug, $recommended->id]) }}" class="text-white"> {{$recommended->title}}</a></h6>
-        <h6 class="ml-2 text-white" style="font-size: 12px">
-            {{$recommended->category->title}}
-        </h6>
     </div>
     <div class="col-md-3 my-auto" style="margin-bottom: 7px !important">
         <h6 class="text-white w-100">
@@ -431,20 +426,27 @@ $tercero++;
                 <div class="col-xl-4 col-lg-4 col-12" style="padding-bottom: 10px;">
                    <a href="{{ route('courses.show', [$cursoNuevo->slug, $cursoNuevo->id]) }}" style="text-decoration: none;background-color: transparent; color: white;">
                     <div class="card">
-                        @if (!is_null($cursoNuevo->cover))
-                        <img src="{{ asset('uploads/images/courses/covers/'.$cursoNuevo->cover) }}" class="card-img-top new-course-img" alt="...">
+                        @if (!is_null($cursoNuevo->thumbnail_cover))
+                        <img src="{{ asset('uploads/images/courses/covers/'.$cursoNuevo->thumbnail_cover) }}" class="card-img-top new-course-img" alt="...">
                         @else
                         <img src="{{ asset('uploads/images/courses/covers/default.jpg') }}" class="card-img-top new-course-img" alt="...">
                         @endif
                         <div class="card-img-overlay d-flex flex-column">
-                                <div class="mt-auto">
-                                    <div class="new-course-title">{{ $cursoNuevo->title }}</div>
-                                    <div class="row">
-                                       <div class="col-md-12">
-                                           <p style="float: right;"> <i class="far fa-user-circle"> {{ $cursoNuevo->users->count()}}</i></p>
-                                       </div>
+                            <div class="mt-auto">
+                                <div class="new-course-title">{{ $cursoNuevo->title }}</div>
+                                <div class="row">
+                                    <div class="col-12 col-xl-6 new-course-category">{{ $cursoNuevo->category->title }}</div>
+                                    <div class="col-12 col-xl-6" style="font-size: 16px;">
+                                        <div class="row row-cols-3">
+                                            <div class="col text-right no-padding-sides mr-2">
+
+                                                <i class="far fa-user-circle"></i><br>
+                                                <span class="new-course-items-text">{{$cursoNuevo->users->count()}}</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+                            </div>
                         </div>
                     </div>
                   </a>
@@ -472,7 +474,7 @@ $tercero++;
                             @if (!is_null($course->cover))
                                 <img src="{{ asset('uploads/images/categories/covers/'.$course->cover) }}" class="card-img-top img-fluid course-category1" alt="...">
                             @else
-                                <img src="{{ asset('uploads/images/categories/covers/default.png') }}" class="card-img-top img-fluid course-category1" alt="...">
+                                <img src="{{ asset('uploads/images/categories/covers/default.jpg') }}" class="card-img-top img-fluid course-category1" alt="...">
                             @endif
                             <div class="course-category-caption ml-1 mr-1">
                                 <div class="col-sm-lg text-sm-left font-weight-bold">

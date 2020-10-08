@@ -50,52 +50,40 @@ class EventsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
-        $client = new Client(['base_uri' => 'https://streaming.shapinetwork.com']);
+        $streamingConnect = new StreamingController();
 
-        if (is_null(Auth::user()->streaming_token)){
-            $response = $client->request('POST', 'api/auth/login', [
-                'headers' => ['Accept' => 'application/json', 'Content-Type' => 'application/x-www-form-urlencoded'],
-                'form_params' => [
-                    'email' => 'admin',
-                    'password' => '123456789',
-                    'device_name' => 'luisana',
-                ]
-            ]);
+        $datosMentor = DB::table('wp98_users')
+                        ->select('display_name', 'user_email', 'password')
+                        ->where('id', '=', $request->user_id)
+                        ->first();
+        
+        $userStreaming = $streamingConnect->verifyUser($datosMentor->user_email);
+        if (!is_null($userStreaming)){
+            $userId = $userStreaming->id;
+            $contactStreaming = $streamingConnect->verifyContact($userId);
 
-            $result = json_decode($response->getBody());
+            if (!is_null($contactStreaming)){
+                $contactId = $contactStreaming->id;
+            }else{
+                $requestContact = new Request(array('name' => $datosMentor->user_email, 'email' => $datosMentor->user_email, 'user_id' => $userId));
+                $contactId = $streamingConnect->newContact($requestContact);
+            }
+        }else{
+            $requestUser = new Request(array('role_id' => 4, 'name' => $datosMentor->display_name, 'email' => $datosMentor->user_email, 'username' => $datosMentor->user_email, 'password' => $datosMentor->password));
+            $userId = $streamingConnect->newUser($requestUser);
 
-            DB::table('wp98_users')
-                ->where('ID', '=', Auth::user()->ID)
-                ->update(['streaming_token' => $result->token]);
+            $requestContact = new Request(array('name' => $datosMentor->user_email, 'email' => $datosMentor->user_email, 'user_id' => $userId));
+            $contactId = $streamingConnect->newContact($requestContact);
         }
 
-        $headers = [
-            'Accept'        => 'application/json',
-            'Content-Type' => 'application/x-www-form-urlencoded',
-            'Authorization' => 'Bearer '.Auth::user()->streaming_token
-        ];
+        if (is_null(Auth::user()->streaming_token)){
+            $streamingConnect->setToken();
+        }
 
-        $p =  $request->date."T".$request->time;
-        $carbon = new Carbon($p);
-        $fecha = $carbon->subHours(5);
-        $ultFecha = $fecha->format('Y-m-d H:i:s');
-        $creacionEvento = $client->request('POST', 'api/meetings', [
-            'headers' => $headers,
-            'form_params' => [
-                'title' => $request->title,
-                'agenda' => $request->description,
-                'description' => $request->description,
-                'start_date_time' => $ultFecha,
-                'period' => $request->duration,
-                'category' =>[$request->category_id],
-                'type' => ['webinar']
-            ]
-        ]);
-
-        $result2 = json_decode($creacionEvento->getBody());
+        $meetingUuid = $streamingConnect->newMeeting($request, $userId);
 
         $evento = new Events($request->all());
-        $evento->uuid = $result2->meeting->uuid;
+        $evento->uuid = $meetingUuid;
         $evento->url_streaming = 'https://streaming.shapinetwork.com/app/live/meetings/'.$evento->uuid;
         $evento->status = 1;
         $evento->save();
@@ -138,16 +126,7 @@ class EventsController extends Controller
         return view('live.live', compact ('event','notes', 'menuResource', 'surveys'));
     }
 
-
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
+    public function edit($id){
         $evento = Events::find($id);
 
         return response()->json(
@@ -155,53 +134,44 @@ class EventsController extends Controller
         );
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request){
+        $streamingConnect = new StreamingController();
+
         $evento = Events::find($request->event_id);
 
-        $client = new Client(['base_uri' => 'https://streaming.shapinetwork.com']);
-
         if (is_null(Auth::user()->streaming_token)){
-            $response = $client->request('POST', 'api/auth/login', [
-                'headers' => ['Accept' => 'application/json', 'Content-Type' => 'application/x-www-form-urlencoded'],
-                'form_params' => [
-                    'email' => 'admin',
-                    'password' => '123456789',
-                    'device_name' => 'luisana',
-                ]
-            ]);
-
-            $result = json_decode($response->getBody());
-
-            DB::table('wp98_users')
-                ->where('id', '=', Auth::user()->ID)
-                ->update(['streaming_token' => $result->token]);
+            $streamingConnect->setToken();
         }
 
-        $headers = [
-            'Accept'        => 'application/json',
-            'Content-Type' => 'application/x-www-form-urlencoded',
-            'Authorization' => 'Bearer '.Auth::user()->streaming_token
-        ];
+        if ($evento->user_id != $request->user_id){
+            $datosMentor = DB::table('wp98_users')
+                                ->select('display_name', 'user_email', 'password')
+                                ->where('id', '=', $request->user_id)
+                                ->first();
+        
+            $userStreaming = $streamingConnect->verifyUser($datosMentor->user_email);
+            if (!is_null($userStreaming)){
+                $userId = $userStreaming->id;
+                $contactStreaming = $streamingConnect->verifyContact($userId);
 
-        $actualizacionEvento = $client->request('PATCH', 'api/meetings/'.$evento->uuid, [
-            'headers' => $headers,
-            'form_params' => [
-                'title' => $request->title,
-                'agenda' => $request->description,
-                'description' => $request->description,
-                'start_date_time' => $request->date."T".$request->time,
-                'period' => $request->duration,
-                'category' =>[$request->category_id],
-                'type' => ['webinar', 'video_conference']
-            ]
-        ]);
+                if (!is_null($contactStreaming)){
+                    $contactId = $contactStreaming->id;
+                }else{
+                    $requestContact = new Request(array('name' => $datosMentor->user_email, 'email' => $datosMentor->user_email, 'user_id' => $userId));
+                    $contactId = $streamingConnect->newContact($requestContact);
+                }
+            }else{
+                $requestUser = new Request(array('role_id' => 4, 'name' => $datosMentor->display_name, 'email' => $datosMentor->user_email, 'username' => $datosMentor->user_email, 'password' => $datosMentor->password));
+                $userId = $streamingConnect->newUser($requestUser);
+
+                $requestContact = new Request(array('name' => $datosMentor->user_email, 'email' => $datosMentor->user_email, 'user_id' => $userId));
+                $contactId = $streamingConnect->newContact($requestContact);
+            }
+
+            $request->user_streaming_id = $userId;
+        }
+        
+        $streamingConnect->updateMeeting($request, $evento->uuid);
 
         $evento->fill($request->all());
         if ($request->hasFile('banner')){
@@ -478,120 +448,79 @@ class EventsController extends Controller
 
 
   /*AGENDAR EVENTOS DEL USUARIO*/
-   public function schedule($event_id, Request $request){
-      $check = DB::table('events_users')
+    public function schedule($event_id, Request $request){
+        $check = DB::table('events_users')
                     ->where('user_id', '=', Auth::user()->ID)
                     ->where('event_id', '=', $event_id)
                     ->first();
 
-      if (is_null($check)){
-         $events = DB::table('events')
-                     ->select('date')
-                     ->where('id', '=', $event_id)
-                     ->first();
+        if (is_null($check)){
+            $events = DB::table('events')
+                        ->select('date')
+                        ->where('id', '=', $event_id)
+                        ->first();
 
-         $date_event = date('Y-m-d', strtotime($events->date));
-         $time_event = date('H:i:s', strtotime($events->date));
+            $date_event = date('Y-m-d', strtotime($events->date));
+            $time_event = date('H:i:s', strtotime($events->date));
 
-         $disponibilidad = DB::table('events_users')
-                              ->where('user_id', '=', Auth::user()->ID)
-                              ->where('date', '=', $date_event)
-                              ->where('time', '=', $time_event)
-                              ->first();
+            $disponibilidad = DB::table('events_users')
+                                ->where('user_id', '=', Auth::user()->ID)
+                                ->where('date', '=', $date_event)
+                                ->where('time', '=', $time_event)
+                                ->first();
 
-         if (is_null($disponibilidad)){
-            $streamingConnect = new App\Http\Controllers\StreamingController();
+            if (is_null($disponibilidad)){
+                $streamingConnect = new StreamingController();
 
-            if (!is_null($streamingConnect->verify_user(Auth::user()->email))){
+                $userStreaming = $streamingConnect->verifyUser(Auth::user()->user_email);
+                if (!is_null($userStreaming)){
+                    $userId = $userStreaming->id;
+                    $contactStreaming = $streamingConnect->verifyContact($userId);
+
+                    if (!is_null($contactStreaming)){
+                        $contactId = $contactStreaming->id;
+                    }else{
+                        $requestContact = new Request(array('name' => Auth::user()->user_email, 'email' => Auth::user()->user_email, 'user_id' => $userId));
+                        $contactId = $streamingConnect->newContact($requestContact);
+                    }
+                }else{
+                    $requestUser = new Request(array('role_id' => 3, 'name' => Auth::user()->display_name, 'email' => Auth::user()->user_email, 'username' => Auth::user()->user_email, 'password' => Auth::user()->password));
+                    $userId = $streamingConnect->newUser($requestUser);
+
+                    $requestContact = new Request(array('name' => Auth::user()->user_email, 'email' => Auth::user()->user_email, 'user_id' => $userId));
+                    $contactId = $streamingConnect->newContact($requestContact);
+                }
+                
+                $evento = Events::find($event_id);
+
+                $streamingId = $streamingConnect->getMeetingId($evento->uuid);
+
+                $streamingConnect->newInvitation($streamingId, $contactId);
                
-            }
-            
+                Auth::user()->events()->attach($event_id, ['date' => $date_event, 'time' => $time_event]);
+                
+                $new_calendar = Events::where('id', '=', $event_id)->first();
 
-            $invitar = false;
-            if (!is_null($userStreaming)){
-               $contactId = DB::table('streaming.contacts')
-                              ->select('id')
-                              ->where('user_id', '=', $userStreaming->id)
-                              ->first();
+                $calendario = new Calendario();
+                $calendario->titulo = $new_calendar->title;
+                $calendario->contenido = $new_calendar->description;
+                $calendario->inicio = $new_calendar->date;
+                $calendario->time = $new_calendar->time;
+                $calendario->color = '#28a745';
+                $calendario->lugar = 'Ninguno';
+                $calendario->iduser = Auth::user()->ID;
+                $calendario->save();
 
-               $invitar = true;
+                //return redirect('agendar/calendar');
+
+                return redirect()->action('EventsController@calendar');
             }else{
-               $creacionUsuario = $client->request('POST', 'api/auth/register', [
-                  'headers' => $headers,
-                  'form_params' => [
-                     'name' => Auth::user()->display_name,
-                     'email' => Auth::user()->user_email,
-                     'username' => Auth::user()->display_name,
-                     'password' => decrypt(Auth::user()->clave)
-                  ]
-               ]);
-
-               $result2 = json_decode($creacionUsuario->getBody());
-
-               if ($result2->status == 'success'){
-                  DB::table('streaming.users')
-                        ->where('email', '=', Auth::user()->user_email)
-                        ->update(['status' => 'activated']);
-
-                  $creacionContacto = $client->request('POST', 'api/contacts', [
-                     'headers' => $headers,
-                     'form_params' => [
-                        'name' => Auth::user()->display_name,
-                        'email' => Auth::user()->user_email
-                     ]
-                  ]);
-
-                  $result3 = json_decode($creacionContacto->getBody());
-                  if ($result3->status == 'success'){
-                     $contactId = DB::table('streaming.contacts')
-                                    ->select('id')
-                                    ->where('uuid', '=', $result3->contact->uuid)
-                                    ->first();
-
-                     $invitar = true;
-                  }
-               }
+                return redirect()->back()->with('msj-erroneo', 'No se puede agendar este evento porque ya posee en su agenda otro evento en la misma fecha y hora.');
             }
-
-            if ($invitar == true){
-               $evento = Event::find($event_id);
-
-               $streamingEvent = DB::table('streaming.meetings')
-                                    ->select('id')
-                                    ->where('uuid', '=', $evento->uuid)
-                                    ->first();
-
-               $fecha = date('Y-m-d H:i:s');
-               DB::table('streaming.meeting_invitees')
-                  ->insert(['uuid' => Str::uuid(), 'meeting_id' => $streamingEvent->id, 'contact_id' => $contactId, 'created_at' => $fecha, 'updated_at' => $fecha]);
-
-               Auth::user()->events()->attach($event_id, ['date' => $date_event, 'time' => $time_event]);
-            
-               $new_calendar = Events::where('id', '=', $event_id)->first();
-
-               $calendario = new Calendario();
-               $calendario->titulo = $new_calendar->title;
-               $calendario->contenido = $new_calendar->description;
-               $calendario->inicio = $new_calendar->date;
-               $calendario->time = $new_calendar->time;
-               $calendario->color = '#28a745';
-               $calendario->lugar = 'Ninguno';
-               $calendario->iduser = Auth::user()->ID;
-               $calendario->save();
-
-               //return redirect('agendar/calendar');
-
-               return redirect()->action('EventsController@calendar');
-            }else{
-               return redirect()->back()->with('msj-erroneo', 'Ha ocurrido un error en la agenda del evento. Por favor, intente nuevamente.');
-            }
-         }else{
-            return redirect()->back()->with('msj-erroneo', 'No se puede agendar este evento porque ya posee en su agenda otro evento en la misma fecha y hora.');
-         }
-      }else{
-         return redirect()->back()->with('msj-erroneo', 'Este evento se encuentra registrado en su agenda.');
-      }
-   }
+        }else{
+            return redirect()->back()->with('msj-erroneo', 'Este evento se encuentra registrado en su agenda.');
+        }
+    }
 
     //modificamos algun dato del calendario
     public function modificar(Request $request){

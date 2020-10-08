@@ -5,12 +5,88 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str as Str;
 use GuzzleHttp\Client;
-use App\Models\Streaming\User;
-use Auth;
+use App\Models\Streaming\User; use App\Models\Streaming\Contact;
+use App\Models\Streaming\Meeting; use App\Models\Streaming\Invitation;
+use Auth; use Carbon\Carbon; use DB;
 
 class StreamingController extends Controller{
 
-    public function verify_user($email){
+    public function setToken(){
+        $client = new Client(['base_uri' => 'https://streaming.shapinetwork.com']);
+
+        $response = $client->request('POST', 'api/auth/login', [
+            'headers' => ['Accept' => 'application/json', 'Content-Type' => 'application/x-www-form-urlencoded'],
+            'form_params' => [
+                'email' => 'admin',
+                'password' => '123456789',
+                'device_name' => 'admin-device',
+            ]
+        ]);
+
+        $result = json_decode($response->getBody());
+
+        DB::table('wp98_users')
+            ->where('ID', '=', Auth::user()->ID)
+            ->update(['streaming_token' => $result->token]);
+    }
+
+    public function newMeeting(Request $request, $userId){
+        $client = new Client(['base_uri' => 'https://streaming.shapinetwork.com']);
+
+        $headers = [
+            'Accept'        => 'application/json',
+            'Content-Type' => 'application/x-www-form-urlencoded',
+            'Authorization' => 'Bearer '.Auth::user()->streaming_token
+        ];
+
+        $p = $request->date."T".$request->time;
+        $carbon = new Carbon($p);
+        $fecha = $carbon->subHours(5);
+        $ultFecha = $fecha->format('Y-m-d H:i:s');
+        $creacionEvento = $client->request('POST', 'api/meetings', [
+            'headers' => $headers,
+            'form_params' => [
+                'title' => $request->title,
+                'agenda' => $request->description,
+                'description' => $request->description,
+                'start_date_time' => $ultFecha,
+                'period' => $request->duration,
+                'category' => [$request->category_id],
+                'user_id' => $userId,
+                'type' => ['webinar']
+            ]
+        ]);
+
+        $result = json_decode($creacionEvento->getBody());
+
+        return $result->meeting->uuid;
+    }
+
+    public function updateMeeting(Request $request, $uuid){
+        $client = new Client(['base_uri' => 'https://streaming.shapinetwork.com']);
+
+        $headers = [
+            'Accept'        => 'application/json',
+            'Content-Type' => 'application/x-www-form-urlencoded',
+            'Authorization' => 'Bearer '.Auth::user()->streaming_token
+        ];
+
+        $actualizacionEvento = $client->request('PATCH', 'api/meetings/'.$uuid, [
+            'headers' => $headers,
+            'form_params' => [
+                'title' => $request->title,
+                'agenda' => $request->description,
+                'description' => $request->description,
+                'start_date_time' => $request->date."T".$request->time,
+                'period' => $request->duration,
+                'category' =>[$request->category_id],
+                'user_id' => $request->user_streaming_id,
+                'type' => ['webinar']
+            ]
+        ]);
+    }
+
+    public function verifyUser($email){
         $userStreaming = User::where('email', '=', $email)
                             ->select('id')
                             ->first();
@@ -18,16 +94,50 @@ class StreamingController extends Controller{
         return $userStreaming;
     }
 
-    public function store_user(){ 
-        $usuario = new User();
+    public function newUser(Request $request){ 
+        $usuario = new User($request->all());
         $usuario->uuid = Str::uuid();
-        $usuario->name = Auth::user()->display_name;
-        $usuario->email = Auth::user()->user_email;
-        $usuario->username = Auth::user()->user_email;
-        $usuario->password = Auth::user()->password;
         $usuario->status = 'activated';
         $usuario->save();
 
-        dd("listo");
+        DB::table('streaming.model_has_roles')
+            ->insert(['role_id' => $request->role_id, 'model_type' => 'App\Models\User', 'model_id' => $usuario->id]);
+
+
+        return $usuario->id;
+    }
+
+    public function verifyContact($user_id){
+        $contactStreaming = Contact::where('user_id', '=', $user_id)
+                                ->select('id')
+                                ->first();
+
+        return $contactStreaming;
+    }
+
+    public function newContact(Request $request){
+        $contact = new Contact($request->all());
+        $contact->uuid = Str::uuid();
+        $contact->save();
+
+        return $contact->id;
+    }
+
+    public function getMeetingId($uuid){
+        $eventStreaming = Meeting::where('uuid', '=', $uuid)
+                            ->select('id')
+                            ->first();
+
+        return $eventStreaming->id;
+    }
+
+    public function newInvitation($meeting_id, $contact_id){
+        $invitation = new Invitation();
+        $invitation->uuid = Str::uuid();
+        $invitation->meeting_id = $meeting_id;
+        $invitation->contact_id = $contact_id;
+        $invitation->save();
+
+        return $invitation;
     }
 }

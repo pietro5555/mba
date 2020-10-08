@@ -21,6 +21,9 @@
             </li>
             @if (Auth::guest())
                 <li class="nav-item dropdown">
+                    <div id="google_translate_element" class="google"></div>
+                </li>
+                {{-- <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle items-header" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         IDIOMA
                     </a>
@@ -28,7 +31,7 @@
                         <a class="dropdown-item" href="#">Español</a>
                         <a class="dropdown-item" href="#">Inglés</a>
                     </div>
-                </li>
+                </li> --}}
 
                 <li class="nav-item li-register-button">
                     <a type="button" class="btn btn-primary btn-register-header" href="{{ route('log').'?act=1' }}">REGISTRARME</a> <!--/login-->
@@ -39,7 +42,8 @@
                 </li>
             @else
                 <li class="nav-item dropdown li-language" id="li-language-larger">
-                    <div class="btn-group">
+                    <div id="google_translate_element"></div>
+                    {{-- <div class="btn-group">
                         <button type="button" class="btn btn-primary btn-language dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             IDIOMA
                         </button>
@@ -47,7 +51,7 @@
                             <a class="dropdown-item" href="#">Español</a>
                             <a class="dropdown-item" href="#">Inglés</a>
                         </div>
-                    </div>
+                    </div> --}}
                 </li>
                 <li class="nav-item" id="li-language-small" style="display: none;">
                     <a class="nav-link items-header" href="#">IDIOMA</a>

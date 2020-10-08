@@ -19,6 +19,30 @@
 
         <!-- css para la vista de anotaciones y mas -->
         <link rel="stylesheet" href="{{asset('css/anotaciones-simple.css')}}">
+
+        <style>
+            .goog-te-gadget-simple{
+                display: inline-block;
+                text-align: center;
+                vertical-align: middle;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+                border: 1px solid;
+                padding: .375rem .75rem !important;
+                font-size: 1rem !important;
+                line-height: 1.5;
+                transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+                background-color: #007bff !important;
+                border-color: #007bff !important;
+                border-radius: 25px !important;
+                font-weight: bold;
+            }
+            .goog-te-gadget-simple .goog-te-menu-value span{
+                color: #fff !important;
+            }
+        </style>
         
         @stack('styles')
         
@@ -97,6 +121,14 @@
             <!-- /#page-content-wrapper -->
         </div>
         <!-- /#wrapper -->
+
+        <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+        <script type="text/javascript">
+            function googleTranslateElementInit() {
+                new google.translate.TranslateElement({pageLanguage: 'es', includedLanguages: 'en, es', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, gaTrack: true}, 'google_translate_element');
+                    }
+            </script>
 
         <!-- Bootstrap core JavaScript -->
         <script src="https://kit.fontawesome.com/d6f2727f64.js" crossorigin="anonymous"></script>

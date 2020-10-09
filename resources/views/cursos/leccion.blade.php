@@ -23,10 +23,10 @@
    @endif
 <div class="container-fluid">
   <div class="row justify-content-end">
-    <div class="title-level col-xs-1 col-md-4">
+    <div class="title-level col-xs-1 col-md-3">
       <h5>Nivel: {{$lesson->course->subcategory->title}}</h5>
     </div>
-    <div class="col-xs-1 col-md-4 text-center ">
+    <div class="col-xs-1 col-md-2 text-center ">
       <div class="icon-social-media">
         <a href="https://m.facebook.com/MyBusinessAcademyPro/" target="_blank" class="btn btn-social-icon btn-facebook btn-rounded"><img src="{{ asset('images/icons/facebook.svg') }}" height="20px" width="20px"></a>
         <a href="" class="btn btn-social-icon btn-twitter btn-rounded" target="_blank"><img src="{{ asset('images/icons/twitter.svg') }}" height="20px" width="20px"></a>
@@ -39,14 +39,31 @@
   {{-- BANNER --}}
   <div id="lessonsCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
     <div class="carousel-inner">
-      @php $cont = 0; @endphp
+      @php $ending = 0; $cont = 1; @endphp
       @foreach ($all_lessons as $leccion)
         <div class="carousel-item @if ($leccion->id == $lesson->id) active @endif">
           <div class="video-container">
-            <iframe src="{{ $leccion->url }}" width="100%" height="564" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+            <iframe src="{{ $leccion->url }}" width="100%" height="590" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
           </div>
         </div>
-        @php $cont++; @endphp
+        @if ($leccion->id <= $lesson->id)
+            @php
+                if ($cont >= count($all_lessons) ){
+                  $ending = 1;
+                }else{
+                  $cont++;
+                }
+            @endphp
+        @endif
+          @if ($leccion->id > $lesson->id)
+            @if ($leccion->id == ($lesson->id + 1))
+              <a id="nextlesson" class="d-none" href="{{ route('lesson.show', [$leccion->slug, $leccion->id, $leccion->course_id]) }}">Siguiente</a>    
+            @endif
+          @else
+            @if ($leccion->id == $lesson->id && $ending == 1)
+              <a id="nextlesson" class="d-none" href="{{ route('client.courses.take-evaluation', [$lesson->course->slug, $lesson->course_id]) }}">Evaluacion</a>  
+            @endif
+          @endif
       @endforeach
     </div>
     <!--<div class="">
@@ -70,13 +87,15 @@
             <div class="nav nav-tabs nav-fill font-weight-bold" id="nav-tab" role="tablist">
               <a class="nav-item nav-link active m-2" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Acerca del Curso</a>
               <a class="nav-item nav-link m-2" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Comentarios</a>
-              <a class="nav-item nav-link m-2" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Materiales</a>
+              @if ($lesson->materials->isNotEmpty())
+                <a class="nav-item nav-link m-2" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Materiales</a>
+              @endif
               <a class="nav-item nav-link m-2" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab" aria-controls="nav-about" aria-selected="false">Certificado</a>
             </div>
           </nav>
           <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
             <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-              {{$lesson->course->description}}
+              {!!$lesson->course->description!!}
             </div>
             <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
               <div class="custombox clearfix">
@@ -124,7 +143,7 @@
 
                           <div class="media-body">
                             <h4 class="media-heading text-white">{{ $comment->user->display_name }}</h4>
-                            <h7 class="media-heading about-course-text">{{str_replace('-', '/', date('d-m-Y', strtotime($comment->date)))}}</h7>
+                            <small class="media-heading about-course-text">{{str_replace('-', '/', date('d-m-Y', strtotime($comment->date)))}}</small>
                             <p class="about-course-text">
                               {{$comment->comment}}
                             </p>
@@ -269,3 +288,18 @@
     {{-- FIN DE SECCIÓN REFERIDOS (USUARIOS LOGGUEADOS) --}}
 
   @endsection
+  @push('scripts')
+  <script>    
+    $(document).on(function(){
+    $(".vp-telecine.invisible video").on('ended', function(){
+      $('#nextlesson').click();
+    });
+  });
+
+  $(document).ready(function(){
+    $(".vp-telecine.invisible video").on('ended', function(){
+      $('#nextlesson').click();
+    });
+  });
+  </script>
+  @endpush

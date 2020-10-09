@@ -19,6 +19,9 @@
       input[type="radio"]:checked ~ label {
          color: orange;
       }
+      .cuadrado{
+         outline: 1px solid #2A91FF;
+      }
    </style>
 @endpush
 
@@ -181,7 +184,7 @@
          <div class="col-md-12">
             <div class="row">
                <div class="col-md-12">
-                  <h4 class="text-white ml-5">ACERCA DEL CURSO </h4>
+                  <h2 class="text-white ml-5">ACERCA DEL CURSO </h2>
                   <hr style="border: 1px solid #707070; opacity: 1;" />
                   <div class="col-md-12">
                      <div class="col-md-12 justify-content-center p-2 ml-4" style="color: white;">
@@ -226,24 +229,31 @@
                      @php $cont = 0; @endphp
                      @foreach ($curso->lessons as $leccion)
                         @php $cont++; @endphp
-                        <div class="panel panel-default">
+                        <div class="panel panel-default mb-2">
                            <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{$leccion->id}}">
-                              <div class="col-md-12 p-2 accordion-seccion-leccion align-items-center">
-                                 <div class="row">
-                                    <div class="col-md-2">
-                                       <div class="cuadrado"><h2 class="text-white"> @if ($cont < 10) 0{{ $cont }} @else {{ $cont }} @endif</h2></div>
+                              <div class="col-md-12 accordion-seccion-leccion align-items-center">
+                                 <div class="row align-items-center ">
+                                    <div class="col-md-1 p-0">
+                                       <div class="cuadrado p-1 pl-2 pr-2">
+                                          <h4 class="text-white m-0"> 
+                                             <strong>@if ($cont < 10) 0{{ $cont }} @else {{ $cont }} @endif</strong>
+                                          </h4>
+                                       </div>
                                     </div>
-                                    <div class="col-md-8">
-                                       <h5 class="panel-title about-course-text"> 
+                                    <div class="col-md-10 pl-0">
+                                       <h5 class="panel-title about-course-text m-0"> 
                                           @if ( (!Auth::guest()) && (!is_null($progresoCurso)) )
-                                             <a href="{{ route('lesson.show', [$leccion->slug, $leccion->id, $curso->id]) }}" class="about-course-text">{{ $leccion->title }}</a>
+                                          <a href="{{ route('lesson.show', [$leccion->slug, $leccion->id, $curso->id]) }}" class="about-course-text">
+                                             {{ $leccion->title }}
+                                          </a>
+                                             
                                           @else
                                              {{ $leccion->title }}
                                           @endif
                                        </h5>
                                     </div>
-                                    <div class="col-md-2">
-                                       <img src="{{ asset('images/icons/chevron.svg') }}" class="leccion-icon float-right"> 
+                                    <div class="col-md-1">
+                                       <img src="{{ asset('images/icons/chevron.svg') }}" class="leccion-icon float-right" height="20">
                                     </div>
                                  </div>
                               </div>

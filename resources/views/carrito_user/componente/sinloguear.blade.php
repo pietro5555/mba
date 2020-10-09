@@ -127,6 +127,8 @@
                                 <label class="form-check-label" style="color:white;">
                                     <input class="form-check-input text-white" name="terms" type="checkbox" required>
                                     Acepto las politicas de privacidad y los términos de datos.
+                                     <br>
+                                    <a href="{{asset('assets/terminosycondiciones.docx')}}" style="color: white;" download>Descargar Terminos y Condiciones</a>
                                 </label>
                             </div>
                             

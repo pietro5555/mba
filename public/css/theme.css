@@ -395,7 +395,7 @@
 }
 @media (max-width: 450px) {
     .course-category-caption a{
-    font-size: 12px;
+    font-size: 23px;
     }
     .carousel-caption{
         width: auto;
@@ -448,7 +448,7 @@ bottom: 0px;
 
 @media  (min-width: 1024px) {
     .course-category-caption a{
-font-size: 16px;
+font-size: 23px;
 }
 
 .mentor-index-seccion{

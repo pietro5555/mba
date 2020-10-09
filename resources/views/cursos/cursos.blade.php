@@ -421,36 +421,30 @@ $tercero++;
                 </div>
             </div>
 
-            <div class="row" style="padding: 10px 30px;">
+            <div id="newers" class="row" style="padding: 10px 30px;">
                 @foreach ($cursosNuevos as $cursoNuevo)
-                <div class="col-xl-4 col-lg-4 col-12" style="padding-bottom: 10px;">
-                   <a href="{{ route('courses.show', [$cursoNuevo->slug, $cursoNuevo->id]) }}" style="text-decoration: none;background-color: transparent; color: white;">
-                    <div class="card">
-                        @if (!is_null($cursoNuevo->thumbnail_cover))
-                        <img src="{{ asset('uploads/images/courses/covers/'.$cursoNuevo->thumbnail_cover) }}" class="card-img-top new-course-img" alt="...">
-                        @else
-                        <img src="{{ asset('uploads/images/courses/covers/default.jpg') }}" class="card-img-top new-course-img" alt="...">
-                        @endif
-                        <div class="card-img-overlay d-flex flex-column">
-                            <div class="mt-auto">
-                                <div class="new-course-title">{{ $cursoNuevo->title }}</div>
-                                <div class="row">
-                                    <div class="col-12 col-xl-6 new-course-category">{{ $cursoNuevo->category->title }}</div>
-                                    <div class="col-12 col-xl-6" style="font-size: 16px;">
-                                        <div class="row row-cols-3">
-                                            <div class="col text-right no-padding-sides mr-2">
+                    <div class="col-xl-4 col-lg-4 col-12" style="padding-bottom: 10px;">
+                        <div class="card">
+                            <a href="{{ route('courses.show', [$cursoNuevo->slug, $cursoNuevo->id]) }}" style="color: white;">
 
-                                                <i class="far fa-user-circle"></i><br>
-                                                <span class="new-course-items-text">{{$cursoNuevo->users->count()}}</span>
-                                            </div>
-                                        </div>
+                            @if (!is_null($cursoNuevo->cover))
+                                <img src="{{ asset('uploads/images/courses/covers/'.$cursoNuevo->cover) }}" class="card-img-top new-course-img" alt="...">
+                            @else
+                                <img src="{{ asset('uploads/images/courses/covers/default.jpg') }}" class="card-img-top new-course-img" alt="...">
+                            @endif
+                            <div class="card-img-overlay d-flex flex-column">
+                                <div class="mt-auto">
+                                    <div class="new-course-title">{{ $cursoNuevo->title }}</div>
+                                    <div class="row">
+                                       <div class="col-md-12">
+                                           <p style="float: right;"> <i class="far fa-user-circle"> {{ $cursoNuevo->users->count()}}</i></p>
+                                       </div>
                                     </div>
                                 </div>
                             </div>
+                          </a>
                         </div>
                     </div>
-                  </a>
-                </div>
                 @endforeach
             </div>
         </div>

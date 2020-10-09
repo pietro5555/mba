@@ -36,41 +36,44 @@ const countdown = (deadline,elem) => {
       $('#'+elem).append(
         '<h1>El live ya a Iniciado</h1>'
         );
+      $('.text-change').html('AGENDAR LIVE Y ENTRAR');
+      $('.ocultar').addClass('d-none')
+      $('.mostrar').removeClass('d-none')
     }else{
 
      $('#'+elem).append(
 
-            '<p class="p-1 bd-highlight" style="font-size: 66px;">'+
+            '<p class="p-1 bd-highlight" style="font-size: 80px; font-weight:800;">'+
              t.remainDays +
-                '<p style="margin-left: -40px; margin-top: 100px;">DIAS</p>'+
+                '<p style="margin-left: -40px; margin-top: 100px; font-weight:800;">DIAS</p>'+
             '</p>'+
 
-            '<p class="p-2 bd-highlight" style="font-size: 56px;">'+
+            '<p class="p-2 bd-highlight" style="font-size: 70px; font-weight:800;">'+
                 ':'+
             '</p>'+
 
-            '<p class="p-1 bd-highlight" style="font-size: 66px;">'+
+            '<p class="p-1 bd-highlight" style="font-size: 80px; font-weight:800;">'+
               t.remainHours +
-                '<p style="margin-left: -68px; margin-top: 100px;">HORAS</p>'+
+                '<p style="margin-left: -68px; margin-top: 100px; font-weight:800;">HORAS</p>'+
             '</p>'+
 
-            '<p class="p-2 bd-highlight" style="font-size: 56px;">'+
+            '<p class="p-2 bd-highlight" style="font-size: 70px; font-weight:800;">'+
                ':'+
             '</p>'+
 
-            '<p class="p-1 bd-highlight" style="font-size: 66px;">'+
+            '<p class="p-1 bd-highlight" style="font-size: 80px; font-weight:800;">'+
                t.remainMinutes +
 
-                '<p style="margin-left: -80px; margin-top: 100px;">MINUTOS</p>'+
+                '<p style="margin-left: -80px; margin-top: 100px; font-weight:800;">MINUTOS</p>'+
             '</p>'+
 
-            '<p class="p-2 bd-highlight" style="font-size: 56px;">'+
+            '<p class="p-2 bd-highlight" style="font-size: 70px; font-weight:800;">'+
                 ':'+
             '</p>'+
-            '<p class="p-1 bd-highlight" style="font-size: 66px;">'+
+            '<p class="p-1 bd-highlight" style="font-size: 80px; font-weight:800;">'+
                t.remainSeconds +
 
-                '<p style="margin-left: -85px; margin-top: 100px;">SEGUNDOS</p>'+
+                '<p style="margin-left: -85px; margin-top: 100px; font-weight:800;">SEGUNDOS</p>'+
             '</p>'
 
         )
@@ -146,22 +149,28 @@ countdown('{{($evento != null) ? $evento->date.' '.$evento->time : $fechaActual}
    <div class="col-md-6" style="margin-bottom: 10px;">
       @if (Auth::guest())
          {{-- USUARIOS INVITADOS --}}
-         <a href="{{route('shopping-cart.membership')}}" class="btn btn-success  btn-block"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar al Carrito</a>
+         <a href="{{route('shopping-cart.membership')}}" class="btn btn-success  btn-block"><i class="fa fa-shopping-cart" aria-hidden="true"></i> AQUIRIR MEMBRESIA</a>
       @else
          @if (is_null(Auth::user()->membership_id))
             {{-- USUARIOS LOGUEADOS SIN MEMBRESÍA --}}
-            <a href="{{route('shopping-cart.membership')}}" class="btn btn-success btn-block"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar al Carrito</a>
+            <a href="{{route('shopping-cart.membership')}}" class="btn btn-success btn-block"><i class="fa fa-shopping-cart" aria-hidden="true"></i> AQUIRIR MEMBRESIA</a>
          @else
             @if ($evento->subcategory_id > Auth::user()->membership_id)
                {{-- USUARIOS LOGUEADOS CON MEMBRESÍA MENOR A LA SUBCATEGORÍA DEL EVENTO--}}
-               <a href="{{route('shopping-cart.membership')}}" class="btn btn-success"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar al Carrito</a>
+               <a href="{{route('shopping-cart.membership')}}" class="btn btn-success"><i class="fa fa-shopping-cart" aria-hidden="true"></i> MEJORAR MEMBRESIA</a>
             @else
                @if (is_null($checkEvento))
                   {{-- USUARIOS LOGUEADOS CON MEMBRESÍA MAYOR O IGUAL A LA SUBCATEGORÍA DEL EVENTO Y QUE NO TIENEN EL EVENTO AGENDADO AÚN--}}
-                  <a href="{{ route('schedule.event',[$evento->id]) }}" class="btn btn-primary btn-block">AGENDAR LIVE</a>
+                  <a href="{{ route('schedule.event',[$evento->id]) }}" class="btn btn-primary btn-block text-change">AGENDAR LIVE</a>
                @else
                   {{-- EL USUARIO YA TIENE EL EVENTO AGENDADO--}}
-                  <a href="{{route('show.event', $evento->id)}}" class="btn btn-success btn-block">Ir Al Evento</a>
+                  <a href="{{route('show.event', $evento->id)}}" class="btn btn-success btn-block ocultar">IR AL EVENTO</a>
+                  <form action="https://streaming.shapinetwork.com/connect-mba/{{$evento->id}}/{{Auth::user()->ID}}" method="POST" class="mostrar d-none">
+                        @csrf
+                        <input type="hidden" name="email" value="{{ Auth::user()->user_email }}">
+                      <input type="hidden" name="password" value="{{ decrypt(Auth::user()->clave) }}">
+                      <button type="submit" class="btn btn-success btn-block">ENTRAR AL LIVE</button>
+                  </form>
                @endif
             @endif
          @endif

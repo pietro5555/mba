@@ -54,9 +54,9 @@
                     <div class="row ml-0 d-flex h-100">
                         <div class="col-md-9 my-auto" style="margin-bottom: 0px !important">
                             <h6 class="col-sm w-100 pl-0" style="font-size: 14px"><i class="text-success fa fa-play-circle"></i> <a href="{{ route('courses.show', [$curso->slug, $curso->id]) }}" class="text-white">{{ $curso->title }}</a></h6>
-                            <h6 class="ml-2 text-white" style="font-size: 12px">
+                            {{-- <h6 class="ml-2 text-white" style="font-size: 12px">
                                 {{ $curso->category->title }}
-                            </h6>
+                            </h6> --}}
                          </div>
                         <div class="col-md-3 my-auto" style="margin-bottom: 0px !important">
                             <h6 class="text-white w-100">

@@ -42,6 +42,10 @@
             .goog-te-gadget-simple .goog-te-menu-value span{
                 color: #fff !important;
             }
+
+            .goog-te-gadget-icon{
+                display: none;
+            }
         </style>
         
         @stack('styles')
@@ -127,7 +131,10 @@
         <script type="text/javascript">
             function googleTranslateElementInit() {
                 new google.translate.TranslateElement({pageLanguage: 'es', includedLanguages: 'en, es', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, gaTrack: true}, 'google_translate_element');
-                    }
+                setTimeout(() => {
+                    $('.goog-te-menu-value > span:first').html('Idioma')
+                }, 1000);
+                }
             </script>
 
         <!-- Bootstrap core JavaScript -->

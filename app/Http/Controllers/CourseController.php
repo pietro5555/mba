@@ -179,9 +179,10 @@ class CourseController extends Controller{
                 $cantCateg = count($cursostmp);
                 $cont = 0;
                 $string = '';
+                $categoriastmp = [];
                 foreach ($cursostmp as $curso) {
                     $cate = DB::table('categories')->where('id', $curso->category_id)->first();
-
+                    // $categoriastmp [] = $cate->title;
                     if ($cantCateg == 1) {
                         $string = $cate->title;
                     }else{
@@ -197,6 +198,15 @@ class CourseController extends Controller{
                     }
                     $cont++;
                 }
+                // $categoriastmp2 = array_unique($categoriastmp);
+                // dump($categoriastmp, $categoriastmp2);
+                // for ($i=0; $i < count($categoriastmp2); $i++) { 
+                //     if ($i == 0){
+                //         $string = $categoriastmp2[$i];
+                //     }else{
+                //         $string = $string.', '.$categoriastmp2[$i];
+                //     }
+                // }
                 $mentor->categoria = $string;
             }
         }
@@ -210,10 +220,9 @@ class CourseController extends Controller{
         $courses = Course::paginate(8);
         $refeDirec =0;
         if(Auth::user()){
-           $refeDirec = User::where('referred_id', Auth::user()->ID)->count('ID');
+            $refeDirec = User::where('referred_id', Auth::user()->ID)->count('ID');
         }
-
-        return view('cursos.show_all_courses', compact('courses','refeDirec'));
+        return view('cursos.show_all_courses', compact('courses', 'refeDirec'));
 
     }
 

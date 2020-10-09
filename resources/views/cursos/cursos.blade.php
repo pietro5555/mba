@@ -80,7 +80,7 @@
                                         {{$last_course->title}}
                             </h4>
                             <p class="col-md-6 description-course text-justify pl-0 ml-4">
-                                    {{$last_course->description}}
+                                    {!!$last_course->description!!}
                             </p>
                             <div class="float-right mb-2">
                                 <div class="row">

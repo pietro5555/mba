@@ -23,9 +23,9 @@
    @endif
 <div class="container-fluid">
   <div class="row justify-content-end">
-    <div class="title-level col-xs-1 col-md-4">
-      <h5>Nivel: {{$lesson->course->subcategory->title}}</h5>
-    </div>
+        <div>
+                <h5 class="title-level">Nivel: {{$lesson->course->subcategory->title}}</h5>
+        </div>
     <div class="col-xs-1 col-md-4 text-center ">
       <div class="icon-social-media">
         <a href="https://m.facebook.com/MyBusinessAcademyPro/" target="_blank" class="btn btn-social-icon btn-facebook btn-rounded"><img src="{{ asset('images/icons/facebook.svg') }}" height="20px" width="20px"></a>
@@ -177,12 +177,49 @@
               <h5 class="text-white">CONTENIDO DEL CURSO</h5>
             </div>
           </nav>
-          <div class="row">
-            <div class="col-lg-12 mx-auto mt-2 mb-2">
-              <!-- Accordion -->
-              <div id="accordionContentLeccion" class="accordion-leccion">
+
+          <div id="accordion">
                 @php $cont2 = 0; @endphp
                 <!-- Accordion item 1 -->
+                @foreach($all_lessons as $lesson)
+                <div class="card mt-2 card-accordion" id="card-lesson-content">
+                        <div class="card-header collapsed border-0 collapsible-link" id="heading{{$lesson->id}}" data-toggle="collapse" data-target="#collapse{{$lesson->id}}" aria-expanded="false" aria-controls="collapse{{$lesson->id}}">
+                                <a href="{{ route('lesson.show', [$lesson->slug, $lesson->id, $lesson->course_id]) }}">
+                                        <h5 class="mb-0 font-weight-bold d-block position-relative py-2">
+                                        <i class="text-primary fa fa-play-circle"></i>  {{$lesson->title}}
+                                        </h5>
+                                </a>
+                                <h6 class="mb-0 ml-4 d-block py-2"><i class="fa fa-clock-o" aria-hidden="true"></i> {{$lesson->duration}} m</h6>
+                        </div>
+                        <div id="collapse{{$lesson->id}}" class="collapse" aria-labelledby="heading{{$lesson->id}}" data-parent="#accordion">
+                        <div class="card-body">
+                                {{$lesson->description}}
+                        </div>
+                        </div>
+                </div>
+                @php $cont2++; @endphp
+            @endforeach
+            </div>
+            @if ($progresoCurso->certificate == 0)
+                  <div class="card mt-2 mb-2" style="background-color: #2A91FF;">
+                    <div class="card-header text-center" >
+                      <a href="{{ route('client.courses.take-evaluation', [$lesson->course->slug, $lesson->course_id]) }}">
+                        <h5 class="mb-0 font-weight-bold d-block position-relative py-2" style="color: white;">
+                          PRESENTAR EVALUACIÓN
+                        </h5>
+                      </a>
+                    </div>
+                  </div>
+            @endif
+
+
+
+          <!--<div class="row">
+            <div class="col-lg-12 mx-auto mt-2 mb-2">
+
+              <div id="accordionContentLeccion" class="accordion-leccion">
+                @php $cont2 = 0; @endphp
+
                 @foreach($all_lessons as $lesson)
                   <div id="card{{$lesson->id}}" class="card mb-2">
                     <div class="card-header accordion-leccion-content" data-toggle="collapse" data-target="#collapse{{$lesson->id}}">
@@ -203,7 +240,7 @@
                 @endforeach
                 @if ($progresoCurso->certificate == 0)
                   <div class="card mb-2" style="background-color: #2A91FF;">
-                    <div class="card-header accordion-leccion-content text-center" >
+                    <div class="card-header text-center" >
                       <a href="{{ route('client.courses.take-evaluation', [$lesson->course->slug, $lesson->course_id]) }}">
                         <h5 class="mb-0 font-weight-bold d-block position-relative py-2" style="color: white;">
                           PRESENTAR EVALUACIÓN
@@ -214,7 +251,7 @@
                 @endif
               </div>
             </div>
-          </div>
+          </div>-->
 
         </div>
       </div>
@@ -246,26 +283,7 @@
 </div>-->
 
     {{-- SECCIÓN REFERIDOS (USUARIOS LOGGUEADOS) --}}
-    @if (!Auth::guest())
-        <div class="pt-4">
-            <div class="row">
-                <div class="col-xl-4 col-lg-4 col-12 pl-4 pr-4">
-                    <div class="referrers-box">
-                        <i class="fa fa-user referrers-icon" style="color: white;"></i><br>
-                        {{ $directos ?? '' }} Referidos
-                    </div>
-                    <a href="{{url('/admin')}}" style="color: white; text-decoration: none;">
-                     <div class="referrers-button">
-                        Panel de referidos
-                     </div>
-                    </a>
-                </div>
-                <div class="col-xl-8 col-lg-8 d-none d-lg-block d-xl-block referrers-banner">
-                    <div class="referrers-banner-text">EL QUE QUIERE SUPERARSE, NO VE OBSTÁCULOS, VE SUEÑOS.</div>
-                </div>
-            </div>
-        </div><br><br>
-    @endif
+
     {{-- FIN DE SECCIÓN REFERIDOS (USUARIOS LOGGUEADOS) --}}
 
   @endsection

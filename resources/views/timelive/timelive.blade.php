@@ -269,8 +269,7 @@ $contador++;
 @endforeach
 </div>
 </div>
-
-@if($total >= 4)
+@if($total > 4)
 <div class="carousel-item">
     <div class="row">
 

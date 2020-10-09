@@ -67,7 +67,7 @@
             border-radius: 50%;
             right: 0;
         }
-        .punto.bg-success::after{                        
+        .punto.bg-success::after{
             background: rgba(0,123,255,0.99);
             background: -moz-linear-gradient(left, rgba(0,123,255,0.99) 0%, rgba(0,123,253,0.99) 1%, rgba(40,167,69,1) 100%);
             background: -webkit-gradient(left top, right top, color-stop(0%, rgba(0,123,255,0.99)), color-stop(1%, rgba(0,123,253,0.99)), color-stop(100%, rgba(40,167,69,1)));
@@ -105,7 +105,7 @@
             background: transparent linear-gradient(90deg, #2A91FF 0%, #257EDB 61%, #6AB742 100%) 0% 0% no-repeat padding-box;
         }
 
-        .punto.bg-info::after{                        
+        .punto.bg-info::after{
             background: rgba(40,167,70,0.99);
             background: -moz-linear-gradient(left, rgba(40,167,70,0.99) 0%, rgba(40,167,71,0.99) 1%, rgba(23,163,184,1) 100%);
             background: -webkit-gradient(left top, right top, color-stop(0%, rgba(40,167,70,0.99)), color-stop(1%, rgba(40,167,71,0.99)), color-stop(100%, rgba(23,163,184,1)));
@@ -115,7 +115,7 @@
             background: linear-gradient(to right, rgba(40,167,70,0.99) 0%, rgba(40,167,71,0.99) 1%, rgba(23,163,184,1) 100%);
             filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#28a746', endColorstr='#17a3b8', GradientType=1 );
         }
-        .punto.bg-warning::after{                        
+        .punto.bg-warning::after{
             background: rgba(23,163,184,0.99);
             background: -moz-linear-gradient(left, rgba(23,163,184,0.99) 0%, rgba(25,163,182,0.99) 1%, rgba(255,193,7,1) 100%);
             background: -webkit-gradient(left top, right top, color-stop(0%, rgba(23,163,184,0.99)), color-stop(1%, rgba(25,163,182,0.99)), color-stop(100%, rgba(255,193,7,1)));
@@ -125,7 +125,7 @@
             background: linear-gradient(to right, rgba(23,163,184,0.99) 0%, rgba(25,163,182,0.99) 1%, rgba(255,193,7,1) 100%);
             filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#17a3b8', endColorstr='#ffc107', GradientType=1 );
         }
-        .punto.bg-danger::after{            
+        .punto.bg-danger::after{
             background: rgba(255,193,7,0.99);
             background: -moz-linear-gradient(left, rgba(255,193,7,0.99) 0%, rgba(255,192,8,0.99) 1%, rgba(220,53,69,1) 100%);
             background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255,193,7,0.99)), color-stop(1%, rgba(255,192,8,0.99)), color-stop(100%, rgba(220,53,69,1)));

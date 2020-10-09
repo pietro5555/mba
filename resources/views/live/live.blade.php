@@ -225,7 +225,7 @@
 
         <div class="nav flex-column nav-pills mt-2 menu-vertical-anotaciones" id="v-pills-tab" role="tablist" aria-orientation="vertical">
             <!--Solo se muestra para mentores-->
-            @if(Auth::user()->rol_id ==3)
+            @if(Auth::user()->rol_id ==2)
                 <a class="nav-link  text-white text-center" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="true"><img src="{{ asset('images/icons/settings.svg') }}" height="30px" class=""><h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Configuración</h6></a>
                 <a class="nav-link text-white text-center" id="v-pills-students-tab" data-toggle="pill" href="#v-pills-students" role="tab" aria-controls="v-pills-students" aria-selected="false"> <img src="{{ asset('images/icons/person.svg') }}" height="30px" class="">
                     <h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Participantes</h6></a>
@@ -243,7 +243,7 @@
                 <a class="nav-link text-white text-center" id="v-pills-offers-tab" data-toggle="pill" href="#v-pills-offers" role="tab" aria-controls="v-pills-offers" aria-selected="false"><img src="{{ asset('images/icons/descuento.svg') }}" height="30px" class="">
                     <h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Ofertas</h6></a>
         </div>
-        <div class="tab-content mt-2" id="v-pills-tabContent">
+        <div class="tab-content mt-2 col-md-4" id="v-pills-tabContent">
                 <div class="tab-pane fade  ml-2" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
                     <div>
                     <a data-toggle="modal" data-target="#modal-settings-survey" class="btn btn-primary btn-block"><i class="fa fa-plus-circle"></i> Agregar Encuesta</a>
@@ -263,7 +263,7 @@
 
                 </div>
                 <div class="tab-pane fade ml-2" id="v-pills-students" role="tabpanel" aria-labelledby="v-pills-students-tab">Seccion Participantes</div>
-                <div class="tab-pane show active fade ml-2" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                <div class="tab-pane show active fade ml-2 mb-2" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
                     <div>
                             <div class="row ml-1">
                                     <div class="col pt-2 logo-user">
@@ -422,6 +422,9 @@
                         </div>
                         @endif
                     @endif
+                    @if(Auth::user()->rol_id==2)
+                    <div>Estadisticas de encuesta</div>
+                    @endif
                 </div>
                 <div class="tab-pane fade ml-2" id="v-pills-presentation" role="tabpanel" aria-labelledby="v-pills-presentation-tab">Seccion Presentacion</div>
                 <div class="tab-pane fade ml-2" id="v-pills-video" role="tabpanel" aria-labelledby="v-pills-video-tab">Seccion Video</div>
@@ -442,7 +445,7 @@
       			<div class="modal-header">
         			<h5 class="modal-title" id="exampleModalLabel">Agregar video</h5>
       			</div>
-      			<form action="{{ route('set.event.store', [1]) }}" method="POST">
+      			<form action="{{ route('set.event.store', [$event->id]) }}" method="POST">
 			        {{ csrf_field() }}
 				    <div class="modal-body">
 				        <div class="container-fluid">
@@ -474,7 +477,7 @@
       			<div class="modal-header">
         			<h5 class="modal-title" id="exampleModalLabel">Agregar Archivos</h5>
       			</div>
-      			<form action="{{ route('set.event.store', [1]) }}" method="POST" enctype="multipart/form-data" >
+      			<form action="{{ route('set.event.store', [$event->id]) }}" method="POST" enctype="multipart/form-data" >
 			        {{ csrf_field() }}
 				    <div class="modal-body">
 				        <div class="container-fluid">
@@ -506,7 +509,7 @@
       			<div class="modal-header">
         			<h5 class="modal-title" id="exampleModalLabel">Agregar Presentación</h5>
       			</div>
-      			<form action="{{ route('set.event.store', [1]) }}" method="POST" enctype="multipart/form-data" >
+      			<form action="{{ route('set.event.store', [$event->id]) }}" method="POST" enctype="multipart/form-data" >
 			        {{ csrf_field() }}
 				    <div class="modal-body">
 				        <div class="container-fluid">
@@ -538,7 +541,7 @@
       			<div class="modal-header">
         			<h5 class="modal-title" id="exampleModalLabel">Agregar Encuesta</h5>
       			</div>
-      			<form action="{{ route('set.event.store', [1]) }}" method="POST" id="formQuestion">
+      			<form action="{{ route('set.event.store', [$event->id]) }}" method="POST" id="formQuestion">
 			        {{ csrf_field() }}
 				    <div class="modal-body">
 				        <div class="container-fluid">

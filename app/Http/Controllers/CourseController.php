@@ -208,7 +208,12 @@ class CourseController extends Controller{
     public function show_all_courses()
     {
         $courses = Course::paginate(8);
-        return view('cursos.show_all_courses', compact('courses'));
+        $refeDirec =0;
+        if(Auth::user()){
+           $refeDirec = User::where('referred_id', Auth::user()->ID)->count('ID');
+        }
+
+        return view('cursos.show_all_courses', compact('courses','refeDirec'));
 
     }
 
@@ -356,7 +361,7 @@ class CourseController extends Controller{
             ->insert(['course_id' => $id, 'user_id' => Auth::user()->ID, 'progress' => 0,
                       'start_date' => date('Y-m-d'), 'certificate' => 0, 'favorite' => 0,
                       'created_at' => $fecha, 'updated_at' => $fecha]);*/
-        
+
         if (!is_null($primeraLeccion)){
             return redirect('courses/lesson/'.$primeraLeccion->slug.'/'.$primeraLeccion->id.'/'.$curso->id)->with('msj-exitoso', 'El curso ha sido agregado a su lista con éxito.');
         }else{

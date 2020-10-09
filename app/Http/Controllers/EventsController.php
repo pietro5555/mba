@@ -96,6 +96,16 @@ class EventsController extends Controller
             $evento->image = $name;
             $evento->save();
         }
+        /*Habilitar recursos por defecto: Configuracion y Participantes*/
+        $resource = new EventResources;
+        $resource->resources_id = 1;
+        $resource->event_id = $evento->id;
+        $resource->status = 1;
+        $resource->resources_id = 2;
+        $resource->event_id = $evento->id;
+        $resource->status = 1;
+        $resource->save();
+        return dd ($resource);
 
         return redirect('admin/events')->with('msj-exitoso', 'El evento '.$evento->title.' ha sido creado con éxito.');
     }
@@ -112,6 +122,7 @@ class EventsController extends Controller
         $event = Events::find($event_id);
         $menuResource = $event->getResource();
         $resources_survey = SetEvent::where('event_id', $event_id)->where('type', 'survey')->get()->first();
+      // return  dd($resources_survey, $menuResource);
         if (!empty($resources_survey))
         {
             $surveys = Survey::where('content_event_id', $resources_survey->id)->get();

@@ -164,4 +164,11 @@ Dev:Pietro
 Dev:Luisana Marín
 *Agregado el campo thumbnail_cover a la tabla courses (correr el script courses)
 
+ÚLTIMA ACTUALIZACIÓN DEL SERVIDOR: 08/10/2020
+----------------------------------------------
+
+Dev:Luisana Marín
+*Nueva Base de datos para el streaming (correr el script streaming)
+*Agregar al archivo .env DB_STREAMING_DATABASE=streaming en los datos de conexión a la base de datos
+
 

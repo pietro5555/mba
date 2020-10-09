@@ -89,8 +89,9 @@ class EventsController extends Controller
         $evento->status = 1;
         $evento->save();
 
+        $fecha = date('Y-m-d H:i:s');
         DB::table('events_users')
-            ->insert(['event_id' => $evento->id, 'user_id' => $evento->user_id, 'date' => $evento->date, 'time' => $evento->time]);
+            ->insert(['event_id' => $evento->id, 'user_id' => $evento->user_id, 'date' => $evento->date, 'time' => $evento->time, 'created_at' => $fecha, 'updated_at' => $fecha]);
 
         $calendario = new Calendario();
         $calendario->titulo = $evento->title;
@@ -467,7 +468,7 @@ class EventsController extends Controller
 
 
   /*AGENDAR EVENTOS DEL USUARIO*/
-    public function schedule($event_id, Request $request){
+    public function schedule($event_id){
         $check = DB::table('events_users')
                     ->where('user_id', '=', Auth::user()->ID)
                     ->where('event_id', '=', $event_id)

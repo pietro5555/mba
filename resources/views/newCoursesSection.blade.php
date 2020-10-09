@@ -7,13 +7,13 @@
         <button type="button" class="btn btn-outline-success btn-arrow btn-arrow-next" @if ($next == 0) disabled @endif data-route="{{ route('landing.load-more-courses-new', [$idEnd, 'next'] ) }}"  onclick="loadMoreCoursesNew('next');"><i class="fas fa-chevron-right"></i></button>
     </div>
 </div>
-               
+
 <div class="row" style="padding: 10px 30px;">
     @foreach ($cursosNuevos as $cursoNuevo)
         <div class="col-xl-4 col-lg-4 col-12" style="padding-bottom: 10px;">
             <div class="card" >
-                @if (!is_null($cursoNuevo->cover))
-                    <img src="{{ asset('uploads/images/courses/covers/'.$cursoNuevo->cover) }}" class="card-img-top new-course-img" alt="...">
+                @if (!is_null($cursoNuevo->thumbnail_cover))
+                    <img src="{{ asset('uploads/images/courses/covers/'.$cursoNuevo->thumbnail_cover) }}" class="card-img-top new-course-img" alt="...">
                 @else
                     <img src="{{ asset('uploads/images/courses/covers/default.jpg') }}" class="card-img-top new-course-img" alt="...">
                 @endif

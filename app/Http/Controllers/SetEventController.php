@@ -101,8 +101,8 @@ class SetEventController extends Controller
                     ]);
                     $question =  $request->q1;
                     $responses = explode(',', $request->input('questions'));
-                    
-                    
+
+
                     $question_save = new Survey;
                     $question_save->question =  $question;
                     $question_save->content_event_id = $dataE->id;

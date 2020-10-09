@@ -161,22 +161,23 @@
 
 </div>
 
-  {{-- SECCIÓN REFERIDOS (USUARIOS LOGGUEADOS) --}}
+	{{-- SECCIÓN REFERIDOS (USUARIOS LOGGUEADOS) --}}
     @if (!Auth::guest())
-        <div style="padding-top: 30px;">
+        <div class="pt-4">
             <div class="row">
-                <div class="col-4 " style="padding-left: 30px;">
-                    <div style="text-align: center; font-size: 34px; color: white; font-weight: bold; border: solid #919191 1px; background-color: #222326; margin-bottom: 10px; height: 330px; padding: 120px 15px;">
-                        <i class="fa fa-user"></i><br>
-                        739 Referidos
+                <div class="col-xl-4 col-lg-4 col-12 pl-4 pr-4">
+                    <div class="referrers-box">
+                        <i class="fa fa-user referrers-icon" style="color: white;"></i><br>
+                        {{ $refeDirec }} Referidos
                     </div>
-                    <div style="text-align: center; font-size: 25px; color: white; font-weight: bold; background-color: #6AB742; height: 60px; padding: 10px 10px;">
+                    <a href="{{url('/admin')}}" style="color: white; text-decoration: none;">
+                     <div class="referrers-button">
                         Panel de referidos
-                    </div>
+                     </div>
+                    </a>
                 </div>
-                <div class="col-8" style=" background:url('http://localhost:8000/images/banner_referidos.png');">
-                    <!--<img src="{{ asset('images/banner_referidos.png') }}" alt="" style="height: 400px; width:100%; opacity: 1; background: transparent linear-gradient(90deg, #2A91FF 0%, #2276D0A1 54%, #15498000 100%) 0% 0% no-repeat padding-box;">-->
-                    <div style="font-size: 50px; width: 50%; padding: 80px 40px 80px 80px; color: white; line-height: 55px;">EL QUE QUIERE SUPERARSE, NO VE OBSTÁCULOS, VE SUEÑOS.</div>
+                <div class="col-xl-8 col-lg-8 d-none d-lg-block d-xl-block referrers-banner">
+                    <div class="referrers-banner-text">EL QUE QUIERE SUPERARSE, NO VE OBSTÁCULOS, VE SUEÑOS.</div>
                 </div>
             </div>
         </div><br><br>

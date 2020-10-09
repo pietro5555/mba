@@ -370,7 +370,7 @@ class CourseController extends Controller{
             ->insert(['course_id' => $id, 'user_id' => Auth::user()->ID, 'progress' => 0,
                       'start_date' => date('Y-m-d'), 'certificate' => 0, 'favorite' => 0,
                       'created_at' => $fecha, 'updated_at' => $fecha]);*/
-        
+
         if (!is_null($primeraLeccion)){
             return redirect('courses/lesson/'.$primeraLeccion->slug.'/'.$primeraLeccion->id.'/'.$curso->id)->with('msj-exitoso', 'El curso ha sido agregado a su lista con éxito.');
         }else{

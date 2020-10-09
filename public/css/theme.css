@@ -863,11 +863,39 @@ nav > div a.nav-item.nav-link:focus
 
 .btn-cont-course{
 height: 124px;
+background: #27282C 0% 0% no-repeat padding-box;
+opacity: 1;
+}
+.accordion-lesson{
+    background-color:#1C1D21;
+    border: 1px solid #363840;
+    opacity: 1;
 }
 
+#card-lesson-content .card-header {
+    transition: background-color 0.5s ease;
+  }
+
+  #card-lesson-content .collapsed {
+    background-color: #1C1D21!important;
+  }
+  #card-lesson-content .collapsed>a,h6 {
+    color: #8E8E8E;
+  }
+
+  .card-accordion{
+    background: #363840 0% 0% no-repeat padding-box;
+    border: 1px solid #707070;
+    opacity: 1;
+  }
+
+  .card-accordion .card-body{
+      color: #8E8E8E;
+  }
 .accordion-leccion-content{
 border: 1px solid #363840;
 opacity: 1;
+background-color:#1C1D21;
 }
 
 .accordion-leccion-content h5{
@@ -886,41 +914,38 @@ border-right: 1px solid #707070;
 border-bottom: 1px solid #707070;
 }
 
-#accordion-leccion:after {
-  font-family: 'FontAwesome';
-  content: "\f13a";
-  color: #2A91FF;
-}
 
 .collapsible-link::before {
-   font-family: 'FontAwesome';
-  content: "\f13a";
-  color: #2A91FF;
-  position: absolute;
-  right: 1rem;
-  display: block;
-  transition: all 0.3s;
-}
+    font-family: 'FontAwesome';
+   content: "\f13a";
+   color: #2A91FF;
+   position: absolute;
+   right: 1rem;
+   display: block;
+   transition: all 0.3s;
+   font-size: 25px;
+ }
 
-.collapsible-link[aria-expanded='true']::before {
-  transform: rotate(180deg);
-}
 
-.accordion-leccion-content .collapsed{
+  .collapsible-link[aria-expanded='true']::before {
+    transform: rotate(180deg);
+  }
+
+/*.accordion-leccion-content .collapsed{
    color: #8E8E8E;
-}
+}*/
 /*Card Contenido del Curso*/
-#card1 .collapsed {
+/*#card-lesson-content .collapsed {
   background-color: #1C1D21 !important;
   color: #8E8E8E;
 }
 
-#card1{
+#card-lesson-content{
 background: #363840 0% 0% no-repeat padding-box;
 border: 1px solid #707070;
 opacity: 1;
 color: #2A91FF;
-}
+}*/
 
 #card2 .collapsed {
   background-color: #1C1D21 !important;
@@ -1340,3 +1365,14 @@ background: #363840;
 .img-thumbnail{
     background-color: none;
 }
+
+.paginador .page-link{
+background-color: #1C1D21;
+border: 1px solid #8E8E8E;
+}
+
+.paginador .pagination>li.disabled>span {
+    background: #1C1D21;
+    color: #8E8E8E;
+    border: 1px solid #8E8E8E;
+  }

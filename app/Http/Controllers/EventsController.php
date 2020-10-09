@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Crypt;
 use App\Models\Course; use App\Models\Events; use App\Models\Note; use App\Models\EventResources;
@@ -52,11 +53,11 @@ class EventsController extends Controller
     public function store(Request $request){
         $streamingConnect = new StreamingController();
 
+
         $datosMentor = DB::table('wp98_users')
                         ->select('display_name', 'user_email', 'password')
-                        ->where('id', '=', $request->user_id)
+                        ->where('ID', '=', $request->user_id)
                         ->first();
-        
         $userStreaming = $streamingConnect->verifyUser($datosMentor->user_email);
         if (!is_null($userStreaming)){
             $userId = $userStreaming->id;
@@ -148,7 +149,7 @@ class EventsController extends Controller
                                 ->select('display_name', 'user_email', 'password')
                                 ->where('id', '=', $request->user_id)
                                 ->first();
-        
+
             $userStreaming = $streamingConnect->verifyUser($datosMentor->user_email);
             if (!is_null($userStreaming)){
                 $userId = $userStreaming->id;
@@ -170,7 +171,7 @@ class EventsController extends Controller
 
             $request->user_streaming_id = $userId;
         }
-        
+
         $streamingConnect->updateMeeting($request, $evento->uuid);
 
         $evento->fill($request->all());
@@ -442,8 +443,12 @@ class EventsController extends Controller
 
 
       //  return dd($user_calendar);
-
-        return view('agendar/calendar',compact('usuario','eventos_agendados', 'user_calendar'));
+      //linea de referidos Directos
+      $refeDirec =0;
+      if(Auth::user()){
+         $refeDirec = User::where('referred_id', Auth::user()->ID)->count('ID');
+      }
+        return view('agendar/calendar',compact('usuario','eventos_agendados', 'user_calendar', 'refeDirec'));
     }
 
 
@@ -490,15 +495,15 @@ class EventsController extends Controller
                     $requestContact = new Request(array('name' => Auth::user()->user_email, 'email' => Auth::user()->user_email, 'user_id' => $userId));
                     $contactId = $streamingConnect->newContact($requestContact);
                 }
-                
+
                 $evento = Events::find($event_id);
 
                 $streamingId = $streamingConnect->getMeetingId($evento->uuid);
 
                 $streamingConnect->newInvitation($streamingId, $contactId);
-               
+
                 Auth::user()->events()->attach($event_id, ['date' => $date_event, 'time' => $time_event]);
-                
+
                 $new_calendar = Events::where('id', '=', $event_id)->first();
 
                 $calendario = new Calendario();

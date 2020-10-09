@@ -99,11 +99,12 @@
 
             @endif
         </div>
-        
-        <div class="text-white text-center">
-            <a class="">{{ $courses->links() }}</a>
-            </div>
-        
+
+
+            <div class="d-flex justify-content-center paginador">
+                    {{ $courses->links("pagination::bootstrap-4") }}
+                </div>
+
     </div>
 
 

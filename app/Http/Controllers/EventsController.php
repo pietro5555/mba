@@ -89,6 +89,20 @@ class EventsController extends Controller
         $evento->status = 1;
         $evento->save();
 
+        $fecha = date('Y-m-d H:i:s');
+        DB::table('events_users')
+            ->insert(['event_id' => $evento->id, 'user_id' => $evento->user_id, 'date' => $evento->date, 'time' => $evento->time, 'created_at' => $fecha, 'updated_at' => $fecha]);
+
+        $calendario = new Calendario();
+        $calendario->titulo = $evento->title;
+        $calendario->contenido = $evento->description;
+        $calendario->inicio = $evento->date;
+        $calendario->time = $evento->time;
+        $calendario->color = '#28a745';
+        $calendario->lugar = 'Ninguno';
+        $calendario->iduser = $evento->user_id;
+        $calendario->save();
+
         if ($request->hasFile('banner')){
             $file = $request->file('banner');
             $name = $evento->id.".".$file->getClientOriginalExtension();
@@ -450,6 +464,7 @@ class EventsController extends Controller
         $eventos_agendados = DB::table('events')
         ->join('events_users', 'events_users.event_id', '=', 'events.id')
         ->where('events_users.user_id', '=', Auth::user()->ID)
+        ->select('events.*')
         ->get();
 
 
@@ -464,7 +479,7 @@ class EventsController extends Controller
 
 
   /*AGENDAR EVENTOS DEL USUARIO*/
-    public function schedule($event_id, Request $request){
+    public function schedule($event_id){
         $check = DB::table('events_users')
                     ->where('user_id', '=', Auth::user()->ID)
                     ->where('event_id', '=', $event_id)

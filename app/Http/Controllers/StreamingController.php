@@ -7,6 +7,7 @@ use Illuminate\Support\Str as Str;
 use GuzzleHttp\Client;
 use App\Models\Streaming\User; use App\Models\Streaming\Contact;
 use App\Models\Streaming\Meeting; use App\Models\Streaming\Invitation;
+use App\Models\Streaming\ModelHasRole;
 use Auth; use Carbon\Carbon; use DB;
 
 class StreamingController extends Controller{
@@ -52,12 +53,16 @@ class StreamingController extends Controller{
                 'start_date_time' => $ultFecha,
                 'period' => $request->duration,
                 'category' => [$request->category_id],
-                'user_id' => $userId,
                 'type' => ['webinar']
             ]
         ]);
 
         $result = json_decode($creacionEvento->getBody());
+
+        $meeting = Meeting::where('uuid', '=', $result->meeting->uuid)->first();
+        $meeting->type = 'webinar';
+        $meeting->user_id = $userId;
+        $meeting->save();
 
         return $result->meeting->uuid;
     }
@@ -80,7 +85,6 @@ class StreamingController extends Controller{
                 'start_date_time' => $request->date."T".$request->time,
                 'period' => $request->duration,
                 'category' =>[$request->category_id],
-                'user_id' => $request->user_streaming_id,
                 'type' => ['webinar']
             ]
         ]);
@@ -100,9 +104,14 @@ class StreamingController extends Controller{
         $usuario->status = 'activated';
         $usuario->save();
 
-        DB::table('streaming.model_has_roles')
-            ->insert(['role_id' => $request->role_id, 'model_type' => 'App\Models\User', 'model_id' => $usuario->id]);
-
+        $role = new ModelHasRole();
+        $role->role_id = $request->role_id;
+        $role->model_type = 'App\Models\User';
+        $role->model_id = $usuario->id;
+        $role->save();
+        
+        /*DB::table('streaming.model_has_roles')
+            ->insert(['role_id' => $request->role_id, 'model_type' => 'App\Models\User', 'model_id' => $usuario->id]);*/
 
         return $usuario->id;
     }

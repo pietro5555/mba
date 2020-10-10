@@ -222,26 +222,40 @@
 
         </div><!--End col -->
         <!--Menu y Chat-->
-
+        @if($menuResource)
         <div class="nav flex-column nav-pills mt-2 menu-vertical-anotaciones" id="v-pills-tab" role="tablist" aria-orientation="vertical">
             <!--Solo se muestra para mentores-->
-
-            @if(Auth::user()->rol_id == 0)
+            @if(Auth::user()->rol_id == 2)
                 <a class="nav-link  text-white text-center" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="true"><img src="{{ asset('images/icons/settings.svg') }}" height="30px" class=""><h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Configuración</h6></a>
                 <a class="nav-link text-white text-center" id="v-pills-students-tab" data-toggle="pill" href="#v-pills-students" role="tab" aria-controls="v-pills-students" aria-selected="false"> <img src="{{ asset('images/icons/person.svg') }}" height="30px" class="">
                     <h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Participantes</h6></a>
             @endif
-                <a class="nav-link active text-white text-center" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false"> <img src="{{ asset('images/icons/comment.svg') }}" height="30px" class="">
-                    <h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Chat</h6></a>
-                <a class="nav-link text-white text-center" id="v-pills-survey-tab" data-toggle="pill" href="#v-pills-survey" role="tab" aria-controls="v-pills-survey" aria-selected="false"><img src="{{ asset('images/icons/lista.svg') }}" height="30px" class="">
-                    <h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Encuesta</h6></a>
-                <a class="nav-link text-white text-center" id="v-pills-presentation-tab" data-toggle="pill" href="#v-pills-presentation" role="tab" aria-controls="v-pills-presentation" aria-selected="false"> <img src="{{ asset('images/icons/presentacion.svg') }}" height="30px" class="">
-                    <h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Presentación</h6></a>
-                <a class="nav-link text-white text-center" id="v-pills-video-tab" data-toggle="pill" href="#v-pills-video" role="tab" aria-controls="v-pills-video" aria-selected="false"><img src="{{ asset('images/icons/video.svg') }}" height="30px" class="">
-                    <h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Vídeo</h6></a>
-                <a class="nav-link text-white text-center" id="v-pills-documents-tab" data-toggle="pill" href="#v-pills-documents" role="tab" aria-controls="v-pills-documents" aria-selected="false"><img src="{{ asset('images/icons/documentos.svg') }}" height="30px" class="">
-                    <h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Archivos</h6></a>
-                <a class="nav-link text-white text-center" id="v-pills-offers-tab" data-toggle="pill" href="#v-pills-offers" role="tab" aria-controls="v-pills-offers" aria-selected="false"><img src="{{ asset('images/icons/descuento.svg') }}" height="30px" class="">
+            @foreach($menuResource as $resource)
+            @if($resource->resources_id ==3 && $resource->status==1)
+            <a class="nav-link active text-white text-center" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false"> <img src="{{ asset('images/icons/comment.svg') }}" height="30px" class="">
+                <h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Chat</h6></a>
+            @endif
+            @if($resource->resources_id ==4 && $resource->status==1)
+            <a class="nav-link text-white text-center" id="v-pills-survey-tab" data-toggle="pill" href="#v-pills-survey" role="tab" aria-controls="v-pills-survey" aria-selected="false"><img src="{{ asset('images/icons/lista.svg') }}" height="30px" class="">
+                <h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Encuesta</h6></a>
+            @endif
+            @if($resource->resources_id ==5 && $resource->status==1)
+            <a class="nav-link text-white text-center" id="v-pills-presentation-tab" data-toggle="pill" href="#v-pills-presentation" role="tab" aria-controls="v-pills-presentation" aria-selected="false"> <img src="{{ asset('images/icons/presentacion.svg') }}" height="30px" class="">
+                <h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Presentación</h6></a>
+            @endif
+            @if($resource->resources_id ==6 && $resource->status==1)
+            <a class="nav-link text-white text-center" id="v-pills-video-tab" data-toggle="pill" href="#v-pills-video" role="tab" aria-controls="v-pills-video" aria-selected="false"><img src="{{ asset('images/icons/video.svg') }}" height="30px" class="">
+                <h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Vídeo</h6></a>
+            @endif
+            @if($resource->resources_id ==7 && $resource->status==1)
+            <a class="nav-link text-white text-center" id="v-pills-documents-tab" data-toggle="pill" href="#v-pills-documents" role="tab" aria-controls="v-pills-documents" aria-selected="false"><img src="{{ asset('images/icons/documentos.svg') }}" height="30px" class="">
+                <h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Archivos</h6></a>
+            @endif
+            @if($resource->resources_id ==8 && $resource->status==1)
+            <a class="nav-link text-white text-center" id="v-pills-offers-tab" data-toggle="pill" href="#v-pills-offers" role="tab" aria-controls="v-pills-offers" aria-selected="false"><img src="{{ asset('images/icons/descuento.svg') }}" height="30px" class="">
+                <h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Ofertas</h6></a>
+            @endif
+            @endforeach
         </div>
         <div class="tab-content mt-2 col-md-4" id="v-pills-tabContent">
                 <div class="tab-pane fade  ml-2" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
@@ -258,8 +272,12 @@
                     <a data-toggle="modal" data-target="#modal-settings-file" class="btn btn-primary btn-block"><i class="fa fa-plus-circle"></i> Agregar Archivos</a>
                     </div> <br>
                     <div>
+                        <a data-toggle="modal" data-target="#modal-settings-offers" class="btn btn-primary btn-block"><i class="fa fa-plus-circle"></i>Agregar Oferta</a>
+                    </div><br>
+                    <div>
                     <a data-toggle="modal" data-target="#modal-settings-enable" class="btn btn-primary btn-block"><i class="fa fa-check"></i> Habilitar recursos</a>
                     </div>
+
 
                 </div>
                 <div class="tab-pane fade ml-2" id="v-pills-students" role="tabpanel" aria-labelledby="v-pills-students-tab">Seccion Participantes</div>
@@ -405,15 +423,16 @@
                                 <h5 class="text-primary">Responde estas preguntas</h5>
                         </div>
 
-                        <form style="max-width:230px;">
+                        <!--<form style="max-width:230px;">
                                 @foreach($surveys as $survey)
                                 <div class="mb-2 form-group">
                                   <label for="label-question{{$survey->question}}">{{$survey->question}}</label>
+                                  <select name="" id=""></select>
                                   <input type="text" class="form-control" id="question{{$survey->question}}" placeholder="">
                                 </div>
                                 @endforeach
                                 <button class="btn btn-smal btn-success float-right" type="submit">Enviar</button>
-                        </form>
+                        </form>-->
                         @else
                         <div>
                             <h6 class="text-primary">
@@ -426,11 +445,23 @@
                     <div>Estadisticas de encuesta</div>
                     @endif
                 </div>
-                <div class="tab-pane fade ml-2" id="v-pills-presentation" role="tabpanel" aria-labelledby="v-pills-presentation-tab">Seccion Presentacion</div>
-                <div class="tab-pane fade ml-2" id="v-pills-video" role="tabpanel" aria-labelledby="v-pills-video-tab">Seccion Video</div>
+                <div class="tab-pane fade ml-2" id="v-pills-presentation" role="tabpanel" aria-labelledby="v-pills-presentation-tab">
+                    Seccion Presentacion
+                    <!--<a href="" class="btn btn-success btn-block">Descargar Presentación</a>-->
+
+
+
+                </div>
+                <div class="tab-pane fade ml-2" id="v-pills-video" role="tabpanel" aria-labelledby="v-pills-video-tab">
+                    @if(!empty($resources_video))
+                    <div class="embed-responsive embed-responsive-16by9">
+                            <iframe class="embed-responsive-item" src="{{$resources_video->url}}"></iframe>
+                    </div>
+                    @endif
                 <div class="tab-pane fade ml-2" id="v-pills-documents" role="tabpanel" aria-labelledby="v-pills-documents-tab">Seccion Archivos</div>
                 <div class="tab-pane fade ml-2" id="v-pills-offers" role="tabpanel" aria-labelledby="v-pills-offers-tab">Seccion Ofertas</div>
         </div>
+        @endif
 
       </div>
     </div>
@@ -443,7 +474,7 @@
   		<div class="modal-dialog" role="document">
     		<div class="modal-content" >
       			<div class="modal-header">
-        			<h5 class="modal-title" id="exampleModalLabel">Agregar video</h5>
+        			<h5 class="modal-title" id="exampleModalLabel">Agregar vídeo</h5>
       			</div>
       			<form action="{{ route('set.event.store', [$event->id]) }}" method="POST">
 			        {{ csrf_field() }}
@@ -453,7 +484,7 @@
 						        <div class="col-md-12">
                         <div class="form-group">
 						                <label>Link del Video</label>
-						            	  <input type="text" class="form-control" name="url_video" required>
+						            	  <input type="text" class="form-control" placeholder="https://www.youtube.com/embed/X4VRKMZf4Uc" name="url_video" required>
 						            </div>
 						        </div>
 						    </div>
@@ -601,7 +632,35 @@
 	      		</form>
     		</div>
   		</div>
-	</div>
+    </div>
+
+     <!-- Modal Agregar Ofertas-->
+  <div class="modal fade" id="modal-settings-offers" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Agregar oferta</h5>
+            </div>
+            <form action="{{ route('set.event.store', [$event->id]) }}" method="POST">
+              {{ csrf_field() }}
+              <div class="modal-body">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-md-12">
+                  <label>Ofertas</label>
+                          </div>
+                      </div>
+                  </div>
+                  <input type="hidden" name="type" value='offers' required>
+              </div>
+
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </form>
+      </div>
+    </div>
+</div>
 
 
 @endsection

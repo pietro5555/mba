@@ -224,7 +224,7 @@
    {{-- FIN DE SECCIÓN TU AVANCE (USUARIOS LOGGUEADOS) --}}
 
    @auth
-   <div class="col-12 section-landing new-courses-section">
+   <div class="col-12 section-landing mb-4" style="background: linear-gradient(to bottom, #222326 100%, #1C1D21 100%)">
         <div class="row">
             <div class="col-12">
                 <div class="section-title-landing new-courses-section-title">TU AVANCE</div>

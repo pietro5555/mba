@@ -171,4 +171,7 @@ Dev:Luisana Marín
 *Nueva Base de datos para el streaming (correr el script streaming)
 *Agregar al archivo .env DB_STREAMING_DATABASE=streaming en los datos de conexión a la base de datos
 
-
+09/10/2020
+Dev:Crisleivys Gil
+*Agregados los campos created_at y updated_at en la tabla events_resourses(correr el script events_resourses)
+*Tablas survey_options y survey_options_response (correr scripts survey_options y survey_options_response)

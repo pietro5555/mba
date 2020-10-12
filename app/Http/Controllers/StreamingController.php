@@ -98,7 +98,7 @@ class StreamingController extends Controller{
         return $userStreaming;
     }
 
-    public function newUser(Request $request){ 
+    public function newUser(Request $request){
         $usuario = new User($request->all());
         $usuario->uuid = Str::uuid();
         $usuario->status = 'activated';
@@ -109,7 +109,7 @@ class StreamingController extends Controller{
         $role->model_type = 'App\Models\User';
         $role->model_id = $usuario->id;
         $role->save();
-        
+
         /*DB::table('streaming.model_has_roles')
             ->insert(['role_id' => $request->role_id, 'model_type' => 'App\Models\User', 'model_id' => $usuario->id]);*/
 

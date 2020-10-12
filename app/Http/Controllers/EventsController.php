@@ -118,6 +118,25 @@ class EventsController extends Controller
             $evento->image = $name;
             $evento->save();
         }
+        /*Habilitar recursos por defecto: Configuracion y Participantes*/
+
+        $resourceOne = EventResources::create([
+            'resources_id' => 1,
+            'event_id' => $evento->id,
+            'status' => 1,
+        ]);
+        $resourceTwo = EventResources::create([
+            'resources_id' => 2,
+            'event_id' => $evento->id,
+            'status' => 1,
+        ]);
+        $resourceThree= EventResources::create([
+            'resources_id' => 2,
+            'event_id' => $evento->id,
+            'status' => 1,
+        ]);
+
+        //return dd ($resourceOne, $resourceTwo);
 
         return redirect('admin/events')->with('msj-exitoso', 'El evento '.$evento->title.' ha sido creado con éxito.');
     }
@@ -134,6 +153,8 @@ class EventsController extends Controller
         $event = Events::find($event_id);
         $menuResource = $event->getResource();
         $resources_survey = SetEvent::where('event_id', $event_id)->where('type', 'survey')->get()->first();
+        $resources_video = SetEvent::where('event_id', $event_id)->where('type', 'video')->get()->first();
+      // return  dd($resources_survey, $menuResource);
         if (!empty($resources_survey))
         {
             $surveys = Survey::where('content_event_id', $resources_survey->id)->get();
@@ -146,7 +167,7 @@ class EventsController extends Controller
        // return dd ($resources_survey , $surveys);
         // return response()->json([$menuResource], 201);
 
-        return view('live.live', compact ('event','notes', 'menuResource', 'surveys'));
+        return view('live.live', compact ('event','notes', 'menuResource', 'surveys', 'resources_video'));
     }
 
     public function edit($id){

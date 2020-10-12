@@ -178,3 +178,7 @@ Dev: Carlos Gonzalez
 * en el archivo que se llama "variables para el archivo .env" esta las nuevas variables que se necesitan para el chat
 * tambien tiene que actualizar su composer para que se puedan traer los nuevos complementos
 * la informacion que esta ahi es con mi usuario prueba. despues de cambiara por la del cliente.
+09/10/2020
+Dev:Crisleivys Gil
+*Agregados los campos created_at y updated_at en la tabla events_resourses(correr el script events_resourses)
+*Tablas survey_options y survey_options_response (correr scripts survey_options y survey_options_response)

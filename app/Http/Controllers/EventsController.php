@@ -6,11 +6,19 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Crypt;
-use App\Models\Course; use App\Models\Events; use App\Models\Note; use App\Models\EventResources;
-use App\Models\Category; use App\Models\Subcategory; use App\Models\Calendario;
+use App\Models\Course; 
+use App\Models\Events; 
+use App\Models\Note;
+use App\Models\EventResources;
+use App\Models\Category; 
+use App\Models\Subcategory; 
+use App\Models\Calendario;
 use App\Models\SetEvent;
 use App\Models\Survey;
-use DB; use Auth; use Carbon\Carbon; use DateTime;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon; 
+use DateTime;
 
 class EventsController extends Controller
 {

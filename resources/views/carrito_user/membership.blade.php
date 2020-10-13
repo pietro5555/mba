@@ -40,6 +40,7 @@
             @if ($membresia->id > Auth::user()->membership_id)
                 <div class="col-12 col-md-6 col-lg-4 mt-2">
                     <div class="card h-100 bg-grey-alt">
+                        <img src="{{asset('assets/'.$membresia->image)}}" class="card-top-img m-auto pt-2" height="120" width="120" alt="">
                         <div class="card-body text-center">
                             <h5 class="card-title text-white">
                                 <strong>{{$membresia->name}}</strong>
@@ -60,6 +61,7 @@
         @else
             <div class="col-12 col-md-6 col-lg-4 mt-2">
                 <div class="card h-100 bg-grey-alt">
+                    <img src="{{asset('assets/'.$membresia->image)}}" class="card-top-img m-auto pt-2" height="120" width="120" alt="">
                     <div class="card-body text-center">
                         <h5 class="card-title text-white">
                             <strong>{{$membresia->name}}</strong>
@@ -80,6 +82,7 @@
         @else
         <div class="col-12 col-md-6 col-lg-4 mt-2">
             <div class="card h-100 bg-grey-alt">
+                <img src="{{asset('assets/'.$membresia->image)}}" class="card-top-img m-auto pt-2" height="120" width="120" alt="">
                 <div class="card-body text-center">
                     <h5 class="card-title text-white">
                         <strong>{{$membresia->name}}</strong>

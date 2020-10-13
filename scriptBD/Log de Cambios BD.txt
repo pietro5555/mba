@@ -182,3 +182,7 @@ Dev: Carlos Gonzalez
 * en el archivo que se llama "variables para el archivo .env" esta las nuevas variables que se necesitan para el chat
 * tambien tiene que actualizar su composer para que se puedan traer los nuevos complementos
 * la informacion que esta ahi es con mi usuario prueba. despues de cambiara por la del cliente.
+
+12/10/2020
+Dev:Crisleivys
+*Agregado el campo selected (correr el script survey_options_response)

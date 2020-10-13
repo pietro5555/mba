@@ -140,7 +140,7 @@ countdown('{{($evento != null) ? $evento->date.' '.$evento->time : $fechaActual}
   <h3 style="color: #2A91FF; margin-top: 20px;">{{$evento->title}}</h3>
    <hr color="white" size=3>
    <p style="color:white;">
-     {{$evento->description}}
+     {!!$evento->description!!}
    </p>
 
    <div style="margin-top: 60px;">

@@ -2,10 +2,10 @@
 -- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 18-09-2020 a las 04:17:47
--- Versión del servidor: 10.4.11-MariaDB
--- Versión de PHP: 7.4.4
+-- Servidor: localhost
+-- Tiempo de generación: 13-10-2020 a las 04:17:50
+-- Versión del servidor: 10.4.14-MariaDB
+-- Versión de PHP: 7.3.21
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -32,6 +32,7 @@ CREATE TABLE `shopping_cart` (
   `user_id` text NOT NULL,
   `course_id` int(11) DEFAULT NULL,
   `membership_id` int(11) DEFAULT NULL,
+  `offer_id` int(11) DEFAULT NULL,
   `date` date NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL

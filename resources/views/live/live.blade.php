@@ -226,12 +226,14 @@
         <div class="nav flex-column nav-pills mt-2 menu-vertical-anotaciones" id="v-pills-tab" role="tablist" aria-orientation="vertical">
             <!--Solo se muestra para mentores-->
             @if(Auth::user()->rol_id == 2)
+            <a class="nav-link active text-white text-center" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false"> <img src="{{ asset('images/icons/comment.svg') }}" height="30px" class="">
+              <h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Chat</h6></a>
                 <a class="nav-link  text-white text-center" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="true"><img src="{{ asset('images/icons/settings.svg') }}" height="30px" class=""><h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Configuración</h6></a>
                 <a class="nav-link text-white text-center" id="v-pills-students-tab" data-toggle="pill" href="#v-pills-students" role="tab" aria-controls="v-pills-students" aria-selected="false"> <img src="{{ asset('images/icons/person.svg') }}" height="30px" class="">
                     <h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Participantes</h6></a>
             @endif
             @foreach($menuResource as $resource)
-            @if($resource->resources_id ==3 && $resource->status==1)
+            @if($resource->resources_id == 3 && $resource->status==1)
             <a class="nav-link active text-white text-center" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false"> <img src="{{ asset('images/icons/comment.svg') }}" height="30px" class="">
                 <h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Chat</h6></a>
             @endif
@@ -285,6 +287,27 @@
                     @include('live.components.chat')
 
                 </div>
+                <div class="tab-pane fade ml-2" id="v-pills-offers" role="tabpanel" aria-labelledby="v-pills-offers-tab">
+                  @if ($resources_offer->isNotEmpty())
+                    @foreach ($resources_offer as $offer)
+                        <div class="card p-2" style="background: #363840">
+                          <div class="card-content">
+                            <div class="card-body- text-center">
+                              <h4 class="card-title">{{$offer->title}}</h4>
+                              <p class="card-text">{{$offer->price}} $</p>
+                              <form action="{{route('shopping-cart.store', $offer->id)}}" method="get">
+                                @csrf
+                                <input type="hidden" value="oferta" name="type">
+                                <button type="submit" class="btn btn-info">Comprar</button>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                    @endforeach
+                  @else
+                      No Hay Ofertas
+                  @endif
+                </div>
                 <div class="tab-pane fade ml-2" id="v-pills-survey" role="tabpanel" aria-labelledby="v-pills-survey-tab">
                     @if(Auth::user()->rol_id==3)
                         @if(!empty($surveys))
@@ -328,7 +351,6 @@
                     </div>
                     @endif
                 <div class="tab-pane fade ml-2" id="v-pills-documents" role="tabpanel" aria-labelledby="v-pills-documents-tab">Seccion Archivos</div>
-                <div class="tab-pane fade ml-2" id="v-pills-offers" role="tabpanel" aria-labelledby="v-pills-offers-tab">Seccion Ofertas</div>
         </div>
         @endif
 
@@ -510,13 +532,33 @@
             <div class="modal-header">
               <h5 class="modal-title" id="exampleModalLabel">Agregar oferta</h5>
             </div>
-            <form action="{{ route('set.event.store', [$event->id]) }}" method="POST">
+            <form action="{{ route('set.event.store', [$event->id]) }}" method="POST" enctype="multipart/form-data">
               {{ csrf_field() }}
               <div class="modal-body">
                   <div class="container-fluid">
                       <div class="row">
-                          <div class="col-md-12">
-                  <label>Ofertas</label>
+                          <div class="col-12">
+                            <div class="form-group">
+                              <label for="">Titulo</label>
+                              <input type="text" name="title" class="form-control" required/>
+                            </div>  
+                          </div>
+                          <div class="col-12">
+                            <div class="form-group">
+                              <label for="">Precio</label>
+                              <input type="number" min="1" name="price" class="form-control" required/>
+                            </div>
+                          </div>
+                          <div class="col-12">
+                            <div class="form-group">
+                              <label for="">Recurso</label>
+                              <input type="file" name="resource" class="form-control"/>
+                            </div>
+                          </div>
+                          <div class="col-12">
+                            <div class="form-group">
+                              <button type="submit" class="btn">Enviar</button>
+                            </div>
                           </div>
                       </div>
                   </div>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 22-09-2020 a las 23:34:16
+-- Tiempo de generación: 13-10-2020 a las 05:23:49
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.3.21
 
@@ -35,6 +35,7 @@ CREATE TABLE `courses_orden` (
   `idtransacion_stripe` varchar(100) DEFAULT NULL,
   `idtransacion_coinpaymen` varchar(100) DEFAULT NULL,
   `status` tinyint(4) NOT NULL DEFAULT 0 COMMENT '0 - procesando, 1 - completado, 2 - cancelado',
+  `type_product` varchar(50) DEFAULT 'membresia',
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 13-10-2020 a las 05:40:57
+-- Tiempo de generación: 13-10-2020 a las 04:46:41
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.3.21
 
@@ -24,19 +24,17 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `purchase_details`
+-- Estructura de tabla para la tabla `offers_live`
 --
 
-CREATE TABLE `purchase_details` (
+CREATE TABLE `offers_live` (
   `id` int(11) NOT NULL,
-  `purchase_id` int(11) NOT NULL,
-  `course_id` int(11) DEFAULT NULL,
-  `membership_id` int(11) DEFAULT NULL,
-  `offer_id` int(11) DEFAULT NULL,
-  `offer` int(11) NOT NULL,
-  `amount` double NOT NULL,
-  `created_at` datetime NOT NULL,
-  `updated_at` datetime NOT NULL
+  `event_id` int(11) DEFAULT NULL,
+  `title` varchar(200) NOT NULL,
+  `price` double NOT NULL,
+  `url_resource` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -44,9 +42,9 @@ CREATE TABLE `purchase_details` (
 --
 
 --
--- Indices de la tabla `purchase_details`
+-- Indices de la tabla `offers_live`
 --
-ALTER TABLE `purchase_details`
+ALTER TABLE `offers_live`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -54,9 +52,9 @@ ALTER TABLE `purchase_details`
 --
 
 --
--- AUTO_INCREMENT de la tabla `purchase_details`
+-- AUTO_INCREMENT de la tabla `offers_live`
 --
-ALTER TABLE `purchase_details`
+ALTER TABLE `offers_live`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 

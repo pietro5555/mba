@@ -13,6 +13,7 @@ use App\Models\EventResources;
 use App\Models\Category; 
 use App\Models\Subcategory; 
 use App\Models\Calendario;
+use App\Models\OffersLive;
 use App\Models\SetEvent;
 use App\Models\Survey;
 use Illuminate\Support\Facades\Auth;
@@ -154,6 +155,7 @@ class EventsController extends Controller
         $menuResource = $event->getResource();
         $resources_survey = SetEvent::where('event_id', $event_id)->where('type', 'survey')->get()->first();
         $resources_video = SetEvent::where('event_id', $event_id)->where('type', 'video')->get()->first();
+        $resources_offer = OffersLive::all()->where('event_id', $event_id);
       // return  dd($resources_survey, $menuResource);
         if (!empty($resources_survey))
         {
@@ -167,7 +169,7 @@ class EventsController extends Controller
        // return dd ($resources_survey , $surveys);
         // return response()->json([$menuResource], 201);
 
-        return view('live.live', compact ('event','notes', 'menuResource', 'surveys', 'resources_video'));
+        return view('live.live', compact ('event','notes', 'menuResource', 'surveys', 'resources_video', 'resources_offer'));
     }
 
     public function edit($id){

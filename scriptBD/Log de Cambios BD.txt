@@ -182,3 +182,9 @@ Dev: Carlos Gonzalez
 * en el archivo que se llama "variables para el archivo .env" esta las nuevas variables que se necesitan para el chat
 * tambien tiene que actualizar su composer para que se puedan traer los nuevos complementos
 * la informacion que esta ahi es con mi usuario prueba. despues de cambiara por la del cliente.
+
+12-10-2020
+Dev: Carlos Gonzalez
+*Agregar nuevo campo "offer_id" en las tablas purchase_details y shopping_cart
+*Agregar nuevo campo "type_product" en la tabla courses_orden
+*Crear una nueva tabla llamada offers_live - esta es para las oferta del mentor en la vista de eventos

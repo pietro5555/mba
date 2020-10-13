@@ -10,6 +10,6 @@ class CourseOrden extends Model
 
     protected $fillable = [
         'user_id', 'total', 'detalles', 'idtransacion_stripe',
-        'idtransacion_coinpayment', 'status'
+        'idtransacion_coinpayment', 'status', 'type_product'
     ];
 }

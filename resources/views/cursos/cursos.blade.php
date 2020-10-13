@@ -189,23 +189,21 @@
                     <div class="wrapper">
                     @foreach ($cursos as $curso)
                       <div>
-
-                         <div class="card m-2 mb-4 card-courses">
-
+                         <div class="card h-100 m-2 mb-4 card-courses">
                             <img class="card-img-top" src="{{ asset('uploads/avatar/'.$curso->mentor->avatar) }}" alt="card-image-cap">
                             <div class="card-body p-2">
-                            <div class="row align-items-start">
+                            <div class="row align-items-center">
                                 <h6 class="col-sm"><a href="{{ route('courses.show', [$curso->slug, $curso->id]) }}" class="text-secondary text-sm">{{$curso->title}}</a>
                                 </h6>
 
-                                 <div class="col-3 m-2"><img src="{{ asset('images/icons/video-player-blue.svg') }}" alt="" height="20px" width="20px"></div>
+                                 <div class="col-3 mr-2"><img src="{{ asset('images/icons/video-player-blue.svg') }}" alt="" height="20px" width="20px"></div>
                             </div>
                             </div>
                        </div>
                     </div>
                     @endforeach
-                     <div class="">
-                        <div class="row h-100">
+                     <div class="" style="z-index: 3">
+                        <div class="row">
                                 <div class="card-block w-50 text-primary align-self-center">
                                     <a href="{{ route('client.my-courses') }}" class="font-weight-bold">Ver todos mis cursos</a>
                                 </div>
@@ -456,15 +454,15 @@ $tercero++;
     @if(!empty($courses))
     <div class="">
         <div class="container-fluid">
-            <div class="col section-title-category">
-                <h3>
-                    CURSOS POR CATEGORÍA
-                </h3>
+            <div class="col section-title-category mt-4">
+                <h1>
+                    <b>CURSOS POR CATEGORÍA</b>
+                </h1>
             </div>
-            <div class="row">
+            <div class="row justify-content-center">
                 @foreach ($courses as $course)
                     @if ($course->courses_count > 0)
-                        <div class="col-sm-4 d-inline-flex p-2">
+                        <div class="col-sm-3 d-inline-flex p-2">
                             @if (!is_null($course->cover))
                                 <img src="{{ asset('uploads/images/categories/covers/'.$course->cover) }}" class="card-img-top img-fluid course-category1" alt="...">
                             @else
@@ -472,10 +470,18 @@ $tercero++;
                             @endif
                             <div class="course-category-caption ml-1 mr-1">
                                 <div class="col-sm-lg text-sm-left font-weight-bold">
-                                    <a href="{{ url('courses/category/'.$course->id) }}" class="col-sm-lg text-sm-left  text-white">{{$course->title}}</a>
+                                    <h6 class="pl-2 pr-2 m-0">
+                                        <a href="{{ url('courses/category/'.$course->id) }}" class="col-sm-lg text-sm-left text-white">
+                                            <small>
+                                                <strong>{{$course->title}}</strong>
+                                            </small>
+                                        </a>
+                                    </h6>
                                 </div>
                                 <div class="col-lg">
-                                    <p class="text-white font-weight-bold">{{$course->courses_count}} Cursos</p>
+                                    <p class="text-white font-weight-bold">
+                                        <small>{{$course->courses_count}} Cursos</small>
+                                    </p>
                                 </div>
                             </div>
                         </div>

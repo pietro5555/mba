@@ -198,7 +198,7 @@
 
 {{-- SECCIÓN REFERIDOS (USUARIOS LOGGUEADOS) --}}
 @if (!Auth::guest())
-<div class="pt-4">
+<div class="pt-4 mt-4">
     <div class="row">
         <div class="col-xl-4 col-lg-4 col-12 pl-4 pr-4">
             <div class="referrers-box">

@@ -14,7 +14,7 @@ class User extends Authenticatable
 
     public $table = 'wp98_users';
     protected $primaryKey = 'ID';
-    
+
     /**
      * The attributes that are mass assignable.
      *
@@ -22,10 +22,10 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'birthdate', 'gender','user_login', 'user_pass', 'user_nicename', 
-        'user_email', 'user_url', 'user_registered', 'user_activation_key', 'user_status', 
-        'display_name', 'password', 'avatar','provider_id', 'provider', 
-        'access_token', 'referred_id', 'status', 'wallet_amount','billetera', 'bank_amount', 
+        'birthdate', 'gender','user_login', 'user_pass', 'user_nicename',
+        'user_email', 'user_url', 'user_registered', 'user_activation_key', 'user_status',
+        'display_name', 'password', 'avatar','provider_id', 'provider',
+        'access_token', 'referred_id', 'status', 'wallet_amount','billetera', 'bank_amount',
         'clave', 'activacion', 'sponsor_id', 'position_id', 'tipouser', 'rol_id',
         'ladomatriz', 'puntosPro', 'puntosRed', 'puntosDer', 'puntosIzq',
         'fecha_activacion','binario','debiDer','debiIzq','codigo','correos',
@@ -41,7 +41,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token'
     ];
-    
+
     /**
      * Permite ejecutar un query para buscar por medio id o user_email
      *
@@ -66,20 +66,20 @@ class User extends Authenticatable
     public function transfers(){
         return $this->hasMany('App\Models\Transfer');
     }
-    
+
     public function tickets(){
         return $this->hasMany('App\Models\Ticket');
-        
+
     }
-    
+
     public function notificacion_tickets(){
         return $this->hasMany('App\Models\Ticket');
-        
+
     }
 
     public function comentarios(){
         return $this->hasMany('App\Models\Comentario');
-        
+
     }
 
     //Relación Mentor - Cursos
@@ -127,5 +127,11 @@ class User extends Authenticatable
     public function comments()
     {
         return $this->hasMany('App\Models\Comment');
+    }
+
+
+    public function response()
+    {
+        return $this->belongsTo('App\Models\SurveyResponse');
     }
 }

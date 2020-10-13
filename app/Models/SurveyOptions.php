@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Survey extends Model
+class SurveyOptions extends Model
 {
-    protected $table = "survey_options";
+    protected $table = 'survey_options';
     /**
      * The attributes that are mass assignable.
      *
@@ -15,4 +15,9 @@ class Survey extends Model
     protected $fillable = [
         'question', 'content_event_id'
     ];
+
+
+    public function responses(){
+        return $this->hasMany('App\Models\SurveyResponse');
+    }
 }

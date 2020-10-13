@@ -6,19 +6,19 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Crypt;
-use App\Models\Course; 
-use App\Models\Events; 
+use App\Models\Course;
+use App\Models\Events;
 use App\Models\Note;
 use App\Models\EventResources;
-use App\Models\Category; 
-use App\Models\Subcategory; 
+use App\Models\Category;
+use App\Models\Subcategory;
 use App\Models\Calendario;
 use App\Models\OffersLive;
 use App\Models\SetEvent;
-use App\Models\Survey;
+use App\Models\SurveyOptions;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon; 
+use Carbon\Carbon;
 use DateTime;
 
 class EventsController extends Controller
@@ -159,17 +159,31 @@ class EventsController extends Controller
       // return  dd($resources_survey, $menuResource);
         if (!empty($resources_survey))
         {
-            $surveys = Survey::where('content_event_id', $resources_survey->id)->get();
+            $surveys = SurveyOptions::where('content_event_id', $resources_survey->id)->get();
+            $survey_id =$surveys[0]->id;
         }
         else
         {
             $surveys = null;
+            $survey_id =null;
         }
 
        // return dd ($resources_survey , $surveys);
         // return response()->json([$menuResource], 201);
 
-        return view('live.live', compact ('event','notes', 'menuResource', 'surveys', 'resources_video', 'resources_offer'));
+        
+        /*Files*/
+        $files = SetEvent::where('event_id', $event_id)
+        ->where('type', 'file')
+        ->get();
+        /*Presentations */
+        $presentations = SetEvent::where('event_id', $event_id)
+        ->where('type', 'presentation')
+        ->get();
+        return view('live.live', compact ('event','notes', 'menuResource', 'surveys', 'resources_video', 'files', 'presentations','survey_id', 'resources_offer'));
+
+        
+        
     }
 
     public function edit($id){

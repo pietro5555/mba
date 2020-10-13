@@ -3,9 +3,6 @@
 @section('content')
 @stack('styles')
 
-@php
- //dd($menuResource)
-@endphp
 
 <div class="bg-dark-gray">
 <div class="container-fluid">
@@ -315,16 +312,23 @@
                                 <h5 class="text-primary">Responde estas preguntas</h5>
                         </div>
 
-                        <!--<form style="max-width:230px;">
+                        <form action="{{ route ('save.survey.student')}}" method="POST">
+                                @csrf
                                 @foreach($surveys as $survey)
                                 <div class="mb-2 form-group">
                                   <label for="label-question{{$survey->question}}">{{$survey->question}}</label>
-                                  <select name="" id=""></select>
-                                  <input type="text" class="form-control" id="question{{$survey->question}}" placeholder="">
+                                  <select class="browser-default custom-select" name="response" id="response">
+                                    <option selected>Selecciona una respuesta</option>
+                                    @foreach($survey->responses as $respuesta)
+                                    <option value="{{$respuesta->response}}">{{$respuesta->response}}</option>
+                                    @endforeach
+                                  </select>
+                                  <input type="hidden" name="survey_options_id" value='{{$survey->id}}' required>
+                                  <input type="hidden" name="event_id" value='{{$event->id}}' required>
                                 </div>
                                 @endforeach
                                 <button class="btn btn-smal btn-success float-right" type="submit">Enviar</button>
-                        </form>-->
+                        </form>
                         @else
                         <div>
                             <h6 class="text-primary">
@@ -334,14 +338,28 @@
                         @endif
                     @endif
                     @if(Auth::user()->rol_id==2)
-                    <div>Estadisticas de encuesta</div>
+                        <div>
+                        <h4>Estadisticas de encuesta</h4>
+                        </div>
+                        <div>
+                        <canvas id="myChart" width="400" height="400"></canvas>
+                        </div>
+
+                    
                     @endif
                 </div>
                 <div class="tab-pane fade ml-2" id="v-pills-presentation" role="tabpanel" aria-labelledby="v-pills-presentation-tab">
-                    Seccion Presentacion
-                    <!--<a href="" class="btn btn-success btn-block">Descargar Presentación</a>-->
-
-
+                    @if(!$presentations->isEmpty())
+                    <h4>Presentación</h4>
+                    <div class="m-1">
+                    <ul class="list-group">
+                    @foreach($presentations as $presentation)
+                    <a href="{{route ('download_resource_file', [$event->id, $presentation->id])}}" class="btn btn-primary btn-block">{{$presentation->title}}</a>
+                    @endforeach
+                    </ul>
+                    </div>
+                    @endif
+                   
 
                 </div>
                 <div class="tab-pane fade ml-2" id="v-pills-video" role="tabpanel" aria-labelledby="v-pills-video-tab">
@@ -350,7 +368,24 @@
                             <iframe class="embed-responsive-item" src="{{$resources_video->url}}"></iframe>
                     </div>
                     @endif
-                <div class="tab-pane fade ml-2" id="v-pills-documents" role="tabpanel" aria-labelledby="v-pills-documents-tab">Seccion Archivos</div>
+                <div class="tab-pane fade ml-2" id="v-pills-documents" role="tabpanel" aria-labelledby="v-pills-documents-tab">
+                 @if(!$files->isEmpty())
+                    <h4>Archivos</h4>
+                    <div class="m-1">
+                    <ul class="list-group">
+                    @foreach($files as $file)
+                    <a href="{{route ('download_resource_file', [$event->id, $file->id])}}" class="btn btn-primary btn-block">{{$file->title}}</a>
+                    @endforeach
+                    </ul>
+                    </div>
+                    
+                    
+                    
+
+                    @endif
+                
+                </div>
+                <div class="tab-pane fade ml-2" id="v-pills-offers" role="tabpanel" aria-labelledby="v-pills-offers-tab">Seccion Ofertas</div>
         </div>
         @endif
 
@@ -577,7 +612,12 @@
 @endsection
 
 @push('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+<script src='https://cdn.jsdelivr.net/lodash/4.17.2/lodash.min.js'></script>
   <script type="text/javascript">
+
+    var responses=[];
+    var values=[];
     let  nextinput = 1;
     $('.addResponse').on('click',function(e){
         e.preventDefault();
@@ -587,11 +627,6 @@
         $("#list_question").append(campo);
 
     });
-
-
-
-
-
 
     $('.sendFormQuestion').on('click',function(e){
       e.preventDefault();
@@ -615,6 +650,67 @@
      removeQuestion = function(q) {
       $('#content_'+q).remove()
     }
+
+$.ajax({
+    url:'/survey/statistics',
+    method:'POST',
+    data:{
+        id:1,
+        _token:$('input[name="_token"]').val()
+    }
+
+}).done(function(res)
+{
+    var array = JSON.parse(res);
+    var resultadito = Object.entries(_.groupBy(array, 'response')).map(([key, value]) => { return {'name': key, 'values': value} })
+    for(var x=0; x<resultadito.length;x++){
+        responses.push(resultadito[x].name);
+        values.push(resultadito[x].values.length);
+        }
+    generargrafica();
+});
+
+function generargrafica() {
+    /*CHART*/
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: responses,
+        datasets: [{
+            label: 'Respuestas de la encuesta',
+            data: values,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+    
+}
 
 
   </script>

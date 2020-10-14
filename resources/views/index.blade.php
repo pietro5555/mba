@@ -287,9 +287,9 @@
                             <a href="{{ route('courses.show', [$cursoNuevo->slug, $cursoNuevo->id]) }}" style="color: white;">
 
                             @if (!is_null($cursoNuevo->mentor->avatar))
-                                <img src="{{ asset('uploads/images/avatar/'.$cursoNuevo->mentor->avatar) }}" class="card-img-top new-course-img" alt="...">
+                                <img src="{{ asset('uploads/avatar/'.$cursoNuevo->mentor->avatar) }}" class="card-img-top new-course-img" alt="...">
                             @else
-                                <img src="{{ asset('uploads/images/avatar/default.jpg') }}" class="card-img-top new-course-img" alt="...">
+                                <img src="{{ asset('uploads/avatar/default.jpg') }}" class="card-img-top new-course-img" alt="...">
                             @endif
                             <div class="card-img-overlay d-flex flex-column">
                                 <div class="mt-auto">
@@ -320,7 +320,7 @@
                 <div class="next-streaming-title">{{ $proximoEvento->title }}</div>
                 <div class="next-streaming-date">
                     <i class="fa fa-calendar"></i> {{ $proximoEvento->weekend_day }} {{ $proximoEvento->date_day }} de {{ $proximoEvento->month }}
-                    <i class="fa fa-clock"></i> {{ date('H:i A', strtotime($proximoEvento->date)) }}
+                    <i class="fa fa-clock" style="padding-left: 20px;"></i> {{ date('H:i A', strtotime($proximoEvento->date)) }}
                 </div>
                 @if (!Auth::guest())
                     <div class="next-streaming-reserve">
@@ -338,7 +338,7 @@
             <div class="row">
                 <div class="col-xl-4 col-lg-4 col-12 pl-4 pr-4">
                     <div class="referrers-box">
-                        <i class="fa fa-user referrers-icon" style="color: white;"></i><br>
+                        <i class="fa fa-user referrers-icon" style="color: #2a91ff;"></i><br>
                         {{ $refeDirec }} Referidos
                     </div>
                     <a href="{{url('/admin')}}" style="color: white; text-decoration: none;">

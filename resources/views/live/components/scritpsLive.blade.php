@@ -2,6 +2,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
 <script src='https://cdn.jsdelivr.net/lodash/4.17.2/lodash.min.js'></script>
 <script type="text/javascript">
+    var id = $('input[name="survey_id"]').val()
+    console.log(id);
     var responses = [];
     var values = [];
     let nextinput = 1;
@@ -46,11 +48,12 @@
         url: '/survey/statistics',
         method: 'POST',
         data: {
-            id: 1,
+            id: id,
             _token: $('input[name="_token"]').val()
         }
 
     }).done(function (res) {
+        console.log(res);
         var array = JSON.parse(res);
         var resultadito = Object.entries(_.groupBy(array, 'response')).map(([key, value]) => {
             return {

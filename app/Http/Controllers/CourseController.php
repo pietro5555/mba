@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Lesson;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Models\CourseUser;
 
 class CourseController extends Controller{
     /**
@@ -150,7 +151,11 @@ class CourseController extends Controller{
         foreach ($cursosMasVistos as $cursoVisto){
             $cursosRecomendados->push($cursoVisto);
         }
-        $total = count($cursosRecomendados);
+        $recomendados = $cursosRecomendados->filter(function ($value) { return !is_null($value); });
+
+         //dd($recomendados);
+        $total = count($recomendados);
+
 
         $cursos = NULL;
         $last_course = NULL;
@@ -163,10 +168,11 @@ class CourseController extends Controller{
             //ULTIMO CURSO VISTO POR EL USUARIO
             $last_course = DB::table('courses')
                                 ->join('courses_users', 'courses_users.course_id', '=', 'courses.id')
+                                ->where('courses.deleted_at',  null)
+                                ->where('courses_users.deleted_at',  null)
                                 ->where('courses_users.user_id', '=', Auth::user()->ID )
                                 ->orderBy('courses_users.updated_at', 'DESC')
                                 ->first();
-
             /*Mentores que tengan cursos*/
             $mentores = DB::table('wp98_users')
                         ->join('courses', 'courses.mentor_id', '=', 'wp98_users.id')
@@ -211,7 +217,7 @@ class CourseController extends Controller{
             }
         }
 
-        return view('cursos.cursos')->with(compact('username','cursosDestacados', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next', 'courses', 'mentores', 'cursos', 'cursosRecomendados', 'total', 'last_course'));
+        return view('cursos.cursos')->with(compact('username','cursosDestacados', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next', 'courses', 'mentores', 'cursos', 'recomendados', 'total', 'last_course'));
     }
 
     /*Ver todos los cursos */
@@ -510,6 +516,12 @@ class CourseController extends Controller{
         $curso = Course::find($id);
         $curso->status = $status;
         $curso->save();
+        $curso->delete();
+        $courses_users = CourseUser::where('course_id', $id)->get();
+        foreach ($courses_users as $key => $course_user) {
+            $course_user->delete();
+        }
+        
 
         if ($status == 0){
             return redirect('admin/courses')->with('msj-exitoso', 'El curso '.$curso->title.' ha sido deshabilitado con éxito.');
@@ -557,6 +569,41 @@ class CourseController extends Controller{
         return redirect('admin/courses')->with('msj-exitoso', 'El curso ha sido quitado de destacados con éxito.');
     }
 
+    /*MOSTRAR CURSOS POR CATEGORIA*/
+    public function show_course_category($category_id){
+
+        $courses = Course::where('category_id','=', $category_id)->where('status', 1)->get();
+        $category_name = Category::where('categories.id', '=', $category_id)->first();
+           if($courses)
+           {
+
+            $directos = NULL;
+            if (!Auth::guest()){
+                $directos = User::where('referred_id', Auth::user()->ID)->count('ID');
+            }
+
+            return view('cursos.cursos_categorias', compact('courses', 'category_name', 'directos'));
+           }
+    }
+     public function perfil_mentor($mentor_id){
+
+        $mentor_info = User::where('wp98_users.id', '=', $mentor_id)
+        ->select('wp98_users.display_name as nombre', 'wp98_users.profession as profession' ,'wp98_users.about as biography', 'wp98_users.avatar as avatar')
+        ->first();
+
+        $directos = User::where('referred_id', Auth::user()->ID)->count('ID');
+
+        $courses= DB::table('wp98_users')
+        ->join('courses', 'courses.mentor_id', '=', 'wp98_users.id')
+        ->join('categories', 'categories.id', '=', 'courses.category_id')
+        ->where('wp98_users.id', '=', $mentor_id)
+        ->where('courses.status', 1)
+        ->select(array ('wp98_users.display_name as nombre','categories.title as categoria', 'courses.title as course_title', 'wp98_users.about as about', 'courses.cover as cover','courses.thumbnail_cover as thumbnail_cover', 'courses.slug as slug', 'courses.id as id'))
+        ->get();
+
+    // return dd($cursos);
+        return view('cursos.perfil_mentor', compact('courses','mentor_info','directos'));
+    }
 
 }
 

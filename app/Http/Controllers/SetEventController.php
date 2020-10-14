@@ -281,11 +281,10 @@ class SetEventController extends Controller
        return response()->download($file, 'File.pdf', $headers);
     }
      /**Estadisticas de las respuestas**/
-     public function survey_statistics()
+     public function survey_statistics(Request $request)
      {
-
-       $statistics = SurveyResponse::where('selected', 1)->get();
- 
+        $id = $request->get('id');
+       $statistics = SurveyResponse::where('survey_options_id', $id)->where('selected', 1)->get();
          return response(json_encode($statistics),200)->header('Content-type', 'text/plain');
         
      }

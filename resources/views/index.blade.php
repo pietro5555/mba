@@ -96,13 +96,13 @@
             overflow: hidden;
             line-height: 0;
             font-size: .75rem;
-            background-color: #8E8E8E;
+            background: transparent linear-gradient(90deg, #2A91FF 0%, #257EDB 30%, #6AB742 100%) 0% 0% no-repeat padding-box;
             border-radius: .25rem;
         }
 
         .progress-bar-striped {
             background-size: 1rem 1rem;
-            background: transparent linear-gradient(90deg, #2A91FF 0%, #257EDB 61%, #6AB742 100%) 0% 0% no-repeat padding-box;
+            background: transparent;
         }
 
         .punto.bg-info::after{
@@ -175,6 +175,7 @@
                     @foreach ($cursosDestacados as $cursoDestacado)
                         @php $cont++; @endphp
         	            <div class="carousel-item @if ($cont == 1) active @endif">
+        	                <div class="overlay" ></div>
         	                <img src="{{ asset('uploads/images/courses/featured_covers/'.$cursoDestacado->featured_cover) }}" class="d-block w-100" alt="...">
         	                <div class="carousel-caption">
                                 <p style="color:#007bff; font-size: 22px; font-weight: bold; margin-top: -20px;">NUEVO CURSO</p>
@@ -285,17 +286,17 @@
                         <div class="card">
                             <a href="{{ route('courses.show', [$cursoNuevo->slug, $cursoNuevo->id]) }}" style="color: white;">
 
-                            @if (!is_null($cursoNuevo->cover))
-                                <img src="{{ asset('uploads/images/courses/covers/'.$cursoNuevo->cover) }}" class="card-img-top new-course-img" alt="...">
+                            @if (!is_null($cursoNuevo->mentor->avatar))
+                                <img src="{{ asset('uploads/avatar/'.$cursoNuevo->mentor->avatar) }}" class="card-img-top new-course-img" alt="...">
                             @else
-                                <img src="{{ asset('uploads/images/courses/covers/default.jpg') }}" class="card-img-top new-course-img" alt="...">
+                                <img src="{{ asset('uploads/avatar/default.jpg') }}" class="card-img-top new-course-img" alt="...">
                             @endif
                             <div class="card-img-overlay d-flex flex-column">
                                 <div class="mt-auto">
                                     <div class="new-course-title">{{ $cursoNuevo->title }}</div>
                                     <div class="row">
                                        <div class="col-md-12">
-                                           <p style="float: right;"> <i class="far fa-user-circle"> {{ $cursoNuevo->users->count()}}</i></p>
+                                           <p class="ico" style="float: right;"> <i class="far fa-user-circle"> {{ $cursoNuevo->users->count()}}</i></p>
                                        </div>
                                     </div>
                                 </div>
@@ -337,7 +338,7 @@
             <div class="row">
                 <div class="col-xl-4 col-lg-4 col-12 pl-4 pr-4">
                     <div class="referrers-box">
-                        <i class="fa fa-user referrers-icon" style="color: white;"></i><br>
+                        <i class="fa fa-user referrers-icon" style="color: #2a91ff;"></i><br>
                         {{ $refeDirec }} Referidos
                     </div>
                     <a href="{{url('/admin')}}" style="color: white; text-decoration: none;">

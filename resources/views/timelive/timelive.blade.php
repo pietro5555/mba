@@ -43,37 +43,37 @@ const countdown = (deadline,elem) => {
 
      $('#'+elem).append(
 
-            '<p class="p-1 bd-highlight" style="font-size: 80px; font-weight:800;">'+
+            '<p class="p-1 bd-highlight" style="font-size: 80px; font-weight:500;">'+
              t.remainDays +
-                '<p style="margin-left: -40px; margin-top: 100px; font-weight:800;">DIAS</p>'+
+                '<p style="margin-left: -40px; margin-top: 100px; font-weight:500;">DIAS</p>'+
             '</p>'+
 
-            '<p class="p-2 bd-highlight" style="font-size: 70px; font-weight:800;">'+
+            '<p class="p-2 bd-highlight" style="font-size: 70px; font-weight:500;">'+
                 ':'+
             '</p>'+
 
-            '<p class="p-1 bd-highlight" style="font-size: 80px; font-weight:800;">'+
+            '<p class="p-1 bd-highlight" style="font-size: 80px; font-weight:500;">'+
               t.remainHours +
-                '<p style="margin-left: -68px; margin-top: 100px; font-weight:800;">HORAS</p>'+
+                '<p style="margin-left: -68px; margin-top: 100px; font-weight:500;">HORAS</p>'+
             '</p>'+
 
-            '<p class="p-2 bd-highlight" style="font-size: 70px; font-weight:800;">'+
+            '<p class="p-2 bd-highlight" style="font-size: 70px; font-weight:500;">'+
                ':'+
             '</p>'+
 
-            '<p class="p-1 bd-highlight" style="font-size: 80px; font-weight:800;">'+
+            '<p class="p-1 bd-highlight" style="font-size: 80px; font-weight:500;">'+
                t.remainMinutes +
 
-                '<p style="margin-left: -80px; margin-top: 100px; font-weight:800;">MINUTOS</p>'+
+                '<p style="margin-left: -80px; margin-top: 100px; font-weight:500;">MINUTOS</p>'+
             '</p>'+
 
-            '<p class="p-2 bd-highlight" style="font-size: 70px; font-weight:800;">'+
+            '<p class="p-2 bd-highlight" style="font-size: 70px; font-weight:500;">'+
                 ':'+
             '</p>'+
-            '<p class="p-1 bd-highlight" style="font-size: 80px; font-weight:800;">'+
+            '<p class="p-1 bd-highlight" style="font-size: 80px; font-weight:500;">'+
                t.remainSeconds +
 
-                '<p style="margin-left: -85px; margin-top: 100px; font-weight:800;">SEGUNDOS</p>'+
+                '<p style="margin-left: -85px; margin-top: 100px; font-weight:500;">SEGUNDOS</p>'+
             '</p>'
 
         )
@@ -254,7 +254,7 @@ $contador++;
 @endphp
 
 @if($contador <= 3)
- <div class="col-md-4" style="margin-top: 20px;">
+<div class="col-md-4" style="margin-top: 20px;">
                               @if (!is_null($prox->mentor->avatar))
                                  <img src="{{ asset('uploads/avatar/'.$prox->mentor->avatar) }}" class="card-img-top img-prox-events" alt="...">
                               @else

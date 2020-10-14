@@ -17,7 +17,7 @@
                 <a class="nav-link items-header" href="{{ route('courses') }}">CURSOS</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link items-header" href="{{route('transmisiones')}}">FXT LIVE</a>
+                <a class="nav-link items-header" href="{{route('transmisiones')}}">STREAMING</a>
             </li>
             @if (Auth::guest())
                 <li class="nav-item dropdown">

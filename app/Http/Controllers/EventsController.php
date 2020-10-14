@@ -228,7 +228,7 @@ class EventsController extends Controller
 
             $request->user_streaming_id = $userId;
         }
-
+        
         $streamingConnect->updateMeeting($request, $evento->uuid);
 
         $evento->fill($request->all());

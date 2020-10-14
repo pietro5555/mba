@@ -19,15 +19,15 @@
 
       events: [
         @foreach($user_calendar as $calendario) {
-            ID: '{{$calendario->id}}',
-            iduser: '{{$calendario->iduser}}',
-            title: '{{$calendario->titulo}}',
-            color: '{{$calendario->color}}',
-            start: '{{$calendario->inicio}}',
-            end: '{{$calendario->vence}}',
-            backgroundColor: '{{$calendario->color}}',
-            borderColor: '{{$calendario->color}}',
-          },
+          ID: '{{$calendario->id}}',
+          iduser: '{{$calendario->iduser}}',
+          title: '{{$calendario->titulo}}',
+          color: '{{$calendario->color}}',
+          start: '{{$calendario->inicio}}',
+          end: '{{$calendario->vence}}',
+          backgroundColor: '{{$calendario->color}}',
+          borderColor: '{{$calendario->color}}',
+        },
         @endforeach
       ],
       timeFormat: 'hh:mm a',
@@ -49,9 +49,9 @@
 
 
         if ($('#iduser').val() == {
-            {
+            
               $usuario
-            }
+            
           }) {
           $('.habilitar').removeAttr('disabled')
           $(".oculto").show("slow");
@@ -75,8 +75,8 @@
 
     });
 
-    $(".connect").on('click', function(){
-      $("#connect-form-"+$(this).attr('data-id')).submit();
+    $(".connect").on('click', function() {
+      $("#connect-form-" + $(this).attr('data-id')).submit();
     });
   });
 
@@ -88,8 +88,6 @@
       return false;
     }
   }
-
-
 </script>
 @endpush
 @section('content')
@@ -106,38 +104,38 @@
 <div class="container-fluid">
   <div class="row">
     @foreach ($eventos_agendados as $agendado)
-      <div class="col-md-4 mt-1 img-course-cat border-0">
-        @if (!is_null($agendado->image))
-        <img src="{{ asset('uploads/images/banner/'.$agendado->image) }}" class="card-img-top" alt="...">
-        @else
-        <img src="{{ asset('uploads/images/banner/default.png') }}" class="card-img-top" alt="...">
-        @endif
-        <div class="card-img-overlay clearfix">
-          <div class="row ml-0 d-flex h-100">
-            <div class="col-md-9 my-auto" style="margin-bottom: 0px !important">
-              <h6 class="col-sm w-100 pl-0" style="font-size: 14px">
-              <i class="text-success fa fa-play-circle"></i> 
+    <div class="col-md-4 mt-1 img-course-cat border-0">
+      @if (!is_null($agendado->image))
+      <img src="{{ asset('uploads/images/banner/'.$agendado->image) }}" class="card-img-top" alt="...">
+      @else
+      <img src="{{ asset('uploads/images/banner/default.png') }}" class="card-img-top" alt="...">
+      @endif
+      <div class="card-img-overlay clearfix">
+        <div class="row ml-0 d-flex h-100">
+          <div class="col-md-9 my-auto" style="margin-bottom: 0px !important">
+            <h6 class="col-sm w-100 pl-0" style="font-size: 14px">
+              <i class="text-success fa fa-play-circle"></i>
               <a href="javascript:;" class="text-white connect" data-id="{{$agendado->id}}"> {{ $agendado->title }}</a></h6>
-              <h6 class="ml-2 text-white" style="font-size: 12px">
+            <h6 class="ml-2 text-white" style="font-size: 12px">
 
-              </h6>
-            </div>
-            <div class="col-md-3 my-auto" style="margin-bottom: 0px !important">
-              <h6 class="text-white w-100">
-                <i class="far fa-calendar text-center">
-                  <p style="font-size: 10px;">{{strftime("%d de %B",strtotime($agendado->date) )}}</p>
-                </i>
-              </h6>
-            </div>
+            </h6>
+          </div>
+          <div class="col-md-3 my-auto" style="margin-bottom: 0px !important">
+            <h6 class="text-white w-100">
+              <i class="far fa-calendar text-center">
+                <p style="font-size: 10px;">{{strftime("%d de %B",strtotime($agendado->date) )}}</p>
+              </i>
+            </h6>
           </div>
         </div>
       </div>
+    </div>
 
-      <form action="https://streaming.shapinetwork.com/connect-mba/{{$agendado->id}}/{{Auth::user()->ID}}" method="POST" id="connect-form-{{$agendado->id}}">
-           @csrf
-           <input type="hidden" name="email" value="{{ Auth::user()->user_email }}">
-          <input type="hidden" name="password" value="{{ decrypt(Auth::user()->clave) }}">
-      </form>
+    <form action="https://streaming.shapinetwork.com/connect-mba/{{$agendado->id}}/{{Auth::user()->ID}}" method="POST" id="connect-form-{{$agendado->id}}">
+      @csrf
+      <input type="hidden" name="email" value="{{ Auth::user()->user_email }}">
+      <input type="hidden" name="password" value="{{ decrypt(Auth::user()->clave) }}">
+    </form>
     @endforeach
   </div>
 </div>
@@ -160,26 +158,26 @@
 
 </div>
 
-	{{-- SECCIÓN REFERIDOS (USUARIOS LOGGUEADOS) --}}
-    @if (!Auth::guest())
-        <div class="pt-4">
-            <div class="row">
-                <div class="col-xl-4 col-lg-4 col-12 pl-4 pr-4">
-                    <div class="referrers-box">
-                        <i class="fa fa-user referrers-icon" style="color: white;"></i><br>
-                        {{ $refeDirec }} Referidos
-                    </div>
-                    <a href="{{url('/admin')}}" style="color: white; text-decoration: none;">
-                     <div class="referrers-button">
-                        Panel de referidos
-                     </div>
-                    </a>
-                </div>
-                <div class="col-xl-8 col-lg-8 d-none d-lg-block d-xl-block referrers-banner">
-                    <div class="referrers-banner-text">EL QUE QUIERE SUPERARSE, NO VE OBSTÁCULOS, VE SUEÑOS.</div>
-                </div>
-            </div>
-        </div><br><br>
-    @endif
-    {{-- FIN DE SECCIÓN REFERIDOS (USUARIOS LOGGUEADOS) --}}
+{{-- SECCIÓN REFERIDOS (USUARIOS LOGGUEADOS) --}}
+@if (!Auth::guest())
+<div class="pt-4">
+  <div class="row">
+    <div class="col-xl-4 col-lg-4 col-12 pl-4 pr-4">
+      <div class="referrers-box">
+        <i class="fa fa-user referrers-icon" style="color: white;"></i><br>
+        {{ $refeDirec }} Referidos
+      </div>
+      <a href="{{url('/admin')}}" style="color: white; text-decoration: none;">
+        <div class="referrers-button">
+          Panel de referidos
+        </div>
+      </a>
+    </div>
+    <div class="col-xl-8 col-lg-8 d-none d-lg-block d-xl-block referrers-banner">
+      <div class="referrers-banner-text">EL QUE QUIERE SUPERARSE, NO VE OBSTÁCULOS, VE SUEÑOS.</div>
+    </div>
+  </div>
+</div><br><br>
+@endif
+{{-- FIN DE SECCIÓN REFERIDOS (USUARIOS LOGGUEADOS) --}}
 @endsection

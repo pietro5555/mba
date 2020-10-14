@@ -11,11 +11,17 @@
 			<label>Descripción</label>
 			<textarea class="form-control" name="description">{{ $leccion->description }}</textarea> 
 		</div>
-    </div>
+	</div>
     <div class="col-md-12">
 		<div class="form-group">
-			<label>URL</label>
+			<label>URL Español</label>
 			<input type="url" class="form-control" name="url" value="{{ $leccion->url }}" required>
+		</div>
+	</div>
+	<div class="col-md-12">
+		<div class="form-group">
+			<label>URL Inglés</label>
+			<input type="url" class="form-control" name="english_url" value="{{ $leccion->english_url }}" required>
 		</div>
 	</div>
 </div>

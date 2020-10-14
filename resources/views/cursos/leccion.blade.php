@@ -212,7 +212,6 @@
                                         <i class="text-primary fa fa-play-circle"></i>  {{$lesson->title}}
                                         </h5>
                                 </a>
-                                <h6 class="mb-0 ml-4 d-block py-2"><i class="fa fa-clock-o" aria-hidden="true"></i> {{$lesson->duration}} m</h6>
                         </div>
                         <div id="collapse{{$lesson->id}}" class="collapse" aria-labelledby="heading{{$lesson->id}}" data-parent="#accordion">
                         <div class="card-body">

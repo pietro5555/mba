@@ -6,21 +6,19 @@
 			$('#mytable').DataTable( {
 				responsive: true,
 			});
-
-			$('.editar').on('click',function(e){
- 				e.preventDefault();
-
- 				var route = $(this).attr('data-route');
- 				$.ajax({
-	                url:route,
-	                type:'GET',
-	                success:function(ans){
-	                	$("#content-modal").html(ans);
-	                    $("#modal-edit").modal("show");
-	                }
-	            });
-			});
 		});
+
+		function editar($id){
+			var route = $("#"+$id).attr('data-route');
+ 			$.ajax({
+	            url:route,
+	            type:'GET',
+	            success:function(ans){
+	                $("#content-modal").html(ans);
+	                $("#modal-edit").modal("show");
+	            }
+	        });
+		}
 	</script>
 @endpush
 
@@ -65,10 +63,9 @@
 								<td class="text-center">{{ $leccion->title }}</td>
 								<td class="text-center">{{ $leccion->description }}</td>
                                 <td class="text-center">{{ $leccion->url }}</td>
-								<td class="text-center">{{ $leccion->duration }}</td>
                                 <td class="text-center">{{ $leccion->materials->count() }}</td>
 								<td class="text-center">
-									<a class="btn btn-info editar btn-rounded" data-route="{{ route('admin.courses.lessons.edit', $leccion->id) }}" title="Editar"><i class="fa fa-edit"></i></a>
+									<a class="btn btn-info btn-rounded" data-route="{{ route('admin.courses.lessons.edit', $leccion->id) }}" id="{{$leccion->id}}" onclick="editar(this.id);" title="Editar"><i class="fa fa-edit"></i></a>
 									<a class="btn btn-primary" href="{{ route('admin.courses.lessons.show', $leccion->id) }}" title="Ver Video"><i class="fa fa-video"></i></a>
 									<a class="btn btn-warning" href="{{ route('admin.courses.lessons.resources', $leccion->id) }}" title="Ver Recursos Adicionales"><i class="fa fa-file"></i></a>
 									<a class="btn btn-danger" href="{{ route('admin.courses.lessons.delete', $leccion->id) }}" title="Eliminar"><i class="fa fa-ban"></i></a>
@@ -106,11 +103,17 @@
 						                <label>Descripción</label>
 						            	<textarea class="form-control" name="description"></textarea>
 						            </div>
-                                </div>
+								</div>
                                 <div class="col-md-12">
 						            <div class="form-group">
-						                <label>URL</label>
+						                <label>URL Español</label>
 						            	<input type="url" class="form-control" name="url" required>
+						            </div>
+								</div>
+								<div class="col-md-12">
+						            <div class="form-group">
+						                <label>URL Inglés</label>
+						            	<input type="url" class="form-control" name="english_url" required>
 						            </div>
 						        </div>
 						    </div>

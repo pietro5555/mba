@@ -133,8 +133,8 @@
                      <div class="col-md-4">
                         <h6 class="text-white"> 
                            <img src="{{ asset('images/icons/clock.svg') }}" height="30px" width="30px">
-                           @if ($curso->duration > 0)
-                              {{ $curso->hours }}h {{ $curso->minutes }}m
+                           @if (!is_null($curso->duration))
+                              {{ $curso->duration }}
                            @else
                               0h 0m
                            @endif

@@ -87,7 +87,7 @@ class TransmisionesController extends Controller
                         ->get()
                         ->first();
 
-      $proximos = Events::where('date', '>', Carbon::now()->format('Y-m-d'))
+      $proximos = Events::where('date', '>=', Carbon::now()->format('Y-m-d'))
                      ->where('id', '!=', ($evento_actual == null) ? 0 : $evento_actual->id)
                      ->where('status', '=',1)
                      ->get();

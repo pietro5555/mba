@@ -274,19 +274,6 @@ class CourseController extends Controller{
                     ])->with('evaluation')
                     ->first();
 
-        $dur = 0;
-        foreach ($curso->lessons as $leccion){
-            $dur += $leccion->duration;
-        }
-        $curso->duration = $dur;
-        if ($dur > 0){
-            $tiempo = explode(".", $dur);
-            $segundos = $tiempo[0]*60 + $tiempo[1];
-            $curso->hours = floor($segundos/ 3600);
-            $curso->minutes = floor(($segundos - ($curso->hours * 3600)) / 60);
-            $curso->seconds = $segundos - ($curso->hours * 3600) - ($curso->minutes * 60);
-        }
-
         $miValoracion = NULL;
         $progresoCurso = NULL;
         if (!Auth::guest()){

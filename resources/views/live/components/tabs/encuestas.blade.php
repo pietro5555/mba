@@ -31,7 +31,7 @@
 @endif
 @if(Auth::user()->rol_id==2)
 <div>
-    <h4>Estadisticas de encuesta</h4>
+    <h4>Estadísticas de encuesta</h4>
 </div>
 <div>
     <canvas id="myChart" width="400" height="400"></canvas>

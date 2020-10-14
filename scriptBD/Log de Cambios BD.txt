@@ -201,3 +201,8 @@ Dev:Luisana Marín
 *Nuevo campo duration en la tabla courses (VARCHAR 50 NULL)
 *Nuevo campo english_url en la tabla lessons (VARCHAR 255 NULL)
 
+
+
+13/10/2020
+Dev:Crisleivys
+*Agregado el campo deleted_at a la tabla courses y courses_users (correr los scripts courses y courses_users)

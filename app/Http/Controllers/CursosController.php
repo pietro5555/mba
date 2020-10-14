@@ -154,24 +154,7 @@ class CursosController extends Controller
        }
     }
 
-    public function perfil_mentor($mentor_id){
 
-        $mentor_info = User::where('wp98_users.id', '=', $mentor_id)
-        ->select('wp98_users.display_name as nombre', 'wp98_users.profession as profession' ,'wp98_users.about as biography', 'wp98_users.avatar as avatar')
-        ->first();
-
-         $directos = User::where('referred_id', Auth::user()->ID)->count('ID');
-
-         $courses= DB::table('wp98_users')
-        ->join('courses', 'courses.mentor_id', '=', 'wp98_users.id')
-        ->join('categories', 'categories.id', '=', 'courses.category_id')
-        ->where('wp98_users.id', '=', $mentor_id)
-        ->select(array ('wp98_users.display_name as nombre','categories.title as categoria', 'courses.title as course_title', 'wp98_users.about as about', 'courses.cover as cover','courses.thumbnail_cover as thumbnail_cover', 'courses.slug as slug', 'courses.id as id'))
-        ->get();
-
-      // return dd($cursos);
-        return view('cursos.perfil_mentor', compact('courses','mentor_info','directos'));
-    }
 
 
     public function show_one_course()

@@ -53,6 +53,8 @@
                                                         @csrf
                                                         <input id="event_id" name="event_id" type="hidden"
                                                             value="{{ $event->id }}">
+                                                            <input id="survey_id" name="survey_id" type="hidden"
+                                                            value="{{ $survey_id }}">
                                                         <div class="form-group notes-form-title">
                                                             <input type="text" id="title" placeholder="Título"
                                                                 class="col-md-6 form-control{{ $errors->has('title') ? ' is-invalid' : '' }}"

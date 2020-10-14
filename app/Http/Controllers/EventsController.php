@@ -170,8 +170,6 @@ class EventsController extends Controller
 
        // return dd ($resources_survey , $surveys);
         // return response()->json([$menuResource], 201);
-
-        
         /*Files*/
         $files = SetEvent::where('event_id', $event_id)
         ->where('type', 'file')

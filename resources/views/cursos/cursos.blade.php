@@ -136,7 +136,7 @@
                 </div>
             </div>
         @endif
-    @endif-->
+    @endif
     {{-- FIN DEL BANNER --}}
     {{-- SECCIÓN TUS CURSOS--}}
     <!--@if (!Auth::guest())
@@ -228,7 +228,7 @@
     {{-- FIN SECCIÓN TUS CURSOS--}}
 
     {{-- SECCIÓN RECOMENDACIONES--}}
-@if(!empty($cursosRecomendados))
+@if(!empty($recomendados))
 <div class="section-landing mt-3" style="background-color: #121317;">
 
     <div class="col">
@@ -240,7 +240,6 @@
         </div>
 
 <!--Carrusel-->
-
 @if($total > 0)
 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
 
@@ -252,15 +251,14 @@
 @php
 $contador=0;
 @endphp
-@foreach($cursosRecomendados as $recommended)
+@foreach($recomendados as $recommended)
 @php
 $contador++;
 @endphp
 
 @if($contador <= 3)
-
 <div class="col-md-4" style="margin-top: 20px;">
-  @if (!is_null($recommended->thumbnail_cover))
+  @if (($recommended->thumbnail_cover)!= null)
  <img src="{{ asset('uploads/images/courses/covers/'.$recommended->thumbnail_cover) }}" class="card-img-top img-prox-events" alt="...">
  @else
  <img src="{{ asset('uploads/images/courses/covers/default.jpg') }}" class="card-img-top img-prox-events" alt="...">
@@ -295,7 +293,7 @@ $contador++;
 @php
 $segundo =0;
 @endphp
-@foreach($cursosRecomendados as $recommended)
+@foreach($recomendados as $recommended)
 @php
 $segundo++;
 @endphp
@@ -336,7 +334,7 @@ $segundo++;
 @php
 $tercero =0;
 @endphp
-@foreach($cursosRecomendados as $recommended)
+@foreach($recomendados as $recommended)
 @php
 $tercero++;
 @endphp

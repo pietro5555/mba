@@ -319,7 +319,7 @@
                 <div class="next-streaming-title">{{ $proximoEvento->title }}</div>
                 <div class="next-streaming-date">
                     <i class="fa fa-calendar"></i> {{ $proximoEvento->weekend_day }} {{ $proximoEvento->date_day }} de {{ $proximoEvento->month }}
-                    <i class="fa fa-clock"></i> {{ date('H:i A', strtotime($proximoEvento->date)) }}
+                    <i class="fa fa-clock"></i> {{ date('H:i A', strtotime($proximoEvento->time)) }}
                 </div>
                 @if (!Auth::guest())
                     <div class="next-streaming-reserve">

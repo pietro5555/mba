@@ -137,7 +137,7 @@ class LessonController extends Controller{
                             ->where('user_id', '=', Auth::user()->ID)
                             ->first();
                             $last_lesson = Lesson::where('id', $lesson_id)->latest('created_at')->first();
-                            return dd($last_lesson);
+                           // return dd($last_lesson);
    $all_comments = Comment::where('lesson_id', $lesson_id)->get();
         return view('cursos.leccion', compact('lesson', 'all_lessons','all_comments', 'progresoCurso'));
         $all_comments = Comment::where('lesson_id', $lesson_id)->with('user')->get();

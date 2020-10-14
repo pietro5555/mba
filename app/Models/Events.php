@@ -77,4 +77,6 @@ class Events extends Model
     public function subcategory(){
         return $this->belongsTo('App\Models\Subcategory');
     }
+
+    
 }

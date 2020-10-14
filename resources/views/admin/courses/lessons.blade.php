@@ -39,8 +39,10 @@
 		<div class="box">
 			<div class="box-body">
 				<div style="text-align: right;">
-					<a href="{{ route ('admin.courses.index')}}" class="btn btn-danger descargar"><i class="fas fa-arrow-circle-left"></i> Regresar</a>
-					<a data-toggle="modal" data-target="#modal-new" class="btn btn-info descargar"><i class="fa fa-plus-circle"></i> Nueva Lección</a>
+				    <a href="{{ route ('admin.courses.index')}}" class="btn btn-danger descargar"><i class="fas fa-arrow-circle-left"></i> Atrás</a>
+				    <a data-toggle="modal" data-target="#modal-new" class="btn btn-info descargar"><i class="fa fa-plus-circle"></i> Nueva Lección</a>
+				    
+					
 				</div>
 
 				<br class="col-xs-12">
@@ -51,8 +53,8 @@
 							<th class="text-center">#</th>
 							<th class="text-center">Título</th>
 							<th class="text-center">Descripción</th>
-                            <th class="text-center">URL</th>
-							<th class="text-center">Duración</th>
+							<th class="text-center">URL Español</th>
+							<th class="text-center">URL Inglés</th>
                             <th class="text-center">Recursos Adicionales</th>
 							<th class="text-center">Acción</th>
 						</tr>
@@ -64,6 +66,7 @@
 								<td class="text-center">{{ $leccion->title }}</td>
 								<td class="text-center">{{ $leccion->description }}</td>
                                 <td class="text-center">{{ $leccion->url }}</td>
+								<td class="text-center">{{ $leccion->english_url }}</td>
                                 <td class="text-center">{{ $leccion->materials->count() }}</td>
 								<td class="text-center">
 									<a class="btn btn-info btn-rounded" data-route="{{ route('admin.courses.lessons.edit', $leccion->id) }}" id="{{$leccion->id}}" onclick="editar(this.id);" title="Editar"><i class="fa fa-edit"></i></a>

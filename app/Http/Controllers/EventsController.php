@@ -308,93 +308,108 @@ class EventsController extends Controller
     }
 
 
-   /*Vista con la información del streaming Time/timelive*/
-   public function timelive(Request $request){
-      //setlocale(LC_TIME, 'es_ES.UTF-8'); Para el server
-      setlocale(LC_TIME, 'es');//Local
-      Carbon::setLocale('es');
-      //$total_eventos = count(Events::all());
-      $total_eventos = Events::where('date', '>=', Carbon::now()->format('Y-m-d'))
-                           ->where('status','1')->count();
+ /*Vista con la información del streaming Time/timelive*/
+ public function timelive(Request $request){
+    setlocale(LC_TIME, 'es_ES.UTF-8');
+    //setlocale(LC_TIME, 'es');//Local
+    Carbon::setLocale('es');
+    //$total_eventos = count(Events::all());
+    $total_eventos = Events::where('date', '>=', Carbon::now()->format('Y-m-d'))
+                         ->where('status','1')->count();
+      //return dd( $total_eventos, date('H:i:s'));
+    $evento = Events::where('date', '>=', Carbon::now()->format('Y-m-d'))
+                ->where('time', '>=', date('H:i:s'))
+                ->where('status', '=',1)
+                ->get()
+                ->first();
 
-      $evento = Events::where('date', '>=', Carbon::now()->format('Y-m-d'))
-                  ->where('status', '=',1)
-                  ->get()
-                  ->first();
+    if(!empty($evento)){
+       //return dd($evento, !empty($evento));
+       if ($request->sigEvent == '' or $request->sigEvent == null) {
+          if($total_eventos > 1){
+             $prox = true;
+             $i = 1;
+             $id = $evento->id;
+             while($prox){
+                $id = $id+1;
+                $nextEvent = Events::where('id', $id)->get()->first();
+                if($nextEvent != null)
+                   $prox = false;
+             }
+          }else{
+             $nextEvent = null;
+          }
+       }else {
+          $lastEvent = Events::all()->last();
+          $evento = Events::find($request->sigEvent);
 
-      if(!empty($evento)){
-         //return dd($evento, !empty($evento));
-         if ($request->sigEvent == '' or $request->sigEvent == null) {
-            if($total_eventos > 1){
-               $prox = true;
-               $i = 1;
-               $id = $evento->id;
-               while($prox){
-                  $id = $id+1;
-                  $nextEvent = Events::where('id', $id)->get()->first();
-                  if($nextEvent != null)
-                     $prox = false;
-               }
-            }else{
-               $nextEvent = null;
-            }
-         }else {
-            $lastEvent = Events::all()->last();
-            $evento = Events::find($request->sigEvent);
-
-            if ($lastEvent->id == $evento->id) {
-               $nextEvent = Events::where('date', '>=', Carbon::now())->first();
-               //return dd($lastEvent, $total_eventos, $nextEvent);
-            }else {
-               if($total_eventos > 1){
-                  $prox = true;
-                  $i = 1;
-                  $id = $evento->id;
-                  while($prox){
-                     $id = $id+1;
-                     $nextEvent = Events::where('id', $id)->get()->first();
-                     //return dd($lastEvent, $evento, $id, $total_eventos, $nextEvent);
-                     if ($nextEvent != null)
-                        $prox = false;
-                  }
-               }else{
-                  $nextEvent = null;
-               }
-            }
-         }
-      }else{
-         $evento= '';
-         $nextEvent = '';
-         $proximos = '';
-         $total= $total_eventos;
-         $fechaActual = Carbon::now()->format('Y-m-d');
-         return view('timelive/timelive', compact('evento', 'nextEvent', 'proximos', 'total', 'total_eventos'));
-      }
-
-      /*PROXIMOS EVENTOS*/
-      if($total_eventos>0){
-         $proximos = Events::where('date', '>=', Carbon::now())
-                        ->where('id', '!=', $evento->id)
-                        ->where('status', '=', '1')
-                        ->get();
-         $total = count($proximos);
-      }else{
-         $proximos ='';
-         $total =0;
-      }
-
-      $fechaActual = Carbon::now()->format('Y-m-d');
-      $checkEvento = NULL;
-      if (!Auth::guest()){
-         $checkEvento = DB::table('events_users')
-                        ->where('event_id', '=', $evento->id)
-                        ->where('user_id', '=', Auth::user()->ID)
-                        ->first();
-      }
-
-      //dd($evento, $proximos);
-      return view('timelive/timelive', compact('evento', 'nextEvent', 'proximos', 'total', 'total_eventos', 'fechaActual', 'checkEvento'));
+          if ($lastEvent->id == $evento->id) {
+             $nextEvent = Events::where('date', '>=', Carbon::now())->first();
+             //return dd($lastEvent, $total_eventos, $nextEvent);
+          }else {
+             if($total_eventos > 1){
+                $prox = true;
+                $i = 1;
+                $id = $evento->id;
+                while($prox){
+                   $id = $id+1;
+                   $nextEvent = Events::where('id', $id)->get()->first();
+                   //return dd($lastEvent, $evento, $id, $total_eventos, $nextEvent);
+                   if ($nextEvent != null)
+                      $prox = false;
+                }
+             }else{
+                $nextEvent = null;
+             }
+          }
+       }
+    }else{
+       $evento= '';
+       $nextEvent = '';
+       $proximos = '';
+       $total= $total_eventos;
+       $fechaActual = Carbon::now()->format('Y-m-d');
+       return view('timelive/timelive', compact('evento', 'nextEvent', 'proximos', 'total', 'total_eventos'));
     }
+
+    /*PROXIMOS EVENTOS*/
+    if($total_eventos>0){
+       $proximos = Events::where('date', '>=', date('Y-m-d'))
+                      ->where('id', '!=', $evento->id)
+                      ->where('time', '>=', date('H:i:s'))
+                      ->where('status', '=', '1')
+                      ->get();
+       $total = count($proximos);
+    }else{
+       $proximos ='';
+       $total =0;
+    }
+
+    $fechaActual = Carbon::now()->format('Y-m-d');
+    $checkEvento = NULL;
+    if (!Auth::guest()){
+       $checkEvento = DB::table('events_users')
+                      ->where('event_id', '=', $evento->id)
+                      ->where('user_id', '=', Auth::user()->ID)
+                      ->first();
+    }
+    
+    
+    $misEventosArray = [];
+    if (!Auth::guest()){
+       $misEventos = DB::table('events_users')
+                      ->select('event_id')
+                      ->where('user_id', '=', Auth::user()->ID)
+                      ->get();
+
+       foreach ($misEventos as $miEvento){
+          array_push($misEventosArray, $miEvento->event_id);
+       }
+    }
+
+    //dd($evento, $proximos);
+    return view('timelive/timelive', compact('evento', 'nextEvent', 'proximos', 'total', 'total_eventos', 'fechaActual', 'checkEvento' , 'misEventosArray'));
+  }
 
 
      public function dias($fecha){

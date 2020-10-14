@@ -133,8 +133,8 @@
                      <div class="col-md-4">
                         <h6 class="text-white"> 
                            <img src="{{ asset('images/icons/clock.svg') }}" height="30px" width="30px">
-                           @if ($curso->duration > 0)
-                              {{ $curso->hours }}h {{ $curso->minutes }}m
+                           @if (!is_null($curso->duration))
+                              {{ $curso->duration }}
                            @else
                               0h 0m
                            @endif
@@ -156,7 +156,8 @@
                            @if (Auth::user()->membership_id < $curso->subcategory_id)
                               <a href="{{route('shopping-cart.store', $curso->id)}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> ACTUALIZAR MEMBRESIA</a>
                            @else
-                              <a href="{{route('client.courses.add', $curso->id)}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-plus-circle" aria-hidden="true"></i> INICIAR CURSO</a>
+                              <a href="{{route('client.courses.add', [$curso->id, 'es'])}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-language" aria-hidden="true"></i> INICIAR CURSO EN ESPAÑOL</a>
+                              <a href="{{route('client.courses.add', [$curso->id, 'en'])}}" class="btn btn-primary play-course-button btn-block" ><i class="fa fa-language" aria-hidden="true"></i> INICIAR CURSO EN INGLÉS</a>
                            @endif
                         @endif
                      @else

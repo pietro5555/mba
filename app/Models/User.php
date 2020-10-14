@@ -116,7 +116,7 @@ class User extends Authenticatable
 
     //Relación con los cursos que posee el usuario
     public function courses_buyed(){
-        return $this->belongsToMany('App\Models\Course', 'courses_users', 'user_id', 'course_id')->withPivot('progress', 'start_date', 'finish_date', 'certificate', 'favorite')->withTimestamps();
+        return $this->belongsToMany('App\Models\Course', 'courses_users', 'user_id', 'course_id')->withPivot('progress', 'start_date', 'finish_date', 'certificate', 'favorite', 'language')->withTimestamps();
     }
 
     public function evaluations(){

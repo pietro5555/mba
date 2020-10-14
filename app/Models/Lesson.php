@@ -8,7 +8,7 @@ class Lesson extends Model
 {
     protected $table = 'lessons';
 
-    protected $fillable = ['course_id', 'title', 'slug', 'description', 'url', 'duration'];
+    protected $fillable = ['course_id', 'title', 'slug', 'description', 'url', 'english_url'];
 
     public function course(){
         return $this->belongsTo('App\Models\Course');

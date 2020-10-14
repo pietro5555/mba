@@ -280,19 +280,6 @@ class CourseController extends Controller{
                     ])->with('evaluation')
                     ->first();
 
-        $dur = 0;
-        foreach ($curso->lessons as $leccion){
-            $dur += $leccion->duration;
-        }
-        $curso->duration = $dur;
-        if ($dur > 0){
-            $tiempo = explode(".", $dur);
-            $segundos = $tiempo[0]*60 + $tiempo[1];
-            $curso->hours = floor($segundos/ 3600);
-            $curso->minutes = floor(($segundos - ($curso->hours * 3600)) / 60);
-            $curso->seconds = $segundos - ($curso->hours * 3600) - ($curso->minutes * 60);
-        }
-
         $miValoracion = NULL;
         $progresoCurso = NULL;
         if (!Auth::guest()){
@@ -362,10 +349,10 @@ class CourseController extends Controller{
     /**
     * Cliente con Membresía / agregar curso a mi lista
     */
-    public function add($id){
+    public function add($id, $language){
         $fecha = date('Y-m-d H:i:s');
         $curso = Course::find($id);
-        $curso->users()->attach(Auth::user()->ID, ['progress' => 0, 'start_date' => date('Y-m-d'), 'certificate' => 0, 'favorite' => 0]);
+        $curso->users()->attach(Auth::user()->ID, ['progress' => 0, 'start_date' => date('Y-m-d'), 'certificate' => 0, 'favorite' => 0, 'language' => $language]);
 
          $primeraLeccion = DB::table('lessons')
                             ->where('course_id', '=', $id)

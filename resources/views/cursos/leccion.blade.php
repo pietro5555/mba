@@ -48,7 +48,7 @@
       @foreach ($all_lessons as $leccion)
         <div class="carousel-item @if ($leccion->id == $lesson->id) active @endif">
           <div class="video-container">
-            <iframe src="{{ $leccion->url }}" width="100%" height="590" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+            <iframe @if ($progresoCurso->language == 'es') src="{{ $leccion->url }}" @else src="{{ $leccion->english_url }}" @endif width="100%" height="590" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
           </div>
         </div>
         @if ($leccion->id <= $lesson->id)
@@ -213,7 +213,6 @@
                                         <i class="text-primary fa fa-play-circle"></i>  {{$lesson->title}}
                                         </h5>
                                 </a>
-                                <h6 class="mb-0 ml-4 d-block py-2"><i class="fa fa-clock-o" aria-hidden="true"></i> {{$lesson->duration}} m</h6>
                         </div>
                         <div id="collapse{{$lesson->id}}" class="collapse" aria-labelledby="heading{{$lesson->id}}" data-parent="#accordion">
                         <div class="card-body">

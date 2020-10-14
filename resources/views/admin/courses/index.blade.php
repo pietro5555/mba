@@ -9,20 +9,6 @@
 				responsive: true,
 			});
 
-			/*$('.editar').on('click',function(e){
- 				e.preventDefault();
-
- 				var route = $(this).attr('data-route');
- 				$.ajax({
-	                url:route,
-	                type:'GET',
-	                success:function(ans){
-	                	$("#content-modal").html(ans);
-	                    $("#modal-edit").modal("show");
-	                }
-	            });
-			});*/
-
 			$('.featured').on('click',function(e){
  				e.preventDefault();
 
@@ -51,6 +37,7 @@
 	                $("#subcategory_id option[value="+ans[0].subcategory_id+"]").attr("selected", true);
 	                $("#mentor_id option[value="+ans[0].mentor_id+"]").attr("selected", true);
                  	CKEDITOR.instances["description"].setData(ans[0].description);
+					$("#duration").val(ans[0].duration);
 	                var myArr = ans[1];
 	                $(".check-edit").each(function() {
 			            if(myArr.includes(parseInt($(this).val()))){
@@ -184,6 +171,12 @@
 						            	<textarea class="ckeditor form-control" name="description"></textarea>
 						            </div>
 						        </div>
+								<div class="col-md-12">
+						            <div class="form-group">
+						                <label>Duración del Curso</label>
+						            	<input type="text" class="form-control" name="duration" >
+						            </div>
+						        </div>
 						        <div class="col-md-12">
 						            <div class="form-group">
 						                <label>Imagen de Cover</label>
@@ -284,6 +277,12 @@
 										<textarea class="ckeditor form-control" name="description" id="description"></textarea>
 									</div>
 								</div>
+								<div class="col-md-12">
+						            <div class="form-group">
+						                <label>Duración del Curso</label>
+						            	<input type="text" class="form-control" name="duration" id="duration" >
+						            </div>
+						        </div>
 								<div class="col-md-12">
 									<div class="form-group">
 										<label>Imagen de Cover</label>

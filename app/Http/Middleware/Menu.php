@@ -136,7 +136,7 @@ class Menu
                 'activo' => 0,
             ],
 
-            'Volver a MBA' => [
+            'Academia' => [
                 'submenu' => 0,
                 'ruta' => 'index',
                 'black'=> '0',

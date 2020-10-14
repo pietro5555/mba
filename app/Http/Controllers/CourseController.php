@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Lesson;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Models\CourseUser;
 
 class CourseController extends Controller{
     /**
@@ -150,7 +151,11 @@ class CourseController extends Controller{
         foreach ($cursosMasVistos as $cursoVisto){
             $cursosRecomendados->push($cursoVisto);
         }
-        $total = count($cursosRecomendados);
+        $recomendados = $cursosRecomendados->filter(function ($value) { return !is_null($value); });
+
+         //dd($recomendados);
+        $total = count($recomendados);
+
 
         $cursos = NULL;
         $last_course = NULL;
@@ -163,10 +168,11 @@ class CourseController extends Controller{
             //ULTIMO CURSO VISTO POR EL USUARIO
             $last_course = DB::table('courses')
                                 ->join('courses_users', 'courses_users.course_id', '=', 'courses.id')
+                                ->where('courses.deleted_at',  null)
+                                ->where('courses_users.deleted_at',  null)
                                 ->where('courses_users.user_id', '=', Auth::user()->ID )
                                 ->orderBy('courses_users.updated_at', 'DESC')
                                 ->first();
-
             /*Mentores que tengan cursos*/
             $mentores = DB::table('wp98_users')
                         ->join('courses', 'courses.mentor_id', '=', 'wp98_users.id')
@@ -179,9 +185,10 @@ class CourseController extends Controller{
                 $cantCateg = count($cursostmp);
                 $cont = 0;
                 $string = '';
+                $categoriastmp = [];
                 foreach ($cursostmp as $curso) {
                     $cate = DB::table('categories')->where('id', $curso->category_id)->first();
-
+                    // $categoriastmp [] = $cate->title;
                     if ($cantCateg == 1) {
                         $string = $cate->title;
                     }else{
@@ -197,18 +204,31 @@ class CourseController extends Controller{
                     }
                     $cont++;
                 }
+                // $categoriastmp2 = array_unique($categoriastmp);
+                // dump($categoriastmp, $categoriastmp2);
+                // for ($i=0; $i < count($categoriastmp2); $i++) { 
+                //     if ($i == 0){
+                //         $string = $categoriastmp2[$i];
+                //     }else{
+                //         $string = $string.', '.$categoriastmp2[$i];
+                //     }
+                // }
                 $mentor->categoria = $string;
             }
         }
 
-        return view('cursos.cursos')->with(compact('username','cursosDestacados', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next', 'courses', 'mentores', 'cursos', 'cursosRecomendados', 'total', 'last_course'));
+        return view('cursos.cursos')->with(compact('username','cursosDestacados', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next', 'courses', 'mentores', 'cursos', 'recomendados', 'total', 'last_course'));
     }
 
     /*Ver todos los cursos */
     public function show_all_courses()
     {
         $courses = Course::paginate(8);
-        return view('cursos.show_all_courses', compact('courses'));
+        $refeDirec =0;
+        if(Auth::user()){
+            $refeDirec = User::where('referred_id', Auth::user()->ID)->count('ID');
+        }
+        return view('cursos.show_all_courses', compact('courses', 'refeDirec'));
 
     }
 
@@ -259,19 +279,6 @@ class CourseController extends Controller{
                         }
                     ])->with('evaluation')
                     ->first();
-
-        $dur = 0;
-        foreach ($curso->lessons as $leccion){
-            $dur += $leccion->duration;
-        }
-        $curso->duration = $dur;
-        if ($dur > 0){
-            $tiempo = explode(".", $dur);
-            $segundos = $tiempo[0]*60 + $tiempo[1];
-            $curso->hours = floor($segundos/ 3600);
-            $curso->minutes = floor(($segundos - ($curso->hours * 3600)) / 60);
-            $curso->seconds = $segundos - ($curso->hours * 3600) - ($curso->minutes * 60);
-        }
 
         $miValoracion = NULL;
         $progresoCurso = NULL;
@@ -342,10 +349,10 @@ class CourseController extends Controller{
     /**
     * Cliente con Membresía / agregar curso a mi lista
     */
-    public function add($id){
+    public function add($id, $language){
         $fecha = date('Y-m-d H:i:s');
         $curso = Course::find($id);
-        $curso->users()->attach(Auth::user()->ID, ['progress' => 0, 'start_date' => date('Y-m-d'), 'certificate' => 0, 'favorite' => 0]);
+        $curso->users()->attach(Auth::user()->ID, ['progress' => 0, 'start_date' => date('Y-m-d'), 'certificate' => 0, 'favorite' => 0, 'language' => $language]);
 
          $primeraLeccion = DB::table('lessons')
                             ->where('course_id', '=', $id)
@@ -356,7 +363,7 @@ class CourseController extends Controller{
             ->insert(['course_id' => $id, 'user_id' => Auth::user()->ID, 'progress' => 0,
                       'start_date' => date('Y-m-d'), 'certificate' => 0, 'favorite' => 0,
                       'created_at' => $fecha, 'updated_at' => $fecha]);*/
-        
+
         if (!is_null($primeraLeccion)){
             return redirect('courses/lesson/'.$primeraLeccion->slug.'/'.$primeraLeccion->id.'/'.$curso->id)->with('msj-exitoso', 'El curso ha sido agregado a su lista con éxito.');
         }else{
@@ -496,6 +503,12 @@ class CourseController extends Controller{
         $curso = Course::find($id);
         $curso->status = $status;
         $curso->save();
+        $curso->delete();
+        $courses_users = CourseUser::where('course_id', $id)->get();
+        foreach ($courses_users as $key => $course_user) {
+            $course_user->delete();
+        }
+        
 
         if ($status == 0){
             return redirect('admin/courses')->with('msj-exitoso', 'El curso '.$curso->title.' ha sido deshabilitado con éxito.');
@@ -543,6 +556,41 @@ class CourseController extends Controller{
         return redirect('admin/courses')->with('msj-exitoso', 'El curso ha sido quitado de destacados con éxito.');
     }
 
+    /*MOSTRAR CURSOS POR CATEGORIA*/
+    public function show_course_category($category_id){
+
+        $courses = Course::where('category_id','=', $category_id)->where('status', 1)->get();
+        $category_name = Category::where('categories.id', '=', $category_id)->first();
+           if($courses)
+           {
+
+            $directos = NULL;
+            if (!Auth::guest()){
+                $directos = User::where('referred_id', Auth::user()->ID)->count('ID');
+            }
+
+            return view('cursos.cursos_categorias', compact('courses', 'category_name', 'directos'));
+           }
+    }
+     public function perfil_mentor($mentor_id){
+
+        $mentor_info = User::where('wp98_users.id', '=', $mentor_id)
+        ->select('wp98_users.display_name as nombre', 'wp98_users.profession as profession' ,'wp98_users.about as biography', 'wp98_users.avatar as avatar')
+        ->first();
+
+        $directos = User::where('referred_id', Auth::user()->ID)->count('ID');
+
+        $courses= DB::table('wp98_users')
+        ->join('courses', 'courses.mentor_id', '=', 'wp98_users.id')
+        ->join('categories', 'categories.id', '=', 'courses.category_id')
+        ->where('wp98_users.id', '=', $mentor_id)
+        ->where('courses.status', 1)
+        ->select(array ('wp98_users.display_name as nombre','categories.title as categoria', 'courses.title as course_title', 'wp98_users.about as about', 'courses.cover as cover','courses.thumbnail_cover as thumbnail_cover', 'courses.slug as slug', 'courses.id as id'))
+        ->get();
+
+    // return dd($cursos);
+        return view('cursos.perfil_mentor', compact('courses','mentor_info','directos'));
+    }
 
 }
 

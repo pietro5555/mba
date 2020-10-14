@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.6deb5
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost:3306
--- Tiempo de generación: 12-09-2020 a las 11:38:24
--- Versión del servidor: 5.7.31-0ubuntu0.18.04.1
--- Versión de PHP: 7.2.24-0ubuntu0.18.04.6
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 10-10-2020 a las 05:46:47
+-- Versión del servidor: 10.4.14-MariaDB
+-- Versión de PHP: 7.3.22
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -30,18 +31,29 @@ CREATE TABLE `event_resources` (
   `id` int(11) NOT NULL,
   `resources_id` int(11) NOT NULL,
   `event_id` int(11) NOT NULL,
-  `status` varchar(50) COLLATE utf8_spanish_ci NOT NULL
+  `status` int(50) DEFAULT 1,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `event_resources`
 --
 
-INSERT INTO `event_resources` (`id`, `resources_id`, `event_id`, `status`) VALUES
-(1, 1, 1, '1'),
-(2, 2, 1, '1'),
-(3, 3, 1, '1'),
-(4, 4, 1, '1');
+INSERT INTO `event_resources` (`id`, `resources_id`, `event_id`, `status`, `created_at`, `updated_at`) VALUES
+(5, 1, 2, 1, '2020-10-09 16:54:28', '2020-10-09 16:54:28'),
+(6, 2, 2, 1, '2020-10-09 16:54:51', '2020-10-09 16:54:51'),
+(7, 3, 2, 1, '2020-10-09 17:18:32', '2020-10-09 17:18:32'),
+(10, 5, 2, 1, '2020-10-09 20:03:51', '2020-10-09 20:03:51'),
+(11, 6, 2, 1, '2020-10-09 20:04:19', '2020-10-09 20:04:19'),
+(12, 7, 2, 1, '2020-10-09 20:04:40', '2020-10-09 20:04:40'),
+(16, 1, 1, 1, '2020-10-09 21:24:33', '2020-10-09 21:24:33'),
+(17, 2, 1, 1, '2020-10-09 21:24:33', '2020-10-09 21:24:33'),
+(18, 3, 1, 1, '2020-10-09 21:25:13', '2020-10-09 21:25:13'),
+(19, 4, 1, 1, '2020-10-09 20:38:26', '2020-10-09 20:38:26'),
+(20, 5, 1, 1, '2020-10-09 20:46:57', '2020-10-09 20:46:57'),
+(21, 6, 1, 1, '2020-10-09 20:48:36', '2020-10-09 20:48:36'),
+(22, 7, 1, 1, '2020-10-09 20:49:32', '2020-10-09 20:49:32');
 
 --
 -- Índices para tablas volcadas
@@ -61,7 +73,9 @@ ALTER TABLE `event_resources`
 -- AUTO_INCREMENT de la tabla `event_resources`
 --
 ALTER TABLE `event_resources`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

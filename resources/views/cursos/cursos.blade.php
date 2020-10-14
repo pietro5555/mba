@@ -80,7 +80,7 @@
                                         {{$last_course->title}}
                             </h4>
                             <p class="col-md-6 description-course text-justify pl-0 ml-4">
-                                    {{$last_course->description}}
+                                    {!!$last_course->description!!}
                             </p>
                             <div class="float-right mb-2">
                                 <div class="row">
@@ -136,7 +136,7 @@
                 </div>
             </div>
         @endif
-    @endif-->
+    @endif
     {{-- FIN DEL BANNER --}}
     {{-- SECCIÓN TUS CURSOS--}}
     <!--@if (!Auth::guest())
@@ -183,29 +183,27 @@
                         <h3 class="">Tus Cursos</h3>
                         <hr style="margin-top:0px; border: 1px solid #707070;opacity: 1;" />
                         </div>
-                    
+
                 </div>
                 <div class="container-fluid m-2">
                     <div class="wrapper">
                     @foreach ($cursos as $curso)
                       <div>
-
-                         <div class="card m-2 mb-4 card-courses">
-
+                         <div class="card h-100 m-2 mb-4 card-courses">
                             <img class="card-img-top" src="{{ asset('uploads/avatar/'.$curso->mentor->avatar) }}" alt="card-image-cap">
                             <div class="card-body p-2">
-                            <div class="row align-items-start">
+                            <div class="row align-items-center">
                                 <h6 class="col-sm"><a href="{{ route('courses.show', [$curso->slug, $curso->id]) }}" class="text-secondary text-sm">{{$curso->title}}</a>
                                 </h6>
 
-                                 <div class="col-3 m-2"><img src="{{ asset('images/icons/video-player-blue.svg') }}" alt="" height="20px" width="20px"></div>
+                                 <div class="col-3 mr-2"><img src="{{ asset('images/icons/video-player-blue.svg') }}" alt="" height="20px" width="20px"></div>
                             </div>
                             </div>
                        </div>
                     </div>
                     @endforeach
-                     <div class="">
-                        <div class="row h-100">
+                     <div class="" style="z-index: 3">
+                        <div class="row">
                                 <div class="card-block w-50 text-primary align-self-center">
                                     <a href="{{ route('client.my-courses') }}" class="font-weight-bold">Ver todos mis cursos</a>
                                 </div>
@@ -230,7 +228,7 @@
     {{-- FIN SECCIÓN TUS CURSOS--}}
 
     {{-- SECCIÓN RECOMENDACIONES--}}
-@if(!empty($cursosRecomendados))
+@if(!empty($recomendados))
 <div class="section-landing mt-3" style="background-color: #121317;">
 
     <div class="col">
@@ -242,7 +240,6 @@
         </div>
 
 <!--Carrusel-->
-
 @if($total > 0)
 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
 
@@ -254,16 +251,15 @@
 @php
 $contador=0;
 @endphp
-@foreach($cursosRecomendados as $recommended)
+@foreach($recomendados as $recommended)
 @php
 $contador++;
 @endphp
 
 @if($contador <= 3)
-
 <div class="col-md-4" style="margin-top: 20px;">
-  @if (!is_null($recommended->cover))
- <img src="{{ asset('uploads/images/courses/covers/'.$recommended->cover) }}" class="card-img-top img-prox-events" alt="...">
+  @if (($recommended->thumbnail_cover)!= null)
+ <img src="{{ asset('uploads/images/courses/covers/'.$recommended->thumbnail_cover) }}" class="card-img-top img-prox-events" alt="...">
  @else
  <img src="{{ asset('uploads/images/courses/covers/default.jpg') }}" class="card-img-top img-prox-events" alt="...">
   @endif
@@ -297,7 +293,7 @@ $contador++;
 @php
 $segundo =0;
 @endphp
-@foreach($cursosRecomendados as $recommended)
+@foreach($recomendados as $recommended)
 @php
 $segundo++;
 @endphp
@@ -305,8 +301,8 @@ $segundo++;
 @if($segundo >= 4 && $segundo <= 6)
 
 <div class="col-md-4" style="margin-top: 20px;">
-  @if (!is_null($recommended->cover))
- <img src="{{ asset('uploads/images/courses/covers/'.$recommended->cover) }}" class="card-img-top img-prox-events" alt="...">
+  @if (!is_null($recommended->thumbnail_cover))
+ <img src="{{ asset('uploads/images/courses/covers/'.$recommended->thumbnail_cover) }}" class="card-img-top img-prox-events" alt="...">
  @else
  <img src="{{ asset('uploads/images/avatar/default.jpg') }}" class="card-img-top img-prox-events" alt="...">
   @endif
@@ -338,7 +334,7 @@ $segundo++;
 @php
 $tercero =0;
 @endphp
-@foreach($cursosRecomendados as $recommended)
+@foreach($recomendados as $recommended)
 @php
 $tercero++;
 @endphp
@@ -346,8 +342,8 @@ $tercero++;
 @if($tercero >= 7 && $tercero <= 9)
 
 <div class="col-md-4" style="margin-top: 20px;">
-  @if (!is_null($recommended->cover))
- <img src="{{ asset('uploads/images/courses/covers/'.$recommended->cover) }}" class="card-img-top img-prox-events" alt="...">
+  @if (!is_null($recommended->thumbnail_cover))
+ <img src="{{ asset('uploads/images/courses/covers/'.$recommended->thumbnail_cover) }}" class="card-img-top img-prox-events" alt="...">
  @else
  <img src="{{ asset('uploads/images/avatar/default.jpg') }}" class="card-img-top img-prox-events" alt="...">
   @endif
@@ -456,15 +452,15 @@ $tercero++;
     @if(!empty($courses))
     <div class="">
         <div class="container-fluid">
-            <div class="col section-title-category">
-                <h3>
-                    CURSOS POR CATEGORÍA
-                </h3>
+            <div class="col section-title-category mt-4">
+                <h1>
+                    <b>CURSOS POR CATEGORÍA</b>
+                </h1>
             </div>
-            <div class="row">
+            <div class="row justify-content-center">
                 @foreach ($courses as $course)
                     @if ($course->courses_count > 0)
-                        <div class="col-sm-4 d-inline-flex p-2">
+                        <div class="col-sm-3 d-inline-flex p-2">
                             @if (!is_null($course->cover))
                                 <img src="{{ asset('uploads/images/categories/covers/'.$course->cover) }}" class="card-img-top img-fluid course-category1" alt="...">
                             @else
@@ -472,10 +468,18 @@ $tercero++;
                             @endif
                             <div class="course-category-caption ml-1 mr-1">
                                 <div class="col-sm-lg text-sm-left font-weight-bold">
-                                    <a href="{{ url('courses/category/'.$course->id) }}" class="col-sm-lg text-sm-left  text-white">{{$course->title}}</a>
+                                    <h6 class="pl-2 pr-2 m-0">
+                                        <a href="{{ url('courses/category/'.$course->id) }}" class="col-sm-lg text-sm-left text-white">
+                                            <small>
+                                                <strong>{{$course->title}}</strong>
+                                            </small>
+                                        </a>
+                                    </h6>
                                 </div>
                                 <div class="col-lg">
-                                    <p class="text-white font-weight-bold">{{$course->courses_count}} Cursos</p>
+                                    <p class="text-white font-weight-bold">
+                                        <small>{{$course->courses_count}} Cursos</small>
+                                    </p>
                                 </div>
                             </div>
                         </div>

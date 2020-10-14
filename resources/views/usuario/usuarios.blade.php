@@ -22,9 +22,11 @@
             <th class="text-center">
               Referifo Por
             </th>
+            @if ($tipo != 2)
             <th class="text-center">
               Estatus
             </th>
+            @endif
                        
             @if($tipo == 1)
             <th class="text-center">
@@ -48,6 +50,7 @@
             <td class="text-center">
               {{ $usuario->patrocinador }}
             </td>
+            @if ($tipo != 2)
             <td class="text-center">
               @if ($usuario->status == 1)
               Activo
@@ -55,6 +58,7 @@
               Inactivo
               @endif
             </td>
+            @endif
             
             
             @if($tipo == 1)

@@ -77,6 +77,7 @@ class LessonController extends Controller{
     */
     public function update(Request $request){
         $leccion = Lesson::find($request->lesson_id);
+
         $videoUpdate = 0;
         if ($request->url != $leccion->url){
             $videoUpdate = 1;
@@ -84,9 +85,10 @@ class LessonController extends Controller{
             $leccion->url = "https://player.vimeo.com/video/".$url[1];
         }
         $leccion->title = $request->title;
+        $leccion->description = $request->description;
         $leccion->slug = Str::slug($leccion->title);
         $leccion->save();
-
+      //  return dd($request->all(), $leccion);
         if ($videoUpdate == 0){
             return redirect('admin/courses/lessons/'.$leccion->course_id)->with('msj-exitoso', 'La lección ha sido actualizada con éxito.');
         }else{

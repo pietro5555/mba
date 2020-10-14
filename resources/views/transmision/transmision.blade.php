@@ -10,11 +10,10 @@
                <div style="width: 60%; line-height: 70px;">
                   <a href="{{ route('timelive')}}" class="text-white">{{$evento_actual->title}}</a>
                </div>
-               <div style="font-size: 25px; font-weight: 500;">
-                  <i class="fa fa-calendar"></i>
-                  {{\Carbon\Carbon::parse($evento_actual->date)->formatLocalized(' %d de %B')}}
-                  <i class="fa fa-clock"></i> {{\Carbon\Carbon::parse($evento_actual->time)->format('g:i a')}}
-               </div>
+             <div class="next-streaming-date">
+                    <i class="fa fa-calendar"></i> {{\Carbon\Carbon::parse($evento_actual->date)->formatLocalized(' %d de %B')}}
+                    <i class="fa fa-clock" style="padding-left: 20px;"></i>{{\Carbon\Carbon::parse($evento_actual->time)->format('g:i a')}}
+                </div>
                <div style="font-size: 35px; padding-top: 60px;">
                   @if (Auth::guest())
                      {{-- USUARIOS INVITADOS --}}
@@ -82,16 +81,17 @@
                               @else
                                  <img src="{{ asset('uploads/images/avatar/default.jpg') }}" class="card-img-top img-prox-events" alt="...">
                               @endif
-                              <div class="card-img-overlay" style="margin-left: 10px; margin-right: 10px;">
+                              <div class="card-img-overlay d-flex flex-column" style="margin-left: 10px; margin-right: 10px;">
+                                  <div class="mt-auto">
                                  <form action="{{route('timelive')}}" method="GET">
                                     @csrf
                                     <input id="sigEvent" name="sigEvent" type="hidden" value="{{ $proxima->id }}">
-                                    <button class="btn text-left" type="submit" style="margin-top: 150px; color: #2A91FF;"><h5>{{$proxima->title}}</h5></button>
+                                    <button class="btn text-left" type="submit" style=" color: #2A91FF;"><h2 class="streaming">{{$proxima->title}}</h2></button>
                                  </form>
 
-                                 <p class="card-text font-weight-bold mr-2" style="margin-top: -10px; font-size: 12px;">   <i class="far fa-calendar mr-2" style="font-size: 18px;"> </i>
+                                 <p class="card-text font-weight-bold mr-2" style="margin-top: -10px; font-size: 12px;">   <i class="far fa-calendar mr-2" style="font-size: 18px !important;padding: 5px;"> </i>
                                     {{\Carbon\Carbon::parse($proxima->date)->formatLocalized(' %d de %B')}}
-                                    <i class="far fa-clock ml-2" style="font-size: 18px;"></i>{{\Carbon\Carbon::parse($proxima->time)->format('g:i a')}}
+                                    <i class="far fa-clock ml-2" style="font-size: 18px !important;padding: 5px;" aria-hidden="true"></i>{{\Carbon\Carbon::parse($proxima->time)->format('g:i a')}}
                                  </p>
                                  @if (Auth::guest())
                                     {{-- USUARIOS INVITADOS --}}
@@ -115,6 +115,7 @@
                                        @endif
                                     @endif
                                  @endif
+                                 </div>
                               </div>
                            </div>
 

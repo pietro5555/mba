@@ -19,6 +19,9 @@
       input[type="radio"]:checked ~ label {
          color: orange;
       }
+      .cuadrado{
+         outline: 1px solid #2A91FF;
+      }
    </style>
 @endpush
 
@@ -41,7 +44,7 @@
    </div>
 
    {{-- BANNER --}}
-   <div class="container-fluid">
+   <div class="container-fluid p-0">
         @if (!is_null($curso->featured_cover))
                <div style="max-width: 100%; position: relative; display: inline-block;">
                     <img src="{{ asset('uploads/images/courses/featured_covers/'.$curso->featured_cover) }}" alt="" style=" max-width:100%; opacity: 0.5;" class="">
@@ -53,7 +56,7 @@
          @endif
    </div>
    {{-- FIN DEL BANNER --}}
-   <hr style="border: 1px solid #707070;opacity: 1;" />
+   <hr class="m-0" style="border: 1px solid #707070;opacity: 1;" />
 
    {{-- SECCIÓN ACERCA DEL CURSO--}}
    <div class="container-fluid">
@@ -61,7 +64,7 @@
          <div class="col-md-12">
             <div class="row">
                <div class="col-md-12">
-                  <h3 class="text-white">{{ $curso->title }}</h3>
+                  <h1 class="text-white">{{ $curso->title }}</h1>
                   <div>
                      @if ( (!Auth::guest()) && (!is_null($progresoCurso)) && (is_null($miValoracion)) ) 
                         <p class="rating">
@@ -130,8 +133,8 @@
                      <div class="col-md-4">
                         <h6 class="text-white"> 
                            <img src="{{ asset('images/icons/clock.svg') }}" height="30px" width="30px">
-                           @if ($curso->duration > 0)
-                              {{ $curso->hours }}h {{ $curso->minutes }}m
+                           @if (!is_null($curso->duration))
+                              {{ $curso->duration }}
                            @else
                               0h 0m
                            @endif
@@ -144,16 +147,17 @@
                </div>
                <div class="col-md-3 mt-2 text-center">
                   @if (Auth::guest())
-                     <a href="{{route('shopping-cart.membership')}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> AGREGAR AL CARRITO</a>
+                     <a href="{{route('shopping-cart.membership')}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> ADQUIRIR MEMBRESIA</a>
                   @else
                      @if (is_null($progresoCurso))
                         @if (is_null(Auth::user()->membership_id))
-                           <a href="{{route('shopping-cart.store', $curso->id)}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> AGREGAR AL CARRITO</a>
+                           <a href="{{route('shopping-cart.store', $curso->id)}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> ADQUIRIR MEMBRESIA</a>
                         @else
                            @if (Auth::user()->membership_id < $curso->subcategory_id)
-                              <a href="{{route('shopping-cart.store', $curso->id)}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> AGREGAR AL CARRITO</a>
+                              <a href="{{route('shopping-cart.store', $curso->id)}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> ACTUALIZAR MEMBRESIA</a>
                            @else
-                              <a href="{{route('client.courses.add', $curso->id)}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-plus-circle" aria-hidden="true"></i> AGREGAR A MIS CURSOS</a>
+                              <a href="{{route('client.courses.add', [$curso->id, 'es'])}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-language" aria-hidden="true"></i> INICIAR CURSO EN ESPAÑOL</a>
+                              <a href="{{route('client.courses.add', [$curso->id, 'en'])}}" class="btn btn-primary play-course-button btn-block" ><i class="fa fa-language" aria-hidden="true"></i> INICIAR CURSO EN INGLÉS</a>
                            @endif
                         @endif
                      @else
@@ -181,7 +185,7 @@
          <div class="col-md-12">
             <div class="row">
                <div class="col-md-12">
-                  <h4 class="text-white ml-5">ACERCA DEL CURSO </h4>
+                  <h2 class="text-white ml-5">ACERCA DEL CURSO </h2>
                   <hr style="border: 1px solid #707070; opacity: 1;" />
                   <div class="col-md-12">
                      <div class="col-md-12 justify-content-center p-2 ml-4" style="color: white;">
@@ -226,24 +230,31 @@
                      @php $cont = 0; @endphp
                      @foreach ($curso->lessons as $leccion)
                         @php $cont++; @endphp
-                        <div class="panel panel-default">
+                        <div class="panel panel-default mb-2">
                            <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{$leccion->id}}">
-                              <div class="col-md-12 p-2 accordion-seccion-leccion align-items-center">
-                                 <div class="row">
-                                    <div class="col-md-2">
-                                       <div class="cuadrado"><h2 class="text-white"> @if ($cont < 10) 0{{ $cont }} @else {{ $cont }} @endif</h2></div>
+                              <div class="col-md-12 accordion-seccion-leccion align-items-center">
+                                 <div class="row align-items-center ">
+                                    <div class="col-md-1 p-0">
+                                       <div class="cuadrado p-1 pl-2 pr-2">
+                                          <h4 class="text-white m-0"> 
+                                             <strong>@if ($cont < 10) 0{{ $cont }} @else {{ $cont }} @endif</strong>
+                                          </h4>
+                                       </div>
                                     </div>
-                                    <div class="col-md-8">
-                                       <h5 class="panel-title about-course-text"> 
+                                    <div class="col-md-10 pl-0">
+                                       <h5 class="panel-title about-course-text m-0"> 
                                           @if ( (!Auth::guest()) && (!is_null($progresoCurso)) )
-                                             <a href="{{ route('lesson.show', [$leccion->slug, $leccion->id, $curso->id]) }}" class="about-course-text">{{ $leccion->title }}</a>
+                                          <a href="{{ route('lesson.show', [$leccion->slug, $leccion->id, $curso->id]) }}" class="about-course-text">
+                                             {{ $leccion->title }}
+                                          </a>
+                                             
                                           @else
                                              {{ $leccion->title }}
                                           @endif
                                        </h5>
                                     </div>
-                                    <div class="col-md-2">
-                                       <img src="{{ asset('images/icons/chevron.svg') }}" class="leccion-icon float-right"> 
+                                    <div class="col-md-1">
+                                       <img src="{{ asset('images/icons/chevron.svg') }}" class="leccion-icon float-right" height="20">
                                     </div>
                                  </div>
                               </div>

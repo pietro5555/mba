@@ -36,41 +36,44 @@ const countdown = (deadline,elem) => {
       $('#'+elem).append(
         '<h1>El live ya a Iniciado</h1>'
         );
+      $('.text-change').html('AGENDAR LIVE Y ENTRAR');
+      $('.ocultar').addClass('d-none')
+      $('.mostrar').removeClass('d-none')
     }else{
 
      $('#'+elem).append(
 
-            '<p class="p-1 bd-highlight" style="font-size: 66px;">'+
+            '<p class="p-1 bd-highlight" style="font-size: 80px; font-weight:500;">'+
              t.remainDays +
-                '<p style="margin-left: -40px; margin-top: 100px;">DIAS</p>'+
+                '<p style="margin-left: -40px; margin-top: 100px; font-weight:500;">DIAS</p>'+
             '</p>'+
 
-            '<p class="p-2 bd-highlight" style="font-size: 56px;">'+
+            '<p class="p-2 bd-highlight" style="font-size: 70px; font-weight:500;">'+
                 ':'+
             '</p>'+
 
-            '<p class="p-1 bd-highlight" style="font-size: 66px;">'+
+            '<p class="p-1 bd-highlight" style="font-size: 80px; font-weight:500;">'+
               t.remainHours +
-                '<p style="margin-left: -68px; margin-top: 100px;">HORAS</p>'+
+                '<p style="margin-left: -68px; margin-top: 100px; font-weight:500;">HORAS</p>'+
             '</p>'+
 
-            '<p class="p-2 bd-highlight" style="font-size: 56px;">'+
+            '<p class="p-2 bd-highlight" style="font-size: 70px; font-weight:500;">'+
                ':'+
             '</p>'+
 
-            '<p class="p-1 bd-highlight" style="font-size: 66px;">'+
+            '<p class="p-1 bd-highlight" style="font-size: 80px; font-weight:500;">'+
                t.remainMinutes +
 
-                '<p style="margin-left: -80px; margin-top: 100px;">MINUTOS</p>'+
+                '<p style="margin-left: -80px; margin-top: 100px; font-weight:500;">MINUTOS</p>'+
             '</p>'+
 
-            '<p class="p-2 bd-highlight" style="font-size: 56px;">'+
+            '<p class="p-2 bd-highlight" style="font-size: 70px; font-weight:500;">'+
                 ':'+
             '</p>'+
-            '<p class="p-1 bd-highlight" style="font-size: 66px;">'+
+            '<p class="p-1 bd-highlight" style="font-size: 80px; font-weight:500;">'+
                t.remainSeconds +
 
-                '<p style="margin-left: -85px; margin-top: 100px;">SEGUNDOS</p>'+
+                '<p style="margin-left: -85px; margin-top: 100px; font-weight:500;">SEGUNDOS</p>'+
             '</p>'
 
         )
@@ -133,11 +136,11 @@ countdown('{{($evento != null) ? $evento->date.' '.$evento->time : $fechaActual}
 
 <div class="row ml-1 mb-1">
 
-<div class="col-md-8">
-  <h3 style="color: #2A91FF; margin-top: 20px;">{{$evento->title}}</h3>
+<div class="col-md-8 kol">
+  <h3 style="color: #2A91FF;margin-top: 20px;text-transform: uppercase;font-weight: 600;">{{$evento->title}}</h3>
    <hr color="white" size=3>
-   <p style="color:white;">
-     {{$evento->description}}
+   <p class="text-white">
+     {!!$evento->description!!}
    </p>
 
    <div style="margin-top: 60px;">
@@ -146,22 +149,28 @@ countdown('{{($evento != null) ? $evento->date.' '.$evento->time : $fechaActual}
    <div class="col-md-6" style="margin-bottom: 10px;">
       @if (Auth::guest())
          {{-- USUARIOS INVITADOS --}}
-         <a href="{{route('shopping-cart.membership')}}" class="btn btn-success  btn-block"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar al Carrito</a>
+         <a href="{{route('shopping-cart.membership')}}" class="btn btn-success  btn-block"><i class="fa fa-shopping-cart" aria-hidden="true"></i> AQUIRIR MEMBRESIA</a>
       @else
          @if (is_null(Auth::user()->membership_id))
             {{-- USUARIOS LOGUEADOS SIN MEMBRESÍA --}}
-            <a href="{{route('shopping-cart.membership')}}" class="btn btn-success btn-block"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar al Carrito</a>
+            <a href="{{route('shopping-cart.membership')}}" class="btn btn-success btn-block"><i class="fa fa-shopping-cart" aria-hidden="true"></i> AQUIRIR MEMBRESIA</a>
          @else
             @if ($evento->subcategory_id > Auth::user()->membership_id)
                {{-- USUARIOS LOGUEADOS CON MEMBRESÍA MENOR A LA SUBCATEGORÍA DEL EVENTO--}}
-               <a href="{{route('shopping-cart.membership')}}" class="btn btn-success"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar al Carrito</a>
+               <a href="{{route('shopping-cart.membership')}}" class="btn btn-success"><i class="fa fa-shopping-cart" aria-hidden="true"></i> MEJORAR MEMBRESIA</a>
             @else
                @if (is_null($checkEvento))
                   {{-- USUARIOS LOGUEADOS CON MEMBRESÍA MAYOR O IGUAL A LA SUBCATEGORÍA DEL EVENTO Y QUE NO TIENEN EL EVENTO AGENDADO AÚN--}}
-                  <a href="{{ route('schedule.event',[$evento->id]) }}" class="btn btn-primary btn-block">AGENDAR LIVE</a>
+                  <a href="{{ route('schedule.event',[$evento->id]) }}" class="btn btn-primary btn-block text-change">AGENDAR LIVE</a>
                @else
                   {{-- EL USUARIO YA TIENE EL EVENTO AGENDADO--}}
-                  <a href="{{route('show.event', $evento->id)}}" class="btn btn-success btn-block">Ir Al Evento</a>
+                  <a href="{{route('show.event', $evento->id)}}" class="btn btn-success btn-block ocultar">IR AL EVENTO</a>
+                  <form action="https://streaming.shapinetwork.com/connect-mba/{{$evento->id}}/{{Auth::user()->ID}}" method="POST" class="mostrar d-none">
+                        @csrf
+                        <input type="hidden" name="email" value="{{ Auth::user()->user_email }}">
+                      <input type="hidden" name="password" value="{{ decrypt(Auth::user()->clave) }}">
+                      <button type="submit" class="btn btn-success btn-block">ENTRAR AL LIVE</button>
+                  </form>
                @endif
             @endif
          @endif
@@ -203,18 +212,18 @@ countdown('{{($evento != null) ? $evento->date.' '.$evento->time : $fechaActual}
 
 
   <div class="col-md-4 col-xs-12 " style="margin-top: 20px;">
-     <div style="margin-right: 10px; margin-left: 10px;">
+     <div style="background:#25262B; margin-right: 10px; margin-left: 10px;">
           @if (!is_null($evento->mentor->avatar))
-            <img src="{{ asset('uploads/images/avatar/'.$evento->mentor->avatar) }}" class="card-img-top" alt="...">
+            <img src="{{ asset('uploads/avatar/'.$evento->mentor->avatar) }}" class="card-img-top" alt="...">
           @else
           <img src="{{ asset('uploads/images/avatar/default.jpg') }}" class="card-img-top" alt="...">
           @endif
-          <p style="color: white;">Invitado</p>
-          <h5 style="color:#2A91FF; margin-top: -20px;">{{$evento->mentor->display_name}}</h5>
-          <p style="color: white;">{{$evento->mentor->profession}}<p>
-          <p style="color:#b7a7a7; font-size: 12px; margin-top: -10px;"> {{$evento->mentor->about}}</p>
+          <p style="color: white; padding-left: 10px;">Invitado</p>
+          <h5 style="color:#2A91FF; margin-top: -20px; padding-left: 10px;">{{$evento->mentor->display_name}}</h5>
+          <p style="color: white; padding-left: 10px;">{{$evento->mentor->profession}}<p>
+          <p style="color:#FFFFFF; font-size: 18px; margin-top: 0px;padding-left: 10px"> {{$evento->mentor->about}}</p>
 
-        <a href="#" class="btn btn-success btn-block">NIVEL: {{$evento->subcategory->title}}</a>
+        <a href="#" class="btn btn-success btn-block" >NIVEL: {{$evento->subcategory->title}}</a>
     </div>
   </div>
 
@@ -260,7 +269,7 @@ $contador++;
 </form>
   <p class="card-text font-weight-bold mr-2" style="margin-top: -10px; font-size: 12px;"> <i class="far fa-calendar mr-2" style="font-size: 18px;"> </i>
     {{\Carbon\Carbon::parse($prox->date)->formatLocalized(' %d de %B')}}
-   <i class="far fa-clock ml-2" style="font-size: 18px;"></i>{{\Carbon\Carbon::parse($prox->date)->format('g:i a')}}
+   <i class="far fa-clock ml-2" style="font-size: 18px;"></i>{{date('H:i', strtotime($prox->time)) }}
    </p>
   <a href="{{route ('schedule.event',[$prox->id]) }}" class="btn btn-success btn-block">Agendar</a>
   </div>
@@ -269,8 +278,7 @@ $contador++;
 @endforeach
 </div>
 </div>
-
-@if($total >= 4)
+@if($total > 4)
 <div class="carousel-item">
     <div class="row">
 

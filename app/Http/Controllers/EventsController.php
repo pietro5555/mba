@@ -3,13 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Crypt;
-use App\Models\Course; use App\Models\Events; use App\Models\Note; use App\Models\EventResources;
-use App\Models\Category; use App\Models\Subcategory; use App\Models\Calendario;
+use App\Models\Course;
+use App\Models\Events;
+use App\Models\Note;
+use App\Models\EventResources;
+use App\Models\Category;
+use App\Models\Subcategory;
+use App\Models\Calendario;
+use App\Models\OffersLive;
 use App\Models\SetEvent;
-use App\Models\Survey;
-use DB; use Auth; use Carbon\Carbon; use DateTime;
+use App\Models\SurveyOptions;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+use DateTime;
 
 class EventsController extends Controller
 {
@@ -52,11 +62,11 @@ class EventsController extends Controller
     public function store(Request $request){
         $streamingConnect = new StreamingController();
 
+
         $datosMentor = DB::table('wp98_users')
                         ->select('display_name', 'user_email', 'password')
-                        ->where('id', '=', $request->user_id)
+                        ->where('ID', '=', $request->user_id)
                         ->first();
-        
         $userStreaming = $streamingConnect->verifyUser($datosMentor->user_email);
         if (!is_null($userStreaming)){
             $userId = $userStreaming->id;
@@ -88,6 +98,20 @@ class EventsController extends Controller
         $evento->status = 1;
         $evento->save();
 
+        $fecha = date('Y-m-d H:i:s');
+        DB::table('events_users')
+            ->insert(['event_id' => $evento->id, 'user_id' => $evento->user_id, 'date' => $evento->date, 'time' => $evento->time, 'created_at' => $fecha, 'updated_at' => $fecha]);
+
+        $calendario = new Calendario();
+        $calendario->titulo = $evento->title;
+        $calendario->contenido = $evento->description;
+        $calendario->inicio = $evento->date;
+        $calendario->time = $evento->time;
+        $calendario->color = '#28a745';
+        $calendario->lugar = 'Ninguno';
+        $calendario->iduser = $evento->user_id;
+        $calendario->save();
+
         if ($request->hasFile('banner')){
             $file = $request->file('banner');
             $name = $evento->id.".".$file->getClientOriginalExtension();
@@ -95,6 +119,25 @@ class EventsController extends Controller
             $evento->image = $name;
             $evento->save();
         }
+        /*Habilitar recursos por defecto: Configuracion y Participantes*/
+
+        $resourceOne = EventResources::create([
+            'resources_id' => 1,
+            'event_id' => $evento->id,
+            'status' => 1,
+        ]);
+        $resourceTwo = EventResources::create([
+            'resources_id' => 2,
+            'event_id' => $evento->id,
+            'status' => 1,
+        ]);
+        $resourceThree= EventResources::create([
+            'resources_id' => 2,
+            'event_id' => $evento->id,
+            'status' => 1,
+        ]);
+
+        //return dd ($resourceOne, $resourceTwo);
 
         return redirect('admin/events')->with('msj-exitoso', 'El evento '.$evento->title.' ha sido creado con éxito.');
     }
@@ -111,19 +154,34 @@ class EventsController extends Controller
         $event = Events::find($event_id);
         $menuResource = $event->getResource();
         $resources_survey = SetEvent::where('event_id', $event_id)->where('type', 'survey')->get()->first();
+        $resources_video = SetEvent::where('event_id', $event_id)->where('type', 'video')->get()->first();
+        $resources_offer = OffersLive::all()->where('event_id', $event_id);
+      // return  dd($resources_survey, $menuResource);
         if (!empty($resources_survey))
         {
-            $surveys = Survey::where('content_event_id', $resources_survey->id)->get();
+            $surveys = SurveyOptions::where('content_event_id', $resources_survey->id)->get();
+            $survey_id =$surveys[0]->id;
         }
         else
         {
             $surveys = null;
+            $survey_id =null;
         }
 
        // return dd ($resources_survey , $surveys);
         // return response()->json([$menuResource], 201);
+        /*Files*/
+        $files = SetEvent::where('event_id', $event_id)
+        ->where('type', 'file')
+        ->get();
+        /*Presentations */
+        $presentations = SetEvent::where('event_id', $event_id)
+        ->where('type', 'presentation')
+        ->get();
+        return view('live.live', compact ('event','notes', 'menuResource', 'surveys', 'resources_video', 'files', 'presentations','survey_id', 'resources_offer'));
 
-        return view('live.live', compact ('event','notes', 'menuResource', 'surveys'));
+        
+        
     }
 
     public function edit($id){
@@ -148,7 +206,7 @@ class EventsController extends Controller
                                 ->select('display_name', 'user_email', 'password')
                                 ->where('id', '=', $request->user_id)
                                 ->first();
-        
+
             $userStreaming = $streamingConnect->verifyUser($datosMentor->user_email);
             if (!is_null($userStreaming)){
                 $userId = $userStreaming->id;
@@ -438,17 +496,22 @@ class EventsController extends Controller
         $eventos_agendados = DB::table('events')
         ->join('events_users', 'events_users.event_id', '=', 'events.id')
         ->where('events_users.user_id', '=', Auth::user()->ID)
+        ->select('events.*')
         ->get();
 
 
       //  return dd($user_calendar);
-
-        return view('agendar/calendar',compact('usuario','eventos_agendados', 'user_calendar'));
+      //linea de referidos Directos
+      $refeDirec =0;
+      if(Auth::user()){
+         $refeDirec = User::where('referred_id', Auth::user()->ID)->count('ID');
+      }
+        return view('agendar/calendar',compact('usuario','eventos_agendados', 'user_calendar', 'refeDirec'));
     }
 
 
   /*AGENDAR EVENTOS DEL USUARIO*/
-    public function schedule($event_id, Request $request){
+    public function schedule($event_id){
         $check = DB::table('events_users')
                     ->where('user_id', '=', Auth::user()->ID)
                     ->where('event_id', '=', $event_id)
@@ -490,15 +553,15 @@ class EventsController extends Controller
                     $requestContact = new Request(array('name' => Auth::user()->user_email, 'email' => Auth::user()->user_email, 'user_id' => $userId));
                     $contactId = $streamingConnect->newContact($requestContact);
                 }
-                
+
                 $evento = Events::find($event_id);
 
                 $streamingId = $streamingConnect->getMeetingId($evento->uuid);
 
                 $streamingConnect->newInvitation($streamingId, $contactId);
-               
+
                 Auth::user()->events()->attach($event_id, ['date' => $date_event, 'time' => $time_event]);
-                
+
                 $new_calendar = Events::where('id', '=', $event_id)->first();
 
                 $calendario = new Calendario();

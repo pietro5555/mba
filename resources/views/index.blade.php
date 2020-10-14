@@ -67,7 +67,7 @@
             border-radius: 50%;
             right: 0;
         }
-        .punto.bg-success::after{                        
+        .punto.bg-success::after{
             background: rgba(0,123,255,0.99);
             background: -moz-linear-gradient(left, rgba(0,123,255,0.99) 0%, rgba(0,123,253,0.99) 1%, rgba(40,167,69,1) 100%);
             background: -webkit-gradient(left top, right top, color-stop(0%, rgba(0,123,255,0.99)), color-stop(1%, rgba(0,123,253,0.99)), color-stop(100%, rgba(40,167,69,1)));
@@ -96,16 +96,16 @@
             overflow: hidden;
             line-height: 0;
             font-size: .75rem;
-            background-color: #8E8E8E;
+            background: transparent linear-gradient(90deg, #2A91FF 0%, #257EDB 30%, #6AB742 100%) 0% 0% no-repeat padding-box;
             border-radius: .25rem;
         }
 
         .progress-bar-striped {
             background-size: 1rem 1rem;
-            background: transparent linear-gradient(90deg, #2A91FF 0%, #257EDB 61%, #6AB742 100%) 0% 0% no-repeat padding-box;
+            background: transparent;
         }
 
-        .punto.bg-info::after{                        
+        .punto.bg-info::after{
             background: rgba(40,167,70,0.99);
             background: -moz-linear-gradient(left, rgba(40,167,70,0.99) 0%, rgba(40,167,71,0.99) 1%, rgba(23,163,184,1) 100%);
             background: -webkit-gradient(left top, right top, color-stop(0%, rgba(40,167,70,0.99)), color-stop(1%, rgba(40,167,71,0.99)), color-stop(100%, rgba(23,163,184,1)));
@@ -115,7 +115,7 @@
             background: linear-gradient(to right, rgba(40,167,70,0.99) 0%, rgba(40,167,71,0.99) 1%, rgba(23,163,184,1) 100%);
             filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#28a746', endColorstr='#17a3b8', GradientType=1 );
         }
-        .punto.bg-warning::after{                        
+        .punto.bg-warning::after{
             background: rgba(23,163,184,0.99);
             background: -moz-linear-gradient(left, rgba(23,163,184,0.99) 0%, rgba(25,163,182,0.99) 1%, rgba(255,193,7,1) 100%);
             background: -webkit-gradient(left top, right top, color-stop(0%, rgba(23,163,184,0.99)), color-stop(1%, rgba(25,163,182,0.99)), color-stop(100%, rgba(255,193,7,1)));
@@ -125,7 +125,7 @@
             background: linear-gradient(to right, rgba(23,163,184,0.99) 0%, rgba(25,163,182,0.99) 1%, rgba(255,193,7,1) 100%);
             filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#17a3b8', endColorstr='#ffc107', GradientType=1 );
         }
-        .punto.bg-danger::after{            
+        .punto.bg-danger::after{
             background: rgba(255,193,7,0.99);
             background: -moz-linear-gradient(left, rgba(255,193,7,0.99) 0%, rgba(255,192,8,0.99) 1%, rgba(220,53,69,1) 100%);
             background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255,193,7,0.99)), color-stop(1%, rgba(255,192,8,0.99)), color-stop(100%, rgba(220,53,69,1)));
@@ -175,6 +175,7 @@
                     @foreach ($cursosDestacados as $cursoDestacado)
                         @php $cont++; @endphp
         	            <div class="carousel-item @if ($cont == 1) active @endif">
+        	                <div class="overlay" ></div>
         	                <img src="{{ asset('uploads/images/courses/featured_covers/'.$cursoDestacado->featured_cover) }}" class="d-block w-100" alt="...">
         	                <div class="carousel-caption">
                                 <p style="color:#007bff; font-size: 22px; font-weight: bold; margin-top: -20px;">NUEVO CURSO</p>
@@ -224,7 +225,7 @@
    {{-- FIN DE SECCIÓN TU AVANCE (USUARIOS LOGGUEADOS) --}}
 
    @auth
-   <div class="col-12 section-landing new-courses-section">
+   <div class="col-12 section-landing mb-4" style="background: linear-gradient(to bottom, #222326 100%, #1C1D21 100%)">
         <div class="row">
             <div class="col-12">
                 <div class="section-title-landing new-courses-section-title">TU AVANCE</div>
@@ -241,7 +242,7 @@
             </div>
             <div class="col-12 mt-4">
                 <div class="progress">
-                    @if (Auth::user()->membership_id >= 0)
+                    @if (Auth::user()->membership_id >= 1)
                     <div class="progress-bar progress-bar-striped punto" role="progressbar" style="width: 20%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
                     @endif
                     @if(Auth::user()->membership_id >= 2)
@@ -285,17 +286,17 @@
                         <div class="card">
                             <a href="{{ route('courses.show', [$cursoNuevo->slug, $cursoNuevo->id]) }}" style="color: white;">
 
-                            @if (!is_null($cursoNuevo->cover))
-                                <img src="{{ asset('uploads/images/courses/covers/'.$cursoNuevo->cover) }}" class="card-img-top new-course-img" alt="...">
+                            @if (!is_null($cursoNuevo->mentor->avatar))
+                                <img src="{{ asset('uploads/avatar/'.$cursoNuevo->mentor->avatar) }}" class="card-img-top new-course-img" alt="...">
                             @else
-                                <img src="{{ asset('uploads/images/courses/covers/default.jpg') }}" class="card-img-top new-course-img" alt="...">
+                                <img src="{{ asset('uploads/avatar/default.jpg') }}" class="card-img-top new-course-img" alt="...">
                             @endif
                             <div class="card-img-overlay d-flex flex-column">
                                 <div class="mt-auto">
                                     <div class="new-course-title">{{ $cursoNuevo->title }}</div>
                                     <div class="row">
                                        <div class="col-md-12">
-                                           <p style="float: right;"> <i class="far fa-user-circle"> {{ $cursoNuevo->users->count()}}</i></p>
+                                           <p class="ico" style="float: right;"> <i class="far fa-user-circle"> {{ $cursoNuevo->users->count()}}</i></p>
                                        </div>
                                     </div>
                                 </div>
@@ -319,7 +320,7 @@
                 <div class="next-streaming-title">{{ $proximoEvento->title }}</div>
                 <div class="next-streaming-date">
                     <i class="fa fa-calendar"></i> {{ $proximoEvento->weekend_day }} {{ $proximoEvento->date_day }} de {{ $proximoEvento->month }}
-                    <i class="fa fa-clock"></i> {{ date('H:i A', strtotime($proximoEvento->date)) }}
+                    <i class="fa fa-clock" style="padding-left: 20px;"></i> {{ date('H:i A', strtotime($proximoEvento->date)) }}
                 </div>
                 @if (!Auth::guest())
                     <div class="next-streaming-reserve">
@@ -337,7 +338,7 @@
             <div class="row">
                 <div class="col-xl-4 col-lg-4 col-12 pl-4 pr-4">
                     <div class="referrers-box">
-                        <i class="fa fa-user referrers-icon" style="color: white;"></i><br>
+                        <i class="fa fa-user referrers-icon" style="color: #2a91ff;"></i><br>
                         {{ $refeDirec }} Referidos
                     </div>
                     <a href="{{url('/admin')}}" style="color: white; text-decoration: none;">

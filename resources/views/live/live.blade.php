@@ -3,9 +3,6 @@
 @section('content')
 @stack('styles')
 
-@php
- //dd($menuResource)
-@endphp
 
 <div class="bg-dark-gray">
 <div class="container-fluid">
@@ -17,15 +14,15 @@
 
                 </div>
                 <div class="col-md clearfix">
-                    <div class="row">
+                    <div class="row justify-content-end">
                         <div>
                                 <h5 class="title-level">Nivel: {{$event->subcategory->title}}</h5>
                         </div>
 
-                            <div class="ml-auto p-2">
-                                    <a href="https://m.facebook.com/MyBusinessAcademyPro/" class="btn btn-social-icon btn-facebook btn-rounded" target="_blank"><img src="{{ asset('images/icons/facebook.svg') }}" height="20px" width="20px"></a>
-                                    <a href="" class="btn btn-social-icon btn-twitter btn-rounded" target="_blank"><img src="{{ asset('images/icons/twitter.svg') }}" height="20px" width="20px"></a>
-                                    <a href="https://instagram.com/mybusinessacademypro?igshid=tdj5prrv1gx1" class="btn btn-social-icon btn-instagram btn-rounded" target="_blank"><img src="{{ asset('images/icons/instagram.svg') }}" height="20px" width="20px"></a>
+                            <div class=" p-2">
+                                    <a href="https://m.facebook.com/MyBusinessAcademyPro/" class="btn btn-social-icon ml-2 mr-2 btn-facebook btn-rounded" target="_blank"><img src="{{ asset('images/icons/facebook.svg') }}" height="20px" width="20px"></a>
+                                    <a href="" class="btn btn-social-icon ml-2 mr-2 btn-twitter btn-rounded" target="_blank"><img src="{{ asset('images/icons/twitter.svg') }}" height="20px" width="20px"></a>
+                                    <a href="https://instagram.com/mybusinessacademypro?igshid=tdj5prrv1gx1" class="btn btn-social-icon ml-2 mr-2 btn-instagram btn-rounded" target="_blank"><img src="{{ asset('images/icons/instagram.svg') }}" height="20px" width="20px"></a>
 
                             </div>
 
@@ -222,28 +219,44 @@
 
         </div><!--End col -->
         <!--Menu y Chat-->
-
+        @if($menuResource)
         <div class="nav flex-column nav-pills mt-2 menu-vertical-anotaciones" id="v-pills-tab" role="tablist" aria-orientation="vertical">
             <!--Solo se muestra para mentores-->
-            @if(Auth::user()->rol_id ==3)
+            @if(Auth::user()->rol_id == 2)
+            <a class="nav-link active text-white text-center" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false"> <img src="{{ asset('images/icons/comment.svg') }}" height="30px" class="">
+              <h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Chat</h6></a>
                 <a class="nav-link  text-white text-center" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="true"><img src="{{ asset('images/icons/settings.svg') }}" height="30px" class=""><h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Configuración</h6></a>
                 <a class="nav-link text-white text-center" id="v-pills-students-tab" data-toggle="pill" href="#v-pills-students" role="tab" aria-controls="v-pills-students" aria-selected="false"> <img src="{{ asset('images/icons/person.svg') }}" height="30px" class="">
                     <h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Participantes</h6></a>
             @endif
-                <a class="nav-link active text-white text-center" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false"> <img src="{{ asset('images/icons/comment.svg') }}" height="30px" class="">
-                    <h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Chat</h6></a>
-                <a class="nav-link text-white text-center" id="v-pills-survey-tab" data-toggle="pill" href="#v-pills-survey" role="tab" aria-controls="v-pills-survey" aria-selected="false"><img src="{{ asset('images/icons/lista.svg') }}" height="30px" class="">
-                    <h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Encuesta</h6></a>
-                <a class="nav-link text-white text-center" id="v-pills-presentation-tab" data-toggle="pill" href="#v-pills-presentation" role="tab" aria-controls="v-pills-presentation" aria-selected="false"> <img src="{{ asset('images/icons/presentacion.svg') }}" height="30px" class="">
-                    <h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Presentación</h6></a>
-                <a class="nav-link text-white text-center" id="v-pills-video-tab" data-toggle="pill" href="#v-pills-video" role="tab" aria-controls="v-pills-video" aria-selected="false"><img src="{{ asset('images/icons/video.svg') }}" height="30px" class="">
-                    <h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Vídeo</h6></a>
-                <a class="nav-link text-white text-center" id="v-pills-documents-tab" data-toggle="pill" href="#v-pills-documents" role="tab" aria-controls="v-pills-documents" aria-selected="false"><img src="{{ asset('images/icons/documentos.svg') }}" height="30px" class="">
-                    <h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Archivos</h6></a>
-                <a class="nav-link text-white text-center" id="v-pills-offers-tab" data-toggle="pill" href="#v-pills-offers" role="tab" aria-controls="v-pills-offers" aria-selected="false"><img src="{{ asset('images/icons/descuento.svg') }}" height="30px" class="">
-                    <h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Ofertas</h6></a>
+            @foreach($menuResource as $resource)
+            @if($resource->resources_id == 3 && $resource->status==1)
+            <a class="nav-link active text-white text-center" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false"> <img src="{{ asset('images/icons/comment.svg') }}" height="30px" class="">
+                <h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Chat</h6></a>
+            @endif
+            @if($resource->resources_id ==4 && $resource->status==1)
+            <a class="nav-link text-white text-center" id="v-pills-survey-tab" data-toggle="pill" href="#v-pills-survey" role="tab" aria-controls="v-pills-survey" aria-selected="false"><img src="{{ asset('images/icons/lista.svg') }}" height="30px" class="">
+                <h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Encuesta</h6></a>
+            @endif
+            @if($resource->resources_id ==5 && $resource->status==1)
+            <a class="nav-link text-white text-center" id="v-pills-presentation-tab" data-toggle="pill" href="#v-pills-presentation" role="tab" aria-controls="v-pills-presentation" aria-selected="false"> <img src="{{ asset('images/icons/presentacion.svg') }}" height="30px" class="">
+                <h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Presentación</h6></a>
+            @endif
+            @if($resource->resources_id ==6 && $resource->status==1)
+            <a class="nav-link text-white text-center" id="v-pills-video-tab" data-toggle="pill" href="#v-pills-video" role="tab" aria-controls="v-pills-video" aria-selected="false"><img src="{{ asset('images/icons/video.svg') }}" height="30px" class="">
+                <h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Vídeo</h6></a>
+            @endif
+            @if($resource->resources_id ==7 && $resource->status==1)
+            <a class="nav-link text-white text-center" id="v-pills-documents-tab" data-toggle="pill" href="#v-pills-documents" role="tab" aria-controls="v-pills-documents" aria-selected="false"><img src="{{ asset('images/icons/documentos.svg') }}" height="30px" class="">
+                <h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Archivos</h6></a>
+            @endif
+            @if($resource->resources_id ==8 && $resource->status==1)
+            <a class="nav-link text-white text-center" id="v-pills-offers-tab" data-toggle="pill" href="#v-pills-offers" role="tab" aria-controls="v-pills-offers" aria-selected="false"><img src="{{ asset('images/icons/descuento.svg') }}" height="30px" class="">
+                <h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Ofertas</h6></a>
+            @endif
+            @endforeach
         </div>
-        <div class="tab-content mt-2" id="v-pills-tabContent">
+        <div class="tab-content mt-2 col-md-4" id="v-pills-tabContent">
                 <div class="tab-pane fade  ml-2" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
                     <div>
                     <a data-toggle="modal" data-target="#modal-settings-survey" class="btn btn-primary btn-block"><i class="fa fa-plus-circle"></i> Agregar Encuesta</a>
@@ -258,145 +271,39 @@
                     <a data-toggle="modal" data-target="#modal-settings-file" class="btn btn-primary btn-block"><i class="fa fa-plus-circle"></i> Agregar Archivos</a>
                     </div> <br>
                     <div>
+                        <a data-toggle="modal" data-target="#modal-settings-offers" class="btn btn-primary btn-block"><i class="fa fa-plus-circle"></i>Agregar Oferta</a>
+                    </div><br>
+                    <div>
                     <a data-toggle="modal" data-target="#modal-settings-enable" class="btn btn-primary btn-block"><i class="fa fa-check"></i> Habilitar recursos</a>
                     </div>
 
+
                 </div>
                 <div class="tab-pane fade ml-2" id="v-pills-students" role="tabpanel" aria-labelledby="v-pills-students-tab">Seccion Participantes</div>
-                <div class="tab-pane show active fade ml-2" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
-                    <div>
-                            <div class="row ml-1">
-                                    <div class="col pt-2 logo-user">
-                                            <div ><img src="{{ asset('uploads/avatar/'.$event->mentor->avatar) }}" alt="" class="rounded-circle logo-username-green"></div>
-                                    </div>
-                                    <div class="col pt-2">
-                                       <p class="nombre-anfitrion">{{$event->mentor->display_name}}</p>
-                                    </div>
+                <div class="tab-pane show active fade ml-2 mb-2" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                    @include('live.components.chat')
 
+                </div>
+                <div class="tab-pane fade ml-2" id="v-pills-offers" role="tabpanel" aria-labelledby="v-pills-offers-tab">
+                  @if ($resources_offer->isNotEmpty())
+                    @foreach ($resources_offer as $offer)
+                        <div class="card p-2" style="background: #363840">
+                          <div class="card-content">
+                            <div class="card-body- text-center">
+                              <h4 class="card-title">{{$offer->title}}</h4>
+                              <p class="card-text">{{$offer->price}} $</p>
+                              <form action="{{route('shopping-cart.store', $offer->id)}}" method="get">
+                                @csrf
+                                <input type="hidden" value="oferta" name="type">
+                                <button type="submit" class="btn btn-info">Comprar</button>
+                              </form>
                             </div>
-                            <div class="ml-1">
-                                <textarea class="contenido-anfitrion border-0" name="" id="" cols="24" rows="5" readonly>Lorem ipsum dolor sit amet consectetur adipisicing elit.</textarea>
-                            </div>
-                    </div>
-                    <div>
-                            <div class="row ml-1">
-                                    <div class="col pt-2 logo-user">
-                                            <div ><img src="{{ asset('uploads/avatar/'.Auth::user()->avatar) }}" alt="" class="rounded-circle logo-username-green"></div>
-                                    </div>
-                                    <div class="col pt-2">
-                                            <p class="nombre-jd">{{Auth::user()->display_name}}</p>
-                                    </div>
-
-                            </div>
-                            <div class="ml-1">
-                                <textarea class="contenido-anfitrion border-0" name="" id="" cols="24" rows="5" readonly>Lorem ipsum dolor sit amet consectetur adipisicing elit.</textarea>
-                            </div>
-                    </div>
-                    <div>
-                            <div class="row ml-1">
-                                    <div class="col pt-2 logo-user">
-                                            <div ><img src="{{ asset('uploads/avatar/'.$event->mentor->avatar) }}" alt="" class="rounded-circle logo-username-green"></div>
-                                    </div>
-                                    <div class="col pt-2">
-                                       <p class="nombre-anfitrion">{{$event->mentor->display_name}}</p>
-                                    </div>
-
-                            </div>
-                            <div class="ml-1">
-                                <textarea class="contenido-anfitrion border-0 disabled" name="" id="" cols="24" rows="5" readonly>Lorem ipsum dolor sit amet consectetur adipisicing elit.</textarea>
-                            </div>
-                    </div>
-                    <div>
-                            <div class="row ml-1">
-                                    <div class="col pt-2 logo-user">
-                                            <div ><img src="{{ asset('uploads/avatar/'.Auth::user()->avatar) }}" alt="" class="rounded-circle logo-username-green"></div>
-                                    </div>
-                                    <div class="col pt-2">
-                                            <p class="nombre-jd">{{Auth::user()->display_name}}</p>
-                                    </div>
-
-                            </div>
-                            <div class="ml-1">
-                                <textarea class="contenido-anfitrion border-0" name="" id="" cols="24" rows="5" readonly>Lorem ipsum dolor sit amet consectetur adipisicing elit.</textarea>
-                            </div>
-                    </div>
-                    <div class="card card-anotaciones">
-                        <form action="">
-                            <textarea name="" id="" cols="25" rows="3">Escribe tu mensaje</textarea>
-
-                        </form>
-                        <div class="card-body">
-                                <div class="row">
-                                        <span>
-                                          <i class="em em-angry small" aria-role="presentation" aria-label="ANGRY FACE"></i>
-                                        </span>
-                                        <span>
-                                          <i class="em em-anguished small" aria-role="presentation" aria-label="ANGUISHED FACE"></i>
-                                        </span>
-                                   <span>
-                                     <i class="em em-astonished small" aria-role="presentation" aria-label="ASTONISHED FACE"></i>
-                                   </span>
-                                   <span>
-                                     <i class="em em-adult" aria-role="presentation" aria-label="ADULT"></i>
-                                   </span>
-                                   <span>
-                                     <i class="em em-angel small" aria-role="presentation" aria-label="BABY ANGEL"></i>
-                                   </span>
-                                   <span>
-                                    <i class="em em-baby small" aria-role="presentation" aria-label="BABY"></i>
-                                   </span>
-                                   <span>
-                                     <i class="em em---1 small" aria-role="presentation" aria-label="THUMBS UP SIGN"></i>
-                                   </span>
-                                   <span>
-                                     <i class="em em--1 small" aria-role="presentation" aria-label="THUMBS DOWN SIGN"></i>
-                                   </span>
-                                   <span>
-                                     <i class="em em-blush small" aria-role="presentation" aria-label="SMILING FACE WITH SMILING EYES"></i>
-                                   </span>
-                                   <span>
-                                     <i class="em em-clap small" aria-role="presentation" aria-label="CLAPPING HANDS SIGN"></i>
-                                   </span>
-                                  </div>
-                                  <div class="row">
-                                        <span>
-                                                <i class="em em-cry small" aria-role="presentation" aria-label="CRYING FACE"> </i>
-                                              </span>
-                                              <span>
-                                                <i class="em em-eyes small" aria-role="presentation" aria-label="EYES"></i>
-                                              </span>
-                                              <span>
-                                                <i class="em em-face_with_rolling_eyes small" aria-role="presentation" aria-label="FACE WITH ROLLING EYES"></i>
-                                              </span>
-                                             <span>
-                                               <i class="em em-exploding_head small" aria-role="presentation" aria-label="SHOCKED FACE WITH EXPLODING HEAD"></i>
-                                             </span>
-                                             <span>
-                                               <i class="em em-face_with_raised_eyebrow small" aria-role="presentation" aria-label="FACE WITH ONE EYEBROW RAISED"></i>
-                                             </span>
-                                             <span>
-                                               <i class="em em-dizzy_face small" aria-role="presentation" aria-label="DIZZY FACE"></i>
-                                             </span>
-                                             <span>
-                                               <i class="em em-face_with_monocle small" aria-role="presentation" aria-label="FACE WITH MONOCLE"></i>
-                                             </span>
-                                             <span>
-                                                    <i class="em em-bookmark small" aria-role="presentation" aria-label="BOOKMARK"></i>
-                                             </span>
-                                             <span>
-                                                    <i class="em em-blue_book small" aria-role="presentation" aria-label="BLUE BOOK"></i>
-                                             </span>
-                                             <span>
-                                                    <i class="em em-100 small" aria-role="presentation" aria-label="HUNDRED POINTS SYMBOL"></i>
-                                             </span>
-                                  </div>
+                          </div>
                         </div>
-
-                        <div class="card-footer p-1 border-0">
-                            <button class="btn btn-success float-right" type="submit">Enviar</button>
-                        </div>
-                    </div>
-
+                    @endforeach
+                  @else
+                      No Hay Ofertas
+                  @endif
                 </div>
                 <div class="tab-pane fade ml-2" id="v-pills-survey" role="tabpanel" aria-labelledby="v-pills-survey-tab">
                     @if(Auth::user()->rol_id==3)
@@ -405,11 +312,19 @@
                                 <h5 class="text-primary">Responde estas preguntas</h5>
                         </div>
 
-                        <form style="max-width:230px;">
+                        <form action="{{ route ('save.survey.student')}}" method="POST">
+                                @csrf
                                 @foreach($surveys as $survey)
                                 <div class="mb-2 form-group">
                                   <label for="label-question{{$survey->question}}">{{$survey->question}}</label>
-                                  <input type="text" class="form-control" id="question{{$survey->question}}" placeholder="">
+                                  <select class="browser-default custom-select" name="response" id="response">
+                                    <option selected>Selecciona una respuesta</option>
+                                    @foreach($survey->responses as $respuesta)
+                                    <option value="{{$respuesta->response}}">{{$respuesta->response}}</option>
+                                    @endforeach
+                                  </select>
+                                  <input type="hidden" name="survey_options_id" value='{{$survey->id}}' required>
+                                  <input type="hidden" name="event_id" value='{{$event->id}}' required>
                                 </div>
                                 @endforeach
                                 <button class="btn btn-smal btn-success float-right" type="submit">Enviar</button>
@@ -422,12 +337,57 @@
                         </div>
                         @endif
                     @endif
+                    @if(Auth::user()->rol_id==2)
+                        <div>
+                        <h4>Estadisticas de encuesta</h4>
+                        </div>
+                        <div>
+                        <canvas id="myChart" width="400" height="400"></canvas>
+                        </div>
+
+                    
+                    @endif
                 </div>
-                <div class="tab-pane fade ml-2" id="v-pills-presentation" role="tabpanel" aria-labelledby="v-pills-presentation-tab">Seccion Presentacion</div>
-                <div class="tab-pane fade ml-2" id="v-pills-video" role="tabpanel" aria-labelledby="v-pills-video-tab">Seccion Video</div>
-                <div class="tab-pane fade ml-2" id="v-pills-documents" role="tabpanel" aria-labelledby="v-pills-documents-tab">Seccion Archivos</div>
+                <div class="tab-pane fade ml-2" id="v-pills-presentation" role="tabpanel" aria-labelledby="v-pills-presentation-tab">
+                    @if(!$presentations->isEmpty())
+                    <h4>Presentación</h4>
+                    <div class="m-1">
+                    <ul class="list-group">
+                    @foreach($presentations as $presentation)
+                    <a href="{{route ('download_resource_file', [$event->id, $presentation->id])}}" class="btn btn-primary btn-block">{{$presentation->title}}</a>
+                    @endforeach
+                    </ul>
+                    </div>
+                    @endif
+                   
+
+                </div>
+                <div class="tab-pane fade ml-2" id="v-pills-video" role="tabpanel" aria-labelledby="v-pills-video-tab">
+                    @if(!empty($resources_video))
+                    <div class="embed-responsive embed-responsive-16by9">
+                            <iframe class="embed-responsive-item" src="{{$resources_video->url}}"></iframe>
+                    </div>
+                    @endif
+                <div class="tab-pane fade ml-2" id="v-pills-documents" role="tabpanel" aria-labelledby="v-pills-documents-tab">
+                 @if(!$files->isEmpty())
+                    <h4>Archivos</h4>
+                    <div class="m-1">
+                    <ul class="list-group">
+                    @foreach($files as $file)
+                    <a href="{{route ('download_resource_file', [$event->id, $file->id])}}" class="btn btn-primary btn-block">{{$file->title}}</a>
+                    @endforeach
+                    </ul>
+                    </div>
+                    
+                    
+                    
+
+                    @endif
+                
+                </div>
                 <div class="tab-pane fade ml-2" id="v-pills-offers" role="tabpanel" aria-labelledby="v-pills-offers-tab">Seccion Ofertas</div>
         </div>
+        @endif
 
       </div>
     </div>
@@ -440,9 +400,9 @@
   		<div class="modal-dialog" role="document">
     		<div class="modal-content" >
       			<div class="modal-header">
-        			<h5 class="modal-title" id="exampleModalLabel">Agregar video</h5>
+        			<h5 class="modal-title" id="exampleModalLabel">Agregar vídeo</h5>
       			</div>
-      			<form action="{{ route('set.event.store', [1]) }}" method="POST">
+      			<form action="{{ route('set.event.store', [$event->id]) }}" method="POST">
 			        {{ csrf_field() }}
 				    <div class="modal-body">
 				        <div class="container-fluid">
@@ -450,7 +410,7 @@
 						        <div class="col-md-12">
                         <div class="form-group">
 						                <label>Link del Video</label>
-						            	  <input type="text" class="form-control" name="url_video" required>
+						            	  <input type="text" class="form-control" placeholder="https://www.youtube.com/embed/X4VRKMZf4Uc" name="url_video" required>
 						            </div>
 						        </div>
 						    </div>
@@ -474,7 +434,7 @@
       			<div class="modal-header">
         			<h5 class="modal-title" id="exampleModalLabel">Agregar Archivos</h5>
       			</div>
-      			<form action="{{ route('set.event.store', [1]) }}" method="POST" enctype="multipart/form-data" >
+      			<form action="{{ route('set.event.store', [$event->id]) }}" method="POST" enctype="multipart/form-data" >
 			        {{ csrf_field() }}
 				    <div class="modal-body">
 				        <div class="container-fluid">
@@ -506,7 +466,7 @@
       			<div class="modal-header">
         			<h5 class="modal-title" id="exampleModalLabel">Agregar Presentación</h5>
       			</div>
-      			<form action="{{ route('set.event.store', [1]) }}" method="POST" enctype="multipart/form-data" >
+      			<form action="{{ route('set.event.store', [$event->id]) }}" method="POST" enctype="multipart/form-data" >
 			        {{ csrf_field() }}
 				    <div class="modal-body">
 				        <div class="container-fluid">
@@ -538,7 +498,7 @@
       			<div class="modal-header">
         			<h5 class="modal-title" id="exampleModalLabel">Agregar Encuesta</h5>
       			</div>
-      			<form action="{{ route('set.event.store', [1]) }}" method="POST" id="formQuestion">
+      			<form action="{{ route('set.event.store', [$event->id]) }}" method="POST" id="formQuestion">
 			        {{ csrf_field() }}
 				    <div class="modal-body">
 				        <div class="container-fluid">
@@ -598,13 +558,66 @@
 	      		</form>
     		</div>
   		</div>
-	</div>
+    </div>
+
+     <!-- Modal Agregar Ofertas-->
+  <div class="modal fade" id="modal-settings-offers" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Agregar oferta</h5>
+            </div>
+            <form action="{{ route('set.event.store', [$event->id]) }}" method="POST" enctype="multipart/form-data">
+              {{ csrf_field() }}
+              <div class="modal-body">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-12">
+                            <div class="form-group">
+                              <label for="">Titulo</label>
+                              <input type="text" name="title" class="form-control" required/>
+                            </div>  
+                          </div>
+                          <div class="col-12">
+                            <div class="form-group">
+                              <label for="">Precio</label>
+                              <input type="number" min="1" name="price" class="form-control" required/>
+                            </div>
+                          </div>
+                          <div class="col-12">
+                            <div class="form-group">
+                              <label for="">Recurso</label>
+                              <input type="file" name="resource" class="form-control"/>
+                            </div>
+                          </div>
+                          <div class="col-12">
+                            <div class="form-group">
+                              <button type="submit" class="btn">Enviar</button>
+                            </div>
+                          </div>
+                      </div>
+                  </div>
+                  <input type="hidden" name="type" value='offers' required>
+              </div>
+
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </form>
+      </div>
+    </div>
+</div>
 
 
 @endsection
 
 @push('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+<script src='https://cdn.jsdelivr.net/lodash/4.17.2/lodash.min.js'></script>
   <script type="text/javascript">
+
+    var responses=[];
+    var values=[];
     let  nextinput = 1;
     $('.addResponse').on('click',function(e){
         e.preventDefault();
@@ -614,11 +627,6 @@
         $("#list_question").append(campo);
 
     });
-
-
-
-
-
 
     $('.sendFormQuestion').on('click',function(e){
       e.preventDefault();
@@ -642,6 +650,67 @@
      removeQuestion = function(q) {
       $('#content_'+q).remove()
     }
+
+$.ajax({
+    url:'/survey/statistics',
+    method:'POST',
+    data:{
+        id:1,
+        _token:$('input[name="_token"]').val()
+    }
+
+}).done(function(res)
+{
+    var array = JSON.parse(res);
+    var resultadito = Object.entries(_.groupBy(array, 'response')).map(([key, value]) => { return {'name': key, 'values': value} })
+    for(var x=0; x<resultadito.length;x++){
+        responses.push(resultadito[x].name);
+        values.push(resultadito[x].values.length);
+        }
+    generargrafica();
+});
+
+function generargrafica() {
+    /*CHART*/
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: responses,
+        datasets: [{
+            label: 'Respuestas de la encuesta',
+            data: values,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+    
+}
 
 
   </script>

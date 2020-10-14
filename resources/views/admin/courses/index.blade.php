@@ -9,20 +9,6 @@
 				responsive: true,
 			});
 
-			/*$('.editar').on('click',function(e){
- 				e.preventDefault();
-
- 				var route = $(this).attr('data-route');
- 				$.ajax({
-	                url:route,
-	                type:'GET',
-	                success:function(ans){
-	                	$("#content-modal").html(ans); 
-	                    $("#modal-edit").modal("show");
-	                }
-	            });
-			});*/
-
 			$('.featured').on('click',function(e){
  				e.preventDefault();
 
@@ -51,11 +37,11 @@
 	                $("#subcategory_id option[value="+ans[0].subcategory_id+"]").attr("selected", true);
 	                $("#mentor_id option[value="+ans[0].mentor_id+"]").attr("selected", true);
                  	CKEDITOR.instances["description"].setData(ans[0].description);
-	                $("#price").val(ans[0].price);
+					$("#duration").val(ans[0].duration);
 	                var myArr = ans[1];
 	                $(".check-edit").each(function() {
 			            if(myArr.includes(parseInt($(this).val()))){
-			            	$(this).prop("checked", true);  
+			            	$(this).prop("checked", true);
 			            }
 			        });
 			        $("#modal-edit").modal("show");
@@ -84,7 +70,7 @@
 				<div style="text-align: right;">
 					<a data-toggle="modal" data-target="#modal-new" class="btn btn-info descargar"><i class="fa fa-plus-circle"></i> Nuevo Curso</a>
 				</div>
-				
+
 				<br class="col-xs-12">
 
 				<table id="mytable" class="table">
@@ -92,7 +78,7 @@
 						<tr>
 							<th class="text-center">#</th>
 							<th class="text-center">Título</th>
-							<th class="text-center">Subcategoría</th>
+							<th class="text-center">Categoría</th>
 							<th class="text-center">Lecciones</th>
 							<th class="text-center">Acción</th>
 						</tr>
@@ -102,7 +88,7 @@
 							<tr>
 								<td class="text-center">{{ $curso->id }}</td>
 								<td class="text-center">{{ $curso->title }}</td>
-								<td class="text-center">{{ $curso->subcategory->title }}</td>
+								<td class="text-center">{{ $curso->category->title }}</td>
 								<td class="text-center">{{ $curso->lessons_count }}</td>
 								<td class="text-center">
 									<a class="btn btn-info" data-route="{{ route('admin.courses.edit', $curso->id) }}" id="{{$curso->id}}" onclick="editar(this.id);"><i class="fa fa-edit"></i></a>
@@ -157,7 +143,7 @@
 						                </select>
 						            </div>
 						        </div>
-						        <div class="col-md-12">
+						        <!--<div class="col-md-12">
 						            <div class="form-group">
 						                <label>Subcategoría</label>
 						            	<select class="form-control" name="subcategory_id" required>
@@ -167,7 +153,7 @@
 						                	@endforeach
 						                </select>
 						            </div>
-						        </div>
+						        </div>-->
 						        <div class="col-md-12">
 						            <div class="form-group">
 						                <label>Mentor</label>
@@ -182,7 +168,13 @@
 						        <div class="col-md-12">
 						            <div class="form-group">
 						                <label>Descripción</label>
-						            	<textarea class="ckeditor form-control" name="description"></textarea> 
+						            	<textarea class="ckeditor form-control" name="description"></textarea>
+						            </div>
+						        </div>
+								<div class="col-md-12">
+						            <div class="form-group">
+						                <label>Duración del Curso</label>
+						            	<input type="text" class="form-control" name="duration" >
 						            </div>
 						        </div>
 						        <div class="col-md-12">
@@ -193,16 +185,16 @@
 						        </div>
 						        <div class="col-md-12">
 						            <div class="form-group">
-						                <label>Imagen Miniaturar</label>
+						                <label>Imagen Miniatura</label>
 						            	<input type="file" class="form-control" name="thumbnail_cover">
 						            </div>
 						        </div>
-						        <div class="col-md-12">
+						       <!-- <div class="col-md-12">
 						            <div class="form-group">
 						                <label>Precio</label>
 						            	<input type="text" class="form-control" name="price">
 						            </div>
-						        </div>
+						        </div>-->
 						        <div class="col-md-12">
 						            <div class="form-group">
 						                <label>Etiquetas Disponibles</label>
@@ -214,12 +206,12 @@
 												</div>
 							            	@endforeach
 						                </div>
-						            	
+
 						            </div>
 						        </div>
 						    </div>
 						</div>
-				        
+
 				    </div>
 	      			<div class="modal-footer">
 	        			<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -259,7 +251,7 @@
 										</select>
 									</div>
 								</div>
-								<div class="col-md-12">
+								<!--<div class="col-md-12">
 									<div class="form-group">
 										<label>Subcategoría</label>
 										<select class="form-control" name="subcategory_id" id="subcategory_id" required>
@@ -268,7 +260,7 @@
 											@endforeach
 										</select>
 									</div>
-								</div>
+								</div>-->
 								<div class="col-md-12">
 									<div class="form-group">
 										<label>Mentor</label>
@@ -282,9 +274,15 @@
 								<div class="col-md-12">
 									<div class="form-group">
 										<label>Descripción</label>
-										<textarea class="ckeditor form-control" name="description" id="description"></textarea> 
+										<textarea class="ckeditor form-control" name="description" id="description"></textarea>
 									</div>
 								</div>
+								<div class="col-md-12">
+						            <div class="form-group">
+						                <label>Duración del Curso</label>
+						            	<input type="text" class="form-control" name="duration" id="duration" >
+						            </div>
+						        </div>
 								<div class="col-md-12">
 									<div class="form-group">
 										<label>Imagen de Cover</label>
@@ -293,16 +291,16 @@
 								</div>
 								<div class="col-md-12">
 						            <div class="form-group">
-						                <label>Imagen Miniaturar</label>
+						                <label>Imagen Miniatura</label>
 						            	<input type="file" class="form-control" name="thumbnail_cover" >
 						            </div>
 						        </div>
-								<div class="col-md-12">
+								<!--<div class="col-md-12">
 									<div class="form-group">
 										<label>Precio</label>
 										<input type="text" class="form-control" name="price" id="price">
 									</div>
-								</div>
+								</div>-->
 								<div class="col-md-12">
 									<div class="form-group">
 										<label>Etiquetas Disponibles</label>

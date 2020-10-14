@@ -9,6 +9,7 @@ use App\Models\Purchase; use App\Models\PurchaseDetail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Addresip;
+use App\Models\OffersLive;
 use App\Models\Paises; 
  
 class ShoppingCartController extends Controller
@@ -74,36 +75,50 @@ class ShoppingCartController extends Controller
             $items = DB::table('shopping_cart')->where('user_id', '=', Auth::user()->ID)->orderBy('date', 'DESC')->get();
         }
 
-
+        $membresia = null;
         $totalItems = 0;
         foreach ($items as $item) {
 
-            $curso = DB::table('memberships')->where('id', $item->course_id)->first();
-            $direcip = Addresip::where('ip', request()->ip())->first();
+            if ($item->course_id != null) {
+                $curso = DB::table('memberships')->where('id', $item->course_id)->first();
+                $direcip = Addresip::where('ip', request()->ip())->first();
 
-            if($direcip == null){
-              $total = $curso->price;          
-              }else{
-              $total = $this->descuentogeneral($curso->id); 
+                if($direcip == null){
+                $total = $curso->price;          
+                }else{
+                $total = $this->descuentogeneral($curso->id); 
+                }
+                // $categoria = null;
+                // $mentor = null;
+                // if (!empty($curso)) {
+                //     $categoria = Category::find($curso->category_id);
+                //     $mentor = User::find($curso->mentor_id);
+                // }
+                $item->curso = [
+                    'titulo' => (!empty($curso)) ? $curso->name : 'Membresia no disponible',
+                    // 'categoria' => (!empty($categoria)) ? $categoria->title : 'Categoria no disponible',
+                    // 'mentor' => (!empty($mentor)) ? $mentor->display_name : 'Mento no disponible',
+                    'precio' => (!empty($curso)) ? $total : 0,
+                    'img' => (!empty($curso)) ? asset('/uploads/images/courses/covers/'.$curso->image) : 'no disponible'
+                ];
+                $totalItems += (!empty($curso)) ? $total : 0;
+            }elseif($item->offer_id != null){
+                
+                $oferta = OffersLive::find($item->offer_id);
+
+                $item->curso = [
+                    'titulo' => (!empty($oferta)) ? $oferta->title : 'Oferta no disponible',
+                    'precio' => (!empty($oferta)) ? $oferta->price : 0,
+                    'img' => 'no disponible'
+                ];
+
+                $totalItems += (!empty($oferta)) ? $oferta->price : 0;
+                $membresia = 1;
             }
-            // $categoria = null;
-            // $mentor = null;
-            // if (!empty($curso)) {
-            //     $categoria = Category::find($curso->category_id);
-            //     $mentor = User::find($curso->mentor_id);
-            // }
-            $item->curso = [
-                'titulo' => (!empty($curso)) ? $curso->name : 'Membresia no disponible',
-                // 'categoria' => (!empty($categoria)) ? $categoria->title : 'Categoria no disponible',
-                // 'mentor' => (!empty($mentor)) ? $mentor->display_name : 'Mento no disponible',
-                'precio' => (!empty($curso)) ? $total : 0,
-                'img' => (!empty($curso)) ? asset('/uploads/images/courses/covers/'.$curso->image) : 'no disponible'
-            ];
-            $totalItems += (!empty($curso)) ? $total : 0;
           
         }
 
-        $membresia = null;
+        
         //RETORNAR VISTA AQUÍ
         return view('carrito_user.index')->with(compact('items', 'totalItems', 'membresia','paises'));
     }
@@ -162,17 +177,32 @@ class ShoppingCartController extends Controller
             */
 
         }else{
-            $itemAgregado = DB::table('shopping_cart')
+            if ($request->type == null) {
+                $itemAgregado = DB::table('shopping_cart')
                                 ->where('user_id', '=', Auth::user()->ID)
                                 ->where('course_id', '=', $id)
                                 ->count();
 
-            if ($itemAgregado == 0){
-                $item = new ShoppingCart();
-                $item->user_id = Auth::user()->ID;
-                $item->course_id = $id;
-                $item->date = date('Y-m-d');
-                $item->save();
+                if ($itemAgregado == 0){
+                    $item = new ShoppingCart();
+                    $item->user_id = Auth::user()->ID;
+                    $item->course_id = $id;
+                    $item->date = date('Y-m-d');
+                    $item->save();
+                }
+            }else{
+                $itemAgregado = DB::table('shopping_cart')
+                                ->where('user_id', '=', Auth::user()->ID)
+                                ->where('offer_id', '=', $id)
+                                ->count();
+
+                if ($itemAgregado == 0){
+                    $item = new ShoppingCart();
+                    $item->user_id = Auth::user()->ID;
+                    $item->offer_id = $id;
+                    $item->date = date('Y-m-d');
+                    $item->save();
+                }
             }
             
             return redirect('shopping-cart');
@@ -267,12 +297,20 @@ class ShoppingCartController extends Controller
 
         $detallesMembresia = json_decode($datosOrden->detalles);
         
-        $compra->link = $detallesMembresia->links;
+        if ($datosOrden->type_product == 'membresia') {
+            $compra->link = $detallesMembresia->links;
+        }else{
+            
+        }
         $compra->save();
 
         $detalle = new PurchaseDetail();
         $detalle->purchase_id = $compra->id;
-        $detalle->membership_id = $detallesMembresia->idmembresia;
+        if ($datosOrden->type_product == 'membresia') {
+            $detalle->membership_id = $detallesMembresia->idmembresia;
+        } else {
+            $detalle->offer_id = $detallesMembresia->idmembresia;
+        }
         $detalle->amount = $detallesMembresia->precio;
         $detalle->save();
         
@@ -292,11 +330,12 @@ class ShoppingCartController extends Controller
                             'created_at' => $fecha,
                             'updated_at' => $fecha]);
         }*/
-
-        DB::table('wp98_users')
+        if ($datosOrden->type_product == 'membresia') {
+            DB::table('wp98_users')
             ->where('ID', '=', $datosOrden->user_id)
             ->update(['membership_id' => $detallesMembresia->idmembresia,
                       'status' => 1]);
+        }
                       
         DB::table('shopping_cart')
             ->where('user_id', '=', $datosOrden->user_id)

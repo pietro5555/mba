@@ -3,12 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Course extends Model
 {
-    protected $table = 'courses';
+    use SoftDeletes;
 
-    protected $fillable = ['mentor_id', 'title', 'slug', 'category_id', 'subcategory_id', 'description', 'cover', 'cover_name', 'thumbnail_cover', 'featured', 'featured_cover', 'featured_cover_name', 'featured_at', 'status', 'likes', 'shares', 'views', 'price'];
+    protected $table = 'courses';
+    protected $dates = ['deleted_at'];
+    protected $fillable = ['mentor_id', 'title', 'slug', 'category_id', 'subcategory_id', 'description', 'cover', 'cover_name', 'thumbnail_cover', 'featured', 'featured_cover', 'featured_cover_name', 'featured_at', 'status', 'likes', 'shares', 'views', 'duration', 'price', 'deleted_at'];
+
 
     public function mentor(){
         return $this->belongsTo('App\Models\User', 'mentor_id', 'ID');
@@ -44,7 +48,7 @@ class Course extends Model
 
     //Relación con los estudiantes que poseen el curso
     public function users(){
-        return $this->belongsToMany('App\Models\User', 'courses_users', 'course_id', 'user_id')->withPivot('progress', 'start_date', 'finish_date', 'certificate', 'favorite')->withTimestamps();
+        return $this->belongsToMany('App\Models\User', 'courses_users', 'course_id', 'user_id')->withPivot('progress', 'start_date', 'finish_date', 'certificate', 'favorite', 'language')->withTimestamps();
     }
 
     //Relacion Eventos que tiene un curso

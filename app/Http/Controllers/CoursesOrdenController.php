@@ -12,6 +12,7 @@ use App\Models\ShoppingCart;
 use App\Models\Course;
 use App\Models\Category;
 use App\Models\Addresip;
+use App\Models\OffersLive;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -31,7 +32,8 @@ class CoursesOrdenController extends Controller
             $data = [
                 'user_id' => $iduser,
                 'total' => $detalles['total'],
-                'detalles' => $detalles['detalles']
+                'detalles' => $detalles['detalles'],
+                'type_product' => 'oferta'
             ];
             $idorden = $this->saveCourseOrden($data);
             if ($request->metodo == 'stripe') {
@@ -99,7 +101,7 @@ class CoursesOrdenController extends Controller
             ]);
 
             $carrito = new ShoppingCartController();
-            $carrito->process_cart($data['idorden']);
+            $carrito->process_membership_buy($data['idorden']);
         } catch (\Throwable $th) {
             dd($th);
         }
@@ -147,38 +149,27 @@ class CoursesOrdenController extends Controller
         $items = ShoppingCart::where('user_id', '=', $iduser)
         ->orderBy('date', 'DESC')
         ->get();
-        
-        $enlace = Addresip::where('ip', request()->ip())->first();
+           
 
         $arrayCursos = [];
 
         $totalItems = 0;
         foreach ($items as $item) {
             
-            if($direcip == null){
-              $precio = $curso->price;          
-              }else{
-              $precio = $curso->descuento; 
-            }
             
-            $curso = Course::find($item->course_id);
-            $categoria = null;
-            $mentor = null;
-            if (!empty($curso)) {
-                $categoria = Category::find($curso->category_id);
-                $mentor = User::find($curso->mentor_id);
-            }
+            
+            $oferta = OffersLive::find($item->offer_id);
+            
             $arrayCursos [] = [
-                'idcurso' => $item->course_id,
-                'titulo' => (!empty($curso)) ? $curso->title : 'Curso no disponible',
-                'categoria' => (!empty($categoria)) ? $categoria->title : 'Categoria no disponible',
-                'mentor' => (!empty($mentor)) ? $mentor->display_name : 'Mento no disponible',
-                'precio' => (!empty($curso)) ? $precio : 0,
-                'img' => (!empty($curso)) ? asset('uploads/images/courses/covers/'.$curso->cover) : 'no disponible'
+                'idmembresia' => $oferta->id,
+                'nombre' => $oferta->title,
+                'precio' => $oferta->price,
+                'img' => 'no disponible',
+                'links' => 0,
             ];
-            $totalItems += (!empty($curso)) ? $precio : 0;
+            $totalItems += (!empty($oferta)) ? $oferta->price : 0;
 
-            $item->delete();
+            // $item->delete();
         }
         $data = [
             'total' => $totalItems,
@@ -229,6 +220,7 @@ class CoursesOrdenController extends Controller
             $orden->detalles = json_encode($datosMembresia);
             $orden->idtransacion_stripe = $request->stripeToken;
             $orden->status = 1;
+            $orden->type_product = 'membresia';
             $orden->save();
 
             $carrito = new ShoppingCartController();
@@ -264,6 +256,7 @@ class CoursesOrdenController extends Controller
             $orden->total = ($enlace != null) ? $membresia->descuento : $membresia->price;
             $orden->detalles = json_encode($datosMembresia);
             $orden->status = 0;
+            $orden->type_product = 'membresia';
             $orden->save();
 
             $transacion = [

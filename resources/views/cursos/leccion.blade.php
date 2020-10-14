@@ -23,14 +23,18 @@
    @endif
 <div class="container-fluid">
   <div class="row justify-content-end">
-    <div class="title-level col-xs-1 col-md-4">
-      <h5>Nivel: {{$lesson->course->subcategory->title}}</h5>
+    <div class="col-xs-1 col-md-2">
+      <h5 class="title-level">
+        <small>
+          <strong>Nivel: {{$lesson->course->subcategory->title}}</strong>
+        </small>
+      </h5>
     </div>
-    <div class="col-xs-1 col-md-4 text-center ">
+    <div class="col-xs-1 col-md-2 text-center ">
       <div class="icon-social-media">
-        <a href="https://m.facebook.com/MyBusinessAcademyPro/" target="_blank" class="btn btn-social-icon btn-facebook btn-rounded"><img src="{{ asset('images/icons/facebook.svg') }}" height="20px" width="20px"></a>
-        <a href="" class="btn btn-social-icon btn-twitter btn-rounded" target="_blank"><img src="{{ asset('images/icons/twitter.svg') }}" height="20px" width="20px"></a>
-        <a href="https://instagram.com/mybusinessacademypro?igshid=tdj5prrv1gx1" target="_blank" class="btn btn-social-icon btn-instagram btn-rounded"><img src="{{ asset('images/icons/instagram.svg') }}" height="20px" width="20px"></a>
+        <a href="https://m.facebook.com/MyBusinessAcademyPro/" target="_blank" class="btn btn-social-icon btn-facebook btn-rounded ml-2 mr-2"><img src="{{ asset('images/icons/facebook.svg') }}" height="20px" width="20px"></a>
+        <a href="" class="btn btn-social-icon btn-twitter btn-rounded ml-2 mr-2" target="_blank"><img src="{{ asset('images/icons/twitter.svg') }}" height="20px" width="20px"></a>
+        <a href="https://instagram.com/mybusinessacademypro?igshid=tdj5prrv1gx1" target="_blank" class="btn btn-social-icon btn-instagram btn-rounded ml-2 mr-2"><img src="{{ asset('images/icons/instagram.svg') }}" height="20px" width="20px"></a>
       </div>
     </div>
   </div>
@@ -39,14 +43,31 @@
   {{-- BANNER --}}
   <div id="lessonsCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
     <div class="carousel-inner">
-      @php $cont = 0; @endphp
+      @php $ending = 0; $cont = 1; @endphp
       @foreach ($all_lessons as $leccion)
         <div class="carousel-item @if ($leccion->id == $lesson->id) active @endif">
           <div class="video-container">
-            <iframe src="{{ $leccion->url }}" width="100%" height="564" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+            <iframe @if ($progresoCurso->language == 'es') src="{{ $leccion->url }}" @else src="{{ $leccion->english_url }}" @endif width="100%" height="590" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
           </div>
         </div>
-        @php $cont++; @endphp
+        @if ($leccion->id <= $lesson->id)
+            @php
+                if ($cont >= count($all_lessons) ){
+                  $ending = 1;
+                }else{
+                  $cont++;
+                }
+            @endphp
+        @endif
+          @if ($leccion->id > $lesson->id)
+            @if ($leccion->id == ($lesson->id + 1))
+              <a id="nextlesson" class="d-none" href="{{ route('lesson.show', [$leccion->slug, $leccion->id, $leccion->course_id]) }}">Siguiente</a>    
+            @endif
+          @else
+            @if ($leccion->id == $lesson->id && $ending == 1)
+              <a id="nextlesson" class="d-none" href="{{ route('client.courses.take-evaluation', [$lesson->course->slug, $lesson->course_id]) }}">Evaluacion</a>  
+            @endif
+          @endif
       @endforeach
     </div>
     <!--<div class="">
@@ -70,13 +91,15 @@
             <div class="nav nav-tabs nav-fill font-weight-bold" id="nav-tab" role="tablist">
               <a class="nav-item nav-link active m-2" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Acerca del Curso</a>
               <a class="nav-item nav-link m-2" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Comentarios</a>
-              <a class="nav-item nav-link m-2" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Materiales</a>
+              @if ($lesson->materials->isNotEmpty())
+                <a class="nav-item nav-link m-2" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Materiales</a>
+              @endif
               <a class="nav-item nav-link m-2" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab" aria-controls="nav-about" aria-selected="false">Certificado</a>
             </div>
           </nav>
           <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
             <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-              {{$lesson->course->description}}
+              {!!$lesson->course->description!!}
             </div>
             <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
               <div class="custombox clearfix">
@@ -124,7 +147,7 @@
 
                           <div class="media-body">
                             <h4 class="media-heading text-white">{{ $comment->user->display_name }}</h4>
-                            <h7 class="media-heading about-course-text">{{str_replace('-', '/', date('d-m-Y', strtotime($comment->date)))}}</h7>
+                            <small class="media-heading about-course-text">{{str_replace('-', '/', date('d-m-Y', strtotime($comment->date)))}}</small>
                             <p class="about-course-text">
                               {{$comment->comment}}
                             </p>
@@ -177,12 +200,48 @@
               <h5 class="text-white">CONTENIDO DEL CURSO</h5>
             </div>
           </nav>
-          <div class="row">
-            <div class="col-lg-12 mx-auto mt-2 mb-2">
-              <!-- Accordion -->
-              <div id="accordionContentLeccion" class="accordion-leccion">
+
+          <div id="accordion">
                 @php $cont2 = 0; @endphp
                 <!-- Accordion item 1 -->
+                @foreach($all_lessons as $lesson)
+                <div class="card mt-2 card-accordion" id="card-lesson-content">
+                        <div class="card-header collapsed border-0 collapsible-link" id="heading{{$lesson->id}}" data-toggle="collapse" data-target="#collapse{{$lesson->id}}" aria-expanded="false" aria-controls="collapse{{$lesson->id}}">
+                                <a href="{{ route('lesson.show', [$lesson->slug, $lesson->id, $lesson->course_id]) }}">
+                                        <h5 class="mb-0 font-weight-bold d-block position-relative py-2">
+                                        <i class="text-primary fa fa-play-circle"></i>  {{$lesson->title}}
+                                        </h5>
+                                </a>
+                        </div>
+                        <div id="collapse{{$lesson->id}}" class="collapse" aria-labelledby="heading{{$lesson->id}}" data-parent="#accordion">
+                        <div class="card-body">
+                                {{$lesson->description}}
+                        </div>
+                        </div>
+                </div>
+                @php $cont2++; @endphp
+            @endforeach
+            </div>
+            @if ($progresoCurso->certificate == 0)
+                  <div class="card mt-2 mb-2" style="background-color: #2A91FF;">
+                    <div class="card-header text-center" >
+                      <a href="{{ route('client.courses.take-evaluation', [$lesson->course->slug, $lesson->course_id]) }}">
+                        <h5 class="mb-0 font-weight-bold d-block position-relative py-2" style="color: white;">
+                          PRESENTAR EVALUACIÓN
+                        </h5>
+                      </a>
+                    </div>
+                  </div>
+            @endif
+
+
+
+          <!--<div class="row">
+            <div class="col-lg-12 mx-auto mt-2 mb-2">
+
+              <div id="accordionContentLeccion" class="accordion-leccion">
+                @php $cont2 = 0; @endphp
+
                 @foreach($all_lessons as $lesson)
                   <div id="card{{$lesson->id}}" class="card mb-2">
                     <div class="card-header accordion-leccion-content" data-toggle="collapse" data-target="#collapse{{$lesson->id}}">
@@ -203,7 +262,7 @@
                 @endforeach
                 @if ($progresoCurso->certificate == 0)
                   <div class="card mb-2" style="background-color: #2A91FF;">
-                    <div class="card-header accordion-leccion-content text-center" >
+                    <div class="card-header text-center" >
                       <a href="{{ route('client.courses.take-evaluation', [$lesson->course->slug, $lesson->course_id]) }}">
                         <h5 class="mb-0 font-weight-bold d-block position-relative py-2" style="color: white;">
                           PRESENTAR EVALUACIÓN
@@ -214,7 +273,7 @@
                 @endif
               </div>
             </div>
-          </div>
+          </div>-->
 
         </div>
       </div>
@@ -246,26 +305,22 @@
 </div>-->
 
     {{-- SECCIÓN REFERIDOS (USUARIOS LOGGUEADOS) --}}
-    @if (!Auth::guest())
-        <div class="pt-4">
-            <div class="row">
-                <div class="col-xl-4 col-lg-4 col-12 pl-4 pr-4">
-                    <div class="referrers-box">
-                        <i class="fa fa-user referrers-icon" style="color: white;"></i><br>
-                        {{ $directos ?? '' }} Referidos
-                    </div>
-                    <a href="{{url('/admin')}}" style="color: white; text-decoration: none;">
-                     <div class="referrers-button">
-                        Panel de referidos
-                     </div>
-                    </a>
-                </div>
-                <div class="col-xl-8 col-lg-8 d-none d-lg-block d-xl-block referrers-banner">
-                    <div class="referrers-banner-text">EL QUE QUIERE SUPERARSE, NO VE OBSTÁCULOS, VE SUEÑOS.</div>
-                </div>
-            </div>
-        </div><br><br>
-    @endif
+
     {{-- FIN DE SECCIÓN REFERIDOS (USUARIOS LOGGUEADOS) --}}
 
   @endsection
+  @push('scripts')
+  <script>    
+    $(document).on(function(){
+    $(".vp-telecine.invisible video").on('ended', function(){
+      $('#nextlesson').click();
+    });
+  });
+
+  $(document).ready(function(){
+    $(".vp-telecine.invisible video").on('ended', function(){
+      $('#nextlesson').click();
+    });
+  });
+  </script>
+  @endpush

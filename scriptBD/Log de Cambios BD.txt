@@ -193,3 +193,9 @@ Dev: Carlos Gonzalez
 *Agregar nuevo campo "offer_id" en las tablas purchase_details y shopping_cart
 *Agregar nuevo campo "type_product" en la tabla courses_orden
 *Crear una nueva tabla llamada offers_live - esta es para las oferta del mentor en la vista de eventos
+
+
+
+13/10/2020
+Dev:Crisleivys
+*Agregado el campo deleted_at a la tabla courses y courses_users (correr los scripts courses y courses_users)

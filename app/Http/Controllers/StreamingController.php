@@ -76,18 +76,27 @@ class StreamingController extends Controller{
             'Authorization' => 'Bearer '.Auth::user()->streaming_token
         ];
 
-        $actualizacionEvento = $client->request('PATCH', 'api/meetings/'.$uuid, [
-            'headers' => $headers,
-            'form_params' => [
-                'title' => $request->title,
-                'agenda' => $request->description,
-                'description' => $request->description,
-                'start_date_time' => $request->date."T".$request->time,
-                'period' => $request->duration,
-                'category' =>[$request->category_id],
-                'type' => ['webinar']
-            ]
-        ]);
+        $consultaEvento = $client->request('GET', 'api/meetings/'.$uuid, ['headers' => $headers]);
+        $detallesEvento = json_decode($consultaEvento->getBody());
+        
+        if ($detallesEvento->status == 'scheduled'){
+            $actualizacionEvento = $client->request('PATCH', 'api/meetings/'.$uuid, [
+                'headers' => $headers,
+                'form_params' => [
+                    'title' => $request->title,
+                    'agenda' => $request->description,
+                    'description' => $request->description,
+                    'start_date_time' => $request->date."T".$request->time,
+                    'period' => $request->duration,
+                    'category' =>[$request->category_id],
+                    'type' => ['webinar']
+                ]
+            ]);
+
+            $meeting = Meeting::where('uuid', '=', $uuid)->first();
+            $meeting->type = 'webinar';
+            $meeting->save();
+        }
     }
 
     public function verifyUser($email){

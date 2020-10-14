@@ -50,8 +50,8 @@
 							<th class="text-center">#</th>
 							<th class="text-center">Título</th>
 							<th class="text-center">Descripción</th>
-                            <th class="text-center">URL</th>
-							<th class="text-center">Duración</th>
+							<th class="text-center">URL Español</th>
+							<th class="text-center">URL Inglés</th>
                             <th class="text-center">Recursos Adicionales</th>
 							<th class="text-center">Acción</th>
 						</tr>
@@ -62,7 +62,8 @@
 								<td class="text-center">{{ $leccion->id }}</td>
 								<td class="text-center">{{ $leccion->title }}</td>
 								<td class="text-center">{{ $leccion->description }}</td>
-                                <td class="text-center">{{ $leccion->url }}</td>
+								<td class="text-center">{{ $leccion->url }}</td>
+								<td class="text-center">{{ $leccion->english_url }}</td>
                                 <td class="text-center">{{ $leccion->materials->count() }}</td>
 								<td class="text-center">
 									<a class="btn btn-info btn-rounded" data-route="{{ route('admin.courses.lessons.edit', $leccion->id) }}" id="{{$leccion->id}}" onclick="editar(this.id);" title="Editar"><i class="fa fa-edit"></i></a>

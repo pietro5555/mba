@@ -6,21 +6,6 @@
 			$('#mytable').DataTable( {
 				responsive: true,
 			});
-
-			$('.editar').on('click',function(e){
- 				e.preventDefault();
-
- 				var route = $(this).attr('data-route');
- 				$.ajax({
-	                url:route,
-	                type:'GET',
-	                success:function(ans){
-	                	$("#content-modal").html(ans); 
-	                    $("#modal-edit").modal("show");
-	                }
-	            });
-			});
-
 		});
 
 		function changeType($opc){
@@ -47,6 +32,18 @@
 		        	$("#url_div2").show();
 		        }
 			}
+		}
+
+		function editar($id){
+			var route = $("#"+$id).attr('data-route');
+ 			$.ajax({
+	        	url:route,
+	            type:'GET',
+	            success:function(ans){
+	                $("#content-modal").html(ans); 
+	                $("#modal-edit").modal("show");
+	            }
+	        });
 		}
 	</script>
 @endpush
@@ -94,7 +91,7 @@
 									@else
 										<a class="btn btn-warning" href="{{ url('uploads/courses/lessons/materials/'.$material->material) }}" target="_blank"><i class="fa fa-search"></i></a>
 									@endif
-									<a class="btn btn-info editar" data-route="{{ route('admin.courses.lessons.resources.edit', $material->id) }}"><i class="fa fa-edit"></i></a>
+									<a class="btn btn-info" data-route="{{ route('admin.courses.lessons.resources.edit', $material->id) }}" id="{{$material->id}}" onclick="editar(this.id);"><i class="fa fa-edit"></i></a>
 									<a class="btn btn-danger" href="{{ route('admin.courses.lessons.resources.delete', $material->id) }}" title="Eliminar"><i class="fa fa-ban"></i></a>
 								</td>
 							</tr>

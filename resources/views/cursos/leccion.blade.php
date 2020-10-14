@@ -25,8 +25,9 @@
   <div class="row justify-content-end">
     <div class="col-xs-1 col-md-2">
       <h5 class="title-level">
+      
         <small>
-          <strong>Nivel: {{$lesson->course->subcategory->title}}</strong>
+          <strong>Nivel:</strong>
         </small>
       </h5>
     </div>

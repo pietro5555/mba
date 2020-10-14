@@ -68,6 +68,7 @@
 		<div class="box">
 			<div class="box-body">
 				<div style="text-align: right;">
+				<a href="{{ route ('admin.courses.lessons.resources, $leccion->course_id')}}" class="btn btn-danger descargar"><i class="fas fa-arrow-circle-left"></i> Regresar</a>
 					<a data-toggle="modal" data-target="#modal-new" class="btn btn-info"><i class="fa fa-plus-circle"></i> Nuevo Recurso</a>
 				</div>
 				

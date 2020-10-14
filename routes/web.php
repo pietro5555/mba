@@ -219,7 +219,7 @@ Route::group(['prefix' => 'installer'], function (){
   Route::group(['prefix' => 'client', 'middleware' => ['auth']], function(){
      Route::group(['prefix' => 'courses'], function(){
         Route::get('my-list', 'CourseController@my_courses')->name('client.my-courses');
-        Route::get('add/{curso}', 'CourseController@add')->name('client.courses.add');
+        Route::get('add/{curso}/{language}', 'CourseController@add')->name('client.courses.add');
         Route::post('rate', 'RatingController@store')->name('client.courses.rate');
         Route::get('{slug}/{id}/take-evaluation', 'EvaluationController@take')->name('client.courses.take-evaluation');
         Route::post('submit-evaluation', 'EvaluationController@submit')->name('client.courses.submit-evaluation');

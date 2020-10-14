@@ -200,7 +200,7 @@ Dev: Carlos Gonzalez
 Dev:Luisana Marín
 *Nuevo campo duration en la tabla courses (VARCHAR 50 NULL)
 *Nuevo campo english_url en la tabla lessons (VARCHAR 255 NULL)
-
+*Nuevo campo language en la tabla courses_users (VARCHAR 2 PREDETERMINADO "es")
 
 
 13/10/2020

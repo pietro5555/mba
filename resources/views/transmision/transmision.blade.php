@@ -226,13 +226,13 @@
          @if($finalizados->isNotEmpty())
             @foreach($finalizados as $fin)
                <div class="col-md-3" style="margin-top: 20px;">
-                  <img src="{{ asset('uploads/avatar/'.$fin->mentor->avatar) }}" class="card-img-top" alt="..." style="height: 200px;">
+                  <img src="{{ asset('uploads/avatar/'.$fin->mentor->avatar) }}" class="card-img-top" alt="..." >
                   <div class="card-img-overlay" style="margin-left: 10px; margin-right: 10px;">
                      <h6 class="card-title">{{$fin->mentor->display_name}}</h6>
                   </div>
 
                   <div class="card-body" style="background-color: #2f343a;">
-                     <h6 class="card-title" style="margin-top: -15px;"> <i class="far fa-play-circle" style="font-size: 16px; color: #6fd843;"></i> {{$fin->title}}</h6>
+                     <h6 class="card-title" style="margin-top: -15px;">  {{$fin->title}}</h6>
                      <h6 style="font-size: 10px; margin-left: 20px; margin-top: -10px;">{{$fin->category->title}}</h6>
                   </div>
                </div>

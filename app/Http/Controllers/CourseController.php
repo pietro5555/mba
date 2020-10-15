@@ -294,7 +294,10 @@ class CourseController extends Controller{
                                 ->first();
         }
 
-        return view('cursos.show_one_course')->with(compact('curso', 'progresoCurso', 'miValoracion'));
+        $first_lesson = Lesson::where('course_id', '=', $id)
+        ->first();
+
+        return view('cursos.show_one_course')->with(compact('curso', 'progresoCurso', 'miValoracion', 'first_lesson '));
     }
 
      /**

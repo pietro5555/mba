@@ -23,10 +23,12 @@
    @endif
 <div class="container-fluid">
   <div class="row justify-content-end">
+    <div class="col mt-2"><h5 class="text-white">{{$lesson->title}}</h5></div>
     <div class="col-xs-1 col-md-2">
       <h5 class="title-level">
+      
         <small>
-          <strong>Nivel: {{$lesson->course->subcategory->title}}</strong>
+          <strong>Nivel:</strong>
         </small>
       </h5>
     </div>

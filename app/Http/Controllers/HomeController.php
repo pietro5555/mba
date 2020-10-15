@@ -104,6 +104,7 @@ class HomeController extends Controller{
       }
 
       $proximoEvento = Events::where('status', '=', 1)
+                           ->where('time', '>=', date('H:i:s'))
                            ->orderBy('date', 'DESC')
                            ->first();
 

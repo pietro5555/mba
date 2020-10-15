@@ -56,7 +56,7 @@
          @endif
    </div>
    {{-- FIN DEL BANNER --}}
-   <hr class="m-0" style="border: 1px solid #707070;opacity: 1;" />
+ <hr class="m-0" style="border: 1px solid #707070;opacity: 1;margin-top: 20px !important;margin-bottom: 25px !important;">
 
    {{-- SECCIÓN ACERCA DEL CURSO--}}
    <div class="container-fluid">
@@ -64,7 +64,7 @@
          <div class="col-md-12">
             <div class="row">
                <div class="col-md-12">
-                  <h1 class="text-white">{{ $curso->title }}</h1>
+                  <h1 class="text-white up">{{ $curso->title }}</h1>
                   <div>
                      @if ( (!Auth::guest()) && (!is_null($progresoCurso)) && (is_null($miValoracion)) ) 
                         <p class="rating">
@@ -143,6 +143,7 @@
                      <div class="col-md-4 mt-2">
                         <h6 class="text-white"><img src="{{ asset('images/icons/calendar.svg') }}" height="30px" width="30px">  Fecha de salida: {{ date('d-m-Y', strtotime($curso->created_at)) }}</h6>
                      </div>
+                   
                   </div>
                </div>
                <div class="col-md-3 mt-2 text-center">
@@ -161,6 +162,9 @@
                            @endif
                         @endif
                      @else
+                         @if ( (!Auth::guest()) && (!is_null($progresoCurso)) )
+                            <a href="{{ route('lesson.show', [$first_lesson->slug, $first_lesson->id, $curso->id]) }}" class="px-2 mr-auto btn btn-success play-course-button btn-block"> <i class="fa fa-play" aria-hidden="true"></i> CONTINUAR CURSO</a>
+                        @endif
                      <!--<a href="#" class="btn btn-info play-course-button btn-block"><i class="fa fa-list"></i> VER LECCIONES</a>
                         @if (is_null($miValoracion))
                            <a href="#ratingModal" data-toggle="modal" class="btn btn-info play-course-button btn-block"><i class="fa fa-star"></i> VALORAR</a>
@@ -184,8 +188,8 @@
       <div class="row">
          <div class="col-md-12">
             <div class="row">
-               <div class="col-md-12">
-                  <h2 class="text-white ml-5">ACERCA DEL CURSO </h2>
+               <div class="col-md-10">
+                  <h2 class="text-white ml-5 up">ACERCA DEL CURSO </h2>
                   <hr style="border: 1px solid #707070; opacity: 1;" />
                   <div class="col-md-12">
                      <div class="col-md-12 justify-content-center p-2 ml-4" style="color: white;">

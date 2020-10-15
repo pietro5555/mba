@@ -39,7 +39,10 @@
 		<div class="box">
 			<div class="box-body">
 				<div style="text-align: right;">
-					<a data-toggle="modal" data-target="#modal-new" class="btn btn-info descargar"><i class="fa fa-plus-circle"></i> Nueva Lección</a>
+				    <a href="{{ route ('admin.courses.index')}}" class="btn btn-danger descargar"><i class="fas fa-arrow-circle-left"></i> Atrás</a>
+				    <a data-toggle="modal" data-target="#modal-new" class="btn btn-info descargar"><i class="fa fa-plus-circle"></i> Nueva Lección</a>
+				    
+					
 				</div>
 
 				<br class="col-xs-12">
@@ -62,7 +65,8 @@
 								<td class="text-center">{{ $leccion->id }}</td>
 								<td class="text-center">{{ $leccion->title }}</td>
 								<td class="text-center">{{ $leccion->description }}</td>
-								<td class="text-center">{{ $leccion->url }}</td>
+                                <td class="text-center">{{ $leccion->url }}</td>
+
 								<td class="text-center">{{ $leccion->english_url }}</td>
                                 <td class="text-center">{{ $leccion->materials->count() }}</td>
 								<td class="text-center">

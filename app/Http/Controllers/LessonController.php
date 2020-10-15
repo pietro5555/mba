@@ -89,6 +89,12 @@ class LessonController extends Controller{
             $url = explode("https://vimeo.com/", $request->url);
             $leccion->url = "https://player.vimeo.com/video/".$url[1];
         }
+
+        if ($request->english_url != $leccion->english_url){
+            $videoUpdate = 1;
+            $url = explode("https://vimeo.com/", $request->english_url);
+            $leccion->english_url = "https://player.vimeo.com/video/".$url[1];
+        }
         $leccion->title = $request->title;
         $leccion->description = $request->description;
         $leccion->subcategory_id = $request->subcategory_id;
@@ -131,7 +137,7 @@ class LessonController extends Controller{
         return view('cursos.leccion', compact('lesson', 'all_lessons','all_comments'));
     }*/
     public function lesson($lesson_slug, $lesson_id, $course_id){
-
+        
     /* mostrar o no el boton de certificado solo se mostrara en la ultima leccion*/    
     $certificar = false;
      $certificado = Lesson::where('course_id', $course_id)->orderBy('id', 'DESC')->first()->take(1);
@@ -139,12 +145,11 @@ class LessonController extends Controller{
          if($certificado == $lesson_id){
             $certificar = true;
          }
-       }   
-
+       }    
+         
         $lesson = Lesson::where('id', '=',$lesson_id)
                     ->with('materials')
                     ->first();
-                    
         $all_lessons = Lesson::where([
             ['course_id', '=',  $course_id],
             ['subcategory_id', '<=', Auth::user()->membership_id]
@@ -154,18 +159,19 @@ class LessonController extends Controller{
                             ->where('course_id', '=', $course_id)
                             ->where('user_id', '=', Auth::user()->ID)
                             ->first();
-                            $last_lesson = Lesson::where('id', $lesson_id)->latest('created_at')->first();
-                           // return dd($last_lesson);
+
    $all_comments = Comment::where('lesson_id', $lesson_id)->get();
+         
         return view('cursos.leccion', compact('lesson', 'all_lessons','all_comments', 'progresoCurso','certificar'));
         $all_comments = Comment::where('lesson_id', $lesson_id)->with('user')->get();
 
         $directos = User::where('referred_id', Auth::user()->ID)->get()->count('ID');
          $last_lesson = Lesson::where('id', $lesson_id)->latest('created_at')->first();
+         
+         
         // return dd(last_lesson);
         
         return view('cursos.leccion', compact('lesson', 'all_lessons','all_comments', 'progresoCurso','directos', 'last_lesson'));
-       
     }
     /*AGREGAR COMENTARIOS*/
     public function lesson_comments(Request $request){

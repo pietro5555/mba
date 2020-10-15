@@ -124,13 +124,13 @@
             <div class="row">
                <div class="col-md-9 mt-2">
                   <div class="row">
-                     <div class="col-md-4">
+                     <div class="col-md-3">
                         <h6 class="text-white"> <img src="{{ asset('images/icons/icon-user.svg') }}" alt="" height="30px" width="30px">  {{ $curso->users_count }} Alumnos</h6>
                      </div>
-                     <div class="col-md-4">
+                     <div class="col-md-3">
                         <h6 class="text-white"> <img src="{{ asset('images/icons/icon-book-video.svg') }}" height="30px" width="30px"> {{ $curso->lessons_count }} Lecciones</h6>
                      </div>
-                     <div class="col-md-4">
+                     <div class="col-md-3">
                         <h6 class="text-white"> 
                            <img src="{{ asset('images/icons/clock.svg') }}" height="30px" width="30px">
                            @if (!is_null($curso->duration))
@@ -139,6 +139,9 @@
                               0h 0m
                            @endif
                         </h6>
+                     </div>
+                     <div class="col-md-3">
+                           <img src="{{ asset('images/medallas/diamante.png') }}" height="30px" width="30px">
                      </div>
                      <div class="col-md-4 mt-2">
                         <h6 class="text-white"><img src="{{ asset('images/icons/calendar.svg') }}" height="30px" width="30px">  Fecha de salida: {{ date('d-m-Y', strtotime($curso->created_at)) }}</h6>
@@ -437,15 +440,15 @@
                   <span aria-hidden="true">&times;</span>
                </button>
             </div>
-            <div class="modal-body">
-                  <h4>Necesitas Una Nueva Membresia</h4>
+            <div class="modal-body text-center">
+                  <h4 class="text-muted">Necesitas Una Nueva Membresia</h4>
                   <p class="text-muted">
-                     Parar tener acceso a nuevas lessiones debes mejorar tu membresia
+                     Parar tener acceso a nuevas lecciones debes mejorar tu membresia
                   </p>
                   @php
-                     $idmembresia = empty(Auth::user()->ID) ? 1 : (Auth::user()->ID + 1);
+                     $idmembresia = empty(Auth::user()->membership_id) ? 1 : (Auth::user()->membership_id + 1);
                   @endphp
-                  <a href="{{route('shopping-cart.store', $idmembresia)}}" class="btn btn-color-green text-white" style="background: #6ab742;">Adquirir Membresia</a>
+                  <a href="{{route('shopping-cart.store', $idmembresia)}}" class="btn btn-color-green text-white" style="background: #6ab742;">Subir de nivel</a>
             </div>
             <div class="modal-footer">
                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>

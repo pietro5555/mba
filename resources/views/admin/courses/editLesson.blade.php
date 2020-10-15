@@ -21,7 +21,18 @@
 	<div class="col-md-12">
 		<div class="form-group">
 			<label>URL Inglés</label>
-			<input type="url" class="form-control" name="english_url" value="{{ $leccion->english_url }}" required>
+			<input type="url" class="form-control" name="english_url" value="{{ $leccion->english_url }}">
+		</div>
+	</div>
+	<div class="col-md-12">
+		<div class="form-group">
+			<label>Nivel de Acceso</label>
+			<select class="form-control" name="subcategory_id" id="" required>
+				<option value="" disabled @if ($leccion->subcategory_id == 0) selected @endif>Seleccione una categoria</option>
+				@foreach ($subcategory as $sub)
+				<option value="{{$sub->id}}" @if ($sub->id == $leccion->subcategory_id) selected @endif>{{$sub->title}}</option>
+				@endforeach
+			</select>
 		</div>
 	</div>
 </div>

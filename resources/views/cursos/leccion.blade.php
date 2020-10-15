@@ -23,6 +23,7 @@
    @endif
 <div class="container-fluid">
   <div class="row justify-content-end">
+     <div class="col mt-2"><h5 class="text-white">{{$lesson->title}}</h5></div>
     <div class="col-xs-1 col-md-2">
       <h5 class="title-level">
         <small>
@@ -30,6 +31,7 @@
         </small>
       </h5>
     </div>
+    
     <div class="col-xs-1 col-md-2 text-center ">
       <div class="icon-social-media">
         <a href="https://m.facebook.com/MyBusinessAcademyPro/" target="_blank" class="btn btn-social-icon btn-facebook btn-rounded ml-2 mr-2"><img src="{{ asset('images/icons/facebook.svg') }}" height="20px" width="20px"></a>
@@ -46,10 +48,13 @@
       @php $ending = 0; $cont = 1; @endphp
       @foreach ($all_lessons as $leccion)
         <div class="carousel-item @if ($leccion->id == $lesson->id) active @endif">
+        
+        @if ($progresoCurso != null)
           <div class="video-container">
             <iframe @if ($progresoCurso->language == 'es') src="{{ $leccion->url }}" @else src="{{ $leccion->english_url }}" @endif width="100%" height="590" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
           </div>
         </div>
+        @endif
         @if ($leccion->id <= $lesson->id)
             @php
                 if ($cont >= count($all_lessons) ){

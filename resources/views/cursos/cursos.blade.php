@@ -75,14 +75,12 @@
                 <img src="{{ asset('uploads/images/courses/covers/'.$last_course->cover) }}" class="course-banner-img img-fluid" alt="..."/>
                 <div class="container-fluid pl-0 pr-0 course-banner-caption  d-none d-sm-block d-md-block clearfix">
                     <div class="">
-                        <div class="col-md-12 p-0">
-                            <h4 class="text-white text-uppercase ml-4 font-weight-bold" >
+                        <div class="row p-0">
+                            <h4 class=" col-md-10 text-white text-uppercase  font-weight-bold" >
                                         {{$last_course->title}}
                             </h4>
-                            <p class="col-md-6 description-course text-justify pl-0 ml-4">
-                                    {!!$last_course->description!!}
-                            </p>
-                            <div class="float-right mb-2">
+                            
+                            <div class="col-md-2 float-right mb-2">
                                 <div class="row">
                                      <a href="{{ route('courses.show', [$last_course->slug, $last_course->course_id]) }}" class="btn btn-primary float-right text-uppercase mr-4"><i class="fa fa-play"></i> Continuar curso</a>
                                 </div>
@@ -136,7 +134,7 @@
                 </div>
             </div>
         @endif
-    @endif
+    @endif-->
     {{-- FIN DEL BANNER --}}
     {{-- SECCIÓN TUS CURSOS--}}
     <!--@if (!Auth::guest())
@@ -189,27 +187,28 @@
                     <div class="wrapper">
                     @foreach ($cursos as $curso)
                       <div>
-                         <div class="card h-100 m-2 mb-4 card-courses">
+
+                         <div class="card m-2 mb-4 card-courses">
+
                             <img class="card-img-top" src="{{ asset('uploads/avatar/'.$curso->mentor->avatar) }}" alt="card-image-cap">
                             <div class="card-body p-2">
-                            <div class="row align-items-center">
+                            <div class="row align-items-start">
                                 <h6 class="col-sm"><a href="{{ route('courses.show', [$curso->slug, $curso->id]) }}" class="text-secondary text-sm">{{$curso->title}}</a>
                                 </h6>
 
-                                 <div class="col-3 mr-2"><img src="{{ asset('images/icons/video-player-blue.svg') }}" alt="" height="20px" width="20px"></div>
+                                 <div class="col-3 m-2"><img src="{{ asset('images/icons/video-player-blue.svg') }}" alt="" height="20px" width="20px"></div>
                             </div>
                             </div>
                        </div>
                     </div>
                     @endforeach
-                     <div class="" style="z-index: 3">
-                        <div class="row">
+                     <div class="">
+                        <div class="row h-100">
                                 <div class="card-block w-50 text-primary align-self-center">
                                     <a href="{{ route('client.my-courses') }}" class="font-weight-bold">Ver todos mis cursos</a>
+                                    <i class="text-primary fa fa-arrow-right"></i>
                                 </div>
-                                <div class="align-self-center">
-                                        <i class="text-primary fa fa-arrow-right"></i>
-                                </div>
+
                         </div>
                     </div>
 
@@ -228,7 +227,7 @@
     {{-- FIN SECCIÓN TUS CURSOS--}}
 
     {{-- SECCIÓN RECOMENDACIONES--}}
-@if(!empty($recomendados))
+@if(!empty($cursosRecomendados))
 <div class="section-landing mt-3" style="background-color: #121317;">
 
     <div class="col">
@@ -240,6 +239,7 @@
         </div>
 
 <!--Carrusel-->
+
 @if($total > 0)
 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
 
@@ -251,14 +251,15 @@
 @php
 $contador=0;
 @endphp
-@foreach($recomendados as $recommended)
+@foreach($cursosRecomendados as $recommended)
 @php
 $contador++;
 @endphp
 
 @if($contador <= 3)
+
 <div class="col-md-4" style="margin-top: 20px;">
-  @if (($recommended->thumbnail_cover)!= null)
+  @if (!is_null($recommended->thumbnail_cover))
  <img src="{{ asset('uploads/images/courses/covers/'.$recommended->thumbnail_cover) }}" class="card-img-top img-prox-events" alt="...">
  @else
  <img src="{{ asset('uploads/images/courses/covers/default.jpg') }}" class="card-img-top img-prox-events" alt="...">
@@ -269,13 +270,14 @@ $contador++;
 </div>
 <div class="row ml-0 d-flex h-100">
     <div class="col-md-9 my-auto" style="margin-bottom: 7px !important">
-        <h6 class="col-sm w-100 pl-0" style="font-size: 14px"><img src="{{ asset('images/icons/video-player-green.svg') }}" alt="" height="20px" width="20px"> <a href="{{ route('courses.show', [$recommended->slug, $recommended->id]) }}" class="text-white"> {{$recommended->title}}</a></h6>
+       <p class="col-sm w-100 pl-0" style="font-size: 16px;"> <a href="{{ route('courses.show', [$recommended->slug, $recommended->id]) }}" class="text-white"> {{$recommended->title}}</a></p>
     </div>
     <div class="col-md-3 my-auto" style="margin-bottom: 7px !important">
         <h6 class="text-white w-100">
             <i class="far fa-user-circle text-center">
                 <p style="font-size: 10px;">{{ $recommended->users->count() }}</p>
             </i>
+            
         </h6>
     </div>
 </div>
@@ -293,7 +295,7 @@ $contador++;
 @php
 $segundo =0;
 @endphp
-@foreach($recomendados as $recommended)
+@foreach($cursosRecomendados as $recommended)
 @php
 $segundo++;
 @endphp
@@ -311,14 +313,15 @@ $segundo++;
     <h6 class="card-title" style="font-size: 14px">{{$recommended->mentor->display_name}}</h6>
 </div>
 <div class="row ml-0 d-flex h-100">
-    <div class="col-md-9 my-auto" style="margin-bottom: 7px !important">
-        <h6 class="col-sm w-100 pl-0" style="font-size: 14px"><img src="{{ asset('images/icons/video-player-green.svg') }}" alt="" height="20px" width="20px"> <a href="{{ route('courses.show', [$recommended->slug, $recommended->id]) }}" class="text-white"> {{$recommended->title}}</a></h6>
+<div class="col-md-9 my-auto" style="margin-bottom: 7px !important">
+        <p class="col-sm w-100 pl-0" style="font-size: 16px;"> <a href="{{ route('courses.show', [$recommended->slug, $recommended->id]) }}" class="text-white"> {{$recommended->title}}</a></p>
     </div>
     <div class="col-md-3 my-auto" style="margin-bottom: 7px !important">
         <h6 class="text-white w-100">
             <i class="far fa-user-circle text-center">
                 <p style="font-size: 10px;">{{ $recommended->users->count() }}</p>
             </i>
+            
         </h6>
     </div>
 </div>
@@ -334,7 +337,7 @@ $segundo++;
 @php
 $tercero =0;
 @endphp
-@foreach($recomendados as $recommended)
+@foreach($cursosRecomendados as $recommended)
 @php
 $tercero++;
 @endphp
@@ -403,8 +406,8 @@ $tercero++;
 
     {{--FIN SECCIÓN RECOMENDACIONES--}}
 
-
-    {{-- SECCIÓN CURSOS MAS NUEVOS --}}
+<hr style="margin-top: 40px;border: 1px solid #707070;opacity: 1;margin-bottom: 45px;">
+   {{-- SECCIÓN CURSOS MAS NUEVOS --}}
     @if ($cursosNuevos->count() > 0)
         <div class="section-landing new-courses-section" id="new-courses-section">
             <div class="row">
@@ -412,8 +415,8 @@ $tercero++;
                     <div class="section-title-landing new-courses-section-title">LOS MÁS NUEVOS</div>
                 </div>
                 <div class="col text-right">
-                    <button type="button" class="btn btn-outline-light btn-arrow btn-arrow-previous" @if ($previous==0) disabled @endif data-route="{{ route('landing.load-more-courses-new', [$idStart, 'previous'] ) }}" onclick="loadMoreCoursesNew('previous');"><i class="fas fa-chevron-left"></i></button>
-                    <button type="button" class="btn btn-outline-success btn-arrow btn-arrow-next" @if ($next==0) disabled @endif data-route="{{ route('landing.load-more-courses-new', [$idEnd, 'next'] ) }}" onclick="loadMoreCoursesNew('next');"><i class="fas fa-chevron-right"></i></button>
+                    <button type="button" class="btn btn-outline-light btn-arrow btn-arrow-previous" @if ($previous == 0) disabled @endif data-route="{{ route('landing.load-more-courses-new', [$idStart, 'previous'] ) }}"  onclick="loadMoreCoursesNew('previous');"><i class="fas fa-chevron-left"></i></button>
+                    <button type="button" class="btn btn-outline-success btn-arrow btn-arrow-next" @if ($next == 0) disabled @endif data-route="{{ route('landing.load-more-courses-new', [$idEnd, 'next'] ) }}"  onclick="loadMoreCoursesNew('next');"><i class="fas fa-chevron-right"></i></button>
                 </div>
             </div>
 
@@ -423,17 +426,17 @@ $tercero++;
                         <div class="card">
                             <a href="{{ route('courses.show', [$cursoNuevo->slug, $cursoNuevo->id]) }}" style="color: white;">
 
-                            @if (!is_null($cursoNuevo->cover))
-                                <img src="{{ asset('uploads/images/courses/covers/'.$cursoNuevo->cover) }}" class="card-img-top new-course-img" alt="...">
+                            @if (!is_null($cursoNuevo->mentor->avatar))
+                                <img src="{{ asset('uploads/avatar/'.$cursoNuevo->mentor->avatar) }}" class="card-img-top new-course-img" alt="...">
                             @else
-                                <img src="{{ asset('uploads/images/courses/covers/default.jpg') }}" class="card-img-top new-course-img" alt="...">
+                                <img src="{{ asset('uploads/avatar/default.jpg') }}" class="card-img-top new-course-img" alt="...">
                             @endif
                             <div class="card-img-overlay d-flex flex-column">
                                 <div class="mt-auto">
                                     <div class="new-course-title">{{ $cursoNuevo->title }}</div>
                                     <div class="row">
                                        <div class="col-md-12">
-                                           <p style="float: right;"> <i class="far fa-user-circle"> {{ $cursoNuevo->users->count()}}</i></p>
+                                           <p class="ico" style="float: right;"> <i class="far fa-user-circle"> {{ $cursoNuevo->users->count()}}</i></p>
                                        </div>
                                     </div>
                                 </div>
@@ -452,15 +455,15 @@ $tercero++;
     @if(!empty($courses))
     <div class="">
         <div class="container-fluid">
-            <div class="col section-title-category mt-4">
-                <h1>
-                    <b>CURSOS POR CATEGORÍA</b>
-                </h1>
+            <div class="col section-title-category">
+                <h3>
+                    CURSOS POR CATEGORÍA
+                </h3>
             </div>
-            <div class="row justify-content-center">
+            <div class="row">
                 @foreach ($courses as $course)
                     @if ($course->courses_count > 0)
-                        <div class="col-sm-3 d-inline-flex p-2">
+                        <div class="col-sm-4 d-inline-flex p-2">
                             @if (!is_null($course->cover))
                                 <img src="{{ asset('uploads/images/categories/covers/'.$course->cover) }}" class="card-img-top img-fluid course-category1" alt="...">
                             @else
@@ -468,18 +471,10 @@ $tercero++;
                             @endif
                             <div class="course-category-caption ml-1 mr-1">
                                 <div class="col-sm-lg text-sm-left font-weight-bold">
-                                    <h6 class="pl-2 pr-2 m-0">
-                                        <a href="{{ url('courses/category/'.$course->id) }}" class="col-sm-lg text-sm-left text-white">
-                                            <small>
-                                                <strong>{{$course->title}}</strong>
-                                            </small>
-                                        </a>
-                                    </h6>
+                                    <a href="{{ url('courses/category/'.$course->id) }}" class="col-sm-lg text-sm-left  text-white">{{$course->title}}</a>
                                 </div>
                                 <div class="col-lg">
-                                    <p class="text-white font-weight-bold">
-                                        <small>{{$course->courses_count}} Cursos</small>
-                                    </p>
+                                    <p class="text-white font-weight-bold">{{$course->courses_count}} Cursos</p>
                                 </div>
                             </div>
                         </div>

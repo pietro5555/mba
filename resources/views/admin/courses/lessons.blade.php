@@ -39,7 +39,10 @@
 		<div class="box">
 			<div class="box-body">
 				<div style="text-align: right;">
-					<a data-toggle="modal" data-target="#modal-new" class="btn btn-info descargar"><i class="fa fa-plus-circle"></i> Nueva Lección</a>
+				    <a href="{{ route ('admin.courses.index')}}" class="btn btn-danger descargar"><i class="fas fa-arrow-circle-left"></i> Atrás</a>
+				    <a data-toggle="modal" data-target="#modal-new" class="btn btn-info descargar"><i class="fa fa-plus-circle"></i> Nueva Lección</a>
+				    
+					
 				</div>
 
 				<br class="col-xs-12">
@@ -52,6 +55,7 @@
 							<th class="text-center">Descripción</th>
 							<th class="text-center">URL Español</th>
 							<th class="text-center">URL Inglés</th>
+							<th class="text-center">Nivel Acceso</th>
                             <th class="text-center">Recursos Adicionales</th>
 							<th class="text-center">Acción</th>
 						</tr>
@@ -62,8 +66,21 @@
 								<td class="text-center">{{ $leccion->id }}</td>
 								<td class="text-center">{{ $leccion->title }}</td>
 								<td class="text-center">{{ $leccion->description }}</td>
-								<td class="text-center">{{ $leccion->url }}</td>
+                                <td class="text-center">{{ $leccion->url }}</td>
 								<td class="text-center">{{ $leccion->english_url }}</td>
+								<td class="text-center">
+									@if ($leccion->subcategory_id == 1)
+										Principiante
+									@elseif ($leccion->subcategory_id == 2)
+										Básico
+									@elseif ($leccion->subcategory_id == 3)
+										Intermedio
+									@elseif ($leccion->subcategory_id == 4)
+										Avanzado
+									@elseif ($leccion->subcategory_id == 5)
+										Pro
+									@endif
+								</td>
                                 <td class="text-center">{{ $leccion->materials->count() }}</td>
 								<td class="text-center">
 									<a class="btn btn-info btn-rounded" data-route="{{ route('admin.courses.lessons.edit', $leccion->id) }}" id="{{$leccion->id}}" onclick="editar(this.id);" title="Editar"><i class="fa fa-edit"></i></a>
@@ -115,6 +132,17 @@
 						            <div class="form-group">
 						                <label>URL Inglés</label>
 						            	<input type="url" class="form-control" name="english_url" required>
+						            </div>
+								</div>
+								<div class="col-md-12">
+						            <div class="form-group">
+						                <label>Nivel de Acceso</label>
+										<select class="form-control" name="subcategory_id" id="" required>
+											<option value="" disabled selected>Seleccione una categoria</option>
+											@foreach ($subcategory as $sub)
+											<option value="{{$sub->id}}">{{$sub->title}}</option>
+											@endforeach
+										</select>
 						            </div>
 						        </div>
 						    </div>

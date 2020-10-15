@@ -10,6 +10,7 @@ use App\Models\Comment;
 use App\Models\User;
 use DB;
 use Auth;
+use App\Models\Subcategory;
 use Carbon\Carbon;
 class LessonController extends Controller{
     /**
@@ -23,7 +24,9 @@ class LessonController extends Controller{
                     ->with('lessons', 'lessons.materials')
                     ->first();
 
-        return view('admin.courses.lessons')->with(compact('curso'));
+        $subcategory = Subcategory::all();
+
+        return view('admin.courses.lessons')->with(compact('curso', 'subcategory'));
     }
 
     /**
@@ -69,7 +72,9 @@ class LessonController extends Controller{
     public function edit($id){
         $leccion = Lesson::find($id);
 
-        return view('admin.courses.editLesson')->with(compact('leccion'));
+        $subcategory = Subcategory::all();
+
+        return view('admin.courses.editLesson')->with(compact('leccion', 'subcategory'));
     }
 
      /**
@@ -86,6 +91,7 @@ class LessonController extends Controller{
         }
         $leccion->title = $request->title;
         $leccion->description = $request->description;
+        $leccion->subcategory_id = $request->subcategory_id;
         $leccion->slug = Str::slug($leccion->title);
         $leccion->save();
       //  return dd($request->all(), $leccion);
@@ -128,8 +134,10 @@ class LessonController extends Controller{
         $lesson = Lesson::where('id', '=',$lesson_id)
                     ->with('materials')
                     ->first();
-        $all_lessons = Lesson::where('course_id', '=',  $course_id)
-                        ->get();
+        $all_lessons = Lesson::where([
+            ['course_id', '=',  $course_id],
+            ['subcategory_id', '<=', Auth::user()->membership_id]
+        ])->get();
 
         $progresoCurso = DB::table('courses_users')
                             ->where('course_id', '=', $course_id)
@@ -141,8 +149,10 @@ class LessonController extends Controller{
         $all_comments = Comment::where('lesson_id', $lesson_id)->with('user')->get();
 
         $directos = User::where('referred_id', Auth::user()->ID)->get()->count('ID');
-
-        return view('cursos.leccion', compact('lesson', 'all_lessons','all_comments', 'progresoCurso','directos'));
+         $last_lesson = Lesson::where('id', $lesson_id)->latest('created_at')->first();
+        // return dd(last_lesson);
+        
+        return view('cursos.leccion', compact('lesson', 'all_lessons','all_comments', 'progresoCurso','directos', 'last_lesson'));
     }
     /*AGREGAR COMENTARIOS*/
     public function lesson_comments(Request $request){

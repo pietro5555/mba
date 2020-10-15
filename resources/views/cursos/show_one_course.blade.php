@@ -56,7 +56,7 @@
          @endif
    </div>
    {{-- FIN DEL BANNER --}}
-   <hr class="m-0" style="border: 1px solid #707070;opacity: 1;" />
+ <hr class="m-0" style="border: 1px solid #707070;opacity: 1;margin-top: 20px !important;margin-bottom: 25px !important;">
 
    {{-- SECCIÓN ACERCA DEL CURSO--}}
    <div class="container-fluid">
@@ -64,7 +64,7 @@
          <div class="col-md-12">
             <div class="row">
                <div class="col-md-12">
-                  <h1 class="text-white">{{ $curso->title }}</h1>
+                  <h1 class="text-white up">{{ $curso->title }}</h1>
                   <div>
                      @if ( (!Auth::guest()) && (!is_null($progresoCurso)) && (is_null($miValoracion)) ) 
                         <p class="rating">
@@ -143,6 +143,7 @@
                      <div class="col-md-4 mt-2">
                         <h6 class="text-white"><img src="{{ asset('images/icons/calendar.svg') }}" height="30px" width="30px">  Fecha de salida: {{ date('d-m-Y', strtotime($curso->created_at)) }}</h6>
                      </div>
+                   
                   </div>
                </div>
                <div class="col-md-3 mt-2 text-center">
@@ -161,6 +162,9 @@
                            @endif
                         @endif
                      @else
+                         @if ( (!Auth::guest()) && (!is_null($progresoCurso)) )
+                            <a href="{{ route('lesson.show', [$first_lesson->slug, $first_lesson->id, $curso->id]) }}" class="px-2 mr-auto btn btn-success play-course-button btn-block"> <i class="fa fa-play" aria-hidden="true"></i> CONTINUAR CURSO</a>
+                        @endif
                      <!--<a href="#" class="btn btn-info play-course-button btn-block"><i class="fa fa-list"></i> VER LECCIONES</a>
                         @if (is_null($miValoracion))
                            <a href="#ratingModal" data-toggle="modal" class="btn btn-info play-course-button btn-block"><i class="fa fa-star"></i> VALORAR</a>
@@ -184,8 +188,8 @@
       <div class="row">
          <div class="col-md-12">
             <div class="row">
-               <div class="col-md-12">
-                  <h2 class="text-white ml-5">ACERCA DEL CURSO </h2>
+               <div class="col-md-10">
+                  <h2 class="text-white ml-5 up">ACERCA DEL CURSO </h2>
                   <hr style="border: 1px solid #707070; opacity: 1;" />
                   <div class="col-md-12">
                      <div class="col-md-12 justify-content-center p-2 ml-4" style="color: white;">
@@ -235,7 +239,17 @@
                               <div class="col-md-12 accordion-seccion-leccion align-items-center">
                                  <div class="row align-items-center ">
                                     <div class="col-md-1 p-0">
-                                       <div class="cuadrado p-1 pl-2 pr-2">
+                                       @php
+                                             $arrayColor = [
+                                                0 => '#2A92FF',
+                                                1 => '#BF4040',
+                                                2 => '#B9AA1D',
+                                                3 => '#A5D6E5',
+                                                4 => '#9C4F9D',
+                                                5 => '#3B053C'
+                                             ];
+                                       @endphp
+                                       <div class="cuadrado p-1 pl-2 pr-2" style="background: {{$arrayColor[$leccion->subcategory_id]}}; outline-color:{{$arrayColor[$leccion->subcategory_id]}}; ">
                                           <h4 class="text-white m-0"> 
                                              <strong>@if ($cont < 10) 0{{ $cont }} @else {{ $cont }} @endif</strong>
                                           </h4>
@@ -244,10 +258,15 @@
                                     <div class="col-md-10 pl-0">
                                        <h5 class="panel-title about-course-text m-0"> 
                                           @if ( (!Auth::guest()) && (!is_null($progresoCurso)) )
-                                          <a href="{{ route('lesson.show', [$leccion->slug, $leccion->id, $curso->id]) }}" class="about-course-text">
-                                             {{ $leccion->title }}
-                                          </a>
-                                             
+                                             @if ($leccion->subcategory_id <= Auth::user()->membership_id)
+                                                <a href="{{ route('lesson.show', [$leccion->slug, $leccion->id, $curso->id]) }}" class="about-course-text">
+                                                   {{ $leccion->title }}
+                                                </a>
+                                             @else
+                                                <a href="#newMembership" data-toggle="modal"  class="about-course-text">
+                                                   {{ $leccion->title }}
+                                                </a>
+                                             @endif
                                           @else
                                              {{ $leccion->title }}
                                           @endif
@@ -388,6 +407,33 @@
                   <button type="submit" class="btn btn-primary">Valorar</button>
                </div>
             </form>
+         </div>
+      </div>
+   </div>
+
+   {{-- Modal Membresia --}}
+   <div class="modal fade" id="newMembership" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+         <div class="modal-content" style="background-color: black;">
+            <div class="modal-header">
+               <h5 class="modal-title" id="exampleModalLabel" style="color: white;">Adquirir nueva membresia</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="modal-body">
+                  <h4>Necesitas Una Nueva Membresia</h4>
+                  <p class="text-muted">
+                     Parar tener acceso a nuevas lessiones debes mejorar tu membresia
+                  </p>
+                  @php
+                     $idmembresia = empty(Auth::user()->ID) ? 1 : (Auth::user()->ID + 1);
+                  @endphp
+                  <a href="{{route('shopping-cart.store', $idmembresia)}}" class="btn btn-color-green text-white" style="background: #6ab742;">Adquirir Membresia</a>
+            </div>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
          </div>
       </div>
    </div>

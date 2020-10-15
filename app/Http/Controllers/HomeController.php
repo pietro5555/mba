@@ -104,6 +104,7 @@ class HomeController extends Controller{
       }
 
       $proximoEvento = Events::where('status', '=', 1)
+                            ->where('time', '>=', date('H:i:s'))
                            ->orderBy('date', 'DESC')
                            ->first();
 
@@ -143,7 +144,12 @@ class HomeController extends Controller{
       if (!empty(Auth::user()->membership)) {
          $membresia = Auth::user()->membership->name;
          $idmembresia = (Auth::user()->membership_id == 5) ? 5 : (Auth::user()->membership_id+1);
-         $membresia2 = Auth::user()->membership->where('id', ($idmembresia))->first()->name;   
+         if (Auth::user()->membership_id < 5) {
+            $membresia2 = Auth::user()->membership->where('id', ($idmembresia))->first()->name;
+         }else{
+            $membresia2 = '';
+         }
+         
          $cursos = Auth::user()->courses_buyed->count();
       }
       

@@ -220,9 +220,35 @@
    {{-- FIN SECCIÓN ACERCA DEL CURSO--}}
    
    {{-- SECCIÓN LECCIONES--}}
+   @php
+         $arrayColor = [
+            0 => '#2A92FF',
+            1 => '#BF4040',
+            2 => '#B9AA1D',
+            3 => '#A5D6E5',
+            4 => '#9C4F9D',
+            5 => '#3B053C'
+         ];
+
+         $arrayNivel = [
+            1 => 'Principiante',
+            2 => 'Básico',
+            3 => 'Intermedio',
+            4 => 'Avanzado',
+            5 => 'Pro'
+         ];
+   @endphp
    <div class="container-fluid pt-4 pb-4">
       <div class="col-md-12 section-title-category">
          <h3 class="ml-4">LECCIONES</h3>
+      </div>
+      <div class="row justify-content-center">
+         @foreach ($arrayNivel as $nivel => $name)
+         <div class="d-flex align-items-center mt-2 col">
+            <div class="cuadrado" style="background: {{$arrayColor[$nivel]}}; outline-color: {{$arrayColor[$nivel]}}; height: 15px; width: 15px;"></div>
+            <span class="ml-2" style="color: {{$arrayColor[$nivel]}}">{{$name}}</span>
+         </div>
+         @endforeach
       </div>
       <hr style="border: 1px solid #707070;opacity: 1;" />
       
@@ -239,16 +265,6 @@
                               <div class="col-md-12 accordion-seccion-leccion align-items-center">
                                  <div class="row align-items-center ">
                                     <div class="col-md-1 p-0">
-                                       @php
-                                             $arrayColor = [
-                                                0 => '#2A92FF',
-                                                1 => '#BF4040',
-                                                2 => '#B9AA1D',
-                                                3 => '#A5D6E5',
-                                                4 => '#9C4F9D',
-                                                5 => '#3B053C'
-                                             ];
-                                       @endphp
                                        <div class="cuadrado p-1 pl-2 pr-2" style="background: {{$arrayColor[$leccion->subcategory_id]}}; outline-color:{{$arrayColor[$leccion->subcategory_id]}}; ">
                                           <h4 class="text-white m-0"> 
                                              <strong>@if ($cont < 10) 0{{ $cont }} @else {{ $cont }} @endif</strong>

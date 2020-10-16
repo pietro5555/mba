@@ -197,9 +197,9 @@ countdown('{{($evento != null) ? $evento->date.' '.$evento->time : $fechaActual}
    <!-- Button trigger modal -->
 
 
-   <div class="col-md-6" style="margin-bottom: 10px;">
+   <!--<div class="col-md-6" style="margin-bottom: 10px;">
        <a href="{{route('oauthCallback', ['id' => $evento->id])}}" class="btn gris-boton btn-block"><i class="fas fa-calendar-alt" style="color:#2A91FF"></i> Google Calendar</a>
-   </div>
+   </div>-->
   @if (!empty ($nextEvent))
    <div class="col-md-6" style="margin-bottom: 10px;">
     <form action="{{route('timelive')}}" method="GET">

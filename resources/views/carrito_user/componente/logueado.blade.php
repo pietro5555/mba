@@ -1,4 +1,7 @@
 <div class="col-12">
+    @php
+        $public_key = 'pk_live_51HQmTBFKU1xhP2bFEs29RlQMiYvIXZysowWVmoPXNbxyCzuDAwYIhz2KSkuhpbtJFjhHMcEQpXRm7QecxBdVcMUT00E1FnHTdg';
+    @endphp
     @if (is_null($membresia))
     <h3 class="text-center text-white">
         <strong>
@@ -26,7 +29,7 @@
             <input type="hidden" name="metodo" value="stripe">
             <script
                 src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                data-key="{{ env('STRIPE_KEY') }}"
+                data-key="{{ $public_key }}"
                 data-amount="{{($totalItems * 100)}}"
                 data-name="Compra"
                 data-description="Compra Membresia"
@@ -67,7 +70,7 @@
                 <input type="hidden" name="metodo" value="stripe">
                 <script
                     src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                    data-key="{{ env('STRIPE_KEY') }}"
+                    data-key="{{ $public_key }}"
                     data-amount="{{($totalItems * 100)}}"
                     data-name="Compra"
                     data-description="Comprar Oferta"

@@ -33,9 +33,15 @@ const countdown = (deadline,elem) => {
 
      if(t.remainTime <= 1) {
       clearInterval(timerUpdate);
-      $('#'+elem).append(
-        '<h1>El live ya a Iniciado</h1>'
-        );
+      if ($("#statusLive").val() == 'scheduled'){
+                        $('#' + elem).append('<h1>El live está por iniciar</h1>');
+                    }else if ($("#statusLive").val() == 'live'){
+                        $('#' + elem).append('<h1>El live ya ha iniciado</h1>');
+                    }else if ($("#statusLive").val() == 'ended'){
+                        $('#' + elem).append('<h1>El live ya ha finalizado</h1>');
+                    }else if ($("#statusLive").val() == 'cancelled'){
+                        $('#' + elem).append('<h1>El live ha sido cancelado</h1>');
+                    }
       $('.text-change').html('AGENDAR LIVE Y ENTRAR');
       $('.ocultar').addClass('d-none')
       $('.mostrar').removeClass('d-none')
@@ -43,37 +49,37 @@ const countdown = (deadline,elem) => {
 
      $('#'+elem).append(
 
-            '<p class="p-1 bd-highlight" style="font-size: 80px; font-weight:500;">'+
+            '<p class="p-1 bd-highlight" style="font-size: 80px; font-weight:800;">'+
              t.remainDays +
-                '<p style="margin-left: -40px; margin-top: 100px; font-weight:500;">DIAS</p>'+
+                '<p style="margin-left: -40px; margin-top: 100px; font-weight:800;">DIAS</p>'+
             '</p>'+
 
-            '<p class="p-2 bd-highlight" style="font-size: 70px; font-weight:500;">'+
+            '<p class="p-2 bd-highlight" style="font-size: 70px; font-weight:800;">'+
                 ':'+
             '</p>'+
 
-            '<p class="p-1 bd-highlight" style="font-size: 80px; font-weight:500;">'+
+            '<p class="p-1 bd-highlight" style="font-size: 80px; font-weight:800;">'+
               t.remainHours +
-                '<p style="margin-left: -68px; margin-top: 100px; font-weight:500;">HORAS</p>'+
+                '<p style="margin-left: -68px; margin-top: 100px; font-weight:800;">HORAS</p>'+
             '</p>'+
 
-            '<p class="p-2 bd-highlight" style="font-size: 70px; font-weight:500;">'+
+            '<p class="p-2 bd-highlight" style="font-size: 70px; font-weight:800;">'+
                ':'+
             '</p>'+
 
-            '<p class="p-1 bd-highlight" style="font-size: 80px; font-weight:500;">'+
+            '<p class="p-1 bd-highlight" style="font-size: 80px; font-weight:800;">'+
                t.remainMinutes +
 
-                '<p style="margin-left: -80px; margin-top: 100px; font-weight:500;">MINUTOS</p>'+
+                '<p style="margin-left: -80px; margin-top: 100px; font-weight:800;">MINUTOS</p>'+
             '</p>'+
 
-            '<p class="p-2 bd-highlight" style="font-size: 70px; font-weight:500;">'+
+            '<p class="p-2 bd-highlight" style="font-size: 70px; font-weight:800;">'+
                 ':'+
             '</p>'+
-            '<p class="p-1 bd-highlight" style="font-size: 80px; font-weight:500;">'+
+            '<p class="p-1 bd-highlight" style="font-size: 80px; font-weight:800;">'+
                t.remainSeconds +
 
-                '<p style="margin-left: -85px; margin-top: 100px; font-weight:500;">SEGUNDOS</p>'+
+                '<p style="margin-left: -85px; margin-top: 100px; font-weight:800;">SEGUNDOS</p>'+
             '</p>'
 
         )
@@ -163,14 +169,26 @@ countdown('{{($evento != null) ? $evento->date.' '.$evento->time : $fechaActual}
                   {{-- USUARIOS LOGUEADOS CON MEMBRESÍA MAYOR O IGUAL A LA SUBCATEGORÍA DEL EVENTO Y QUE NO TIENEN EL EVENTO AGENDADO AÚN--}}
                   <a href="{{ route('schedule.event',[$evento->id]) }}" class="btn btn-primary btn-block text-change">AGENDAR LIVE</a>
                @else
-                  {{-- EL USUARIO YA TIENE EL EVENTO AGENDADO--}}
-                  <a href="{{route('show.event', $evento->id)}}" class="btn btn-success btn-block ocultar">IR AL EVENTO</a>
-                  <form action="https://streaming.shapinetwork.com/connect-mba/{{$evento->id}}/{{Auth::user()->ID}}" method="POST" class="mostrar d-none">
-                        @csrf
-                        <input type="hidden" name="email" value="{{ Auth::user()->user_email }}">
-                      <input type="hidden" name="password" value="{{ decrypt(Auth::user()->clave) }}">
-                      <button type="submit" class="btn btn-success btn-block">ENTRAR AL LIVE</button>
-                  </form>
+                    {{-- EL USUARIO YA TIENE EL EVENTO AGENDADO--}}
+                    @if ( ($statusLive == 'ended') || ($statusLive == 'cancelled') )
+                        <a href="{{route('show.event', $evento->id)}}" class="btn btn-success btn-block">VER DETALLES DEL EVENTO</a>
+                    @else
+                        <form action="https://streaming.shapinetwork.com/connect-mba/{{$evento->id}}/{{Auth::user()->ID}}" method="POST" class="mostrar d-none">
+                            @csrf
+                            <input type="hidden" name="email" value="{{ Auth::user()->user_email }}">
+                            <input type="hidden" name="password" value="{{ decrypt(Auth::user()->clave) }}">
+                            
+                            @if ($statusLive == 'scheduled')
+                                @if (Auth::user()->rol_id == 2)
+                                    <button type="submit" class="btn btn-success btn-block">ENTRAR AL LIVE</button>
+                                @else
+                                    <button type="submit" class="btn btn-success btn-block" disabled>ENTRAR AL LIVE</button>
+                                @endif
+                            @elseif ($statusLive == 'live')
+                                <button type="submit" class="btn btn-success btn-block">ENTRAR AL LIVE</button>
+                            @endif
+                        @endif
+                      </form>
                @endif
             @endif
          @endif
@@ -183,9 +201,9 @@ countdown('{{($evento != null) ? $evento->date.' '.$evento->time : $fechaActual}
    <!-- Button trigger modal -->
 
 
-   <div class="col-md-6" style="margin-bottom: 10px;">
+   <!--<div class="col-md-6" style="margin-bottom: 10px;">
        <a href="{{route('oauthCallback', ['id' => $evento->id])}}" class="btn gris-boton btn-block"><i class="fas fa-calendar-alt" style="color:#2A91FF"></i> Google Calendar</a>
-   </div>
+   </div>-->
   @if (!empty ($nextEvent))
    <div class="col-md-6" style="margin-bottom: 10px;">
     <form action="{{route('timelive')}}" method="GET">
@@ -254,7 +272,7 @@ $contador++;
 @endphp
 
 @if($contador <= 3)
-<div class="col-md-4" style="margin-top: 20px;">
+ <div class="col-md-4" style="margin-top: 20px;">
                               @if (!is_null($prox->mentor->avatar))
                                  <img src="{{ asset('uploads/avatar/'.$prox->mentor->avatar) }}" class="card-img-top img-prox-events" alt="...">
                               @else
@@ -398,4 +416,4 @@ $segundo++;
 
 
 
-@endsection
+  @endsection

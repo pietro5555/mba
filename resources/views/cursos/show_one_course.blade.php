@@ -445,15 +445,15 @@
                   <span aria-hidden="true">&times;</span>
                </button>
             </div>
-            <div class="modal-body">
-                  <h4>Necesitas Una Nueva Membresia</h4>
+            <div class="modal-body text-center">
+                  <h4 class="text-muted">Necesitas Una Nueva Membresia</h4>
                   <p class="text-muted">
-                     Parar tener acceso a nuevas lessiones debes mejorar tu membresia
+                     Parar tener acceso a nuevas lecciones debes mejorar tu membresia
                   </p>
                   @php
-                     $idmembresia = empty(Auth::user()->ID) ? 1 : (Auth::user()->ID + 1);
+                     $idmembresia = empty(Auth::user()->membership_id) ? 1 : (Auth::user()->membership_id + 1);
                   @endphp
-                  <a href="{{route('shopping-cart.store', $idmembresia)}}" class="btn btn-color-green text-white" style="background: #6ab742;">Adquirir Membresia</a>
+                  <a href="{{route('shopping-cart.store', $idmembresia)}}" class="btn btn-color-green text-white" style="background: #6ab742;">Subir de nivel</a>
             </div>
             <div class="modal-footer">
                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>

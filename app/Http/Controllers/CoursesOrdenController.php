@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\DB;
 class CoursesOrdenController extends Controller
 {
     
+    public $secret_key = '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';
+
     /**
      * Permite procesar las compras por los diferentes medios de pagos
      *
@@ -81,7 +83,7 @@ class CoursesOrdenController extends Controller
      */
     public function stripe($data){
         try {
-            $secret_key = env('STRIPE_SECRET');
+            $secret_key = $this->secret_key;
             Stripe::setApiKey($secret_key);
 
             $customer = Customer::create(array(
@@ -186,7 +188,7 @@ class CoursesOrdenController extends Controller
 
     public function pay_membership_stripe(Request $request){
         try {
-            $secret_key = env('STRIPE_SECRET');
+            $secret_key = $this->secret_key;
             Stripe::setApiKey($secret_key);
 
             $idmembresia = $this->getDataMembeship(Auth::user()->ID);

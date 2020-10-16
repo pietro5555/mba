@@ -147,35 +147,6 @@ class ShoppingCartController extends Controller
             }else{
                 return redirect('shopping-cart')->with('msj-informativo', 'El item ya se encuentra en su carrito de compras.');
             }
-
-            /*
-            $cont = 0;
-
-            if ($request->session()->has('cart')) {
-
-                $items = $request->session()->pull('cart');
-                 
-                foreach ($items as $item) {
-                    if ($item == $id){
-                        $cont++;
-                    }else{
-                        $request->session()->push('cart', $item);
-                    }       
-                }
-
-                $request->session()->push('cart', $id);
-
-                if ($cont > 0){
-                    return redirect('shopping-cart')->with('msj-informativo', 'El item ya se encuentra en su carrito de compras.');
-                }
-            }else{
-
-                $request->session()->push('cart', $id);
-            }
-            
-            return redirect('shopping-cart')->with('msj-exitoso', 'El item ha sido agregado a su carrito de compras con éxito.');
-            */
-
         }else{
             if ($request->type == null) {
                 $itemAgregado = DB::table('shopping_cart')

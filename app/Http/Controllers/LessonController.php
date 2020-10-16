@@ -156,13 +156,16 @@ class LessonController extends Controller{
 
 
     /* mostrar o no el boton de certificado solo se mostrara en la ultima leccion*/
+
     $certificar = false;
      $certificado = Lesson::where('course_id', $course_id)->orderBy('id', 'DESC')->first()->take(1);
        if($certificado != null){
          if($certificado == $lesson_id){
             $certificar = true;
          }
+
        }
+
 
         $lesson = Lesson::where('id', '=',$lesson_id)
                     ->with('materials')
@@ -178,7 +181,6 @@ class LessonController extends Controller{
                             ->first();
 
    $all_comments = Comment::where('lesson_id', $lesson_id)->get();
-
         return view('cursos.leccion', compact('lesson', 'all_lessons','all_comments', 'progresoCurso','certificar'));
         $all_comments = Comment::where('lesson_id', $lesson_id)->with('user')->get();
 

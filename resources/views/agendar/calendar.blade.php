@@ -49,9 +49,9 @@
 
 
         if ($('#iduser').val() == {
-            
+
               $usuario
-            
+
           }) {
           $('.habilitar').removeAttr('disabled')
           $(".oculto").show("slow");
@@ -104,7 +104,7 @@
 <div class="container-fluid">
     <div class="row">
     @foreach ($eventos_agendados as $agendado)
-    
+
    <div class="col-md-4" style="margin-top: 20px;">
                               @if (!is_null($agendado->mentor->avatar))
                                  <img src="{{ asset('uploads/avatar/'.$agendado->mentor->avatar) }}" class="card-img-top img-prox-events" alt="...">
@@ -140,11 +140,13 @@
                                              <a href="{{route('schedule.event', [$agendado->id])}}" class="btn btn-success btn-block">Agendar</a>
                                           @else
                                              {{-- EL USUARIO YA TIENE EL EVENTO AGENDADO--}}
+                                             @if($agendado->date > date('Y-m-d')) || (($agendado->date = date('Y-m-d')) && ($agendado->time => date('H:i:s')))
                                              <form action="{{route('timelive')}}" method="GET">
                                                 @csrf
                                                 <input id="sigEvent" name="sigEvent" type="hidden" value="{{ $agendado->id }}">
                                                 <button class="btn btn-success btn-block" type="submit"><h4>Ir al Evento</h4></button>
                                              </form>
+                                             @endif
                                           @endif
                                        @endif
                                     @endif
@@ -153,7 +155,7 @@
                               </div>
                            </div>
 
-    
+
   <form action="https://streaming.shapinetwork.com/connect-mba/{{$agendado->id}}/{{Auth::user()->ID}}" method="POST" id="connect-form-{{$agendado->id}}">
            @csrf
            <input type="hidden" name="email" value="{{ Auth::user()->user_email }}">

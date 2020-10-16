@@ -66,7 +66,7 @@
                <div class="col-md-12">
                   <h1 class="text-white up">{{ $curso->title }}</h1>
                   <div>
-                     @if ( (!Auth::guest()) && (!is_null($progresoCurso)) && (is_null($miValoracion)) ) 
+                     @if ( (!Auth::guest()) && (!is_null($progresoCurso)) && (is_null($miValoracion)) )
                         <p class="rating">
                            <input id="d-radio1c" type="radio" name="points" value="5">
                            <label for="d-radio1c" href="#ratingModal" data-toggle="modal">
@@ -116,7 +116,7 @@
                            <i class="fa fa-star-o text-secondary"></i>
                         @endif
                      @endif
-                     
+
                   </div>
                </div>
             </div>
@@ -124,14 +124,14 @@
             <div class="row">
                <div class="col-md-9 mt-2">
                   <div class="row">
-                     <div class="col-md-4">
+                     <div class="col-md-3">
                         <h6 class="text-white"> <img src="{{ asset('images/icons/icon-user.svg') }}" alt="" height="30px" width="30px">  {{ $curso->users_count }} Alumnos</h6>
                      </div>
-                     <div class="col-md-4">
+                     <div class="col-md-3">
                         <h6 class="text-white"> <img src="{{ asset('images/icons/icon-book-video.svg') }}" height="30px" width="30px"> {{ $curso->lessons_count }} Lecciones</h6>
                      </div>
-                     <div class="col-md-4">
-                        <h6 class="text-white"> 
+                     <div class="col-md-3">
+                        <h6 class="text-white">
                            <img src="{{ asset('images/icons/clock.svg') }}" height="30px" width="30px">
                            @if (!is_null($curso->duration))
                               {{ $curso->duration }}
@@ -140,10 +140,18 @@
                            @endif
                         </h6>
                      </div>
+                     @if (!Auth::guest())
+                     @if(Auth::user()->ID = 10067 && $curso->id = 39)
+                       <div class="col-md-3">
+                           <img src="{{ asset('images/medallas/diamante.png') }}" height="30px" width="30px">
+                     </div>
+                      @endif
+                      @endif
+
                      <div class="col-md-4 mt-2">
                         <h6 class="text-white"><img src="{{ asset('images/icons/calendar.svg') }}" height="30px" width="30px">  Fecha de salida: {{ date('d-m-Y', strtotime($curso->created_at)) }}</h6>
                      </div>
-                   
+
                   </div>
                </div>
                <div class="col-md-3 mt-2 text-center">
@@ -174,7 +182,7 @@
                         @else
                            @if (!is_null($curso->evaluation))
                               <a href="{{ route('client.courses.take-evaluation', [$curso->slug, $curso->id]) }}" class="btn btn-primary play-course-button btn-block"><i class="far fa-file-alt"></i> PRESENTAR EVALUACIÓN</a>
-                           @endif   
+                           @endif
                         @endif-->
                      @endif
                   @endif
@@ -209,7 +217,7 @@
                               </div>
                            </div>
                         </div>
-                    
+
                      </div>
                   </div>
                </div>
@@ -218,14 +226,40 @@
       </div>
    </div>
    {{-- FIN SECCIÓN ACERCA DEL CURSO--}}
-   
+
    {{-- SECCIÓN LECCIONES--}}
+   @php
+         $arrayColor = [
+            0 => '#2A92FF',
+            1 => '#BF4040',
+            2 => '#B9AA1D',
+            3 => '#A5D6E5',
+            4 => '#9C4F9D',
+            5 => '#3B053C'
+         ];
+
+         $arrayNivel = [
+            1 => 'Principiante',
+            2 => 'Básico',
+            3 => 'Intermedio',
+            4 => 'Avanzado',
+            5 => 'Pro'
+         ];
+   @endphp
    <div class="container-fluid pt-4 pb-4">
       <div class="col-md-12 section-title-category">
          <h3 class="ml-4">LECCIONES</h3>
       </div>
+      <div class="row justify-content-center">
+         @foreach ($arrayNivel as $nivel => $name)
+         <div class="d-flex align-items-center mt-2 col">
+            <div class="cuadrado" style="background: {{$arrayColor[$nivel]}}; outline-color: {{$arrayColor[$nivel]}}; height: 15px; width: 15px;"></div>
+            <span class="ml-2" style="color: {{$arrayColor[$nivel]}}">{{$name}}</span>
+         </div>
+         @endforeach
+      </div>
       <hr style="border: 1px solid #707070;opacity: 1;" />
-      
+
       <div class="col-md-10">
          <div class="full margin_bottom_30">
             <div class="accordion border_circle">
@@ -239,24 +273,14 @@
                               <div class="col-md-12 accordion-seccion-leccion align-items-center">
                                  <div class="row align-items-center ">
                                     <div class="col-md-1 p-0">
-                                       @php
-                                             $arrayColor = [
-                                                0 => '#2A92FF',
-                                                1 => '#BF4040',
-                                                2 => '#B9AA1D',
-                                                3 => '#A5D6E5',
-                                                4 => '#9C4F9D',
-                                                5 => '#3B053C'
-                                             ];
-                                       @endphp
                                        <div class="cuadrado p-1 pl-2 pr-2" style="background: {{$arrayColor[$leccion->subcategory_id]}}; outline-color:{{$arrayColor[$leccion->subcategory_id]}}; ">
-                                          <h4 class="text-white m-0"> 
+                                          <h4 class="text-white m-0">
                                              <strong>@if ($cont < 10) 0{{ $cont }} @else {{ $cont }} @endif</strong>
                                           </h4>
                                        </div>
                                     </div>
                                     <div class="col-md-10 pl-0">
-                                       <h5 class="panel-title about-course-text m-0"> 
+                                       <h5 class="panel-title about-course-text m-0">
                                           @if ( (!Auth::guest()) && (!is_null($progresoCurso)) )
                                              @if ($leccion->subcategory_id <= Auth::user()->membership_id)
                                                 <a href="{{ route('lesson.show', [$leccion->slug, $leccion->id, $curso->id]) }}" class="about-course-text">
@@ -305,7 +329,7 @@
                <h3 class="text-white ml-5">VALORACIONES</h3>
                <hr style="border: 1px solid #707070;opacity: 1;" />
                @foreach ($curso->ratings as $valoracion)
-                  <div class="row m-4 pt-4 border-bottom">  
+                  <div class="row m-4 pt-4 border-bottom">
                      <div class="col-md-2">
                         <div class="circle"><img src="{{ asset('uploads/avatar/'.$valoracion->user->avatar) }}" alt="" class="circle" ></div>
                      </div>
@@ -323,28 +347,28 @@
                            <div class="col-md-12">
                               <div class="row">
                                  <div class="col-md-12">
-                                    @if ($valoracion->points >= 1) 
-                                       <i class="fa fa-star text-warning"></i> 
+                                    @if ($valoracion->points >= 1)
+                                       <i class="fa fa-star text-warning"></i>
                                     @else
                                        <i class="fa fa-star-o text-secondary"></i>
                                     @endif
-                                    @if ($valoracion->points >= 2) 
-                                       <i class="fa fa-star text-warning"></i> 
+                                    @if ($valoracion->points >= 2)
+                                       <i class="fa fa-star text-warning"></i>
                                     @else
                                        <i class="fa fa-star-o text-secondary"></i>
                                     @endif
-                                    @if ($valoracion->points >= 3) 
-                                       <i class="fa fa-star text-warning"></i> 
+                                    @if ($valoracion->points >= 3)
+                                       <i class="fa fa-star text-warning"></i>
                                     @else
                                        <i class="fa fa-star-o text-secondary"></i>
                                     @endif
-                                    @if ($valoracion->points >= 4) 
-                                       <i class="fa fa-star text-warning"></i> 
+                                    @if ($valoracion->points >= 4)
+                                       <i class="fa fa-star text-warning"></i>
                                     @else
                                        <i class="fa fa-star-o text-secondary"></i>
                                     @endif
-                                    @if ($valoracion->points >= 5) 
-                                       <i class="fa fa-star text-warning"></i> 
+                                    @if ($valoracion->points >= 5)
+                                       <i class="fa fa-star text-warning"></i>
                                     @else
                                        <i class="fa fa-star-o text-secondary"></i>
                                     @endif
@@ -390,7 +414,7 @@
                         <div class="col-4">
                            <label for="comment" style="color: white;">Puntuación</label>
                         </div>
-                        <div class="col-8 text-right"> 
+                        <div class="col-8 text-right">
                            <p class="rating text-right">
                               <input id="radio1c" type="radio" name="points" value="5"><label for="radio1c"><i class="fa fa-star"></i></label>
                               <input id="radio2c" type="radio" name="points" value="4"><label for="radio2c"><i class="fa fa-star"></i></label>
@@ -400,7 +424,7 @@
                            </p>
                         </div>
                      </div>
-                  </div> 
+                  </div>
                </div>
                <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>

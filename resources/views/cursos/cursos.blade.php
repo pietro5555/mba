@@ -56,7 +56,7 @@
                     </div>
 
                     <div class="progress progress-course-bar pl-0">
-                                <div class="progress-bar" role="progressbar" aria-valuenow="{{$last_course->progress}}" aria-valuemin="0" aria-valuemax="100" style="width:{{$last_course->progress}}%">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="{{$progress_bar}}" aria-valuemin="0" aria-valuemax="100" style="width:{{$progress_bar}}%">
                     </div>
                     </div>
                 </div>
@@ -79,7 +79,7 @@
                             <h4 class=" col-md-10 text-white text-uppercase  font-weight-bold" >
                                         {{$last_course->title}}
                             </h4>
-                            
+
                             <div class="col-md-2 float-right mb-2">
                                 <div class="row">
                                      <a href="{{ route('courses.show', [$last_course->slug, $last_course->course_id]) }}" class="btn btn-primary float-right text-uppercase mr-4"><i class="fa fa-play"></i> Continuar curso</a>
@@ -88,24 +88,13 @@
                             </div>
 
                             <div class="pl-0 pr-0 col-md-12 progress progress-course-bar">
-                                        <div class="progress-bar pl-0" role="progressbar" aria-valuenow="{{$last_course->progress}}" aria-valuemin="0" aria-valuemax="100" style="width:{{$last_course->progress}}%">
+                                        <div class="progress-bar pl-0" role="progressbar" aria-valuenow="{{$progress_bar}}" aria-valuemin="0" aria-valuemax="100" style="width:{{$progress_bar}}%">
                             </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!--<div class="col-md-10 course-banner-caption pl-0 pr-4  d-none d-sm-block d-md-block">
-                    <a href="{{ route('courses.show', [$last_course->slug, $last_course->course_id]) }}" class="btn btn-primary float-right text-uppercase mr-2"><i class="fa fa-play"></i> Continuar curso</a>
-                    <div class="col-md-10">
-                         <h4 class="text-white text-uppercase ml-4">
-                                {{$last_course->title}}
-                        </h4>
-                    </div>
-                    <div class="progress col-xs progress-course-bar pl-0">
-                                <div class="progress-bar" role="progressbar" aria-valuenow="{{$last_course->progress}}" aria-valuemin="0" aria-valuemax="100" style="width:{{$last_course->progress}}%">
-                    </div>
-                    </div>
-                </div>-->
+
             </div>
             <!--<div class="banner-course">
                 <div class="button-container">
@@ -136,42 +125,6 @@
         @endif
     @endif-->
     {{-- FIN DEL BANNER --}}
-    {{-- SECCIÓN TUS CURSOS--}}
-    <!--@if (!Auth::guest())
-        @if($cursos->isNotEmpty())
-            <div class="row">
-                <div class="col-12">
-                    <div class="section-title-courses ml-2">Tus Cursos</div>
-                    <hr style="border: 1px solid #707070;opacity: 1;" />
-                </div>
-                @foreach ($cursos as $curso)
-                    <div class="col-12 col-md-6 col-lg-3">
-                        <div class="card mb-4 card-courses">
-                            <img class="card-img-top" src="{{ asset('uploads/images/courses/covers/'.$curso->cover) }}" alt="card-image-cap">
-                            <div class="card-body p-2">
-                                <div class="row align-items-start">
-                                    <h6 class="col-10"><a href="{{ route('courses.show', [$curso->slug, $curso->id]) }}" class="text-secondary text-sm">{{$curso->title}}</a></h6>
-                                    <div class="col-2"><img src="{{ asset('images/icons/video-player-blue.svg') }}" alt="" height="20px" width="20px"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-                <div class="col-12 text-center">
-                    <div class="card-block text-primary">
-                        <a href="{{ route('client.my-courses') }}" class="font-weight-bold">Ver todos mis cursos <i class="text-primary fa fa-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
-        @else
-            <div class="title-page-course col-md">
-                <span class="text-white">
-                    <h4 class=""> {{$username}} <span class="text-white"> ¡No has agregado cursos!</span></h4>
-                </span>
-            </div>
-        @endif
-    @endif-->
-
     {{-- SECCIÓN TUS CURSOS--}}
     @if (!Auth::guest())
         @if($cursos->isNotEmpty())
@@ -277,7 +230,7 @@ $contador++;
             <i class="far fa-user-circle text-center">
                 <p style="font-size: 10px;">{{ $recommended->users->count() }}</p>
             </i>
-            
+
         </h6>
     </div>
 </div>
@@ -321,7 +274,7 @@ $segundo++;
             <i class="far fa-user-circle text-center">
                 <p style="font-size: 10px;">{{ $recommended->users->count() }}</p>
             </i>
-            
+
         </h6>
     </div>
 </div>
@@ -391,16 +344,13 @@ $tercero++;
 
 @else
 <div class="row">
-  No se encontraron cursos recomendados...
+  Hola
 </div>
 
 @endif
 <!--Carrusel-->
 </div>
-@else
-<div class="row">
-  No se encontraron cursos recomendados...
-</div>
+
 
 @endif
 

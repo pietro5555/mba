@@ -140,11 +140,12 @@
                                              <a href="{{route('schedule.event', [$agendado->id])}}" class="btn btn-success btn-block">Agendar</a>
                                           @else
                                              {{-- EL USUARIO YA TIENE EL EVENTO AGENDADO--}}
-                                             <form action="{{route('timelive')}}" method="GET">
+                                             <a class="btn btn-success btn-block" href="{{ route('timeliveEvent', $agendado->id) }}"><h4>Ir al Evento</h4></a>
+                                             <!-- <form action="{{route('timelive')}}" method="GET">
                                                 @csrf
                                                 <input id="sigEvent" name="sigEvent" type="hidden" value="{{ $agendado->id }}">
                                                 <button class="btn btn-success btn-block" type="submit"><h4>Ir al Evento</h4></button>
-                                             </form>
+                                             </form>-->
                                           @endif
                                        @endif
                                     @endif

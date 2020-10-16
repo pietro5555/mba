@@ -249,6 +249,7 @@ Route::group(['prefix' => 'installer'], function (){
   //Agendar
   Route::get('schedule/{event_id}', 'EventsController@schedule')->name('schedule.event');
   Route::get('calendar', 'EventsController@calendar')->name('schedule.calendar');
+  
   //vista de anotaciones
   Route::get('/anotaciones', 'NoteController@index')->name('anotaciones');
   Route::post('/anotaciones/store', 'NoteController@store')->name('live.anotaciones');
@@ -256,6 +257,7 @@ Route::group(['prefix' => 'installer'], function (){
   //vista de timelive
       Route::group(['prefix' => 'time'], function(){
       Route::get('/timelive', 'EventsController@timelive')->name('timelive');
+      Route::get('/timelive/event/{event}', 'EventsController@timeliveEvent')->name('timeliveEvent');
       Route::get('/oauth/{id}', 'CalendarioGoogleController@oauth')->name('oauthCallback');
       Route::get('/redirigircalendario', 'CalendarioGoogleController@index')->name('cal.index');
       Route::get('/proximo/{id}', 'CalendarioGoogleController@proximo')->name('time-prox');

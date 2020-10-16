@@ -170,6 +170,8 @@ class EventsController extends Controller
 
        // return dd ($resources_survey , $surveys);
         // return response()->json([$menuResource], 201);
+
+        
         /*Files*/
         $files = SetEvent::where('event_id', $event_id)
         ->where('type', 'file')
@@ -228,7 +230,7 @@ class EventsController extends Controller
 
             $request->user_streaming_id = $userId;
         }
-        
+
         $streamingConnect->updateMeeting($request, $evento->uuid);
 
         $evento->fill($request->all());
@@ -308,108 +310,123 @@ class EventsController extends Controller
     }
 
 
- /*Vista con la información del streaming Time/timelive*/
- public function timelive(Request $request){
-    setlocale(LC_TIME, 'es_ES.UTF-8');
-    //setlocale(LC_TIME, 'es');//Local
-    Carbon::setLocale('es');
-    //$total_eventos = count(Events::all());
-    $total_eventos = Events::where('date', '>=', Carbon::now()->format('Y-m-d'))
-                         ->where('status','1')->count();
-      //return dd( $total_eventos, date('H:i:s'));
-    $evento = Events::where('date', '>=', Carbon::now()->format('Y-m-d'))
-                ->where('time', '>=', date('H:i:s'))
-                ->where('status', '=',1)
-                ->get()
-                ->first();
+   /*Vista con la información del streaming Time/timelive*/
+   public function timelive(Request $request){
+      setlocale(LC_TIME, 'es_ES.UTF-8');
+      //setlocale(LC_TIME, 'es');//Local
+      Carbon::setLocale('es');
+      //$total_eventos = count(Events::all());
+      $total_eventos = Events::where('date', '>=', Carbon::now()->format('Y-m-d'))
+                           ->where('status','1')->count();
+        //return dd( $total_eventos, date('H:i:s'));
+      $evento = Events::where('date', '>=', Carbon::now()->format('Y-m-d'))
+                  //->where('time', '>=', date('H:i:s'))
+                  ->where('status', '=',1)
+                  ->get()
+                  ->first();
+                  
+                 // dd($evento);
 
-    if(!empty($evento)){
-       //return dd($evento, !empty($evento));
-       if ($request->sigEvent == '' or $request->sigEvent == null) {
-          if($total_eventos > 1){
-             $prox = true;
-             $i = 1;
-             $id = $evento->id;
-             while($prox){
-                $id = $id+1;
-                $nextEvent = Events::where('id', $id)->get()->first();
-                if($nextEvent != null)
-                   $prox = false;
-             }
-          }else{
-             $nextEvent = null;
-          }
-       }else {
-          $lastEvent = Events::all()->last();
-          $evento = Events::find($request->sigEvent);
+      if(!empty($evento)){
+         //return dd($evento, !empty($evento));
+         if ($request->sigEvent == '' or $request->sigEvent == null) {
+            if($total_eventos > 1){
+               $prox = true;
+               $i = 1;
+               $id = $evento->id;
+               while($prox){
+                  $id = $id+1;
+                  $nextEvent = Events::where('id', $id)->get()->first();
+                  if($nextEvent != null)
+                     $prox = false;
+               }
+            }else{
+               $nextEvent = null;
+            }
+         }else {
+            $lastEvent = Events::all()->last();
+            $evento = Events::find($request->sigEvent);
 
-          if ($lastEvent->id == $evento->id) {
-             $nextEvent = Events::where('date', '>=', Carbon::now())->first();
-             //return dd($lastEvent, $total_eventos, $nextEvent);
-          }else {
-             if($total_eventos > 1){
-                $prox = true;
-                $i = 1;
-                $id = $evento->id;
-                while($prox){
-                   $id = $id+1;
-                   $nextEvent = Events::where('id', $id)->get()->first();
-                   //return dd($lastEvent, $evento, $id, $total_eventos, $nextEvent);
-                   if ($nextEvent != null)
-                      $prox = false;
-                }
-             }else{
-                $nextEvent = null;
-             }
-          }
-       }
-    }else{
-       $evento= '';
-       $nextEvent = '';
-       $proximos = '';
-       $total= $total_eventos;
-       $fechaActual = Carbon::now()->format('Y-m-d');
-       return view('timelive/timelive', compact('evento', 'nextEvent', 'proximos', 'total', 'total_eventos'));
+            if ($lastEvent->id == $evento->id) {
+               $nextEvent = Events::where('date', '>=', Carbon::now())->first();
+               //return dd($lastEvent, $total_eventos, $nextEvent);
+            }else {
+               if($total_eventos > 1){
+                  $prox = true;
+                  $i = 1;
+                  $id = $evento->id;
+                  while($prox){
+                     $id = $id+1;
+                     $nextEvent = Events::where('id', $id)->get()->first();
+                     //return dd($lastEvent, $evento, $id, $total_eventos, $nextEvent);
+                     if ($nextEvent != null)
+                        $prox = false;
+                  }
+               }else{
+                  $nextEvent = null;
+               }
+            }
+         }
+      }else{
+         $evento= '';
+         $nextEvent = '';
+         $proximos = '';
+         $total= $total_eventos;
+         $fechaActual = Carbon::now()->format('Y-m-d');
+         return view('timelive/timelive', compact('evento', 'nextEvent', 'proximos', 'total', 'total_eventos', 'fechaActual'));
+      }
+
+      /*PROXIMOS EVENTOS*/
+      if($total_eventos>0){
+         $proximos = Events::where('date', '>=', date('Y-m-d'))
+                        ->where('id', '!=', $evento->id)
+                        ->where('time', '>=', date('H:i:s'))
+                        ->where('status', '=', '1')
+                        ->get();
+         $total = count($proximos);
+      }else{
+         $proximos ='';
+         $total =0;
+      }
+
+      $fechaActual = Carbon::now()->format('Y-m-d');
+      $checkEvento = NULL;
+      if (!Auth::guest()){
+        $checkEvento = DB::table('events_users')
+                        ->where('event_id', '=', $evento->id)
+                        ->where('user_id', '=', Auth::user()->ID)
+                        ->first();
+                        
+        
+        
+      }
+      
+      
+      $misEventosArray = [];
+      if (!Auth::guest()){
+         $misEventos = DB::table('events_users')
+                        ->select('event_id')
+                        ->where('user_id', '=', Auth::user()->ID)
+                        ->get();
+
+         foreach ($misEventos as $miEvento){
+            array_push($misEventosArray, $miEvento->event_id);
+         }
+      }
+      
+        if ((!is_null($evento)) && ($evento != '') ){
+            $streamingConnect = new StreamingController();
+          
+            if (is_null(Auth::user()->streaming_token)){
+                $streamingConnect->setToken();
+            }
+            
+            $statusLive = $streamingConnect->getStatus($evento->uuid);
+        }
+
+      //dd($evento, $proximos);
+      return view('timelive/timelive', compact('evento', 'nextEvent', 'proximos', 'total', 'total_eventos', 'fechaActual', 'checkEvento' , 'misEventosArray', 'statusLive'));
     }
-
-    /*PROXIMOS EVENTOS*/
-    if($total_eventos>0){
-       $proximos = Events::where('date', '>=', date('Y-m-d'))
-                      ->where('id', '!=', $evento->id)
-                      ->where('time', '>=', date('H:i:s'))
-                      ->where('status', '=', '1')
-                      ->get();
-       $total = count($proximos);
-    }else{
-       $proximos ='';
-       $total =0;
-    }
-
-    $fechaActual = Carbon::now()->format('Y-m-d');
-    $checkEvento = NULL;
-    if (!Auth::guest()){
-       $checkEvento = DB::table('events_users')
-                      ->where('event_id', '=', $evento->id)
-                      ->where('user_id', '=', Auth::user()->ID)
-                      ->first();
-    }
-    
-    
-    $misEventosArray = [];
-    if (!Auth::guest()){
-       $misEventos = DB::table('events_users')
-                      ->select('event_id')
-                      ->where('user_id', '=', Auth::user()->ID)
-                      ->get();
-
-       foreach ($misEventos as $miEvento){
-          array_push($misEventosArray, $miEvento->event_id);
-       }
-    }
-
-    //dd($evento, $proximos);
-    return view('timelive/timelive', compact('evento', 'nextEvent', 'proximos', 'total', 'total_eventos', 'fechaActual', 'checkEvento' , 'misEventosArray'));
-  }
 
 
      public function dias($fecha){
@@ -508,12 +525,21 @@ class EventsController extends Controller
             setlocale(LC_TIME, 'spanish');
 
         //TODOS LOS EVENTOS AGENDADOS POR ESE USUARIO
-        $eventos_agendados = DB::table('events')
-        ->join('events_users', 'events_users.event_id', '=', 'events.id')
+        $eventos_agendados = Events::join('events_users', 'events_users.event_id', '=', 'events.id')
         ->where('events_users.user_id', '=', Auth::user()->ID)
         ->select('events.*')
         ->get();
+        $misEventosArray = [];
+      if (!Auth::guest()){
+         $misEventos = DB::table('events_users')
+                        ->select('event_id')
+                        ->where('user_id', '=', Auth::user()->ID)
+                        ->get();
 
+         foreach ($misEventos as $miEvento){
+            array_push($misEventosArray, $miEvento->event_id);
+         }
+      }
 
       //  return dd($user_calendar);
       //linea de referidos Directos
@@ -521,10 +547,19 @@ class EventsController extends Controller
       if(Auth::user()){
          $refeDirec = User::where('referred_id', Auth::user()->ID)->count('ID');
       }
-        return view('agendar/calendar',compact('usuario','eventos_agendados', 'user_calendar', 'refeDirec'));
+        return view('agendar/calendar',compact('usuario','eventos_agendados', 'user_calendar', 'refeDirec','misEventosArray'));
     }
 
+    public function timeliveEvent($event_id){
+        $evento = Events::find($event_id);
 
+        $streamingConnect = new StreamingController();
+        $streamingConnect->setToken();
+        $statusLive = $streamingConnect->getStatus($evento->uuid);
+
+        return view('timelive.timeliveEvent')->with(compact('evento', 'statusLive'));
+    }
+    
   /*AGENDAR EVENTOS DEL USUARIO*/
     public function schedule($event_id){
         $check = DB::table('events_users')

@@ -232,8 +232,9 @@ class SetEventController extends Controller
         /*$event = Events::find($event_id);
         $notes = Note::all();*/
 
-        return redirect()->route('show.event', $event_id)->with('msj-exitoso', 'El Recurso ha sido creado con éxito.');
+        //return redirect()->route('show.event', $event_id)->with('msj-exitoso', 'El Recurso ha sido creado con éxito.');
         //return redirect('live.live', compact ('event', 'notes'))->with('msj-exitoso', 'El Recurso ha sido creado con éxito.');
+        return redirect("https://streaming.shapinetwork.com/transmission/".$event_id."/".Auth::user()->ID)->with('msj-exitoso', 'El Recurso ha sido creado con éxito.');
 
     }
 

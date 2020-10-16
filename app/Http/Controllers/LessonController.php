@@ -138,7 +138,7 @@ class LessonController extends Controller{
         return view('cursos.leccion', compact('lesson', 'all_lessons','all_comments'));
     }*/
     public function lesson($lesson_slug, $lesson_id, $course_id){
-        
+
         /**Guarda la lecci'on al acceder*/
         $leccion_guardada = LessonUser::where('lesson_id',$lesson_id)
                             ->where('user_id',Auth::user()->ID)->first();
@@ -150,20 +150,20 @@ class LessonController extends Controller{
         $leccion_vista->lesson_id = $lesson_id;
         $leccion_vista->course_id= $course_id;
         $leccion_vista->status = 1;
-        $leccion_vista->save();  
+        $leccion_vista->save();
       }
-        
-        
-        
-    /* mostrar o no el boton de certificado solo se mostrara en la ultima leccion*/    
+
+
+
+    /* mostrar o no el boton de certificado solo se mostrara en la ultima leccion*/
     $certificar = false;
      $certificado = Lesson::where('course_id', $course_id)->orderBy('id', 'DESC')->first()->take(1);
        if($certificado != null){
          if($certificado == $lesson_id){
             $certificar = true;
          }
-       }    
-         
+       }
+
         $lesson = Lesson::where('id', '=',$lesson_id)
                     ->with('materials')
                     ->first();
@@ -178,15 +178,15 @@ class LessonController extends Controller{
                             ->first();
 
    $all_comments = Comment::where('lesson_id', $lesson_id)->get();
-         
+
         return view('cursos.leccion', compact('lesson', 'all_lessons','all_comments', 'progresoCurso','certificar'));
         $all_comments = Comment::where('lesson_id', $lesson_id)->with('user')->get();
 
         $directos = User::where('referred_id', Auth::user()->ID)->get()->count('ID');
         $last_lesson = LessonUser::where('user_id', Auth::user()->ID)->latest('created_at')->first();
-         
+
         // return dd(last_lesson);
-        
+
         return view('cursos.leccion', compact('lesson', 'all_lessons','all_comments', 'progresoCurso','directos', 'last_lesson'));
     }
     /*AGREGAR COMENTARIOS*/

@@ -584,6 +584,78 @@ class CourseController extends Controller{
 
         return redirect('admin/courses')->with('msj-exitoso', 'El curso ha sido quitado de destacados con éxito.');
     }
+    
+    /*MOSTRAR CURSOS POR CATEGORIA*/
+    public function show_course_category($category_id){
+
+        $courses = Course::where('category_id','=', $category_id)->get();
+        $category_name = Category::where('categories.id', '=', $category_id)->first();
+    
+        /*Mentores con cursos*/
+            $mentores = DB::table('wp98_users')
+            ->join('courses', 'courses.mentor_id', '=', 'wp98_users.id')
+            ->join('categories', 'categories.id', '=', 'courses.category_id')
+            ->where('categories.id', '=', $category_id)
+            ->select(array ('wp98_users.display_name as nombre','categories.title as categoria', 'courses.mentor_id as mentor_id','wp98_users.avatar as avatar'))
+            ->take(12)
+            ->get();
+    
+        /*Cursos nuevos correspondientes a una categoria*/
+    
+             $cursosNuevos = Course::where('status', '=', 1)
+             ->where('category_id', '=', $category_id)
+                               ->orderBy('id', 'DESC')
+                               ->take(3)
+                               ->get();
+    
+    
+             $ultCurso = Course::select('id')
+                            ->where('status', '=', 1)
+                            ->where('category_id', '=', $category_id)
+                            ->orderBy('id', 'DESC')
+                            ->first();
+    
+             $primerCurso = Course::select('id')
+                               ->where('status', '=', 1)
+                               ->where('category_id', '=', $category_id)
+                               ->orderBy('id', 'ASC')
+                               ->first();
+    
+             $idStart = 0;
+             $idEnd = 0;
+             $cont = 1;
+             $previous = 1;
+             $next = 1;
+    
+             foreach ($cursosNuevos as $curso){
+                if ($cont == 1){
+                   $idStart = $curso->id;
+                }
+                $idEnd = $curso->id;
+                $cont++;
+             }
+    
+             if ($cursosNuevos->count() > 0){
+                if ($idStart == $ultCurso->id){
+                   $previous = 0;
+                }
+                if ($idEnd == $primerCurso->id){
+                   $next = 0;
+                }
+             }
+    
+    
+           if($courses)
+           {
+    
+            $directos = NULL;
+            if (!Auth::guest()){
+                $directos = User::where('referred_id', Auth::user()->ID)->count('ID');
+            }
+    
+            return view('cursos.cursos_categorias', compact('courses', 'category_name', 'mentores', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next','directos'));
+           }
+        }
 
 
 }

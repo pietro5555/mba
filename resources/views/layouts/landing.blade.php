@@ -47,9 +47,9 @@
                 display: none;
             }
         </style>
-        
+
         @stack('styles')
-        
+
         <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
 
         <script>
@@ -68,7 +68,7 @@
             <!-- Page Content -->
             <div class="bg-dark-gray" id="page-content-wrapper">
                 @include('layouts.partials.header')
-                
+
                 @yield('content')
 
                 <div class="section-paises">
@@ -102,24 +102,29 @@
                                     <img src="{{ asset('images/vietnam.png')}}" height="40px" width="40px" class="mr-md-2 mr-3">
                                 </div>
                                 <div class="mb-2 text-center text-white">
-                                    Próximamente aceptaremos
-                                    <img src="{{ asset('images/visa.png')}}" height="15px" class="mr-md-2 mr-3">
-                                    <img src="{{ asset('images/mastercard.png')}}" height="15px" class="mr-md-2 mr-3">
-                                    <img src="{{ asset('images/american.png')}}" height="15px" class="mr-md-2 mr-3">
-                                    <img src="{{ asset('images/stripe.png')}}" height="15px"class="mr-md-2 mr-3">
-                                    <img src="{{ asset('images/square.png')}}" height="15px"class="mr-md-2 mr-3">
-                                    <img src="{{ asset('images/apple_pay.png')}}" height="15px" class="mr-md-2 mr-3">
-                                    <img src="{{ asset('images/bitpay.png')}}" height="15px" class="mr-md-2 mr-3">
-                                    <img src="{{ asset('images/g_pay.png')}}" height="15px" class="mr-md-2 mr-3">
-                                    <img src="{{ asset('images/amazon_pay.png')}}" height="15px" class="mr-md-2 mr-3">
+                                    Medios de Pago
+                                    <img src="http://127.0.0.1:8000/images/stripe.png" height="15px" class="mr-md-2 mr-3">
                                 </div>
-                                
+                                <div class="mb-2 text-center text-white">
+                                    Aceptamos
+                                    <img src="http://127.0.0.1:8000/images/visa.png" height="15px" class="mr-md-2 mr-3">
+                                    <img src="http://127.0.0.1:8000/images/mastercard.png" height="15px" class="mr-md-2 mr-3">
+                                    <img src="http://127.0.0.1:8000/images/american.png" height="15px" class="mr-md-2 mr-3">
+                                </div>
+                                <div class="mb-2 text-center text-white">
+                                    Próximamente
+                                    <img src="http://127.0.0.1:8000/images/amazon_pay.png" height="15px" class="mr-md-2 mr-3">
+                                    <img src="http://127.0.0.1:8000/images/apple_pay.png" height="15px" class="mr-md-2 mr-3">
+                                    <img src="http://127.0.0.1:8000/images/g_pay.png" height="15px" class="mr-md-2 mr-3">
+
+                                </div>
+
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
-                
+
                 @include('layouts.partials.footer')
             </div>
             <!-- /#page-content-wrapper -->

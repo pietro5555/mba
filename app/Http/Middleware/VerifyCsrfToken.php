@@ -14,6 +14,7 @@ class VerifyCsrfToken extends Middleware
     protected $except = [
         'coinpayment/ipn',
         'anotaciones/store',
-        'settings/event/*'
+        'settings/event/*',
+        'survey/*'
     ];
 }

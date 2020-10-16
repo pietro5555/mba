@@ -33,9 +33,15 @@ const countdown = (deadline,elem) => {
 
      if(t.remainTime <= 1) {
       clearInterval(timerUpdate);
-      $('#'+elem).append(
-        '<h1>El live ya a Iniciado</h1>'
-        );
+      if ($("#statusLive").val() == 'scheduled'){
+                        $('#' + elem).append('<h1>El live está por iniciar</h1>');
+                    }else if ($("#statusLive").val() == 'live'){
+                        $('#' + elem).append('<h1>El live ya ha iniciado</h1>');
+                    }else if ($("#statusLive").val() == 'ended'){
+                        $('#' + elem).append('<h1>El live ya ha finalizado</h1>');
+                    }else if ($("#statusLive").val() == 'cancelled'){
+                        $('#' + elem).append('<h1>El live ha sido cancelado</h1>');
+                    }
       $('.text-change').html('AGENDAR LIVE Y ENTRAR');
       $('.ocultar').addClass('d-none')
       $('.mostrar').removeClass('d-none')
@@ -164,8 +170,8 @@ countdown('{{($evento != null) ? $evento->date.' '.$evento->time : $fechaActual}
                   <a href="{{ route('schedule.event',[$evento->id]) }}" class="btn btn-primary btn-block text-change">AGENDAR LIVE</a>
                @else
                     {{-- EL USUARIO YA TIENE EL EVENTO AGENDADO--}}
-                    @if ($statusLive == 'ended')
-                        <a href="{{route('show.event', $evento->id)}}" class="btn btn-success btn-block">IR AL EVENTO</a>
+                    @if ( ($statusLive == 'ended') || ($statusLive == 'cancelled') )
+                        <a href="{{route('show.event', $evento->id)}}" class="btn btn-success btn-block">VER DETALLES DEL EVENTO</a>
                     @else
                         <form action="https://streaming.shapinetwork.com/connect-mba/{{$evento->id}}/{{Auth::user()->ID}}" method="POST" class="mostrar d-none">
                             @csrf
@@ -180,8 +186,6 @@ countdown('{{($evento != null) ? $evento->date.' '.$evento->time : $fechaActual}
                                 @endif
                             @elseif ($statusLive == 'live')
                                 <button type="submit" class="btn btn-success btn-block">ENTRAR AL LIVE</button>
-                            @elseif ($statusLive == 'cancelled')
-                                <button type="submit" class="btn btn-success btn-block" disabled>EVENTO CANCELADO</button>
                             @endif
                         @endif
                       </form>

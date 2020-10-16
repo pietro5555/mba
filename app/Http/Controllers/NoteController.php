@@ -30,8 +30,11 @@ class NoteController extends Controller
     	'user_id' => auth()->user()->ID//Retorna el ID del usuario logueado
     	]);
        // return dd ($note_save);
-		return redirect("https://streaming.shapinetwork.com/transmission/".$request->event_id."/".Auth::user()->ID);
-		//return redirect()->route('show.event', $event_id);
+	   if (isset($request->subdomain)){
+			return redirect("https://streaming.shapinetwork.com/transmission/".$request->event_id."/".Auth::user()->ID);
+		}else{
+			return redirect()->route('show.event', $event_id);
+		}
 
     }
 }

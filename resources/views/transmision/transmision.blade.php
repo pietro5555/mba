@@ -31,7 +31,7 @@
                               {{-- USUARIOS LOGUEADOS CON MEMBRESÍA MAYOR O IGUAL A LA SUBCATEGORÍA DEL EVENTO Y QUE NO TIENEN EL EVENTO AGENDADO AÚN--}}
                               <a href="{{ route('schedule.event', [$evento_actual->id]) }}" style="color: #6fd843;">Reservar Plaza <i class="fas fa-chevron-right"></i></a>
                            @else
-                              <a href="{{route('show.event', $evento_actual->id)}}" style="color: #6fd843;">Ir al Evento<i class="fas fa-chevron-right"></i></a>
+                              <a href="{{ route('timeliveEvent', $evento_actual->id) }}" style="color: #6fd843;">Ir al Evento<i class="fas fa-chevron-right"></i></a>
                            @endif
                         @endif
                      @endif
@@ -110,7 +110,7 @@
                                              <a href="{{route('schedule.event', [$proxima->id])}}" class="btn btn-success btn-block">Agendar</a>
                                           @else
                                              {{-- EL USUARIO YA TIENE EL EVENTO AGENDADO--}}
-                                             <a href="{{route('show.event', $proxima->id)}}" class="btn btn-success btn-block">Ir Al Evento</a>
+                                             <a href="{{ route('timeliveEvent', $proxima->id) }}" class="btn btn-success btn-block">Ir Al Evento</a>
                                           @endif
                                        @endif
                                     @endif
@@ -172,7 +172,7 @@
                                                 <a href="{{route('schedule.event', [$proxima->id])}}" class="btn btn-success btn-block">Agendar</a>
                                              @else
                                                 {{-- EL USUARIO YA TIENE EL EVENTO AGENDADO--}}
-                                                <a href="{{route('show.event', $proxima->id)}}" class="btn btn-success btn-block">Ir Al Evento</a>
+                                                <a href="{{route('timeliveEvent', $proxima->id)}}" class="btn btn-success btn-block">Ir Al Evento</a>
                                              @endif
                                           @endif
                                        @endif

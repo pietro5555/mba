@@ -14,7 +14,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         //
-        'App\Console\Commands\StatusUser'
+        'App\Console\Commands\StatusUser',
+        'App\Console\Commands\MembershipsExpirations'
     ];
 
     /**
@@ -29,6 +30,7 @@ class Kernel extends ConsoleKernel
         //          ->hourly();
         $schedule->command('status:user')
                     ->everyMinute();
+        $schedule->command('membership:users')->dailyAt('1:00');;
     }
 
     /**

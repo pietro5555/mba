@@ -84,68 +84,73 @@ class CourseController extends Controller{
         if (!Auth::guest()){
             $username = auth()->user()->display_name;
 
-        $cursosArray = [];
+            $cursosArray = [];
 
-        $cursosMasComprados = DB::table('courses_users')
-                                ->select(DB::raw('count(course_id) as purchases_count, course_id'))
-                                ->groupBy('course_id')
-                                ->orderBy('purchases_count', 'DESC')
-                                ->get();
+            $cursosMasComprados = DB::table('courses_users')
+                                    ->select(DB::raw('count(course_id) as purchases_count, course_id'))
+                                    ->groupBy('course_id')
+                                    ->orderBy('purchases_count', 'DESC')
+                                    ->get();
 
-        $misCursos = DB::table('courses_users')->where('user_id', Auth::user()->ID)->select('course_id')->get();
+            $misCursos = DB::table('courses_users')->where('user_id', Auth::user()->ID)->select('course_id')->get();
 
-        // dd($misCursos);
+            // dd($misCursos);
 
-        $cursosRecomendados = collect();
+            $cursosRecomendados = collect();
 
-        foreach ($cursosMasComprados as $cursoComprado){
-            array_push($cursosArray, $cursoComprado->course_id);
+            foreach ($cursosMasComprados as $cursoComprado){
+                array_push($cursosArray, $cursoComprado->course_id);
 
-            $curso = Course::where('id', '=', $cursoComprado->course_id)->first();
-            $filtro = $misCursos->where('course_id', $cursoComprado->course_id);
-            if ($filtro->count() == 0) {
-                $cursosRecomendados->push($curso);
+                $curso = Course::where('id', '=', $cursoComprado->course_id)->first();
+                $filtro = $misCursos->where('course_id', $cursoComprado->course_id);
+                if ($filtro->count() == 0) {
+                    $cursosRecomendados->push($curso);
+                }
             }
-        }
 
 
-        $cursosMasVistos = Course::where('views', '>=', 0)
-                                ->whereNotIn('id', $cursosArray)
-                                ->orderBy('views', 'DESC')
-                                ->get();
+            $cursosMasVistos = Course::where('views', '>=', 0)
+                                    ->whereNotIn('id', $cursosArray)
+                                    ->orderBy('views', 'DESC')
+                                    ->get();
 
-        foreach ($cursosMasVistos as $cursoVisto){
-            $cursosRecomendados->push($cursoVisto);
-        }
-        $total = count($cursosRecomendados);
+            foreach ($cursosMasVistos as $cursoVisto){
+                $cursosRecomendados->push($cursoVisto);
+            }
+            $total = count($cursosRecomendados);
 
-         //ULTIMO CURSO VISTO POR EL USUARIO
+            //ULTIMO CURSO VISTO POR EL USUARIO
             $last_course = DB::table('courses')
-                                ->join('courses_users', 'courses_users.course_id', '=', 'courses.id')
-                                ->where('courses_users.user_id', '=', Auth::user()->ID )
-                                ->orderBy('courses_users.updated_at', 'DESC')
-                                ->first();
+                                    ->join('courses_users', 'courses_users.course_id', '=', 'courses.id')
+                                    ->where('courses_users.user_id', '=', Auth::user()->ID )
+                                    ->orderBy('courses_users.updated_at', 'DESC')
+                                    ->first();
 
-           $leccion_vista = LessonUser::where('user_id', Auth::user()->ID)->where('course_id', $last_course->course_id)->get();
-        $total_vista = $leccion_vista->count();
-        $total_lesson = Lesson::where('course_id',$last_course->course_id )->count();
-        if(Empty($total_lesson)){
-            $progress_bar =0;
-        }
-        else{
-            $progress_bar = (($total_vista*100)/$total_lesson);
-        }
-        //dd($progress_bar);
+            if (!is_null($last_course)){
+                 $leccion_vista = LessonUser::where('user_id', Auth::user()->ID)->where('course_id', $last_course->course_id)->get();
+                $total_vista = $leccion_vista->count();
+                $total_lesson = Lesson::where('course_id',$last_course->course_id )->count();
+                if(Empty($total_lesson)){
+                    $progress_bar =0;
+                }
+                else{
+                    $progress_bar = (($total_vista*100)/$total_lesson);
+                }
+            }else{
+                $progress_bar = NULL;
+                $last_course = NULL;
+            }
+           
+            //dd($progress_bar);
 
 
-        }
-        else{
+        }else{
             $cursosRecomendados = null;
             $progress_bar = 0;
             $total = 0;
             $cursos = NULL;
-        $last_course = NULL;
-        $mentores = NULL;
+            $last_course = NULL;
+            $mentores = NULL;
         }
 
         $cursosDestacados = Course::where('featured', '=', 1)
@@ -310,14 +315,20 @@ class CourseController extends Controller{
                         }
                     ])->with('evaluation', 'lessons')
                     ->first();
+        
         $last_lesson = NULL;
         $first_lesson = NULL;
         $miValoracion = NULL;
         $progresoCurso = NULL;
         if (!Auth::guest()){
             $last_lesson = LessonUser::where('user_id', Auth::user()->ID)->latest('created_at')->first();
-        $first_lesson = Lesson::where('id', $last_lesson->lesson_id)->first();
-        //dd($first_lesson);
+            if (!is_null($last_lesson)){
+                $first_lesson = Lesson::where('id', $last_lesson->lesson_id)->first();
+            }else{
+                $first_lesson = NULL;
+            }
+            
+            //dd($first_lesson);
             $progresoCurso = DB::table('courses_users')
                                 ->where('course_id', '=', $id)
                                 ->where('user_id', '=', Auth::user()->ID)

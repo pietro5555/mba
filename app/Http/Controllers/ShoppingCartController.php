@@ -332,6 +332,7 @@ class ShoppingCartController extends Controller
             'Intermedio' => 'Accesos a todos los cursos de nivel Intermedio',
             'Avanzado' => 'Accesos a todos los cursos de nivel Avanzado',
             'Pro' => 'Accesos a todos los cursos de nivel Profesional',
+            'Pro Anual' => 'Accesos a todos los cursos de todos los niveles',
         ];
         $membresias = DB::table('memberships')->get();
 

@@ -166,10 +166,10 @@
                               <a href="{{route('shopping-cart.store', $curso->id)}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> ACTUALIZAR MEMBRESIA</a>
                            @else
                               @if (Auth::user()->membership_status == 1)
-                                 <a href="{{route('client.courses.add', [$curso->id, 'es'])}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-language" aria-hidden="true"></i> INICIAR CURSO EN ESPAÑOL - {{$curso->id}}</a>
+                                 <a href="{{route('client.courses.add', [$curso->id, 'es'])}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-language" aria-hidden="true"></i> INICIAR CURSO EN ESPAÑOL</a>
                                  <a href="{{route('client.courses.add', [$curso->id, 'en'])}}" class="btn btn-primary play-course-button btn-block" ><i class="fa fa-language" aria-hidden="true"></i> INICIAR CURSO EN INGLÉS</a>
                               @else
-                                 <a href="{{route('shopping-cart.store', $curso->id)}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> RENOVAR MEMBRESIA</a>
+                                 <a href="{{route('shopping-cart.store', $curso->id)}}" class="btn btn-danger play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> RENOVAR MEMBRESIA</a>
                               @endif
                            @endif
                         @endif
@@ -177,7 +177,7 @@
                         @if (Auth::user()->membership_status == 1)
                            <a href="{{ route('lesson.show', [$first_lesson->slug, $first_lesson->id, $curso->id]) }}" class="px-2 mr-auto btn btn-success play-course-button btn-block"> <i class="fa fa-play" aria-hidden="true"></i> CONTINUAR CURSO</a>
                         @else
-                           <a href="{{route('shopping-cart.store', $curso->id)}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> RENOVAR MEMBRESIA</a>
+                           <a href="{{route('shopping-cart.store', $curso->id)}}" class="btn btn-danger play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> RENOVAR MEMBRESIA</a>
                         @endif
                      @endif
                   @endif

@@ -25,13 +25,17 @@
                      @else
                         @if ($evento_actual->subcategory_id > Auth::user()->membership_id)
                            {{-- USUARIOS LOGUEADOS CON MEMBRESÍA MENOR A LA SUBCATEGORÍA DEL EVENTO--}}
-                           <a href="{{route('shopping-cart.membership')}}" class="btn btn-success" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> AGREGAR AL CARRITO</a>
+                           <a href="{{route('shopping-cart.membership')}}" class="btn btn-success" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> MEJORAR MEMBRESÍA</a>
                         @else
-                           @if (!in_array($evento_actual->id, $misEventosArray))
-                              {{-- USUARIOS LOGUEADOS CON MEMBRESÍA MAYOR O IGUAL A LA SUBCATEGORÍA DEL EVENTO Y QUE NO TIENEN EL EVENTO AGENDADO AÚN--}}
-                              <a href="{{ route('schedule.event', [$evento_actual->id]) }}" style="color: #6fd843;">Reservar Plaza <i class="fas fa-chevron-right"></i></a>
+                           @if (Auth::user()->membership_status == 1)
+                              @if (!in_array($evento_actual->id, $misEventosArray))
+                                 {{-- USUARIOS LOGUEADOS CON MEMBRESÍA MAYOR O IGUAL A LA SUBCATEGORÍA DEL EVENTO Y QUE NO TIENEN EL EVENTO AGENDADO AÚN--}}
+                                 <a href="{{ route('schedule.event', [$evento_actual->id]) }}" style="color: #6fd843;">Reservar Plaza <i class="fas fa-chevron-right"></i></a>
+                              @else
+                                 <a href="{{ route('timeliveEvent', $evento_actual->id) }}" style="color: #6fd843;">Ir al Evento<i class="fas fa-chevron-right"></i></a>
+                              @endif
                            @else
-                              <a href="{{ route('timeliveEvent', $evento_actual->id) }}" style="color: #6fd843;">Ir al Evento<i class="fas fa-chevron-right"></i></a>
+                              <a href="{{route('shopping-cart.membership')}}" class="btn btn-danger" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> RENOVAR MEMBRESÍA</a>
                            @endif
                         @endif
                      @endif
@@ -103,14 +107,18 @@
                                     @else
                                        @if ($proxima->subcategory_id > Auth::user()->membership_id)
                                           {{-- USUARIOS LOGUEADOS CON MEMBRESÍA MENOR A LA SUBCATEGORÍA DEL EVENTO--}}
-                                          <a href="{{route('shopping-cart.membership')}}" class="btn btn-success"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar al Carrito</a>
+                                          <a href="{{route('shopping-cart.membership')}}" class="btn btn-success"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Mejorar Membresía</a>
                                        @else
-                                          @if (!in_array($proxima->id, $misEventosArray))
-                                             {{-- USUARIOS LOGUEADOS CON MEMBRESÍA MAYOR O IGUAL A LA SUBCATEGORÍA DEL EVENTO Y QUE NO TIENEN EL EVENTO AGENDADO AÚN--}}
-                                             <a href="{{route('schedule.event', [$proxima->id])}}" class="btn btn-success btn-block">Agendar</a>
+                                          @if (Auth::user()->membership_status == 1)
+                                             @if (!in_array($proxima->id, $misEventosArray))
+                                                {{-- USUARIOS LOGUEADOS CON MEMBRESÍA MAYOR O IGUAL A LA SUBCATEGORÍA DEL EVENTO Y QUE NO TIENEN EL EVENTO AGENDADO AÚN--}}
+                                                <a href="{{route('schedule.event', [$proxima->id])}}" class="btn btn-success btn-block">Agendar</a>
+                                             @else
+                                                {{-- EL USUARIO YA TIENE EL EVENTO AGENDADO--}}
+                                                <a href="{{ route('timeliveEvent', $proxima->id) }}" class="btn btn-success btn-block">Ir Al Evento</a>
+                                             @endif
                                           @else
-                                             {{-- EL USUARIO YA TIENE EL EVENTO AGENDADO--}}
-                                             <a href="{{ route('timeliveEvent', $proxima->id) }}" class="btn btn-success btn-block">Ir Al Evento</a>
+                                             <a href="{{route('shopping-cart.membership')}}" class="btn btn-danger"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Renovar Membresía</a>
                                           @endif
                                        @endif
                                     @endif
@@ -165,14 +173,18 @@
                                        @else
                                           @if ($proxima->subcategory_id > Auth::user()->membership_id)
                                              {{-- USUARIOS LOGUEADOS CON MEMBRESÍA MENOR A LA SUBCATEGORÍA DEL EVENTO--}}
-                                             <a href="{{route('shopping-cart.membership')}}" class="btn btn-success"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar al Carrito</a>
+                                             <a href="{{route('shopping-cart.membership')}}" class="btn btn-success"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Mejorar Membresía</a>
                                           @else
-                                             @if (!in_array($proxima->id, $misEventosArray))
-                                                {{-- USUARIOS LOGUEADOS CON MEMBRESÍA MAYOR O IGUAL A LA SUBCATEGORÍA DEL EVENTO Y QUE NO TIENEN EL EVENTO AGENDADO AÚN--}}
-                                                <a href="{{route('schedule.event', [$proxima->id])}}" class="btn btn-success btn-block">Agendar</a>
+                                             @if (Auth::user()->membership_status == 1)
+                                                @if (!in_array($proxima->id, $misEventosArray))
+                                                   {{-- USUARIOS LOGUEADOS CON MEMBRESÍA MAYOR O IGUAL A LA SUBCATEGORÍA DEL EVENTO Y QUE NO TIENEN EL EVENTO AGENDADO AÚN--}}
+                                                   <a href="{{route('schedule.event', [$proxima->id])}}" class="btn btn-success btn-block">Agendar</a>
+                                                @else
+                                                   {{-- EL USUARIO YA TIENE EL EVENTO AGENDADO--}}
+                                                   <a href="{{route('timeliveEvent', $proxima->id)}}" class="btn btn-success btn-block">Ir Al Evento</a>
+                                                @endif
                                              @else
-                                                {{-- EL USUARIO YA TIENE EL EVENTO AGENDADO--}}
-                                                <a href="{{route('timeliveEvent', $proxima->id)}}" class="btn btn-success btn-block">Ir Al Evento</a>
+                                                <a href="{{route('shopping-cart.membership')}}" class="btn btn-danger"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Renovar Membresía</a>
                                              @endif
                                           @endif
                                        @endif

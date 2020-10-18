@@ -39,6 +39,10 @@ class LessonController extends Controller{
 
         $url = explode("https://vimeo.com/", $leccion->url);
         $leccion->url = "https://player.vimeo.com/video/".$url[1];
+        
+        $url2 = explode("https://vimeo.com/", $leccion->english_url);
+        $leccion->english_url = "https://player.vimeo.com/video/".$url2[1];
+        
         $leccion->save();
 
         return redirect('admin/courses/lessons/show/'.$leccion->id)->with('msj-exitoso', 'La lección ha sido creada con éxito.');
@@ -93,8 +97,8 @@ class LessonController extends Controller{
 
         if ($request->english_url != $leccion->english_url){
             $videoUpdate = 1;
-            $url = explode("https://vimeo.com/", $request->english_url);
-            $leccion->english_url = "https://player.vimeo.com/video/".$url[1];
+            $url2 = explode("https://vimeo.com/", $request->english_url);
+            $leccion->english_url = "https://player.vimeo.com/video/".$url2[1];
         }
         $leccion->title = $request->title;
         $leccion->description = $request->description;

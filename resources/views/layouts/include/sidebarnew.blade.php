@@ -105,6 +105,12 @@
                 @endif
                 @endif
             @endforeach
+            <li class="">
+                <a href="#imageLanding" data-toggle="modal">
+                    <i class="fas fa-toolbox"></i>
+                    <span>Imagen Landing</span>
+                </a>
+            </li>
             {{-- CERRAR SESIÓN --}}
             <li class="">
                 <a href="{{ route('logout') }}"
@@ -123,4 +129,37 @@
     </section>
     <!-- /.sidebar -->
 </aside>
+
+{{-- Modal Imagen Landing --}}
+<div class="modal fade" id="imageLanding" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+       <div class="modal-content" style="background-color: black;">
+          <div class="modal-header">
+             <h5 class="modal-title" id="exampleModalLabel" style="color: white;">Actualizar imagen Landing</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+             </button>
+          </div>
+          <div class="modal-body text-center">
+            <form action="{{route('admin.update.image.landing')}}" enctype="multipart/form-data" method="post">
+                @csrf
+                <div class="form-group">
+                    <h5 for="">Imagen Actual</h5>
+                    <img src="{{asset($settings->id_no_comision)}}" alt="" height="200" width="200">
+                </div>
+                <div class="form-group">
+                    <label for="">Nueva Imagen</label>
+                    <input type="file" name="image_landing" class="form-control" accept="image/png, image/jpeg">
+                </div>
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-success">Subir</button>
+                </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          </div>
+       </div>
+    </div>
+ </div>
 @endguest

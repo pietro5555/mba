@@ -59,6 +59,9 @@
                     <a type="button" class="btn btn-primary btn-register-header d-md-block m-2" href="{{ route('log').'?act=1' }}">REGISTRARME</a> <!--/login-->
                     <a type="button" class="btn btn-primary btn-register-header d-md-block m-2" href="{{ route('log').'?act=0' }}">INICIAR SESIÓN</a> <!--/login-->
                     @endguest
+                    <div class="text-center p-2">
+                        <img src="{{asset($settings->id_no_comision)}}" alt="" height="200" width="200">
+                    </div>
                 </div>
             </div>
             <!-- /#sidebar-wrapper -->

@@ -39,10 +39,10 @@ class LessonController extends Controller{
 
         $url = explode("https://vimeo.com/", $leccion->url);
         $leccion->url = "https://player.vimeo.com/video/".$url[1];
-        
+
         $url2 = explode("https://vimeo.com/", $leccion->english_url);
         $leccion->english_url = "https://player.vimeo.com/video/".$url2[1];
-        
+
         $leccion->save();
 
         return redirect('admin/courses/lessons/show/'.$leccion->id)->with('msj-exitoso', 'La lección ha sido creada con éxito.');
@@ -155,7 +155,7 @@ class LessonController extends Controller{
                 $leccion_vista->status = 1;
                 $leccion_vista->save();
             }
-            
+
             /* mostrar o no el boton de certificado solo se mostrara en la ultima leccion*/
             $certificar = false;
             $certificado = Lesson::where('course_id', $course_id)->orderBy('id', 'DESC')->first()->take(1);

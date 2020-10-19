@@ -138,6 +138,7 @@
                 </div>
                 <div class="container-fluid m-2">
                     <div class="wrapper">
+
                     @foreach ($cursos as $curso)
                       <div>
 

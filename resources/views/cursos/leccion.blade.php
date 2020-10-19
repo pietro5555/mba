@@ -25,11 +25,43 @@
   <div class="row justify-content-end">
      <div class="col mt-2"><h5 class="text-white">{{$lesson->title}}</h5></div>
     <div class="col-xs-1 col-md-2">
-      <h5 class="title-level">
-        <small>
-          <strong>Nivel: {{$lesson->course->subcategory->title}}</strong>
-        </small>
-      </h5>
+            @switch( $lesson->subcategory_id)
+            @case(1)
+            <h5 style="padding: 10px 10px;background-color: #BF4040;color: #fff;text-align: center;">
+                    <small>
+                      <strong>Principiante</strong>
+                    </small>
+            </h5>
+            @break
+            @case(2)
+            <h5 style="padding: 10px 10px;background-color: #B9AA1D;color: #fff;text-align: center;">
+                    <small>
+                      <strong>Básico</strong>
+                    </small>
+            </h5>
+            @break
+            @case (3)
+            <h5 style="padding: 10px 10px;background-color: #A5D6E5;color: #fff;text-align: center;">
+                    <small>
+                      <strong>Intermedio</strong>
+                    </small>
+            </h5>
+            @break
+            @case (4)
+            <h5 style="padding: 10px 10px;background-color: #9C4F9D;color: #fff;text-align: center;">
+                    <small>
+                      <strong>Avanzado</strong>
+                    </small>
+            </h5>
+            @break
+            @case (5)
+            <h5 style="padding: 10px 10px;background-color: #3B053C;color: #fff;text-align: center;">
+                    <small>
+                      <strong>Pro</strong>
+                    </small>
+            </h5>
+            @break
+        @endswitch
     </div>
 
     <div class="col-xs-1 col-md-2 text-center ">

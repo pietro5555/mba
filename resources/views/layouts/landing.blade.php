@@ -118,6 +118,12 @@
                                     <img src="http://127.0.0.1:8000/images/g_pay.png" height="15px" class="mr-md-2 mr-3">
 
                                 </div>
+                                <div class="mb-2 text-center text-white">
+                                        <a href="" class="text-white">Políticas de Uso</a> &nbsp&nbsp
+                                        <a href="" class="text-white">Términos y condiciones</a>&nbsp&nbsp
+                                        <a href="" class="text-white"> Contacto</a>&nbsp&nbsp
+                                        <a href="{{route('index')}}" class="text-white">Inicio</a>&nbsp&nbsp
+                                </div>
 
                             </div>
                         </div>

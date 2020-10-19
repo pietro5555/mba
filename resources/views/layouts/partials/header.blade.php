@@ -47,7 +47,7 @@
                 </li>
 
                 <li class="nav-item li-register-button">
-                    <a type="button" class="btn btn-primary btn-register-header" href="{{ route('log').'?act=0' }}">INICIAR SESIÓN</a> <!--/login-->
+                    <a type="button" class="btn btn-primary btn-register-header" href="{{ route('log').'?act=0' }}">ENTRAR</a> <!--/login-->
                 </li>
             @else
                 <li class="nav-item dropdown li-language" id="li-language-larger">

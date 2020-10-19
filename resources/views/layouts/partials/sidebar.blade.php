@@ -57,7 +57,7 @@
                     @endif
                     @guest
                     <a type="button" class="btn btn-primary btn-register-header d-md-block m-2" href="{{ route('log').'?act=1' }}">REGISTRARME</a> <!--/login-->
-                    <a type="button" class="btn btn-primary btn-register-header d-md-block m-2" href="{{ route('log').'?act=0' }}">INICIAR SESIÓN</a> <!--/login-->
+                    <a type="button" class="btn btn-primary btn-register-header d-md-block m-2" href="{{ route('log').'?act=0' }}">ENTRAR</a> <!--/login-->
                     @endguest
                     @if (!empty($settings->id_no_comision))
                     <div class="text-center p-2">

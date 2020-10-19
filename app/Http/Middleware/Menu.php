@@ -737,6 +737,12 @@ class Menu
                         'black'=> '0',
                         'oculto'=> 'activo',
                     ],
+                    'Gestionar Insignias' => [
+                        'ruta' => 'insignia.index',
+                        'complementoruta' => '',
+                        'black'=> '0',
+                        'oculto'=> 'activo',
+                    ],
                 ]
             ],
             'Eventos' => [

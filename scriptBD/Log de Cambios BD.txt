@@ -210,3 +210,7 @@ Dev:Crisleivys
 19/10/2020
 Dev: Carlos Gonzalez
 *Creacion del modulo de insignia y la tabla con el mismo nombre insignia.sql, correr scripts, ya esta en el servidor todo
+
+20/10/2020
+Dev: Carlos Gonzalez
+*Creacion del modulo de insignia_user y la tabla con el mismo nombre insignia_user.sql, correr scripts, ya esta en el servidor todo

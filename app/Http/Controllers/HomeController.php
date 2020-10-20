@@ -16,6 +16,7 @@ use App\Models\Course; use App\Models\Category; use App\Models\Events;
 
 // llamando a los controladores
 use App\Http\Controllers\IndexController;
+use App\Http\Controllers\InsigniaController;
 use Modules\ReferralTree\Http\Controllers\ReferralTreeController;
 
 use PDF;
@@ -85,6 +86,11 @@ class HomeController extends Controller{
       $cont = 1;
       $previous = 1;
       $next = 1;
+
+      $insignia = new InsigniaController;
+      if (Auth::user()->rol_id != 0){
+         $insignia->validadInsignia(Auth::user()->ID);
+      }
 
       foreach ($cursosNuevos as $curso){
          if ($cont == 1){

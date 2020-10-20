@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Course;
 use App\Models\Insignia;
+use App\Models\Course;
+use App\Models\CourseUser;
+use App\Models\InsigniaUser;
+use App\Models\Lesson;
+use App\Models\LessonUser;
 use App\Models\Membership;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class InsigniaController extends Controller
 {
@@ -155,5 +160,63 @@ class InsigniaController extends Controller
         Insignia::find($id)->delete();
 
         return redirect()->back()->with('msj-exitoso', 'Insignia Borrada con exito');
+    }
+
+
+    /**
+     * Permite validar las insignias por los usuarios
+     *
+     * @param integer $iduser
+     * @return void
+     */
+    public function validadInsignia($iduser)
+    {
+        $course_users = CourseUser::where('user_id', $iduser)->get();
+
+        foreach ($course_users as $course_user) {
+
+            $sql = "SELECT COUNT(id) as cant_nivel, subcategory_id FROM `lessons` WHERE course_id = ? GROUP BY subcategory_id";
+
+            $arrayCantNivel = DB::select($sql, [$course_user->course_id]);
+
+            $cant = 0;
+            foreach ($arrayCantNivel as $cant_nivel) {
+                $lessions = Lesson::where('subcategory_id', $cant_nivel->subcategory_id)->get();
+                foreach ($lessions as $lession) {
+                    $lesson_user = LessonUser::where([
+                        ['user_id', '=', $iduser],
+                        ['course_id', '=', $course_user->course_id],
+                        ['status', '=', 1],
+                        ['lesson_id', '=', $lession->id]
+                    ])->first();
+                    if ($lesson_user != null) {
+                        $cant++;
+                        $nivel = Insignia::where([
+                            ['nivel_id', '=', $cant_nivel->subcategory_id],
+                            ['course_id', '=', $course_user->course_id],
+                        ])->first();
+                        if ($nivel != null){
+                            if ($cant == $cant_nivel->cant_nivel) {
+                                $data = [
+                                    'user_id' => $iduser,
+                                    'course_id' => $course_user->course_id,
+                                    'insignia_id' => $nivel->id,
+                                    'status' => 1
+                                ];
+                                $check = InsigniaUser::where([
+                                    ['user_id', '=', $iduser],
+                                    ['course_id', '=', $course_user->course_id],
+                                    ['insignia_id', '=', $nivel->id],
+                                    ['status', '=', 1],
+                                ])->first();
+                                if ($check == null){
+                                    InsigniaUser::create($data);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

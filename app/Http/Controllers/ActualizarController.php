@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 // llamando a las funciones de laravel
+
 use Illuminate\Http\Request;
-use DB; 
-use Auth; 
-use Mail;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+
 
 // llamando a los modelos
 use App\Models\Rol;
@@ -13,7 +15,9 @@ use App\Models\User;
 use App\Models\Seguridad; 
 use App\Models\Settings;
 use App\Models\Notification;
-use App\Models\SettingsEstructura; 
+use App\Models\SettingsEstructura;
+use App\Models\InsigniaUser;
+use App\Models\Insignia;
 // llamando a los controladores
 use App\Http\Controllers\IndexController;
 use Modules\ReferralTree\Http\Controllers\ReferralTreeController;
@@ -49,11 +53,20 @@ class ActualizarController extends Controller
         if (!empty($rol)) {
             $nombre = $rol->name;
         }
+
+        $insignia = '';
+        $insigniaUser = InsigniaUser::where('status', 1)->take(1)->orderBy('id', 'desc')->first();
+        $model_insignia = Insignia::find($insigniaUser->insignia_id);
+        if ($model_insignia != null) {
+            $insignia = asset($model_insignia->insignia);
+        }
+        
         $data = [
             'principal' => $user,
             'segundo' => DB::table('user_campo')->where('ID', $user->ID)->get(),
             'rol' =>  $nombre,
-            'referido' => (Auth::user()->rol_id != 0) ? User::find($user->referred_id)->only('display_name') : ['display_name' => 'Administrador'] ,
+            'insignia' => $insignia,
+            'referido' => (Auth::user()->rol_id != 0) ? User::find($user->referred_id) : ['display_name' => 'Administrador'] ,
             'controler' => 'ActualizarController@updateProfile'
         ];
 

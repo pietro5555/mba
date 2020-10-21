@@ -1638,10 +1638,11 @@ p.card-text.font-weight-bold.mr-2 {
     font-size: 86px;
     line-height: 100px;
 }
+
 .estilobusiness{
     text-align: right; 
     font-size: 56px; 
-    line-height: 100px; 
+    line-height: 60px; 
     color: #2A91FF;
     font-weight: 700!important;
  }
@@ -1654,11 +1655,11 @@ p.card-text.font-weight-bold.mr-2 {
   }
 
   .estilobusiness{
-   text-align: right; 
-   font-size: 56px; 
-   line-height: 100px; 
-   color: #2A91FF; 
-   font-weight: 700!important;
+   text-align: right;
+    font-size: 42px;
+    line-height: 40px;
+    color: #2A91FF;
+    font-weight: 700!important;
   }
 }
 

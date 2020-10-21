@@ -172,6 +172,10 @@ Route::group(['prefix' => 'installer'], function (){
   Route::post('/autenticar', 'LoginController@autenticacion')->name('autenticar');
   Route::post('/autshoping', 'LoginController@autshoping')->name('aut-shoping');
 
+  //vistas de step
+  Route::get('/step2', 'NosotrosController@step2')->name('step2');
+  Route::get('/step3', 'NosotrosController@step3')->name('step3');
+
   /* Rutas de la Landing */
   Route::get('load-more-courses-new/{ultimoId}/{accion}', 'CourseController@load_more_courses_new')->name('landing.load-more-courses-new');
   Route::get('book-event/{evento}', 'EventsController@book')->name('landing.book-event');

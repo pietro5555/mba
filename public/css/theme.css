@@ -1632,3 +1632,18 @@ p.card-text.font-weight-bold.mr-2 {
     color: #8E8E8E;
     border: 1px solid #8E8E8E;
 }
+
+.blog-title{
+    color: white;
+    text-align: center;
+    font-size: 86px;
+    line-height: 100px;
+}
+
+@media (max-width: 450px) {
+.blog-title {
+    font-size: 25px;
+    line-height: 25px;
+    padding: 10px 0;
+  }
+}

@@ -27,8 +27,8 @@
                 let t = getRemainingTime(deadline);
                 //el.innerHTML = `${t.remainDays}d:${t.remainHours}h:${t.remainMinutes}m:${t.remainSeconds}s`;
                 $('#' + elem).empty()
-
-                if (t.remainTime <= 1) {
+            
+                if ((t.remainTime <= 1) || ($("#statusLive").val() == 'live') ) {
                     clearInterval(timerUpdate);
                     $("#remain-time-text").css('display', 'none');
                     $("#checkCountdown").val(1);
@@ -45,6 +45,7 @@
                     }
                     
                 } else {
+                    
 
                     $('#' + elem).append(
 

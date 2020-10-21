@@ -17,6 +17,7 @@ use App\Models\OffersLive;
 use App\Models\SetEvent;
 use App\Models\SurveyOptions;
 use App\Models\SurveyResponse;
+use App\Models\Streaming\Meeting;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -197,7 +198,7 @@ class EventsController extends Controller
     public function timeliveEvent($event_id){
         $evento = Events::find($event_id);
 
-        $client = new Client(['base_uri' => 'https://streaming.mybusinessacademypro.com']);
+        /*$client = new Client(['base_uri' => 'https://streaming.mybusinessacademypro.com']);
 
         $response = $client->request('POST', 'api/auth/login', [
             'headers' => ['Accept' => 'application/json', 'Content-Type' => 'application/x-www-form-urlencoded'],
@@ -218,7 +219,11 @@ class EventsController extends Controller
         
         $consultaEvento = $client->request('GET', 'api/meetings/'.$evento->uuid, ['headers' => $headers]);
         $detallesEvento = json_decode($consultaEvento->getBody());
-        $statusLive = $detallesEvento->status;
+        $statusLive = $detallesEvento->status;*/
+        
+        $meeting = Meeting::where('uuid', '=', $evento->uuid)->first();
+        $info = json_decode($meeting->meta);
+        $statusLive =  $info->status;
 
         return view('timelive.timeliveEvent')->with(compact('evento', 'statusLive'));
     }
@@ -458,13 +463,9 @@ class EventsController extends Controller
       }
       
         if ((!is_null($evento)) && ($evento != '') ){
-            $streamingConnect = new StreamingController();
-          
-            if (is_null(Auth::user()->streaming_token)){
-                $streamingConnect->setToken();
-            }
-            
-            $statusLive = $streamingConnect->getStatus($evento->uuid);
+            $meeting = Meeting::where('uuid', '=', $evento->uuid)->first();
+            $info = json_decode($meeting->meta);
+            $statusLive =  $info->status;
         }
 
       //dd($evento, $proximos);

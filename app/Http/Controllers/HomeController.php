@@ -88,8 +88,11 @@ class HomeController extends Controller{
       $next = 1;
 
       $insignia = new InsigniaController;
-      if (Auth::user()->rol_id != 0){
-         $insignia->validadInsignia(Auth::user()->ID);
+      
+      if (Auth::user()){
+         if (Auth::user()->rol_id != 0){
+            $insignia->validadInsignia(Auth::user()->ID);
+         }
       }
 
       foreach ($cursosNuevos as $curso){
@@ -172,7 +175,7 @@ class HomeController extends Controller{
          $refeDirec = User::where('referred_id', Auth::user()->ID)->count('ID');
       }
       
-      $misEventosArray = [];
+       $misEventosArray = [];
       if (!Auth::guest()){
          $misEventos = DB::table('events_users')
                         ->select('event_id')

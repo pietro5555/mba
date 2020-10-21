@@ -1645,6 +1645,7 @@ p.card-text.font-weight-bold.mr-2 {
     line-height: 60px; 
     color: #2A91FF;
     font-weight: 700!important;
+    margin-top: 50px;
  }
 
 @media (max-width: 450px) {
@@ -1660,6 +1661,7 @@ p.card-text.font-weight-bold.mr-2 {
     line-height: 40px;
     color: #2A91FF;
     font-weight: 700!important;
+    margin-top: 0px;
   }
 }
 

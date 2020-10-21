@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Addresip;
 use App\Models\OffersLive;
 use App\Models\Paises; 
+use Carbon\Carbon;
  
 class ShoppingCartController extends Controller
 {
@@ -147,35 +148,6 @@ class ShoppingCartController extends Controller
             }else{
                 return redirect('shopping-cart')->with('msj-informativo', 'El item ya se encuentra en su carrito de compras.');
             }
-
-            /*
-            $cont = 0;
-
-            if ($request->session()->has('cart')) {
-
-                $items = $request->session()->pull('cart');
-                 
-                foreach ($items as $item) {
-                    if ($item == $id){
-                        $cont++;
-                    }else{
-                        $request->session()->push('cart', $item);
-                    }       
-                }
-
-                $request->session()->push('cart', $id);
-
-                if ($cont > 0){
-                    return redirect('shopping-cart')->with('msj-informativo', 'El item ya se encuentra en su carrito de compras.');
-                }
-            }else{
-
-                $request->session()->push('cart', $id);
-            }
-            
-            return redirect('shopping-cart')->with('msj-exitoso', 'El item ha sido agregado a su carrito de compras con éxito.');
-            */
-
         }else{
             if ($request->type == null) {
                 $itemAgregado = DB::table('shopping_cart')
@@ -277,7 +249,6 @@ class ShoppingCartController extends Controller
      * Procesar Compra de membresía una vez verificado el pago
     */
     public function process_membership_buy($order){
-
         $datosOrden = DB::table('courses_orden')
                         ->where('id', '=', $order)
                         ->first();
@@ -314,27 +285,25 @@ class ShoppingCartController extends Controller
         $detalle->amount = $detallesMembresia->precio;
         $detalle->save();
         
-        /*$cursoAsociado = ShoppingCart::where('user_id', '=', $datosOrden->user_id)
-                            ->where('course_id', '<>', NULL)
-                            ->orderBy('id', 'DESC')
-                            ->first();
-        
-        if ($cursoAsociado->course->subcategory_id <= $detallesMembresia->idmembresia){
-            $fecha = date('Y-m-d H:i:s');
-
-            DB::table('courses_users')
-                ->insert(['course_id' => $cursoAsociado->course_id,
-                            'user_id' => $datosOrden->user_id,
-                            'progress' => 0,
-                            'start_date' => date('Y-m-d'),
-                            'created_at' => $fecha,
-                            'updated_at' => $fecha]);
-        }*/
         if ($datosOrden->type_product == 'membresia') {
+            $datosMembresia = DB::table('memberships')
+                                ->select('type')
+                                ->where('id', '=', $detallesMembresia->idmembresia)
+                                ->first();
+            
+            $fechaCompra = Carbon::now();
+            if ($datosMembresia->type == 'monthly'){
+                $fechaExpiracion = $fechaCompra->addMonth();
+            }else{
+                $fechaExpiracion = $fechaCompra->addYear();
+            }
+
             DB::table('wp98_users')
             ->where('ID', '=', $datosOrden->user_id)
             ->update(['membership_id' => $detallesMembresia->idmembresia,
-                      'status' => 1]);
+                      'status' => 1,
+                      'membership_status' => 1,
+                      'membership_expiration' => $fechaExpiracion]);
         }
                       
         DB::table('shopping_cart')
@@ -363,6 +332,7 @@ class ShoppingCartController extends Controller
             'Intermedio' => 'Accesos a todos los cursos de nivel Intermedio',
             'Avanzado' => 'Accesos a todos los cursos de nivel Avanzado',
             'Pro' => 'Accesos a todos los cursos de nivel Profesional',
+            'Pro Anual' => 'Accesos a todos los cursos de todos los niveles',
         ];
         $membresias = DB::table('memberships')->get();
 

@@ -279,6 +279,10 @@ Route::group(['prefix' => 'installer'], function (){
 
   Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'menu']], function() {
 
+    Route::post('save-image-landing', 'AdminController@update_image_landing')->name('admin.update.image.landing');
+
+    Route::resource('insignia', 'InsigniaController');
+
     Route::group(['prefix' => 'red'], function(){
           Route::get('/listado', 'RedController@index')->name('admin-red-index');
           Route::post('/filtrered', 'RedController@filtrered')->name('admin-red-filtre');

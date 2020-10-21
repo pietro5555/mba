@@ -10,6 +10,15 @@
             <li class="nav-item active">
                 <a class="nav-link items-header" href="{{route('index')}}">INICIO</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link items-header" href="https://www.mybusinessacademypro.com/nosotros/">NOSOTROS</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link items-header" href="https://www.mybusinessacademypro.com/gratis/">GRATIS</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link items-header" href="https://www.mybusinessacademypro.com/blog/">BLOG</a>
+            </li>
             <li class="nav-item active">
                 <a class="nav-link items-header" href="{{route('shopping-cart.membership')}}">MEMBRESIAS</a>
             </li>
@@ -36,9 +45,9 @@
                 <li class="nav-item li-register-button">
                     <a type="button" class="btn btn-primary btn-register-header" href="{{ route('log').'?act=1' }}">REGISTRARME</a> <!--/login-->
                 </li>
-                
+
                 <li class="nav-item li-register-button">
-                    <a type="button" class="btn btn-primary btn-register-header" href="{{ route('log').'?act=0' }}">INICIAR SESIÓN</a> <!--/login-->
+                    <a type="button" class="btn btn-primary btn-register-header" href="{{ route('log').'?act=0' }}">ENTRAR</a> <!--/login-->
                 </li>
             @else
                 <li class="nav-item dropdown li-language" id="li-language-larger">

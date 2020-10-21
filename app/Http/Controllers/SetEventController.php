@@ -59,7 +59,7 @@ class SetEventController extends Controller
                 ]);
                 $guardadas =   EventResources::where('event_id', $event_id)
                         ->where('resources_id',6)->get();
-                        
+
                         if($guardadas->isEmpty())
                         {
                             $dataPresentation = new EventResources;
@@ -86,7 +86,7 @@ class SetEventController extends Controller
                         ]);
                         $guardadas =   EventResources::where('event_id', $event_id)
                         ->where('resources_id',7)->get();
-                        
+
                         if($guardadas->isEmpty())
                         {
                             $dataPresentation = new EventResources;
@@ -98,7 +98,11 @@ class SetEventController extends Controller
 
 
                     }else{
-                        return redirect()->back()->with('msj-erroneo', 'Hubo un Problema al subir el recurso');
+                        if (isset($request->subdomain)){
+                            return redirect("https://streaming.shapinetwork.com/transmission/".$event_id."/".Auth::user()->ID)->with('msj-erroneo', 'Hubo un Problema al subir el recurso');
+                        }else{
+                            return redirect()->back()->with('msj-erroneo', 'Hubo un Problema al subir el recurso');
+                        }
                     }
                 break;
 
@@ -117,7 +121,7 @@ class SetEventController extends Controller
                     ]);
                     $guardadas =   EventResources::where('event_id', $event_id)
                         ->where('resources_id',5)->get();
-                        
+
                         if($guardadas->isEmpty())
                         {
                             $dataPresentation = new EventResources;
@@ -128,7 +132,11 @@ class SetEventController extends Controller
                         }
 
                 }else{
-                    return redirect()->back()->with('msj-erroneo', 'Hubo un Problema al subir el recurso');
+                    if (isset($request->subdomain)){
+                        return redirect("https://streaming.shapinetwork.com/transmission/".$event_id."/".Auth::user()->ID)->with('msj-erroneo', 'Hubo un Problema al subir el recurso');
+                    }else{
+                        return redirect()->back()->with('msj-erroneo', 'Hubo un Problema al subir el recurso');
+                    }
                 }
                 break;
 
@@ -139,7 +147,7 @@ class SetEventController extends Controller
 
                     $guardadas =   EventResources::where('event_id', $event_id)
                         ->where('resources_id',4)->get();
-                        
+
                         if($guardadas->isEmpty())
                         {
                             $dataE = SetEvent::create([
@@ -152,7 +160,7 @@ class SetEventController extends Controller
                                 $dataSurvey->event_id = $event_id;
                                 $dataSurvey->status = 1;
                                 $dataSurvey->save();
-    
+
                                 $question =  $request->q1;
                                 $responses = explode(',', $request->input('questions'));
                                 $question_save = new SurveyOptions;
@@ -164,12 +172,16 @@ class SetEventController extends Controller
                                         'response' => $response,
                                         'survey_options_id' => $question_save->id,
                                         'user_id' => Auth::user()->ID,
-                                        'selected' => 1,
+                                        'selected' => 0,
                                     ]);
                                 }
                         }
                         else{
-                            return redirect()->back()->with('msj-erroneo', 'Ya cuenta con una encuesta guardada');
+                            if (isset($request->subdomain)){
+                                return redirect("https://streaming.shapinetwork.com/transmission/".$event_id."/".Auth::user()->ID)->with('msj-erroneo', 'Ya cuenta con una encuesta guardada');
+                            }else{
+                                return redirect()->back()->with('msj-erroneo', 'Ya cuenta con una encuesta guardada');
+                            }
                         }
 
                   //  return dd ($responses, $question, $question_save, $question_save->id);
@@ -187,7 +199,7 @@ class SetEventController extends Controller
                             $name_file = 'offer_'.$event_id.'_'.time().'.'.$file->getClientOriginalExtension();
                             $path = public_path() .'/upload/events';
                             $file->move($path,$name_file);
-        
+
                             SetEvent::create([
                                 'title' => $request->input('title') ? $request->input('title') : 'null',
                                 'type' => 'oferta',
@@ -205,7 +217,7 @@ class SetEventController extends Controller
                             $guardadas =   EventResources::where('event_id', $event_id)->get();
                             $encontrada = false;
                             foreach ($guardadas as $guardada) {
-        
+
                                 if( $guardada->resources_id == 8){
                                     $encontrada = true;
                                 }else{
@@ -219,9 +231,13 @@ class SetEventController extends Controller
                                     $dataPresentation->status = 1;
                                     $dataPresentation->save();
                             }
-        
+
                         }else{
-                            return redirect()->back()->with('msj-erroneo', 'Hubo un problema al subir la oferta');
+                            if (isset($request->subdomain)){
+                                return redirect("https://streaming.shapinetwork.com/transmission/".$event_id."/".Auth::user()->ID)->with('msj-erroneo', 'Hubo un problema al subir la oferta');
+                            }else{
+                                return redirect()->back()->with('msj-erroneo', 'Hubo un problema al subir la oferta');
+                            }
                         }
                     break;
                     // CREATE TABLE `survey_options` ( `id` INT NOT NULL AUTO_INCREMENT ,  `question` TEXT NOT NULL ,  `content_event_id` INT NOT NULL ,  `created_at` TIMESTAMP NULL ,  `updated_at` TIMESTAMP NULL ,    PRIMARY KEY  (`id`)) ENGINE = InnoDB;
@@ -232,9 +248,12 @@ class SetEventController extends Controller
         /*$event = Events::find($event_id);
         $notes = Note::all();*/
 
-        //return redirect()->route('show.event', $event_id)->with('msj-exitoso', 'El Recurso ha sido creado con éxito.');
         //return redirect('live.live', compact ('event', 'notes'))->with('msj-exitoso', 'El Recurso ha sido creado con éxito.');
-        return redirect("https://streaming.shapinetwork.com/transmission/".$event_id."/".Auth::user()->ID)->with('msj-exitoso', 'El Recurso ha sido creado con éxito.');
+        if (isset($request->subdomain)){
+            return redirect("https://streaming.shapinetwork.com/transmission/".$event_id."/".Auth::user()->ID)->with('msj-exitoso', 'El Recurso ha sido creado con éxito.');
+        }else{
+            return redirect()->route('show.event', $event_id)->with('msj-exitoso', 'El Recurso ha sido creado con éxito.');
+        }
 
     }
 
@@ -248,16 +267,25 @@ class SetEventController extends Controller
         $response_saved = SurveyResponse::where('user_id','=', $user_id)->first();
         if(empty(!$response_saved))
         {
-            return redirect()->route('show.event', $request->event_id)->with('msj-erroneo', 'Ya ha guardado una respuesta');
+            if (isset($request->subdomain)){
+                return redirect("https://streaming.shapinetwork.com/transmission/".$request->event_id."/".Auth::user()->ID)->with('msj-erroneo', 'Ya ha guardado una respuesta');
+            }else{
+                return redirect()->route('show.event', $request->event_id)->with('msj-erroneo', 'Ya ha guardado una respuesta');
+            }
         }
         else{
-            
+
         $new_response = new SurveyResponse;
         $new_response->response = $request->response;
         $new_response->survey_options_id = $request->survey_options_id;
         $new_response->user_id = Auth::user()->ID;
+        $new_response->selected = 1;
         $new_response->save();
-        return redirect()->route('show.event', $request->event_id)->with('msj-exitoso', 'Respuesta guardada con éxito.');
+            if (isset($request->subdomain)){
+                return redirect("https://streaming.shapinetwork.com/transmission/".$request->event_id."/".Auth::user()->ID)->with('msj-exitoso', 'Respuesta guardada con éxito.');
+            }else{
+                return redirect()->route('show.event', $request->event_id)->with('msj-exitoso', 'Respuesta guardada con éxito.');
+            }
         }
 
     }
@@ -284,10 +312,12 @@ class SetEventController extends Controller
      /**Estadisticas de las respuestas**/
      public function survey_statistics(Request $request)
      {
-        $id = $request->get('id');
+
+       $id = $request->get('id');
        $statistics = SurveyResponse::where('survey_options_id', $id)->where('selected', 1)->get();
+
          return response(json_encode($statistics),200)->header('Content-type', 'text/plain');
-        
+
      }
     public function show($id)
     {

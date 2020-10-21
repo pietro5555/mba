@@ -6,19 +6,17 @@
 
 <form action="{{ route ('save.survey.student')}}" method="POST">
     @csrf
-    @foreach($surveys as $survey)
     <div class="mb-2 form-group">
-        <label for="label-question{{$survey->question}}">{{$survey->question}}</label>
+        <label for="label-question{{$surveys->question}}">{{$surveys->question}}</label>
         <select class="browser-default custom-select" name="response" id="response">
             <option selected>Selecciona una respuesta</option>
-            @foreach($survey->responses as $respuesta)
+            @foreach($survey_response as $respuesta)
             <option value="{{$respuesta->response}}">{{$respuesta->response}}</option>
             @endforeach
         </select>
-        <input type="hidden" name="survey_options_id" value='{{$survey->id}}' required>
+        <input type="hidden" name="survey_options_id" value='{{$surveys->id}}' required>
         <input type="hidden" name="event_id" value='{{$event->id}}' required>
     </div>
-    @endforeach
     <button class="btn btn-smal btn-success float-right" type="submit">Enviar</button>
 </form>
 @else

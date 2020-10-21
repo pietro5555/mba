@@ -216,7 +216,6 @@ h5.title-level {
 .btn-register-header {
     border-radius: 25px !important;
     font-weight: bold;
-    width: 180px;
 }
 
 .btn-language {
@@ -359,7 +358,7 @@ h5.title-level {
 }
 
 .li-register-button {
-    padding-left: 20px;
+    padding-left: 10px;
 }
 
 @media (max-width: 1350px) {
@@ -1647,3 +1646,4 @@ p.card-text.font-weight-bold.mr-2 {
     padding: 10px 0;
   }
 }
+

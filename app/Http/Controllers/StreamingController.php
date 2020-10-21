@@ -13,13 +13,13 @@ use Auth; use Carbon\Carbon; use DB;
 class StreamingController extends Controller{
 
     public function setToken(){
-        $client = new Client(['base_uri' => 'https://streaming.shapinetwork.com']);
+        $client = new Client(['base_uri' => 'https://streaming.mybusinessacademypro.com']);
 
         $response = $client->request('POST', 'api/auth/login', [
             'headers' => ['Accept' => 'application/json', 'Content-Type' => 'application/x-www-form-urlencoded'],
             'form_params' => [
-                'email' => 'admin',
-                'password' => '123456789',
+                'email' => 'mbapro',
+                'password' => 'mbapro2020',
                 'device_name' => 'admin-device',
             ]
         ]);
@@ -32,7 +32,7 @@ class StreamingController extends Controller{
     }
 
     public function newMeeting(Request $request, $userId){
-        $client = new Client(['base_uri' => 'https://streaming.shapinetwork.com']);
+        $client = new Client(['base_uri' => 'https://streaming.mybusinessacademypro.com']);
 
         $headers = [
             'Accept'        => 'application/json',
@@ -42,8 +42,8 @@ class StreamingController extends Controller{
 
         $p = $request->date."T".$request->time;
         $carbon = new Carbon($p);
-        $fecha = $carbon->subHours(5);
-        $ultFecha = $fecha->format('Y-m-d H:i:s');
+        $fecha = $carbon->addHours(5)->addMinutes(30);
+        $ultFecha = $carbon->format('Y-m-d H:i:s');
         $creacionEvento = $client->request('POST', 'api/meetings', [
             'headers' => $headers,
             'form_params' => [
@@ -68,7 +68,7 @@ class StreamingController extends Controller{
     }
 
     public function updateMeeting(Request $request, $uuid){
-        $client = new Client(['base_uri' => 'https://streaming.shapinetwork.com']);
+        $client = new Client(['base_uri' => 'https://streaming.mybusinessacademypro.com']);
 
         $headers = [
             'Accept'        => 'application/json',
@@ -92,11 +92,26 @@ class StreamingController extends Controller{
                     'type' => ['webinar']
                 ]
             ]);
-
+            
             $meeting = Meeting::where('uuid', '=', $uuid)->first();
             $meeting->type = 'webinar';
             $meeting->save();
         }
+    }
+    
+    public function getStatus($uuid){
+        $client = new Client(['base_uri' => 'https://streaming.mybusinessacademypro.com']);
+
+        $headers = [
+            'Accept'        => 'application/json',
+            'Content-Type' => 'application/x-www-form-urlencoded',
+            'Authorization' => 'Bearer '.Auth::user()->streaming_token
+        ];
+        
+        $consultaEvento = $client->request('GET', 'api/meetings/'.$uuid, ['headers' => $headers]);
+        $detallesEvento = json_decode($consultaEvento->getBody());
+        
+        return $detallesEvento->status;
     }
 
     public function verifyUser($email){
@@ -119,8 +134,6 @@ class StreamingController extends Controller{
         $role->model_id = $usuario->id;
         $role->save();
 
-        /*DB::table('streaming.model_has_roles')
-            ->insert(['role_id' => $request->role_id, 'model_type' => 'App\Models\User', 'model_id' => $usuario->id]);*/
 
         return $usuario->id;
     }

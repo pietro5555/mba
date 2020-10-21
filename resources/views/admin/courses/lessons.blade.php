@@ -41,8 +41,8 @@
 				<div style="text-align: right;">
 				    <a href="{{ route ('admin.courses.index')}}" class="btn btn-danger descargar"><i class="fas fa-arrow-circle-left"></i> Atrás</a>
 				    <a data-toggle="modal" data-target="#modal-new" class="btn btn-info descargar"><i class="fa fa-plus-circle"></i> Nueva Lección</a>
-				    
-					
+
+
 				</div>
 
 				<br class="col-xs-12">

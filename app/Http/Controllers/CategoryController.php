@@ -28,15 +28,15 @@ class CategoryController extends Controller{
      * Admin / Cursos / Gestionar Categorías / Agregar Categoría
      */
     public function add_category(Request $request){
-        $client = new Client(['base_uri' => 'https://streaming.shapinetwork.com']);
+        $client = new Client(['base_uri' => 'https://streaming.mybusinessacademypro.com']);
 
         if (is_null(Auth::user()->streaming_token)){
             $response = $client->request('POST', 'api/auth/login', [
                 'headers' => ['Accept' => 'application/json', 'Content-Type' => 'application/x-www-form-urlencoded'],
                 'form_params' => [
-                    'email' => 'admin',
-                    'password' => '123456789',
-                    'device_name' => 'luisana',
+                    'email' => 'mbapro',
+                    'password' => 'mbapro2020',
+                    'device_name' => 'admin-device',
                 ]
             ]);
 
@@ -96,15 +96,15 @@ class CategoryController extends Controller{
      * Admin / Cursos / Gestionar Categorías / Actualizar Categoría
      */
     public function update_category(Request $request){
-        $client = new Client(['base_uri' => 'https://streaming.shapinetwork.com']);
+        $client = new Client(['base_uri' => 'https://streaming.mybusinessacademypro.com']);
 
         if (is_null(Auth::user()->streaming_token)){
             $response = $client->request('POST', 'api/auth/login', [
                 'headers' => ['Accept' => 'application/json', 'Content-Type' => 'application/x-www-form-urlencoded'],
                 'form_params' => [
-                    'email' => 'admin',
-                    'password' => '123456789',
-                    'device_name' => 'luisana',
+                    'email' => 'mbapro',
+                    'password' => 'mbapro2020',
+                    'device_name' => 'admin-device',
                 ]
             ]);
 
@@ -153,14 +153,14 @@ class CategoryController extends Controller{
      * Admin / Cursos / Gestionar Categorías / Eliminar Categoría
      */
     public function delete_category($categoria){
-        $client = new Client(['base_uri' => 'https://streaming.shapinetwork.com']);
+        $client = new Client(['base_uri' => 'https://streaming.mybusinessacademypro.com']);
 
         if (is_null(Auth::user()->streaming_token)){
             $response = $client->request('POST', 'api/auth/login', [
                 'headers' => ['Accept' => 'application/json', 'Content-Type' => 'application/x-www-form-urlencoded'],
                 'form_params' => [
-                    'email' => 'admin',
-                    'password' => '123456789',
+                    'email' => 'mbapro',
+                    'password' => 'mbapro2020',
                     'device_name' => 'luisana',
                 ]
             ]);

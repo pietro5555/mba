@@ -10,6 +10,6 @@ class Meeting extends Model{
 
 	protected $table = "meetings";
 
-    protected $fillable = ['uuid', 'type', 'title', 'agenda', 'description', 'start_date_time', 'preiod', 'category_id', 'user_id'];
+    protected $fillable = ['uuid', 'type', 'title', 'agenda', 'description', 'start_date_time', 'period', 'meta', 'category_id', 'user_id'];
 
 }

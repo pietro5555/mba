@@ -461,4 +461,28 @@ class AdminController extends Controller
             
             return $lista;
         }
+
+        /**
+         * Permite actualiza la imagen del landing
+         *
+         * @param Request $request
+         * @return void
+         */
+        public function update_image_landing(Request $request)
+        {
+            if ($request->file('image_landing')) {
+                $file = $request->file('image_landing');
+                $name_file = 'image_landing_'.time().'.'.$file->getClientOriginalExtension();
+                $path = public_path() .'/assets/img';
+                $file->move($path,$name_file);
+
+                DB::table('settings')->where('id', 1)->update([
+                    'id_no_comision' => '/assets/img/'.$name_file
+                ]);
+
+                return redirect()->back()->with('msj-exitoso', 'Imagen Actualizada con exito');
+            }else{
+                return redirect()->back()->with('msj-erroneo', 'Hubo un problema al subir la imagen del landing');
+            }
+        }
 }

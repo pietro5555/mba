@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str as Str;
 use App\Models\Course;
 use App\Models\Lesson;
+use App\Models\LessonUser;
 use App\Models\Comment;
 use App\Models\User;
 use DB;
@@ -38,6 +39,10 @@ class LessonController extends Controller{
 
         $url = explode("https://vimeo.com/", $leccion->url);
         $leccion->url = "https://player.vimeo.com/video/".$url[1];
+        
+        $url2 = explode("https://vimeo.com/", $leccion->english_url);
+        $leccion->english_url = "https://player.vimeo.com/video/".$url2[1];
+        
         $leccion->save();
 
         return redirect('admin/courses/lessons/show/'.$leccion->id)->with('msj-exitoso', 'La lección ha sido creada con éxito.');
@@ -92,8 +97,8 @@ class LessonController extends Controller{
 
         if ($request->english_url != $leccion->english_url){
             $videoUpdate = 1;
-            $url = explode("https://vimeo.com/", $request->english_url);
-            $leccion->english_url = "https://player.vimeo.com/video/".$url[1];
+            $url2 = explode("https://vimeo.com/", $request->english_url);
+            $leccion->english_url = "https://player.vimeo.com/video/".$url2[1];
         }
         $leccion->title = $request->title;
         $leccion->description = $request->description;
@@ -137,41 +142,59 @@ class LessonController extends Controller{
         return view('cursos.leccion', compact('lesson', 'all_lessons','all_comments'));
     }*/
     public function lesson($lesson_slug, $lesson_id, $course_id){
-        
-    /* mostrar o no el boton de certificado solo se mostrara en la ultima leccion*/    
-    $certificar = false;
-     $certificado = Lesson::where('course_id', $course_id)->orderBy('id', 'DESC')->first()->take(1);
-       if($certificado != null){
-         if($certificado == $lesson_id){
-            $certificar = true;
-         }
-       }    
-         
-        $lesson = Lesson::where('id', '=',$lesson_id)
-                    ->with('materials')
-                    ->first();
-        $all_lessons = Lesson::where([
-            ['course_id', '=',  $course_id],
-            ['subcategory_id', '<=', Auth::user()->membership_id]
-        ])->get();
+        if (Auth::user()->membership_status == 1){
+            /**Guarda la lecci'on al acceder*/
+            $leccion_guardada = LessonUser::where('lesson_id',$lesson_id)
+                                ->where('user_id',Auth::user()->ID)->first();
+            //dd($leccion_guardada, Empty($leccion_guardada));
+            if(Empty($leccion_guardada)){
+                $leccion_vista = new LessonUser;
+                $leccion_vista->user_id = Auth::user()->ID;
+                $leccion_vista->lesson_id = $lesson_id;
+                $leccion_vista->course_id= $course_id;
+                $leccion_vista->status = 1;
+                $leccion_vista->save();
+            }
+            
+            /* mostrar o no el boton de certificado solo se mostrara en la ultima leccion*/
+            $certificar = false;
+            $certificado = Lesson::where('course_id', $course_id)->orderBy('id', 'DESC')->first()->take(1);
+            if($certificado != null){
+                if($certificado == $lesson_id){
+                    $certificar = true;
+                }
 
-        $progresoCurso = DB::table('courses_users')
-                            ->where('course_id', '=', $course_id)
-                            ->where('user_id', '=', Auth::user()->ID)
+            }
+
+            $lesson = Lesson::where('id', '=',$lesson_id)
+                        ->with('materials')
+                        ->first();
+            $all_lessons = Lesson::where([
+                ['course_id', '=',  $course_id],
+                ['subcategory_id', '<=', Auth::user()->membership_id]
+            ])->get();
+
+            $progresoCurso = DB::table('courses_users')
+                                ->where('course_id', '=', $course_id)
+                                ->where('user_id', '=', Auth::user()->ID)
+                                ->first();
+
+            $all_comments = Comment::where('lesson_id', $lesson_id)->get();
+
+            $directos = User::where('referred_id', Auth::user()->ID)->get()->count('ID');
+            $last_lesson = LessonUser::where('user_id', Auth::user()->ID)->latest('created_at')->first();
+
+            // return dd(last_lesson);
+
+            return view('cursos.leccion', compact('lesson', 'all_lessons','all_comments', 'progresoCurso','directos', 'last_lesson', 'certificar'));
+        }else{
+            $datosCurso = DB::table('courses')
+                            ->select('id', 'slug')
+                            ->where('id', '=', $course_id)
                             ->first();
 
-   $all_comments = Comment::where('lesson_id', $lesson_id)->get();
-         
-        return view('cursos.leccion', compact('lesson', 'all_lessons','all_comments', 'progresoCurso','certificar'));
-        $all_comments = Comment::where('lesson_id', $lesson_id)->with('user')->get();
-
-        $directos = User::where('referred_id', Auth::user()->ID)->get()->count('ID');
-         $last_lesson = Lesson::where('id', $lesson_id)->latest('created_at')->first();
-         
-         
-        // return dd(last_lesson);
-        
-        return view('cursos.leccion', compact('lesson', 'all_lessons','all_comments', 'progresoCurso','directos', 'last_lesson'));
+            return redirect()->route('courses.show', [$datosCurso->slug, $datosCurso->id])->with('msj-erroneo', 'Por favor, renueve su membresía para seguir disfrutando de los cursos.');
+        }
     }
     /*AGREGAR COMENTARIOS*/
     public function lesson_comments(Request $request){
@@ -189,4 +212,3 @@ class LessonController extends Controller{
 
     }
 }
-

@@ -8,7 +8,11 @@
                 <div class="col-md-5" style="text-align: center;">
                   <img src="{{asset('/uploads/avatar/'.$data['principal']->avatar)}}" style="width: 150px; height: 150px; border-radius: 50%; margin-top: 20px;">
 
-                  @if(Auth::user()->ID == $data['principal']->ID || Auth::user()->rol_id == 0)    
+                  @if(!empty($data['insignia']))
+                  <img src="{{ $data['insignia'] }}" height="80px" width="80px" style="margin: 20px;">
+                  @endif
+
+                  @if(Auth::user()->ID == $data['principal']->ID || Auth::user()->rol_id == 0)
                     <a href="#" class="btn btn-primary btn-block" data-toggle="modal" data-target="#myModal"><b>Editar
                             imagen</b></a>
                   @endif
@@ -114,7 +118,7 @@
                         <div class="form-group col-sm-12" style="padding-left: 10px;">
                             <button class="btn green padding_both_small" type="submit"
                                 style="margin-bottom: 15px; margin-top: 2px;">Subir</button>
-                               
+
                         </div>
                     </form>
                 </div>
@@ -125,4 +129,3 @@
         </div>
     </div>
 </div>
-  

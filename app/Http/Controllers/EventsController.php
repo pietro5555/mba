@@ -16,6 +16,8 @@ use App\Models\Calendario;
 use App\Models\OffersLive;
 use App\Models\SetEvent;
 use App\Models\SurveyOptions;
+use App\Models\SurveyResponse;
+use App\Models\Streaming\Meeting;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -94,7 +96,7 @@ class EventsController extends Controller
 
         $evento = new Events($request->all());
         $evento->uuid = $meetingUuid;
-        $evento->url_streaming = 'https://streaming.shapinetwork.com/app/live/meetings/'.$evento->uuid;
+        $evento->url_streaming = 'https://streaming.mybusinessacademypro.com/app/live/meetings/'.$evento->uuid;
         $evento->status = 1;
         $evento->save();
 
@@ -132,7 +134,7 @@ class EventsController extends Controller
             'status' => 1,
         ]);
         $resourceThree= EventResources::create([
-            'resources_id' => 2,
+            'resources_id' => 3,
             'event_id' => $evento->id,
             'status' => 1,
         ]);
@@ -157,10 +159,17 @@ class EventsController extends Controller
         $resources_video = SetEvent::where('event_id', $event_id)->where('type', 'video')->get()->first();
         $resources_offer = OffersLive::all()->where('event_id', $event_id);
       // return  dd($resources_survey, $menuResource);
+        $survey_response = null;
         if (!empty($resources_survey))
         {
-            $surveys = SurveyOptions::where('content_event_id', $resources_survey->id)->get();
-            $survey_id =$surveys[0]->id;
+            $surveys = SurveyOptions::where('content_event_id', $resources_survey->id)->first();
+            $survey_id =$surveys->id;
+            if(Empty($surveys)){
+                $survey_response = null;
+            }else
+            {
+                $survey_response = SurveyResponse::where('survey_options_id', $surveys->id)->where('selected', 0)->get();
+            }
         }
         else
         {
@@ -170,7 +179,7 @@ class EventsController extends Controller
 
        // return dd ($resources_survey , $surveys);
         // return response()->json([$menuResource], 201);
-
+     //  dd($survey_response);
         
         /*Files*/
         $files = SetEvent::where('event_id', $event_id)
@@ -180,11 +189,45 @@ class EventsController extends Controller
         $presentations = SetEvent::where('event_id', $event_id)
         ->where('type', 'presentation')
         ->get();
-        return view('live.live', compact ('event','notes', 'menuResource', 'surveys', 'resources_video', 'files', 'presentations','survey_id', 'resources_offer'));
+        return view('live.live', compact ('event','notes', 'menuResource', 'surveys', 'resources_video', 'files', 'presentations','survey_id', 'resources_offer', 'survey_response'));
 
         
         
     }
+    
+    public function timeliveEvent($event_id){
+        $evento = Events::find($event_id);
+
+        /*$client = new Client(['base_uri' => 'https://streaming.mybusinessacademypro.com']);
+
+        $response = $client->request('POST', 'api/auth/login', [
+            'headers' => ['Accept' => 'application/json', 'Content-Type' => 'application/x-www-form-urlencoded'],
+            'form_params' => [
+                'email' => 'mbapro',
+                'password' => 'mbapro2020',
+                'device_name' => 'admin-device',
+            ]
+        ]);
+        
+        $result = json_decode($response->getBody());
+        
+        $headers = [
+            'Accept'        => 'application/json',
+            'Content-Type' => 'application/x-www-form-urlencoded',
+            'Authorization' => 'Bearer '.$result->token
+        ];
+        
+        $consultaEvento = $client->request('GET', 'api/meetings/'.$evento->uuid, ['headers' => $headers]);
+        $detallesEvento = json_decode($consultaEvento->getBody());
+        $statusLive = $detallesEvento->status;*/
+        
+        $meeting = Meeting::where('uuid', '=', $evento->uuid)->first();
+        $info = json_decode($meeting->meta);
+        $statusLive =  $info->status;
+
+        return view('timelive.timeliveEvent')->with(compact('evento', 'statusLive'));
+    }
+   
 
     public function edit($id){
         $evento = Events::find($id);
@@ -314,22 +357,25 @@ class EventsController extends Controller
    public function timelive(Request $request){
       setlocale(LC_TIME, 'es_ES.UTF-8');
       //setlocale(LC_TIME, 'es');//Local
-      Carbon::setLocale('es');
+     // Carbon::setLocale('es');
       //$total_eventos = count(Events::all());
-      $total_eventos = Events::where('date', '>=', Carbon::now()->format('Y-m-d'))
+      $total_eventos = Events::where('date', '>', Carbon::now()->format('Y-m-d'))
+                      ->orwhere('date', '=', date('Y-m-d'))
+                      ->where('time', '>=', date('H:i:s'))
                            ->where('status','1')->count();
         //return dd( $total_eventos, date('H:i:s'));
-      $evento = Events::where('date', '>=', Carbon::now()->format('Y-m-d'))
-                  //->where('time', '>=', date('H:i:s'))
+      $evento = Events::where('date', '>=', date('Y-m-d'))
+                  ->where('time', '>=', date('H:i:s'))
                   ->where('status', '=',1)
                   ->get()
                   ->first();
                   
-                 // dd($evento);
+                  //dd($evento);
 
       if(!empty($evento)){
-         //return dd($evento, !empty($evento));
+          //dd($evento, $total_eventos);
          if ($request->sigEvent == '' or $request->sigEvent == null) {
+             
             if($total_eventos > 1){
                $prox = true;
                $i = 1;
@@ -342,6 +388,7 @@ class EventsController extends Controller
                }
             }else{
                $nextEvent = null;
+               
             }
          }else {
             $lastEvent = Events::all()->last();
@@ -378,11 +425,12 @@ class EventsController extends Controller
 
       /*PROXIMOS EVENTOS*/
       if($total_eventos>0){
-         $proximos = Events::where('date', '>=', date('Y-m-d'))
-                        ->where('id', '!=', $evento->id)
-                        ->where('time', '>=', date('H:i:s'))
-                        ->where('status', '=', '1')
-                        ->get();
+         $proximos = Events::where('date', '>', date('Y-m-d'))
+                      ->where('id', '!=', $evento->id)
+                      ->orwhere('date', '=', date('Y-m-d'))
+                      ->where('time', '>=', date('H:i:s'))
+                      ->get();
+                      //dd(date_default_timezone_get(),Carbon::now()->format('H:i:s') , date('Y-m-d'), date('H:i:s'));
          $total = count($proximos);
       }else{
          $proximos ='';
@@ -415,13 +463,9 @@ class EventsController extends Controller
       }
       
         if ((!is_null($evento)) && ($evento != '') ){
-            $streamingConnect = new StreamingController();
-          
-            if (is_null(Auth::user()->streaming_token)){
-                $streamingConnect->setToken();
-            }
-            
-            $statusLive = $streamingConnect->getStatus($evento->uuid);
+            $meeting = Meeting::where('uuid', '=', $evento->uuid)->first();
+            $info = json_decode($meeting->meta);
+            $statusLive =  $info->status;
         }
 
       //dd($evento, $proximos);
@@ -550,16 +594,7 @@ class EventsController extends Controller
         return view('agendar/calendar',compact('usuario','eventos_agendados', 'user_calendar', 'refeDirec','misEventosArray'));
     }
 
-    public function timeliveEvent($event_id){
-        $evento = Events::find($event_id);
 
-        $streamingConnect = new StreamingController();
-        $streamingConnect->setToken();
-        $statusLive = $streamingConnect->getStatus($evento->uuid);
-
-        return view('timelive.timeliveEvent')->with(compact('evento', 'statusLive'));
-    }
-    
   /*AGENDAR EVENTOS DEL USUARIO*/
     public function schedule($event_id){
         $check = DB::table('events_users')
@@ -569,19 +604,19 @@ class EventsController extends Controller
 
         if (is_null($check)){
             $events = DB::table('events')
-                        ->select('date')
+                        ->select('date', 'time')
                         ->where('id', '=', $event_id)
                         ->first();
 
             $date_event = date('Y-m-d', strtotime($events->date));
-            $time_event = date('H:i:s', strtotime($events->date));
+            $time_event = date('H:i:s', strtotime($events->time));
 
             $disponibilidad = DB::table('events_users')
                                 ->where('user_id', '=', Auth::user()->ID)
                                 ->where('date', '=', $date_event)
                                 ->where('time', '=', $time_event)
                                 ->first();
-
+        
             if (is_null($disponibilidad)){
                 $streamingConnect = new StreamingController();
 

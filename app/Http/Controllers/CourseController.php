@@ -8,6 +8,7 @@ use App\Models\Course;
 use App\Models\Category;
 use App\Models\User;
 use App\Models\Lesson;
+use App\Models\LessonUser;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -82,6 +83,74 @@ class CourseController extends Controller{
         $username = NULL;
         if (!Auth::guest()){
             $username = auth()->user()->display_name;
+
+            $cursosArray = [];
+
+            $cursosMasComprados = DB::table('courses_users')
+                                    ->select(DB::raw('count(course_id) as purchases_count, course_id'))
+                                    ->groupBy('course_id')
+                                    ->orderBy('purchases_count', 'DESC')
+                                    ->get();
+
+            $misCursos = DB::table('courses_users')->where('user_id', Auth::user()->ID)->select('course_id')->get();
+
+            // dd($misCursos);
+
+            $cursosRecomendados = collect();
+
+            foreach ($cursosMasComprados as $cursoComprado){
+                array_push($cursosArray, $cursoComprado->course_id);
+
+                $curso = Course::where('id', '=', $cursoComprado->course_id)->first();
+                $filtro = $misCursos->where('course_id', $cursoComprado->course_id);
+                if ($filtro->count() == 0) {
+                    $cursosRecomendados->push($curso);
+                }
+            }
+
+
+            $cursosMasVistos = Course::where('views', '>=', 0)
+                                    ->whereNotIn('id', $cursosArray)
+                                    ->orderBy('views', 'DESC')
+                                    ->get();
+
+            foreach ($cursosMasVistos as $cursoVisto){
+                $cursosRecomendados->push($cursoVisto);
+            }
+            $total = count($cursosRecomendados);
+
+            //ULTIMO CURSO VISTO POR EL USUARIO
+            $last_course = DB::table('courses')
+                                    ->join('courses_users', 'courses_users.course_id', '=', 'courses.id')
+                                    ->where('courses_users.user_id', '=', Auth::user()->ID )
+                                    ->orderBy('courses_users.updated_at', 'DESC')
+                                    ->first();
+
+            if (!is_null($last_course)){
+                 $leccion_vista = LessonUser::where('user_id', Auth::user()->ID)->where('course_id', $last_course->course_id)->get();
+                $total_vista = $leccion_vista->count();
+                $total_lesson = Lesson::where('course_id',$last_course->course_id )->count();
+                if(Empty($total_lesson)){
+                    $progress_bar =0;
+                }
+                else{
+                    $progress_bar = (($total_vista*100)/$total_lesson);
+                }
+            }else{
+                $progress_bar = NULL;
+                $last_course = NULL;
+            }
+           
+            //dd($progress_bar);
+
+
+        }else{
+            $cursosRecomendados = null;
+            $progress_bar = 0;
+            $total = 0;
+            $cursos = NULL;
+            $last_course = NULL;
+            $mentores = NULL;
         }
 
         $cursosDestacados = Course::where('featured', '=', 1)
@@ -132,55 +201,10 @@ class CourseController extends Controller{
                         ->take(9)
                         ->get();
 
-        $cursosArray = [];
-
-        $cursosMasComprados = DB::table('courses_users')
-                                ->select(DB::raw('count(course_id) as purchases_count, course_id'))
-                                ->groupBy('course_id')
-                                ->orderBy('purchases_count', 'DESC')
-                                ->get();
-
-        $misCursos = DB::table('courses_users')->where('user_id', Auth::user()->ID)->select('course_id')->get();
-
-        // dd($misCursos);
-
-        $cursosRecomendados = collect();
-
-        foreach ($cursosMasComprados as $cursoComprado){
-            array_push($cursosArray, $cursoComprado->course_id);
-
-            $curso = Course::where('id', '=', $cursoComprado->course_id)->first();
-            $filtro = $misCursos->where('course_id', $cursoComprado->course_id);            
-            if ($filtro->count() == 0) {
-                $cursosRecomendados->push($curso);    
-            }
-        }
-        
-
-        $cursosMasVistos = Course::where('views', '>=', 0)
-                                ->whereNotIn('id', $cursosArray)
-                                ->orderBy('views', 'DESC')
-                                ->get();
-
-        foreach ($cursosMasVistos as $cursoVisto){
-            $cursosRecomendados->push($cursoVisto);
-        }
-        $total = count($cursosRecomendados);
-
-        $cursos = NULL;
-        $last_course = NULL;
-        $mentores = NULL;
         if (!Auth::guest()){
             $cursos = Auth::user()->courses_buyed->take(4);
-            // $vacio = isset($cursos);
-            // return dd($cursos,$vacio);
 
-            //ULTIMO CURSO VISTO POR EL USUARIO
-            $last_course = DB::table('courses')
-                                ->join('courses_users', 'courses_users.course_id', '=', 'courses.id')
-                                ->where('courses_users.user_id', '=', Auth::user()->ID )
-                                ->orderBy('courses_users.updated_at', 'DESC')
-                                ->first();
+
 
             /*Mentores que tengan cursos*/
             $mentores = DB::table('wp98_users')
@@ -215,7 +239,7 @@ class CourseController extends Controller{
                 }
                 // $categoriastmp2 = array_unique($categoriastmp);
                 // dump($categoriastmp, $categoriastmp2);
-                // for ($i=0; $i < count($categoriastmp2); $i++) { 
+                // for ($i=0; $i < count($categoriastmp2); $i++) {
                 //     if ($i == 0){
                 //         $string = $categoriastmp2[$i];
                 //     }else{
@@ -226,7 +250,10 @@ class CourseController extends Controller{
             }
         }
 
-        return view('cursos.cursos')->with(compact('username','cursosDestacados', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next', 'courses', 'mentores', 'cursos', 'cursosRecomendados', 'total', 'last_course'));
+        /*Datos del progress bar*/
+
+
+        return view('cursos.cursos')->with(compact('username','cursosDestacados', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next', 'courses', 'mentores', 'cursos', 'cursosRecomendados', 'total', 'last_course', 'progress_bar'));
     }
 
     /*Ver todos los cursos */
@@ -288,13 +315,20 @@ class CourseController extends Controller{
                         }
                     ])->with('evaluation', 'lessons')
                     ->first();
-
-
-        $first_lesson = $curso->lessons[0];
-
+        
+        $last_lesson = NULL;
+        $first_lesson = NULL;
         $miValoracion = NULL;
         $progresoCurso = NULL;
         if (!Auth::guest()){
+            $last_lesson = LessonUser::where('user_id', Auth::user()->ID)->latest('created_at')->first();
+            if (!is_null($last_lesson)){
+                $first_lesson = Lesson::where('id', $last_lesson->lesson_id)->first();
+            }else{
+                $first_lesson = NULL;
+            }
+            
+            //dd($first_lesson);
             $progresoCurso = DB::table('courses_users')
                                 ->where('course_id', '=', $id)
                                 ->where('user_id', '=', Auth::user()->ID)
@@ -399,7 +433,7 @@ class CourseController extends Controller{
 
     /*EVENTOS Y CURSOS FAVORITOS DEL USUARIO*/
     public function favorites(){
-        //Eventos favoritos de un usuario
+        //Eventos favoritos de un usuariol
         $eventos_favoritos = DB::table('events')
         ->join('events_users', 'events_users.event_id', '=', 'events.id')
         ->where('events_users.user_id', '=', Auth::user()->ID )
@@ -561,6 +595,78 @@ class CourseController extends Controller{
 
         return redirect('admin/courses')->with('msj-exitoso', 'El curso ha sido quitado de destacados con éxito.');
     }
+    
+    /*MOSTRAR CURSOS POR CATEGORIA*/
+    public function show_course_category($category_id){
+
+        $courses = Course::where('category_id','=', $category_id)->get();
+        $category_name = Category::where('categories.id', '=', $category_id)->first();
+    
+        /*Mentores con cursos*/
+            $mentores = DB::table('wp98_users')
+            ->join('courses', 'courses.mentor_id', '=', 'wp98_users.id')
+            ->join('categories', 'categories.id', '=', 'courses.category_id')
+            ->where('categories.id', '=', $category_id)
+            ->select(array ('wp98_users.display_name as nombre','categories.title as categoria', 'courses.mentor_id as mentor_id','wp98_users.avatar as avatar'))
+            ->take(12)
+            ->get();
+    
+        /*Cursos nuevos correspondientes a una categoria*/
+    
+             $cursosNuevos = Course::where('status', '=', 1)
+             ->where('category_id', '=', $category_id)
+                               ->orderBy('id', 'DESC')
+                               ->take(3)
+                               ->get();
+    
+    
+             $ultCurso = Course::select('id')
+                            ->where('status', '=', 1)
+                            ->where('category_id', '=', $category_id)
+                            ->orderBy('id', 'DESC')
+                            ->first();
+    
+             $primerCurso = Course::select('id')
+                               ->where('status', '=', 1)
+                               ->where('category_id', '=', $category_id)
+                               ->orderBy('id', 'ASC')
+                               ->first();
+    
+             $idStart = 0;
+             $idEnd = 0;
+             $cont = 1;
+             $previous = 1;
+             $next = 1;
+    
+             foreach ($cursosNuevos as $curso){
+                if ($cont == 1){
+                   $idStart = $curso->id;
+                }
+                $idEnd = $curso->id;
+                $cont++;
+             }
+    
+             if ($cursosNuevos->count() > 0){
+                if ($idStart == $ultCurso->id){
+                   $previous = 0;
+                }
+                if ($idEnd == $primerCurso->id){
+                   $next = 0;
+                }
+             }
+    
+    
+           if($courses)
+           {
+    
+            $directos = NULL;
+            if (!Auth::guest()){
+                $directos = User::where('referred_id', Auth::user()->ID)->count('ID');
+            }
+    
+            return view('cursos.cursos_categorias', compact('courses', 'category_name', 'mentores', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next','directos'));
+           }
+        }
 
 
 }

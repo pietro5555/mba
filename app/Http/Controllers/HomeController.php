@@ -16,6 +16,7 @@ use App\Models\Course; use App\Models\Category; use App\Models\Events;
 
 // llamando a los controladores
 use App\Http\Controllers\IndexController;
+use App\Http\Controllers\InsigniaController;
 use Modules\ReferralTree\Http\Controllers\ReferralTreeController;
 
 use PDF;
@@ -85,6 +86,14 @@ class HomeController extends Controller{
       $cont = 1;
       $previous = 1;
       $next = 1;
+
+      $insignia = new InsigniaController;
+      
+      if (Auth::user()){
+         if (Auth::user()->rol_id != 0){
+            $insignia->validadInsignia(Auth::user()->ID);
+         }
+      }
 
       foreach ($cursosNuevos as $curso){
          if ($cont == 1){
@@ -165,8 +174,20 @@ class HomeController extends Controller{
       if(Auth::user()){
          $refeDirec = User::where('referred_id', Auth::user()->ID)->count('ID');
       }
+      
+       $misEventosArray = [];
+      if (!Auth::guest()){
+         $misEventos = DB::table('events_users')
+                        ->select('event_id')
+                        ->where('user_id', '=', Auth::user()->ID)
+                        ->get();
 
-      return view('index')->with(compact('cursosDestacados', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next', 'refeDirec', 'proximoEvento', 'avance'));
+         foreach ($misEventos as $miEvento){
+            array_push($misEventosArray, $miEvento->event_id);
+         }
+      }
+
+      return view('index')->with(compact('cursosDestacados', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next', 'refeDirec', 'proximoEvento', 'avance', 'misEventosArray'));
    }
 
    public function search(Request $request){

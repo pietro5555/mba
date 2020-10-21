@@ -27,11 +27,16 @@
                 let t = getRemainingTime(deadline);
                 //el.innerHTML = `${t.remainDays}d:${t.remainHours}h:${t.remainMinutes}m:${t.remainSeconds}s`;
                 $('#' + elem).empty()
-
-                if (t.remainTime <= 1) {
+            
+                if ((t.remainTime <= 1) || ($("#statusLive").val() == 'live') ) {
                     clearInterval(timerUpdate);
                     $("#remain-time-text").css('display', 'none');
-                    if ($("#statusLive").val() == 'live'){
+                    $("#checkCountdown").val(1);
+                    $("#close").css('display', 'none');
+                    $("#open").css('display', 'block');
+                    if ($("#statusLive").val() == 'scheduled'){
+                        $('#' + elem).append('<h1>El live está por iniciar</h1>');
+                    }else if ($("#statusLive").val() == 'live'){
                         $('#' + elem).append('<h1>El live ya ha iniciado</h1>');
                     }else if ($("#statusLive").val() == 'ended'){
                         $('#' + elem).append('<h1>El live ya ha finalizado</h1>');
@@ -40,6 +45,7 @@
                     }
                     
                 } else {
+                    
 
                     $('#' + elem).append(
 
@@ -109,6 +115,7 @@
 
     <div class="row">
         <input type="hidden" id="statusLive" value="{{ $statusLive }}">
+        <input type="hidden" id="checkCountdown" value="0">
         <div class="col-md-12">
             @if (!is_null($evento->image))
                 <img src="{{ asset('uploads/images/banner/'.$evento->image) }}" class="card-img-top img-banner-live" alt="...">
@@ -134,25 +141,36 @@
             <div style="margin-top: 60px;">
                 <div class="row">
                     <div class="col-md-6" style="margin-bottom: 10px;">
-                        @if ($statusLive == 'ended')
-                            <a href="{{route('show.event', $evento->id)}}" class="btn btn-success btn-block">IR AL EVENTO</a>
-                        @else
-                            <form action="https://streaming.shapinetwork.com/connect-mba/{{$evento->id}}/{{Auth::user()->ID}}" method="POST">
-                                @csrf
-                                <input type="hidden" name="email" value="{{ Auth::user()->user_email }}">
-                                <input type="hidden" name="password" value="{{ decrypt(Auth::user()->clave) }}">
-
-                                @if ($statusLive == 'scheduled')
-                                    @if (Auth::user()->rol_id == 2)
-                                        <button type="submit" class="btn btn-success btn-block">ENTRAR AL LIVE</button>
-                                    @else
-                                        <button type="submit" class="btn btn-success btn-block" disabled>ENTRAR AL LIVE</button>
-                                    @endif
-                                @elseif ($statusLive == 'live')
-                                    <button type="submit" class="btn btn-success btn-block">ENTRAR AL LIVE</button>
+                        <div id="close">
+                             <a href="{{route('show.event', $evento->id)}}" class="btn btn-success btn-block">VER DETALLES DEL EVENTO</a>
+                        </div> 
+                        <div id="open" style="display: none;">
+                            @if (Auth::user()->rol_id == 2)
+                                @if ( ($statusLive == 'scheduled') || ($statusLive == 'live') )
+                                    <form action="https://streaming.mybusinessacademypro.com/connect-mba/{{$evento->id}}/{{Auth::user()->ID}}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="email" value="{{ Auth::user()->user_email }}">
+                                        <input type="hidden" name="password" value="{{ decrypt(Auth::user()->clave) }}">
+                                        
+                                        <button type="submit" class="btn btn-success btn-block">ENTRAR AL LIVE</button>  
+                                    </form>
+                                @else
+                                    <a href="{{route('show.event', $evento->id)}}" class="btn btn-success btn-block">VER DETALLES DEL EVENTO</a>
                                 @endif
-                            </form>
-                        @endif
+                            @else
+                                @if ($statusLive == 'live')
+                                    <form action="https://streaming.mybusinessacademypro.com/connect-mba/{{$evento->id}}/{{Auth::user()->ID}}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="email" value="{{ Auth::user()->user_email }}">
+                                        <input type="hidden" name="password" value="{{ decrypt(Auth::user()->clave) }}">
+                                        
+                                        <button type="submit" class="btn btn-success btn-block">ENTRAR AL LIVE</button>  
+                                    </form>
+                                @else
+                                    <a href="{{route('show.event', $evento->id)}}" class="btn btn-success btn-block">VER DETALLES DEL EVENTO</a>
+                                @endif
+                            @endif
+                        </div> 
                     </div>
                 </div>
             </div>

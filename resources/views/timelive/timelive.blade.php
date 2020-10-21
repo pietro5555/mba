@@ -178,7 +178,7 @@ countdown('{{($evento != null) ? $evento->date.' '.$evento->time : $fechaActual}
                      @if ( ($statusLive == 'ended') || ($statusLive == 'cancelled') )
                         <a href="{{route('show.event', $evento->id)}}" class="btn btn-success btn-block">VER DETALLES DEL EVENTO</a>
                      @else
-                        <form action="https://streaming.shapinetwork.com/connect-mba/{{$evento->id}}/{{Auth::user()->ID}}" method="POST" class="mostrar d-none">
+                        <form action="https://streaming.mybusinessacademypro.com/connect-mba/{{$evento->id}}/{{Auth::user()->ID}}" method="POST" class="mostrar d-none">
                            @csrf
                            <input type="hidden" name="email" value="{{ Auth::user()->user_email }}">
                            <input type="hidden" name="password" value="{{ decrypt(Auth::user()->clave) }}">

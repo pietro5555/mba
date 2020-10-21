@@ -171,8 +171,20 @@ class HomeController extends Controller{
       if(Auth::user()){
          $refeDirec = User::where('referred_id', Auth::user()->ID)->count('ID');
       }
+      
+      $misEventosArray = [];
+      if (!Auth::guest()){
+         $misEventos = DB::table('events_users')
+                        ->select('event_id')
+                        ->where('user_id', '=', Auth::user()->ID)
+                        ->get();
 
-      return view('index')->with(compact('cursosDestacados', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next', 'refeDirec', 'proximoEvento', 'avance'));
+         foreach ($misEventos as $miEvento){
+            array_push($misEventosArray, $miEvento->event_id);
+         }
+      }
+
+      return view('index')->with(compact('cursosDestacados', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next', 'refeDirec', 'proximoEvento', 'avance', 'misEventosArray'));
    }
 
    public function search(Request $request){

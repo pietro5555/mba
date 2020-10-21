@@ -1638,6 +1638,13 @@ p.card-text.font-weight-bold.mr-2 {
     font-size: 86px;
     line-height: 100px;
 }
+.estilobusiness{
+    text-align: right; 
+    font-size: 56px; 
+    line-height: 100px; 
+    color: #2A91FF;
+    font-weight: 700!important;
+ }
 
 @media (max-width: 450px) {
 .blog-title {
@@ -1645,5 +1652,16 @@ p.card-text.font-weight-bold.mr-2 {
     line-height: 25px;
     padding: 10px 0;
   }
+
+  .estilobusiness{
+   text-align: right; 
+   font-size: 56px; 
+   line-height: 100px; 
+   color: #2A91FF; 
+   font-weight: 700!important;
+  }
 }
+
+
+
 

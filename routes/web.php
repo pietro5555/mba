@@ -217,6 +217,7 @@ Route::group(['prefix' => 'installer'], function (){
     Route::get('show/{slug}/{id}', 'CourseController@show')->name('courses.show');
      Route::get('lesson/{slug}/{id}/{course_id}', 'LessonController@lesson')->name('lesson.show');
      Route::post('lesson/comments', 'LessonController@lesson_comments')->name('lesson.comments');
+     Route::get('change-language/{course}/{language}/{lesson}', 'CourseController@change_language')->name('course.change-language');
     //Route::get('recommended', 'CourseController@recommended')->name('courses.recommended');
     Route::get('all', 'CourseController@show_all_courses')->name('courses.show.all');
   });
@@ -226,6 +227,7 @@ Route::group(['prefix' => 'installer'], function (){
      Route::group(['prefix' => 'courses'], function(){
         Route::get('my-list', 'CourseController@my_courses')->name('client.my-courses');
         Route::get('add/{curso}/{language}', 'CourseController@add')->name('client.courses.add');
+       
         Route::post('rate', 'RatingController@store')->name('client.courses.rate');
         Route::get('{slug}/{id}/take-evaluation', 'EvaluationController@take')->name('client.courses.take-evaluation');
         Route::post('submit-evaluation', 'EvaluationController@submit')->name('client.courses.submit-evaluation');

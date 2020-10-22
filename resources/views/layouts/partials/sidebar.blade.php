@@ -64,6 +64,12 @@
                         <img src="{{asset($settings->id_no_comision)}}" alt="" height="200" width="200">
                     </div>
                     @endif
+                    <div class="text-center col pt-2">
+                        <a href="https://m.facebook.com/MyBusinessAcademyPro/"><img class="m-2" src="{{ asset('images/icons/FBA.png') }}"></a>
+                        <a href=""><img class="m-2" src="{{ asset('images/icons/TWA.png') }}"></a>
+                         <a href="https://instagram.com/mybusinessacademypro?igshid=tdj5prrv1gx1"><img class="m-2" src="{{ asset('images/icons/IGA.png') }}"></a>
+                        <a href=""><img class="m-2" src="{{ asset('images/icons/YTA.png') }}"></a>
+                    </div>
                 </div>
             </div>
             <!-- /#sidebar-wrapper -->

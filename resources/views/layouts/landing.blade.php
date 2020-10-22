@@ -119,15 +119,15 @@
 
                                 </div>
                                 <div class="mb-2 text-center text-white">
-                                    <a href="" class="text-white">Pol&iacute;ticas de Uso</a> &nbsp&nbsp
-                                    <a href="" class="text-white">T&eacute;rminos y condiciones</a>&nbsp&nbsp
+                                    <a href="{{route('client.policies')}}" class="text-white" target="_blank">Pol&iacute;ticas de Uso</a> &nbsp&nbsp
+                                    <a href="https://mybusinessacademypro.com/aviso-de-privacidad-terminos-y-condiciones/" class="text-white">T&eacute;rminos y condiciones</a>&nbsp&nbsp
                                     <a href="" class="text-white"> Contacto</a>&nbsp&nbsp
                                     <a href="{{route('index')}}" class="text-white">Inicio</a>&nbsp&nbsp
                                 </div>
-                                
+
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
 

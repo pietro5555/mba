@@ -181,7 +181,7 @@
                                 <p style="color:#007bff; font-size: 22px; font-weight: bold; margin-top: -20px;">NUEVO CURSO</p>
         						<div class="course-autor">{{$cursoDestacado->mentor->display_name}}</div>
         						<div class="course-title"> <a href="{{ route('courses.show', [$cursoDestacado->slug, $cursoDestacado->id]) }}" style="color: white;">{{ $cursoDestacado->title }}</a></div>
-        	                    <div class="course-category">{{ $cursoDestacado->category->title }} | {{ $cursoDestacado->subcategory->title }}</div>
+        	                    <div class="course-category">{{ $cursoDestacado->category->title }}</div>
         	                </div>
         	            </div>
                     @endforeach
@@ -328,19 +328,17 @@
                             {{-- USUARIOS LOGUEADOS SIN MEMBRESÍA  --}}
                             <a href="{{route('shopping-cart.membership')}}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> AGREGAR AL CARRITO</a>
                         @else
-                            @if ($evento_actual->subcategory_id > Auth::user()->membership_id)
+                            @if ($proximoEvento->subcategory_id > Auth::user()->membership_id)
                                 {{-- USUARIOS LOGUEADOS CON MEMBRESÍA MENOR A LA SUBCATEGORÍA DEL EVENTO--}}
                                 <a href="{{route('shopping-cart.membership')}}" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> MEJORAR MEMBRESÍA</a>
                             @else
                                 @if (Auth::user()->membership_status == 1)
-                                    @if (!in_array($evento_actual->id, $misEventosArray))
+                                    @if (!in_array($proximoEvento->id, $misEventosArray))
                                         {{-- USUARIOS LOGUEADOS CON MEMBRESÍA MAYOR O IGUAL A LA SUBCATEGORÍA DEL EVENTO Y QUE NO TIENEN EL EVENTO AGENDADO AÚN--}}
-                                        <a href="{{ route('schedule.event', [$evento_actual->id]) }}">Reservar Plaza <i class="fas fa-chevron-right"></i></a>
+                                        <a href="{{ route('schedule.event', [$proximoEvento->id]) }}">Reservar Plaza <i class="fas fa-chevron-right"></i></a>
                                     @else
-                                        <a href="{{ route('timeliveEvent', $evento_actual->id) }}">Ir al Evento<i class="fas fa-chevron-right"></i></a>
+                                        <a href="{{ route('timeliveEvent', $proximoEvento->id) }}">Ir al Evento<i class="fas fa-chevron-right"></i></a>
                                     @endif
-                                @else
-                                    <a href="{{route('shopping-cart.membership')}}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> RENOVAR MEMBRESÍA</a>
                                 @endif
                             @endif
                         @endif
@@ -350,6 +348,48 @@
         </div><br><br>
     @endif
     {{-- FIN SECCIÓN PRÓXIMO STREAMING--}}
+
+          {{-- SECCIÓN MENTORES --}}
+    <div class="section-landing">
+        <div class="row">
+            <div class="col">
+                <div class="section-title-landing new-courses-section-title">
+                    <h1>MENTORES</h1>
+                </div>
+            </div>
+        </div>
+
+        <div id="newers" class="row" style="padding: 10px 30px;">
+            @foreach ($mentores as $mentor)
+                <div class="col-xl-4 col-lg-4 col-12" style="padding-bottom: 10px;">
+                    <div class="card">
+                        <a href="" style="color: white;">
+
+                        @if (!is_null($mentor->avatar))
+                            <!-- <img src="{{ asset('uploads/avatar/'.$mentor->avatar) }}" class="card-img-top new-course-img" alt="..."> -->
+                            <img src="{{ asset('uploads/avatar/'.$mentor->avatar) }}" class="card-img-top new-course-img" alt="...">
+                        @else
+                            <img src="{{ asset('uploads/images/courses/covers/default.jpg') }}" class="card-img-top new-course-img" alt="...">
+                        @endif
+                        <div class="card-img-overlay d-flex flex-column">
+                            <div class="mt-auto">
+                                <div class="text-sm text-white" style="line-height:1;">
+                                    <a class="text-white" href="{{ url('courses/mentor/'.$mentor->mentor_id) }}"> {{ $mentor->nombre }}</a>
+                                   </div>
+
+
+                            </div>
+                        </div>
+                      </a>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+
+
+
+{{-- FIN SECCIÓN MENTORES --}}
 
 	{{-- SECCIÓN REFERIDOS (USUARIOS LOGGUEADOS) --}}
     @if (!Auth::guest())

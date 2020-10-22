@@ -166,7 +166,8 @@ Route::group(['prefix' => 'installer'], function (){
 
 
   /*Rutas MBA*/
-
+    //Politicas
+    Route::get('/policies', 'HomeController@policies')->name('client.policies');
   //vista del login (/login)
   Route::get('/log', 'LoginController@login')->name('log');
   Route::get('/nosotros', 'HomeController@nosotros')->name('client.nosotros');

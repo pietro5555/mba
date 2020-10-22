@@ -8,6 +8,12 @@
 	</div>
 	<div class="col-md-12">
 		<div class="form-group">
+			<label>Título de la Lección (Inglés)</label>
+			<input type="text" class="form-control" name="english_title" value="{{ $leccion->english_title }}" required>
+		</div>
+	</div>
+	<div class="col-md-12">
+		<div class="form-group">
 			<label>Descripción</label>
 			<textarea class="form-control" name="description">{{ $leccion->description }}</textarea> 
 		</div>

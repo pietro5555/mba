@@ -23,7 +23,7 @@
    @endif
 <div class="container-fluid">
   <div class="row justify-content-end">
-     <div class="col mt-2"><h5 class="text-white">{{$lesson->title}}</h5></div>
+     <div class="col mt-2"><h5 class="text-white">@if ($progresoCurso->language == 'es') {{$lesson->title}} @else {{$lesson->english_title}} @endif</h5></div>
     <div class="col-xs-1 col-md-2">
             @switch( $lesson->subcategory_id)
             @case(1)
@@ -249,7 +249,7 @@
                         <div class="card-header collapsed border-0 collapsible-link" id="heading{{$lesson->id}}" data-toggle="collapse" data-target="#collapse{{$lesson->id}}" aria-expanded="false" aria-controls="collapse{{$lesson->id}}">
                                 <a href="{{ route('lesson.show', [$lesson->slug, $lesson->id, $lesson->course_id]) }}">
                                         <h5 class="mb-0 font-weight-bold d-block position-relative py-2">
-                                        <i class="text-primary fa fa-play-circle"></i>  {{$lesson->title}}
+                                        <i class="text-primary fa fa-play-circle"></i>  @if ($progresoCurso->language == 'es') {{$lesson->title}} @else {{$lesson->english_title}} @endif
                                         </h5>
                                 </a>
                         </div>

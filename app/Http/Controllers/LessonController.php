@@ -101,6 +101,7 @@ class LessonController extends Controller{
             $leccion->english_url = "https://player.vimeo.com/video/".$url2[1];
         }
         $leccion->title = $request->title;
+        $leccion->english_title = $request->english_title;
         $leccion->description = $request->description;
         $leccion->subcategory_id = $request->subcategory_id;
         $leccion->slug = Str::slug($leccion->title);

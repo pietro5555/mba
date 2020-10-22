@@ -52,6 +52,7 @@
 						<tr>
 							<th class="text-center">#</th>
 							<th class="text-center">Título</th>
+							<th class="text-center">Título Inglés</th>
 							<th class="text-center">Descripción</th>
 							<th class="text-center">URL Español</th>
 							<th class="text-center">URL Inglés</th>
@@ -65,6 +66,7 @@
 							<tr>
 								<td class="text-center">{{ $leccion->id }}</td>
 								<td class="text-center">{{ $leccion->title }}</td>
+								<td class="text-center">{{ $leccion->english_title }}</td>
 								<td class="text-center">{{ $leccion->description }}</td>
                                 <td class="text-center">{{ $leccion->url }}</td>
 								<td class="text-center">{{ $leccion->english_url }}</td>
@@ -114,6 +116,12 @@
 						            <div class="form-group">
 						                <label>Título de la Lección</label>
 						            	<input type="text" class="form-control" name="title" required>
+						            </div>
+						        </div>
+								<div class="col-md-12">
+						            <div class="form-group">
+						                <label>Título de la Lección (Inglés)</label>
+						            	<input type="text" class="form-control" name="english_title" required>
 						            </div>
 						        </div>
 						        <div class="col-md-12">

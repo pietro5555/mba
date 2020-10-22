@@ -16,6 +16,7 @@ use App\Models\Course; use App\Models\Category; use App\Models\Events;
 
 // llamando a los controladores
 use App\Http\Controllers\IndexController;
+use App\Http\Controllers\InsigniaController;
 use Modules\ReferralTree\Http\Controllers\ReferralTreeController;
 
 use PDF;
@@ -85,6 +86,14 @@ class HomeController extends Controller{
       $cont = 1;
       $previous = 1;
       $next = 1;
+
+      $insignia = new InsigniaController;
+
+      if (Auth::user()){
+         if (Auth::user()->rol_id != 0){
+            $insignia->validadInsignia(Auth::user()->ID);
+         }
+      }
 
       foreach ($cursosNuevos as $curso){
          if ($cont == 1){
@@ -166,51 +175,19 @@ class HomeController extends Controller{
          $refeDirec = User::where('referred_id', Auth::user()->ID)->count('ID');
       }
 
+       $misEventosArray = [];
+      if (!Auth::guest()){
+         $misEventos = DB::table('events_users')
+                        ->select('event_id')
+                        ->where('user_id', '=', Auth::user()->ID)
+                        ->get();
 
-      /*Mentores que tengan cursos*/
-      $mentores = DB::table('wp98_users')
-      ->join('courses', 'courses.mentor_id', '=', 'wp98_users.id')
-      ->select(array ('wp98_users.display_name as nombre', 'wp98_users.avatar as avatar', 'courses.mentor_id as mentor_id'))
-      ->groupBy('courses.mentor_id', 'wp98_users.display_name', 'wp98_users.avatar')
-      ->get();
-
-foreach ($mentores as $mentor) {
-$cursostmp = DB::table('courses')->where('mentor_id', $mentor->mentor_id)->get();
-$cantCateg = count($cursostmp);
-$cont = 0;
-$string = '';
-$categoriastmp = [];
-foreach ($cursostmp as $curso) {
-  $cate = DB::table('categories')->where('id', $curso->category_id)->first();
-  // $categoriastmp [] = $cate->title;
-  if ($cantCateg == 1) {
-      $string = $cate->title;
-  }else{
-      if ($cont == 0) {
-          $string = $cate->title;
-      }else{
-          if($string != $cate->title)
-          {
-              $string = $string.', '.$cate->title;
-          }
-
+         foreach ($misEventos as $miEvento){
+            array_push($misEventosArray, $miEvento->event_id);
+         }
       }
-  }
-  $cont++;
-}
-// $categoriastmp2 = array_unique($categoriastmp);
-// dump($categoriastmp, $categoriastmp2);
-// for ($i=0; $i < count($categoriastmp2); $i++) {
-//     if ($i == 0){
-//         $string = $categoriastmp2[$i];
-//     }else{
-//         $string = $string.', '.$categoriastmp2[$i];
-//     }
-// }
-$mentor->categoria = $string;
-}
 
-      return view('index')->with(compact('cursosDestacados', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next', 'refeDirec', 'proximoEvento', 'avance', 'mentores'));
+      return view('index')->with(compact('cursosDestacados', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next', 'refeDirec', 'proximoEvento', 'avance', 'misEventosArray'));
    }
 
    public function search(Request $request){

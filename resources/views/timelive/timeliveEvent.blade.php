@@ -27,8 +27,8 @@
                 let t = getRemainingTime(deadline);
                 //el.innerHTML = `${t.remainDays}d:${t.remainHours}h:${t.remainMinutes}m:${t.remainSeconds}s`;
                 $('#' + elem).empty()
-
-                if (t.remainTime <= 1) {
+            
+                if ((t.remainTime <= 1) || ($("#statusLive").val() == 'live') ) {
                     clearInterval(timerUpdate);
                     $("#remain-time-text").css('display', 'none');
                     $("#checkCountdown").val(1);
@@ -45,6 +45,7 @@
                     }
                     
                 } else {
+                    
 
                     $('#' + elem).append(
 
@@ -146,7 +147,7 @@
                         <div id="open" style="display: none;">
                             @if (Auth::user()->rol_id == 2)
                                 @if ( ($statusLive == 'scheduled') || ($statusLive == 'live') )
-                                    <form action="https://streaming.shapinetwork.com/connect-mba/{{$evento->id}}/{{Auth::user()->ID}}" method="POST">
+                                    <form action="https://streaming.mybusinessacademypro.com/connect-mba/{{$evento->id}}/{{Auth::user()->ID}}" method="POST">
                                         @csrf
                                         <input type="hidden" name="email" value="{{ Auth::user()->user_email }}">
                                         <input type="hidden" name="password" value="{{ decrypt(Auth::user()->clave) }}">
@@ -158,7 +159,7 @@
                                 @endif
                             @else
                                 @if ($statusLive == 'live')
-                                    <form action="https://streaming.shapinetwork.com/connect-mba/{{$evento->id}}/{{Auth::user()->ID}}" method="POST">
+                                    <form action="https://streaming.mybusinessacademypro.com/connect-mba/{{$evento->id}}/{{Auth::user()->ID}}" method="POST">
                                         @csrf
                                         <input type="hidden" name="email" value="{{ Auth::user()->user_email }}">
                                         <input type="hidden" name="password" value="{{ decrypt(Auth::user()->clave) }}">

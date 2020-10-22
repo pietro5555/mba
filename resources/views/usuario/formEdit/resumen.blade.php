@@ -8,8 +8,8 @@
                 <div class="col-md-5" style="text-align: center;">
                   <img src="{{asset('/uploads/avatar/'.$data['principal']->avatar)}}" style="width: 150px; height: 150px; border-radius: 50%; margin-top: 20px;">
 
-                  @if(Auth::user()->ID = 10067)
-                  <img src="{{ asset('images/medallas/diamante.png') }}" height="40px" width="40px" style="margin: 20px;">
+                  @if(!empty($data['insignia']))
+                  <img src="{{ $data['insignia'] }}" height="80px" width="80px" style="margin: 20px;">
                   @endif
 
                   @if(Auth::user()->ID == $data['principal']->ID || Auth::user()->rol_id == 0)

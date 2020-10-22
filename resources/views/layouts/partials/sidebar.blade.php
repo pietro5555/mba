@@ -38,17 +38,17 @@
                         </form>
                     </div>
                     <a href="{{ route('courses.show.all') }}" class="list-group-item bg-dark-gray" style="color: white;"><i class="fas fa-border-all"></i> Ver todos los cursos</a>
-                   <!-- <a class="list-group-item bg-dark-gray" data-toggle="collapse" href="#categoriesDiv" style="color: white;"><i class="fas fa-border-all"></i> Ver todos los cursos <i class="fas fa-angle-down"></i></a>
+                    <a class="list-group-item bg-dark-gray" data-toggle="collapse" href="#categoriesDiv" style="color: white;"><i class="far fa-list-alt"></i> Categorías <i class="fas fa-angle-down"></i></a>
                     <div class="collapse" id="categoriesDiv" style="padding-left: 15px;">
                         @foreach ($categoriasSidebar as $categoria)
-                            <a class="list-group-item bg-dark-gray" data-toggle="collapse" href="#subcategories-{{$categoria->id}}" style="color: white;"><i class="{{ $categoria->icon }}"></i> {{ $categoria->title }} </a>
-                            <div class="collapse" id="subcategories-{{$categoria->id}}" style="padding-left: 15px;">
+                            <a class="list-group-item bg-dark-gray" href="{{ url('courses/category/'.$categoria->id) }}" style="color: white;"><i class="{{ $categoria->icon }}"></i> {{ $categoria->title }} </a>
+                            <!--<div class="collapse" id="subcategories-{{$categoria->id}}" style="padding-left: 15px;">
                                 @foreach ($subcategoriasSidebar as $subcategoria)
                                     <a class="list-group-item bg-dark-gray" href="{{ route('search-by-category', [$categoria->slug, $categoria->id, $subcategoria->slug, $subcategoria->id]) }}" style="color: white;"><i class="far fa-circle"></i> {{ $subcategoria->title }} </a>
                                 @endforeach
-                            </div>
+                            </div>-->
                         @endforeach
-                    </div>-->
+                    </div>
 
                     @if(Auth::user())
                      @if(Auth::user()->rol_id == 0)

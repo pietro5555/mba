@@ -169,6 +169,7 @@ Route::group(['prefix' => 'installer'], function (){
 
   //vista del login (/login)
   Route::get('/log', 'LoginController@login')->name('log');
+  Route::get('/nosotros', 'HomeController@nosotros')->name('client.nosotros');
   Route::post('/autenticar', 'LoginController@autenticacion')->name('autenticar');
   Route::post('/autshoping', 'LoginController@autshoping')->name('aut-shoping');
 
@@ -249,7 +250,7 @@ Route::group(['prefix' => 'installer'], function (){
   //Agendar
   Route::get('schedule/{event_id}', 'EventsController@schedule')->name('schedule.event');
   Route::get('calendar', 'EventsController@calendar')->name('schedule.calendar');
-  
+
   //vista de anotaciones
   Route::get('/anotaciones', 'NoteController@index')->name('anotaciones');
   Route::post('/anotaciones/store', 'NoteController@store')->name('live.anotaciones');

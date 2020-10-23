@@ -39,11 +39,11 @@
                                     </h3>
                                 </div>
                                 <div class="box-body">
-                                    
+
                                     <input type="hidden" name="tip" value="1">
 
 
-                                    @if(!empty(request()->select))  
+                                    @if(!empty(request()->select))
                                     <div class="form-group">
                                         <label class="control-label" style="text-align: center; color: white;">Tipo de Usuario (*)</label>
                                        <select class="form-control" name="rango" id="idrang" onchange="avataresMentor()">
@@ -63,11 +63,16 @@
                                       </div>
 
                                       <div class="form-group">
-                                        <label class="control-label" style="text-align: center; color: white;">Descripcion (*)</label>
+                                        <label class="control-label" style="text-align: center; color: white;">Descripción(*)</label>
+                                           <input class="form-control" type="textarea" name="profession">
+                                      </div>
+                                      <div class="form-group">
+                                        <label class="control-label" style="text-align: center; color: white;">Biografía(*)</label>
                                            <textarea class="form-control" type="textarea" name="contenido"> </textarea>
                                       </div>
                                     </div>
-                                    
+                                    </div>
+
                                     @foreach($campos as $campo)
                                     @if($campo->tip == 0 || $campo->tip == 1)
                                     @if($campo->tipo == 'select')
@@ -160,8 +165,8 @@
                                             style="background-color:f7f7f7;" oncopy="return false"
                                             onpaste="return false" />
                                     </div>
-                                    
-                                    
+
+
                                     @if (request()->ref == null)
                                     <div class="form-group">
                                         <div class="alert alert-info">
@@ -170,21 +175,21 @@
                                                 Si no sabes cual es el ID de su Patrocinador, por favor Coloque el 1
                                             </span>
                                         </div>
-                                        
+
                     <label class="control-label" style="text-align: center;">ID Patrocinador (*)</label>
             <input class="form-control form-control-solid placeholder-no-fix form-group" type="text" required pattern="[0-9]*"
                 autocomplete="off" name="referred_id" style="background-color:f7f7f7;" oncopy="return false"
                 onpaste="return false" />
-                                        
+
                                     </div>
-                                    
+
                                     @else
                                     <div class=" form-group">
                                         <label class="white" for="">ID Patrocinador (opcional)</label>
                                         <input type="number" class="form-control" name="referred_id" value="{{ request()->ref }}">
                                     </div>
                                     @endif
-                                    
+
                                     {{-- no binario --}}
                                     @if ($settingEstructura->tipoestructura != 'binaria')
                                      @if($settings->posicionamiento == 0)
@@ -198,11 +203,11 @@
                                     </div>
                                      @endif
                                     @else
-                                    
+
                                     @if (!empty(request()->lado))
                                     <input type="hidden" name="ladomatriz" value="{{request()->lado}}" />
                                     @endif
-                                    
+
                                     @if(empty(request()->lado))
                                     {{-- binario --}}
                                         <div class=" form-group">
@@ -288,13 +293,13 @@
     function avataresMentor(){
 
     var opt = $('#idrang').val();
-    
+
     if(opt == "2"){
         $('#imagenavatar').show();
         }else{
             $('#imagenavatar').hide();
         }
     }
-    
+
 </script>
 @endpush

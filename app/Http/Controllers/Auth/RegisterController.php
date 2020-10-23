@@ -151,6 +151,7 @@ class RegisterController extends Controller
             'status' => '0',
             'correos' =>'{"pago":"1","compra":"1","pc":"1","liquidacion":"1"}',
             'avatar' => ($rol_id != 2) ? 'avatar.png' : $this->avatarMentor($data),
+            'profession' => $data['profession'],
             'about' => $data['contenido'],
         ]);
 

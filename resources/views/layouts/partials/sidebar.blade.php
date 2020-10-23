@@ -2,6 +2,7 @@
     $categoriasSidebar = \App\Models\Category::orderBy('id', 'ASC')->get();
 
         $subcategoriasSidebar = \App\Models\Subcategory::orderBy('id', 'ASC')->get();
+        $cursos = \App\Models\Course::orderBy('id', 'ASC')->get();
 @endphp
 
 <!-- Sidebar -->
@@ -48,6 +49,15 @@
                                 @endforeach
                             </div>-->
                         @endforeach
+
+                        <!--@foreach ($cursos as $curso)
+                            <a class="list-group-item bg-dark-gray" href="{{ url ('courses/show/'.$curso->slug.'/'.$curso->id)}}" style="color: white;"><i class="text-primary fas fa-arrow-circle-right"></i> {{ $curso->title }} </a>
+                            <div class="collapse" id="subcategories-{{$categoria->id}}" style="padding-left: 15px;">
+                                @foreach ($subcategoriasSidebar as $subcategoria)
+                                    <a class="list-group-item bg-dark-gray" href="{{ route('search-by-category', [$categoria->slug, $categoria->id, $subcategoria->slug, $subcategoria->id]) }}" style="color: white;"><i class="far fa-circle"></i> {{ $subcategoria->title }} </a>
+                                @endforeach
+                            </div>-->
+                        <!--@endforeach-->
                     </div>
 
                     @if(Auth::user())

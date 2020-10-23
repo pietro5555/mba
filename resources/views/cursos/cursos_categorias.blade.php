@@ -7,12 +7,12 @@
             }else{
                 var route = $(".btn-arrow-previous").attr('data-route');
             }
-            
+
             $.ajax({
                 url:route,
                 type:'GET',
                 success:function(ans){
-                    $("#new-courses-section").html(ans); 
+                    $("#new-courses-section").html(ans);
                 }
             });
         }
@@ -29,7 +29,7 @@
           <hr style="border: 1px solid #707070;opacity: 1;" />
        </div>
     <div class="container-fluid">
-        
+
         <div class="col mb-4 mt-4">
             <div class="title-page-course col-md"><span class="text-white">
                 @if (!is_null ($category_name))
@@ -38,12 +38,12 @@
                     <h2>Cursos Online <span class="text-primary">relacionados</span></h2>
                 @endif
             </div>
-        </div>     
-             
+        </div>
+
         <div class="row">
             @if ($courses->count() > 0)
                 @foreach ($courses as $curso)
-                
+
                 <div class="col-md-3 mt-1">
                     @if (!is_null($curso->thumbnail_cover))
                         <img src="{{ asset('uploads/images/courses/covers/'.$curso->thumbnail_cover) }}" class="card-img-top img-opacity" alt="...">
@@ -70,7 +70,7 @@
 
                                     </div>
                                 </div>
-                            
+
                             </div>
                         </div>
                     </div>
@@ -79,11 +79,11 @@
                 @endforeach
             @else
             <div class="container-fluid">
-                <h3>
+                <h4 class="text-white">
                     No se encontraron cursos relacionados con la búsqueda...
-                </h3>
+                </h4>
             </div>
-                
+
             @endif
         </div>
     </div>

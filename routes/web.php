@@ -166,9 +166,11 @@ Route::group(['prefix' => 'installer'], function (){
 
 
   /*Rutas MBA*/
-
+    //Politicas
+    Route::get('/policies', 'HomeController@policies')->name('client.policies');
   //vista del login (/login)
   Route::get('/log', 'LoginController@login')->name('log');
+  Route::get('/nosotros', 'HomeController@nosotros')->name('client.nosotros');
   Route::post('/autenticar', 'LoginController@autenticacion')->name('autenticar');
   Route::post('/autshoping', 'LoginController@autshoping')->name('aut-shoping');
 
@@ -216,6 +218,7 @@ Route::group(['prefix' => 'installer'], function (){
     Route::get('show/{slug}/{id}', 'CourseController@show')->name('courses.show');
      Route::get('lesson/{slug}/{id}/{course_id}', 'LessonController@lesson')->name('lesson.show');
      Route::post('lesson/comments', 'LessonController@lesson_comments')->name('lesson.comments');
+     Route::get('change-language/{course}/{language}/{lesson}', 'CourseController@change_language')->name('course.change-language');
     //Route::get('recommended', 'CourseController@recommended')->name('courses.recommended');
     Route::get('all', 'CourseController@show_all_courses')->name('courses.show.all');
   });
@@ -225,6 +228,7 @@ Route::group(['prefix' => 'installer'], function (){
      Route::group(['prefix' => 'courses'], function(){
         Route::get('my-list', 'CourseController@my_courses')->name('client.my-courses');
         Route::get('add/{curso}/{language}', 'CourseController@add')->name('client.courses.add');
+       
         Route::post('rate', 'RatingController@store')->name('client.courses.rate');
         Route::get('{slug}/{id}/take-evaluation', 'EvaluationController@take')->name('client.courses.take-evaluation');
         Route::post('submit-evaluation', 'EvaluationController@submit')->name('client.courses.submit-evaluation');
@@ -254,7 +258,7 @@ Route::group(['prefix' => 'installer'], function (){
   //Agendar
   Route::get('schedule/{event_id}', 'EventsController@schedule')->name('schedule.event');
   Route::get('calendar', 'EventsController@calendar')->name('schedule.calendar');
-  
+
   //vista de anotaciones
   Route::get('/anotaciones', 'NoteController@index')->name('anotaciones');
   Route::post('/anotaciones/store', 'NoteController@store')->name('live.anotaciones');

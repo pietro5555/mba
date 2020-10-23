@@ -103,26 +103,26 @@
                                 </div>
                                 <div class="mb-2 text-center text-white">
                                     Medios de Pago
-                                    <img src="http://127.0.0.1:8000/images/stripe.png" height="15px" class="mr-md-2 mr-3">
+                                    <img src="{{ asset('images/stripe.png') }}" height="15px" class="mr-md-2 mr-3">
                                 </div>
                                 <div class="mb-2 text-center text-white">
                                     Aceptamos
-                                    <img src="http://127.0.0.1:8000/images/visa.png" height="15px" class="mr-md-2 mr-3">
-                                    <img src="http://127.0.0.1:8000/images/mastercard.png" height="15px" class="mr-md-2 mr-3">
-                                    <img src="http://127.0.0.1:8000/images/american.png" height="15px" class="mr-md-2 mr-3">
+                                    <img src="{{ asset('images/visa.png') }}" height="15px" class="mr-md-2 mr-3">
+                                    <img src="{{ asset('images/mastercard.png') }}" height="15px" class="mr-md-2 mr-3">
+                                    <img src="{{ asset('images/american.png') }}" height="15px" class="mr-md-2 mr-3">
                                 </div>
                                 <div class="mb-2 text-center text-white">
-                                    Próximamente
-                                    <img src="http://127.0.0.1:8000/images/amazon_pay.png" height="15px" class="mr-md-2 mr-3">
-                                    <img src="http://127.0.0.1:8000/images/apple_pay.png" height="15px" class="mr-md-2 mr-3">
-                                    <img src="http://127.0.0.1:8000/images/g_pay.png" height="15px" class="mr-md-2 mr-3">
+                                    Pr&oacute;ximamente
+                                    <img src="{{ asset('images/amazon_pay.png') }}" height="15px" class="mr-md-2 mr-3">
+                                    <img src="{{ asset('images/apple_pay.png') }}" height="15px" class="mr-md-2 mr-3">
+                                    <img src="{{ asset('images/g_pay.png') }}" height="15px" class="mr-md-2 mr-3">
 
                                 </div>
                                 <div class="mb-2 text-center text-white">
-                                        <a href="" class="text-white">Políticas de Uso</a> &nbsp&nbsp
-                                        <a href="" class="text-white">Términos y condiciones</a>&nbsp&nbsp
-                                        <a href="" class="text-white"> Contacto</a>&nbsp&nbsp
-                                        <a href="{{route('index')}}" class="text-white">Inicio</a>&nbsp&nbsp
+                                    <a href="{{route('client.policies')}}" class="text-white" target="_blank">Pol&iacute;ticas de Uso</a> &nbsp&nbsp
+                                    <a href="https://mybusinessacademypro.com/aviso-de-privacidad-terminos-y-condiciones/" class="text-white">T&eacute;rminos y condiciones</a>&nbsp&nbsp
+                                    <a href="" class="text-white"> Contacto</a>&nbsp&nbsp
+                                    <a href="{{route('index')}}" class="text-white">Inicio</a>&nbsp&nbsp
                                 </div>
 
                             </div>

@@ -444,38 +444,47 @@ $tercero++;
 
     {{-- SECCIÓN TUS MENTORES--}}
     @if (!Auth::guest())
-        <div class="section-landing">
-            <div class="col-lg-6 offset-lg-3">
-                <h4 class=" section-title-landing text-primary text-center">MENTORES</h4>
-            </div>
-            <div class="container-fluid">
-                <div class="mentor-index-seccion row d-flex flex-row p-2">
-                    @foreach ($mentores as $mentor)
-                    <div class="col-xs-12 mt-2">
-                        <div class="card mentors-card">
-                            <div class="row no-gutters">
-                                <div class="col-auto">
-                                    <img src="{{ asset('uploads/avatar/'.$mentor->avatar)}}" class="" alt="" height="164px" width="164px">
-                                </div>
-                                <div class="col">
-                                    <div class="card-block px-2">
-                                        <h4 class="card-title mt-4">{{$mentor->nombre}}</h4>
-                                        <p class="card-text">{{$mentor->categoria}}</p>
-                                        <br>
-
-                                        <p class="card-text text-lg-right"><a href="{{ url('courses/mentor/'.$mentor->mentor_id) }}" class="col-sm-lg text-sm-left card-text">Ver perfil</a> <i class=" fa fa-angle-right"> </i></p>
-                                    </div>
-
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    @endforeach
+           {{-- SECCIÓN MENTORES --}}
+    <div class="section-landing">
+        <div class="row">
+            <div class="col">
+                <div class="section-title-landing new-courses-section-title">
+                    <h1>MENTORES</h1>
                 </div>
-
             </div>
         </div>
+
+        <div id="newers" class="row" style="padding: 10px 30px;">
+            @foreach ($mentores as $mentor)
+                <div class="col-xl-4 col-lg-4 col-12" style="padding-bottom: 10px;">
+                    <div class="card">
+                        <a href="" style="color: white;">
+
+                        @if (!is_null($mentor->avatar))
+                            <!-- <img src="{{ asset('uploads/avatar/'.$mentor->avatar) }}" class="card-img-top new-course-img" alt="..."> -->
+                            <img src="{{ asset('uploads/avatar/'.$mentor->avatar) }}" class="card-img-top new-course-img" alt="...">
+                        @else
+                            <img src="{{ asset('uploads/images/courses/covers/default.jpg') }}" class="card-img-top new-course-img" alt="...">
+                        @endif
+                        <div class="card-img-overlay d-flex flex-column">
+                            <div class="mt-auto">
+                                <div class="text-sm text-white" style="line-height:1;">
+                                    <a class="text-white" href="{{ url('courses/mentor/'.$mentor->mentor_id) }}"> {{ $mentor->nombre }}</a>
+                                   </div>
+
+
+                            </div>
+                        </div>
+                      </a>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+
+
+
+{{-- FIN SECCIÓN MENTORES --}}
     @endif
     {{-- FIN SECCIÓN TUS MENTORES--}}
 @endsection

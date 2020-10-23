@@ -2,6 +2,7 @@
     $categoriasSidebar = \App\Models\Category::orderBy('id', 'ASC')->get();
 
         $subcategoriasSidebar = \App\Models\Subcategory::orderBy('id', 'ASC')->get();
+        $cursos = \App\Models\Course::orderBy('id', 'ASC')->get();
 @endphp
 
 <!-- Sidebar -->
@@ -38,17 +39,26 @@
                         </form>
                     </div>
                     <a href="{{ route('courses.show.all') }}" class="list-group-item bg-dark-gray" style="color: white;"><i class="fas fa-border-all"></i> Ver todos los cursos</a>
-                   <!-- <a class="list-group-item bg-dark-gray" data-toggle="collapse" href="#categoriesDiv" style="color: white;"><i class="fas fa-border-all"></i> Ver todos los cursos <i class="fas fa-angle-down"></i></a>
+                    <a class="list-group-item bg-dark-gray" data-toggle="collapse" href="#categoriesDiv" style="color: white;"><i class="far fa-list-alt"></i> Categorías <i class="fas fa-angle-down"></i></a>
                     <div class="collapse" id="categoriesDiv" style="padding-left: 15px;">
                         @foreach ($categoriasSidebar as $categoria)
-                            <a class="list-group-item bg-dark-gray" data-toggle="collapse" href="#subcategories-{{$categoria->id}}" style="color: white;"><i class="{{ $categoria->icon }}"></i> {{ $categoria->title }} </a>
+                            <a class="list-group-item bg-dark-gray" href="{{ url('courses/category/'.$categoria->id) }}" style="color: white;"><i class="{{ $categoria->icon }}"></i> {{ $categoria->title }} </a>
+                            <!--<div class="collapse" id="subcategories-{{$categoria->id}}" style="padding-left: 15px;">
+                                @foreach ($subcategoriasSidebar as $subcategoria)
+                                    <a class="list-group-item bg-dark-gray" href="{{ route('search-by-category', [$categoria->slug, $categoria->id, $subcategoria->slug, $subcategoria->id]) }}" style="color: white;"><i class="far fa-circle"></i> {{ $subcategoria->title }} </a>
+                                @endforeach
+                            </div>-->
+                        @endforeach
+
+                        <!--@foreach ($cursos as $curso)
+                            <a class="list-group-item bg-dark-gray" href="{{ url ('courses/show/'.$curso->slug.'/'.$curso->id)}}" style="color: white;"><i class="text-primary fas fa-arrow-circle-right"></i> {{ $curso->title }} </a>
                             <div class="collapse" id="subcategories-{{$categoria->id}}" style="padding-left: 15px;">
                                 @foreach ($subcategoriasSidebar as $subcategoria)
                                     <a class="list-group-item bg-dark-gray" href="{{ route('search-by-category', [$categoria->slug, $categoria->id, $subcategoria->slug, $subcategoria->id]) }}" style="color: white;"><i class="far fa-circle"></i> {{ $subcategoria->title }} </a>
                                 @endforeach
-                            </div>
-                        @endforeach
-                    </div>-->
+                            </div>-->
+                        <!--@endforeach-->
+                    </div>
 
                     @if(Auth::user())
                      @if(Auth::user()->rol_id == 0)
@@ -64,6 +74,12 @@
                         <img src="{{asset($settings->id_no_comision)}}" alt="" height="200" width="200">
                     </div>
                     @endif
+                    <div class="text-center col pt-2">
+                        <a href="https://m.facebook.com/MyBusinessAcademyPro/"><img class="m-2" src="{{ asset('images/icons/FBA.png') }}"></a>
+                        <a href=""><img class="m-2" src="{{ asset('images/icons/TWA.png') }}"></a>
+                         <a href="https://instagram.com/mybusinessacademypro?igshid=tdj5prrv1gx1"><img class="m-2" src="{{ asset('images/icons/IGA.png') }}"></a>
+                        <a href=""><img class="m-2" src="{{ asset('images/icons/YTA.png') }}"></a>
+                    </div>
                 </div>
             </div>
             <!-- /#sidebar-wrapper -->

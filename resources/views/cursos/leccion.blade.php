@@ -3,120 +3,129 @@
 @push('styles')
   <style>
     .circular--square {
-        width: 5rem;
-        height: 5rem;
+      width: 5rem;
+      height: 5rem;
       border-radius: 50%;
     }
   </style>
 @endpush
 @section('content')
   @if (Session::has('msj-exitoso'))
-      <div class="alert alert-success" style="margin: 5px 15px;">
-         {{ Session::get('msj-exitoso') }}
-      </div>
-   @endif
+  <div class="alert alert-success" style="margin: 5px 15px;">
+    {{ Session::get('msj-exitoso') }}
+  </div>
+  @endif
 
-   @if (Session::has('msj-erroneo'))
-      <div class="alert alert-danger" style="margin: 5px 15px;">
-         {{ Session::get('msj-erroneo') }}
+  @if (Session::has('msj-erroneo'))
+  <div class="alert alert-danger" style="margin: 5px 15px;">
+    {{ Session::get('msj-erroneo') }}
+  </div>
+  @endif
+  <div class="container-fluid">
+    <div class="row justify-content-end">
+      <div class="col mt-2">
+        <h5 class="text-white">@if ($progresoCurso->language == 'es') {{$lesson->title}} @else {{$lesson->english_title}} @endif</h5>
       </div>
-   @endif
-<div class="container-fluid">
-  <div class="row justify-content-end">
-     <div class="col mt-2"><h5 class="text-white">{{$lesson->title}}</h5></div>
-    <div class="col-xs-1 col-md-2">
-            @switch( $lesson->subcategory_id)
-            @case(1)
-            <h5 style="padding: 10px 10px;background-color: #BF4040;color: #fff;text-align: center;">
-                    <small>
-                      <strong>Principiante</strong>
-                    </small>
-            </h5>
-            @break
-            @case(2)
-            <h5 style="padding: 10px 10px;background-color: #B9AA1D;color: #fff;text-align: center;">
-                    <small>
-                      <strong>Básico</strong>
-                    </small>
-            </h5>
-            @break
-            @case (3)
-            <h5 style="padding: 10px 10px;background-color: #A5D6E5;color: #fff;text-align: center;">
-                    <small>
-                      <strong>Intermedio</strong>
-                    </small>
-            </h5>
-            @break
-            @case (4)
-            <h5 style="padding: 10px 10px;background-color: #9C4F9D;color: #fff;text-align: center;">
-                    <small>
-                      <strong>Avanzado</strong>
-                    </small>
-            </h5>
-            @break
-            @case (5)
-            <h5 style="padding: 10px 10px;background-color: #3B053C;color: #fff;text-align: center;">
-                    <small>
-                      <strong>Pro</strong>
-                    </small>
-            </h5>
-            @break
+      <div class="col-xs-1 col-md-3 mt-1">
+        @if ($progresoCurso->language == 'es')
+          <a href="{{ route('course.change-language', [$lesson->course_id, 'en', $lesson->id]) }}" class="btn btn-primary">Continuar en Inglés</a>
+        @else
+          <a href="{{ route('course.change-language', [$lesson->course_id, 'es', $lesson->id]) }}" class="btn btn-primary">Continuar en Español</a>
+        @endif
+      </div>
+      <div class="col-xs-1 col-md-2">
+        @switch( $lesson->subcategory_id)
+        @case(1)
+        <h5 style="padding: 10px 10px;background-color: #BF4040;color: #fff;text-align: center;">
+          <small>
+            <strong>Principiante</strong>
+          </small>
+        </h5>
+        @break
+        @case(2)
+        <h5 style="padding: 10px 10px;background-color: #B9AA1D;color: #fff;text-align: center;">
+          <small>
+            <strong>Básico</strong>
+          </small>
+        </h5>
+        @break
+        @case (3)
+        <h5 style="padding: 10px 10px;background-color: #A5D6E5;color: #fff;text-align: center;">
+          <small>
+            <strong>Intermedio</strong>
+          </small>
+        </h5>
+        @break
+        @case (4)
+        <h5 style="padding: 10px 10px;background-color: #9C4F9D;color: #fff;text-align: center;">
+          <small>
+            <strong>Avanzado</strong>
+          </small>
+        </h5>
+        @break
+        @case (5)
+        <h5 style="padding: 10px 10px;background-color: #3B053C;color: #fff;text-align: center;">
+          <small>
+            <strong>Pro</strong>
+          </small>
+        </h5>
+        @break
         @endswitch
-    </div>
+      </div>
 
-    <div class="col-xs-1 col-md-2 text-center ">
-      <div class="icon-social-media">
-        <a href="https://m.facebook.com/MyBusinessAcademyPro/" target="_blank" class="btn btn-social-icon btn-facebook btn-rounded ml-2 mr-2"><img src="{{ asset('images/icons/facebook.svg') }}" height="20px" width="20px"></a>
-        <a href="" class="btn btn-social-icon btn-twitter btn-rounded ml-2 mr-2" target="_blank"><img src="{{ asset('images/icons/twitter.svg') }}" height="20px" width="20px"></a>
-        <a href="https://instagram.com/mybusinessacademypro?igshid=tdj5prrv1gx1" target="_blank" class="btn btn-social-icon btn-instagram btn-rounded ml-2 mr-2"><img src="{{ asset('images/icons/instagram.svg') }}" height="20px" width="20px"></a>
+      <div class="col-xs-1 col-md-2 text-center ">
+        <div class="icon-social-media">
+          <a href="https://m.facebook.com/MyBusinessAcademyPro/" target="_blank" class="btn btn-social-icon btn-facebook btn-rounded ml-2 mr-2"><img src="{{ asset('images/icons/facebook.svg') }}" height="20px" width="20px"></a>
+          <a href="" class="btn btn-social-icon btn-twitter btn-rounded ml-2 mr-2" target="_blank"><img src="{{ asset('images/icons/twitter.svg') }}" height="20px" width="20px"></a>
+          <a href="https://instagram.com/mybusinessacademypro?igshid=tdj5prrv1gx1" target="_blank" class="btn btn-social-icon btn-instagram btn-rounded ml-2 mr-2"><img src="{{ asset('images/icons/instagram.svg') }}" height="20px" width="20px"></a>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-  {{-- BANNER --}}
-  <div id="lessonsCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
-    <div class="carousel-inner">
-      @php $ending = 0; $cont = 1; @endphp
-      @foreach ($all_lessons as $leccion)
-        <div class="carousel-item @if ($leccion->id == $lesson->id) active @endif">
+{{-- BANNER --}}
+<div id="lessonsCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
+  <div class="carousel-inner">
+    @php $ending = 0; $cont = 1; @endphp
+    @foreach ($all_lessons as $leccion)
+    <div class="carousel-item @if ($leccion->id == $lesson->id) active @endif">
 
-        @if ($progresoCurso != null)
-          <div class="video-container">
-            <iframe @if ($progresoCurso->language == 'es') src="{{ $leccion->url }}" @else src="{{ $leccion->english_url }}" @endif width="100%" height="590" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-          </div>
-        </div>
-        @endif
-        @if ($leccion->id <= $lesson->id)
-            @php
-                if ($cont >= count($all_lessons) ){
-                  $ending = 1;
-                }else{
-                  $cont++;
-                }
-            @endphp
-        @endif
-          @if ($leccion->id > $lesson->id)
-            @if ($leccion->id == ($lesson->id + 1))
-              <a id="nextlesson" class="d-none" href="{{ route('lesson.show', [$leccion->slug, $leccion->id, $leccion->course_id]) }}">Siguiente</a>
-            @endif
-          @else
-            @if ($leccion->id == $lesson->id && $ending == 1)
-              <a id="nextlesson" class="d-none" href="{{ route('client.courses.take-evaluation', [$lesson->course->slug, $lesson->course_id]) }}">Evaluacion</a>
-            @endif
-          @endif
-      @endforeach
+      @if ($progresoCurso != null)
+      <div class="video-container">
+        <iframe @if ($progresoCurso->language == 'es') src="{{ $leccion->url }}" @else src="{{ $leccion->english_url }}" @endif width="100%" height="590" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+      </div>
     </div>
-    <!--<div class="">
+    @endif
+    @if ($leccion->id <= $lesson->id)
+      @php
+      if ($cont >= count($all_lessons) ){
+      $ending = 1;
+      }else{
+      $cont++;
+      }
+      @endphp
+      @endif
+      @if ($leccion->id > $lesson->id)
+      @if ($leccion->id == ($lesson->id + 1))
+      <a id="nextlesson" class="d-none" href="{{ route('lesson.show', [$leccion->slug, $leccion->id, $leccion->course_id]) }}">Siguiente</a>
+      @endif
+      @else
+      @if ($leccion->id == $lesson->id && $ending == 1)
+      <a id="nextlesson" class="d-none" href="{{ route('client.courses.take-evaluation', [$lesson->course->slug, $lesson->course_id]) }}">Evaluacion</a>
+      @endif
+      @endif
+      @endforeach
+  </div>
+  <!--<div class="">
       <a class="btn-prev text-white" href="#lessonsCarousel" role="button" data-slide="prev">Anterior</a>
     </div>
     <div>
       <a class="btn-next text-white" href="#lessonsCarousel" role="button" data-slide="next">Siguiente</a>
     </div>-->
-    <!--<div class="btn-play-video">
+  <!--<div class="btn-play-video">
       <i class="fa fa-play-circle text-primary"></i>
     </div>-->
-  </div>
+</div>
 {{-- FIN DEL BANNER --}}
 {{-- SECCIÓN Tabs Leccion--}}
 <div class="container-fluid">
@@ -129,7 +138,7 @@
               <a class="nav-item nav-link active m-2" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Acerca del Curso</a>
               <a class="nav-item nav-link m-2" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Comentarios</a>
               @if ($lesson->materials->isNotEmpty())
-                <a class="nav-item nav-link m-2" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Materiales</a>
+              <a class="nav-item nav-link m-2" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Materiales</a>
               @endif
 
               @if ($certificar)
@@ -150,7 +159,7 @@
                         <a class="media-left" href="#">
                           <div class="col-md-2">
                             <div class="perfil-comments">
-                              <img src="{{ asset('uploads/avatar/'.Auth::user()->avatar) }}" alt="" class="circular--square" >
+                              <img src="{{ asset('uploads/avatar/'.Auth::user()->avatar) }}" alt="" class="circular--square">
                             </div>
                           </div>
                         </a>
@@ -173,63 +182,63 @@
                 </div><!-- end row -->
               </div><!-- end custom-box -->
               @foreach ($all_comments as $comment)
-                <div class="custombox clearfix mt-4 pb-4 border-bottom">
-                  <div class="row">
-                    <div class="col-lg-12">
+              <div class="custombox clearfix mt-4 pb-4 border-bottom">
+                <div class="row">
+                  <div class="col-lg-12">
 
-                      <div class="comments-list">
-                        <div class="media">
-                          <a class="media-left" href="#">
-                            <div class="col-md-2">
-                              <img src="{{ asset('uploads/avatar/'.$comment->user->avatar) }}" alt="" class="circular--square" >
-                            </div>
-                          </a>
-
-                          <div class="media-body">
-                            <h4 class="media-heading text-white">{{ $comment->user->display_name }}</h4>
-                            <small class="media-heading about-course-text">{{str_replace('-', '/', date('d-m-Y', strtotime($comment->date)))}}</small>
-                            <p class="about-course-text">
-                              {{$comment->comment}}
-                            </p>
-                            <p class="about-course-text float-right mr-4">
-                              <i class="far fa-comment-alt about-course-text" aria-hidden="true"></i> <a href="" class="about-course-text"> Responder</a>
-
-                            </p>
-
+                    <div class="comments-list">
+                      <div class="media">
+                        <a class="media-left" href="#">
+                          <div class="col-md-2">
+                            <img src="{{ asset('uploads/avatar/'.$comment->user->avatar) }}" alt="" class="circular--square">
                           </div>
+                        </a>
+
+                        <div class="media-body">
+                          <h4 class="media-heading text-white">{{ $comment->user->display_name }}</h4>
+                          <small class="media-heading about-course-text">{{str_replace('-', '/', date('d-m-Y', strtotime($comment->date)))}}</small>
+                          <p class="about-course-text">
+                            {{$comment->comment}}
+                          </p>
+                          <p class="about-course-text float-right mr-4">
+                            <i class="far fa-comment-alt about-course-text" aria-hidden="true"></i> <a href="" class="about-course-text"> Responder</a>
+
+                          </p>
 
                         </div>
-                      </div>
 
-                    </div><!-- end col -->
-                  </div><!-- end row -->
-                </div>
+                      </div>
+                    </div>
+
+                  </div><!-- end col -->
+                </div><!-- end row -->
+              </div>
               @endforeach
               <!-- end custom-box -->
             </div>
             <div class="tab-pane fade pl-5" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
               @foreach ($lesson->materials as $material)
-                @if ($material->type == 'Archivo')
-                  <a href="{{ asset('uploads/courses/lessons/materials/'.$material->material) }}" target="_blank">
-                    <h5 class="mb-0 font-weight-bold d-block position-relative py-2">
-                      <i class="text-primary fa fa-link"></i> {{$material->title}}
-                    </h5>
-                  </a>
-                @else
-                  <a href="{{ $material->material }}" target="_blank">
-                    <h5 class="mb-0 font-weight-bold d-block position-relative py-2">
-                      <i class="text-primary fa fa-link"></i> {{$material->title}}
-                    </h5>
-                  </a>
-                @endif
-                <br>
+              @if ($material->type == 'Archivo')
+              <a href="{{ asset('uploads/courses/lessons/materials/'.$material->material) }}" target="_blank">
+                <h5 class="mb-0 font-weight-bold d-block position-relative py-2">
+                  <i class="text-primary fa fa-link"></i> {{$material->title}}
+                </h5>
+              </a>
+              @else
+              <a href="{{ $material->material }}" target="_blank">
+                <h5 class="mb-0 font-weight-bold d-block position-relative py-2">
+                  <i class="text-primary fa fa-link"></i> {{$material->title}}
+                </h5>
+              </a>
+              @endif
+              <br>
               @endforeach
             </div>
             <div class="tab-pane fade" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
               @if ($progresoCurso->certificate == 1)
-                <a href="{{ route('client.courses.get-certificate', $progresoCurso->course_id) }}" class="btn btn-primary play-course-button btn-block"><i class="fas fa-certificate"></i> OBTENER CERTIFICADO</a>
+              <a href="{{ route('client.courses.get-certificate', $progresoCurso->course_id) }}" class="btn btn-primary play-course-button btn-block"><i class="fas fa-certificate"></i> OBTENER CERTIFICADO</a>
               @else
-                Debe finalizar el curso para generar el certificado...
+              Debe finalizar el curso para generar el certificado...
               @endif
             </div>
           </div>
@@ -242,37 +251,37 @@
           </nav>
 
           <div id="accordion">
-                @php $cont2 = 0; @endphp
-                <!-- Accordion item 1 -->
-                @foreach($all_lessons as $lesson)
-                <div class="card mt-2 card-accordion" id="card-lesson-content">
-                        <div class="card-header collapsed border-0 collapsible-link" id="heading{{$lesson->id}}" data-toggle="collapse" data-target="#collapse{{$lesson->id}}" aria-expanded="false" aria-controls="collapse{{$lesson->id}}">
-                                <a href="{{ route('lesson.show', [$lesson->slug, $lesson->id, $lesson->course_id]) }}">
-                                        <h5 class="mb-0 font-weight-bold d-block position-relative py-2">
-                                        <i class="text-primary fa fa-play-circle"></i>  {{$lesson->title}}
-                                        </h5>
-                                </a>
-                        </div>
-                        <div id="collapse{{$lesson->id}}" class="collapse" aria-labelledby="heading{{$lesson->id}}" data-parent="#accordion">
-                        <div class="card-body">
-                                {{$lesson->description}}
-                        </div>
-                        </div>
+            @php $cont2 = 0; @endphp
+            <!-- Accordion item 1 -->
+            @foreach($all_lessons as $lesson)
+            <div class="card mt-2 card-accordion" id="card-lesson-content">
+              <div class="card-header collapsed border-0 collapsible-link" id="heading{{$lesson->id}}" data-toggle="collapse" data-target="#collapse{{$lesson->id}}" aria-expanded="false" aria-controls="collapse{{$lesson->id}}">
+                <a href="{{ route('lesson.show', [$lesson->slug, $lesson->id, $lesson->course_id]) }}">
+                  <h5 class="mb-0 font-weight-bold d-block position-relative py-2">
+                    <i class="text-primary fa fa-play-circle"></i> @if ($progresoCurso->language == 'es') {{$lesson->title}} @else {{$lesson->english_title}} @endif
+                  </h5>
+                </a>
+              </div>
+              <div id="collapse{{$lesson->id}}" class="collapse" aria-labelledby="heading{{$lesson->id}}" data-parent="#accordion">
+                <div class="card-body">
+                  {{$lesson->description}}
                 </div>
-                @php $cont2++; @endphp
-            @endforeach
+              </div>
             </div>
-            @if ($progresoCurso->certificate == 0)
-                  <div class="card mt-2 mb-2" style="background-color: #2A91FF;">
-                    <div class="card-header text-center" >
-                      <a href="{{ route('client.courses.take-evaluation', [$lesson->course->slug, $lesson->course_id]) }}">
-                        <h5 class="mb-0 font-weight-bold d-block position-relative py-2" style="color: white;">
-                          PRESENTAR EVALUACIÓN
-                        </h5>
-                      </a>
-                    </div>
-                  </div>
-            @endif
+            @php $cont2++; @endphp
+            @endforeach
+          </div>
+          @if ($progresoCurso->certificate == 0)
+          <div class="card mt-2 mb-2" style="background-color: #2A91FF;">
+            <div class="card-header text-center">
+              <a href="{{ route('client.courses.take-evaluation', [$lesson->course->slug, $lesson->course_id]) }}">
+                <h5 class="mb-0 font-weight-bold d-block position-relative py-2" style="color: white;">
+                  PRESENTAR EVALUACIÓN
+                </h5>
+              </a>
+            </div>
+          </div>
+          @endif
 
 
 
@@ -344,23 +353,23 @@
   </div>
 </div>-->
 
-    {{-- SECCIÓN REFERIDOS (USUARIOS LOGGUEADOS) --}}
+  {{-- SECCIÓN REFERIDOS (USUARIOS LOGGUEADOS) --}}
 
-    {{-- FIN DE SECCIÓN REFERIDOS (USUARIOS LOGGUEADOS) --}}
+  {{-- FIN DE SECCIÓN REFERIDOS (USUARIOS LOGGUEADOS) --}}
 
   @endsection
   @push('scripts')
   <script>
-    $(document).on(function(){
-    $(".vp-telecine.invisible video").on('ended', function(){
-      $('#nextlesson').click();
+    $(document).on(function() {
+      $(".vp-telecine.invisible video").on('ended', function() {
+        $('#nextlesson').click();
+      });
     });
-  });
 
-  $(document).ready(function(){
-    $(".vp-telecine.invisible video").on('ended', function(){
-      $('#nextlesson').click();
+    $(document).ready(function() {
+      $(".vp-telecine.invisible video").on('ended', function() {
+        $('#nextlesson').click();
+      });
     });
-  });
   </script>
   @endpush

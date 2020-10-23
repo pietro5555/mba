@@ -202,10 +202,13 @@ Dev:Luisana Marín
 *Nuevo campo english_url en la tabla lessons (VARCHAR 255 NULL)
 *Nuevo campo language en la tabla courses_users (VARCHAR 2 PREDETERMINADO "es")
 
-
 13/10/2020
 Dev:Crisleivys
 *Agregado el campo deleted_at a la tabla courses y courses_users (correr los scripts courses y courses_users)
+
+
+ÚLTIMA ACTUALIZACIÓN DEL SERVIDOR: 17/10/2020
+----------------------------------------------
 
 19/10/2020
 Dev: Carlos Gonzalez
@@ -214,3 +217,7 @@ Dev: Carlos Gonzalez
 20/10/2020
 Dev: Carlos Gonzalez
 *Creacion del modulo de insignia_user y la tabla con el mismo nombre insignia_user.sql, correr scripts, ya esta en el servidor todo
+
+21/10/2020
+Dev:Luisana Marín
+*Nuevo campo english_title en la tabla lessons (VARCHAR 255 NULL)

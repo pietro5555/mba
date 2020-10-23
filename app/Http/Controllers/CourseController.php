@@ -325,7 +325,7 @@ class CourseController extends Controller{
             if (!is_null($last_lesson)){
                 $first_lesson = Lesson::where('id', $last_lesson->lesson_id)->first();
             }else{
-                $first_lesson = NULL;
+                $first_lesson = Lesson::where('course_id', '=', $id)->orderBy('id', 'ASC')->first();
             }
             
             //dd($first_lesson);
@@ -415,6 +415,19 @@ class CourseController extends Controller{
         }else{
             return redirect('courses/show/'.$curso->slug.'/'.$curso->id)->with('msj-exitoso', 'El curso ha sido agregado a su lista con éxito.');
         }
+    }
+
+    public function change_language($course, $language, $lesson){
+        DB::table('courses_users')
+            ->update(['language' => $language, 'updated_at' => date('Y-m-d H:i:s')]);
+         
+         
+        $datosLeccion = DB::table('lessons')
+                            ->select('slug')
+                            ->where('id', '=', $lesson)
+                            ->first(); 
+
+        return redirect('courses/lesson/'.$datosLeccion->slug.'/'.$lesson.'/'.$course)->with('msj-exitoso', 'La configuración del curso ha sido cambiada con éxito.');
     }
 
     /*CURSO FAVORITO*/

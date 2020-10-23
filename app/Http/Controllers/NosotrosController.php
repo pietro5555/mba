@@ -28,6 +28,11 @@ use App\Http\Controllers\WalletControler;
 class NosotrosController extends Controller
 {
 
+	public function step1(){
+
+		return view('nosotros.step1');
+	}
+
 	public function step2(){
 
 		return view('nosotros.step2');

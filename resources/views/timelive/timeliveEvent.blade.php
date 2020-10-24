@@ -2,7 +2,7 @@
 
 @push('scripts')
     <script>
-        const getRemainingTime = deadline => {
+        /*const getRemainingTime = deadline => {
             let objFecha = new Date()
             let now = new Date(objFecha.getUTCFullYear(), objFecha.getUTCMonth(), objFecha.getUTCDate(), objFecha.getUTCHours(), objFecha.getUTCMinutes(), objFecha.getUTCSeconds()),
                 remainTime = (new Date(deadline) - now + 1000) / 1000,
@@ -45,8 +45,6 @@
                     }
                     
                 } else {
-                    
-
                     $('#' + elem).append(
 
                         '<p class="p-1 bd-highlight" style="font-size: 80px; font-weight:800;">' +
@@ -86,8 +84,55 @@
                 }
 
             }, 1000)
-        };
-        countdown('{{$evento->date.' '.$evento->time}}', 'clock');
+        };*/
+        // Set the date we're counting down to
+         // var countDownDate = new Date("Jan 5, 2021 15:37:25").getTime();
+        var fecha = document.getElementById("countdown_limit").value;
+        if (fecha != 0){
+            var countDownDate = new Date(fecha).getTime();
+
+            // Update the count down every 1 second
+            var x = setInterval(function() {
+
+                // Get today's date and time
+                var now = new Date().getTime();
+                // Find the distance between now and the count down date
+                var distance = countDownDate - now;
+
+                // Time calculations for days, hours, minutes and seconds
+                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById("clock").innerHTML = days+" : "+hours+" : "+minutes+" : "+seconds;
+                   
+                // If the count down is finished, write some text
+                if (distance < 0) {
+                    clearInterval(x);
+                    $("#clock").css('display', 'none');
+                    $('#status-text').append('<h1>El live está por iniciar</h1>');
+                    $("#close").css('display', 'none');
+                    $("#open").css('display', 'block');
+                }
+            }, 1000);
+        }else{
+            $("#clock").css('display', 'none');
+            if ($("#statusLive").val() == 'ended'){
+                $("#open").css('display', 'none');
+                $("#close").css('display', 'block');
+                $('#status-text').append('<h1>El live ya ha finalizado</h1>');
+            }else if ($("#statusLive").val() == 'cancelled'){
+                $("#open").css('display', 'none');
+                $("#close").css('display', 'block');
+                $('#status-text').append('<h1>El live ha sido cancelado</h1>');
+            }else if ($("#statusLive").val() == 'live'){
+                $("#open").css('display', 'block');
+                $("#close").css('display', 'none');
+                $('#status-text').append('<h1>El live está en vivo</h1>');
+            }
+        }
+
     </script>
 @endpush
 
@@ -114,6 +159,7 @@
     @endif
 
     <div class="row">
+        <input type="hidden" id="countdown_limit" value="{{ $countdownLimit }}">
         <input type="hidden" id="statusLive" value="{{ $statusLive }}">
         <input type="hidden" id="checkCountdown" value="0">
         <div class="col-md-12">
@@ -124,8 +170,13 @@
             @endif
 
             <div class="card-img-overlay counter-caption">
-                <h6 class="card-title text-white text-center" id="remain-time-text">TIEMPO PARA INICIAR EL LIVE</h6>
-                <div class="d-flex justify-content-center bd-highlight mb-1 text-white" id="clock"></div>
+                <h6 class="card-title text-white text-center" id="remain-time-text" style="font-size: 25px !important; font-weight:600 !important;">TIEMPO PARA INICIAR EL LIVE</h6>
+                <div class="d-flex justify-content-center bd-highlight mb-1 text-white" style="padding-left: 15%; padding-right: 15%; font-size: 80px; font-weight:800;" id="clock">
+                    
+                </div>
+                <div class="d-flex justify-content-center bd-highlight mb-1 text-white" style="padding-left: 15%; padding-right: 15%; font-size: 80px; font-weight:800;" id="status-text">
+                    
+                </div>
             </div>
         </div>
     </div>
@@ -134,6 +185,17 @@
         <div class="col-md-8 kol">
             <h3 style="color: #2A91FF;margin-top: 20px;text-transform: uppercase;font-weight: 600;">{{$evento->title}}</h3>
             <hr color="white" size=3>
+           
+            @if (is_null($checkPais))
+                <p class="text-white">
+                    Fecha del Live: {{ date('d-m-Y', strtotime($evento->date)) }}<br>
+                    Horario del Live: 
+                    @foreach ($evento->countries as $country)
+                        {{ $country->abbreviation }} {{ date('H:i A', strtotime($country->pivot->time)) }} /
+                    @endforeach
+                </p>
+            @endif
+           
             <p class="text-white">
                 {!!$evento->description!!}
             </p>

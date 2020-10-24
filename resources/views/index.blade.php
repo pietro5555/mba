@@ -160,7 +160,7 @@
 	{{-- SLIDER --}}
     @if ($cursosDestacados->count() > 0)
     	<div class="container-fluid courses-slider">
-    		<div id="mainSlider" class="carousel slide" data-ride="carousel">
+    		<div id="mainSlider" class="carousel slide carousel-fade" data-ride="carousel">
                 @if ($cursosDestacados->count() > 1)
                     @php $contCD = 0; @endphp
                     <ol class="carousel-indicators">
@@ -260,9 +260,14 @@
                     @endif
             </div>
             </div>
-            <div class="col-12 mt-4">
+            <div class="col-12 col-sm-6 col-md-6 mt-4">
                 <h4 class="">Cursos Realizados: {{$avance['cursos']}}</h4>
             </div>
+            @if(!empty($insignia))
+            <div class="col-12 col-sm-6 col-md-6 mt-4">
+                <h4 class="">Ultima Insignia Ganada: <img src="{{ $insignia }}" height="40px" width="40px" style="margin: 20px;"></h4>
+            </div>
+              @endif
         </div>
     </div>
    @endauth
@@ -286,14 +291,15 @@
                         <div class="card">
                             <a href="{{ route('courses.show', [$cursoNuevo->slug, $cursoNuevo->id]) }}" style="color: white;">
 
-                            @if (!is_null($cursoNuevo->mentor->avatar))
-                                <img src="{{ asset('uploads/avatar/'.$cursoNuevo->mentor->avatar) }}" class="card-img-top new-course-img" alt="...">
+                            @if (!is_null($cursoNuevo->thumbnail_cover))
+                                <!-- <img src="{{ asset('uploads/avatar/'.$cursoNuevo->mentor->avatar) }}" class="card-img-top new-course-img" alt="..."> -->
+                                <img src="{{ asset('uploads/images/courses/covers/'.$cursoNuevo->thumbnail_cover) }}" class="card-img-top new-course-img" alt="...">
                             @else
-                                <img src="{{ asset('uploads/avatar/default.jpg') }}" class="card-img-top new-course-img" alt="...">
+                                <img src="{{ asset('uploads/images/courses/covers/default.jpg') }}" class="card-img-top new-course-img" alt="...">
                             @endif
                             <div class="card-img-overlay d-flex flex-column">
                                 <div class="mt-auto">
-                                    <div class="new-course-title">{{ $cursoNuevo->title }}</div>
+                                    <div class="section-title-landing text-white" style="line-height:1;">{{ $cursoNuevo->title }}</div>
                                     <div class="row">
                                        <div class="col-md-12">
                                            <p class="ico" style="float: right;"> <i class="far fa-user-circle"> {{ $cursoNuevo->users->count()}}</i></p>
@@ -318,9 +324,23 @@
             	<a href="{{route('transmisiones')}}" type="button" class="btn btn-primary btn-next-streaming">Próximo Streaming</a><br>
 
                 <div class="next-streaming-title">{{ $proximoEvento->title }}</div>
-                <div class="next-streaming-date">
-                    <i class="fa fa-calendar"></i> {{ $proximoEvento->weekend_day }} {{ $proximoEvento->date_day }} de {{ $proximoEvento->month }}
-                    <i class="fa fa-clock"></i> {{ date('H:i A', strtotime($proximoEvento->time)) }}
+                <div class="next-streaming-date" style="padding-right: 35%;">
+                    <i class="fa fa-calendar"></i> {{ $proximoEvento->weekend_day }} {{ $proximoEvento->date_day }} de {{ $proximoEvento->month }}<br>
+                    @if (Auth::guest()) 
+                        <i class="fa fa-clock"></i>
+                        @foreach ($proximoEvento->countries as $country)
+                            {{ date('H:i A', strtotime($country->pivot->time)) }} {{ $country->abbreviation }} /
+                        @endforeach
+                    @else
+                        @if (!is_null($checkPais))
+                            <i class="fa fa-clock"></i> {{ date('H:i A', strtotime($horaEvento)) }}
+                        @else
+                            <i class="fa fa-clock"></i>
+                            @foreach ($proximoEvento->countries as $country)
+                                {{ date('H:i A', strtotime($country->pivot->time)) }} {{ $country->abbreviation }} /
+                            @endforeach
+                        @endif
+                    @endif
                 </div>
                 @if (!Auth::guest())
                     <div class="next-streaming-reserve">
@@ -348,48 +368,48 @@
         </div><br><br>
     @endif
     {{-- FIN SECCIÓN PRÓXIMO STREAMING--}}
-
-          {{-- SECCIÓN MENTORES --}}
+    
+    {{-- SECCIÓN MENTORES --}}
     <div class="section-landing">
-        <div class="row">
-            <div class="col">
-                <div class="section-title-landing new-courses-section-title">
-                    <h1>MENTORES</h1>
-                </div>
-            </div>
-        </div>
-
-        <div id="newers" class="row" style="padding: 10px 30px;">
-            @foreach ($mentores as $mentor)
-                <div class="col-xl-4 col-lg-4 col-12" style="padding-bottom: 10px;">
-                    <div class="card">
-                        <a href="" style="color: white;">
-
-                        @if (!is_null($mentor->avatar))
-                            <!-- <img src="{{ asset('uploads/avatar/'.$mentor->avatar) }}" class="card-img-top new-course-img" alt="..."> -->
-                            <img src="{{ asset('uploads/avatar/'.$mentor->avatar) }}" class="card-img-top new-course-img" alt="...">
-                        @else
-                            <img src="{{ asset('uploads/images/courses/covers/default.jpg') }}" class="card-img-top new-course-img" alt="...">
-                        @endif
-                        <div class="card-img-overlay d-flex flex-column">
-                            <div class="mt-auto">
-                                <div class="text-sm text-white" style="line-height:1;">
-                                    <a class="text-white" href="{{ url('courses/mentor/'.$mentor->mentor_id) }}"> {{ $mentor->nombre }}</a>
-                                   </div>
-
-
-                            </div>
-                        </div>
-                      </a>
+            <div class="row">
+                <div class="col">
+                    <div class="section-title-landing new-courses-section-title">
+                        <h1>MENTORES</h1>
                     </div>
                 </div>
-            @endforeach
+            </div>
+        
+            <div id="newers" class="row" style="padding: 10px 30px;">
+                @foreach ($mentores as $mentor)
+                    <div class="col-xl-4 col-lg-4 col-12" style="padding-bottom: 10px;">
+                        <div class="card">
+                            <a href="" style="color: white;">
+                            
+                            @if (!is_null($mentor->avatar))
+                                <!-- <img src="{{ asset('uploads/avatar/'.$mentor->avatar) }}" class="card-img-top new-course-img" alt="..."> -->
+                                <img src="{{ asset('uploads/avatar/'.$mentor->avatar) }}" class="card-img-top new-course-img" alt="...">
+                            @else
+                                <img src="{{ asset('uploads/images/courses/covers/default.jpg') }}" class="card-img-top new-course-img" alt="...">
+                            @endif
+                            <div class="card-img-overlay d-flex flex-column">
+                                <div class="mt-auto">
+                                    <div class="text-sm text-white" style="line-height:1;">
+                                        <a class="text-white" href="{{ url('courses/mentor/'.$mentor->mentor_id) }}"> {{ $mentor->nombre }}</a>
+                                       </div>
+                                    
+                                   
+                                </div>
+                            </div>
+                          </a>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
         </div>
-    </div>
-
-
-
-{{-- FIN SECCIÓN MENTORES --}}
+    
+    
+    
+    {{-- FIN SECCIÓN MENTORES --}}
 
 	{{-- SECCIÓN REFERIDOS (USUARIOS LOGGUEADOS) --}}
     @if (!Auth::guest())

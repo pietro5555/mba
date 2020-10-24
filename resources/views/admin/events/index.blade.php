@@ -133,15 +133,31 @@
 						                <label>Descripción</label>
 										<textarea class="ckeditor form-control" name="description"></textarea>
 								    </div>
-						        </div>
-								<div class="col-md-12">
+								</div>
+								<div class="col-md-12 text-center">
+									<label>Fecha y Hora del Sistema	 <br><span style="color: red;">{{ date('d-m-Y H:i A')}}</span></label>
+								</div>
+								<div class="col-md-6">
 									<label>Fecha</label>
 									<input type="date" class="form-control" name="date" required>
 								</div>
-								<div class="col-md-12">
+								<div class="col-md-6">
 									<label>Hora</label>
 									<input type="time" class="form-control" name="time" required>
 								</div>
+								<div class="col-md-12">
+						            <div class="form-group">
+						                <label>Países Disponibles</label>
+						                <div class="row">
+						                	@foreach ($paises as $pais)
+							            		<div class="col-sm-6 col-md-3">
+												    <input type="checkbox" class="form-check-input" value="{{ $pais->id }}" name="countries[]">
+												    <label class="form-check-label">{{ $pais->nombre }}</label>
+												</div>
+							            	@endforeach
+						                </div>
+						            </div>
+						        </div>
 								<div class="col-md-12">
 						        	<label>Duración (Minutos)</label>
             						<input type="number" class="form-control" name="duration" required>

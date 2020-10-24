@@ -42,7 +42,7 @@ class StreamingController extends Controller{
 
         $p = $request->date."T".$request->time;
         $carbon = new Carbon($p);
-        $fecha = $carbon->addHours(5)->addMinutes(30);
+        //$fecha = $carbon->addHours(5)->addMinutes(30);
         $ultFecha = $carbon->format('Y-m-d H:i:s');
         $creacionEvento = $client->request('POST', 'api/meetings', [
             'headers' => $headers,

@@ -113,10 +113,11 @@ class HomeController extends Controller{
       }
 
       $proximoEvento = Events::where('status', '=', 1)
-                            ->where('time', '>=', date('H:i:s'))
-                           ->orderBy('date', 'DESC')
+                            ->where('date', '>=', date('Y-m-d'))
+                            ->with('countries')
+                           ->orderBy('time', 'ASC')
                            ->first();
-
+      $checkPais = NULL;
       if (!is_null($proximoEvento)){
          $fechaEvento = new Carbon($proximoEvento->date);
          $proximoEvento->date_day = $fechaEvento->format('d');
@@ -144,6 +145,34 @@ class HomeController extends Controller{
             case '10': $proximoEvento->month = 'Octubre'; break;
             case '11': $proximoEvento->month = 'Noviembre'; break;
             case '12': $proximoEvento->month = 'Diciembre'; break;
+         }
+         
+         $horaEvento = $proximoEvento->time;
+         if (!Auth::guest()){
+            $checkPais = NULL;
+ 
+            $paisUsuario = DB::table('user_campo')
+                              ->select('pais')
+                              ->where('ID', '=', Auth::user()->ID)
+                              ->first();
+         
+            if ( (!is_null($paisUsuario)) && (!is_null($paisUsuario->pais)) ){
+               $paisID = DB::table('paises')
+                           ->select('id')
+                           ->where('nombre', '=', $paisUsuario->pais)
+                           ->first();
+               
+               if (!is_null($paisID)){
+                  $checkPais = DB::table('event_countries')
+                                    ->where('event_id', '=', $proximoEvento->id)
+                                    ->where('country_id', '=', $paisID->id)
+                                    ->first();
+   
+                  if (!is_null($checkPais)){
+                     $horaEvento = $checkPais->time;
+                  }
+               }
+            }
          }
       }
 
@@ -231,7 +260,7 @@ $mentor->categoria = $string;
 }
 
 
-      return view('index')->with(compact('cursosDestacados', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next', 'refeDirec', 'proximoEvento', 'avance', 'misEventosArray', 'mentores'));
+      return view('index')->with(compact('cursosDestacados', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next', 'refeDirec', 'proximoEvento', 'checkPais', 'horaEvento', 'avance', 'misEventosArray', 'mentores'));
    }
 
    public function search(Request $request){

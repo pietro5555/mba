@@ -12,9 +12,24 @@
     border-color: #2877CB #2877CB #2877CB;
     color: #333;
     }
+
+
+    #video_background {
+      position: absolute;
+      bottom: 0px;
+      right: 0px;
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      z-index: -1000;
+      overflow: hidden;
+   }
     
     
 </style>
+
+<video src="{{asset('/fondovideo/video.mp4')}}" type="video/mp4" autoplay="" muted loop="" id="video_background"></video>
 
  <center>
     <img src="{{asset('/images/logo-login.png')}}" style="width: 100px; height: 100px; margin-top: 80px; margin-bottom: 40px;">

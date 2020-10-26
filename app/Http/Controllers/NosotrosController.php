@@ -20,6 +20,7 @@ use App\Models\Contenido;
 use App\Models\Commission;
 use App\Models\SettingsEstructura; 
 use App\Models\Pagocarrito;
+use App\Models\Entradas;
 // controlador
 use App\Http\Controllers\TiendaController;
 use App\Http\Controllers\WalletControler;
@@ -29,7 +30,7 @@ class NosotrosController extends Controller
 {
 
 	public function step1(){
-
+        
 		return view('nosotros.step1');
 	}
 
@@ -40,7 +41,8 @@ class NosotrosController extends Controller
 
 	public function step3(){
 
-		return view('nosotros.step3');
+        $entradas = Entradas::all();
+		return view('nosotros.step3', compact('entradas'));
 	}
 
 }

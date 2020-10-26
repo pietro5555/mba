@@ -11,7 +11,11 @@ protected $table = "paises";
 
 
     protected $fillable=[
-    	'nombre','idface'
+    	'nombre','idface', 'abbreviation', 'event', 'operation', 'quantity'
     ];
+
+    public function events(){
+        return $this->belongsToMany('App\Models\Event', 'event_countries', 'country_id', 'event_id')->withPivot('date', 'time');
+    }
 
 }

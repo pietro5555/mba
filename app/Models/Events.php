@@ -78,5 +78,9 @@ class Events extends Model
         return $this->belongsTo('App\Models\Subcategory');
     }
 
+    public function countries(){
+        return $this->belongsToMany('App\Models\Paises', 'event_countries', 'event_id', 'country_id')->withPivot('date', 'time');
+    }
+
     
 }

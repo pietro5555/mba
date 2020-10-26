@@ -221,3 +221,8 @@ Dev: Carlos Gonzalez
 21/10/2020
 Dev:Luisana Marín
 *Nuevo campo english_title en la tabla lessons (VARCHAR 255 NULL)
+
+22/10/2020
+Dev:Luisana Marín
+*Nueva tabla event_countries (Corre script event_countries)
+*Nuevos campos abbreviation, event, operation y quantity en la tabla paises (Correr script paises)

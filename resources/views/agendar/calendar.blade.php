@@ -50,7 +50,7 @@
 
         if ($('#iduser').val() == {
 
-              $usuario
+            $usuario
 
           }) {
           $('.habilitar').removeAttr('disabled')
@@ -75,9 +75,6 @@
 
     });
 
-    $(".connect").on('click', function() {
-      $("#connect-form-" + $(this).attr('data-id')).submit();
-    });
   });
 
 
@@ -102,64 +99,55 @@
 </div>
 
 <div class="container-fluid">
-    <div class="row">
+  <div class="row">
     @foreach ($eventos_agendados as $agendado)
+      <div class="col-md-4" style="margin-top: 20px;">
+        @if (!is_null($agendado->mentor->avatar))
+          <img src="{{ asset('uploads/avatar/'.$agendado->mentor->avatar) }}" class="card-img-top img-prox-events" alt="...">
+        @else
+          <img src="{{ asset('uploads/images/avatar/default.jpg') }}" class="card-img-top img-prox-events" alt="...">
+        @endif
+        <div class="card-img-overlay d-flex flex-column" style="margin-left: 10px; margin-right: 10px;">
+          <div class="mt-auto">
+            <a href="{{ route('timeliveEvent', $agendado->id) }}"><h2 class="streaming">{{$agendado->title}}</h2></a>
 
-   <div class="col-md-4" style="margin-top: 20px;">
-                              @if (!is_null($agendado->mentor->avatar))
-                                 <img src="{{ asset('uploads/avatar/'.$agendado->mentor->avatar) }}" class="card-img-top img-prox-events" alt="...">
-                              @else
-                                 <img src="{{ asset('uploads/images/avatar/default.jpg') }}" class="card-img-top img-prox-events" alt="...">
-                              @endif
-                              <div class="card-img-overlay d-flex flex-column" style="margin-left: 10px; margin-right: 10px;">
-                                  <div class="mt-auto">
-                                 <form action="{{route('timelive')}}" method="GET">
-                                    @csrf
-                                    <input id="sigEvent" name="sigEvent" type="hidden" value="{{ $agendado->id }}">
-                                    <button class="btn text-left" type="submit" style=" color: #2A91FF;"><h2 class="streaming">{{$agendado->title}}</h2></button>
-                                 </form>
+            <p class="mr-2 text-white" style="margin-top: -10px; font-size: 12px;"> 
+              <i class="far fa-calendar mr-2" style="font-size: 18px !important;padding: 5px;"> </i>
+              @if (is_null($paisID))
+                {{\Carbon\Carbon::parse($agendado->date)->formatLocalized(' %d de %B')}}
+                <i class="far fa-clock ml-2" style="font-size: 18px !important;padding: 5px;" aria-hidden="true"></i>
+                @if ($agendado->countries_count > 0)
+                    @foreach ($agendado->countries as $country)
+                      {{ $country->abbreviation }} {{\Carbon\Carbon::parse($country->pivot->time)->format('g:i a')}} /
+                    @endforeach
+                @else
+                    {{date('g:i A', strtotime($agendado->time))}}
+                @endif
+              @else
+                @if (is_null($agendado->checkCountry))
+                  {{\Carbon\Carbon::parse($agendado->date)->formatLocalized(' %d de %B')}}
+                  <i class="far fa-clock ml-2" style="font-size: 18px !important;padding: 5px;" aria-hidden="true"></i>
+                  @if ($agendado->countries_count > 0)
+                      @foreach ($agendado->countries as $country)
+                        {{ $country->abbreviation }} {{\Carbon\Carbon::parse($country->pivot->time)->format('g:i a')}} /
+                      @endforeach
+                     @else
+                    {{date('g:i A', strtotime($agendado->time))}}
+                @endif
+                @else
+                  {{\Carbon\Carbon::parse($agendado->date_country)->formatLocalized(' %d de %B')}}
+                  <i class="far fa-clock ml-2" style="font-size: 18px !important;padding: 5px;" aria-hidden="true"></i>
+                  {{date('g:i A', strtotime($agendado->hour_country))}}
+                @endif
+              @endif
 
-                                 <p class="mr-2 text-white" style="margin-top: -10px; font-size: 12px;">   <i class="far fa-calendar mr-2" style="font-size: 18px !important;padding: 5px;"> </i>
-                                    {{\Carbon\Carbon::parse($agendado->date)->formatLocalized(' %d de %B')}}
-                                    <i class="far fa-clock ml-2" style="font-size: 18px !important;padding: 5px;" aria-hidden="true"></i>{{\Carbon\Carbon::parse($agendado->time)->format('g:i a')}}
-                                 </p>
-                                 @if (Auth::guest())
-                                    {{-- USUARIOS INVITADOS --}}
-                                    <a href="{{route('shopping-cart.membership')}}" class="btn btn-success"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar al Carrito</a>
-                                 @else
-                                    @if (is_null(Auth::user()->membership_id))
-                                       {{-- USUARIOS LOGUEADOS SIN MEMBRESÍA --}}
-                                       <a href="{{route('shopping-cart.membership')}}" class="btn btn-success"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar al Carrito</a>
-                                    @else
-                                       @if ($agendado->subcategory_id > Auth::user()->membership_id)
-                                          {{-- USUARIOS LOGUEADOS CON MEMBRESÍA MENOR A LA SUBCATEGORÍA DEL EVENTO--}}
-                                          <a href="{{route('shopping-cart.membership')}}" class="btn btn-success"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar al Carrito</a>
-                                       @else
-                                          @if (!in_array($agendado->id, $misEventosArray))
-                                             {{-- USUARIOS LOGUEADOS CON MEMBRESÍA MAYOR O IGUAL A LA SUBCATEGORÍA DEL EVENTO Y QUE NO TIENEN EL EVENTO AGENDADO AÚN--}}
-                                             <a href="{{route('schedule.event', [$agendado->id])}}" class="btn btn-success btn-block">Agendar</a>
-                                          @else
-                                             {{-- EL USUARIO YA TIENE EL EVENTO AGENDADO--}}
-                                             <a class="btn btn-success btn-block" href="{{ route('timeliveEvent', $agendado->id) }}"><h4>Ir al Evento</h4></a>
-                                             <!-- <form action="{{route('timelive')}}" method="GET">
-                                                @csrf
-                                                <input id="sigEvent" name="sigEvent" type="hidden" value="{{ $agendado->id }}">
-                                                <button class="btn btn-success btn-block" type="submit"><h4>Ir al Evento</h4></button>
-                                             </form>-->
-                                          @endif
-                                       @endif
-                                    @endif
-                                 @endif
-                                 </div>
-                              </div>
-                           </div>
-
-
-  <form action="https://streaming.shapinetwork.com/connect-mba/{{$agendado->id}}/{{Auth::user()->ID}}" method="POST" id="connect-form-{{$agendado->id}}">
-           @csrf
-           <input type="hidden" name="email" value="{{ Auth::user()->user_email }}">
-          <input type="hidden" name="password" value="{{ decrypt(Auth::user()->clave) }}">
-      </form>
+            </p>
+            <a class="btn btn-success btn-block" href="{{ route('timeliveEvent', $agendado->id) }}">
+              <h4>Ir al Evento</h4>
+            </a>
+          </div>
+        </div>
+      </div>
     @endforeach
   </div>
 </div>

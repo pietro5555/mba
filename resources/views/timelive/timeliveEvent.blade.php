@@ -2,7 +2,7 @@
 
 @push('scripts')
     <script>
-        /*const getRemainingTime = deadline => {
+        const getRemainingTime = deadline => {
             let objFecha = new Date()
             let now = new Date(objFecha.getUTCFullYear(), objFecha.getUTCMonth(), objFecha.getUTCDate(), objFecha.getUTCHours(), objFecha.getUTCMinutes(), objFecha.getUTCSeconds()),
                 remainTime = (new Date(deadline) - now + 1000) / 1000,
@@ -10,7 +10,6 @@
                 remainMinutes = ('0' + Math.floor(remainTime / 60 % 60)).slice(-2),
                 remainHours = ('0' + Math.floor(remainTime / 3600 % 24)).slice(-2),
                 remainDays = Math.floor(remainTime / (3600 * 24));
-
             return {
                 remainSeconds,
                 remainMinutes,
@@ -19,116 +18,56 @@
                 remainTime
             }
         };
-
         const countdown = (deadline, elem) => {
             //const el = document.getElementById(elem);
-
             const timerUpdate = setInterval(() => {
                 let t = getRemainingTime(deadline);
                 //el.innerHTML = `${t.remainDays}d:${t.remainHours}h:${t.remainMinutes}m:${t.remainSeconds}s`;
                 $('#' + elem).empty()
             
-                if ((t.remainTime <= 1) || ($("#statusLive").val() == 'live') ) {
+                if (t.remainTime <= 1) {
+                    var route = "https://mybusinessacademypro.com/academia/change-meeting-status/{{$evento->id}}";
+                    $.ajax({
+                        url:route,
+                        type:'GET',
+                        success:function(ans){
+                            clearInterval(timerUpdate);
+                            document.getElementById("clock").innerHTML = "0:0:0:0";
+                            $('#status-text').append('<h1>El live está por iniciar</h1>');
+                            $("#close").css('display', 'none');
+                            $("#open").css('display', 'block');
+                        }
+                    });
+
                     clearInterval(timerUpdate);
-                    $("#remain-time-text").css('display', 'none');
-                    $("#checkCountdown").val(1);
-                    $("#close").css('display', 'none');
-                    $("#open").css('display', 'block');
-                    if ($("#statusLive").val() == 'scheduled'){
-                        $('#' + elem).append('<h1>El live está por iniciar</h1>');
-                    }else if ($("#statusLive").val() == 'live'){
-                        $('#' + elem).append('<h1>El live ya ha iniciado</h1>');
-                    }else if ($("#statusLive").val() == 'ended'){
-                        $('#' + elem).append('<h1>El live ya ha finalizado</h1>');
-                    }else if ($("#statusLive").val() == 'cancelled'){
-                        $('#' + elem).append('<h1>El live ha sido cancelado</h1>');
-                    }
-                    
-                } else {
-                    $('#' + elem).append(
-
-                        '<p class="p-1 bd-highlight" style="font-size: 80px; font-weight:800;">' +
-                        t.remainDays +
-                        '<p style="margin-left: -40px; margin-top: 100px; font-weight:800;">DIAS</p>' +
-                        '</p>' +
-
-                        '<p class="p-2 bd-highlight" style="font-size: 70px; font-weight:800;">' +
-                        ':' +
-                        '</p>' +
-
-                        '<p class="p-1 bd-highlight" style="font-size: 80px; font-weight:800;">' +
-                        t.remainHours +
-                        '<p style="margin-left: -68px; margin-top: 100px; font-weight:800;">HORAS</p>' +
-                        '</p>' +
-
-                        '<p class="p-2 bd-highlight" style="font-size: 70px; font-weight:800;">' +
-                        ':' +
-                        '</p>' +
-
-                        '<p class="p-1 bd-highlight" style="font-size: 80px; font-weight:800;">' +
-                        t.remainMinutes +
-
-                        '<p style="margin-left: -80px; margin-top: 100px; font-weight:800;">MINUTOS</p>' +
-                        '</p>' +
-
-                        '<p class="p-2 bd-highlight" style="font-size: 70px; font-weight:800;">' +
-                        ':' +
-                        '</p>' +
-                        '<p class="p-1 bd-highlight" style="font-size: 80px; font-weight:800;">' +
-                        t.remainSeconds +
-
-                        '<p style="margin-left: -85px; margin-top: 100px; font-weight:800;">SEGUNDOS</p>' +
-                        '</p>'
-
-                    )
-                }
-
-            }, 1000)
-        };*/
-        // Set the date we're counting down to
-         // var countDownDate = new Date("Jan 5, 2021 15:37:25").getTime();
-        var fecha = document.getElementById("countdown_limit").value;
-        if (fecha != 0){
-            var countDownDate = new Date(fecha).getTime();
-
-            // Update the count down every 1 second
-            var x = setInterval(function() {
-
-                // Get today's date and time
-                var now = new Date().getTime();
-                // Find the distance between now and the count down date
-                var distance = countDownDate - now;
-
-                // Time calculations for days, hours, minutes and seconds
-                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                document.getElementById("clock").innerHTML = days+" : "+hours+" : "+minutes+" : "+seconds;
-                   
-                // If the count down is finished, write some text
-                if (distance < 0) {
-                    clearInterval(x);
-                    $("#clock").css('display', 'none');
+                    document.getElementById("clock").innerHTML = "0:0:0:0";
                     $('#status-text').append('<h1>El live está por iniciar</h1>');
                     $("#close").css('display', 'none');
                     $("#open").css('display', 'block');
+                } else {
+                    document.getElementById("clock").innerHTML = t.remainDays+" : "+t.remainHours+" : "+t.remainMinutes+" : "+t.remainSeconds;
                 }
-            }, 1000);
+            }, 1000)
+        };
+        var fecha = document.getElementById("countdown_limit").value;
+        if (fecha != 0){
+            countdown('{{$evento->date.' '.$evento->time}}', 'clock');
         }else{
             $("#clock").css('display', 'none');
             if ($("#statusLive").val() == 'ended'){
                 $("#open").css('display', 'none');
                 $("#close").css('display', 'block');
+                document.getElementById("clock").innerHTML = "0:0:0:0";
                 $('#status-text').append('<h1>El live ya ha finalizado</h1>');
             }else if ($("#statusLive").val() == 'cancelled'){
                 $("#open").css('display', 'none');
                 $("#close").css('display', 'block');
+                document.getElementById("clock").innerHTML = "0:0:0:0";
                 $('#status-text').append('<h1>El live ha sido cancelado</h1>');
             }else if ($("#statusLive").val() == 'live'){
                 $("#open").css('display', 'block');
                 $("#close").css('display', 'none');
+                document.getElementById("clock").innerHTML = "0:0:0:0";
                 $('#status-text').append('<h1>El live está en vivo</h1>');
             }
         }

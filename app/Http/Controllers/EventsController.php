@@ -221,7 +221,7 @@ class EventsController extends Controller
 
     public function timeliveEvent($event_id){
         $evento = Events::where('id', '=', $event_id)->with('countries')->first();
-  
+
         $meeting = Meeting::where('uuid', '=', $evento->uuid)->first();
         $info = json_decode($meeting->meta);
         $statusLive =  $info->status;
@@ -234,7 +234,7 @@ class EventsController extends Controller
                         ->select('pais')
                         ->where('ID', '=', Auth::user()->ID)
                         ->first();
-        
+        $checkPais = NULL;
         if ( (!is_null($paisUsuario)) && (!is_null($paisUsuario->pais)) ){
             $paisID = DB::table('paises')
                         ->select('id')
@@ -254,11 +254,26 @@ class EventsController extends Controller
             }
         }
         
+        
         if ($statusLive != 'scheduled'){
             $countdownLimit = 0;
         }
+        
 
         return view('timelive.timeliveEvent')->with(compact('evento', 'statusLive', 'checkPais', 'countdownLimit'));
+    }
+
+    public function change_meeting_status($event_id){
+        $evento = Events::where('id', '=', $event_id)->first();
+
+        $meeting = Meeting::where('uuid', '=', $evento->uuid)->first();
+        $info = json_decode($meeting->meta);
+        $info->status = 'live';
+        $meeting->meta = json_encode($info);
+
+        return response()->json(
+            true
+        );
     }
 
 
@@ -599,7 +614,7 @@ class EventsController extends Controller
         /*DATOS PARA PINTAR EL CALENDARIO*/
         $user_calendar = Calendario::where('iduser', Auth::user()->ID)->get();
         $usuario = Auth::user()->ID;
-        $eventos_agendados = Auth::user()->events;
+        $eventos_agendados = Auth::user()->events->sortBy('id');;
 
         $paisUsuario = DB::table('user_campo')
                         ->select('pais')

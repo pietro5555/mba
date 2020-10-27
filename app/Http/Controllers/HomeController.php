@@ -118,6 +118,7 @@ class HomeController extends Controller{
                            ->orderBy('time', 'ASC')
                            ->first();
       $checkPais = NULL;
+      $horaEvento = NULL;
       if (!is_null($proximoEvento)){
          $fechaEvento = new Carbon($proximoEvento->date);
          $proximoEvento->date_day = $fechaEvento->format('d');

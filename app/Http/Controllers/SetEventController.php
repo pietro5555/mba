@@ -99,7 +99,7 @@ class SetEventController extends Controller
 
                     }else{
                         if (isset($request->subdomain)){
-                            return redirect("https://streaming.shapinetwork.com/transmission/".$event_id."/".Auth::user()->ID)->with('msj-erroneo', 'Hubo un Problema al subir el recurso');
+                            return redirect("https://streaming.mybusinessacademypro.com/transmission/".$event_id."/".Auth::user()->ID)->with('msj-erroneo', 'Hubo un Problema al subir el recurso');
                         }else{
                             return redirect()->back()->with('msj-erroneo', 'Hubo un Problema al subir el recurso');
                         }
@@ -133,7 +133,7 @@ class SetEventController extends Controller
 
                 }else{
                     if (isset($request->subdomain)){
-                        return redirect("https://streaming.shapinetwork.com/transmission/".$event_id."/".Auth::user()->ID)->with('msj-erroneo', 'Hubo un Problema al subir el recurso');
+                        return redirect("https://streaming.mybusinessacademypro.com/transmission/".$event_id."/".Auth::user()->ID)->with('msj-erroneo', 'Hubo un Problema al subir el recurso');
                     }else{
                         return redirect()->back()->with('msj-erroneo', 'Hubo un Problema al subir el recurso');
                     }
@@ -178,7 +178,7 @@ class SetEventController extends Controller
                         }
                         else{
                             if (isset($request->subdomain)){
-                                return redirect("https://streaming.shapinetwork.com/transmission/".$event_id."/".Auth::user()->ID)->with('msj-erroneo', 'Ya cuenta con una encuesta guardada');
+                                return redirect("https://streaming.mybusinessacademypro.com/transmission/".$event_id."/".Auth::user()->ID)->with('msj-erroneo', 'Ya cuenta con una encuesta guardada');
                             }else{
                                 return redirect()->back()->with('msj-erroneo', 'Ya cuenta con una encuesta guardada');
                             }
@@ -234,7 +234,7 @@ class SetEventController extends Controller
 
                         }else{
                             if (isset($request->subdomain)){
-                                return redirect("https://streaming.shapinetwork.com/transmission/".$event_id."/".Auth::user()->ID)->with('msj-erroneo', 'Hubo un problema al subir la oferta');
+                                return redirect("https://streaming.mybusinessacademypro.com/transmission/".$event_id."/".Auth::user()->ID)->with('msj-erroneo', 'Hubo un problema al subir la oferta');
                             }else{
                                 return redirect()->back()->with('msj-erroneo', 'Hubo un problema al subir la oferta');
                             }
@@ -250,7 +250,7 @@ class SetEventController extends Controller
 
         //return redirect('live.live', compact ('event', 'notes'))->with('msj-exitoso', 'El Recurso ha sido creado con éxito.');
         if (isset($request->subdomain)){
-            return redirect("https://streaming.shapinetwork.com/transmission/".$event_id."/".Auth::user()->ID)->with('msj-exitoso', 'El Recurso ha sido creado con éxito.');
+            return redirect("https://streaming.mybusinessacademypro.com/transmission/".$event_id."/".Auth::user()->ID)->with('msj-exitoso', 'El Recurso ha sido creado con éxito.');
         }else{
             return redirect()->route('show.event', $event_id)->with('msj-exitoso', 'El Recurso ha sido creado con éxito.');
         }
@@ -268,7 +268,7 @@ class SetEventController extends Controller
         if(empty(!$response_saved))
         {
             if (isset($request->subdomain)){
-                return redirect("https://streaming.shapinetwork.com/transmission/".$request->event_id."/".Auth::user()->ID)->with('msj-erroneo', 'Ya ha guardado una respuesta');
+                return redirect("https://streaming.mybusinessacademypro.com/transmission/".$request->event_id."/".Auth::user()->ID)->with('msj-erroneo', 'Ya ha guardado una respuesta');
             }else{
                 return redirect()->route('show.event', $request->event_id)->with('msj-erroneo', 'Ya ha guardado una respuesta');
             }
@@ -282,7 +282,7 @@ class SetEventController extends Controller
         $new_response->selected = 1;
         $new_response->save();
             if (isset($request->subdomain)){
-                return redirect("https://streaming.shapinetwork.com/transmission/".$request->event_id."/".Auth::user()->ID)->with('msj-exitoso', 'Respuesta guardada con éxito.');
+                return redirect("https://streaming.mybusinessacademypro.com/transmission/".$request->event_id."/".Auth::user()->ID)->with('msj-exitoso', 'Respuesta guardada con éxito.');
             }else{
                 return redirect()->route('show.event', $request->event_id)->with('msj-exitoso', 'Respuesta guardada con éxito.');
             }

@@ -208,6 +208,7 @@ Route::group(['prefix' => 'installer'], function (){
     Route::get('/proximo/{id}', 'CalendarioGoogleController@proximo')->name('time-prox');
   });
   ROute::get('transmitir/{evento}', 'EventsController@transmitir')->name('transmitir');
+  Route::get('change-meeting-status/{evento}', 'EventsController@change_meeting_status');
 
   //Cursos
   Route::get('cursos', 'CursosController@index')->name('cursos');

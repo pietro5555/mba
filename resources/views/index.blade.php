@@ -381,7 +381,7 @@
         
             <div id="newers" class="row" style="padding: 10px 30px;">
                 @foreach ($mentores as $mentor)
-                    <div class="col-xl-4 col-lg-4 col-12" style="padding-bottom: 10px;">
+                    <div class="col-xl-3 col-lg-3 col-12" style="padding-bottom: 10px;">
                         <div class="card">
                             <a href="" style="color: white;">
                             

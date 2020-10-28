@@ -91,7 +91,7 @@
                 </li>--}}
 
                 <li class="nav-item dropdown dropleft" id="li-user-larger" style="padding-right: 10px;">
-                    <img class="dropdown-toggle items-header" id="navbarDropdown2" role="button" data-toggle="dropdown" src="{{ asset('images/logo.png') }}" alt="" width="40" height="40">
+                    <img class="dropdown-toggle items-header" id="navbarDropdown2" role="button" data-toggle="dropdown" src="{{asset('/uploads/avatar/'.Auth::user()->avatar)}}" alt="" style="width: 40px; height: 40px; border-radius: 50%;">
 
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

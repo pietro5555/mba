@@ -33,11 +33,35 @@
         })
         $(".questionsArray").val(questionArray)
 
-        if (!valida)
-            $("#formQuestion").submit();
-        else
+        if (!valida){
+            //$("#formQuestion").submit();
+            var route = "https://mybusinessacademypro.com/academia/settings/event";
+            var parametros = $('#formQuestion').serialize();
+            $.ajax({
+                url:route,
+                type:'POST',
+                data:  parametros,
+                success:function(ans){
+                    if (ans == true){
+                        $("#msj-error-ajax").css('display', 'none');
+                        $("#modal-settings-survey").modal("hide");
+                        $("#option-modal-settings").modal("hide");
+                        $("#msj-success-text").html("La encuesta ha sido agregada con éxito");
+                        $("#msj-success-ajax").css('display', 'block');
+                        refreshMenu();
+                    }else{
+                        $("#msj-success-ajax").css('display', 'none');
+                        $("#modal-settings-survey").modal("hide");
+                        $("#option-modal-settings").modal("hide");
+                        $("#msj-error-text").html("Ya posee una encuestra creada");
+                        $("#msj-error-ajax").css('display', 'block');
+                    }
+                }
+            });
+        }else{
             msjError = '<p class="msjError" style="color: red">No pude enviar campos vacios!</>';
-        $("#list_question").append(msjError);
+            $("#list_question").append(msjError);
+        }
     });
 
     removeQuestion = function (q) {
@@ -45,7 +69,7 @@
     }
 
     $.ajax({
-        url: '/survey/statistics',
+        url: 'https://mybusinessacademypro.com/academia/survey/statistics',
         method: 'POST',
         data: {
             id: id,

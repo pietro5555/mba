@@ -6,8 +6,9 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Agregar Encuesta</h5>
             </div>
-            <form action="{{ route('set.event.store', [$event->id]) }}" method="POST" id="formQuestion">
+            <form id="formQuestion">
                 {{ csrf_field() }}
+                <input type="hidden" name="event_id" value="{{ $event->id }}">
                 <div class="modal-body">
                     <div class="container-fluid">
                         <div class="row">
@@ -33,7 +34,6 @@
                     </div>
                     <input type="hidden" name="type" value='survey' required>
                     <input type="hidden" name="questions" class="questionsArray">
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>

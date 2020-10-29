@@ -183,7 +183,7 @@ class EventsController extends Controller
     public function show_event($event_id)
     {
         //return dd(Auth::user()->rol_id);
-        $notes = Note::all();
+        $notes = Note::where('user_id', '=', Auth::user()->ID)->orderBy('id', 'DESC')->get();;
         $event = Events::find($event_id);
         $menuResource = $event->getResource();
         $resources_survey = SetEvent::where('event_id', $event_id)->where('type', 'survey')->get()->first();

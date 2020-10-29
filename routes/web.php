@@ -277,7 +277,8 @@ Route::group(['prefix' => 'installer'], function (){
   // Events landing
   Route::get('/event/{event_id}', 'EventsController@show_event')->name('show.event');
   //Configurar eventos
-  Route::post('/settings/event/{event_id}', 'SetEventController@store')->name('set.event.store');
+  Route::post('/settings/event/{event_id?}', 'SetEventController@store')->name('set.event.store');
+  Route::get('refresh-menu/{user}/{event}', 'SetEventController@refresh_menu');
   //Guardar respuesta de encuesta
   Route::post('/survey', 'SetEventController@save_student_response')->name('save.survey.student');
   Route::get('/download/file/{event_id}/{file_id}', 'SetEventController@download_file')->name('download_resource_file');

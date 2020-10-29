@@ -6,7 +6,7 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Agregar oferta</h5>
             </div>
-            <form action="{{ route('set.event.store', [$event->id]) }}" method="POST" enctype="multipart/form-data">
+            <form enctype="multipart/form-data" id="store_offer_form">
                 {{ csrf_field() }}
                 <div class="modal-body">
                     <div class="container-fluid">
@@ -29,18 +29,15 @@
                                     <input type="file" name="resource" class="form-control" />
                                 </div>
                             </div>
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <button type="submit" class="btn">Enviar</button>
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <input type="hidden" name="type" value='offers' required>
+                    <input type="hidden" name="event_id" value="{{ $event->id }}">
                 </div>
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <a class="btn btn-primary" onclick="newOffer();">Enviar</a>
                 </div>
             </form>
         </div>

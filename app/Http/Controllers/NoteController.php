@@ -4,6 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Note;
+use App\Models\User;
+use App\Models\Events;
+use App\Models\SetEvent;
+use App\Models\OffersLive;
+use App\Models\SurveyOptions;
+use App\Models\SurveyResponse;
 use Auth;
 
 
@@ -27,6 +33,8 @@ class NoteController extends Controller
         	'user_id' => Auth::user()->ID
     	]);
 
-        return redirect()->route('show.event', $event_id);
+        $notes = Note::where('user_id', '=', Auth::user()->ID)->orderBy('id', 'DESC')->get();
+
+        return view('live.components.sections.notesSection')->with(compact('notes'));
     }
 }

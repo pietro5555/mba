@@ -15,6 +15,7 @@ use App\Models\SurveyOptions;
 use App\Models\SurveyResponse;
 use App\Models\EventResources;
 use App\Models\OffersLive;
+use App\Models\User;
 
 
 class SetEventController extends Controller
@@ -45,7 +46,7 @@ class SetEventController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $event_id)
+    public function store(Request $request, $event_id = NULL)
     {
         // dd($event_id, $request->all());
         // se crea el recurso para events
@@ -55,61 +56,67 @@ class SetEventController extends Controller
                     'title' => $request->input('title') ? $request->input('title') : 'null',
                     'type' => 'video',
                     'url' => $request->input('url_video'),
-                    'event_id' => $event_id
+                    'event_id' => $request->event_id
                 ]);
-                $guardadas =   EventResources::where('event_id', $event_id)
-                        ->where('resources_id',6)->get();
-
-                        if($guardadas->isEmpty())
-                        {
-                            $dataPresentation = new EventResources;
-                            $dataPresentation->resources_id =6;
-                            $dataPresentation->event_id = $event_id;
-                            $dataPresentation->status = 1;
-                            $dataPresentation->save();
-                        }
-
-                break;
+                $guardadas =   EventResources::where('event_id', $request->event_id)
+                                    ->where('resources_id',6)
+                                    ->get();
+                        
+                if($guardadas->isEmpty()){
+                    $dataPresentation = new EventResources;
+                    $dataPresentation->resources_id =6;
+                    $dataPresentation->event_id = $request->event_id;
+                    $dataPresentation->status = 1;
+                    $dataPresentation->save();
+                }
+                
+                $resources_video = SetEvent::where('event_id', $request->event_id)
+                                    ->where('type', 'video')
+                                    ->first();
+            
+                return view('live.components.sections.videosSection')->with(compact('resources_video'));
+            break;
+            
             case 'file':
-
-                    if ($request->file('file')) {
-                        $file = $request->file('file');
-                        $name_file = 'file_'.$event_id.'_'.time().'.'.$file->getClientOriginalExtension();
-                        $path = public_path() .'/upload/events';
-                        $file->move($path,$name_file);
-                        $title = $file->getClientOriginalName();
-                        SetEvent::create([
-                            'title' => $title,
-                            'type' => 'file',
-                            'url' => $name_file,
-                            'event_id' => $event_id
-                        ]);
-                        $guardadas =   EventResources::where('event_id', $event_id)
-                        ->where('resources_id',7)->get();
-
-                        if($guardadas->isEmpty())
-                        {
-                            $dataPresentation = new EventResources;
-                            $dataPresentation->resources_id = 7;
-                            $dataPresentation->event_id = $event_id;
-                            $dataPresentation->status = 1;
-                            $dataPresentation->save();
-                        }
-
-
-                    }else{
-                        if (isset($request->subdomain)){
-                            return redirect("https://streaming.mybusinessacademypro.com/transmission/".$event_id."/".Auth::user()->ID)->with('msj-erroneo', 'Hubo un Problema al subir el recurso');
-                        }else{
-                            return redirect()->back()->with('msj-erroneo', 'Hubo un Problema al subir el recurso');
-                        }
+                if ($request->file('file')) {
+                    $file = $request->file('file');
+                    $name_file = 'file_'.$request->event_id.'_'.time().'.'.$file->getClientOriginalExtension();
+                    $path = public_path() .'/upload/events';
+                    $file->move($path,$name_file);
+                    $title = $file->getClientOriginalName();
+                    SetEvent::create([
+                        'title' => $title,
+                        'type' => 'file',
+                        'url' => $name_file,
+                        'event_id' => $request->event_id
+                    ]);
+                    $guardadas = EventResources::where('event_id', $request->event_id)
+                                    ->where('resources_id',7)
+                                    ->get();
+                                    
+                    if($guardadas->isEmpty()){
+                        $dataPresentation = new EventResources;
+                        $dataPresentation->resources_id = 7;
+                        $dataPresentation->event_id = $request->event_id;
+                        $dataPresentation->status = 1;
+                        $dataPresentation->save();
                     }
-                break;
+                    
+                    $files = SetEvent::where('event_id', $request->event_id)
+                                ->where('type', 'file')
+                                ->get();
+                    $event_id = $request->event_id;
+                    
+                    return view('live.components.sections.filesSection')->with(compact('files', 'event_id'));
+                }else{
+                     return response()->json(false);   
+                }
+            break;
 
             case 'presentation':
                 if ($request->file('presentation')) {
                     $file = $request->file('presentation');
-                    $name_file = 'presentation_'.$event_id.'_'.time().'.'.$file->getClientOriginalExtension();
+                    $name_file = 'presentation_'.$request->event_id.'_'.time().'.'.$file->getClientOriginalExtension();
                     $path = public_path() .'/upload/events';
                     $file->move($path,$name_file);
                     $title = $file->getClientOriginalName();
@@ -117,146 +124,122 @@ class SetEventController extends Controller
                         'title' => $title,
                         'type' => 'presentation',
                         'url' => $name_file,
-                        'event_id' => $event_id
+                        'event_id' => $request->event_id
                     ]);
-                    $guardadas =   EventResources::where('event_id', $event_id)
-                        ->where('resources_id',5)->get();
-
-                        if($guardadas->isEmpty())
-                        {
-                            $dataPresentation = new EventResources;
-                            $dataPresentation->resources_id = 5;
-                            $dataPresentation->event_id = $event_id;
-                            $dataPresentation->status = 1;
-                            $dataPresentation->save();
-                        }
-
-                }else{
-                    if (isset($request->subdomain)){
-                        return redirect("https://streaming.mybusinessacademypro.com/transmission/".$event_id."/".Auth::user()->ID)->with('msj-erroneo', 'Hubo un Problema al subir el recurso');
-                    }else{
-                        return redirect()->back()->with('msj-erroneo', 'Hubo un Problema al subir el recurso');
+                    $guardadas =   EventResources::where('event_id', $request->event_id)
+                                    ->where('resources_id',5)
+                                    ->get();
+                        
+                    if($guardadas->isEmpty()){
+                        $dataPresentation = new EventResources;
+                        $dataPresentation->resources_id = 5;
+                        $dataPresentation->event_id = $request->event_id;
+                        $dataPresentation->status = 1;
+                        $dataPresentation->save();
                     }
+                    
+                    $presentations = SetEvent::where('event_id', $request->event_id)
+                                        ->where('type', 'presentation')
+                                        ->get();
+            
+                    $event_id = $request->event_id;
+                    
+                    return view('live.components.sections.presentationsSection')->with(compact('presentations', 'event_id'));
+                }else{
+                    return response()->json(false);
                 }
-                break;
+            break;
 
-
-                // survey_options
-                case 'survey':
-                    /*HABILITAR UNA ENCUESTA PARA EL MENU */
-
-                    $guardadas =   EventResources::where('event_id', $event_id)
-                        ->where('resources_id',4)->get();
-
-                        if($guardadas->isEmpty())
-                        {
-                            $dataE = SetEvent::create([
-                                'title' => $request->input('title') ? $request->input('title') : 'null',
-                                'type' => 'survey',
-                                'event_id' => $event_id
-                            ]);
-                                $dataSurvey = new EventResources;
-                                $dataSurvey->resources_id = 4;
-                                $dataSurvey->event_id = $event_id;
-                                $dataSurvey->status = 1;
-                                $dataSurvey->save();
-
-                                $question =  $request->q1;
-                                $responses = explode(',', $request->input('questions'));
-                                $question_save = new SurveyOptions;
-                                $question_save->question =  $question;
-                                $question_save->content_event_id = $dataE->id;
-                                $question_save->save();
-                                foreach ($responses as $response) {
-                                    DB::table('survey_options_response')->insert([
-                                        'response' => $response,
-                                        'survey_options_id' => $question_save->id,
-                                        'user_id' => Auth::user()->ID,
-                                        'selected' => 0,
-                                    ]);
-                                }
-                        }
-                        else{
-                            if (isset($request->subdomain)){
-                                return redirect("https://streaming.mybusinessacademypro.com/transmission/".$event_id."/".Auth::user()->ID)->with('msj-erroneo', 'Ya cuenta con una encuesta guardada');
-                            }else{
-                                return redirect()->back()->with('msj-erroneo', 'Ya cuenta con una encuesta guardada');
-                            }
-                        }
-
-                  //  return dd ($responses, $question, $question_save, $question_save->id);
-                   /* foreach ($questions as $question) {
-                        DB::table('survey_options')->insert([
-                            'question' => $question,
-                            'content_event_id' => $dataE->id
+            // survey_options
+            case 'survey':
+                $guardadas =   EventResources::where('event_id', $request->event_id)
+                                    ->where('resources_id',4)
+                                    ->get();
+                        
+                if($guardadas->isEmpty()){
+                    $dataE = SetEvent::create([
+                        'title' => $request->input('title') ? $request->input('title') : 'null',
+                        'type' => 'survey',
+                        'event_id' => $request->event_id
+                    ]);
+                    $dataSurvey = new EventResources;
+                    $dataSurvey->resources_id = 4;
+                    $dataSurvey->event_id = $request->event_id;
+                    $dataSurvey->status = 1;
+                    $dataSurvey->save();
+    
+                    $question =  $request->q1;
+                    $responses = explode(',', $request->input('questions'));
+                    $question_save = new SurveyOptions;
+                    $question_save->question =  $question;
+                    $question_save->content_event_id = $dataE->id;
+                    $question_save->save();
+                    foreach ($responses as $response) {
+                        DB::table('survey_options_response')->insert([
+                            'response' => $response,
+                            'survey_options_id' => $question_save->id,
+                            'user_id' => Auth::user()->ID,
+                            'selected' => 0,
                         ]);
-                    }*/
+                    }
+                    
+                    return response()->json(true);
+                }else{
+                    return response()->json(false);
+                }
+            break;
+                
+            case 'offers':
+                if ($request->file('resource')) {
+                    $file = $request->file('resource');
+                    $name_file = 'offer_'.$request->event_id.'_'.time().'.'.$file->getClientOriginalExtension();
+                    $path = public_path() .'/upload/events';
+                    $file->move($path,$name_file);
 
-                    break;
-                    case 'offers':
-                        if ($request->file('resource')) {
-                            $file = $request->file('resource');
-                            $name_file = 'offer_'.$event_id.'_'.time().'.'.$file->getClientOriginalExtension();
-                            $path = public_path() .'/upload/events';
-                            $file->move($path,$name_file);
+                    SetEvent::create([
+                        'title' => $request->input('title') ? $request->input('title') : 'null',
+                        'type' => 'oferta',
+                        'url' => $name_file,
+                        'event_id' => $request->event_id
+                    ]);
 
-                            SetEvent::create([
-                                'title' => $request->input('title') ? $request->input('title') : 'null',
-                                'type' => 'oferta',
-                                'url' => $name_file,
-                                'event_id' => $event_id
-                            ]);
+                    OffersLive::create([
+                        'title' => $request->input('title') ? $request->input('title') : 'null',
+                        'price' => $request->input('price') ? $request->input('price') : 0,
+                        'event_id' => $request->event_id,
+                        'url_resource' => $name_file
+                    ]);
 
-                            OffersLive::create([
-                                'title' => $request->input('title') ? $request->input('title') : 'null',
-                                'price' => $request->input('price') ? $request->input('price') : 0,
-                                'event_id' => $event_id,
-                                'url_resource' => $name_file
-                            ]);
-
-                            $guardadas =   EventResources::where('event_id', $event_id)->get();
-                            $encontrada = false;
-                            foreach ($guardadas as $guardada) {
-
-                                if( $guardada->resources_id == 8){
-                                    $encontrada = true;
-                                }else{
-                                    $encontrada = false;
-                                }
-                            }
-                            if(!$encontrada){
-                                    $dataPresentation = new EventResources;
-                                    $dataPresentation->resources_id = 8;
-                                    $dataPresentation->event_id = $event_id;
-                                    $dataPresentation->status = 1;
-                                    $dataPresentation->save();
-                            }
-
-                        }else{
-                            if (isset($request->subdomain)){
-                                return redirect("https://streaming.mybusinessacademypro.com/transmission/".$event_id."/".Auth::user()->ID)->with('msj-erroneo', 'Hubo un problema al subir la oferta');
-                            }else{
-                                return redirect()->back()->with('msj-erroneo', 'Hubo un problema al subir la oferta');
-                            }
-                        }
-                    break;
-                    // CREATE TABLE `survey_options` ( `id` INT NOT NULL AUTO_INCREMENT ,  `question` TEXT NOT NULL ,  `content_event_id` INT NOT NULL ,  `created_at` TIMESTAMP NULL ,  `updated_at` TIMESTAMP NULL ,    PRIMARY KEY  (`id`)) ENGINE = InnoDB;
-
-
-
+                    $guardadas =   EventResources::where('event_id', $request->event_id)
+                                        ->where('resources_id', '=', 8)
+                                        ->get();
+                    
+                    if($guardadas->isEmpty()){
+                        $dataPresentation = new EventResources;
+                        $dataPresentation->resources_id = 8;
+                        $dataPresentation->event_id = $request->event_id;
+                        $dataPresentation->status = 1;
+                        $dataPresentation->save();
+                    }
+                    
+                    $resources_offer = OffersLive::all()->where('event_id', $request->event_id);
+            
+                    return view('live.components.sections.offersSection')->with(compact('resources_offer'));
+                }else{
+                   return response()->json(false); 
+                }
+            break;
         }
-        /*$event = Events::find($event_id);
-        $notes = Note::all();*/
-
-        //return redirect('live.live', compact ('event', 'notes'))->with('msj-exitoso', 'El Recurso ha sido creado con éxito.');
-        if (isset($request->subdomain)){
-            return redirect("https://streaming.mybusinessacademypro.com/transmission/".$event_id."/".Auth::user()->ID)->with('msj-exitoso', 'El Recurso ha sido creado con éxito.');
-        }else{
-            return redirect()->route('show.event', $event_id)->with('msj-exitoso', 'El Recurso ha sido creado con éxito.');
-        }
-
     }
-
+    
+    public function refresh_menu($user_id, $event_id){
+        $user = User::find($user_id);
+        $event = Events::find($event_id);
+        $menuResource = $event->getResource();
+        
+        return view('live.components.sections.menuSection')->with(compact('user', 'menuResource'));
+        
+    }
 
 
 
@@ -274,13 +257,14 @@ class SetEventController extends Controller
             }
         }
         else{
-
-        $new_response = new SurveyResponse;
-        $new_response->response = $request->response;
-        $new_response->survey_options_id = $request->survey_options_id;
-        $new_response->user_id = Auth::user()->ID;
-        $new_response->selected = 1;
-        $new_response->save();
+            
+            $new_response = new SurveyResponse;
+            $new_response->response = $request->response;
+            $new_response->survey_options_id = $request->survey_options_id;
+            $new_response->user_id = Auth::user()->ID;
+            $new_response->selected = 1;
+            $new_response->save();
+            
             if (isset($request->subdomain)){
                 return redirect("https://streaming.mybusinessacademypro.com/transmission/".$request->event_id."/".Auth::user()->ID)->with('msj-exitoso', 'Respuesta guardada con éxito.');
             }else{
@@ -315,9 +299,9 @@ class SetEventController extends Controller
 
        $id = $request->get('id');
        $statistics = SurveyResponse::where('survey_options_id', $id)->where('selected', 1)->get();
-
+ 
          return response(json_encode($statistics),200)->header('Content-type', 'text/plain');
-
+        
      }
     public function show($id)
     {

@@ -270,6 +270,7 @@ class EventsController extends Controller
         $info = json_decode($meeting->meta);
         $info->status = 'live';
         $meeting->meta = json_encode($info);
+        $meeting->save();
 
         return response()->json(
             true

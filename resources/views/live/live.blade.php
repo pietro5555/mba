@@ -14,8 +14,8 @@
                 }
             });
         }
+        
         function newPresentation(){
-            alert("Aqui");
             var route = "https://mybusinessacademypro.com/academia/settings/event";
             var form = $('#store_presentation_form')[0];
             var parametros = new FormData(form);
@@ -30,13 +30,13 @@
                         $("#msj-success-ajax").css('display', 'none');
                         $("#modal-settings-presentation").modal("hide");
                         $("#option-modal-settings").modal("hide");
-                        $("#msj-error-text").html("Hubo un error al cargar la presentación");
+                        $("#msj-error-text").html("Hubo un error al cargar la memoria");
                         $("#msj-error-ajax").css('display', 'block');
                     }else{
                         $("#msj-error-ajax").css('display', 'none');
                         $("#modal-settings-presentation").modal("hide");
                         $("#option-modal-settings").modal("hide");
-                        $("#msj-success-text").html("La presentación ha sido agregada con éxito");
+                        $("#msj-success-text").html("La memoria ha sido agregada con éxito");
                         $("#msj-success-ajax").css('display', 'block');
                         $("#presentations_section").html(ans);
                         refreshMenu();
@@ -131,6 +131,24 @@
                 }
             });
         }
+        
+        function deletePresentation(){
+            var route = "https://mybusinessacademypro.com/academia/settings/event/delete";
+            var parametros = $('#delete_presentation_form').serialize();
+            console.log(parametros);
+            $.ajax({
+                url:route,
+                type:'POST',
+                data:  parametros,
+                success:function(ans){
+                    $("#msj-error-ajax").css('display', 'none');
+                    $("#option-modal-presentation").modal("hide");
+                    $("#msj-success-text").html("La memoria ha sido eliminada con éxito");
+                    $("#msj-success-ajax").css('display', 'block');
+                    $("#presentations_section").html(ans);
+                }
+            });
+        }
         function refreshMenu(){
             var route = "https://mybusinessacademypro.com/academia/refresh-menu/{{Auth::user()->ID}}/{{$event->id}}";
             $.ajax({
@@ -167,6 +185,7 @@
         </div>
     </div>
     <!-- MODALES PARA LAS OPCIONES DEL MENU -->
+    @include('live.components.optionsMenu.chat')
     @include('live.components.optionsMenu.setting')
     @include('live.components.optionsMenu.survey')
     @include('live.components.optionsMenu.presentation')

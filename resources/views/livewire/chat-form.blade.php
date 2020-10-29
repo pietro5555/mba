@@ -1,13 +1,13 @@
 <div>
 
     <div class="card card-anotaciones">
-        <textarea name="mensaje" id="" cols="25" rows="3" wire:model="mensaje">Escribe tu mensaje</textarea>
+    <textarea name="mensaje" id="" cols="25" rows="3" wire:model="mensaje" style="background-color: #1C1D21; color: white;" placeholder="Escribe tu mensaje"></textarea>
 
         @error('mensaje')<small class="text-danger">{{$message}}</small>@enderror
         <div class="card-footer p-1 border-0">
 
             <div style="position: absolute" class="alert alert-success collapse p-1" role="alert" id="avisoSuccess">
-                Se ha enviado
+                <i class="fa fa-check"></i> Mensaje enviado
             </div>
             <button class="btn btn-success float-right" type="submit" wire:click="enviarMensaje">Enviar</button>
         </div>

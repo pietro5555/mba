@@ -30,7 +30,8 @@ class Kernel extends ConsoleKernel
         //          ->hourly();
         $schedule->command('status:user')
                     ->everyMinute();
-        $schedule->command('membership:users')->dailyAt('1:00');;
+        $schedule->command('membership:users')->dailyAt('1:00');
+        $schedule->command('status:lives')->hourly();
     }
 
     /**

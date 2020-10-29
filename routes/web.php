@@ -277,6 +277,7 @@ Route::group(['prefix' => 'installer'], function (){
   // Events landing
   Route::get('/event/{event_id}', 'EventsController@show_event')->name('show.event');
   //Configurar eventos
+  Route::post('/settings/event/delete', 'SetEventController@delete')->name('set.event.delete');
   Route::post('/settings/event/{event_id?}', 'SetEventController@store')->name('set.event.store');
   Route::get('refresh-menu/{user}/{event}', 'SetEventController@refresh_menu');
   //Guardar respuesta de encuesta

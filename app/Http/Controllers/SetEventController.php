@@ -337,8 +337,18 @@ class SetEventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function delete(Request $request){
+        if ($request->type == 'presentation'){
+            $recurso = SetEvent::find($request->resource_id);
+            $recurso->delete();
+            
+            $presentations = SetEvent::where('event_id', $recurso->event_id)
+                                ->where('type', 'presentation')
+                                ->get();
+            
+            $event_id = $recurso->event_id;
+                    
+            return view('live.components.sections.presentationsSection')->with(compact('presentations', 'event_id'));
+        }
     }
 }

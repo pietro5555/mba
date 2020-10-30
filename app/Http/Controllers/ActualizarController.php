@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\Mail;
 
 // llamando a los modelos
 use App\Models\Rol;
-use App\Models\User; 
+use App\Models\User;  
+use App\Models\Streaming\User as UserStreaming; 
 use App\Models\Seguridad; 
 use App\Models\Settings;
 use App\Models\Notification;
@@ -295,7 +296,7 @@ class ActualizarController extends Controller
      */
     public function actualizar(Request $request, $id)
     {
-       $user = User::find($id);
+        $user = User::find($id);
        
         if ($request->file('avatar')) {
             $imagen = $request->file('avatar');
@@ -305,6 +306,17 @@ class ActualizarController extends Controller
             $imagen->move($path,$nombre_imagen);
             $user->avatar = $nombre_imagen;
             $user->save();
+            
+            $streamingConnect = new StreamingController();
+            $userStreaming = $streamingConnect->verifyUser($user->user_email);
+            if (!is_null($userStreaming)) {
+                $usuarioStre = UserStreaming::find($userStreaming->id);
+                $nombre2 = $usuarioStre->id.'.'.$imagen->getClientOriginalExtension();
+                copy('/home/mbapro/public_html/academia/uploads/avatar/'.$nombre_imagen, '/home/mbapro/public_html/streaming/storage/app/public/avatar/'.$nombre2);
+                $usuarioStre->avatar = '/storage/avatar/'.$nombre2;
+                $usuarioStre->save();
+            }
+
             return redirect()->back()->with('msj', 'La imagen de usuario se ha actualizado');
         }else{
             return redirect()->back()->with('msj', 'Hubo un Problema al subir la imagen');

@@ -4,7 +4,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Agregar Presentaci&oacute;n</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Agregar Memoria</h5>
             </div>
             <form enctype="multipart/form-data" id="store_presentation_form">
                 {{ csrf_field() }}
@@ -13,7 +13,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label>Seleccione la presentaci&oacute;n</label>
+                                    <label>Seleccione la memoria</label>
                                     <input type="file" class="form-control" name="presentation" required>
                                 </div>
                             </div>
@@ -25,7 +25,11 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <a class="btn btn-success" onclick="newPresentation();">Enviar</a>
+                    <a class="btn btn-success" onclick="newPresentation();" id="store_presentation_submit">Enviar</a>
+                    <button class="btn btn-success" type="button" disabled id="store_presentation_loader" style="display: none;">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Espere...
+                    </button>
                 </div>
             </form>
         </div>

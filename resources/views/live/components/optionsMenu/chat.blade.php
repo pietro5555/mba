@@ -35,6 +35,7 @@
                                     channel.bind('chat-event', function(data) {
                                     // alert(JSON.stringify(data));
                                         window.livewire.emit("mensajeRecibido", data)
+                                        $('#badge-chat').css('display', 'block');
                                     });
                                 </script>
                             @endpush

@@ -2,6 +2,9 @@
 
 @push('scripts')
     <script>
+        function refreshChat(){
+            $("#badge-chat").css('display', 'none');
+        }
         function newNote(){
             var route = "https://mybusinessacademypro.com/academia/anotaciones/store";
             var parametros = $('#store_note_form').serialize();
@@ -16,6 +19,8 @@
         }
         
         function newPresentation(){
+            $("#store_presentation_submit").css('display', 'none');
+            $("#store_presentation_loader").css('display', 'block');
             var route = "https://mybusinessacademypro.com/academia/settings/event";
             var form = $('#store_presentation_form')[0];
             var parametros = new FormData(form);
@@ -26,6 +31,8 @@
                 processData: false,
                 contentType: false,
                 success:function(ans){
+                    $("#store_presentation_loader").css('display', 'none');
+                    $("#store_presentation_submit").css('display', 'block');
                     if (ans == false){
                         $("#msj-success-ajax").css('display', 'none');
                         $("#modal-settings-presentation").modal("hide");
@@ -46,6 +53,8 @@
         }
         
         function newVideo(){
+            $("#store_video_submit").css('display', 'none');
+            $("#store_video_loader").css('display', 'block');
             var route = "https://mybusinessacademypro.com/academia/settings/event";
             var parametros = $('#store_video_form').serialize();
             $.ajax({
@@ -53,6 +62,8 @@
                 type:'POST',
                 data:  parametros,
                 success:function(ans){
+                    $("#store_video_loader").css('display', 'none');
+                    $("#store_video_submit").css('display', 'block');
                     if (ans == false){
                         $("#msj-success-ajax").css('display', 'none');
                         $("#modal-settings-video").modal("hide");
@@ -73,6 +84,8 @@
         }
         
         function newFile(){
+            $("#store_file_submit").css('display', 'none');
+            $("#store_file_loader").css('display', 'block');
             var route = "https://mybusinessacademypro.com/academia/settings/event";
             var form = $('#store_file_form')[0];
             var parametros = new FormData(form);
@@ -83,6 +96,8 @@
                 processData: false,
                 contentType: false,
                 success:function(ans){
+                    $("#store_file_loader").css('display', 'none');
+                    $("#store_file_submit").css('display', 'block');
                     if (ans == false){
                         $("#msj-success-ajax").css('display', 'none');
                         $("#modal-settings-file").modal("hide");
@@ -98,11 +113,14 @@
                         $("#files_section").html(ans);
                         refreshMenu();
                     }
+                    
                 }
             });
         }
         
         function newOffer(){
+            $("#store_offer_submit").css('display', 'none');
+            $("#store_offer_loader").css('display', 'block');
             var route = "https://mybusinessacademypro.com/academia/settings/event";
             var form = $('#store_offer_form')[0];
             var parametros = new FormData(form);
@@ -113,6 +131,8 @@
                 processData: false,
                 contentType: false,
                 success:function(ans){
+                    $("#store_offer_loader").css('display', 'none');
+                    $("#store_offer_submit").css('display', 'block');
                     if (ans == false){
                         $("#msj-success-ajax").css('display', 'none');
                         $("#modal-settings-offers").modal("hide");
@@ -132,23 +152,54 @@
             });
         }
         
-        function deletePresentation(){
+        function deletePresentation($presentation){
+            $("#delete_presentation_submit-"+$presentation).css('display', 'none');
+            $("#delete_presentation_loader-"+$presentation).css('display', 'block');
             var route = "https://mybusinessacademypro.com/academia/settings/event/delete";
-            var parametros = $('#delete_presentation_form').serialize();
-            console.log(parametros);
+            $("#resource_type").val('presentation');
+            $("#resource_id").val($presentation);
+            var parametros = $('#delete_resource_form').serialize();
             $.ajax({
                 url:route,
                 type:'POST',
                 data:  parametros,
                 success:function(ans){
+                    $("#delete_presentation_loader-"+$presentation).css('display', 'none');
+                    $("#delete_presentation_submit-"+$presentation).css('display', 'block');
                     $("#msj-error-ajax").css('display', 'none');
                     $("#option-modal-presentation").modal("hide");
                     $("#msj-success-text").html("La memoria ha sido eliminada con éxito");
                     $("#msj-success-ajax").css('display', 'block');
                     $("#presentations_section").html(ans);
+                    refreshMenu();
                 }
             });
         }
+        
+        function deleteFile($file){
+            $("#delete_file_submit-"+$file).css('display', 'none');
+            $("#delete_file_loader-"+$file).css('display', 'block');
+            var route = "https://mybusinessacademypro.com/academia/settings/event/delete";
+            $("#resource_type").val('file');
+            $("#resource_id").val($file);
+            var parametros = $('#delete_resource_form').serialize();
+            $.ajax({
+                url:route,
+                type:'POST',
+                data:  parametros,
+                success:function(ans){
+                    $("#delete_file_loader-"+$file).css('display', 'none');
+                    $("#delete_file_submit-"+$file).css('display', 'block');
+                    $("#msj-error-ajax").css('display', 'none');
+                    $("#option-modal-document").modal("hide");
+                    $("#msj-success-text").html("El archivo ha sido eliminado con éxito");
+                    $("#msj-success-ajax").css('display', 'block');
+                    $("#files_section").html(ans);
+                    refreshMenu();
+                }
+            });
+        }
+        
         function refreshMenu(){
             var route = "https://mybusinessacademypro.com/academia/refresh-menu/{{Auth::user()->ID}}/{{$event->id}}";
             $.ajax({
@@ -184,6 +235,11 @@
             </div>
         </div>
     </div>
+    
+    <form id="delete_resource_form">
+        <input type="hidden" name="resource_id" id="resource_id">
+        <input type="hidden" name="resource_type" id="resource_type">
+    </form>
     <!-- MODALES PARA LAS OPCIONES DEL MENU -->
     @include('live.components.optionsMenu.chat')
     @include('live.components.optionsMenu.setting')

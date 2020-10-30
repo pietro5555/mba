@@ -338,17 +338,39 @@ class SetEventController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function delete(Request $request){
-        if ($request->type == 'presentation'){
-            $recurso = SetEvent::find($request->resource_id);
-            $recurso->delete();
-            
+        $recurso = SetEvent::find($request->resource_id);
+        $recurso->delete();
+        if ($request->resource_type == 'presentation'){
             $presentations = SetEvent::where('event_id', $recurso->event_id)
                                 ->where('type', 'presentation')
                                 ->get();
             
+            if ($presentations->count() == 0){
+                $opcionRecurso = EventResources::where('event_id', $recurso->event_id)
+                                    ->where('resources_id',5)
+                                    ->first();
+                $opcionRecurso->delete();
+            }
+            
             $event_id = $recurso->event_id;
                     
             return view('live.components.sections.presentationsSection')->with(compact('presentations', 'event_id'));
+            
+        }else if ($request->resource_type == 'file'){
+            $files = SetEvent::where('event_id', $recurso->event_id)
+                                ->where('type', 'file')
+                                ->get();
+            
+            if ($files->count() == 0){
+                $opcionRecurso = EventResources::where('event_id', $recurso->event_id)
+                                    ->where('resources_id',7)
+                                    ->first();
+                $opcionRecurso->delete();
+            }
+            
+            $event_id = $recurso->event_id;
+                    
+            return view('live.components.sections.filesSection')->with(compact('files', 'event_id'));
         }
     }
 }

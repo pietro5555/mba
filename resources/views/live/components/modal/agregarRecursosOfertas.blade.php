@@ -25,7 +25,7 @@
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label for="">Recurso</label>
+                                    <label for="">Imagen</label>
                                     <input type="file" name="resource" class="form-control" />
                                 </div>
                             </div>
@@ -37,7 +37,11 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <a class="btn btn-primary" onclick="newOffer();">Enviar</a>
+                    <a class="btn btn-success" onclick="newOffer();" id="store_offer_submit">Enviar</a>
+                    <button class="btn btn-success" type="button" disabled id="store_offer_loader" style="display: none;">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Espere...
+                    </button>
                 </div>
             </form>
         </div>

@@ -37,7 +37,11 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-success sendFormQuestion">Enviar</button>
+                    <button type="button" class="btn btn-success sendFormQuestion" id="store_survey_submit">Enviar</button>
+                    <button class="btn btn-success" type="button" disabled id="store_survey_loader" style="display: none;">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Espere...
+                    </button>
                 </div>
             </form>
         </div>

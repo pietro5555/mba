@@ -2,15 +2,15 @@
     <div class="row">
         <div class="col-md-12 d-flex">
             <div class="row d-flex align-items-center mb-0">
-                <div class="col-12 col-md-3 text-blue">
-                    <h5>{{ $event->title }} / {{$event->mentor->display_name}}</h5>
+                <div class="col-12 col-md-4 text-blue">
+                    <h5>{{ $event->title }} <br> ({{$event->mentor->display_name}})</h5>
                 </div>
                 <div class="col-12 col-md-5">
                     <div class="nav nav-pills mt-2 menu-vertical-anotaciones" id="v-pills-tab" role="tablist" style="padding-left: 20px;">
-                        <a class="nav-link text-white text-center" id="v-pills-messages-tab" data-toggle="modal" href="#option-modal-chat" role="tab" aria-selected="false">
+                        <!--<a class="nav-link text-white text-center" id="v-pills-messages-tab" data-toggle="modal" href="#option-modal-chat" role="tab" aria-selected="false">
                             <img src="https://mybusinessacademypro.com/academia/images/icons/comment.svg" height="30px" class="">
                             <h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Chat</h6>
-                        </a>
+                        </a>-->
                         @if(Auth::user()->rol_id == 2)
                             <a class="nav-link  text-white text-center" id="v-pills-settings-tab" data-toggle="modal" href="#option-modal-settings" role="tab" aria-selected="true">
                                 <img src="{{ asset('images/icons/settings.svg') }}" height="30px" class="">
@@ -52,8 +52,17 @@
                         @endforeach
                     </div>
                 </div>
-                <div class="col-12 col-md-4 clearfix">
+                <div class="col-12 col-md-2">
                     <div class="row justify-content-end">
+                        <div class="nav nav-pills mt-2 pl-4 pr-4 menu-vertical-anotaciones" role="tablist">
+                            <a class="nav-link text-white text-center" id="v-pills-messages-tab" data-toggle="modal" href="#option-modal-chat" onclick="refreshChat();" role="tab" aria-selected="false">
+                                <img src="https://mybusinessacademypro.com/academia/images/icons/comment.svg" height="30px" class=""> 
+                                <span class="badge badge-pill badge-danger" id="badge-chat" style="display: none;"><i class="far fa-comment"></i></span>
+                                <!--<h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Chat</h6>-->
+                            </a>
+                        </div>
+                    </div>
+                    <!--<div class="row justify-content-end">
                         <div class="">
                             <h5 class="title-level">Nivel: {{$event->subcategory->title}}</h5>
                         </div>
@@ -71,7 +80,7 @@
                                 <img src="{{ asset('images/icons/instagram.svg') }}" height="20px" width="20px">
                             </a>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
             </div>
         </div>

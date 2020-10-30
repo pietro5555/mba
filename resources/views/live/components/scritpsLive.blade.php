@@ -35,6 +35,8 @@
 
         if (!valida){
             //$("#formQuestion").submit();
+            $("#store_survey_submit").css('display', 'none');
+            $("#store_survey_loader").css('display', 'block');
             var route = "https://mybusinessacademypro.com/academia/settings/event";
             var parametros = $('#formQuestion').serialize();
             $.ajax({
@@ -42,6 +44,8 @@
                 type:'POST',
                 data:  parametros,
                 success:function(ans){
+                    $("#store_survey_loader").css('display', 'none');
+                    $("#store_survey_submit").css('display', 'block');
                     if (ans == true){
                         $("#msj-error-ajax").css('display', 'none');
                         $("#modal-settings-survey").modal("hide");

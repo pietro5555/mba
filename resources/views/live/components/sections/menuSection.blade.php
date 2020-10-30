@@ -1,8 +1,8 @@
 
-<a class="nav-link text-white text-center" id="v-pills-messages-tab" data-toggle="modal" href="#option-modal-chat" role="tab" aria-selected="false">
+<!--<a class="nav-link text-white text-center" id="v-pills-messages-tab" data-toggle="modal" href="#option-modal-chat" role="tab" aria-selected="false">
     <img src="https://mybusinessacademypro.com/academia/images/icons/comment.svg" height="30px" class="">
     <h6 class="text-center d-none d-sm-none d-md-block" style="font-size:10px;">Chat</h6>
-</a>
+</a>-->
 @if(Auth::user()->rol_id == 2)
     <a class="nav-link  text-white text-center" id="v-pills-settings-tab" data-toggle="modal" href="#option-modal-settings" role="tab" aria-selected="true">
         <img src="{{ asset('images/icons/settings.svg') }}" height="30px" class="">

@@ -18,4 +18,9 @@ class SetEvent extends Model
     ];
 
     //métodos
+    public function pregunta()
+    {
+        return $this->hasOne('App\Models\SurveyOptions', 'content_event_id');
+    }
+
 }

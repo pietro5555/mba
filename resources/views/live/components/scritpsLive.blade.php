@@ -2,7 +2,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
 <script src='https://cdn.jsdelivr.net/lodash/4.17.2/lodash.min.js'></script>
 <script type="text/javascript">
-    var id = $('input[name="survey_id"]').val()
+    var id = $('input[name="event_id"]').val()
     console.log(id);
     var responses = [];
     var values = [];

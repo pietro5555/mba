@@ -16,6 +16,10 @@ class SurveyOptions extends Model
         'question', 'content_event_id'
     ];
 
+    public function contenido()
+    {
+        return $this->belongsTo('App\Models\SetEvent', 'event_content', 'id', 'content_event_id');
+    }
 
     public function responses(){
         return $this->hasMany('App\Models\SurveyResponse');

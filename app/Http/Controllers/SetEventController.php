@@ -150,44 +150,41 @@ class SetEventController extends Controller
                 }
             break;
 
-            // survey_options
-            case 'survey':
-                $guardadas =   EventResources::where('event_id', $request->event_id)
-                                    ->where('resources_id',4)
-                                    ->get();
-                        
+              // survey_options
+              case 'survey':
+              $guardadas =   EventResources::where('event_id', $request->event_id)
+                                  ->where('resources_id',4)
+                                  ->get();
                 if($guardadas->isEmpty()){
-                    $dataE = SetEvent::create([
-                        'title' => $request->input('title') ? $request->input('title') : 'null',
-                        'type' => 'survey',
-                        'event_id' => $request->event_id
-                    ]);
-                    $dataSurvey = new EventResources;
-                    $dataSurvey->resources_id = 4;
-                    $dataSurvey->event_id = $request->event_id;
-                    $dataSurvey->status = 1;
-                    $dataSurvey->save();
-    
-                    $question =  $request->q1;
-                    $responses = explode(',', $request->input('questions'));
-                    $question_save = new SurveyOptions;
-                    $question_save->question =  $question;
-                    $question_save->content_event_id = $dataE->id;
-                    $question_save->save();
-                    foreach ($responses as $response) {
-                        DB::table('survey_options_response')->insert([
-                            'response' => $response,
-                            'survey_options_id' => $question_save->id,
-                            'user_id' => Auth::user()->ID,
-                            'selected' => 0,
-                        ]);
-                    }
-                    
-                    return response()->json(true);
-                }else{
-                    return response()->json(false);
-                }
-            break;
+                     $dataSurvey = new EventResources;
+                      $dataSurvey->resources_id = 4;
+                      $dataSurvey->event_id = $request->event_id;
+                      $dataSurvey->status = 1;
+                      $dataSurvey->save();
+  
+                  }
+                   $dataE = SetEvent::create([
+                      'title' => $request->input('title') ? $request->input('title') : 'null',
+                      'type' => 'survey',
+                      'event_id' => $request->event_id
+                  ]);
+                  $question =  $request->q1;
+                  $responses = explode(',', $request->input('questions'));
+                  $question_save = new SurveyOptions;
+                  $question_save->question =  $question;
+                  $question_save->content_event_id = $dataE->id;
+                  $question_save->save();
+                  foreach ($responses as $response) {
+                      DB::table('survey_options_response')->insert([
+                          'response' => $response,
+                          'survey_options_id' => $question_save->id,
+                          'user_id' => Auth::user()->ID,
+                          'selected' => 0,
+                      ]);
+                  }
+                  
+                  return response()->json(true);
+          break;
                 
             case 'offers':
                 if ($request->file('resource')) {
@@ -246,31 +243,32 @@ class SetEventController extends Controller
     /**Save student response**/
     public function save_student_response(Request $request)
     {
-        $user_id =Auth::user()->ID;
-        $response_saved = SurveyResponse::where('user_id','=', $user_id)->first();
-        if(empty(!$response_saved))
-        {
-            if (isset($request->subdomain)){
-                return redirect("https://streaming.mybusinessacademypro.com/transmission/".$request->event_id."/".Auth::user()->ID)->with('msj-erroneo', 'Ya ha guardado una respuesta');
-            }else{
-                return redirect()->route('show.event', $request->event_id)->with('msj-erroneo', 'Ya ha guardado una respuesta');
+                  
+        foreach ( $request->row as $index => $id ) {
+            $encontrada = SurveyResponse::where('user_id',Auth::user()->ID)->where('response',$request->response[$index])->where('survey_options_id', $request->survey_options_id[$index])->where('selected', 1)->first();
+            if(Empty($encontrada))
+            {
+                $new_response = new SurveyResponse();
+                $new_response->fill([
+                    'user_id' => Auth::user()->ID,
+                    'selected' => 1,
+                    'response' =>  $request->response[$index],
+                    'survey_options_id' =>  $request->survey_options_id[$index]
+                ]);
+                $new_response->save();
             }
-        }
-        else{
+            else{
+                
+                return redirect()->route('show.event', $request->event_id)->with('msj-erroneo', 'Ya ha respondido estas preguntas');
+            }
             
-            $new_response = new SurveyResponse;
-            $new_response->response = $request->response;
-            $new_response->survey_options_id = $request->survey_options_id;
-            $new_response->user_id = Auth::user()->ID;
-            $new_response->selected = 1;
-            $new_response->save();
+        }
             
             if (isset($request->subdomain)){
                 return redirect("https://streaming.mybusinessacademypro.com/transmission/".$request->event_id."/".Auth::user()->ID)->with('msj-exitoso', 'Respuesta guardada con éxito.');
             }else{
                 return redirect()->route('show.event', $request->event_id)->with('msj-exitoso', 'Respuesta guardada con éxito.');
             }
-        }
 
     }
     /**
@@ -296,8 +294,17 @@ class SetEventController extends Controller
      /**Estadisticas de las respuestas**/
      public function survey_statistics(Request $request)
      {
-
+       
        $id = $request->get('id');
+       /*$resources_survey = SetEvent::where('event_id', $id)->where('type', 'survey')->with('pregunta')->get();
+       @foreach($resources_survey  as $encuesta)
+       {
+            foreach($encuesta->pregunta->responses->where('selected', 1)  as $respuesta)
+            {
+    
+            }
+       }*/
+       
        $statistics = SurveyResponse::where('survey_options_id', $id)->where('selected', 1)->get();
  
          return response(json_encode($statistics),200)->header('Content-type', 'text/plain');

@@ -13,7 +13,7 @@
                                     <div>
                                         <h5 class="text-primary">Responde estas preguntas</h5>
                                     </div>
-                                    
+
                                     <form action="{{ route ('save.survey.student')}}" method="POST">
                                         @csrf
                                         <div class="mb-2 form-group">
@@ -29,9 +29,9 @@
 
                                                 <input type="hidden" name="survey_options_id[]" value='{{$encuesta->id}}' required>
                                             @endforeach
-                                            
-                                           
-                                            
+
+
+
                                             <input type="hidden" name="event_id" value='{{$event->id}}' required>
                                             <input type="hidden" name="user_id" value='{{Auth::user()->ID}}' required>
                                             <input type="hidden" name="selected" value='1' required>
@@ -48,7 +48,7 @@
                             @endif
                             @if(Auth::user()->rol_id==2)
                                 <div>
-                                    <h4>Estadísticas de encuesta</h4>
+                                    <h4 class="text-white">Estadísticas de encuesta</h4>
                                 </div>
                                 <div>
                                     <canvas id="myChart" width="400" height="400"></canvas>

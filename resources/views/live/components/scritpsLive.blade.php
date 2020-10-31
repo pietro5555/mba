@@ -73,7 +73,9 @@
     }
 
     $.ajax({
-        url: 'https://mybusinessacademypro.com/academia/survey/statistics',
+
+         url: '/survey/statistics',
+        //url: 'https://mybusinessacademypro.com/academia/survey/statistics',
         method: 'POST',
         data: {
             id: id,

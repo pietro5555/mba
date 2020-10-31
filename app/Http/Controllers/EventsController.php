@@ -151,6 +151,14 @@ class EventsController extends Controller
             $evento->image = $name;
             $evento->save();
         }
+
+        if ($request->hasFile('miniatura')){
+            $file = $request->file('miniatura');
+            $mini = $evento->id.".".$file->getClientOriginalExtension();
+            $file->move(public_path().'/uploads/images/miniatura', $mini);
+            $evento->miniatura = $mini;
+            $evento->save();
+        }
         /*Habilitar recursos por defecto: Configuracion y Participantes*/
 
         $resourceOne = EventResources::create([
@@ -334,6 +342,13 @@ class EventsController extends Controller
             $name = $evento->id . "." . $file->getClientOriginalExtension();
             $file->move(public_path() . '/uploads/images/banner', $name);
             $evento->image = $name;
+        }
+
+        if ($request->hasFile('miniatura')){
+            $file = $request->file('miniatura');
+            $mini = $evento->id.".".$file->getClientOriginalExtension();
+            $file->move(public_path().'/uploads/images/miniatura', $mini);
+            $evento->miniatura = $mini;
         }
         $evento->save();
 

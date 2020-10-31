@@ -9,7 +9,7 @@
 				responsive: true,
 			});
 		});
-
+		
 		function editar($id){
 			var route = $("#"+$id).attr('data-route');
  			$.ajax({
@@ -133,9 +133,9 @@
 						                <label>Descripción</label>
 										<textarea class="ckeditor form-control" name="description"></textarea>
 								    </div>
-								</div>
+						        </div>
 								<div class="col-md-12 text-center">
-									<label>Fecha y Hora del Sistema	 <br><span style="color: red;">{{ date('d-m-Y H:i A')}}</span></label>
+									<label>Fecha y Hora del Sistema	 <br><span style="color: red;">{{ date('d-m-Y H:i A', strtotime($dateNow))}}</span></label>
 								</div>
 								<div class="col-md-6">
 									<label>Fecha</label>
@@ -168,6 +168,14 @@
 										<input class="form-control" type="file" name="banner" required>
 									</div>
 						        </div>
+						        
+						        <div class="col-md-12">
+									<div class="form-group">
+									<label class="control-label text-center">Miniatura</label>
+										<input class="form-control" type="file" name="miniatura" required>
+									</div>
+						        </div>
+						        
 						    </div>
 						</div>
 				        
@@ -243,6 +251,13 @@
 									<input class="form-control" type="file" name="banner">
 								</div>
 							</div>
+							
+							<div class="col-md-12">
+									<div class="form-group">
+									<label class="control-label text-center">Miniatura</label>
+										<input class="form-control" type="file" name="miniatura" required>
+									</div>
+						  </div>
 	    					
 						</div>
 				    </div>
@@ -255,4 +270,5 @@
   		</div>
 	</div>
 @endsection
+
 

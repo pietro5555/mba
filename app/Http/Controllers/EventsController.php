@@ -74,7 +74,7 @@ class EventsController extends Controller
         $streamingConnect = new StreamingController();
 
         $datosMentor = DB::table('wp98_users')
-            ->select('display_name', 'user_email', 'password')
+            ->select('display_name', 'user_email', 'password', 'avatar')
             ->where('ID', '=', $request->user_id)
             ->first();
         $userStreaming = $streamingConnect->verifyUser($datosMentor->user_email);
@@ -88,8 +88,8 @@ class EventsController extends Controller
                 $requestContact = new Request(array('name' => $datosMentor->user_email, 'email' => $datosMentor->user_email, 'user_id' => $userId));
                 $contactId = $streamingConnect->newContact($requestContact);
             }
-        } else {
-            $requestUser = new Request(array('role_id' => 4, 'name' => $datosMentor->display_name, 'email' => $datosMentor->user_email, 'username' => $datosMentor->user_email, 'password' => $datosMentor->password));
+        }else {
+            $requestUser = new Request(array('role_id' => 4, 'name' => $datosMentor->display_name, 'email' => $datosMentor->user_email, 'username' => $datosMentor->user_email, 'password' => $datosMentor->password, 'avatar' => $datosMentor->avatar));
             $userId = $streamingConnect->newUser($requestUser);
 
             $requestContact = new Request(array('name' => $datosMentor->user_email, 'email' => $datosMentor->user_email, 'user_id' => $userId));
@@ -183,16 +183,17 @@ class EventsController extends Controller
     public function show_event($event_id)
     {
         //return dd(Auth::user()->rol_id);
-        $notes = Note::all();
+        $notes = Note::where('user_id', '=', Auth::user()->ID)->orderBy('id', 'DESC')->get();;
         $event = Events::find($event_id);
         $menuResource = $event->getResource();
-        $resources_survey = SetEvent::where('event_id', $event_id)->where('type', 'survey')->get()->first();
         $resources_video = SetEvent::where('event_id', $event_id)->where('type', 'video')->get()->first();
         $resources_offer = OffersLive::all()->where('event_id', $event_id);
-        // return  dd($resources_survey, $menuResource);
-        $survey_response = null;
+        $resources_survey = SetEvent::where('event_id', $event_id)->where('type', 'survey')->with('pregunta')->get();
+       // return dd( $resources_survey);
+       /* $survey_response = null;
         if (!empty($resources_survey)) {
             $surveys = SurveyOptions::where('content_event_id', $resources_survey->id)->first();
+
             $survey_id = $surveys->id;
             if (empty($surveys)) {
                 $survey_response = null;
@@ -202,7 +203,7 @@ class EventsController extends Controller
         } else {
             $surveys = null;
             $survey_id = null;
-        }
+        }*/
 
         // return dd ($resources_survey , $surveys);
         // return response()->json([$menuResource], 201);
@@ -216,7 +217,7 @@ class EventsController extends Controller
         $presentations = SetEvent::where('event_id', $event_id)
             ->where('type', 'presentation')
             ->get();
-        return view('live.live', compact('event', 'notes', 'menuResource', 'surveys', 'resources_video', 'files', 'presentations', 'survey_id', 'resources_offer', 'survey_response'));
+        return view('live.live', compact('event', 'notes', 'menuResource', 'resources_survey', 'resources_video', 'files', 'presentations', 'resources_offer'));
     }
 
     public function timeliveEvent($event_id){
@@ -225,7 +226,7 @@ class EventsController extends Controller
         $meeting = Meeting::where('uuid', '=', $evento->uuid)->first();
         $info = json_decode($meeting->meta);
         $statusLive =  $info->status;
-        
+
         $p = $evento->date."T".$evento->time;
         $countdownLimit = date('M j\, Y H:i:s', strtotime($p));
         $checkPais = NULL;
@@ -240,7 +241,7 @@ class EventsController extends Controller
                         ->select('id')
                         ->where('nombre', '=', $paisUsuario->pais)
                         ->first();
-            
+
             if (!is_null($paisID)){
                 $checkPais = DB::table('event_countries')
                                 ->where('event_id', '=', $evento->id)
@@ -253,12 +254,12 @@ class EventsController extends Controller
                 }
             }
         }
-        
-        
+
+
         if ($statusLive != 'scheduled'){
             $countdownLimit = 0;
         }
-        
+
 
         return view('timelive.timeliveEvent')->with(compact('evento', 'statusLive', 'checkPais', 'countdownLimit'));
     }
@@ -270,6 +271,7 @@ class EventsController extends Controller
         $info = json_decode($meeting->meta);
         $info->status = 'live';
         $meeting->meta = json_encode($info);
+        $meeting->save();
 
         return response()->json(
             true
@@ -620,7 +622,7 @@ class EventsController extends Controller
                         ->select('pais')
                         ->where('ID', '=', Auth::user()->ID)
                         ->first();
-        
+
         $paisID = NULL;
         if ((!is_null($paisUsuario)) && (!is_null($paisUsuario->pais))) {
             $paisID = DB::table('paises')
@@ -628,20 +630,20 @@ class EventsController extends Controller
                         ->where('nombre', '=', $paisUsuario->pais)
                         ->first();
         }
-        
+
         foreach ($eventos_agendados as $evento){
             $evento->countries_count = DB::table('event_countries')
                                         ->where('event_id', '=', $evento->id)
                                         ->count();
-                                        
+
             $evento->checkCountry = NULL;
-            
+
             if (!is_null($paisID)) {
                 $checkPais = DB::table('event_countries')
                                 ->where('event_id', '=', $evento->id)
                                 ->where('country_id', '=', $paisID->id)
                                 ->first();
-                                        
+
                 if (!is_null($checkPais)) {
                     $evento->checkCountry = 1;
                     $evento->date_country = $checkPais->date;
@@ -649,8 +651,8 @@ class EventsController extends Controller
                 }
             }
         }
-        
-        
+
+
         $refeDirec = 0;
         if (Auth::user()) {
             $refeDirec = User::where('referred_id', Auth::user()->ID)->count('ID');
@@ -697,7 +699,7 @@ class EventsController extends Controller
                         $contactId = $streamingConnect->newContact($requestContact);
                     }
                 } else {
-                    $requestUser = new Request(array('role_id' => 3, 'name' => Auth::user()->display_name, 'email' => Auth::user()->user_email, 'username' => Auth::user()->user_email, 'password' => Auth::user()->password));
+                    $requestUser = new Request(array('role_id' => 3, 'name' => Auth::user()->display_name, 'email' => Auth::user()->user_email, 'username' => Auth::user()->user_email, 'password' => Auth::user()->password, 'avatar' => Auth::user()->avatar));
                     $userId = $streamingConnect->newUser($requestUser);
 
                     $requestContact = new Request(array('name' => Auth::user()->user_email, 'email' => Auth::user()->user_email, 'user_id' => $userId));

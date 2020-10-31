@@ -1,4 +1,4 @@
-<div class="col-md-6 pl-0">
+<div class="col-md-12 pl-0">
     {{-- Menu de Navegacion --}}
     <nav class="mb-2">
         <div class="nav nav-tabs nav-fill font-weight-bold" id="nav-tab" role="tablist">
@@ -11,7 +11,7 @@
         </div>
     </nav>
     {{-- Fin menu de navegacion --}}
-    <div class="col-md-10 pl-0">
+    <div class="col-md-12 pl-0">
         <div class="tab-content" id="nav-tabContent">
             <div class="tab-pane fade show active" id="nav-mentor" role="tabpanel" aria-labelledby="nav-mentor-tab">
                 <div class="container-fluid mb-2">
@@ -45,16 +45,15 @@
                             <div class="pl-0 comments-list">
                                 <div class="media pl-0">
                                     <div class="media-body">
-                                        <div class="col-12 box-comments pl-0">
+                                        <div class="col-12 box-comments ">
                                             <div class="card card-anotaciones pb-2">
                                                 <div class="card-body p-0">
-                                                    <form method="POST" action="{{ route('live.anotaciones') }}"
-                                                        class="m-2">
+                                                    <form class="m-2" id="store_note_form">
                                                         @csrf
                                                         <input id="event_id" name="event_id" type="hidden"
                                                             value="{{ $event->id }}">
                                                             <input id="survey_id" name="survey_id" type="hidden"
-                                                            value="{{ $survey_id }}">
+                                                            value="">
                                                         <div class="form-group notes-form-title">
                                                             <input type="text" id="title" placeholder="Título"
                                                                 class="col-md-6 form-control{{ $errors->has('title') ? ' is-invalid' : '' }}"
@@ -69,8 +68,7 @@
                                                                 Escribe tu nota
                                                             </textarea>
                                                         </div>
-                                                        <button type="submit"
-                                                            class="btn btn-success float-right">Guardar nota</button>
+                                                        <a class="btn btn-success float-right" onclick="newNote();">Guardar nota</a>
                                                     </form>
                                                 </div>
                                             </div>
@@ -82,7 +80,7 @@
                     </div>
                     {{-- Notas Guardadas --}}
                     <div class="row">
-                        <div class="col-md-10 pl-0 mb-2">
+                        <div class="col-md-10 mb-2" id="notes_section">
                             <h4 class="title-note pb-2">Notas Guardadas</h4>
                             @foreach ($notes as $note)
                             <div class="accordion accordionNotes mb-2" id="accordionNote{{$note->id}}">

@@ -12,6 +12,7 @@ class ResourcesController extends Controller{
     * Admin / Cursos / Listado de Cursos / Lecciones / Recursos Adicionales
     */
     public function index($leccion){
+     
         $leccion = Lesson::where('id', '=', $leccion)
                     ->with('materials')
                     ->first();
@@ -37,6 +38,13 @@ class ResourcesController extends Controller{
             }
         }else{
             $recurso->material = $request->url;
+        }
+        
+        if ($request->hasFile('image')){
+            $file2 = $request->file('image');
+            $name2 = $file2->getClientOriginalName();
+            $file2->move(public_path().'/uploads/courses/lessons/materials/images', $name2);
+            $recurso->image = $name2;
         }
         $recurso->save();
 
@@ -67,6 +75,13 @@ class ResourcesController extends Controller{
             }
         }else{
             $recurso->material = $request->url;
+        }
+        
+        if ($request->hasFile('image')){
+            $file2 = $request->file('image');
+            $name2 = $file2->getClientOriginalName();
+            $file2->move(public_path().'/uploads/courses/lessons/materials/images', $name2);
+            $recurso->image = $name2;
         }
         $recurso->save();
 

@@ -6,7 +6,7 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Agregar Archivos</h5>
             </div>
-            <form action="{{ route('set.event.store', [$event->id]) }}" method="POST" enctype="multipart/form-data">
+            <form enctype="multipart/form-data" id="store_file_form">
                 {{ csrf_field() }}
                 <div class="modal-body">
                     <div class="container-fluid">
@@ -20,11 +20,15 @@
                         </div>
                     </div>
                     <input type="hidden" name="type" value='file' required>
-
+                    <input type="hidden" name="event_id" value="{{ $event->id }}">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-success">Enviar</button>
+                    <a class="btn btn-success" onclick="newFile();" id="store_file_submit">Enviar</a>
+                    <button class="btn btn-success" type="button" disabled id="store_file_loader" style="display: none;">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Espere...
+                    </button>
                 </div>
             </form>
         </div>

@@ -6,6 +6,7 @@
 			$('#mytable').DataTable( {
 				responsive: true,
 			});
+
 		});
 
 		function changeType($opc){
@@ -33,7 +34,7 @@
 		        }
 			}
 		}
-
+		
 		function editar($id){
 			var route = $("#"+$id).attr('data-route');
  			$.ajax({
@@ -65,7 +66,8 @@
 		<div class="box">
 			<div class="box-body">
 				<div style="text-align: right;">
-				<a href="{{ route ('admin.courses.lessons.resources, $leccion->course_id')}}" class="btn btn-danger descargar"><i class="fas fa-arrow-circle-left"></i> Regresar</a>
+				    
+				    <a href="{{ route ('admin.courses.lessons', $leccion->course_id)}}" class="btn btn-danger descargar"><i class="fas fa-arrow-circle-left"></i> Regresar</a>
 					<a data-toggle="modal" data-target="#modal-new" class="btn btn-info"><i class="fa fa-plus-circle"></i> Nuevo Recurso</a>
 				</div>
 				
@@ -75,9 +77,9 @@
 					<thead>
 						<tr>
 							<th class="text-center">#</th>
-							<th class="text-center">Título</th>
+							<th class="text-center">T铆tulo</th>
 							<th class="text-center">Tipo</th>
-							<th class="text-center">Acción</th>
+							<th class="text-center">Acci贸n</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -118,7 +120,7 @@
 	    					<div class="row">
 						        <div class="col-md-12">
 						            <div class="form-group">
-						                <label>Título</label>
+						                <label>T铆tulo</label>
 						            	<input type="text" class="form-control" name="title" required>
 						            </div>
 						        </div>
@@ -143,12 +145,18 @@
 						            	<input type="url" class="form-control" name="url" id="url">
 						            </div>
 						        </div>
+						         <div class="col-md-12" >
+						            <div class="form-group">
+						                <label>Imagen de Recurso</label>
+						            	<input type="file" class="form-control" name="image">
+						            </div>
+						        </div>
 						    </div>
 						</div>
 				    </div>
 	      			<div class="modal-footer">
 	        			<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-	        			<button type="submit" class="btn btn-primary">Crear Lección</button>
+	        			<button type="submit" class="btn btn-primary">Crear Material</button>
 	      			</div>
 	      		</form>
     		</div>

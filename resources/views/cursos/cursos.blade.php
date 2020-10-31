@@ -408,7 +408,7 @@ $tercero++;
         <div class="container-fluid">
             <div class="col section-title-category">
                 <h3>
-                    CURSOS POR CATEGORÍA
+                    CURSOS POR CONTENIDO
                 </h3>
             </div>
             <div class="row">

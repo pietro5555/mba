@@ -233,8 +233,8 @@
 
 
     <div class="col-md-12" style="background-color: #EDEDED;">
-     <div class="section-title-landing new-courses-section-title" style="text-align: center;     padding: 30px; color: #1C1D21;">
-      Nuestros Fundadores
+     <div class="section-title-landing new-courses-section-title" style="text-align: center; padding: 30px; color: #2A91FF;">
+      Nuestros Especialistas
     </div>
 
 <div class="col-md-10 offset-md-1">
@@ -244,7 +244,7 @@
               <img src="{{ asset('nosotros/nosotros/16.png') }}" class="card-img" alt="...">
              <div class="card-img-overlay d-flex flex-column" style="color: #fff; text-align: center;"> 
                <div class="mt-auto">
-                  <div class="new-course-title" style="background-color: #333; padding: 8px;     float: right; color: #2A91FF;">
+                  <div class="new-course-title" style="background-color: #333; padding: 8px; float: right; color: #2A91FF;">
                     Tania Tostado
                   </div>            
               </div>

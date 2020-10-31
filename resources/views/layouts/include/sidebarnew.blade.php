@@ -105,12 +105,14 @@
                 @endif
                 @endif
             @endforeach
+            @if(Auth::user()->rol_id == 0)
             <li class="">
                 <a href="#imageLanding" data-toggle="modal">
                     <i class="fas fa-toolbox"></i>
                     <span>Imagen Landing</span>
                 </a>
             </li>
+            @endif
             {{-- CERRAR SESIÓN --}}
             <li class="">
                 <a href="{{ route('logout') }}"

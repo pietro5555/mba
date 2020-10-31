@@ -131,11 +131,6 @@
 
                     </div>
                 </div>
-                <div class="cookie-banner" style="display: none">
-                    <p>Utilizamos cookies propias y de terceros para mejorar nuestros servicios. Si continúa con la navegación, consideraremos que acepta este uso. <a href="">cookie policy</a></p>
-                    <button class="close">&times;</button>
-                </div>
-
                 @include('layouts.partials.footer')
             </div>
             <!-- /#page-content-wrapper -->

@@ -205,7 +205,7 @@
                                  <h3 class="featurette-heading text-primary">{{ $curso->mentor->display_name }}</h3>
                                  <h6 class="featurette-heading text-white">{{ $curso->mentor->profession }}</h6>
                                  <p class="lead about-course-text">{{ $curso->mentor->about }}</p>
-                                 <a href="#" class="text-primary">Ver perfil <i class=" fa fa-angle-right"> </i></a>
+                                 <a href="{{route('show.perfil.mentor', $curso->mentor->ID)}}" class="text-primary">Ver perfil <i class=" fa fa-angle-right"> </i></a>
                               </div>
                               <div class="col-md-3 order-md-1">
                                  <img src="{{ asset('uploads/avatar/'.$curso->mentor->avatar) }}" alt="" class="featurette-image img-fluid mx-auto ml-2" width="409" height="370">

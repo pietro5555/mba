@@ -200,7 +200,7 @@
                <p class="card-text" style="padding: 0px 20px; text-align: left; color: #fff; line-height: 30px;"> 
                 Especialista en desarrollo de negocios rentables, sostenibles y de expansión global.
                </p>
-               <p class="card-text" style="padding: 0px 20px; text-align: left; line-height: 30px;">
+               <p class="card-text" style="padding: 0px 20px; text-align: left; line-height: 40px;">
                 15 años de experiencia en el mundo financiero, eterno aprendiz y emprendedor, amante de las finanzas, la innovación, y los proyectos de impacto social. Con la experiencia ganada a través los años y su pasión por el desarrollo personal y profesional de sus equipos de trabajo, ha creado diferentes técnicas de entrenamientos altamente efectivo, además de ser escritor y autor de 4 libros de negocios, 2 best seller. Fundador y Co-creador de My Business Academy Pro, así como de Piense y Hágase Rico, El Legado. Su compromiso es dejar huella en todo país que pise y persona que lo acompañe</p>
             </div>
           </div>

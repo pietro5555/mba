@@ -160,7 +160,7 @@
 	{{-- SLIDER --}}
     @if ($cursosDestacados->count() > 0)
     	<div class="container-fluid courses-slider">
-    		<div id="mainSlider" class="carousel slide carousel-fade" data-ride="carousel">
+    		<div id="mainSlider" class="carousel slide carousel-fade" data-ride="carousel" data-interval="3000">
                 @if ($cursosDestacados->count() > 1)
                     @php $contCD = 0; @endphp
                     <ol class="carousel-indicators">

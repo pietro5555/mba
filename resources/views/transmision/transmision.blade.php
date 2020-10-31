@@ -80,10 +80,11 @@
 
                         @if($contador <= 3)
                            <div class="col-md-4" style="margin-top: 20px;">
-                              @if (!is_null($proxima->mentor->avatar))
+                   
+                              @if ($proxima->miniatura == null)
                                  <img src="{{ asset('uploads/avatar/'.$proxima->mentor->avatar) }}" class="card-img-top img-prox-events" alt="...">
                               @else
-                                 <img src="{{ asset('uploads/images/avatar/default.jpg') }}" class="card-img-top img-prox-events" alt="...">
+                                 <img src="{{ asset('uploads/images/miniatura/'.$proxima->miniatura) }}" class="card-img-top img-prox-events" alt="...">
                               @endif
                               <div class="card-img-overlay d-flex flex-column" style="margin-left: 10px; margin-right: 10px;">
                                   <div class="mt-auto">
@@ -151,10 +152,10 @@
                            @php $segundo++; @endphp
                            @if($segundo >= 4)
                               <div class="col-md-4" style="margin-top: 20px;">
-                                 @if (!is_null($proxima->mentor->avatar))
-                                    <img src="{{ asset('uploads/avatar/'.$proxima->mentor->avatar) }}" class="card-img-top img-prox-events" alt="...">
+                                  @if ($proxima->miniatura == null)
+                                  <img src="{{ asset('uploads/avatar/'.$proxima->mentor->avatar) }}" class="card-img-top img-prox-events" alt="...">
                                  @else
-                                    <img src="{{ asset('uploads/images/avatar/default.jpg') }}" class="card-img-top" alt="...">
+                                  <img src="{{ asset('uploads/images/miniatura/'.$proxima->miniatura) }}" class="card-img-top img-prox-events" alt="...">
                                  @endif
                                  <div class="card-img-overlay" style="margin-left: 10px; margin-right: 10px;">
                                     <h5 class="card-title font-weight-bold" style="margin-top: 170px; color: #2A91FF;">{{$proxima->title}}</h5>
@@ -238,7 +239,11 @@
          @if($finalizados->isNotEmpty())
             @foreach($finalizados as $fin)
                <div class="col-md-3" style="margin-top: 20px;">
-                  <img src="{{ asset('uploads/avatar/'.$fin->mentor->avatar) }}" class="card-img-top" alt="..." >
+                   @if($fin->miniatura == null)
+                    <img src="{{ asset('uploads/avatar/'.$fin->mentor->avatar) }}" class="card-img-top" alt="..." >
+                   @else
+                     <img src="{{ asset('uploads/images/miniatura/'.$fin->miniatura) }}" class="card-img-top" alt="..." >
+                   @endif
                   <div class="card-img-overlay" style="margin-left: 10px; margin-right: 10px;">
                      <h6 class="card-title">{{$fin->mentor->display_name}}</h6>
                   </div>

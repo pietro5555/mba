@@ -359,7 +359,7 @@
     </div>
 
 
-    <div class="col-sm-12 col-xs-12">
+    {{--<div class="col-sm-12 col-xs-12">
         <div class="info-box border-radius" onclick="copyToClipboard('shoping')">
             <div class="box-body" style="padding: 15px 20px;">
                 <div class="col-md-3 col-xs-12 white" style="font-size: 22px; margin-top: 15px;">
@@ -378,7 +378,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>--}}
 
     {{-- referido cliente --}}
     @if ($settingCliente->cliente == 1)

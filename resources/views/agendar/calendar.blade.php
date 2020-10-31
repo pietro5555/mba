@@ -102,10 +102,10 @@
   <div class="row">
     @foreach ($eventos_agendados as $agendado)
       <div class="col-md-4" style="margin-top: 20px;">
-        @if (!is_null($agendado->mentor->avatar))
+        @if ($agendado->miniatura == null)
           <img src="{{ asset('uploads/avatar/'.$agendado->mentor->avatar) }}" class="card-img-top img-prox-events" alt="...">
         @else
-          <img src="{{ asset('uploads/images/avatar/default.jpg') }}" class="card-img-top img-prox-events" alt="...">
+          <img src="{{ asset('uploads/images/miniatura/'.$agendado->miniatura) }}" class="card-img-top img-prox-events" alt="...">
         @endif
         <div class="card-img-overlay d-flex flex-column" style="margin-left: 10px; margin-right: 10px;">
           <div class="mt-auto">

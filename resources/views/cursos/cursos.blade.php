@@ -267,7 +267,7 @@ $segundo++;
 
 @if($segundo >= 4 && $segundo <= 6)
 
-<div class="col-md-4" style="margin-top: 20px;">
+<div class="col-md-4 imagen" style="margin-top: 20px;">
   @if (!is_null($recommended->thumbnail_cover))
  <img src="{{ asset('uploads/images/courses/covers/'.$recommended->thumbnail_cover) }}" class="card-img-top img-prox-events" alt="...">
  @else
@@ -309,7 +309,7 @@ $tercero++;
 
 @if($tercero >= 7 && $tercero <= 9)
 
-<div class="col-md-4" style="margin-top: 20px;">
+<div class="col-md-4 imagen" style="margin-top: 20px;">
   @if (!is_null($recommended->thumbnail_cover))
  <img src="{{ asset('uploads/images/courses/covers/'.$recommended->thumbnail_cover) }}" class="card-img-top img-prox-events" alt="...">
  @else

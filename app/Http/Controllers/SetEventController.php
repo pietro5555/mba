@@ -305,7 +305,7 @@ class SetEventController extends Controller
            // foreach($encuesta->pregunta->responses->where('survey_options_id', $encuesta->id)  as $respuesta)
            // {
 
-              //ActivacionController.php  $statistics = SurveyResponse::where('survey_options_id', $respuesta->id)->where('selected', 1)->get();
+              //$statistics = SurveyResponse::where('survey_options_id', $respuesta->id)->where('selected', 1)->get();
                // error_log($statistics);
             //}
            // return dd ($resources_survey);
@@ -315,26 +315,28 @@ class SetEventController extends Controller
      }
 
      /**Estadisticas de las respuestas**/
-    /* public function survey_statistics(Request $request)
+     /*public function survey_statistics(Request $request)
      {
-       $id = $request->get('id');
-       //Busca las preguntas
-       $resources_survey = SetEvent::where('event_id', $id)->where('type', 'survey')->with('pregunta')->get();
-       //Tam del array
-        $tam = $resources_survey->count();
-        $respondidas = [];
-       foreach($resources_survey  as $encuesta)
-       {
-        for ($i=0; $i < $tam ; $i++)
-        {
-            //Busca las respuestas por preguntas
-            $respondidas[$i] = SurveyResponse::where('survey_options_id', $encuesta->id)->get();
-        }
-       }
-       return response(json_encode($respondidas),200)->header('Content-type', 'text/plain');
+         $id = $request->get('id');
 
+         //Find the question resources
+         $resources_survey = SetEvent::where('event_id', $id)->where('type', 'survey')->with('pregunta')->get();
 
+         $questions = [];
+         foreach($resources_survey as $resource)
+         {
+                 //Find questions with its responses
+                 $responses = SurveyOptions::where('id', $resource->pregunta->id)->with('responses')->first();
+                 $questions[] = $responses->responses->where('selected',1)->first();
 
+         }
+         return response()->json(
+                             $questions,
+                             200,
+                             [
+                                 'Content-type' =>'text/plain'
+                             ]
+                             );
      }*/
 
     public function show($id)

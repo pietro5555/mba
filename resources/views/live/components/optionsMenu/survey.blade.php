@@ -27,7 +27,7 @@
                                                 @endforeach
                                                 </select>
 
-                                                <input type="hidden" name="survey_options_id[]" value='{{$encuesta->id}}' required>
+                                                <input type="hidden" name="survey_options_id[]" value='{{$encuesta->pregunta->id}}' required>
                                             @endforeach
 
 

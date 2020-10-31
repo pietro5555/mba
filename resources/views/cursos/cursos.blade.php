@@ -24,6 +24,18 @@
         #new-courses-section .card-img-overlay:hover{
             text-decoration: underline;
         }
+        
+        .imagen:hover {-webkit-filter: none; filter: none; color: #6EC1E4 0.2em 0.2em 0.6em 0.1em;
+        }
+        
+        .imagen {filter: grayscale(80%);}
+        
+        
+        .containerscale:hover img {
+        transform: scale(1.1, 1.1);
+        z-index: 9;
+       }
+
     </style>
 @endpush
 
@@ -79,7 +91,7 @@
                             <h4 class=" col-md-10 text-white text-uppercase  font-weight-bold" >
                                         {{$last_course->title}}
                             </h4>
-
+                            
                             <div class="col-md-2 float-right mb-2">
                                 <div class="row">
                                      <a href="{{ route('courses.show', [$last_course->slug, $last_course->course_id]) }}" class="btn btn-primary float-right text-uppercase mr-4"><i class="fa fa-play"></i> Continuar curso</a>
@@ -138,9 +150,8 @@
                 </div>
                 <div class="container-fluid m-2">
                     <div class="wrapper">
-
                     @foreach ($cursos as $curso)
-                      <div>
+                      <div class="containerscale">
 
                          <div class="card m-2 mb-4 card-courses">
 
@@ -212,7 +223,7 @@ $contador++;
 
 @if($contador <= 3)
 
-<div class="col-md-4" style="margin-top: 20px;">
+<div class="col-md-4 imagen" style="margin-top: 20px;">
   @if (!is_null($recommended->thumbnail_cover))
  <img src="{{ asset('uploads/images/courses/covers/'.$recommended->thumbnail_cover) }}" class="card-img-top img-prox-events" alt="...">
  @else
@@ -231,7 +242,7 @@ $contador++;
             <i class="far fa-user-circle text-center">
                 <p style="font-size: 10px;">{{ $recommended->users->count() }}</p>
             </i>
-
+            
         </h6>
     </div>
 </div>
@@ -275,7 +286,7 @@ $segundo++;
             <i class="far fa-user-circle text-center">
                 <p style="font-size: 10px;">{{ $recommended->users->count() }}</p>
             </i>
-
+            
         </h6>
     </div>
 </div>
@@ -373,18 +384,19 @@ $tercero++;
 
             <div id="newers" class="row" style="padding: 10px 30px;">
                 @foreach ($cursosNuevos as $cursoNuevo)
-                    <div class="col-xl-4 col-lg-4 col-12" style="padding-bottom: 10px;">
+                    <div class="col-xl-4 col-lg-4 col-12 imagen" style="padding-bottom: 10px;">
                         <div class="card">
                             <a href="{{ route('courses.show', [$cursoNuevo->slug, $cursoNuevo->id]) }}" style="color: white;">
 
-                            @if (!is_null($cursoNuevo->mentor->avatar))
-                                <img src="{{ asset('uploads/avatar/'.$cursoNuevo->mentor->avatar) }}" class="card-img-top new-course-img" alt="...">
+                            @if (!is_null($cursoNuevo->thumbnail_cover))
+                                <!-- <img src="{{ asset('uploads/avatar/'.$cursoNuevo->mentor->avatar) }}" class="card-img-top new-course-img" alt="..."> -->
+                                <img src="{{ asset('uploads/images/courses/covers/'.$cursoNuevo->thumbnail_cover) }}" class="card-img-top new-course-img" alt="...">
                             @else
-                                <img src="{{ asset('uploads/avatar/default.jpg') }}" class="card-img-top new-course-img" alt="...">
+                                <img src="{{ asset('uploads/images/courses/covers/default.jpg') }}" class="card-img-top new-course-img" alt="...">
                             @endif
                             <div class="card-img-overlay d-flex flex-column">
                                 <div class="mt-auto">
-                                    <div class="new-course-title">{{ $cursoNuevo->title }}</div>
+                                    <div class="section-title-landing text-white" style="line-height:1;">{{ $cursoNuevo->title }}</div>
                                     <div class="row">
                                        <div class="col-md-12">
                                            <p class="ico" style="float: right;"> <i class="far fa-user-circle"> {{ $cursoNuevo->users->count()}}</i></p>
@@ -444,47 +456,47 @@ $tercero++;
 
     {{-- SECCIÓN TUS MENTORES--}}
     @if (!Auth::guest())
-           {{-- SECCIÓN MENTORES --}}
+       {{-- SECCIÓN MENTORES --}}
     <div class="section-landing">
-        <div class="row">
-            <div class="col">
-                <div class="section-title-landing new-courses-section-title">
-                    <h1>MENTORES</h1>
-                </div>
-            </div>
-        </div>
-
-        <div id="newers" class="row" style="padding: 10px 30px;">
-            @foreach ($mentores as $mentor)
-                <div class="col-xl-4 col-lg-4 col-12" style="padding-bottom: 10px;">
-                    <div class="card">
-                        <a href="" style="color: white;">
-
-                        @if (!is_null($mentor->avatar))
-                            <!-- <img src="{{ asset('uploads/avatar/'.$mentor->avatar) }}" class="card-img-top new-course-img" alt="..."> -->
-                            <img src="{{ asset('uploads/avatar/'.$mentor->avatar) }}" class="card-img-top new-course-img" alt="...">
-                        @else
-                            <img src="{{ asset('uploads/images/courses/covers/default.jpg') }}" class="card-img-top new-course-img" alt="...">
-                        @endif
-                        <div class="card-img-overlay d-flex flex-column">
-                            <div class="mt-auto">
-                                <div class="text-sm text-white" style="line-height:1;">
-                                    <a class="text-white" href="{{ url('courses/mentor/'.$mentor->mentor_id) }}"> {{ $mentor->nombre }}</a>
-                                   </div>
-
-
-                            </div>
-                        </div>
-                      </a>
+            <div class="row">
+                <div class="col">
+                    <div class="section-title-landing new-courses-section-title">
+                        <h1>MENTORES</h1>
                     </div>
                 </div>
-            @endforeach
+            </div>
+        
+            <div id="newers" class="row" style="padding: 10px 30px;">
+                @foreach ($mentores as $mentor)
+                    <div class="col-xl-4 col-lg-4 col-12" style="padding-bottom: 10px;">
+                        <div class="card">
+                            <a href="" style="color: white;">
+                            
+                            @if (!is_null($mentor->avatar))
+                                <!-- <img src="{{ asset('uploads/avatar/'.$mentor->avatar) }}" class="card-img-top new-course-img" alt="..."> -->
+                                <img src="{{ asset('uploads/avatar/'.$mentor->avatar) }}" class="card-img-top new-course-img" alt="...">
+                            @else
+                                <img src="{{ asset('uploads/images/courses/covers/default.jpg') }}" class="card-img-top new-course-img" alt="...">
+                            @endif
+                            <div class="card-img-overlay d-flex flex-column">
+                                <div class="mt-auto">
+                                    <div class="text-sm text-white" style="line-height:1;">
+                                        <a class="text-white" href="{{ url('courses/mentor/'.$mentor->mentor_id) }}"> {{ $mentor->nombre }}</a>
+                                       </div>
+                                    
+                                   
+                                </div>
+                            </div>
+                          </a>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
         </div>
-    </div>
-
-
-
-{{-- FIN SECCIÓN MENTORES --}}
+    
+    
+    
+    {{-- FIN SECCIÓN MENTORES --}}
     @endif
     {{-- FIN SECCIÓN TUS MENTORES--}}
 @endsection

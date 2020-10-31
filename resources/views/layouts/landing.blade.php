@@ -121,8 +121,8 @@
                                 </div>
                                 <div class="mb-2 text-center text-white" style="margin-top: 20px;">
                                     <a href="{{route('client.policies')}}" class="text-white" target="_blank" style="padding: 2px;">Pol&iacute;ticas de Uso</a> &nbsp&nbsp
-                                    <a href="https://mybusinessacademypro.com/aviso-de-privacidad-terminos-y-condiciones/" class="text-white" style="padding: 2px;">T&eacute;rminos y condiciones</a>&nbsp&nbsp
-                                    <a href="" class="text-white" style="padding: 2px;"> Contacto</a>&nbsp&nbsp
+                                    <a href="https://mybusinessacademypro.com/aviso-de-privacidad-terminos-y-condiciones/" class="text-white" target="_black" style="padding: 2px;">T&eacute;rminos y condiciones</a>&nbsp&nbsp
+                                    <a href="https://mybusinessacademypro.com/contacto/" class="text-white" style="padding: 2px;" target="_black"> Contacto</a>&nbsp&nbsp
                                     <a href="{{route('index')}}" class="text-white" style="padding: 2px;">Inicio</a>&nbsp&nbsp
                                 </div>
 

@@ -61,7 +61,7 @@ class SetEventController extends Controller
                 $guardadas =   EventResources::where('event_id', $request->event_id)
                                     ->where('resources_id',6)
                                     ->get();
-                        
+
                 if($guardadas->isEmpty()){
                     $dataPresentation = new EventResources;
                     $dataPresentation->resources_id =6;
@@ -69,14 +69,14 @@ class SetEventController extends Controller
                     $dataPresentation->status = 1;
                     $dataPresentation->save();
                 }
-                
+
                 $resources_video = SetEvent::where('event_id', $request->event_id)
                                     ->where('type', 'video')
                                     ->first();
-            
+
                 return view('live.components.sections.videosSection')->with(compact('resources_video'));
             break;
-            
+
             case 'file':
                 if ($request->file('file')) {
                     $file = $request->file('file');
@@ -93,7 +93,7 @@ class SetEventController extends Controller
                     $guardadas = EventResources::where('event_id', $request->event_id)
                                     ->where('resources_id',7)
                                     ->get();
-                                    
+
                     if($guardadas->isEmpty()){
                         $dataPresentation = new EventResources;
                         $dataPresentation->resources_id = 7;
@@ -101,15 +101,15 @@ class SetEventController extends Controller
                         $dataPresentation->status = 1;
                         $dataPresentation->save();
                     }
-                    
+
                     $files = SetEvent::where('event_id', $request->event_id)
                                 ->where('type', 'file')
                                 ->get();
                     $event_id = $request->event_id;
-                    
+
                     return view('live.components.sections.filesSection')->with(compact('files', 'event_id'));
                 }else{
-                     return response()->json(false);   
+                     return response()->json(false);
                 }
             break;
 
@@ -129,7 +129,7 @@ class SetEventController extends Controller
                     $guardadas =   EventResources::where('event_id', $request->event_id)
                                     ->where('resources_id',5)
                                     ->get();
-                        
+
                     if($guardadas->isEmpty()){
                         $dataPresentation = new EventResources;
                         $dataPresentation->resources_id = 5;
@@ -137,13 +137,13 @@ class SetEventController extends Controller
                         $dataPresentation->status = 1;
                         $dataPresentation->save();
                     }
-                    
+
                     $presentations = SetEvent::where('event_id', $request->event_id)
                                         ->where('type', 'presentation')
                                         ->get();
-            
+
                     $event_id = $request->event_id;
-                    
+
                     return view('live.components.sections.presentationsSection')->with(compact('presentations', 'event_id'));
                 }else{
                     return response()->json(false);
@@ -161,7 +161,7 @@ class SetEventController extends Controller
                       $dataSurvey->event_id = $request->event_id;
                       $dataSurvey->status = 1;
                       $dataSurvey->save();
-  
+
                   }
                    $dataE = SetEvent::create([
                       'title' => $request->input('title') ? $request->input('title') : 'null',
@@ -182,10 +182,10 @@ class SetEventController extends Controller
                           'selected' => 0,
                       ]);
                   }
-                  
+
                   return response()->json(true);
           break;
-                
+
             case 'offers':
                 if ($request->file('resource')) {
                     $file = $request->file('resource');
@@ -210,7 +210,7 @@ class SetEventController extends Controller
                     $guardadas =   EventResources::where('event_id', $request->event_id)
                                         ->where('resources_id', '=', 8)
                                         ->get();
-                    
+
                     if($guardadas->isEmpty()){
                         $dataPresentation = new EventResources;
                         $dataPresentation->resources_id = 8;
@@ -218,24 +218,24 @@ class SetEventController extends Controller
                         $dataPresentation->status = 1;
                         $dataPresentation->save();
                     }
-                    
+
                     $resources_offer = OffersLive::all()->where('event_id', $request->event_id);
-            
+
                     return view('live.components.sections.offersSection')->with(compact('resources_offer'));
                 }else{
-                   return response()->json(false); 
+                   return response()->json(false);
                 }
             break;
         }
     }
-    
+
     public function refresh_menu($user_id, $event_id){
         $user = User::find($user_id);
         $event = Events::find($event_id);
         $menuResource = $event->getResource();
-        
+
         return view('live.components.sections.menuSection')->with(compact('user', 'menuResource'));
-        
+
     }
 
 
@@ -243,7 +243,7 @@ class SetEventController extends Controller
     /**Save student response**/
     public function save_student_response(Request $request)
     {
-                  
+
         foreach ( $request->row as $index => $id ) {
             $encontrada = SurveyResponse::where('user_id',Auth::user()->ID)->where('response',$request->response[$index])->where('survey_options_id', $request->survey_options_id[$index])->where('selected', 1)->first();
             if(Empty($encontrada))
@@ -258,12 +258,12 @@ class SetEventController extends Controller
                 $new_response->save();
             }
             else{
-                
+
                 return redirect()->route('show.event', $request->event_id)->with('msj-erroneo', 'Ya ha respondido estas preguntas');
             }
-            
+
         }
-            
+
             if (isset($request->subdomain)){
                 return redirect("https://streaming.mybusinessacademypro.com/transmission/".$request->event_id."/".Auth::user()->ID)->with('msj-exitoso', 'Respuesta guardada con éxito.');
             }else{
@@ -294,22 +294,49 @@ class SetEventController extends Controller
      /**Estadisticas de las respuestas**/
      public function survey_statistics(Request $request)
      {
-       
        $id = $request->get('id');
-       /*$resources_survey = SetEvent::where('event_id', $id)->where('type', 'survey')->with('pregunta')->get();
-       @foreach($resources_survey  as $encuesta)
+       $resources_survey = SetEvent::where('event_id', $id)->where('type', 'survey')->with('pregunta')->get();
+      // return dd ($resources_survey);
+      error_log($resources_survey);
+       foreach($resources_survey  as $encuesta)
        {
-            foreach($encuesta->pregunta->responses->where('selected', 1)  as $respuesta)
-            {
-    
-            }
-       }*/
-       
-       $statistics = SurveyResponse::where('survey_options_id', $id)->where('selected', 1)->get();
- 
-         return response(json_encode($statistics),200)->header('Content-type', 'text/plain');
-        
+         $respondidas = SurveyResponse::where('survey_options_id', $encuesta->id)->get();
+         error_log($respondidas);
+           // foreach($encuesta->pregunta->responses->where('survey_options_id', $encuesta->id)  as $respuesta)
+           // {
+
+              //ActivacionController.php  $statistics = SurveyResponse::where('survey_options_id', $respuesta->id)->where('selected', 1)->get();
+               // error_log($statistics);
+            //}
+           // return dd ($resources_survey);
+
+            return response(json_encode($respondidas),200)->header('Content-type', 'text/plain');
+       }
      }
+
+     /**Estadisticas de las respuestas**/
+    /* public function survey_statistics(Request $request)
+     {
+       $id = $request->get('id');
+       //Busca las preguntas
+       $resources_survey = SetEvent::where('event_id', $id)->where('type', 'survey')->with('pregunta')->get();
+       //Tam del array
+        $tam = $resources_survey->count();
+        $respondidas = [];
+       foreach($resources_survey  as $encuesta)
+       {
+        for ($i=0; $i < $tam ; $i++)
+        {
+            //Busca las respuestas por preguntas
+            $respondidas[$i] = SurveyResponse::where('survey_options_id', $encuesta->id)->get();
+        }
+       }
+       return response(json_encode($respondidas),200)->header('Content-type', 'text/plain');
+
+
+
+     }*/
+
     public function show($id)
     {
         //
@@ -351,32 +378,32 @@ class SetEventController extends Controller
             $presentations = SetEvent::where('event_id', $recurso->event_id)
                                 ->where('type', 'presentation')
                                 ->get();
-            
+
             if ($presentations->count() == 0){
                 $opcionRecurso = EventResources::where('event_id', $recurso->event_id)
                                     ->where('resources_id',5)
                                     ->first();
                 $opcionRecurso->delete();
             }
-            
+
             $event_id = $recurso->event_id;
-                    
+
             return view('live.components.sections.presentationsSection')->with(compact('presentations', 'event_id'));
-            
+
         }else if ($request->resource_type == 'file'){
             $files = SetEvent::where('event_id', $recurso->event_id)
                                 ->where('type', 'file')
                                 ->get();
-            
+
             if ($files->count() == 0){
                 $opcionRecurso = EventResources::where('event_id', $recurso->event_id)
                                     ->where('resources_id',7)
                                     ->first();
                 $opcionRecurso->delete();
             }
-            
+
             $event_id = $recurso->event_id;
-                    
+
             return view('live.components.sections.filesSection')->with(compact('files', 'event_id'));
         }
     }

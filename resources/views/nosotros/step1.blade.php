@@ -188,15 +188,19 @@
     <div class="card mb-3" style="max-width: 100%; margin-bottom: 0rem!important;">
         <div class="row no-gutters">
             <div class="col-md-6">
-              <img src="{{ asset('nosotros/nosotros/josegordo.png') }}" style="width: 100%;">
+              <img src="{{ asset('nosotros/fundadores/josegordo.png') }}" style="width: 100%; height: 100%;">
             </div>
             <div class="col-md-6" style="color: #fff; background-color: #1c1d21;">
             <div class="card-body">
+                
+                <p class="card-title" style="padding: 0px 20px; text-align: left; color: #2A91FF; font-family:Muli, Sans-serif; font-size: 50px; font-weight: bold;">
+                    JOSÉ GORDO
+                </p>
 
-               <p class="card-text" style="padding: 0px 30px; text-align: right; color: #2A91FF;"> 
+               <p class="card-text" style="padding: 0px 20px; text-align: left; color: #fff; line-height: 30px;"> 
                 Especialista en desarrollo de negocios rentables, sostenibles y de expansión global.
                </p>
-               <p class="card-text" style="padding: 0px 30px; text-align: right;">
+               <p class="card-text" style="padding: 0px 20px; text-align: left; line-height: 30px;">
                 15 años de experiencia en el mundo financiero, eterno aprendiz y emprendedor, amante de las finanzas, la innovación, y los proyectos de impacto social. Con la experiencia ganada a través los años y su pasión por el desarrollo personal y profesional de sus equipos de trabajo, ha creado diferentes técnicas de entrenamientos altamente efectivo, además de ser escritor y autor de 4 libros de negocios, 2 best seller. Fundador y Co-creador de My Business Academy Pro, así como de Piense y Hágase Rico, El Legado. Su compromiso es dejar huella en todo país que pise y persona que lo acompañe</p>
             </div>
           </div>
@@ -208,16 +212,20 @@
         <div class="row no-gutters">
           <div class="col-md-6" style="color: #fff; background-color: #1c1d21;">
           <div class="card-body">
+              
+              <p class="card-title" style="padding: 0px 20px; color: #2A91FF; font-family:Muli, Sans-serif; font-size: 50px; font-weight: bold;">
+                    MARIANA LÓPEZ DE WAARD
+                </p>
 
-               <p class="card-text" style="padding: 0px 30px; text-align: left;; color: #2A91FF;">
+               <p class="card-text" style="padding: 0px 30px; color: #fff; line-height: 40px;">
                 Licenciada en Marketing con Especialidad en Negocios Internacionales, Filántropa, Exitosa Empresaria y Conferencista de empresas con expansión global.
                </p>
-               <p class="card-text" style="padding: 0px 30px; text-align: left;;">
+               <p class="card-text" style="padding: 0px 30px; line-height: 40px;">
                  Experta en la apertura de nuevos mercados y mentora de grandes equipos de trabajo de la industria del Multinivel. Su compromiso es influir positivamente en mujeres y hombres para sacar al líder que llevan dentro e impulsarlos a cumplir sus sueños.</p>
             </div>
            </div> 
             <div class="col-md-6">
-              <img src="{{ asset('nosotros/nosotros/marianalopez.png') }}" style="width: 100%; padding-bottom: 80px;">
+              <img src="{{ asset('nosotros/fundadores/mujer.png') }}" style="width: 100%;">
             </div>
           </div>
         </div>
@@ -244,7 +252,9 @@
            </div>
           <div class="col-md-8" style="background-color: #EDEDED;">
             <div class="card-body">
-               <p class="card-text" style="padding-left: 20px;">Licenciada en Administración financiera con especialidad en finanzas corporativas, ha colaborado con bancos de talla mundial como: UBS, Credit Suisse y Deutche Bank en Suiza, Bank Hapoalim en Israel, Baern Stearns Securities en EUA, entre muchos otros. En 2008, fue ganadora del premio Best Development, otorgado por la International Property Awards y CNBC. Como consultora independiente, asesora a múltiples y reconocidas empresas en latinoamérica para hacer importantes transacciones con cifras de millones de dólares.</p>
+                <p class="card-text" style="padding-left: 20px; line-height: 40px; color:#2A91FF; font-size: 40px; font-weight: bold;">Tania Tostado</p>
+                
+               <p class="card-text" style="padding-left: 20px; line-height: 35px;">Licenciada en Administración financiera con especialidad en finanzas corporativas, ha colaborado con bancos de talla mundial como: UBS, Credit Suisse y Deutche Bank en Suiza, Bank Hapoalim en Israel, Baern Stearns Securities en EUA, entre muchos otros. En 2008, fue ganadora del premio Best Development, otorgado por la International Property Awards y CNBC. Como consultora independiente, asesora a múltiples y reconocidas empresas en latinoamérica para hacer importantes transacciones con cifras de millones de dólares.</p>
             </div>
           </div>
         </div>
@@ -254,7 +264,10 @@
         <div class="row no-gutters">
           <div class="col-md-8" style="background-color: #EDEDED;">
               <div class="card-body">
-               <p class="card-text" style="padding-right: 20px;">Especialista con 6 años de experiencia en el mundo del Trading, Forex y las Criptodivisas, así como de fondos de inversión con marcas de reconocimiento internacional. Cuenta con una maestría en administración y negocios, es líder de proyectos educativos financieros para diferentes cúpulas de negocios de jóvenes empresarios en México y es promotor de una Sociedad Financiera de Operación Múltiple en la que se operan diversas transacciones con crypto.</p>
+               
+               <p class="card-text" style="padding-left: 20px; line-height: 40px; color:#2A91FF; font-size: 40px; font-weight: bold;">Erick Reynaga</p>
+               
+               <p class="card-text" style="padding-right: 20px; line-height: 40px;">Especialista con 6 años de experiencia en el mundo del Trading, Forex y las Criptodivisas, así como de fondos de inversión con marcas de reconocimiento internacional. Cuenta con una maestría en administración y negocios, es líder de proyectos educativos financieros para diferentes cúpulas de negocios de jóvenes empresarios en México y es promotor de una Sociedad Financiera de Operación Múltiple en la que se operan diversas transacciones con crypto.</p>
             </div>
           </div>
           <div class="col-md-4" style="background-color: #EDEDED;">
@@ -284,7 +297,10 @@
            </div>
           <div class="col-md-8" style="background-color: #EDEDED;">
             <div class="card-body">
-               <p class="card-text" style="padding-left: 20px;">Lic. en Economía por la University of Split de Croacia. Colaboró en Londres para importantes marcas de offshore banking. En México tiene 12 años como consultora directiva de reconocidas empresas Fintech en todo Latam. Así como instructora de diversos programas académicos con diferentes marcas de la industria financiera.</p>
+                
+                <p class="card-text" style="padding-left: 20px; line-height: 40px; color:#2A91FF; font-size: 40px; font-weight: bold;"> Mirela Vuckovic</p>
+                
+               <p class="card-text" style="padding-left: 20px; line-height: 40px;">Lic. en Economía por la University of Split de Croacia. Colaboró en Londres para importantes marcas de offshore banking. En México tiene 12 años como consultora directiva de reconocidas empresas Fintech en todo Latam. Así como instructora de diversos programas académicos con diferentes marcas de la industria financiera.</p>
             </div>
           </div>
         </div>
@@ -295,7 +311,10 @@
         <div class="row no-gutters">
           <div class="col-md-8" style="background-color: #EDEDED;">
               <div class="card-body">
-               <p class="card-text" style="padding-right: 20px;">Lic. en administración Financiera, apasionado del conocimiento y la aplicación de la tecnología en los mercados financieros, desde muy joven se ha interesado por explorar y promover temas de inversiones, forex, trading, IA, entre otros.</p>
+                  
+                <p class="card-text" style="padding-left: 20px; line-height: 40px; color:#2A91FF; font-size: 40px; font-weight: bold;"> Manuel Guerrero Aguilar</p>
+                
+               <p class="card-text" style="padding-right: 20px; line-height: 40px;">Lic. en administración Financiera, apasionado del conocimiento y la aplicación de la tecnología en los mercados financieros, desde muy joven se ha interesado por explorar y promover temas de inversiones, forex, trading, IA, entre otros.</p>
             </div>
           </div>
           <div class="col-md-4" style="background-color: #EDEDED;">

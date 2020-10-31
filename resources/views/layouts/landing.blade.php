@@ -19,7 +19,8 @@
 
         <!-- css para la vista de anotaciones y mas -->
         <link rel="stylesheet" href="{{asset('css/anotaciones-simple.css')}}">
-
+        <!-- css para cookies -->
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
         <style>
             .goog-te-gadget-simple{
                 display: inline-block;
@@ -130,6 +131,10 @@
 
                     </div>
                 </div>
+                <div class="cookie-banner" style="display: none">
+                    <p>Utilizamos cookies propias y de terceros para mejorar nuestros servicios. Si continúa con la navegación, consideraremos que acepta este uso. <a href="">cookie policy</a></p>
+                    <button class="close">&times;</button>
+                </div>
 
                 @include('layouts.partials.footer')
             </div>
@@ -161,6 +166,28 @@
                 $("#wrapper").toggleClass("toggled");
             });
         </script>
+
+<script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
+<script>
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#252e39"
+    },
+    "button": {
+      "background": "#14a7d0"
+    }
+  },
+  "theme": "classic",
+  "position": "bottom-right",
+  "content": {
+    "message": "Utilizamos cookies propias y de terceros para mejorar nuestros servicios. Si continúa con la navegación, consideraremos que acepta este uso.",
+    "dismiss": "Acepto",
+    "link": "Leer más.",
+    "href": "https://mybusinessacademypro.com/academia/policies"
+  }
+});
+</script>
 
         @stack('scripts')
     </body>

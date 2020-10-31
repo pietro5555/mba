@@ -228,7 +228,10 @@
    <div class="col-12 section-landing mb-4" style="background: linear-gradient(to bottom, #222326 100%, #1C1D21 100%)">
         <div class="row">
             <div class="col-12">
-                <div class="section-title-landing new-courses-section-title">TU AVANCE - Hola {{Auth::user()->display_name}}!, Bienvenido(a) ¿Qué quieres aprender hoy?</div>
+                
+                <div class="section-title-landing new-courses-section-title" style="color:#6AB742;">Hola {{Auth::user()->display_name}}!, Bienvenido(a) ¿Qué quieres aprender hoy?</div>
+
+                <div class="section-title-landing new-courses-section-title">TU AVANCE</div>
             </div>
             <div class="col-12 col-md-6">
                 <h4 class="text-left">

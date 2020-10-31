@@ -316,7 +316,7 @@
                         <a href="{{route('schedule.event', [$prox->id])}}" class="btn btn-success btn-block">Agendar</a>
                         @else
                         {{-- EL USUARIO YA TIENE EL EVENTO AGENDADO--}}
-                        <a href="{{route('timeliveEvent', $proxima->id)}}" class="btn btn-success btn-block">Ir Al Evento</a>
+                        <a href="{{route('timeliveEvent', $prox->id)}}" class="btn btn-success btn-block">Ir Al Evento</a>
                         @endif
                         @else
                         <a href="{{route('shopping-cart.membership')}}" class="btn btn-danger"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Renovar Membresía</a>

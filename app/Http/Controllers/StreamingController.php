@@ -128,12 +128,17 @@ class StreamingController extends Controller{
         $usuario->status = 'activated';
         $usuario->save();
 
+        $extension = explode('.', $request->avatar);
+        $nombreImg = $usuario->id.".".$extension[1];
+        copy('/home/mbapro/public_html/academia/uploads/avatar/'.$request->avatar, '/home/mbapro/public_html/streaming/storage/app/public/avatar/'.$nombreImg);
+        $usuario->avatar = '/storage/avatar/'.$nombreImg;
+        $usuario->save();
+
         $role = new ModelHasRole();
         $role->role_id = $request->role_id;
         $role->model_type = 'App\Models\User';
         $role->model_id = $usuario->id;
         $role->save();
-
 
         return $usuario->id;
     }

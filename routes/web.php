@@ -1043,3 +1043,18 @@ Route::group(['prefix' => 'installer'], function (){
           Route::post('ckeditor/image_upload', 'LinkController@upload')->name('upload');
 
       });
+
+      Route::get('copiar-avatars', function(){
+        $usuarios = App\Models\User::orderBy('id')->get();
+
+        foreach ($usuarios as $usuario){
+          $usuarioStre = App\Models\Streaming\User::where('email', '=', $usuario->user_email)->first();
+          if (!is_null($usuarioStre)){
+            $extension = explode('.', $usuario->avatar);
+            $nombreImg = $usuarioStre->id.".".$extension[1];
+            copy('/home/mbapro/public_html/academia/uploads/avatar/'.$usuario->avatar, '/home/mbapro/public_html/streaming/storage/app/public/avatar/'.$nombreImg);
+            $usuarioStre->avatar = '/storage/avatar/'.$nombreImg;
+            $usuarioStre->save();
+          } 
+        }
+      });

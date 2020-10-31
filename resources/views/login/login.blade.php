@@ -116,9 +116,15 @@
                                 <label for="usr" style="font: 16px sans-serif;">Número de Afiliación</label>
                                 <input type="number" class="form-control" name="ID" value="{{old('ID')}}" style="border-radius: 20px;">
                             </div>
-                            <div class="form-group has-feedback">
+
+                            <div class="form-group has-feedback" style="margin-top:10px;">
                                 <label for="usr" style="font: 16px sans-serif;">Contraseña</label>
-                                <input type="password" class="form-control" name="password" ID="txtPassword" style="border-radius: 20px;">
+                               <div class="input-group">
+                                 <div class="input-group-prepend">
+                                  <div class="input-group-text"><span class="fa fa-eye-slash icon" onclick="mostrarPassword()"></span></div>
+                                 </div>
+                                  <input type="password" class="form-control" id="txtPassword" name="password" >
+                                </div>
                             </div>
 
 
@@ -258,5 +264,20 @@
         </div>
     </div>
 </div>
+
+
+<script type="text/javascript">
+  function mostrarPassword(){
+        var cambio = document.getElementById("txtPassword");
+        if(cambio.type == "password"){
+            cambio.type = "text";
+            $('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+        }else{
+            cambio.type = "password";
+            $('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+        }
+    } 
+    
+</script>
 
 @endsection

@@ -27,4 +27,10 @@
 			<input type="url" class="form-control" name="url" id="url2" @if ($material->type == 'Enlace') value="{{ $material->material }}" @endif>
 		</div>
 	</div>
+	<div class="col-md-12" >
+		<div class="form-group">
+		    <label>Imagen de Recurso</label>
+			<input type="file" class="form-control" name="image">
+		</div>
+	</div>
 </div>

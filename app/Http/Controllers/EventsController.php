@@ -74,7 +74,7 @@ class EventsController extends Controller
         $streamingConnect = new StreamingController();
 
         $datosMentor = DB::table('wp98_users')
-            ->select('display_name', 'user_email', 'password')
+            ->select('display_name', 'user_email', 'password', 'avatar')
             ->where('ID', '=', $request->user_id)
             ->first();
         $userStreaming = $streamingConnect->verifyUser($datosMentor->user_email);
@@ -88,8 +88,8 @@ class EventsController extends Controller
                 $requestContact = new Request(array('name' => $datosMentor->user_email, 'email' => $datosMentor->user_email, 'user_id' => $userId));
                 $contactId = $streamingConnect->newContact($requestContact);
             }
-        } else {
-            $requestUser = new Request(array('role_id' => 4, 'name' => $datosMentor->display_name, 'email' => $datosMentor->user_email, 'username' => $datosMentor->user_email, 'password' => $datosMentor->password));
+        }else {
+            $requestUser = new Request(array('role_id' => 4, 'name' => $datosMentor->display_name, 'email' => $datosMentor->user_email, 'username' => $datosMentor->user_email, 'password' => $datosMentor->password, 'avatar' => $datosMentor->avatar));
             $userId = $streamingConnect->newUser($requestUser);
 
             $requestContact = new Request(array('name' => $datosMentor->user_email, 'email' => $datosMentor->user_email, 'user_id' => $userId));
@@ -699,7 +699,7 @@ class EventsController extends Controller
                         $contactId = $streamingConnect->newContact($requestContact);
                     }
                 } else {
-                    $requestUser = new Request(array('role_id' => 3, 'name' => Auth::user()->display_name, 'email' => Auth::user()->user_email, 'username' => Auth::user()->user_email, 'password' => Auth::user()->password));
+                    $requestUser = new Request(array('role_id' => 3, 'name' => Auth::user()->display_name, 'email' => Auth::user()->user_email, 'username' => Auth::user()->user_email, 'password' => Auth::user()->password, 'avatar' => Auth::user()->avatar));
                     $userId = $streamingConnect->newUser($requestUser);
 
                     $requestContact = new Request(array('name' => Auth::user()->user_email, 'email' => Auth::user()->user_email, 'user_id' => $userId));

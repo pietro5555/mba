@@ -229,23 +229,29 @@
               @endforeach
               <!-- end custom-box -->
             </div>
-            <div class="tab-pane fade pl-5" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+            <div class="tab-pane fade pl-5 pr-5" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
               @foreach ($lesson->materials as $material)
-                @if ($material->type == 'Archivo')
-                  <a href="{{ asset('uploads/courses/lessons/materials/'.$material->material) }}" target="_blank">
-                    <h5 class="mb-0 font-weight-bold d-block position-relative py-2">
-                      <i class="text-primary fa fa-link"></i> {{$material->title}}
-                    </h5>
-                  </a>
-                @else
-                  <a href="{{ $material->material }}" target="_blank">
-                    <h5 class="mb-0 font-weight-bold d-block position-relative py-2">
-                      <i class="text-primary fa fa-link"></i> {{$material->title}}
-                    </h5>
-                  </a>
-                @endif
-                <br>
-              @endforeach
+                    <div class="" style="background-color: #27282C; padding: 10px 20px; color: #007bff;">
+                        <h5>{{ $material->title }}</h5>
+                    </div>
+                    <div style="padding: 10px 30px;">
+                        <div class="row">
+                            <div class="col-md-8">
+                                @if (!is_null($material->image))
+                                    <img src="{{ asset('uploads/courses/lessons/materials/images/'.$material->image) }}">
+                                @else
+                                    <img src="{{ asset('uploads/courses/lessons/materials/images/download-image.png') }}" style="widht: 80px; height: 80px;">
+                                @endif
+                            </div>
+                            <div class="col-md-4 text-right">
+                                <a  @if ($material->type == 'Archivo') href="{{ asset('uploads/courses/lessons/materials/'.$material->material) }}" @else href="{{ $material->material }}" @endif target="_blank">
+                                    <img src="{{ asset('uploads/courses/lessons/materials/images/download-image.png') }}" style="widht: 50px; height: 50px;">
+                                </a>
+                                
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
             </div>
             <div class="tab-pane fade" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
               @if ($progresoCurso->certificate == 1)

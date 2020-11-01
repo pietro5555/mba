@@ -10,8 +10,8 @@
               <div class="overlay"></div>
                   <img src="{{ asset('nosotros/gratis-Blog/homegratis.png') }}" class="d-block w-100" alt="...">
                    <div class="carousel-caption row align-items-center">
-                  <div class="blog-title font-weight-bold">ﾂ｡COMIENZA AHORA!
-                          <p style="font-size: 22px;">En este mundo tan acelerado, es la preparaciﾃｳn lo que conduce el futuro de la vida.</p>
+                  <div class="blog-title font-weight-bold">隆COMIENZA AHORA!
+                          <p style="font-size: 22px;">En este mundo tan acelerado, es la preparaci贸n lo que conduce el futuro de la vida.</p>
                         </div>
               </div>
           </div>   
@@ -64,14 +64,14 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Bienvenido</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="cerrarmodal()"> 
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"> 
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
           
           <div class="embed-responsive embed-responsive-16by9">
-            <iframe class="embed-responsive-item" src="{{ asset('nosotros/videos/introduccion.mp4') }}" allowfullscreen></iframe>
+              <video src="{{ asset('nosotros/videos/introduccion.mp4') }}" controls poster="{{ asset('nosotros/fundadores/cambio.png') }}"></video>
           </div>
 
       </div>
@@ -85,14 +85,14 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Ser Pro</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="cerrarmodal()"> 
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"> 
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
           
           <div class="embed-responsive embed-responsive-16by9">
-            <iframe class="embed-responsive-item" src="{{ asset('nosotros/videos/v1.mp4') }}" allowfullscreen></iframe>
+              <video src="{{ asset('nosotros/videos/v1.mp4') }}" controls poster="{{ asset('nosotros/fundadores/cambio.png') }}"></video>
           </div>
           
       </div>
@@ -106,14 +106,14 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">El Cambio</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="cerrarmodal()"> 
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"> 
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
           
           <div class="embed-responsive embed-responsive-16by9">
-            <iframe class="embed-responsive-item" src="{{ asset('nosotros/videos/v2.mp4') }}" allowfullscreen></iframe>
+            <video src="{{ asset('nosotros/videos/v2.mp4') }}" controls poster="{{ asset('nosotros/fundadores/cambio.png') }}"></video>
           </div>
           
       </div>

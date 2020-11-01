@@ -226,3 +226,7 @@ Dev:Luisana Marín
 Dev:Luisana Marín
 *Nueva tabla event_countries (Corre script event_countries)
 *Nuevos campos abbreviation, event, operation y quantity en la tabla paises (Correr script paises)
+
+31/10/2020
+Dev Pietro 
+*anexar columna de miniatura para agregar la imagen que aparecera en eventos

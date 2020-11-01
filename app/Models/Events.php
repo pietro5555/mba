@@ -32,7 +32,8 @@ class Events extends Model
         'status',
         'type',
         'url_streaming',
-        'url_video'
+        'url_video',
+        'miniatura'
     ];
 
     

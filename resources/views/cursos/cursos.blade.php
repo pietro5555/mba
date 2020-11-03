@@ -24,13 +24,13 @@
         #new-courses-section .card-img-overlay:hover{
             text-decoration: underline;
         }
-        
+
         .imagen:hover {-webkit-filter: none; filter: none; color: #6EC1E4 0.2em 0.2em 0.6em 0.1em;
         }
-        
+
         .imagen {filter: grayscale(80%);}
-        
-        
+
+
         .containerscale:hover img {
         transform: scale(1.1, 1.1);
         z-index: 9;
@@ -91,7 +91,7 @@
                             <h4 class=" col-md-10 text-white text-uppercase  font-weight-bold" >
                                         {{$last_course->title}}
                             </h4>
-                            
+
                             <div class="col-md-2 float-right mb-2">
                                 <div class="row">
                                      <a href="{{ route('courses.show', [$last_course->slug, $last_course->course_id]) }}" class="btn btn-primary float-right text-uppercase mr-4"><i class="fa fa-play"></i> Continuar curso</a>
@@ -150,33 +150,166 @@
                 </div>
                 <div class="container-fluid m-2">
                     <div class="wrapper">
-                    @foreach ($cursos as $curso)
-                      <div class="containerscale">
 
-                         <div class="card m-2 mb-4 card-courses">
+                    @switch($cursos->count())
+                        @case(1)
+                            @foreach ($cursos as $curso)
+                            <div class="containerscale">
 
-                            <img class="card-img-top" src="{{ asset('uploads/avatar/'.$curso->mentor->avatar) }}" alt="card-image-cap">
-                            <div class="card-body p-2">
-                            <div class="row align-items-start">
-                                <h6 class="col-sm"><a href="{{ route('courses.show', [$curso->slug, $curso->id]) }}" class="text-secondary text-sm">{{$curso->title}}</a>
-                                </h6>
+                            <div class="card m-2 mb-4 card-courses">
 
-                                 <div class="col-3 m-2"><img src="{{ asset('images/icons/video-player-blue.svg') }}" alt="" height="20px" width="20px"></div>
-                            </div>
-                            </div>
-                       </div>
-                    </div>
-                    @endforeach
-                     <div class="">
-                        <div class="row h-100">
-                                <div class="card-block w-50 text-primary align-self-center">
-                                    <a href="{{ route('client.my-courses') }}" class="font-weight-bold">Ver todos mis cursos</a>
-                                    <i class="text-primary fa fa-arrow-right"></i>
+                                <img class="card-img-top" src="{{ asset('uploads/avatar/'.$curso->mentor->avatar) }}" alt="card-image-cap">
+                                <div class="card-body p-2">
+                                <div class="row align-items-start">
+                                    <h6 class="col-sm"><a href="{{ route('courses.show', [$curso->slug, $curso->id]) }}" class="text-secondary text-sm">{{$curso->title}}</a>
+                                    </h6>
+
+                                    <div class="col-3 m-2"><img src="{{ asset('images/icons/video-player-blue.svg') }}" alt="" height="20px" width="20px"></div>
                                 </div>
-
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                        @endforeach
+                        @for($i=0; $i<3; $i++)
+                        <div class="containerscale h-100">
 
+                                <div class="card m-2 mb-4 card-courses">
+                                    <img class="card-img-top" src="https://mybusinessacademypro.com/academia/uploads/images/courses/covers/6-thumbnail.png" alt="card-image-cap">
+                                    <div class="card-body p-2">
+                                    <div class="row align-items-start">
+                                        <h6 class="col-sm"><a href="" class="text-secondary text-sm">Próximamente</a>
+                                        </h6>
+
+                                        <div class="col-3 m-2"><img src="{{ asset('images/icons/video-player-blue.svg') }}" alt="" height="20px" width="20px"></div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endfor
+                        <div class="">
+                                <div class="row h-100">
+                                        <div class="card-block w-50 text-primary align-self-center">
+                                            <a href="{{ route('client.my-courses') }}" class="font-weight-bold">Ver todos mis cursos</a>
+                                            <i class="text-primary fa fa-arrow-right"></i>
+                                        </div>
+
+                                </div>
+                        </div>
+                        @break
+                        @case(2)
+                            @foreach ($cursos as $curso)
+                            <div class="containerscale">
+
+                                <div class="card m-2 mb-4 card-courses">
+
+                                    <img class="card-img-top" src="{{ asset('uploads/avatar/'.$curso->mentor->avatar) }}" alt="card-image-cap">
+                                    <div class="card-body p-2">
+                                    <div class="row align-items-start">
+                                        <h6 class="col-sm"><a href="{{ route('courses.show', [$curso->slug, $curso->id]) }}" class="text-secondary text-sm">{{$curso->title}}</a>
+                                        </h6>
+
+                                        <div class="col-3 m-2"><img src="{{ asset('images/icons/video-player-blue.svg') }}" alt="" height="20px" width="20px"></div>
+                                    </div>
+                                    </div>
+                            </div>
+                            </div>
+                            @endforeach
+                            @for($i=0; $i<2; $i++)
+                            <div class="containerscale">
+                                    <div class="card m-2 mb-4 card-courses">
+                                    <img class="card-img-top" src="https://mybusinessacademypro.com/academia/uploads/images/courses/covers/6-thumbnail.png" alt="card-image-cap">
+                                    <div class="card-body p-2">
+                                    <div class="row align-items-start">
+                                        <h6 class="col-sm"><a href="" class="text-secondary text-sm">Próximamente</a>
+                                        </h6>
+
+                                            <div class="col-3 m-2"><img src="{{ asset('images/icons/video-player-blue.svg') }}" alt="" height="20px" width="20px"></div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @endfor
+                            <div class="">
+                                    <div class="row h-100">
+                                            <div class="card-block w-50 text-primary align-self-center">
+                                                <a href="{{ route('client.my-courses') }}" class="font-weight-bold">Ver todos mis cursos</a>
+                                                <i class="text-primary fa fa-arrow-right"></i>
+                                            </div>
+
+                                    </div>
+                            </div>
+                    @break
+                    @case(3)
+                        @foreach ($cursos as $curso)
+                        <div class="containerscale">
+
+                            <div class="card m-2 mb-4 card-courses">
+
+                                <img class="card-img-top" src="{{ asset('uploads/avatar/'.$curso->mentor->avatar) }}" alt="card-image-cap">
+                                <div class="card-body p-2">
+                                <div class="row align-items-start">
+                                    <h6 class="col-sm"><a href="{{ route('courses.show', [$curso->slug, $curso->id]) }}" class="text-secondary text-sm">{{$curso->title}}</a>
+                                    </h6>
+
+                                    <div class="col-3 m-2"><img src="{{ asset('images/icons/video-player-blue.svg') }}" alt="" height="20px" width="20px"></div>
+                                </div>
+                                </div>
+                        </div>
+                        </div>
+                        @endforeach
+                        <div class="containerscale">
+
+                                <div class="card m-2 mb-4 card-courses">
+                                        <img class="card-img-top" src="https://mybusinessacademypro.com/academia/uploads/images/courses/covers/6-thumbnail.png" alt="card-image-cap">
+                                <div class="card-body p-2">
+                                <div class="row align-items-start">
+                                    <h6 class="col-sm"><a href="" class="text-secondary text-sm">Próximamente</a>
+                                    </h6>
+
+                                        <div class="col-3 m-2"><img src="{{ asset('images/icons/video-player-blue.svg') }}" alt="" height="20px" width="20px"></div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="">
+                                <div class="row h-100">
+                                        <div class="card-block w-50 text-primary align-self-center">
+                                            <a href="{{ route('client.my-courses') }}" class="font-weight-bold">Ver todos mis cursos</a>
+                                            <i class="text-primary fa fa-arrow-right"></i>
+                                        </div>
+
+                                </div>
+                        </div>
+
+                    @case(4)
+                        @foreach ($cursos as $curso)
+                        <div class="containerscale">
+
+                            <div class="card m-2 mb-4 card-courses">
+
+                                <img class="card-img-top" src="{{ asset('uploads/avatar/'.$curso->mentor->avatar) }}" alt="card-image-cap">
+                                <div class="card-body p-2">
+                                <div class="row align-items-start">
+                                    <h6 class="col-sm"><a href="{{ route('courses.show', [$curso->slug, $curso->id]) }}" class="text-secondary text-sm">{{$curso->title}}</a>
+                                    </h6>
+
+                                    <div class="col-3 m-2"><img src="{{ asset('images/icons/video-player-blue.svg') }}" alt="" height="20px" width="20px"></div>
+                                </div>
+                                </div>
+                        </div>
+                        </div>
+                        @endforeach
+                        <div class="">
+                            <div class="row h-100">
+                                    <div class="card-block w-50 text-primary align-self-center">
+                                        <a href="{{ route('client.my-courses') }}" class="font-weight-bold">Ver todos mis cursos</a>
+                                        <i class="text-primary fa fa-arrow-right"></i>
+                                    </div>
+
+                            </div>
+                        </div>
+                    @break
+                    @endswitch
                     </div>
 
                  </div>
@@ -242,7 +375,7 @@ $contador++;
             <i class="far fa-user-circle text-center">
                 <p style="font-size: 10px;">{{ $recommended->users->count() }}</p>
             </i>
-            
+
         </h6>
     </div>
 </div>
@@ -286,7 +419,7 @@ $segundo++;
             <i class="far fa-user-circle text-center">
                 <p style="font-size: 10px;">{{ $recommended->users->count() }}</p>
             </i>
-            
+
         </h6>
     </div>
 </div>
@@ -465,13 +598,13 @@ $tercero++;
                     </div>
                 </div>
             </div>
-        
+
             <div id="newers" class="row" style="padding: 10px 30px;">
                 @foreach ($mentores as $mentor)
                     <div class="col-xl-3 col-lg-3 col-12" style="padding-bottom: 10px;">
                         <div class="card">
                             <a href="" style="color: white;">
-                            
+
                             @if (!is_null($mentor->avatar))
                                 <!-- <img src="{{ asset('uploads/avatar/'.$mentor->avatar) }}" class="card-img-top new-course-img" alt="..."> -->
                                 <img src="{{ asset('uploads/avatar/'.$mentor->avatar) }}" class="card-img-top new-course-img" alt="...">
@@ -483,8 +616,8 @@ $tercero++;
                                     <div class="text-sm text-white" style="line-height:1;">
                                         <a class="text-white" href="{{ url('courses/mentor/'.$mentor->mentor_id) }}"> {{ $mentor->nombre }}</a>
                                        </div>
-                                    
-                                   
+
+
                                 </div>
                             </div>
                           </a>
@@ -493,9 +626,9 @@ $tercero++;
                 @endforeach
             </div>
         </div>
-    
-    
-    
+
+
+
     {{-- FIN SECCIÓN MENTORES --}}
     @endif
     {{-- FIN SECCIÓN TUS MENTORES--}}

@@ -140,7 +140,7 @@ class CourseController extends Controller{
                 $progress_bar = NULL;
                 $last_course = NULL;
             }
-           
+
             //dd($progress_bar);
 
 
@@ -315,7 +315,7 @@ class CourseController extends Controller{
                         }
                     ])->with('evaluation', 'lessons')
                     ->first();
-        
+
         $last_lesson = NULL;
         $first_lesson = NULL;
         $miValoracion = NULL;
@@ -327,7 +327,7 @@ class CourseController extends Controller{
             }else{
                 $first_lesson = Lesson::where('course_id', '=', $id)->orderBy('id', 'ASC')->first();
             }
-            
+
             //dd($first_lesson);
             $progresoCurso = DB::table('courses_users')
                                 ->where('course_id', '=', $id)
@@ -420,12 +420,12 @@ class CourseController extends Controller{
     public function change_language($course, $language, $lesson){
         DB::table('courses_users')
             ->update(['language' => $language, 'updated_at' => date('Y-m-d H:i:s')]);
-         
-         
+
+
         $datosLeccion = DB::table('lessons')
                             ->select('slug')
                             ->where('id', '=', $lesson)
-                            ->first(); 
+                            ->first();
 
         return redirect('courses/lesson/'.$datosLeccion->slug.'/'.$lesson.'/'.$course)->with('msj-exitoso', 'La configuración del curso ha sido cambiada con éxito.');
     }
@@ -608,13 +608,13 @@ class CourseController extends Controller{
 
         return redirect('admin/courses')->with('msj-exitoso', 'El curso ha sido quitado de destacados con éxito.');
     }
-    
+
     /*MOSTRAR CURSOS POR CATEGORIA*/
     public function show_course_category($category_id){
 
         $courses = Course::where('category_id','=', $category_id)->get();
         $category_name = Category::where('categories.id', '=', $category_id)->first();
-    
+
         /*Mentores con cursos*/
             $mentores = DB::table('wp98_users')
             ->join('courses', 'courses.mentor_id', '=', 'wp98_users.id')
@@ -623,34 +623,34 @@ class CourseController extends Controller{
             ->select(array ('wp98_users.display_name as nombre','categories.title as categoria', 'courses.mentor_id as mentor_id','wp98_users.avatar as avatar'))
             ->take(12)
             ->get();
-    
+
         /*Cursos nuevos correspondientes a una categoria*/
-    
+
              $cursosNuevos = Course::where('status', '=', 1)
              ->where('category_id', '=', $category_id)
                                ->orderBy('id', 'DESC')
                                ->take(3)
                                ->get();
-    
-    
+
+
              $ultCurso = Course::select('id')
                             ->where('status', '=', 1)
                             ->where('category_id', '=', $category_id)
                             ->orderBy('id', 'DESC')
                             ->first();
-    
+
              $primerCurso = Course::select('id')
                                ->where('status', '=', 1)
                                ->where('category_id', '=', $category_id)
                                ->orderBy('id', 'ASC')
                                ->first();
-    
+
              $idStart = 0;
              $idEnd = 0;
              $cont = 1;
              $previous = 1;
              $next = 1;
-    
+
              foreach ($cursosNuevos as $curso){
                 if ($cont == 1){
                    $idStart = $curso->id;
@@ -658,7 +658,7 @@ class CourseController extends Controller{
                 $idEnd = $curso->id;
                 $cont++;
              }
-    
+
              if ($cursosNuevos->count() > 0){
                 if ($idStart == $ultCurso->id){
                    $previous = 0;
@@ -667,16 +667,16 @@ class CourseController extends Controller{
                    $next = 0;
                 }
              }
-    
-    
+
+
            if($courses)
            {
-    
+
             $directos = NULL;
             if (!Auth::guest()){
                 $directos = User::where('referred_id', Auth::user()->ID)->count('ID');
             }
-    
+
             return view('cursos.cursos_categorias', compact('courses', 'category_name', 'mentores', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next','directos'));
            }
         }

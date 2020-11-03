@@ -871,6 +871,16 @@ class Menu
                 'permisoAdmin' => (!empty($permiso)) ? $permiso->usuario : 0,
                 'activo' => 0,
             ],
+
+            'Envio de correos' => [
+                'submenu' => 0,
+                'ruta' => 'correo-vista',
+                'black'=> '0',
+                'icono' => 'fas fa-envelope-open-text',
+                'complementoruta' => '',
+                'permisoAdmin' => (!empty($permiso)) ? $permiso->correos : 0,
+                'activo' => 0,
+            ],
             
             /*
             'Binario' => [
@@ -1056,16 +1066,6 @@ class Menu
                         'oculto'=> 'activo',
                     ],
                 ]
-            ],
-            
-            'Envio de correos' => [
-                'submenu' => 0,
-                'ruta' => 'correo-vista',
-                'black'=> '0',
-                'icono' => 'fas fa-envelope-open-text',
-                'complementoruta' => '',
-                'permisoAdmin' => (!empty($permiso)) ? $permiso->correos : 0,
-                'activo' => 0,
             ],
             
             'Tickets/Soporte' => [

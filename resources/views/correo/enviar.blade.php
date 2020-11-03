@@ -8,16 +8,11 @@
     </head>
     <body>
         <div class="col-xs-12">
-            <img src="{{asset('assets/img/logo-light.png')}}" height="80" alt="">
+            <img src="{{ asset('images/logo.png') }}" height="80" alt="">
         </div>
         
         <div class="col-md-12">
         {!! (!empty($data)) ? $data : '' !!}
-        </div>
-        
-        
-        <div class="col-xs-12">
-            {!! (!empty($firma)) ? $firma : '' !!}
         </div>
         
     </body> 

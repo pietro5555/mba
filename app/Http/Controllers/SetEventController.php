@@ -292,7 +292,7 @@ class SetEventController extends Controller
        return response()->download($file, 'File.pdf', $headers);
     }
      /**Estadisticas de las respuestas**/
-     public function survey_statistics(Request $request)
+    /* public function survey_statistics(Request $request)
      {
        $id = $request->get('id');
        $resources_survey = SetEvent::where('event_id', $id)->where('type', 'survey')->with('pregunta')->get();
@@ -312,10 +312,10 @@ class SetEventController extends Controller
 
             return response(json_encode($respondidas),200)->header('Content-type', 'text/plain');
        }
-     }
+     }*/
 
      /**Estadisticas de las respuestas**/
-     /*public function survey_statistics(Request $request)
+     public function survey_statistics(Request $request)
      {
          $id = $request->get('id');
 
@@ -337,7 +337,7 @@ class SetEventController extends Controller
                                  'Content-type' =>'text/plain'
                              ]
                              );
-     }*/
+     }
 
     public function show($id)
     {

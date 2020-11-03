@@ -32,7 +32,7 @@
 <div class="row">
             @if ($cursos->count() > 0)
                 @foreach ($cursos as $curso)
-                
+
                 <div class="col-md-3 mt-1">
                     @if (!is_null($curso->thumbnail_cover))
                         <img src="{{ asset('uploads/images/courses/covers/'.$curso->thumbnail_cover) }}" class="card-img-top img-opacity" alt="...">
@@ -59,7 +59,7 @@
 
                                     </div>
                                 </div>
-                            
+
                             </div>
                         </div>
                     </div>
@@ -72,7 +72,7 @@
                     No se encontraron cursos relacionados con la búsqueda...
                 </h3>
             </div>
-                
+
             @endif
         </div>
 </div>

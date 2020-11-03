@@ -71,7 +71,13 @@
                 @include('layouts.partials.header')
 
                 @yield('content')
-
+                <div class="icon-bar">
+                    <a href="https://m.facebook.com/MyBusinessAcademyPro/" class="btn btn-social-media-icon btn-rounded facebook mt-2 mb-2" target="_blank"><i class="text-center fa fa-facebook"></i></a>
+                    <a href="#" class="btn btn-social-media-icon btn-rounded twitter mt-2 mb-2" target="_blank"><i class="text-center fa fa-twitter"></i></a>
+                    <a href="#" class="btn btn-social-media-icon btn-rounded linkedin mt-2 mb-2" target="_blank"><i class="fa fa-linkedin"></i></a>
+                    <a href="#" class="btn btn-social-media-icon btn-rounded google mt-2 mb-2" target="_blank"><i class="fas fa-envelope"></i></a>
+                    <a href="#" class="btn btn-social-media-icon btn-rounded youtube" target="_blank"><i class="fa fa-youtube"></i></a>
+                </div>
                 <div class="section-paises">
                     <div class="container">
                         <div class="row">
@@ -121,10 +127,11 @@
                                 </div>
                                 <div class="mb-2 text-center text-white" style="margin-top: 20px;">
                                     <a href="{{route('client.policies')}}" class="text-white" target="_blank" style="padding: 2px;">Pol&iacute;ticas de Uso</a> &nbsp&nbsp
-                                    <a href="" class="text-white" target="_black" style="padding: 2px;">T&eacute;rminos y condiciones</a>&nbsp&nbsp
+                                    <a href="" class="text-white" style="padding: 2px;">T&eacute;rminos y condiciones</a>&nbsp&nbsp
                                     <a href="https://mybusinessacademypro.com/contacto/" class="text-white" style="padding: 2px;" target="_black"> Contacto</a>&nbsp&nbsp
                                     <a href="{{route('index')}}" class="text-white" style="padding: 2px;">Inicio</a>&nbsp&nbsp
                                 </div>
+
 
                             </div>
                         </div>

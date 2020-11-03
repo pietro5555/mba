@@ -14,7 +14,7 @@
                     <div class="estilobusiness">MY BUSINESS ACADEMY PRO</div>
                   </div>
               </div>
-          </div>   
+          </div>
         </div>
     </div>
   </div>
@@ -104,7 +104,7 @@
       Nuestros Valores
     </div>
 
-     
+
      <div class="col-md-8 offset-md-2" style="padding-bottom: 80px; padding-top: 50px;">
       <div class="card mb-3" style="max-width: 100%; margin-bottom: 0rem!important;">
         <div class="row no-gutters">
@@ -114,7 +114,7 @@
                     <div class="mt-auto">
                         <div class="new-course-title">
                           Conexión
-                        </div>            
+                        </div>
                     </div>
                 </div>
             </div>
@@ -124,7 +124,7 @@
                     <div class="mt-auto">
                         <div class="new-course-title">
                           Innovación
-                        </div>            
+                        </div>
                     </div>
                 </div>
             </div>
@@ -134,7 +134,7 @@
                     <div class="mt-auto">
                         <div class="new-course-title">
                           Crecimiento
-                        </div>            
+                        </div>
                     </div>
                 </div>
             </div>
@@ -149,7 +149,7 @@
                     <div class="mt-auto">
                         <div class="new-course-title">
                           Calidad
-                        </div>            
+                        </div>
                     </div>
                 </div>
             </div>
@@ -159,7 +159,7 @@
                     <div class="mt-auto">
                         <div class="new-course-title">
                           Eficacia
-                        </div>            
+                        </div>
                     </div>
                 </div>
             </div>
@@ -169,7 +169,7 @@
                     <div class="mt-auto">
                         <div class="new-course-title">
                           Trascendencia
-                        </div>            
+                        </div>
                     </div>
                 </div>
             </div>
@@ -177,7 +177,7 @@
       </div>
 
   </div>
-</div> 
+</div>
 
 
 <div class="col-md-12" style="background-color: #1C1D21;">
@@ -192,12 +192,12 @@
             </div>
             <div class="col-md-6" style="color: #fff; background-color: #1c1d21;">
             <div class="card-body">
-                
+
                 <p class="card-title" style="padding: 0px 20px; text-align: left; color: #2A91FF; font-family:Muli, Sans-serif; font-size: 50px; font-weight: bold;">
                     JOSÉ GORDO
                 </p>
 
-               <p class="card-text" style="padding: 0px 20px; text-align: left; color: #fff; line-height: 30px;"> 
+               <p class="card-text" style="padding: 0px 20px; text-align: left; color: #fff; line-height: 30px;">
                 Especialista en desarrollo de negocios rentables, sostenibles y de expansión global.
                </p>
                <p class="card-text" style="padding: 0px 20px; text-align: left; line-height: 40px;">
@@ -205,14 +205,14 @@
             </div>
           </div>
         </div>
-    </div>       
+    </div>
 
 
     <div class="card mb-3" style="max-width: 100%; margin-bottom: 0rem!important;">
         <div class="row no-gutters">
           <div class="col-md-6" style="color: #fff; background-color: #1c1d21;">
           <div class="card-body">
-              
+
               <p class="card-title" style="padding: 0px 20px; color: #2A91FF; font-family:Muli, Sans-serif; font-size: 50px; font-weight: bold;">
                     MARIANA LÓPEZ DE WAARD
                 </p>
@@ -223,7 +223,7 @@
                <p class="card-text" style="padding: 0px 30px; line-height: 40px;">
                  Experta en la apertura de nuevos mercados y mentora de grandes equipos de trabajo de la industria del Multinivel. Su compromiso es influir positivamente en mujeres y hombres para sacar al líder que llevan dentro e impulsarlos a cumplir sus sueños.</p>
             </div>
-           </div> 
+           </div>
             <div class="col-md-6">
               <img src="{{ asset('nosotros/fundadores/mujer.png') }}" style="width: 100%;">
             </div>
@@ -242,18 +242,18 @@
         <div class="row no-gutters">
            <div class="col-md-4" style="background-color: #EDEDED;">
               <img src="{{ asset('nosotros/nosotros/16.png') }}" class="card-img" alt="...">
-             <div class="card-img-overlay d-flex flex-column" style="color: #fff; text-align: center;"> 
+             <div class="card-img-overlay d-flex flex-column" style="color: #fff; text-align: center;">
                <div class="mt-auto">
                   <div class="new-course-title" style="background-color: #333; padding: 8px; float: right; color: #2A91FF;">
                     Tania Tostado
-                  </div>            
+                  </div>
               </div>
-             </div> 
+             </div>
            </div>
           <div class="col-md-8" style="background-color: #EDEDED;">
             <div class="card-body">
                 <p class="card-text" style="padding-left: 20px; line-height: 40px; color:#2A91FF; font-size: 40px; font-weight: bold;">Tania Tostado</p>
-                
+
                <p class="card-text" style="padding-left: 20px; line-height: 35px;">Licenciada en Administración financiera con especialidad en finanzas corporativas, ha colaborado con bancos de talla mundial como: UBS, Credit Suisse y Deutche Bank en Suiza, Bank Hapoalim en Israel, Baern Stearns Securities en EUA, entre muchos otros. En 2008, fue ganadora del premio Best Development, otorgado por la International Property Awards y CNBC. Como consultora independiente, asesora a múltiples y reconocidas empresas en latinoamérica para hacer importantes transacciones con cifras de millones de dólares.</p>
             </div>
           </div>
@@ -264,21 +264,21 @@
         <div class="row no-gutters">
           <div class="col-md-8" style="background-color: #EDEDED;">
               <div class="card-body">
-               
+
                <p class="card-text" style="padding-left: 20px; line-height: 40px; color:#2A91FF; font-size: 40px; font-weight: bold;">Erick Reynaga</p>
-               
+
                <p class="card-text" style="padding-right: 20px; line-height: 40px;">Especialista con 6 años de experiencia en el mundo del Trading, Forex y las Criptodivisas, así como de fondos de inversión con marcas de reconocimiento internacional. Cuenta con una maestría en administración y negocios, es líder de proyectos educativos financieros para diferentes cúpulas de negocios de jóvenes empresarios en México y es promotor de una Sociedad Financiera de Operación Múltiple en la que se operan diversas transacciones con crypto.</p>
             </div>
           </div>
           <div class="col-md-4" style="background-color: #EDEDED;">
               <img src="{{ asset('nosotros/nosotros/17.png') }}" class="card-img" alt="...">
-              <div class="card-img-overlay d-flex flex-column" style="color: #fff; text-align: center;"> 
+              <div class="card-img-overlay d-flex flex-column" style="color: #fff; text-align: center;">
                <div class="mt-auto">
                   <div class="new-course-title" style="background-color: #333; padding: 8px; float: left; color: #2A91FF;">
                     Erick Reynaga
-                  </div>            
+                  </div>
                 </div>
-             </div> 
+             </div>
            </div>
         </div>
     </div>
@@ -287,19 +287,19 @@
         <div class="row no-gutters">
            <div class="col-md-4" style="background-color: #EDEDED;">
               <img src="{{ asset('nosotros/nosotros/18.png') }}" class="card-img" alt="...">
-              <div class="card-img-overlay d-flex flex-column" style="color: #fff; text-align: center;"> 
+              <div class="card-img-overlay d-flex flex-column" style="color: #fff; text-align: center;">
                <div class="mt-auto">
                   <div class="new-course-title" style="background-color: #333; padding: 8px; float: right; color: #2A91FF;">
                     Mirela Vuckovic
-                  </div>            
+                  </div>
               </div>
-             </div> 
+             </div>
            </div>
           <div class="col-md-8" style="background-color: #EDEDED;">
             <div class="card-body">
-                
+
                 <p class="card-text" style="padding-left: 20px; line-height: 40px; color:#2A91FF; font-size: 40px; font-weight: bold;"> Mirela Vuckovic</p>
-                
+
                <p class="card-text" style="padding-left: 20px; line-height: 40px;">Lic. en Economía por la University of Split de Croacia. Colaboró en Londres para importantes marcas de offshore banking. En México tiene 12 años como consultora directiva de reconocidas empresas Fintech en todo Latam. Así como instructora de diversos programas académicos con diferentes marcas de la industria financiera.</p>
             </div>
           </div>
@@ -311,19 +311,19 @@
         <div class="row no-gutters">
           <div class="col-md-8" style="background-color: #EDEDED;">
               <div class="card-body">
-                  
+
                 <p class="card-text" style="padding-left: 20px; line-height: 40px; color:#2A91FF; font-size: 40px; font-weight: bold;"> Manuel Guerrero Aguilar</p>
-                
+
                <p class="card-text" style="padding-right: 20px; line-height: 40px;">Lic. en administración Financiera, apasionado del conocimiento y la aplicación de la tecnología en los mercados financieros, desde muy joven se ha interesado por explorar y promover temas de inversiones, forex, trading, IA, entre otros.</p>
             </div>
           </div>
           <div class="col-md-4" style="background-color: #EDEDED;">
               <img src="{{ asset('nosotros/nosotros/19.png') }}" class="card-img" alt="...">
-              <div class="card-img-overlay d-flex flex-column" style="color: #fff; text-align: center;"> 
+              <div class="card-img-overlay d-flex flex-column" style="color: #fff; text-align: center;">
                <div class="mt-auto">
                   <div class="new-course-title" style="background-color: #333; padding: 8px; color: #2A91FF; float: left;">
                     Manuel Guerrero Aguilar
-                  </div>            
+                  </div>
                 </div>
              </div>
            </div>
@@ -332,6 +332,6 @@
 
 </div>
 
-   </div>  
-  
+   </div>
+
 @endsection

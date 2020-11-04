@@ -1,5 +1,5 @@
 @php
-    $categoriasSidebar = \App\Models\Category::orderBy('id', 'ASC')->get();
+    $categoriasSidebar = \App\Models\Category::orderBy('id', 'ASC')->with('course')->get();
 
         $subcategoriasSidebar = \App\Models\Subcategory::orderBy('id', 'ASC')->get();
         $cursos = \App\Models\Course::orderBy('id', 'ASC')->get();
@@ -41,8 +41,16 @@
                     <a href="{{ route('courses.show.all') }}" class="list-group-item bg-dark-gray" style="color: white;"><i class="fas fa-border-all"></i> Ver todos los cursos</a>
                     <a class="list-group-item bg-dark-gray" data-toggle="collapse" href="#categoriesDiv" style="color: white;"><i class="far fa-list-alt"></i> Contenidos <i class="fas fa-angle-down"></i></a>
                     <div class="collapse" id="categoriesDiv" style="padding-left: 15px;">
+
                         @foreach ($categoriasSidebar as $categoria)
-                            <a class="list-group-item bg-dark-gray" href="{{ url('courses/category/'.$categoria->id) }}" style="color: white;"><i class="{{ $categoria->icon }}"></i> {{ $categoria->title }} </a>
+
+                            @if (!is_null($categoria->course))
+                            <a class="list-group-item bg-dark-gray" href="{{ url ('courses/show/'.$categoria->course->slug.'/'.$categoria->course->id)}}" style="color: white;"><i class="{{ $categoria->icon }}"></i> {{ $categoria->title }} </a>
+                            @else
+                            <a class="list-group-item bg-dark-gray" href="{{ url ('courses/category/'.$categoria->id)}}" style="color: white;"><i class="{{ $categoria->icon }}"></i> {{ $categoria->title }} </a>
+                            @endif
+
+
                             <!--<div class="collapse" id="subcategories-{{$categoria->id}}" style="padding-left: 15px;">
                                 @foreach ($subcategoriasSidebar as $subcategoria)
                                     <a class="list-group-item bg-dark-gray" href="{{ route('search-by-category', [$categoria->slug, $categoria->id, $subcategoria->slug, $subcategoria->id]) }}" style="color: white;"><i class="far fa-circle"></i> {{ $subcategoria->title }} </a>
@@ -50,14 +58,14 @@
                             </div>-->
                         @endforeach
 
-                        <!--@foreach ($cursos as $curso)
+                        @foreach ($cursos as $curso)
                             <a class="list-group-item bg-dark-gray" href="{{ url ('courses/show/'.$curso->slug.'/'.$curso->id)}}" style="color: white;"><i class="text-primary fas fa-arrow-circle-right"></i> {{ $curso->title }} </a>
                             <div class="collapse" id="subcategories-{{$categoria->id}}" style="padding-left: 15px;">
                                 @foreach ($subcategoriasSidebar as $subcategoria)
                                     <a class="list-group-item bg-dark-gray" href="{{ route('search-by-category', [$categoria->slug, $categoria->id, $subcategoria->slug, $subcategoria->id]) }}" style="color: white;"><i class="far fa-circle"></i> {{ $subcategoria->title }} </a>
                                 @endforeach
-                            </div>-->
-                        <!--@endforeach-->
+                            </div>
+                        @endforeach
                     </div>
 
                     @if(Auth::user())

@@ -197,7 +197,7 @@ class CourseController extends Controller{
         }
 
         /*Cursos por categoria con el numero de cursos asociados*/
-        $courses = Category::withCount('courses')
+        $courses = Category::withCount('course')
                         ->take(9)
                         ->get();
 

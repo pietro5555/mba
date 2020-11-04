@@ -125,7 +125,7 @@
                                     <img src="{{ asset('images/g_pay.png') }}" height="15px" class="mr-md-3 mr-3">
 
                                 </div>
-                                <div class="mb-2 text-center text-white" style="margin-top: 20px;">
+                                <div class="text-center text-white" style="margin-top: 20px;">
                                     <a href="{{route('client.policies')}}" class="text-white" target="_blank" style="padding: 2px;">Pol&iacute;ticas de Uso</a> &nbsp&nbsp
                                     <a href="" class="text-white" style="padding: 2px;">T&eacute;rminos y condiciones</a>&nbsp&nbsp
                                     <a href="https://mybusinessacademypro.com/contacto/" class="text-white" style="padding: 2px;" target="_black"> Contacto</a>&nbsp&nbsp

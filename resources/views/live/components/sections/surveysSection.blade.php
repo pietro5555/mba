@@ -1,14 +1,4 @@
-<div class="modal fade" id="option-modal-survey" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Encuestas</h5>
-            </div>
-            <div class="modal-body">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-12" id="surveys_section">
-                            @if(Auth::user()->rol_id==3)
+@if(Auth::user()->rol_id==3)
                                 @if(!empty($resources_survey))
                                     <div>
                                         <h5 class="text-primary">Responde estas preguntas</h5>
@@ -54,13 +44,3 @@
                                     <canvas id="myChart" width="400" height="400"></canvas>
                                 </div>
                             @endif
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
-    </div>
-</div>

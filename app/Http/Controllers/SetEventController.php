@@ -69,12 +69,15 @@ class SetEventController extends Controller
                     $dataPresentation->status = 1;
                     $dataPresentation->save();
                 }
-
-                $resources_video = SetEvent::where('event_id', $request->event_id)
+                
+                event(new \App\Events\Notificacion('video', Auth::user()->ID));
+                
+                return response()->json(true);
+                /*$resources_video = SetEvent::where('event_id', $request->event_id)
                                     ->where('type', 'video')
                                     ->first();
 
-                return view('live.components.sections.videosSection')->with(compact('resources_video'));
+                return view('live.components.sections.videosSection')->with(compact('resources_video'));*/
             break;
 
             case 'file':
@@ -101,13 +104,16 @@ class SetEventController extends Controller
                         $dataPresentation->status = 1;
                         $dataPresentation->save();
                     }
+                    
+                    event(new \App\Events\Notificacion('file', Auth::user()->ID));
 
-                    $files = SetEvent::where('event_id', $request->event_id)
+                    return response()->json(true);
+                    /*$files = SetEvent::where('event_id', $request->event_id)
                                 ->where('type', 'file')
                                 ->get();
                     $event_id = $request->event_id;
 
-                    return view('live.components.sections.filesSection')->with(compact('files', 'event_id'));
+                    return view('live.components.sections.filesSection')->with(compact('files', 'event_id'));*/
                 }else{
                      return response()->json(false);
                 }
@@ -137,14 +143,17 @@ class SetEventController extends Controller
                         $dataPresentation->status = 1;
                         $dataPresentation->save();
                     }
+                    
+                    event(new \App\Events\Notificacion('presentation', Auth::user()->ID));
 
-                    $presentations = SetEvent::where('event_id', $request->event_id)
+                    return response()->json(true);
+                    /*$presentations = SetEvent::where('event_id', $request->event_id)
                                         ->where('type', 'presentation')
                                         ->get();
 
                     $event_id = $request->event_id;
 
-                    return view('live.components.sections.presentationsSection')->with(compact('presentations', 'event_id'));
+                    return view('live.components.sections.presentationsSection')->with(compact('presentations', 'event_id'));*/
                 }else{
                     return response()->json(false);
                 }
@@ -183,7 +192,9 @@ class SetEventController extends Controller
                       ]);
                   }
 
-                  return response()->json(true);
+                    event(new \App\Events\Notificacion('survey', Auth::user()->ID));
+
+                    return response()->json(true);
           break;
 
             case 'offers':
@@ -219,9 +230,13 @@ class SetEventController extends Controller
                         $dataPresentation->save();
                     }
 
-                    $resources_offer = OffersLive::all()->where('event_id', $request->event_id);
+                    event(new \App\Events\Notificacion('offer', Auth::user()->ID));
 
-                    return view('live.components.sections.offersSection')->with(compact('resources_offer'));
+                    return response()->json(true);
+
+                    /*$resources_offer = OffersLive::all()->where('event_id', $request->event_id);
+
+                    return view('live.components.sections.offersSection')->with(compact('resources_offer'));*/
                 }else{
                    return response()->json(false);
                 }
@@ -238,7 +253,45 @@ class SetEventController extends Controller
 
     }
 
+    public function refresh_video_section($event_id){
+        $resources_video = SetEvent::where('event_id', $event_id)
+                                ->where('type', 'video')
+                                ->first();
 
+        return view('live.components.sections.videosSection')->with(compact('resources_video'));
+    }
+
+    public function refresh_presentation_section($event_id){
+        $presentations = SetEvent::where('event_id', $event_id)
+                                        ->where('type', 'presentation')
+                                        ->get();
+
+        $event_id = $event_id;
+
+        return view('live.components.sections.presentationsSection')->with(compact('presentations', 'event_id'));
+    }
+
+    public function refresh_file_section($event_id){
+        $files = SetEvent::where('event_id', $event_id)
+                                ->where('type', 'file')
+                                ->get();
+
+        $event_id = $event_id;
+
+        return view('live.components.sections.filesSection')->with(compact('files', 'event_id'));
+    }
+
+    public function refresh_offer_section($event_id){
+        $resources_offer = OffersLive::all()->where('event_id', $event_id);
+
+        return view('live.components.sections.offersSection')->with(compact('resources_offer'));
+    }
+
+    public function refresh_survey_section($event_id){
+        $resources_survey = SetEvent::where('event_id', $event_id)->where('type', 'survey')->with('pregunta')->get();
+
+        return view('live.components.sections.surveysSection')->with(compact('resources_survey'));
+    }
 
     /**Save student response**/
     public function save_student_response(Request $request)

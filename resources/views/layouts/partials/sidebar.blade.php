@@ -30,7 +30,7 @@
                     <div class="collapse" id="searchDiv" style="padding-left: 10px; padding-right: 10px;">
                         <form action="{{ route('search') }}" method="GET" class="form-inline d-flex justify-content-center md-form form-sm active-pink-2 mt-2">
                             <input class="form-control form-control-sm w-75 border-0" type="text" placeholder="Buscar"
-                            aria-label="Buscar">
+                            aria-label="Buscar" id="search" name="q" >
                             <button class="btn btn-none border-0" type="submit"><i class="fas fa-search text-white" aria-hidden="true"></i></button>
                             <!--<div class="input-group">
                                 <input type="text" class="form-control" id="search" name="q" placeholder="Buscar...">

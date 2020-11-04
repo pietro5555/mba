@@ -770,7 +770,7 @@ h6.card-title {
 }
 
 .text-course-mentor {
-    font-size: 12px;
+    font-size: 14px;
     color: #CCC6C6;
 }
 
@@ -1861,7 +1861,7 @@ p.card-text.font-weight-bold.mr-2 {
   color: white;
 }
 
-.google {
+.email-icon {
   background: #dd4b39;
   color: white;
 }

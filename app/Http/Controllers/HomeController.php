@@ -147,28 +147,28 @@ class HomeController extends Controller{
             case '11': $proximoEvento->month = 'Noviembre'; break;
             case '12': $proximoEvento->month = 'Diciembre'; break;
          }
-         
+
          $horaEvento = $proximoEvento->time;
          if (!Auth::guest()){
             $checkPais = NULL;
- 
+
             $paisUsuario = DB::table('user_campo')
                               ->select('pais')
                               ->where('ID', '=', Auth::user()->ID)
                               ->first();
-         
+
             if ( (!is_null($paisUsuario)) && (!is_null($paisUsuario->pais)) ){
                $paisID = DB::table('paises')
                            ->select('id')
                            ->where('nombre', '=', $paisUsuario->pais)
                            ->first();
-               
+
                if (!is_null($paisID)){
                   $checkPais = DB::table('event_countries')
                                     ->where('event_id', '=', $proximoEvento->id)
                                     ->where('country_id', '=', $paisID->id)
                                     ->first();
-   
+
                   if (!is_null($checkPais)){
                      $horaEvento = $checkPais->time;
                   }
@@ -274,23 +274,23 @@ $mentor->categoria = $string;
                            ->orWhere('description', 'LIKE', '%'.$busqueda.'%');
                   })->where('status', '=', 1)
                   ->get();
-
+              //    dd($busqueda, $courses);
       foreach ($courses as $curso){
          array_push($cursosIds, $curso->id);
       }
 
-      $categorias = Category::with(['courses' => function($query) use ($cursosIds){
+      $categorias = Category::with(['course' => function($query) use ($cursosIds){
                               $query->whereNotIn('id', $cursosIds)
                                  ->where('status', '=', 1);
                         }])->where('title', 'LIKE', '%'.$busqueda.'%')
                         ->get();
 
-      foreach ($categorias as $categoria){
+      /*foreach ($categorias as $categoria){
          foreach ($categoria->courses as $cursoCat){
             array_push($cursosIds, $cursoCat->id);
             $courses->push($cursoCat);
          }
-      }
+      }*/
 
       //$page = 'search';
 
@@ -304,13 +304,13 @@ $mentor->categoria = $string;
    }
 
    public function search_by_category($category_slug, $category_id, $subcategory_slug, $subcategory_id){
-      $category_name = Category::with(['courses' => function($query) use ($subcategory_id){
+      $category_name = Category::with(['course' => function($query) use ($subcategory_id){
                               $query->where('status', '=', 1)
                                  ->where('subcategory_id', '=', $subcategory_id);
                         }])->where('id', '=', $category_id)
                         ->first();
 
-      $courses = $category_name->courses;
+      $courses = $category_name->course;
 
       $directos = NULL;
       if (!Auth::guest()){

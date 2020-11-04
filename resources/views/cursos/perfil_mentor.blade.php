@@ -1,15 +1,6 @@
 @extends('layouts.landing')
 
 @section('content')
-<div class="section-landing">
-    <div class="col-md-12 mb-2">
-         <div class="title-page-course col-md"><span class="text-white">
-    <h3><span class="text-white"></span><span class="text-primary"></span></h3>
-</div>
-
-
-
-
 <div class="container-fluid p-2">
 <div class="row featurette">
       <div class="col-md-7 order-md-2">
@@ -42,7 +33,7 @@
               @endif
                 <div class="card-body p-2">
                 <div class="row align-items-start">
-                    <div class="col-9"><p class="text-course-mentor"><a href="{{ route('courses.show', [$course->slug, $course->id]) }}" style="color: white;">{{$course->course_title}}</a></p></div>
+                    <div class="col-9"><h6 class="text-course-mentor"><a class="text-secondary" href="{{ route('courses.show', [$course->slug, $course->id]) }}" style="color: white;">{{$course->course_title}}</a></h6></div>
                      <div class="col-3"><i class="text-primary fa fa-play-circle"></i></div>
                 </div>
                 </div>

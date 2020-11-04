@@ -75,7 +75,7 @@
                     <a href="https://m.facebook.com/MyBusinessAcademyPro/" class="btn btn-social-media-icon btn-rounded facebook mt-2 mb-2" target="_blank"><i class="text-center fa fa-facebook"></i></a>
                     <a href="#" class="btn btn-social-media-icon btn-rounded twitter mt-2 mb-2" target="_blank"><i class="text-center fa fa-twitter"></i></a>
                     <a href="#" class="btn btn-social-media-icon btn-rounded linkedin mt-2 mb-2" target="_blank"><i class="fa fa-linkedin"></i></a>
-                    <a href="#" class="btn btn-social-media-icon btn-rounded google mt-2 mb-2" target="_blank"><i class="fas fa-envelope"></i></a>
+                    <a href="#" class="btn btn-social-media-icon btn-rounded email-icon mt-2 mb-2" target="_blank"><i class="fas fa-envelope"></i></a>
                     <a href="#" class="btn btn-social-media-icon btn-rounded youtube" target="_blank"><i class="fa fa-youtube"></i></a>
                 </div>
                 <div class="section-paises">

@@ -230,3 +230,6 @@ Dev:Luisana Marín
 31/10/2020
 Dev Pietro 
 *anexar columna de miniatura para agregar la imagen que aparecera en eventos
+
+04/11/2020
+* Actualizados precios de mebresias (correr script membresias)

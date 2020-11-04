@@ -1,10 +1,28 @@
+
 @extends('layouts.landing')
 
 @push('scripts')
+    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
     <script>
         function refreshChat(){
             $("#badge-chat").css('display', 'none');
         }
+        function refreshVideo(){
+            $("#badge-video").css('display', 'none');
+        }
+        function refreshPresentation(){
+            $("#badge-presentation").css('display', 'none');
+        }
+        function refreshFile(){
+            $("#badge-file").css('display', 'none');
+        }
+        function refreshOffer(){
+            $("#badge-offer").css('display', 'none');
+        }
+        function refreshSurvey(){
+            $("#badge-survey").css('display', 'none');
+        }
+        
         function newNote(){
             var route = "https://mybusinessacademypro.com/academia/anotaciones/store";
             var parametros = $('#store_note_form').serialize();
@@ -45,8 +63,9 @@
                         $("#option-modal-settings").modal("hide");
                         $("#msj-success-text").html("La memoria ha sido agregada con éxito");
                         $("#msj-success-ajax").css('display', 'block');
-                        $("#presentations_section").html(ans);
+                        //$("#presentations_section").html(ans);
                         refreshMenu();
+                        refreshPresentationSection(false);
                     }
                 }
             });
@@ -76,8 +95,9 @@
                         $("#option-modal-settings").modal("hide");
                         $("#msj-success-text").html("El video ha sido agregado con éxito");
                         $("#msj-success-ajax").css('display', 'block');
-                        $("#videos_section").html(ans);
+                        //$("#videos_section").html(ans);
                         refreshMenu();
+                        refreshVideoSection(false);
                     }
                 }
             });
@@ -110,8 +130,9 @@
                         $("#option-modal-settings").modal("hide");
                         $("#msj-success-text").html("El archivo ha sido agregado con éxito");
                         $("#msj-success-ajax").css('display', 'block');
-                        $("#files_section").html(ans);
+                        //$("#files_section").html(ans);
                         refreshMenu();
+                        refreshFileSection(false);
                     }
                     
                 }
@@ -145,8 +166,9 @@
                         $("#option-modal-settings").modal("hide");
                         $("#msj-success-text").html("La oferta ha sido creada con éxito");
                         $("#msj-success-ajax").css('display', 'block');
-                        $("#offers_section").html(ans);
+                        //$("#offers_section").html(ans);
                         refreshMenu();
+                        refreshOfferSection(false);
                     }
                 }
             });
@@ -210,10 +232,102 @@
                 }
             });
         }
+        
+        function refreshVideoSection($notification){
+            var route = "https://mybusinessacademypro.com/academia/refresh-video-section/{{$event->id}}";
+            $.ajax({
+                url:route,
+                type:'GET',
+                success:function(ans){
+                    $("#videos_section").html(ans);
+                    if ($notification == true){
+                        $("#badge-video").css('display', 'block');
+                    }
+                }
+            });
+        }
+
+        function refreshPresentationSection($notification){
+            var route = "https://mybusinessacademypro.com/academia/refresh-presentation-section/{{$event->id}}";
+            $.ajax({
+                url:route,
+                type:'GET',
+                success:function(ans){
+                    $("#presentations_section").html(ans);
+                    if ($notification == true){
+                        console.log("SI");
+                        $("#badge-presentation").css('display', 'block');
+                    }
+                }
+            });
+        }
+
+        function refreshFileSection($notification){
+            var route = "https://mybusinessacademypro.com/academia/refresh-file-section/{{$event->id}}";
+            $.ajax({
+                url:route,
+                type:'GET',
+                success:function(ans){
+                    $("#files_section").html(ans);
+                    if ($notification == true){
+                        $("#badge-file").css('display', 'block');
+                    }
+                }
+            });
+        }
+
+        function refreshOfferSection($notification){
+            var route = "https://mybusinessacademypro.com/academia/refresh-offer-section/{{$event->id}}";
+            $.ajax({
+                url:route,
+                type:'GET',
+                success:function(ans){
+                    $("#offers_section").html(ans);
+                    if ($notification == true){
+                        $("#badge-offer").css('display', 'block');
+                    }
+                }
+            });
+        }
+
+        function refreshSurveySection($notification){
+            var route = "https://mybusinessacademypro.com/academia/refresh-survey-section/{{$event->id}}";
+            $.ajax({
+                url:route,
+                type:'GET',
+                success:function(ans){
+                    $("#surveys_section").html(ans);
+                    if ($notification == true){
+                        $("#badge-survey").css('display', 'block');
+                    }
+                }
+            });
+        }
+
+        Pusher.logToConsole = true;
+        var pusher = new Pusher('70633ff8ae20c2f8780b', {cluster: 'mt1'});
+        var channel = pusher.subscribe('notificacion-channel');
+        channel.bind('notificacion-event', function(data) {
+            if (data.user != $("#user_auth").val()){
+                refreshMenu();
+                if (data.type == 'video'){ 
+                    refreshVideoSection(true);
+                }else if (data.type == 'presentation'){
+                    refreshPresentationSection(true);
+                }else if (data.type == 'file'){
+                    refreshFileSection(true);
+                }else if (data.type == 'offer'){
+                    refreshOfferSection(true);
+                }else if (data.type == 'survey'){
+                    alert("Aqui");
+                    refreshSurveySection(true);
+                }
+            }
+        });
     </script>
 @endpush
 @section('content')
-
+    <input type="hidden" id="user_auth" value="{{ Auth::user()->ID }}">
     <div class="bg-dark-gray">
         {{-- Encabezado o titulo --}}
         @include('live.components.cabezera')

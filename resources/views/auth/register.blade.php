@@ -57,6 +57,17 @@
                                     @endif
 
                                     <div style="display: none;" id="imagenavatar">
+
+                                      <div class="form-group">
+                                        <label class="control-label" style="text-align: center; color: white;">Nombre (*)</label>
+                                            <input type="text" class="form-control" name="firstname">
+                                      </div>
+                                      
+                                      <div class="form-group">
+                                        <label class="control-label" style="text-align: center; color: white;">Apellido (*)</label>
+                                            <input type="text" class="form-control" name="lastname">
+                                      </div>
+                                        
                                       <div class="form-group">
                                         <label class="control-label" style="text-align: center; color: white;">Imagen de Usuario (*)</label>
                                             <input type="file" name="avatar">

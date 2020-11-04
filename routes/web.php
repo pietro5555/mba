@@ -280,6 +280,11 @@ Route::group(['prefix' => 'installer'], function (){
   Route::post('/settings/event/delete', 'SetEventController@delete')->name('set.event.delete');
   Route::post('/settings/event/{event_id?}', 'SetEventController@store')->name('set.event.store');
   Route::get('refresh-menu/{user}/{event}', 'SetEventController@refresh_menu');
+  Route::get('refresh-video-section/{event}', 'SetEventController@refresh_video_section');
+  Route::get('refresh-presentation-section/{event}', 'SetEventController@refresh_presentation_section');
+  Route::get('refresh-file-section/{event}', 'SetEventController@refresh_file_section');
+  Route::get('refresh-offer-section/{event}', 'SetEventController@refresh_offer_section');
+  Route::get('refresh-survey-section/{event}', 'SetEventController@refresh_survey_section');
   //Guardar respuesta de encuesta
   Route::post('/survey', 'SetEventController@save_student_response')->name('save.survey.student');
   Route::get('/download/file/{event_id}/{file_id}', 'SetEventController@download_file')->name('download_resource_file');

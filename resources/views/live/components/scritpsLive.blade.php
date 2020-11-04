@@ -38,6 +38,7 @@
             $("#store_survey_submit").css('display', 'none');
             $("#store_survey_loader").css('display', 'block');
             var route = "https://mybusinessacademypro.com/academia/settings/event";
+            //var route = "http://localhost:8000/settings/event";
             var parametros = $('#formQuestion').serialize();
             $.ajax({
                 url:route,
@@ -53,6 +54,7 @@
                         $("#msj-success-text").html("La encuesta ha sido agregada con éxito");
                         $("#msj-success-ajax").css('display', 'block');
                         refreshMenu();
+                        refreshSurveySection(false);
                     }else{
                         $("#msj-success-ajax").css('display', 'none');
                         $("#modal-settings-survey").modal("hide");

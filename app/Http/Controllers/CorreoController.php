@@ -80,12 +80,6 @@ class CorreoController extends Controller
         $funciones = new IndexController;
        
         $seting = Settings::find(1);
-	   if (!empty($seting->firma)) {
-	       $firma = $seting->firma;
-	   }else{
-	       $funciones->msjSistema('Lo sentimos la firma no esta habilitada', 'warning');
-            return redirect()->back();
-	   }
        
        $details = $this->detalles($request);
        $this->datos($request, $details);
@@ -99,76 +93,28 @@ class CorreoController extends Controller
 	public function detalles($request){
 	    
 	    $funciones = new IndexController;
-	    $usuarios = [];
-	    
-	    if(Auth::user()->rol_id == 0){
-	        $lista = $funciones->generarArregloAdmin(Auth::user()->ID);
-	    }else{
-	        $lista = $funciones->generarArregloUsuario(Auth::user()->ID);
-	    }
-	    
-	  foreach($lista as $lis){  
-	      
-	      $fechaActual = Carbon::now();
-	       $fechaActual = date('m', strtotime($fechaActual));
-	       $ingreso = date('m', strtotime($lis['fecha']));
-	      
+	    $fechaActual = Carbon::now();
+	    $mes = date('m', strtotime($fechaActual));
+	    $year = date('Y', strtotime($fechaActual));
+
 	    if($request['detalles'] == 1){
-	        
-	       array_push($usuarios, [
-            'ID' => $lis['ID'],
-            'nombre' => $lis['nombre'],
-            'email' => $lis['email'],
-            'referred' => $lis['referred'],
-                ]);
-                
+	      $lista = User::where('rol_id', '!=', '0')->get(); 
 	    }elseif($request['detalles'] == 2){
-	        if($lis['status'] == 1){
-	            
-	        array_push($usuarios, [
-            'ID' => $lis['ID'],
-            'nombre' => $lis['nombre'],
-            'email' => $lis['email'],
-            'referred' => $lis['referred'],
-                ]);
-	          }
-	        }elseif($request['detalles'] == 3){
-	            if($lis['status'] == 0){
-	            
-	        array_push($usuarios, [
-            'ID' => $lis['ID'],
-            'nombre' => $lis['nombre'],
-            'email' => $lis['email'],
-            'referred' => $lis['referred'],
-                ]);
-	          }
-	        }elseif($request['detalles'] == 4){
-	            if($fechaActual == $ingreso){
-	            
-	        array_push($usuarios, [
-            'ID' => $lis['ID'],
-            'nombre' => $lis['nombre'],
-            'email' => $lis['email'],
-            'referred' => $lis['referred'],
-                ]);
-	          }
-	        }else{
-	            if($request['personal'] == $lis['ID']){
-	       array_push($usuarios, [
-            'ID' => $lis['ID'],
-            'nombre' => $lis['nombre'],
-            'email' => $lis['email'],
-            'referred' => $lis['referred'],
-                ]); 
-	            }
-	        }
+	      $lista = User::where('status', '=', '1')->get();   
+	    }elseif($request['detalles'] == 3){
+	      $lista = User::where('status', '=', '0')->get();    
+	    }elseif($request['detalles'] == 4){
+	      $lista = User::where('status', '=', '0')->whereMonth('created_at', $mes)->whereYear('created_at', $year)->get();     
+	    }elseif($request['detalles'] == 5){
+	      $lista = User::where('ID', '=', $request['personal'])->get();  
 	    }
 	    
-	    return $usuarios;
+	    
+	    return $lista;
 	    
 	}
 	
-	
+	/*
 	public function correoprospeccion($id){
 	    
 	    
@@ -215,6 +161,7 @@ class CorreoController extends Controller
 	    
 	   return redirect('admin/correo/email');
 	}
+	*/
 	
 	//enviamos los correos a los usuarios
 	public function datos($request, $usuarios){
@@ -224,19 +171,14 @@ class CorreoController extends Controller
 	    $user= Auth::user()->display_name;
 	    $titulo = $request['asunto'];
 	    
-	    $seting = Settings::find(1);
-	   if (!empty($seting->firma)) {
-	       $firma = $seting->firma;
-	   }
-	    
 	   
 	    foreach($usuarios as $usuario){
-	        $direccion = $usuario['email'];
+	        $direccion = $usuario->user_email;
 	        
-            $mensaje = str_replace('@correo', ' '.$usuario['email'].' ', $request['contenido']);
-            $mensaje = str_replace('@usuario', ' '.$usuario['nombre'].' ', $mensaje);
-            $mensaje = str_replace('@idpatrocinio', ' '.$usuario['referred'].' ', $mensaje);
-	        Mail::send('correo.enviar',  ['data' => $mensaje, 'firma' => $firma], function($msj) use ($mensaje, $direccion, $titulo, $user){
+            $mensaje = str_replace('@correo', ' '.$usuario->user_email.' ', $request['contenido']);
+            $mensaje = str_replace('@usuario', ' '.$usuario->display_name.' ', $mensaje);
+            $mensaje = str_replace('@idpatrocinio', ' '.$usuario->referred_id.' ', $mensaje);
+	        Mail::send('correo.enviar',  ['data' => $mensaje], function($msj) use ($mensaje, $direccion, $titulo, $user){
             $msj->subject($titulo);
             $msj->to($direccion);
           });

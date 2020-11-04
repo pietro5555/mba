@@ -245,6 +245,8 @@ class RegisterController extends Controller
            ->where('ID', '=', $userid)
            ->update([
             'pais' => $data['pais'], 
+            'firstname' => $data['firstname'],
+            'lastname' => $data['lastname'],
             ]);
     }
     /**

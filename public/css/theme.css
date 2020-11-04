@@ -1813,6 +1813,7 @@ p.card-text.font-weight-bold.mr-2 {
 /**Whatsapp */
 
 .whatsapp {
+    position: fixed;
     width:60px;
     height:60px;
     bottom:40px;
@@ -1879,3 +1880,68 @@ p.card-text.font-weight-bold.mr-2 {
     height: 40px;
     padding: 0;
 }
+.btn-footer-redes {
+    border-radius: 25px !important;
+    font-weight: bold;
+    margin: 20px;
+    width: 6em;
+    cursor: pointer;
+    -webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+}
+
+.btn-footer-yt{
+    background-color: #f51c0d;
+    -webkit-transition: background-color 0.1s ease-out;
+}
+
+.btn-footer-yt i{
+    overflow: hidden;
+    -webkit-transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+    -moz-transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+    transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+}
+
+.btn-footer-yt:hover {
+    background-color: #a8240f;
+
+  }
+
+.btn-footer-ig{
+    background-image: linear-gradient(90deg, #feb40b 5%, #eb4041 40%, #a62aa0 90%);
+    -webkit-transition: background-color 0.1s ease-out;
+}
+
+
+.btn-footer-fb{
+    background-color: #3a579a;
+    -webkit-transition: background-color 0.1s ease-out;
+}
+
+.btn-footer-fb:hover {
+    background-color:#314a83;
+
+  }
+
+.btn-footer-in{
+    background-color: #0f699b;
+    -webkit-transition: background-color 0.2s ease-out;
+}
+
+.btn-footer-in:hover {
+    background-color: #2766b2;
+
+  }
+
+
+.btn-footer-tw{
+    background-color:#00abf0;
+    -webkit-transition: background-color 0.2s ease-out;
+}
+
+
+  .btn-footer-tw:hover {
+    background-color: #0092cc;
+
+  }

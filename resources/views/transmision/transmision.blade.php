@@ -1,6 +1,11 @@
 @extends('layouts.landing')
 
 @section('content')
+@if (!Auth::guest())
+<div class="title-page-course col-md"><span class="text-white">
+    <h3 class="mb-2"><span class="text-white">Hola</span><span class="text-primary"> {{Auth::user()->display_name}}</span><span class="text-white"> ¡Nos alegra verte hoy!</span></h3>
+</div>
+@endif
    @if(!empty($evento_actual))
       <div style="width: 100%; position: relative; display: inline-block;">
          <img src="{{ asset('uploads/images/banner/'.$evento_actual->image) }}" alt="" style="height: 500px; width:100%; opacity: 0.5;">
@@ -45,7 +50,7 @@
          </div>
       </div><br><br>
    @endif
-   
+
    @if (Session::has('msj'))
       <div class="col-md-12">
          <div class="alert alert-success">
@@ -80,7 +85,7 @@
 
                         @if($contador <= 3)
                            <div class="col-md-4" style="margin-top: 20px;">
-                   
+
                               @if ($proxima->miniatura == null)
                                  <img src="{{ asset('uploads/avatar/'.$proxima->mentor->avatar) }}" class="card-img-top img-prox-events" alt="...">
                               @else
@@ -132,7 +137,7 @@
                               <img src="{{ asset('uploads/avatar/'.$proxima->avatar) }}" class="card-img-top" alt="...">
                               <div class="card-img-overlay" style="margin-left: 10px; margin-right: 10px;">
                                  <h4 class="card-title" style="margin-top: 180px; color: #2A91FF;">{{$proxima->title}}</h4>
-                                 <p class="card-text" style="margin-top: -10px; font-size: 10px;"> 
+                                 <p class="card-text" style="margin-top: -10px; font-size: 10px;">
                                     <i class="far fa-calendar" style="font-size: 18px;"></i> {{$proxima->fecha}}
                                     <i class="far fa-clock" style="font-size: 18px;margin-right: 5px;"></i>{{\Carbon\Carbon::parse($proxima->date)->format('g:i a')}}
                                  </p>
@@ -159,7 +164,7 @@
                                  @endif
                                  <div class="card-img-overlay" style="margin-left: 10px; margin-right: 10px;">
                                     <h5 class="card-title font-weight-bold" style="margin-top: 170px; color: #2A91FF;">{{$proxima->title}}</h5>
-                                    <p class="card-text font-weight-bold mr-2" style="margin-top: -10px; font-size: 12px;"> 
+                                    <p class="card-text font-weight-bold mr-2" style="margin-top: -10px; font-size: 12px;">
                                        <i class="far fa-calendar mr-2" style="font-size: 18px;"> </i>
                                        {{\Carbon\Carbon::parse($evento_actual->date)->formatLocalized('%A %d de %B')}}
                                        <i class="far fa-clock ml-2" style="font-size: 18px;"></i>{{\Carbon\Carbon::parse($proxima->time)->format('g:i a')}}

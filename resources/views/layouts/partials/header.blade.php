@@ -18,8 +18,8 @@
                                  <a href="https://m.facebook.com/MyBusinessAcademyPro/" target="_blank" class="btn"><i class="text-white fa fa-facebook-f fa-1x"></i></a>
                                  <a href="" class="btn" target="_blank"><i class="text-white fa fa-twitter fa-1x"></i></a>
                                  <a href="https://instagram.com/mybusinessacademypro?igshid=tdj5prrv1gx1" target="_blank" class="btn"><i class="text-white fa fa-instagram fa-1x"></i></a>
-                                 <a href="" target="_blank" class="btn"><i class="text-white fa fa-youtube fa-1x"></i></a>
-                                 <a href="" target="_blank" class="btn"><i class="text-white fa fa-linkedin fa-1x"></i></a>
+                                 <a href="https://www.youtube.com/channel/UCQaLkVtbR6RK8HfhajFnikg" target="_blank" class="btn"><i class="text-white fa fa-youtube fa-1x"></i></a>
+                                 <a href="https://www.linkedin.com/in/my-business-academy-pro-1242481b2/" target="_blank" class="btn"><i class="text-white fa fa-linkedin fa-1x"></i></a>
                             </div>
                         </div>
                     </div>

@@ -17,7 +17,7 @@
                 }
             });
         }
-        
+
     </script>
 @endpush
 
@@ -26,10 +26,10 @@
         #new-courses-section .card-img-overlay:hover{
             text-decoration: underline;
         }
-        
+
         .imagen:hover {-webkit-filter: none; filter: none; color: #6EC1E4 0.2em 0.2em 0.6em 0.1em;
         }
-        
+
         .imagen {filter: grayscale(80%);}
 
         .punto::before{
@@ -294,7 +294,7 @@
 
             <div id="newers" class="row" style="padding: 10px 30px;">
                 @foreach ($cursosNuevos as $cursoNuevo)
-                    <div class="col-xl-4 col-lg-4 col-12 imagen" style="padding-bottom: 10px;">
+                    <div class="col-xl-4 col-lg-4 col-12 imagen box-courses" style="padding-bottom: 10px;">
                         <div class="card">
                             <a href="{{ route('courses.show', [$cursoNuevo->slug, $cursoNuevo->id]) }}" style="color: white;">
 
@@ -304,7 +304,7 @@
                             @else
                                 <img src="{{ asset('uploads/images/courses/covers/default.jpg') }}" class="card-img-top new-course-img" alt="...">
                             @endif
-                            <div class="card-img-overlay d-flex flex-column">
+                            <div class="card-img-overlay d-flex flex-column course-overlay">
                                 <div class="mt-auto">
                                     <div class="section-title-landing text-white" style="line-height:1;">{{ $cursoNuevo->title }}</div>
                                     <div class="row">
@@ -333,7 +333,7 @@
                 <div class="next-streaming-title">{{ $proximoEvento->title }}</div>
                 <div class="next-streaming-date" style="padding-right: 35%;">
                     <i class="fa fa-calendar"></i> {{ $proximoEvento->weekend_day }} {{ $proximoEvento->date_day }} de {{ $proximoEvento->month }}<br>
-                    @if (Auth::guest()) 
+                    @if (Auth::guest())
                         <i class="fa fa-clock"></i>
                         @foreach ($proximoEvento->countries as $country)
                             {{ date('H:i A', strtotime($country->pivot->time)) }} {{ $country->abbreviation }} /
@@ -375,7 +375,7 @@
         </div><br><br>
     @endif
     {{-- FIN SECCIÓN PRÓXIMO STREAMING--}}
-    
+
     {{-- SECCIÓN MENTORES --}}
     <div class="section-landing">
             <div class="row">
@@ -385,13 +385,13 @@
                     </div>
                 </div>
             </div>
-        
+
             <div id="newers" class="row" style="padding: 10px 30px;">
                 @foreach ($mentores as $mentor)
                     <div class="col-xl-3 col-lg-3 col-12" style="padding-bottom: 10px;">
                         <div class="card">
                             <a href="" style="color: white;">
-                            
+
                             @if (!is_null($mentor->avatar))
                                 <!-- <img src="{{ asset('uploads/avatar/'.$mentor->avatar) }}" class="card-img-top new-course-img" alt="..."> -->
                                 <img src="{{ asset('uploads/avatar/'.$mentor->avatar) }}" class="card-img-top new-course-img" alt="...">
@@ -403,8 +403,8 @@
                                     <div class="text-sm text-white" style="line-height:1;">
                                         <a class="text-white" href="{{ url('courses/mentor/'.$mentor->mentor_id) }}"> {{ $mentor->nombre }}</a>
                                        </div>
-                                    
-                                   
+
+
                                 </div>
                             </div>
                           </a>
@@ -413,9 +413,9 @@
                 @endforeach
             </div>
         </div>
-    
-    
-    
+
+
+
     {{-- FIN SECCIÓN MENTORES --}}
 
     {{-- SECCIÓN REFERIDOS (USUARIOS LOGGUEADOS) --}}

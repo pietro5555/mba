@@ -10,7 +10,7 @@
 
 <div id="newers" class="row" style="padding: 10px 30px;">
     @foreach ($cursosNuevos as $cursoNuevo)
-        <div class="col-xl-4 col-lg-4 col-12" style="padding-bottom: 10px;">
+        <div class="col-xl-4 col-lg-4 col-12 box-courses" style="padding-bottom: 10px;">
             <div class="card">
                 <a href="{{ route('courses.show', [$cursoNuevo->slug, $cursoNuevo->id]) }}" style="color: white;">
 
@@ -19,7 +19,7 @@
                 @else
                     <img src="{{ asset('uploads/images/courses/covers/default.png') }}" class="card-img-top new-course-img" alt="...">
                 @endif
-                <div class="card-img-overlay d-flex flex-column">
+                <div class="card-img-overlay d-flex flex-column course-overlay">
                     <div class="mt-auto">
                         <div class="section-title-landing text-white" style="line-height:1;">{{ $cursoNuevo->title }}</div>
                         <div class="row">

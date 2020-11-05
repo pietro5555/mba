@@ -33,13 +33,13 @@
             @if ($cursos->count() > 0)
                 @foreach ($cursos as $curso)
 
-                <div class="col-md-3 mt-1">
+                <div class="col-md-3 mt-1 box-courses">
                     @if (!is_null($curso->thumbnail_cover))
                         <img src="{{ asset('uploads/images/courses/covers/'.$curso->thumbnail_cover) }}" class="card-img-top img-opacity" alt="...">
                         @else
                             <img src="{{ asset('uploads/images/courses/covers/default.jpg') }}" class="card-img-top img-opacity" alt="...">
                         @endif
-                   <div class="card-img-overlay ml-1 mr-1">
+                   <div class="card-img-overlay course-overlay">
                         <div class="container-fluid">
                         <div class="row card-carousel-text mr-1">
                             <div class="col-md-12">

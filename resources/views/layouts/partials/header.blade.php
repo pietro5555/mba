@@ -43,7 +43,7 @@
                 <a class="nav-link items-header" href="https://www.mybusinessacademypro.com/blog/">BLOG</a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link items-header" href="{{route('shopping-cart.membership')}}">MEMBRESIAS</a>
+                <a class="nav-link items-header" href="#">AFILIADOS</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link items-header" href="{{ route('courses') }}">CURSOS</a>

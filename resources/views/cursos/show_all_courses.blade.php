@@ -36,13 +36,13 @@
             @endphp
                 @foreach ($courses  as $course)
 
-                <div class="col-md-3 mt-1">
+                <div class="col-md-3 mt-1 box-courses">
                     @if (!is_null($course->thumbnail_cover))
-                        <img src="{{ asset('uploads/images/courses/covers/'.$course->thumbnail_cover) }}" class="card-img-top img-opacity" alt="...">
+                        <img src="{{ asset('uploads/images/courses/covers/'.$course->thumbnail_cover) }}" class="card-img-top" alt="...">
                         @else
-                            <img src="{{ asset('uploads/images/courses/covers/default.jpg') }}" class="card-img-top img-opacity" alt="...">
+                            <img src="{{ asset('uploads/images/courses/covers/default.jpg') }}" class="card-img-top" alt="...">
                         @endif
-                   <div class="card-img-overlay ml-1 mr-1">
+                   <div class="card-img-overlay course-overlay">
                         <div class="container-fluid">
                         <div class="row card-carousel-text mr-1">
                             <div class="col-md-12">

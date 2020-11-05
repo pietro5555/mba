@@ -171,6 +171,7 @@ i.fa.fa-user.referrers-icon {
     border-radius: 0px !important;
 }
 
+
 .d-flex.justify-content-center.bd-highlight.mb-1.text-white p {
     letter-spacing: 22px;
     font-size: 92px !important;
@@ -1945,3 +1946,49 @@ p.card-text.font-weight-bold.mr-2 {
     background-color: #0092cc;
 
   }
+
+  /**BOX COURSES**/
+ /* .box-courses {
+	width: 100%;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: center;
+    -webkit-justify-content: center;
+    padding: 0px !important;
+}
+
+.box-courses:hover {
+    box-shadow: 0px 30px 18px -8px rgba(156, 111, 111, 0.1);
+    transform: scale(1.20, 1.20);
+}
+
+.course-overlay:hover{
+    transition: .5s ease;
+    background: linear-gradient(185deg, rgba(30,220,255,0.20772058823529416) 40%, rgba(30,150,255,1) 69%);
+    font-weight: bold;
+    color: white;
+    position: absolute;
+    background-position: center;
+  background-size: cover;
+}
+*/
+
+.box-courses {
+    padding: 0px !important;
+}
+.course-overlay
+{
+    background-position: center;
+  background-size: cover;
+}
+.box-courses:hover,
+.box-courses:focus  {
+    transform: scale(1.2);
+    z-index: 9999;
+}
+.course-overlay:hover{
+    background: linear-gradient(185deg, rgba(30,220,255,0.20772058823529416) 40%, rgba(30,150,255,1) 69%);
+    font-weight: bold;
+    color: white;
+}
+

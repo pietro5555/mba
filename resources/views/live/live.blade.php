@@ -174,6 +174,37 @@
             });
         }
         
+        function newResponseSurvey(){
+            $("#survey_response_submit").css('display', 'none');
+            $("#survey_response_loader").css('display', 'block');
+            var route = "https://mybusinessacademypro.com/academia/survey";
+            var form = $('#survey_response_form')[0];
+            var parametros = new FormData(form);
+            $.ajax({
+                url:route,
+                type:'POST',
+                data:  parametros,
+                processData: false,
+                contentType: false,
+                success:function(ans){
+                    $("#survey_response_loader").css('display', 'none');
+                    $("#survey_response_submit").css('display', 'block');
+                    if (ans == false){
+                        $("#msj-success-ajax").css('display', 'none');
+                        $("#option-modal-survey").modal("hide");
+                        $("#msj-error-text").html("Hubo un error al responder las encuestas");
+                        $("#msj-error-ajax").css('display', 'block');
+                    }else{
+                        $("#msj-error-ajax").css('display', 'none');
+                        $("#option-modal-survey").modal("hide");
+                        $("#msj-success-text").html("Las respuestas han sido guardadas con éxito");
+                        $("#msj-success-ajax").css('display', 'block');
+                        refreshSurveySection(false);
+                    }
+                }
+            });
+        }
+        
         function deletePresentation($presentation){
             $("#delete_presentation_submit-"+$presentation).css('display', 'none');
             $("#delete_presentation_loader-"+$presentation).css('display', 'block');
@@ -298,7 +329,16 @@
                 success:function(ans){
                     $("#surveys_section").html(ans);
                     if ($notification == true){
-                        $("#badge-survey").css('display', 'block');
+                        if ($("#type_user").val() == 2){
+                            loadCharts();
+                            $("#badge-survey").css('display', 'block');
+                        }else{
+                            $("#badge-survey").css('display', 'block');
+                        }
+                    }else{
+                        if ($("#type_user").val() == 2){
+                            loadCharts();
+                        }
                     }
                 }
             });
@@ -319,7 +359,6 @@
                 }else if (data.type == 'offer'){
                     refreshOfferSection(true);
                 }else if (data.type == 'survey'){
-                    alert("Aqui");
                     refreshSurveySection(true);
                 }
             }
@@ -328,6 +367,9 @@
 @endpush
 @section('content')
     <input type="hidden" id="user_auth" value="{{ Auth::user()->ID }}">
+    <input type="hidden" id="event_id" value="{{ $event->id }}">
+    <input type="hidden" id="type_user" value="{{ Auth::user()->rol_id }}">
+    
     <div class="bg-dark-gray">
         {{-- Encabezado o titulo --}}
         @include('live.components.cabezera')

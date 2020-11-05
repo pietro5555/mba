@@ -61,7 +61,7 @@ class SetEventController extends Controller
                 $guardadas =   EventResources::where('event_id', $request->event_id)
                                     ->where('resources_id',6)
                                     ->get();
-
+                        
                 if($guardadas->isEmpty()){
                     $dataPresentation = new EventResources;
                     $dataPresentation->resources_id =6;
@@ -73,13 +73,14 @@ class SetEventController extends Controller
                 event(new \App\Events\Notificacion('video', Auth::user()->ID));
                 
                 return response()->json(true);
+                
                 /*$resources_video = SetEvent::where('event_id', $request->event_id)
                                     ->where('type', 'video')
                                     ->first();
-
+            
                 return view('live.components.sections.videosSection')->with(compact('resources_video'));*/
             break;
-
+            
             case 'file':
                 if ($request->file('file')) {
                     $file = $request->file('file');
@@ -96,7 +97,7 @@ class SetEventController extends Controller
                     $guardadas = EventResources::where('event_id', $request->event_id)
                                     ->where('resources_id',7)
                                     ->get();
-
+                                    
                     if($guardadas->isEmpty()){
                         $dataPresentation = new EventResources;
                         $dataPresentation->resources_id = 7;
@@ -108,14 +109,15 @@ class SetEventController extends Controller
                     event(new \App\Events\Notificacion('file', Auth::user()->ID));
 
                     return response()->json(true);
+                    
                     /*$files = SetEvent::where('event_id', $request->event_id)
                                 ->where('type', 'file')
                                 ->get();
                     $event_id = $request->event_id;
-
+                    
                     return view('live.components.sections.filesSection')->with(compact('files', 'event_id'));*/
                 }else{
-                     return response()->json(false);
+                     return response()->json(false);   
                 }
             break;
 
@@ -135,7 +137,7 @@ class SetEventController extends Controller
                     $guardadas =   EventResources::where('event_id', $request->event_id)
                                     ->where('resources_id',5)
                                     ->get();
-
+                        
                     if($guardadas->isEmpty()){
                         $dataPresentation = new EventResources;
                         $dataPresentation->resources_id = 5;
@@ -147,56 +149,57 @@ class SetEventController extends Controller
                     event(new \App\Events\Notificacion('presentation', Auth::user()->ID));
 
                     return response()->json(true);
+                    
                     /*$presentations = SetEvent::where('event_id', $request->event_id)
                                         ->where('type', 'presentation')
                                         ->get();
-
+            
                     $event_id = $request->event_id;
-
+                    
                     return view('live.components.sections.presentationsSection')->with(compact('presentations', 'event_id'));*/
                 }else{
                     return response()->json(false);
                 }
             break;
 
-              // survey_options
-              case 'survey':
-              $guardadas =   EventResources::where('event_id', $request->event_id)
-                                  ->where('resources_id',4)
-                                  ->get();
-                if($guardadas->isEmpty()){
-                     $dataSurvey = new EventResources;
-                      $dataSurvey->resources_id = 4;
-                      $dataSurvey->event_id = $request->event_id;
-                      $dataSurvey->status = 1;
-                      $dataSurvey->save();
-
-                  }
-                   $dataE = SetEvent::create([
-                      'title' => $request->input('title') ? $request->input('title') : 'null',
-                      'type' => 'survey',
-                      'event_id' => $request->event_id
-                  ]);
-                  $question =  $request->q1;
-                  $responses = explode(',', $request->input('questions'));
-                  $question_save = new SurveyOptions;
-                  $question_save->question =  $question;
-                  $question_save->content_event_id = $dataE->id;
-                  $question_save->save();
-                  foreach ($responses as $response) {
-                      DB::table('survey_options_response')->insert([
-                          'response' => $response,
-                          'survey_options_id' => $question_save->id,
-                          'user_id' => Auth::user()->ID,
-                          'selected' => 0,
-                      ]);
-                  }
-
-                    event(new \App\Events\Notificacion('survey', Auth::user()->ID));
-
+            // survey_options
+            case 'survey':
+                $guardadas =   EventResources::where('event_id', $request->event_id)
+                                    ->where('resources_id',4)
+                                    ->get();
+                  if($guardadas->isEmpty()){
+                       $dataSurvey = new EventResources;
+                        $dataSurvey->resources_id = 4;
+                        $dataSurvey->event_id = $request->event_id;
+                        $dataSurvey->status = 1;
+                        $dataSurvey->save();
+    
+                    }
+                     $dataE = SetEvent::create([
+                        'title' => $request->input('title') ? $request->input('title') : 'null',
+                        'type' => 'survey',
+                        'event_id' => $request->event_id
+                    ]);
+                    $question =  $request->q1;
+                    $responses = explode(',', $request->input('questions'));
+                    $question_save = new SurveyOptions;
+                    $question_save->question =  $question;
+                    $question_save->content_event_id = $dataE->id;
+                    $question_save->save();
+                    foreach ($responses as $response) {
+                        DB::table('survey_options_response')->insert([
+                            'response' => $response,
+                            'survey_options_id' => $question_save->id,
+                            'user_id' => Auth::user()->ID,
+                            'selected' => 0,
+                        ]);
+                    }
+                    
+                     event(new \App\Events\Notificacion('survey', Auth::user()->ID));
+                     
                     return response()->json(true);
-          break;
-
+            break;
+                
             case 'offers':
                 if ($request->file('resource')) {
                     $file = $request->file('resource');
@@ -221,7 +224,7 @@ class SetEventController extends Controller
                     $guardadas =   EventResources::where('event_id', $request->event_id)
                                         ->where('resources_id', '=', 8)
                                         ->get();
-
+                    
                     if($guardadas->isEmpty()){
                         $dataPresentation = new EventResources;
                         $dataPresentation->resources_id = 8;
@@ -229,31 +232,31 @@ class SetEventController extends Controller
                         $dataPresentation->status = 1;
                         $dataPresentation->save();
                     }
-
-                    event(new \App\Events\Notificacion('offer', Auth::user()->ID));
+                    
+                     event(new \App\Events\Notificacion('offer', Auth::user()->ID));
 
                     return response()->json(true);
-
-                    /*$resources_offer = OffersLive::all()->where('event_id', $request->event_id);
-
+                    
+                   /* $resources_offer = OffersLive::all()->where('event_id', $request->event_id);
+            
                     return view('live.components.sections.offersSection')->with(compact('resources_offer'));*/
                 }else{
-                   return response()->json(false);
+                   return response()->json(false); 
                 }
             break;
         }
     }
-
+    
     public function refresh_menu($user_id, $event_id){
         $user = User::find($user_id);
         $event = Events::find($event_id);
         $menuResource = $event->getResource();
-
+        
         return view('live.components.sections.menuSection')->with(compact('user', 'menuResource'));
-
+        
     }
-
-    public function refresh_video_section($event_id){
+    
+     public function refresh_video_section($event_id){
         $resources_video = SetEvent::where('event_id', $event_id)
                                 ->where('type', 'video')
                                 ->first();
@@ -289,50 +292,43 @@ class SetEventController extends Controller
 
     public function refresh_survey_section($event_id){
         $resources_survey = SetEvent::where('event_id', $event_id)->where('type', 'survey')->with('pregunta')->get();
-
-        return view('live.components.sections.surveysSection')->with(compact('resources_survey'));
-    }
-
-    /**Save student response**/
-    public function save_student_response(Request $request)
-    {
-
-        foreach ( $request->row as $index => $id ) {
-            $encontrada = SurveyResponse::where('user_id',Auth::user()->ID)->where('response',$request->response[$index])->where('survey_options_id', $request->survey_options_id[$index])->where('selected', 1)->first();
-            if(Empty($encontrada))
-            {
-                $new_response = new SurveyResponse();
-                $new_response->fill([
-                    'user_id' => Auth::user()->ID,
-                    'selected' => 1,
-                    'response' =>  $request->response[$index],
-                    'survey_options_id' =>  $request->survey_options_id[$index]
-                ]);
-                $new_response->save();
+        
+        $surveysCount = $resources_survey->count();
+        $surveysUser = 0;
+        if (Auth::user()->rol_id == 3){
+            foreach ($resources_survey as $survey){
+                $survey->user_response = SurveyResponse::where('user_id',Auth::user()->ID)->where('survey_options_id', $survey->pregunta->id)->first();
+                if (!is_null($survey->user_response)){
+                    $surveysUser++;
+                }
             }
-            else{
-
-                return redirect()->route('show.event', $request->event_id)->with('msj-erroneo', 'Ya ha respondido estas preguntas');
-            }
-
         }
 
-            if (isset($request->subdomain)){
-                return redirect("https://streaming.mybusinessacademypro.com/transmission/".$request->event_id."/".Auth::user()->ID)->with('msj-exitoso', 'Respuesta guardada con éxito.');
-            }else{
-                return redirect()->route('show.event', $request->event_id)->with('msj-exitoso', 'Respuesta guardada con éxito.');
-            }
-
+        return view('live.components.sections.surveysSection')->with(compact('event_id', 'resources_survey', 'surveysCount', 'surveysUser'));
     }
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
+
+    /**Save student response**/
+    public function save_student_response(Request $request){
+       foreach ( $request->row as $index => $id ) {
+            $new_response = new SurveyResponse();
+            $new_response->fill([
+                'user_id' => Auth::user()->ID,
+                'selected' => 1,
+                'response' =>  $request->response[$index],
+                'survey_options_id' =>  $request->survey_options_id[$index]
+            ]);
+            $new_response->save();
+        }
+        
+        event(new \App\Events\Notificacion('survey', Auth::user()->ID));
+        
+        return response()->json(true);
+    }
+
+
     /** Download file**/
-    public function download_file($event_id, $file_id)
-    {
+    public function download_file($event_id, $file_id){
         $files = SetEvent::where('event_id', $event_id)
         ->where('id', $file_id)
         ->first();
@@ -344,54 +340,36 @@ class SetEventController extends Controller
        );
        return response()->download($file, 'File.pdf', $headers);
     }
-     /**Estadisticas de las respuestas**/
-    /* public function survey_statistics(Request $request)
-     {
-       $id = $request->get('id');
-       $resources_survey = SetEvent::where('event_id', $id)->where('type', 'survey')->with('pregunta')->get();
-      // return dd ($resources_survey);
-      error_log($resources_survey);
-       foreach($resources_survey  as $encuesta)
-       {
-         $respondidas = SurveyResponse::where('survey_options_id', $encuesta->id)->get();
-         error_log($respondidas);
-           // foreach($encuesta->pregunta->responses->where('survey_options_id', $encuesta->id)  as $respuesta)
-           // {
 
-              //$statistics = SurveyResponse::where('survey_options_id', $respuesta->id)->where('selected', 1)->get();
-               // error_log($statistics);
-            //}
-           // return dd ($resources_survey);
-
-            return response(json_encode($respondidas),200)->header('Content-type', 'text/plain');
-       }
-     }*/
-
-     /**Estadisticas de las respuestas**/
-     public function survey_statistics(Request $request)
-     {
-         $id = $request->get('id');
-
-         //Find the question resources
-         $resources_survey = SetEvent::where('event_id', $id)->where('type', 'survey')->with('pregunta')->get();
-
-         $questions = [];
-         foreach($resources_survey as $resource)
-         {
-                 //Find questions with its responses
-                 $responses = SurveyOptions::where('id', $resource->pregunta->id)->with('responses')->first();
-                 $questions[] = $responses->responses->where('selected',1)->first();
-
-         }
-         return response()->json(
-                             $questions,
-                             200,
-                             [
-                                 'Content-type' =>'text/plain'
-                             ]
-                             );
-     }
-
+    /**Estadisticas de las respuestas**/
+    public function survey_statistics(Request $request){
+        $id = $request->get('id');
+        $resources_survey = SetEvent::where('event_id', $id)->where('type', 'survey')->with('pregunta')->get();
+        
+        $preguntas = array();
+        foreach($resources_survey as $encuesta){
+            $array = array();
+            $array['id'] = $encuesta->id;
+            $array['question'] = $encuesta->pregunta->question;
+            $opciones = SurveyResponse::where('survey_options_id', $encuesta->pregunta->id)->where('selected',0)->get();
+            $array['options_count'] = $opciones->count();
+            $cantOpciones = 0;
+            $labels = array();
+            $values = array();
+            foreach ($opciones as $opcion){
+                $cantOpciones++;
+                $respuestas = SurveyResponse::where('response', $opcion->response)->where('selected',1)->count();
+                array_push($labels, $opcion->response);
+                array_push($values, $respuestas);
+            }
+            $array['options'] = $labels;
+            $array['responses'] = $values;
+            array_push($preguntas, $array);
+        }
+        
+        return response()->json($preguntas);
+    }
+     
     public function show($id)
     {
         //
@@ -433,32 +411,32 @@ class SetEventController extends Controller
             $presentations = SetEvent::where('event_id', $recurso->event_id)
                                 ->where('type', 'presentation')
                                 ->get();
-
+            
             if ($presentations->count() == 0){
                 $opcionRecurso = EventResources::where('event_id', $recurso->event_id)
                                     ->where('resources_id',5)
                                     ->first();
                 $opcionRecurso->delete();
             }
-
+            
             $event_id = $recurso->event_id;
-
+                    
             return view('live.components.sections.presentationsSection')->with(compact('presentations', 'event_id'));
-
+            
         }else if ($request->resource_type == 'file'){
             $files = SetEvent::where('event_id', $recurso->event_id)
                                 ->where('type', 'file')
                                 ->get();
-
+            
             if ($files->count() == 0){
                 $opcionRecurso = EventResources::where('event_id', $recurso->event_id)
                                     ->where('resources_id',7)
                                     ->first();
                 $opcionRecurso->delete();
             }
-
+            
             $event_id = $recurso->event_id;
-
+                    
             return view('live.components.sections.filesSection')->with(compact('files', 'event_id'));
         }
     }

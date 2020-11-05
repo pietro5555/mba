@@ -188,44 +188,36 @@ class EventsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show_event($event_id)
-    {
+    public function show_event($event_id){
         //return dd(Auth::user()->rol_id);
-        $notes = Note::where('user_id', '=', Auth::user()->ID)->orderBy('id', 'DESC')->get();;
+        $notes = Note::where('user_id', '=', Auth::user()->ID)->orderBy('id', 'DESC')->get();
         $event = Events::find($event_id);
         $menuResource = $event->getResource();
+        $resources_survey = SetEvent::where('event_id', $event_id)->where('type', 'survey')->with('pregunta')->get();
         $resources_video = SetEvent::where('event_id', $event_id)->where('type', 'video')->get()->first();
         $resources_offer = OffersLive::all()->where('event_id', $event_id);
-        $resources_survey = SetEvent::where('event_id', $event_id)->where('type', 'survey')->with('pregunta')->get();
-       // return dd( $resources_survey);
-       /* $survey_response = null;
-        if (!empty($resources_survey)) {
-            $surveys = SurveyOptions::where('content_event_id', $resources_survey->id)->first();
-
-            $survey_id = $surveys->id;
-            if (empty($surveys)) {
-                $survey_response = null;
-            } else {
-                $survey_response = SurveyResponse::where('survey_options_id', $surveys->id)->where('selected', 0)->get();
+        
+        $surveysCount = $resources_survey->count();
+        $surveysUser = 0;
+        if (Auth::user()->rol_id == 3){
+            foreach ($resources_survey as $survey){
+                $survey->user_response = SurveyResponse::where('user_id',Auth::user()->ID)->where('survey_options_id', $survey->pregunta->id)->first();
+                if (!is_null($survey->user_response)){
+                    $surveysUser++;
+                }
             }
-        } else {
-            $surveys = null;
-            $survey_id = null;
-        }*/
-
-        // return dd ($resources_survey , $surveys);
-        // return response()->json([$menuResource], 201);
-        //  dd($survey_response);
-
+        }
+        
         /*Files*/
         $files = SetEvent::where('event_id', $event_id)
-            ->where('type', 'file')
-            ->get();
+                    ->where('type', 'file')
+                    ->get();
         /*Presentations */
         $presentations = SetEvent::where('event_id', $event_id)
-            ->where('type', 'presentation')
-            ->get();
-        return view('live.live', compact('event', 'notes', 'menuResource', 'resources_survey', 'resources_video', 'files', 'presentations', 'resources_offer'));
+                            ->where('type', 'presentation')
+                            ->get();
+        
+        return view('live.live', compact('event','notes', 'menuResource', 'resources_survey', 'resources_video', 'files', 'presentations', 'resources_offer', 'surveysCount', 'surveysUser'));
     }
 
     public function timeliveEvent($event_id){

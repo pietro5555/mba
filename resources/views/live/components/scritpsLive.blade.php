@@ -2,8 +2,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
 <script src='https://cdn.jsdelivr.net/lodash/4.17.2/lodash.min.js'></script>
 <script type="text/javascript">
-    var id = $('input[name="event_id"]').val()
-    console.log(id);
+    var id = $('#event_id').val();
     var responses = [];
     var values = [];
     let nextinput = 1;
@@ -38,7 +37,6 @@
             $("#store_survey_submit").css('display', 'none');
             $("#store_survey_loader").css('display', 'block');
             var route = "https://mybusinessacademypro.com/academia/settings/event";
-            //var route = "http://localhost:8000/settings/event";
             var parametros = $('#formQuestion').serialize();
             $.ajax({
                 url:route,
@@ -73,74 +71,70 @@
     removeQuestion = function (q) {
         $('#content_' + q).remove()
     }
-
-    $.ajax({
-
-         url: '/survey/statistics',
-        //url: 'https://mybusinessacademypro.com/academia/survey/statistics',
-        method: 'POST',
-        data: {
-            id: id,
-            _token: $('input[name="_token"]').val()
-        }
-
-    }).done(function (res) {
-        console.log(res);
-        var array = JSON.parse(res);
-        var resultadito = Object.entries(_.groupBy(array, 'response')).map(([key, value]) => {
-            return {
-                'name': key,
-                'values': value
-            }
-        })
-        for (var x = 0; x < resultadito.length; x++) {
-            responses.push(resultadito[x].name);
-            values.push(resultadito[x].values.length);
-        }
-        generargrafica();
-    });
-
-    function generargrafica() {
-        /*CHART*/
-        var ctx = document.getElementById('myChart').getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'bar',
+    
+    function loadCharts() {
+        $.ajax({
+            url: 'https://mybusinessacademypro.com/academia/survey/statistics',
+            method: 'POST',
             data: {
-                labels: responses,
-                datasets: [{
-                    label: 'Respuestas de la encuesta',
-                    data: values,
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
+                id: id,
+                _token: $('input[name="_token"]').val()
             }
-        });
+        }).done(function (res) {
+            res.forEach(value => {
+                /*console.log("ID: "+value["id"]);
+                console.log("Pregunta: "+value["question"]);
+                console.log("Cantidad de Opciones: "+value["options_count"]);
+                console.log("Opciones: "+value["options"]);
+                console.log("Respuestas: "+value["responses"]);*/
+            
+                var ctx = document.getElementById('survey-chart-'+value["id"]).getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        //labels: responses,
+                        labels: value["options"],
+                        datasets: [{
+                            label: 'Respuestas de la encuesta',
+                            data: value["responses"],
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(255, 159, 64, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
 
+            });
+        });
     }
+    
+    if ($("#type_user").val() == 2){
+        loadCharts();
+    }
+    
 
 </script>
 @endpush

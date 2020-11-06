@@ -52,8 +52,6 @@
                                                         @csrf
                                                         <input id="event_id" name="event_id" type="hidden"
                                                             value="{{ $event->id }}">
-                                                            <input id="survey_id" name="survey_id" type="hidden"
-                                                            value="">
                                                         <div class="form-group notes-form-title">
                                                             <input type="text" id="title" placeholder="Título"
                                                                 class="col-md-6 form-control{{ $errors->has('title') ? ' is-invalid' : '' }}"
@@ -61,12 +59,9 @@
                                                                 autofocus>
                                                         </div>
                                                         <div class="form-group notes-form-content">
-                                                            <textarea
-                                                                class="form-control{{ $errors->has('content') ? ' is-invalid' : '' }}"
+                                                            <textarea class="form-control{{ $errors->has('content') ? ' is-invalid' : '' }}"
                                                                 id="content" name="content" value="{{ old('content') }}"
-                                                                required autofocus rows="3">
-                                                                Escribe tu nota
-                                                            </textarea>
+                                                                required autofocus rows="3" placeholder="Escribe tu nota"></textarea>
                                                         </div>
                                                         <a class="btn btn-success float-right" onclick="newNote();">Guardar nota</a>
                                                     </form>

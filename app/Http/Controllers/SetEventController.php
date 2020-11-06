@@ -358,7 +358,7 @@ class SetEventController extends Controller
             $values = array();
             foreach ($opciones as $opcion){
                 $cantOpciones++;
-                $respuestas = SurveyResponse::where('response', $opcion->response)->where('selected',1)->count();
+                $respuestas = SurveyResponse::where('survey_options_id', $encuesta->pregunta->id)->where('response', $opcion->response)->where('selected',1)->count();
                 array_push($labels, $opcion->response);
                 array_push($values, $respuestas);
             }
@@ -419,9 +419,9 @@ class SetEventController extends Controller
                 $opcionRecurso->delete();
             }
             
-            $event_id = $recurso->event_id;
-                    
-            return view('live.components.sections.presentationsSection')->with(compact('presentations', 'event_id'));
+            event(new \App\Events\Notificacion('delete-presentation', Auth::user()->ID));
+            
+            return response()->json(true);
             
         }else if ($request->resource_type == 'file'){
             $files = SetEvent::where('event_id', $recurso->event_id)
@@ -435,9 +435,9 @@ class SetEventController extends Controller
                 $opcionRecurso->delete();
             }
             
-            $event_id = $recurso->event_id;
-                    
-            return view('live.components.sections.filesSection')->with(compact('files', 'event_id'));
+            event(new \App\Events\Notificacion('delete-file', Auth::user()->ID));
+            
+            return response()->json(true);
         }
     }
 }

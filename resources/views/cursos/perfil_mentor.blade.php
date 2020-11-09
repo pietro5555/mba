@@ -10,7 +10,7 @@
         <p class="lead about-course-text">{{$mentor_info->biography}}</p>
       </div>
       <div class="col-md-5 order-md-1">
-        <img src="{{ asset('uploads/avatar/'.$mentor_info->avatar) }}" alt="" class="featurette-image mx-auto ml-2" width="370" height="370">
+        <img src="{{ asset('uploads/avatar/'.$mentor_info->avatar) }}" alt="" class="featurette-image mx-auto ml-2 img-fluid">
       </div>
 </div>
 </div>

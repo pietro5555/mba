@@ -1987,7 +1987,7 @@ p.card-text.font-weight-bold.mr-2 {
     z-index: 9999;
 }
 .course-overlay:hover{
-    background: linear-gradient(185deg, rgba(30,220,255,0.20772058823529416) 40%, rgba(30,150,255,1) 69%);
+    background: linear-gradient(180deg, rgba(30,220,255,0.011642156862745057) 40%, rgba(30,150,255,0.01724439775910369) 73%);
     font-weight: bold;
     color: white;
 }

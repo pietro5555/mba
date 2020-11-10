@@ -106,10 +106,10 @@
 
 
      <div class="col-md-8 offset-md-2" style="padding-bottom: 80px; padding-top: 50px;">
-      <div class="card mb-3" style="max-width: 100%; margin-bottom: 0rem!important;">
-        <div class="row no-gutters">
+      <div class="card mb-3" style="max-width: 100%;">
+        <div class="row">
             <div class="col-md-4">
-                <img src="{{ asset('nosotros/nosotros/09.png') }}" style="width: 100%;">
+                <img src="{{ asset('nosotros/nosotros/09.png') }}" style="width: 100%;" class="rounded-circle">
               <div class="card-img-overlay d-flex flex-column" style="color: #fff; text-align: center;">
                     <div class="mt-auto">
                         <div class="new-course-title">
@@ -119,7 +119,7 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <img src="{{ asset('nosotros/nosotros/10.png') }}" style="width: 100%;">
+                <img src="{{ asset('nosotros/nosotros/10.png') }}" style="width: 100%;" class="rounded-circle">
               <div class="card-img-overlay d-flex flex-column" style="color: #fff; text-align: center;">
                     <div class="mt-auto">
                         <div class="new-course-title">
@@ -129,7 +129,7 @@
                 </div>
             </div>
              <div class="col-md-4">
-                 <img src="{{ asset('nosotros/nosotros/08.png') }}" style="width: 100%;">
+                 <img src="{{ asset('nosotros/nosotros/08.png') }}" style="width: 100%;" class="rounded-circle">
               <div class="card-img-overlay d-flex flex-column" style="color: #fff; text-align: center;">
                     <div class="mt-auto">
                         <div class="new-course-title">
@@ -141,10 +141,10 @@
         </div>
       </div>
 
-      <div class="card mb-3" style="max-width: 100%; margin-bottom: 0rem!important;">
-        <div class="row no-gutters">
+      <div class="card mb-3" style="max-width: 100%;">
+        <div class="row">
             <div class="col-md-4">
-              <img src="{{ asset('nosotros/nosotros/11.png') }}" style="width: 100%;">
+              <img src="{{ asset('nosotros/nosotros/11.png') }}" style="width: 100%;" class="rounded-circle">
               <div class="card-img-overlay d-flex flex-column" style="color: #fff; text-align: center;">
                     <div class="mt-auto">
                         <div class="new-course-title">
@@ -154,7 +154,7 @@
                 </div>
             </div>
             <div class="col-md-4">
-              <img src="{{ asset('nosotros/nosotros/12.png') }}" style="width: 100%;">
+              <img src="{{ asset('nosotros/nosotros/12.png') }}" style="width: 100%;" class="rounded-circle">
               <div class="card-img-overlay d-flex flex-column" style="color: #fff; text-align: center;">
                     <div class="mt-auto">
                         <div class="new-course-title">
@@ -164,7 +164,7 @@
                 </div>
             </div>
              <div class="col-md-4">
-              <img src="{{ asset('nosotros/nosotros/13.png') }}" style="width: 100%;">
+              <img src="{{ asset('nosotros/nosotros/13.png') }}" style="width: 100%;" class="rounded-circle">
               <div class="card-img-overlay d-flex flex-column" style="color: #fff; text-align: center;">
                     <div class="mt-auto">
                         <div class="new-course-title">

@@ -30,9 +30,12 @@
         <div class="col-12 col-md-6">
             @auth
             @include('carrito_user.componente.logueado')
+            @include('carrito_user.componente.messages')
             @else
             @include('carrito_user.componente.sinloguear')
+            @include('carrito_user.componente.messages')
             @endauth
+
         </div>
         <div class="col-12 col-md-6 p-4" style="background: #363840">
             @include('carrito_user.componente.tabla')
@@ -43,7 +46,7 @@
 <script>
     function pagarS() {
       event.preventDefault();
-     
+
         if (!$("#check_deacuerdo").prop('checked')) {
             alert("Debe estar de acuerdo con los términos y condiciones!");
             return false;
@@ -70,7 +73,7 @@
         }
     }
 
-    
+
     function pagarC2() {
       event.preventDefault();
         if (!$("#check_deacuerdo2").prop('checked')) {

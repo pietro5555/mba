@@ -155,7 +155,7 @@
 
                             <div class="card m-2 mb-4 card-courses">
 
-                                <img class="card-img-top" src="{{ asset('uploads/avatar/'.$curso->mentor->avatar) }}" alt="card-image-cap">
+                                <img class="card-img-top" src="{{ asset('uploads/images/courses/covers/'.$curso->thumbnail_cover) }}" alt="card-image-cap">
                                 <div class="card-body p-2">
                                 <div class="row align-items-start">
                                     <h6 class="col-sm"><a href="{{ route('courses.show', [$curso->slug, $curso->id]) }}" class="text-secondary text-sm">{{$curso->title}}</a>

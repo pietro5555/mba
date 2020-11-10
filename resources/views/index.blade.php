@@ -182,7 +182,7 @@
                         @php $cont++; @endphp
                         <div class="carousel-item @if ($cont == 1) active @endif">
                             <div class="overlay" ></div>
-                            <img src="{{ asset('uploads/images/courses/featured_covers/'.$cursoDestacado->featured_cover) }}" class="d-block w-100" alt="...">
+                            <img src="{{ asset('uploads/images/courses/featured_covers/'.$cursoDestacado->featured_cover) }}" class="d-block w-100 img-fluid" alt="...">
                             <div class="carousel-caption">
                                 <p style="color:#007bff; font-size: 22px; font-weight: bold; margin-top: -20px;">NUEVO CURSO</p>
                                 <div class="course-autor">{{$cursoDestacado->mentor->display_name}}</div>

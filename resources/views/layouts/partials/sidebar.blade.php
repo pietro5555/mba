@@ -26,7 +26,7 @@
                         <a href="{{ route('courses') }}" class="list-group-item bg-dark-gray" style="color: white;"><i class="fas fa-user-circle"></i> Cursos</a>
                         <a href="{{url('/admin')}}" class="list-group-item bg-dark-gray" style="color: white;"><i class="fas fa-user"></i> Backoffice</a>
                     @endif
-                     <a class="list-group-item bg-dark-gray" data-toggle="collapse" href="{{route('shopping-cart.membership')}}" style="color: white;"><i class="fa fa-shopping-bag" aria-hidden="true"></i> Membresias</a>
+                    <a href="{{route('shopping-cart.membership')}}" class="list-group-item bg-dark-gray" style="color: white;"><i class="fa fa-shopping-bag"></i> Membresias</a>
                     <a class="list-group-item bg-dark-gray" data-toggle="collapse" href="#searchDiv" style="color: white;"><i class="fa fa-search"></i> Explorar</a>
                     <div class="collapse" id="searchDiv" style="padding-left: 10px; padding-right: 10px;">
                         <form action="{{ route('search') }}" method="GET" class="form-inline d-flex justify-content-center md-form form-sm active-pink-2 mt-2">

@@ -527,10 +527,10 @@ h5.title-level {
         font-size: 16px;
     }
     .course-autor {
-        font-size: 20px;
+        font-size: 15px;
     }
     .course-title {
-        font-size: 25px;
+        font-size: 12px;
         line-height: 25px;
         padding: 10px 0;
     }
@@ -1604,6 +1604,9 @@ p.card-text.font-weight-bold.mr-2 {
     .wrapper {
         display: block;
     }
+    .carousel-indicators{
+        display: none;
+    }
 }
 
 
@@ -1987,7 +1990,7 @@ p.card-text.font-weight-bold.mr-2 {
     z-index: 9999;
 }
 .course-overlay:hover{
-    background: linear-gradient(180deg, rgba(30,220,255,0.011642156862745057) 40%, rgba(30,150,255,0.01724439775910369) 73%);
+    background: linear-gradient(180deg, rgba(30,220,255,0.04805672268907568) 40%, rgba(30,150,255,0.41780462184873945) 73%);
     font-weight: bold;
     color: white;
 }

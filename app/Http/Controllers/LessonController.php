@@ -208,8 +208,10 @@ class LessonController extends Controller{
         $lesson_comments->date = Carbon::now()->format('Y-m-d');
         $lesson_comments->save();
 
+        $all_comments = Comment::where('lesson_id', $request->lesson_id)->orderBy('id', 'DESC')->get();
 
-         return redirect('courses/lesson/'.$datosLeccion->slug.'/'.$datosLeccion->id.'/'.$datosLeccion->course_id);
+        return view('cursos.commentsSection')->with(compact('all_comments'));
+         //return redirect('courses/lesson/'.$datosLeccion->slug.'/'.$datosLeccion->id.'/'.$datosLeccion->course_id);
 
     }
 }

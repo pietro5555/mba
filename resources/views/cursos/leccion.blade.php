@@ -9,7 +9,10 @@
     }
   </style>
 @endpush
+
+
 @section('content')
+    <input type="hidden" id="membership_id" value="{{Auth::user()->membership_id}}" />
   @if (Session::has('msj-exitoso'))
       <div class="alert alert-success" style="margin: 5px 15px;">
          {{ Session::get('msj-exitoso') }}
@@ -21,6 +24,7 @@
          {{ Session::get('msj-erroneo') }}
       </div>
    @endif
+    
     <div class="container-fluid">
         <div class="row justify-content-end">
             <div class="col-md-6 mt-2"><h5 class="text-white">@if ($progresoCurso->language == 'es') {{$lesson->title}} @else {{$lesson->english_title}} @endif</h5></div>
@@ -178,13 +182,17 @@
                         </a>
                         <div class="media-body align-items-center">
                           <div class="col-12 box-comments d-flex">
-                            <form class="form-inline" action="{{route ('lesson.comments')}}" method="POST">
-                              @csrf
-                              <!--<input type="hidden" name="lesson_slug" value="{{ $lesson->slug}}">
-                              <input type="hidden" name="course_id" value="{{ $lesson->course->id}}">-->
-                              <input type="hidden" name="lesson_id" value="{{ $lesson->id }}">
-                              <input type="text" class="form-control" placeholder="Escribe tu comentario" name="comment" required>
-                              <button class="btn btn-outline-success mt-2" type="submit">Enviar</button>
+                            <form class="form-inline" id="store_comment_form">
+                                @csrf
+                                <!--<input type="hidden" name="lesson_slug" value="{{ $lesson->slug}}">
+                                <input type="hidden" name="course_id" value="{{ $lesson->course->id}}">-->
+                                <input type="hidden" name="lesson_id" value="{{ $lesson->id }}">
+                                <input type="text" class="form-control" placeholder="Escribe tu comentario" name="comment" id="comment" required>
+                                <a class="btn btn-outline-success mt-2 ml-2" onclick="newComment();" id="store_comment_submit">Enviar</a>
+                                <button class="btn btn-success" type="button" disabled id="store_comment_loader" style="display: none;">
+                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    Espere...
+                                </button>
                             </form>
                           </div>
 
@@ -194,43 +202,45 @@
                   </div><!-- end col -->
                 </div><!-- end row -->
               </div><!-- end custom-box -->
-              @foreach ($all_comments as $comment)
-                <div class="custombox clearfix mt-4 pb-4 border-bottom">
-                  <div class="row">
-                    <div class="col-lg-12">
-
-                      <div class="comments-list">
-                        <div class="media">
-                          <a class="media-left" href="#">
-                            <div class="col-md-2">
-                              <img src="{{ asset('uploads/avatar/'.$comment->user->avatar) }}" alt="" class="circular--square" >
+                <div id="comments_section">
+                  @foreach ($all_comments as $comment)
+                    <div class="custombox clearfix mt-4 pb-4 border-bottom">
+                      <div class="row">
+                        <div class="col-lg-12">
+    
+                          <div class="comments-list">
+                            <div class="media">
+                              <a class="media-left" href="#">
+                                <div class="col-md-2">
+                                  <img src="{{ asset('uploads/avatar/'.$comment->user->avatar) }}" alt="" class="circular--square" >
+                                </div>
+                              </a>
+    
+                              <div class="media-body">
+                                <h4 class="media-heading text-white">{{ $comment->user->display_name }}</h4>
+                                <small class="media-heading about-course-text">{{str_replace('-', '/', date('d-m-Y', strtotime($comment->date)))}}</small>
+                                <p class="about-course-text">
+                                  {{$comment->comment}}
+                                </p>
+                                <!--<p class="about-course-text float-right mr-4">
+                                  <i class="far fa-comment-alt about-course-text" aria-hidden="true"></i> <a href="" class="about-course-text"> Responder</a>
+    
+                                </p>-->
+    
+                              </div>
+    
                             </div>
-                          </a>
-
-                          <div class="media-body">
-                            <h4 class="media-heading text-white">{{ $comment->user->display_name }}</h4>
-                            <small class="media-heading about-course-text">{{str_replace('-', '/', date('d-m-Y', strtotime($comment->date)))}}</small>
-                            <p class="about-course-text">
-                              {{$comment->comment}}
-                            </p>
-                            <p class="about-course-text float-right mr-4">
-                              <i class="far fa-comment-alt about-course-text" aria-hidden="true"></i> <a href="" class="about-course-text"> Responder</a>
-
-                            </p>
-
                           </div>
-
-                        </div>
-                      </div>
-
-                    </div><!-- end col -->
-                  </div><!-- end row -->
+    
+                        </div><!-- end col -->
+                      </div><!-- end row -->
+                    </div>
+                  @endforeach
                 </div>
-              @endforeach
               <!-- end custom-box -->
             </div>
             <div class="tab-pane fade pl-5 pr-5" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-              @foreach ($lesson->materials as $material)
+                @foreach ($lesson->materials as $material)
                     <div class="" style="background-color: #27282C; padding: 10px 20px; color: #007bff;">
                         <h5>{{ $material->title }}</h5>
                     </div>
@@ -252,6 +262,22 @@
                         </div>
                     </div>
                 @endforeach
+                <!--@foreach ($lesson->materials as $material)
+                    @if ($material->type == 'Archivo')
+                      <a href="{{ asset('uploads/courses/lessons/materials/'.$material->material) }}" target="_blank">
+                        <h5 class="mb-0 font-weight-bold d-block position-relative py-2">
+                          <i class="text-primary fa fa-link"></i> {{$material->title}}
+                        </h5>
+                      </a>
+                    @else
+                      <a href="{{ $material->material }}" target="_blank">
+                        <h5 class="mb-0 font-weight-bold d-block position-relative py-2">
+                          <i class="text-primary fa fa-link"></i> {{$material->title}}
+                        </h5>
+                      </a>
+                    @endif
+                    <br>
+                @endforeach-->
             </div>
             <div class="tab-pane fade" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
               @if ($progresoCurso->certificate == 1)
@@ -290,7 +316,7 @@
                 @php $cont2++; @endphp
             @endforeach
             </div>
-            @if ($progresoCurso->certificate == 0)
+            @if ( ($progresoCurso->certificate == 0) && (!is_null($lesson->course->evaluation)) )
                   <div class="card mt-2 mb-2" style="background-color: #2A91FF;">
                     <div class="card-header text-center" >
                       <a href="{{ route('client.courses.take-evaluation', [$lesson->course->slug, $lesson->course_id]) }}">
@@ -348,33 +374,30 @@
     </div>
   </div>
 
-  {{-- SECCIÓN REFERIDOS (USUARIOS LOGGUEADOS) --}}
-  <!--@if (!Auth::guest())
-  <div style="padding-top: 30px;">
-    <div class="row">
-      <div class="col-4 " style="padding-left: 30px;">
-        <div style="text-align: center; font-size: 34px; color: white; font-weight: bold; border: solid #919191 1px; background-color: #222326; margin-bottom: 10px; height: 330px; padding: 120px 15px;">
-          <i class="fa fa-user"></i><br>
-          739 Referidos
+    {{-- Modal Membresia --}}
+  <div class="modal fade" id="upgradeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content" style="background-color: black;">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel" style="color: white;">UPGRADE</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-        <div style="text-align: center; font-size: 25px; color: white; font-weight: bold; background-color: #6AB742; height: 60px; padding: 10px 10px;">
-          Panel de referidos
+        <div class="modal-body text-center">
+          <h4 class="text-muted">¿Qué esperas para mejorar tu membresía y subir de nivel?</h4>
+          <p class="text-muted">Con esto tedrás acceso a nuevas lecciones...</p>
+          @php
+            $idmembresia = empty(Auth::user()->membership_id) ? 1 : (Auth::user()->membership_id + 1);
+          @endphp
+          <a href="{{route('shopping-cart.store', $idmembresia)}}" class="btn btn-color-green text-white" style="background: #6ab742;">SUBIR DE NIVEL</a>
         </div>
-      </div>
-      <div class="col-8" style=" background:url('http://localhost:8000/images/banner_referidos.png');">
-        <!--<img src="{{ asset('images/banner_referidos.png') }}" alt="" style="height: 400px; width:100%; opacity: 1; background: transparent linear-gradient(90deg, #2A91FF 0%, #2276D0A1 54%, #15498000 100%) 0% 0% no-repeat padding-box;">
-        <div style="font-size: 50px; width: 50%; padding: 80px 40px 80px 80px; color: white; line-height: 55px;">EL QUE QUIERE SUPERARSE, NO VE OBSTÁCULOS, VE SUEÑOS.</div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        </div>
       </div>
     </div>
-  </div><br><br>
-  @endif
-  {{-- FIN DE SECCIÓN REFERIDOS (USUARIOS LOGGUEADOS) --}}
   </div>
-</div>-->
-
-    {{-- SECCIÓN REFERIDOS (USUARIOS LOGGUEADOS) --}}
-
-    {{-- FIN DE SECCIÓN REFERIDOS (USUARIOS LOGGUEADOS) --}}
 
   @endsection
   @push('scripts')
@@ -389,6 +412,27 @@
     $(".vp-telecine.invisible video").on('ended', function(){
       $('#nextlesson').click();
     });
+    if ($("#membership_id").val() < 5){
+        $("#upgradeModal").modal("show");
+    }
   });
+  
+    function newComment(){
+        $("#store_comment_submit").css('display', 'none');
+        $("#store_comment_loader").css('display', 'block');
+        var route = "https://mybusinessacademypro.com/academia/courses/lesson/comments";
+        var parametros = $('#store_comment_form').serialize();
+        $.ajax({
+            url:route,
+            type:'POST',
+            data:  parametros,
+            success:function(ans){
+                $("#comment").val("");
+                $("#store_comment_loader").css('display', 'none');
+                $("#store_comment_submit").css('display', 'block');
+                $("#comments_section").html(ans);
+        }
+        });
+    }
   </script>
   @endpush

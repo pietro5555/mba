@@ -19,9 +19,22 @@ use App\Http\Controllers\IndexController;
 use App\Http\Controllers\InsigniaController;
 use Modules\ReferralTree\Http\Controllers\ReferralTreeController;
 
-use PDF;
+use PDF; 
 
 class HomeController extends Controller{
+   public function contact_us(Request $request){
+      $data['email'] = $request->email;
+      $data['name'] = $request->name;
+      $data['subject'] = $request->subject;
+      $data['message'] = $request->message;
+
+      Mail::send('emails.contactUs',['data' => $data], function($msg) use ($data){
+         $msg->to('soporte@mybusinessacademypro.com');
+         $msg->subject($data['subject']);
+      });
+
+      return redirect('/')->with('msj-exitoso', 'Tu mensaje ha sido enviado con éxito');
+   }
 
    public function recover_password(Request $request){
       $usuario = DB::table('wp98_users')

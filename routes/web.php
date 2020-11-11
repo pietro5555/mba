@@ -31,6 +31,7 @@ Route::get('search-by-category/{category_slug}/{category_id}/{subcategory_slug}/
 
 Auth::routes();
 Route::post('recover-password', 'HomeController@recover_password')->name('recover-password');
+Route::post('contact-us', 'HomeController@contact_us')->name('contact-us');
 
 // configuracion inicial
 Route::group(['prefix' => 'installer'], function (){

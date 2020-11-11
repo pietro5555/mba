@@ -128,7 +128,7 @@
                                 <div class="text-center text-white" style="margin-top: 20px;">
                                     <a href="{{route('client.policies')}}" class="text-white" target="_blank" style="padding: 2px;">Pol&iacute;ticas de Uso</a> &nbsp&nbsp
                                     <a href="" class="text-white" style="padding: 2px;">T&eacute;rminos y condiciones</a>&nbsp&nbsp
-                                    <a href="https://mybusinessacademypro.com/contacto/" class="text-white" style="padding: 2px;" target="_black"> Contacto</a>&nbsp&nbsp
+                                    <a href="#" data-toggle="modal" data-target="#contactModal" class="text-white" style="padding: 2px;" target="_black"> Contacto</a>&nbsp&nbsp
                                     <a href="{{route('index')}}" class="text-white" style="padding: 2px;">Inicio</a>&nbsp&nbsp
                                 </div>
 
@@ -143,6 +143,45 @@
             <!-- /#page-content-wrapper -->
         </div>
         <!-- /#wrapper -->
+
+        {{-- Modal de Contacto --}}
+        <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content" style="background-color: black;">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" style="color: white;">Déjanos tu Mensaje</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <form action="{{ route('contact-us') }}" method="POST">
+                        @csrf
+                        <div class="modal-body text-center">
+                            <div class="form-group">
+                                <label for="name" style="color: white;">Nombre (*)</label>
+                                <input type="text" class="form-control" name="name" style="background-color: #1C1D21;" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email" style="color: white;">Correo (*)</label>
+                                <input type="email" class="form-control" name="email" style="background-color: #1C1D21;" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="subject" style="color: white;">Asunto (*)</label>
+                                <input type="text" class="form-control" name="subject" style="background-color: #1C1D21;" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="message" style="color: white;">Mensaje</label>
+                                <textarea class="form-control" name="message" rows="3" style="background-color: #1C1D21;" required></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-primary">Enviar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
         <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 

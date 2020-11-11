@@ -18,6 +18,14 @@
             });
         }
 
+        if({{$pop_up}} == 1){
+         $('#mostrarpopup').modal();
+        }
+
+        $('#mostrarpopup').on('hidden.bs.modal', function (e) {
+         $("#mostrarpopup").remove();
+        })
+
     </script>
 @endpush
 
@@ -440,5 +448,29 @@
         </div><br><br>
     @endif
     {{-- FIN DE SECCIÓN REFERIDOS (USUARIOS LOGGUEADOS) --}}
+
+
+    {{-- mostrar pop up --}}
+     @if($pop->activado == '1')
+     <div class="modal fade" id="mostrarpopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLabel" style="color:white;">{!! (!empty($pop->titulo)) ? $pop->titulo : '' !!}   </h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          
+       {!! (!empty($pop->contenido)) ? $pop->contenido : '' !!}   
+               
+            
+      </div>
+    </div>
+  </div>
+</div> 
+@endif
+{{-- Fin pop up--}}
 
 @endsection

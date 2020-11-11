@@ -153,6 +153,7 @@ class RegisterController extends Controller
             'avatar' => ($rol_id != 2) ? 'avatar.png' : $this->avatarMentor($data),
             'profession' => $data['profession'],
             'about' => $data['contenido'],
+            'pop_up' => '1',
         ]);
 
         $this->insertarCampoUser($user->ID, $data);

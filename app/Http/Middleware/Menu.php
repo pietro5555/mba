@@ -881,6 +881,16 @@ class Menu
                 'permisoAdmin' => (!empty($permiso)) ? $permiso->correos : 0,
                 'activo' => 0,
             ],
+
+            'Pop up' => [
+                'submenu' => 0,
+                'ruta' => 'setting-pop',
+                'black'=> '0',
+                'icono' => 'fas fa-window-restore',
+                'complementoruta' => '',
+                'permisoAdmin' => 1,
+                'activo' => 0,
+            ],
             
             /*
             'Binario' => [

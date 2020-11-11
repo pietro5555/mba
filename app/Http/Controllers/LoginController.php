@@ -13,7 +13,7 @@ use Carbon\Carbon;
 // modelo
 use App\Models\User; 
 use App\Models\Paises; 
-
+use App\Models\Pop;
 
 class LoginController extends Controller
 {
@@ -31,6 +31,11 @@ class LoginController extends Controller
     public function autenticacion(Request $datos){
       
       if (Auth::attempt(['ID' => $datos->ID, 'password' => $datos->password])) {
+
+           $autenticado = User::find(Auth::user()->ID);
+           $autenticado->pop_up = 1;
+           $autenticado->save();
+
          if(Auth::user()->rol_id == 0 || Auth::user()->rol_id == 1){
            return redirect('/admin');
          }else{

@@ -1,81 +1,85 @@
-<div class="col-xs-12">
-    <div class="box box-info">
-        <div class="box-body white">
-            <h3 style="padding: 10px 50px;"> Resumen</h3>
+<div class="col-sm-12 ">
+    <div class="row">
+        <div class="col-xs-12 col-sm-4">
+            <div class="box box-primary">
+                <div class="box-body box-profile" style="color:white; text-align: center;">
 
-            <div class="card mb-3" style="max-width: 740px;">
-              <div class="row no-gutters">
-                <div class="col-md-5" style="text-align: center;">
-                  <img src="{{asset('/uploads/avatar/'.$data['principal']->avatar)}}" style="width: 150px; height: 150px; border-radius: 50%; margin-top: 20px;">
+                   <img src="{{asset('/uploads/avatar/'.$data['principal']->avatar)}}" style="width: 100px; height: 100px; border-radius: 50%;">
 
                   @if(!empty($data['insignia']))
-                  <img src="{{ $data['insignia'] }}" height="80px" width="80px" style="margin: 20px;">
+                  <img src="{{ $data['insignia'] }}" height="80px" width="80px" style="margin: 20px; width: 100px; height: 100px;">
                   @endif
 
-                  @if(Auth::user()->ID == $data['principal']->ID || Auth::user()->rol_id == 0)
+                  @if(Auth::user()->ID == $data['principal']->ID || Auth::user()->rol_id == 0)    
                     <a href="#" class="btn btn-primary btn-block" data-toggle="modal" data-target="#myModal"><b>Editar
                             imagen</b></a>
-                  @endif
-
+                            @endif
                 </div>
-                  <div class="col-md-7">
-                    <div class="card-body">
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-8">
+            <div class="box box-primary">
+                <div class="box-header with-border" style="color:white;">
+                    <h3 class="box-title">Datos de Usuario</h3>
+                </div>
+                <div class="box-body white">
+                    <div class="col-xs-12">
                         <div class="row">
                             <div class="col-xs-6 text-center">
-                                <h4>
+                                <h5>
                                     Nombre Completo
-                                </h4>
+                                </h5>
                             </div>
                             <div class="col-xs-6 text-center">
-                                <h4>
+                                <h5>
                                     <b>
                                         {{$data['segundo']->firstname}} {{$data['segundo']->lastname}}
                                     </b>
-                                </h4>
+                                </h5>
                             </div>
                         </div>
                     </div>
                     <div class="col-xs-12">
                         <div class="row">
                             <div class="col-xs-6 text-center">
-                                <h4>
+                                <h5>
                                     Patrocinador
-                                </h4>
+                                </h5>
                             </div>
                             <div class="col-xs-6 text-center">
-                                <h4>
+                                <h5>
                                     <b>
                                         {{$data['referido']['display_name']}}
                                     </b>
-                                </h4>
+                                </h5>
                             </div>
                         </div>
                     </div>
                     <div class="col-xs-12">
                             <div class="row">
                                 <div class="col-xs-6 text-center">
-                                    <h4>
+                                    <h5>
                                         Rango
-                                    </h4>
+                                    </h5>
                                 </div>
                                 <div class="col-xs-6 text-center">
-                                    <h4>
+                                    <h5>
                                         <b>
                                             {{$data['rol']}}
                                         </b>
-                                    </h4>
+                                    </h5>
                                 </div>
                             </div>
                         </div>
                     <div class="col-xs-12">
                         <div class="row">
                             <div class="col-xs-6 text-center">
-                                <h4>
+                                <h5>
                                     Estado
-                                </h4>
+                                </h5>
                             </div>
                             <div class="col-xs-6 text-center">
-                                <h4>
+                                <h5>
                                     <b>
                                         @if($data['principal']->status == 1)
                                         Activo
@@ -83,12 +87,11 @@
                                         Inactivo
                                         @endif
                                     </b>
-                                </h4>
+                                </h5>
                             </div>
                         </div>
-                     </div>
-                 </div>
-              </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

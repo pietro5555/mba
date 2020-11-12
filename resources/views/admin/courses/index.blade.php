@@ -100,6 +100,7 @@
 										<a class="btn btn-danger" href="{{ route('admin.courses.quit-featured', $curso->id) }}" title="Quitar de Destacados"><i class="fa fa-star"></i></a>
 									@endif
 									<a class="btn btn-info" href="{{ route('admin.courses.evaluation.show', $curso->id) }}" title="Evaluación"><i class="far fa-file-alt"></i></a>
+									<a class="btn btn-warning" href="{{ route('admin.courses.lessons.resources', $curso->id) }}" title="Ver Recursos Adicionales"><i class="fa fa-file"></i></a>
 									@if ($curso->status == 1)
 										<a class="btn btn-danger" href="{{ route('admin.courses.change-status', [$curso->id, 0]) }}" title="Deshabilitar"><i class="fa fa-ban"></i></a>
 									@else

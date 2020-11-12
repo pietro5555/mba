@@ -67,7 +67,7 @@
 			<div class="box-body">
 				<div style="text-align: right;">
 				    
-				    <a href="{{ route ('admin.courses.lessons', $leccion->course_id)}}" class="btn btn-danger descargar"><i class="fas fa-arrow-circle-left"></i> Regresar</a>
+				    <a href="{{ route ('admin.courses.index')}}" class="btn btn-danger descargar"><i class="fas fa-arrow-circle-left"></i> Regresar</a>
 					<a data-toggle="modal" data-target="#modal-new" class="btn btn-info"><i class="fa fa-plus-circle"></i> Nuevo Recurso</a>
 				</div>
 				
@@ -77,13 +77,13 @@
 					<thead>
 						<tr>
 							<th class="text-center">#</th>
-							<th class="text-center">T铆tulo</th>
+							<th class="text-center">Título</th>
 							<th class="text-center">Tipo</th>
-							<th class="text-center">Acci贸n</th>
+							<th class="text-center">Acción</th>
 						</tr>
 					</thead>
 					<tbody>
-						@foreach($leccion->materials as $material)
+						@foreach($course->materials as $material)
 							<tr>
 								<td class="text-center">{{ $material->id }}</td>
 								<td class="text-center">{{ $material->title }}</td>
@@ -95,7 +95,7 @@
 										<a class="btn btn-warning" href="{{ url('uploads/courses/lessons/materials/'.$material->material) }}" target="_blank"><i class="fa fa-search"></i></a>
 									@endif
 									<a class="btn btn-info" data-route="{{ route('admin.courses.lessons.resources.edit', $material->id) }}" id="{{$material->id}}" onclick="editar(this.id);"><i class="fa fa-edit"></i></a>
-									<a class="btn btn-danger" href="{{ route('admin.courses.lessons.resources.delete', $material->id) }}" title="Eliminar"><i class="fa fa-ban"></i></a>
+									<a class="btn btn-danger" href="{{ route('admin.courses.lessons.resources.delete',[$material->id,$course->id]) }}" title="Eliminar"><i class="fa fa-ban"></i></a>
 								</td>
 							</tr>
 						@endforeach
@@ -114,13 +114,13 @@
       			</div>
       			<form action="{{ route('admin.courses.lessons.resources.store') }}" method="POST" enctype="multipart/form-data">
                     {{ csrf_field() }}
-                    <input type="hidden" name="lesson_id" value="{{ $leccion->id }}">
+					<input type="hidden" name="course_id" value="{{ $course->id }}">
 				    <div class="modal-body">
 				        <div class="container-fluid">
 	    					<div class="row">
 						        <div class="col-md-12">
 						            <div class="form-group">
-						                <label>T铆tulo</label>
+						                <label>Título</label>
 						            	<input type="text" class="form-control" name="title" required>
 						            </div>
 						        </div>
@@ -172,6 +172,7 @@
       			</div>
       			<form action="{{ route('admin.courses.lessons.resources.update') }}" method="POST" enctype="multipart/form-data">
 			        {{ csrf_field() }}
+					<input type="hidden" name="course_id" value="{{ $course->id }}">
 				    <div class="modal-body">
 				        <div class="container-fluid" id="content-modal">
 

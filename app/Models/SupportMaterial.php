@@ -8,9 +8,9 @@ class SupportMaterial extends Model
 {
     protected $table = 'support_material';
 
-    protected $fillable = ['lesson_id', 'title', 'type', 'material', 'image'];
+    protected $fillable = ['course_id', 'title', 'type', 'material', 'image'];
 
-    public function lesson(){
-        return $this->belongsTo('App\Models\Lesson');
+    public function course(){
+        return $this->belongsTo('App\Models\Course');
     }
 }

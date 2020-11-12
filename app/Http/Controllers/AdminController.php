@@ -150,12 +150,6 @@ class AdminController extends Controller
             //Redes Sociales
             $redes = Redesociales::orderBy('id', 'ASC')->get();
             
-            //Pop up
-            $pop = Pop::find(1);
-            $user = User::find(Auth::user()->ID);
-            $user->pop_up = 0;
-            $user->save();
-            
             //mostrar noticias y gestion de materiales
             $archivo = new ArchivoController;
             
@@ -210,7 +204,7 @@ class AdminController extends Controller
         return view('dashboard.index')->with(compact('cantReferidosDirectos', 'cantReferidosIndirectos', 'cantReferidosActivos', 'fechaProxActivacion', 'new_member',
                     'cantventas', 'cantventasmont', 'fullname', 'rangos', 'cantAllUsers', 'rankingComisiones', 'rankingVentas','noticias', 'contTicket', 'moneda',
                     'nombreRol','desde', 'ordenesView', 'productosnuevos','settingPuntos','totalventas','totalcobrado','anuncios','noticias','materiales','binario',
-                    'settingEstructura','moneda1','moneda2','moneda3','adicional','redes','pop','component','listadoCompras'
+                    'settingEstructura','moneda1','moneda2','moneda3','adicional','redes','component','listadoCompras'
             ));
     }
 

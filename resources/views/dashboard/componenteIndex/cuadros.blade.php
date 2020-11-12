@@ -120,7 +120,7 @@
 
         <div class="info-box border-radius">
           <div class="box-body" style="padding: 15px 20px;">
-             <div class="col-md-3 col-xs-3 col-md-offset-1 col-xs-offset-1">
+             <div class="col-md-3 col-xs-3">
               <i class="{{$red->imagen}} ampliar" style="color:#{{$red->color}};"></i>
               </div>
               <div class="col-md-7 col-xs-7">
@@ -141,7 +141,7 @@
          </div>
         <div class="info-box border-radius">
           <div class="box-body" style="padding: 15px 20px;">
-                <div class="col-md-3 col-xs-3 col-md-offset-1 col-xs-offset-1">
+                <div class="col-md-3 col-xs-3">
             <img src="{{asset('redes/'.$red->imagen)}}" height="50" class="border-redes">
                 </div>
                <div class="col-md-7 col-xs-7">
@@ -192,7 +192,7 @@
         </div>
         <div class="info-box border-radius">
           <div class="box-body" style="padding: 15px 20px;">
-                <div class="col-md-3 col-xs-3 col-md-offset-2 col-xs-offset-2">
+                <div class="col-md-3 col-xs-3">
              <i class="{{$red->imagen}} ampliar" style="color:#{{$red->color}};"></i>
                 </div>
                <div class="col-md-7 col-xs-7">
@@ -213,7 +213,7 @@
          </div>
         <div class="info-box border-radius">
           <div class="box-body" style="padding: 15px 20px;">
-                <div class="col-md-3 col-xs-3 col-md-offset-1 col-xs-offset-1">
+                <div class="col-md-3 col-xs-3">
             <img src="{{asset('redes/'.$red->imagen)}}" height="50" class="border-redes">
                 </div>
                <div class="col-md-7 col-xs-7">

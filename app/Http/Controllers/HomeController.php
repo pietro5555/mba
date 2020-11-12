@@ -13,6 +13,7 @@ use Carbon\Carbon;
 // modelo
 use App\Models\User; use App\Models\Settings; use App\Models\Formulario; use App\Models\SettingCliente;
 use App\Models\Course; use App\Models\Category; use App\Models\Events;
+use App\Models\Pop;
 
 // llamando a los controladores
 use App\Http\Controllers\IndexController;
@@ -75,6 +76,11 @@ class HomeController extends Controller{
    }
 
    public function index(){
+
+       //pop up
+       $pop = Pop::find(1);
+       $pop_up = 0;
+
       $cursosDestacados = Course::where('featured', '=', 1)
                               ->where('status', '=', 1)
                               ->orderBy('featured_at', 'DESC')
@@ -103,6 +109,14 @@ class HomeController extends Controller{
       $insignia = new InsigniaController;
 
       if (Auth::user()){
+        //Pop up
+           if(Auth::user()->pop_up == 1){
+           $user = User::find(Auth::user()->ID);
+           $user->pop_up = 0;
+           $user->save();
+           $pop_up = 1;
+           }
+
          if (Auth::user()->rol_id != 0){
             $insignia->validadInsignia(Auth::user()->ID);
          }

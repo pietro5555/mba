@@ -17,7 +17,7 @@ class CategoryController extends Controller{
        // TITLE
         view()->share('title', 'Listado de Categorías');
 
-        $categorias = Category::withCount('courses')
+        $categorias = Category::with('course')
                         ->orderBy('title', 'ASC')
                         ->get();
 

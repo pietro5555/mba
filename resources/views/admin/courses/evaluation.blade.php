@@ -169,19 +169,19 @@
 						        <div class="col-md-12">
 						            <div class="form-group">
 						                <label>Respuesta 2</label>
-						            	<textarea class="form-control" name="answer_2" required></textarea>
+						            	<textarea class="form-control" name="answer_2"></textarea>
 						            </div>
 						        </div>
 						        <div class="col-md-12">
 						            <div class="form-group">
 						                <label>Respuesta 3</label>
-						            	<textarea class="form-control" name="answer_3" required></textarea>
+						            	<textarea class="form-control" name="answer_3"></textarea>
 						            </div>
 						        </div>
 						        <div class="col-md-12">
 						            <div class="form-group">
 						                <label>Respuesta 4</label>
-						            	<textarea class="form-control" name="answer_4" required></textarea>
+						            	<textarea class="form-control" name="answer_4"></textarea>
 						            </div>
 						        </div>
 						        <div class="col-md-12">
@@ -236,19 +236,19 @@
 						        <div class="col-md-12">
 						            <div class="form-group">
 						                <label>Respuesta 2</label>
-						            	<textarea class="form-control" name="answer_2" id="answer_2" required></textarea>
+						            	<textarea class="form-control" name="answer_2" id="answer_2"></textarea>
 						            </div>
 						        </div>
 						        <div class="col-md-12">
 						            <div class="form-group">
 						                <label>Respuesta 3</label>
-						            	<textarea class="form-control" name="answer_3" id="answer_3" required></textarea>
+						            	<textarea class="form-control" name="answer_3" id="answer_3"></textarea>
 						            </div>
 						        </div>
 						        <div class="col-md-12">
 						            <div class="form-group">
 						                <label>Respuesta 4</label>
-						            	<textarea class="form-control" name="answer_4" id="answer_4" required></textarea>
+						            	<textarea class="form-control" name="answer_4" id="answer_4"></textarea>
 						            </div>
 						        </div>
 						        <div class="col-md-12">

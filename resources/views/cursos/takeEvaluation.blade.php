@@ -40,24 +40,30 @@
                                                     {{ $pregunta->answer_1 }}
                                                     </label>
                                                 </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="selection-{{$pregunta->order}}" id="selection-{{$pregunta->order}}-2" value="2">
-                                                    <label class="form-check-label" for="selection-{{$pregunta->order}}-2">
-                                                    {{ $pregunta->answer_2 }}
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="selection-{{$pregunta->order}}" id="selection-{{$pregunta->order}}-3" value="3">
-                                                    <label class="form-check-label" for="selection-{{$pregunta->order}}-3">
-                                                    {{ $pregunta->answer_3 }}
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="selection-{{$pregunta->order}}" id="selection-{{$pregunta->order}}-4" value="4">
-                                                    <label class="form-check-label" for="selection-{{$pregunta->order}}-4">
-                                                    {{ $pregunta->answer_4 }}
-                                                    </label>
-                                                </div>
+                                                @if (!is_null($pregunta->answer_2))
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="selection-{{$pregunta->order}}" id="selection-{{$pregunta->order}}-2" value="2">
+                                                        <label class="form-check-label" for="selection-{{$pregunta->order}}-2">
+                                                        {{ $pregunta->answer_2 }}
+                                                        </label>
+                                                    </div>
+                                                @endif
+                                                @if (!is_null($pregunta->answer_3))
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="selection-{{$pregunta->order}}" id="selection-{{$pregunta->order}}-3" value="3">
+                                                        <label class="form-check-label" for="selection-{{$pregunta->order}}-3">
+                                                        {{ $pregunta->answer_3 }}
+                                                        </label>
+                                                    </div>
+                                                @endif
+                                                @if (!is_null($pregunta->answer_4))
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="selection-{{$pregunta->order}}" id="selection-{{$pregunta->order}}-4" value="4">
+                                                        <label class="form-check-label" for="selection-{{$pregunta->order}}-4">
+                                                        {{ $pregunta->answer_4 }}
+                                                        </label>
+                                                    </div>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -67,7 +73,7 @@
                     </div>
 
                     <div class="col-12">
-                        <button class="btn btn-info btn-lg btn-block">Finalizar Evaluación</button>
+                        <button class="btn btn-info btn-lg btn-block">Finalizar Evaluaci贸n</button>
                     </div>
                 </form>
             </div>

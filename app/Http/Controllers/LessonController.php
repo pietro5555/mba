@@ -22,7 +22,7 @@ class LessonController extends Controller{
         view()->share('title', 'Lecciones del Curso');
 
         $curso = Course::where('id', '=', $id)
-                    ->with('lessons', 'lessons.materials')
+                    ->with('lessons', 'lessons.course')
                     ->first();
 
         $subcategory = Subcategory::all();
@@ -34,6 +34,7 @@ class LessonController extends Controller{
     * Admin / Cursos / TEmario de Curso / Agregar Lección
     */
     public function store(Request $request){
+        //dd ($request->all());
         $leccion = new Lesson($request->all());
         $leccion->slug = Str::slug($leccion->title);
 
@@ -168,7 +169,7 @@ class LessonController extends Controller{
             }
 
             $lesson = Lesson::where('id', '=',$lesson_id)
-                        ->with('materials')
+                        ->with('course')
                         ->first();
             $all_lessons = Lesson::where([
                 ['course_id', '=',  $course_id],

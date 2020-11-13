@@ -374,7 +374,7 @@ Route::group(['prefix' => 'installer'], function (){
             Route::post('store', 'ResourcesController@store')->name('admin.courses.lessons.resources.store');
             Route::get('edit/{id}', 'ResourcesController@edit')->name('admin.courses.lessons.resources.edit');
             Route::post('update', 'ResourcesController@update')->name('admin.courses.lessons.resources.update');
-            Route::get('delete/{id}', 'ResourcesController@delete')->name('admin.courses.lessons.resources.delete');
+            Route::get('delete/{id}/{course_id}', 'ResourcesController@delete')->name('admin.courses.lessons.resources.delete');
           });
         });
 

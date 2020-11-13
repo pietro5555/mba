@@ -4,31 +4,47 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str as Str;
-use App\Models\Lesson; use App\Models\SupportMaterial;
+use App\Models\Lesson; use App\Models\SupportMaterial; use App\Models\Course;
 use DB;
 
 class ResourcesController extends Controller{
     /**
     * Admin / Cursos / Listado de Cursos / Lecciones / Recursos Adicionales
     */
-    public function index($leccion){
+   /* public function index($leccion){
      
         $leccion = Lesson::where('id', '=', $leccion)
-                    ->with('materials')
+                    ->with('course')
                     ->first();
 
         // TITLE
         view()->share('title', 'Archivos de la Lección '.$leccion->title);
 
         return view('admin.courses.resources')->with(compact('leccion'));
+    }*/
+
+    /**
+    * Admin / Cursos / Listado de Cursos / Recursos Adicionales
+    */
+    public function index($course){
+     
+        $course = Course::where('id', '=', $course)
+                    ->with('materials')
+                    ->first();
+
+        // TITLE
+        view()->share('title', 'Archivos del curso  '.$course->title);
+
+        return view('admin.courses.resources')->with(compact('course'));
     }
 
     /**
     * Admin / Cursos / Listado de Cursos / Lecciones / Agregar Recurso Adicional
     */
     public function store(Request $request){
+       // dd($request->course_id, $request->lesson_id);
         $recurso = new SupportMaterial($request->all());
-
+       
         if ($recurso->type == 'Archivo'){
             if ($request->hasFile('file')){
                 $file = $request->file('file');
@@ -48,7 +64,7 @@ class ResourcesController extends Controller{
         }
         $recurso->save();
 
-        return redirect('admin/courses/lessons/resources/'.$request->lesson_id)->with('msj-exitoso', 'El material ha sido creado con éxito.');
+        return redirect('admin/courses/lessons/resources/'.$request->course_id)->with('msj-exitoso', 'El material ha sido creado con éxito.');
     }
 
     /**
@@ -85,17 +101,17 @@ class ResourcesController extends Controller{
         }
         $recurso->save();
 
-        return redirect('admin/courses/lessons/resources/'.$recurso->lesson_id)->with('msj-exitoso', 'El material ha sido actualizado con éxito.');
+        return redirect('admin/courses/lessons/resources/'.$request->course_id)->with('msj-exitoso', 'El material ha sido actualizado con éxito.');
     }
 
      /**
     * Admin / Cursos / Listado de Cursos / Lecciones / Eliminar Recurso
     */
-    public function delete($id){
+    public function delete($id, $course_id){
         $recurso = SupportMaterial::find($id);
         $recurso->delete();
 
-        return redirect('admin/courses/lessons/resources/'.$recurso->lesson_id)->with('msj-exitoso', 'El material ha sido eliminado con éxito.');
+        return redirect('admin/courses/lessons/resources/'.$course_id)->with('msj-exitoso', 'El material ha sido eliminado con éxito.');
     }
 }
 

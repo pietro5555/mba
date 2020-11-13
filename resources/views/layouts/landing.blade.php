@@ -86,9 +86,11 @@
                                     <img src="{{ asset('images/50impact.png')}}" alt="" height="32px" class="mr-md-2 mr-3">
                                     <img src="{{ asset('images/icf.png')}}" alt="" height="32px" class="mr-md-2 mr-3">
                                     <img src="{{ asset('images/no_work_no_money.png')}}" alt="" height="32px" class="mr-md-2 mr-3">
-                                    <img src="{{ asset('images/fenttix.png')}}" alt="" height="32px" class="mr-md-2 mr-3">
+                                    <img src="{{ asset('images/logo-fentix.png')}}" alt="" height="35px" class="mr-md-2 mr-3">
                                     <img src="{{ asset('images/platinum.png')}}" alt="" height="32px" class="mr-md-2 mr-3">
-
+                                    <img src="{{ asset('images/logo-fxtlive.png')}}" alt="" height="32px" class="mr-md-2 mr-3">
+                                    <img src="{{ asset('images/mytradinglogo.png')}}" alt="" height="35px" class="mr-md-2 mr-3">
+                                    <img src="{{ asset('images/logo-jose.png')}}" alt="" height="32px" class="mr-md-2 mr-3">
                                 </div>
                                 <div class="mb-2 text-center text-white">
                                     PAISES EN DONDE ESTAMOS PRESENTES

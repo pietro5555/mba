@@ -14,9 +14,7 @@ class Lesson extends Model
         return $this->belongsTo('App\Models\Course');
     }
 
-    public function materials(){
-        return $this->hasMany('App\Models\SupportMaterial');
-    }
+
 
     public function comments()
     {

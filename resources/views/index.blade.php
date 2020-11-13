@@ -302,7 +302,7 @@
 
             <div id="newers" class="row" style="padding: 10px 30px;">
                 @foreach ($cursosNuevos as $cursoNuevo)
-                    <div class="col-xl-4 col-lg-4 col-12 imagen box-courses" style="padding-bottom: 10px;">
+                    <div class="col-xl-4 col-lg-4 col-12 box-courses" style="padding-bottom: 10px;">
                         <div class="card">
                             <a href="{{ route('courses.show', [$cursoNuevo->slug, $cursoNuevo->id]) }}" style="color: white;">
 

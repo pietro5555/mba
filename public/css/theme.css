@@ -1995,3 +1995,9 @@ p.card-text.font-weight-bold.mr-2 {
     color: white;
 }
 
+.nosotros-text{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+}

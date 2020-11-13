@@ -24,6 +24,7 @@ use App\Models\Commission;
 use App\Models\SettingsComision;
 use App\Models\Canje;
 use App\Models\Settings; 
+use App\Models\PurchaseDetail;
 // llamada a los controladores
 use App\Http\Controllers\ComisionesController;
 use App\Http\Controllers\IndexController;
@@ -709,6 +710,40 @@ class WalletController extends Controller
         }
 	    
 	    return view('wallet.cortes')->with(compact('wallets', 'moneda','adicional'));
+	}
+
+
+
+		public function reporcomision(){
+	    
+	    if(Auth::user()->rol_id == 0){
+	        $wallets = Wallet::all();
+	         foreach($wallets as $wallet){
+	            $comi = Commission::find($wallet->idcomision);
+	            $user = User::where('user_email', $comi->referred_email)->first();
+	            $purchase  = PurchaseDetail::where('purchase_id', $comi->compra_id)->first();
+	            $membresia = DB::table('memberships')->where('id', $purchase->membership_id)->first();
+	            $wallet->producto = $membresia->name; 
+	            $wallet->precio = $purchase->amount;
+ 	            $wallet->correo = $comi->referred_email;
+	            $wallet->comprador = ($user == null) ? 'N/A' : $user->display_name;
+	         }
+	    }else{
+	        
+	      $wallets = Wallet::where('iduser', Auth::user()->ID)->get();
+	        foreach($wallets as $wallet){
+	            $comi = Commission::find($wallet->idcomision);
+	            $user = User::where('user_email', $comi->referred_email)->first();
+	            $purchase  = PurchaseDetail::where('purchase_id', $comi->compra_id)->first();
+	            $membresia = DB::table('memberships')->where('id', $purchase->membership_id)->first();
+	            $wallet->producto = $membresia->name; 
+	            $wallet->precio = $purchase->amount;
+	            $wallet->correo = $comi->referred_email;
+	            $wallet->comprador = ($user == null) ? 'N/A' : $user->display_name;
+	         }
+	    }
+	    
+	    return view('wallet.reporte')->with(compact('wallets'));
 	}
 	
 	

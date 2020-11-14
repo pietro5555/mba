@@ -478,6 +478,9 @@ Route::group(['prefix' => 'installer'], function (){
           //tabla de comisiones a pagar
           Route::get('/comisionesapagar','WalletController@comisionespagar')->name('wallet-comisiones-pagar');
           Route::post('/comisionesfiltro','WalletController@comisionesfiltro')->name('wallet-comisiones-pagar-filtro');
+
+          //tabla de comisiones a pagar
+        Route::get('/reporcomision','WalletController@reporcomision')->name('wallet-repor-comision-new');
       });
 
       // Pago

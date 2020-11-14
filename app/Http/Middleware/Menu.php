@@ -181,6 +181,17 @@ class Menu
                 'permisoAdmin' => 1,
                 'activo' => 0,
             ],
+
+
+            'Informe de Comisiones' => [
+                'submenu' => 0,
+                'ruta' => 'wallet-repor-comision-new',
+                'black'=> '0',
+                'icono' => 'glyphicon glyphicon-list-alt',
+                'complementoruta' => '',
+                'permisoAdmin' => 1,
+                'activo' => 0,
+            ],
         ];
     }
     
@@ -564,7 +575,7 @@ class Menu
      *
      * @return array
      */
-    public function menuAdmin()
+  public function menuAdmin()
     {
         $permiso = null;
         $settings = Settings::first();
@@ -676,15 +687,15 @@ class Menu
             ],
              
 
-            // 'Entradas' => [
-            //     'submenu' => 0,
-            //     'ruta' => 'admin-users-entrada',
-            //     'black'=> '0',
-            //     'icono' => 'fas fa-door-closed',
-            //     'complementoruta' => '',
-            //     'permisoAdmin' => (!empty($permiso)) ? $permiso->entradas : 0,
-            //     'activo' => 0,
-            // ],
+             'Entradas' => [
+                 'submenu' => 0,
+                 'ruta' => 'admin-users-entrada',
+                 'black'=> '0',
+                 'icono' => 'fas fa-door-closed',
+                 'complementoruta' => '',
+                 'permisoAdmin' => (!empty($permiso)) ? $permiso->entradas : 0,
+                 'activo' => 0,
+             ],
 
             'Red' => [
                 'submenu' => 0,
@@ -695,15 +706,28 @@ class Menu
                 'permisoAdmin' => (!empty($permiso)) ? $permiso->red : 0,
                 'activo' => 0,
             ],
-
+            
             'Historial de comisiones' => [
-                'submenu' => 0,
-                'ruta' => 'wallet-index',
-                'black'=> '0',
+                'submenu' => 1,
+                'ruta' => 'javascript:;',
                 'icono' => 'fas fa-landmark',
                 'complementoruta' => '',
                 'permisoAdmin' => (!empty($permiso)) ? $permiso->historialcomision  : 0,
-                'activo' => 0,
+                'activo' => (request()->is('admin/wallet*')) ? 'active' : '',
+                'menus' => [
+                    'Historial' => [
+                        'ruta' => 'wallet-index',
+                        'complementoruta' => '',
+                        'black'=> '0',
+                        'oculto'=> 'activo',
+                    ],
+                    'Informe de Comisiones' => [
+                        'ruta' => 'wallet-repor-comision-new',
+                        'complementoruta' => '',
+                        'black'=> '0',
+                        'oculto'=> 'activo',
+                    ],
+                ]
             ],
             
             'Cursos' => [
@@ -871,7 +895,8 @@ class Menu
                 'permisoAdmin' => (!empty($permiso)) ? $permiso->usuario : 0,
                 'activo' => 0,
             ],
-
+            
+            
             'Envio de correos' => [
                 'submenu' => 0,
                 'ruta' => 'correo-vista',
@@ -881,7 +906,7 @@ class Menu
                 'permisoAdmin' => (!empty($permiso)) ? $permiso->correos : 0,
                 'activo' => 0,
             ],
-
+            
             'Pop up' => [
                 'submenu' => 0,
                 'ruta' => 'setting-pop',
@@ -891,6 +916,7 @@ class Menu
                 'permisoAdmin' => 1,
                 'activo' => 0,
             ],
+            
             
             /*
             'Binario' => [
@@ -1462,3 +1488,4 @@ class Menu
         ];
     }
 }
+

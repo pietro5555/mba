@@ -6,7 +6,7 @@
 <div class="col-xs-12">
   <div class="box box-info">
     <div class="box-body">
-      
+
       <a class="btn btn-info btn-block" data-toggle="modal" data-target="#anexar">Agregar Entrada</a>
 
       <table id="mytable" class="table">
@@ -15,7 +15,7 @@
                         <th class="text-center">
                             Titulo
                         </th>
-                        
+
                         <th class="text-center">
                             Autor
                         </th>
@@ -26,8 +26,8 @@
 
                         <th class="text-center">
                             Acciónes
-                        </th>                        
-                        
+                        </th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -52,14 +52,14 @@
                            <a class="btn btn-info" href="{{route('admin-actual-entrada', $ent->id)}}">Editar</a>
                            <a class="btn btn-danger" href="{{route('admin-delet-entrada', $ent->id)}}">Eliminar</a>
                         </td>
-                      
+
                     </tr>
                     @endforeach
                 </tbody>
             </table>
     </div>
   </div>
-</div>	
+</div>
 
 
 
@@ -88,18 +88,26 @@
           </div>
 
           <div class="col-md-12">
-             <label>Descripción</label>
+             <label>Resumen</label>
               <textarea class="form-control" type="textarea" name="contenido" required>
               </textarea>
           </div>
+          <div class="col-md-12">
+            <label>Artículo completo</label>
+             <textarea class="form-control" type="textarea" name="articulo" required>
+             </textarea>
+         </div>
 
 
           <div class="col-sm-12">
           <label class="control-label " style="text-align: center; margin-top:4px;">Imagen destacada</label>
           <input type="file" name="destacada" accept="image/*">
         </div>
+        <div class="col-sm-12">
+                <label class="control-label " style="text-align: center; margin-top:4px;">Banner</label>
+                <input type="file" name="banner" accept="image/*">
+        </div>
 
-               
                <button type="submit" class="btn btn-primary btn-block">Aceptar</button>
         </form>
       </div>
@@ -108,7 +116,7 @@
       </div>
     </div>
   </div>
-</div> 
+</div>
 
 
 
@@ -120,6 +128,11 @@
 <script src="//cdn.ckeditor.com/4.13.1/full/ckeditor.js"></script>
 <script>
  CKEDITOR.replace('contenido', {
+    filebrowserUploadUrl: "{{route('upload', ['_token' => csrf_token() ])}}",
+    filebrowserUploadMethod: 'form'
+  });
+
+  CKEDITOR.replace('articulo', {
     filebrowserUploadUrl: "{{route('upload', ['_token' => csrf_token() ])}}",
     filebrowserUploadMethod: 'form'
   });

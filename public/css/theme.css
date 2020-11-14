@@ -1643,6 +1643,13 @@ p.card-text.font-weight-bold.mr-2 {
     line-height: 100px;
 }
 
+.blog-title-two{
+    color: white;
+    text-align: center;
+    font-size: 40px;
+    line-height: 50px;
+}
+
 .estilobusiness{
     text-align: right;
     font-size: 56px;

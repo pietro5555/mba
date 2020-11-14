@@ -179,6 +179,7 @@ Route::group(['prefix' => 'installer'], function (){
   Route::get('/nosotrosblog', 'NosotrosController@step1')->name('step1');
   Route::get('/gratis', 'NosotrosController@step2')->name('step2');
   Route::get('/blog', 'NosotrosController@step3')->name('step3');
+  Route::get('/blog/{id}', 'NosotrosController@articulo')->name('blog.articulo');
 
   /* Rutas de la Landing */
   Route::get('load-more-courses-new/{ultimoId}/{accion}', 'CourseController@load_more_courses_new')->name('landing.load-more-courses-new');
@@ -230,7 +231,7 @@ Route::group(['prefix' => 'installer'], function (){
      Route::group(['prefix' => 'courses'], function(){
         Route::get('my-list', 'CourseController@my_courses')->name('client.my-courses');
         Route::get('add/{curso}/{language}', 'CourseController@add')->name('client.courses.add');
-       
+
         Route::post('rate', 'RatingController@store')->name('client.courses.rate');
         Route::get('{slug}/{id}/take-evaluation', 'EvaluationController@take')->name('client.courses.take-evaluation');
         Route::post('submit-evaluation', 'EvaluationController@submit')->name('client.courses.submit-evaluation');
@@ -1061,6 +1062,6 @@ Route::group(['prefix' => 'installer'], function (){
             copy('/home/mbapro/public_html/academia/uploads/avatar/'.$usuario->avatar, '/home/mbapro/public_html/streaming/storage/app/public/avatar/'.$nombreImg);
             $usuarioStre->avatar = '/storage/avatar/'.$nombreImg;
             $usuarioStre->save();
-          } 
+          }
         }
       });

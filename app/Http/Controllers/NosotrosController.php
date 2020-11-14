@@ -6,19 +6,19 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Crypt;
-use DB; 
-use Auth; 
+use DB;
+use Auth;
 use Session;
-use Carbon\Carbon; 
+use Carbon\Carbon;
 // llamada a los modelos
-use App\Models\Rol; 
-use App\Models\User; 
+use App\Models\Rol;
+use App\Models\User;
 use App\Models\Wallet;
 use App\Models\Monedas;
-use App\Models\Settings; 
-use App\Models\Contenido; 
+use App\Models\Settings;
+use App\Models\Contenido;
 use App\Models\Commission;
-use App\Models\SettingsEstructura; 
+use App\Models\SettingsEstructura;
 use App\Models\Pagocarrito;
 use App\Models\Entradas;
 // controlador
@@ -30,7 +30,7 @@ class NosotrosController extends Controller
 {
 
 	public function step1(){
-        
+
 		return view('nosotros.step1');
 	}
 
@@ -45,4 +45,9 @@ class NosotrosController extends Controller
 		return view('nosotros.step3', compact('entradas'));
 	}
 
+    public function articulo($entrada_id){
+        $articulo = Entradas::find($entrada_id);
+
+        return view('nosotros.articulo', compact('articulo'));
+    }
 }

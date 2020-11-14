@@ -1,31 +1,40 @@
 @extends('layouts.landing')
 
 @push('scripts')
-    <script>
-        function loadMoreCoursesNew($accion){
-            if ($accion == 'next'){
+   <script>
+        function loadMoreCoursesNew($accion) {
+            if ($accion == 'next') {
                 var route = $(".btn-arrow-next").attr('data-route');
-            }else{
+            } else {
                 var route = $(".btn-arrow-previous").attr('data-route');
             }
-
             $.ajax({
-                url:route,
-                type:'GET',
-                success:function(ans){
+                url: route,
+                type: 'GET',
+                success: function(ans) {
                     $("#new-courses-section").html(ans);
                 }
             });
         }
-
+        
+        
         if({{$pop_up}} == 1){
-         $('#mostrarpopup').modal();
+          $('#mostrarpopup').modal();
         }
-
+    
         $('#mostrarpopup').on('hidden.bs.modal', function (e) {
-         $("#mostrarpopup").remove();
-        })
-
+          $("#mostrarpopup").remove();
+        });
+        
+        function showMentorCourses($mentor){
+            $("#card-mentor-"+$mentor).css('display', 'none');
+            $("#courses-mentor-"+$mentor).slideToggle();
+        }
+        
+        function hideMentorCourses($mentor){
+            $("#courses-mentor-"+$mentor).css('display', 'none');
+            $("#card-mentor-"+$mentor).slideToggle();
+        }
     </script>
 @endpush
 
@@ -34,10 +43,10 @@
         #new-courses-section .card-img-overlay:hover{
             text-decoration: underline;
         }
-
+        
         .imagen:hover {-webkit-filter: none; filter: none; color: #6EC1E4 0.2em 0.2em 0.6em 0.1em;
         }
-
+        
         .imagen {filter: grayscale(80%);}
 
         .punto::before{
@@ -171,10 +180,10 @@
         </div>
     @endif
 
-    {{-- SLIDER --}}
+	{{-- SLIDER --}}
     @if ($cursosDestacados->count() > 0)
-        <div class="container-fluid courses-slider">
-            <div id="mainSlider" class="carousel slide carousel-fade" data-ride="carousel" data-interval="3000">
+    	<div class="container-fluid courses-slider">
+    		<div id="mainSlider" class="carousel slide carousel-fade" data-ride="carousel" data-interval="3000">
                 @if ($cursosDestacados->count() > 1)
                     @php $contCD = 0; @endphp
                     <ol class="carousel-indicators">
@@ -184,20 +193,20 @@
                         @endforeach
                     </ol>
                 @endif
-                <div class="carousel-inner">
+    	        <div class="carousel-inner">
                     @php $cont = 0; @endphp
                     @foreach ($cursosDestacados as $cursoDestacado)
                         @php $cont++; @endphp
-                        <div class="carousel-item @if ($cont == 1) active @endif">
-                            <div class="overlay" ></div>
-                            <img src="{{ asset('uploads/images/courses/featured_covers/'.$cursoDestacado->featured_cover) }}" class="d-block w-100 img-fluid" alt="...">
-                            <div class="carousel-caption">
+        	            <div class="carousel-item @if ($cont == 1) active @endif">
+        	                <div class="overlay" ></div>
+        	                <img src="{{ asset('uploads/images/courses/featured_covers/'.$cursoDestacado->featured_cover) }}" class="d-block w-100 img-fluid" alt="...">
+        	                <div class="carousel-caption">
                                 <p style="color:#007bff; font-size: 22px; font-weight: bold; margin-top: -20px;">NUEVO CURSO</p>
-                                <div class="course-autor">{{$cursoDestacado->mentor->display_name}}</div>
-                                <div class="course-title"> <a href="{{ route('courses.show', [$cursoDestacado->slug, $cursoDestacado->id]) }}" style="color: white;">{{ $cursoDestacado->title }}</a></div>
-                                <div class="course-category">{{ $cursoDestacado->category->title }}</div>
-                            </div>
-                        </div>
+        						<div class="course-autor">{{$cursoDestacado->mentor->display_name}}</div>
+        						<div class="course-title"> <a href="{{ route('courses.show', [$cursoDestacado->slug, $cursoDestacado->id]) }}" style="color: white;">{{ $cursoDestacado->title }}</a></div>
+        	                    <!--<div class="course-category">{{ $cursoDestacado->category->title }}</div>-->
+        	                </div>
+        	            </div>
                     @endforeach
                 </div>
                 @if ($cursosDestacados->count() > 1)
@@ -210,13 +219,13 @@
                         <span class="sr-only">Next</span>
                     </a>
                 @endif
-            </div>
-        </div>
+    	    </div>
+    	</div>
     @endif
     {{-- FIN DEL SLIDER --}}
 
-    {{-- SECCIÓN TU AVANCE (USUARIOS LOGGUEADOS)
-    @if (!Auth::guest())
+	{{-- SECCIÓN TU AVANCE (USUARIOS LOGGUEADOS)
+	@if (!Auth::guest())
         <div class="section-landing">
             <div class="section-title-landing">TU AVANCE</div>
             <div class="row">
@@ -224,11 +233,11 @@
                 <div class="col text-right">Próximo Nivel: Intermedio</div>
                 <div class="w-100"></div>
                 <div class="col" style="padding: 20px 20px;">
-                    <div class="progress" style="background-color: #8E8E8E;">
-                        <div class="progress-bar" role="progressbar" style="width: 35%; background-color: #2A91FF;" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
-                        <div class="progress-bar bg-success" role="progressbar" style="width: 35%; background: linear-gradient(to right, #2A91FF, #6AB742); border-radius: 30px;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-                        <!--<div class="progress-bar bg-info" role="progressbar" style="width: 35%; background-color: #6AB742;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>-->
-                    </div>
+                	<div class="progress" style="background-color: #8E8E8E;">
+		                <div class="progress-bar" role="progressbar" style="width: 35%; background-color: #2A91FF;" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+		                <div class="progress-bar bg-success" role="progressbar" style="width: 35%; background: linear-gradient(to right, #2A91FF, #6AB742); border-radius: 30px;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+		                <!--<div class="progress-bar bg-info" role="progressbar" style="width: 35%; background-color: #6AB742;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>-->
+		            </div>
                 </div>
                 <div class="w-100"></div>
                 <div class="col text-left">Cursos Realizados: 7</div>
@@ -336,12 +345,12 @@
         <div class="next-streaming">
             <img src="{{ asset('/uploads/images/banner/'.$proximoEvento->image) }}" class="next-streaming-img">
             <div class="next-streaming-info">
-                <a href="{{route('transmisiones')}}" type="button" class="btn btn-primary btn-next-streaming">Próximo Streaming</a><br>
+            	<a href="{{route('transmisiones')}}" type="button" class="btn btn-primary btn-next-streaming">Próximo Streaming</a><br>
 
                 <div class="next-streaming-title">{{ $proximoEvento->title }}</div>
                 <div class="next-streaming-date" style="padding-right: 35%;">
                     <i class="fa fa-calendar"></i> {{ $proximoEvento->weekend_day }} {{ $proximoEvento->date_day }} de {{ $proximoEvento->month }}<br>
-                    @if (Auth::guest())
+                    @if (Auth::guest()) 
                         <i class="fa fa-clock"></i>
                         @foreach ($proximoEvento->countries as $country)
                             {{ date('H:i A', strtotime($country->pivot->time)) }} {{ $country->abbreviation }} /
@@ -383,7 +392,7 @@
         </div><br><br>
     @endif
     {{-- FIN SECCIÓN PRÓXIMO STREAMING--}}
-
+    
     {{-- SECCIÓN MENTORES --}}
     <div class="section-landing">
             <div class="row">
@@ -393,13 +402,13 @@
                     </div>
                 </div>
             </div>
-
+        
             <div id="newers" class="row" style="padding: 10px 30px;">
                 @foreach ($mentores as $mentor)
                     <div class="col-xl-3 col-lg-3 col-12" style="padding-bottom: 10px;">
-                        <div class="card">
+                        <div class="card" id="card-mentor-{{$mentor->mentor_id}}">
                             <a href="" style="color: white;">
-
+                            
                             @if (!is_null($mentor->avatar))
                                 <!-- <img src="{{ asset('uploads/avatar/'.$mentor->avatar) }}" class="card-img-top new-course-img" alt="..."> -->
                                 <img src="{{ asset('uploads/avatar/'.$mentor->avatar) }}" class="card-img-top new-course-img" alt="...">
@@ -409,24 +418,51 @@
                             <div class="card-img-overlay d-flex flex-column">
                                 <div class="mt-auto">
                                     <div class="text-sm text-white" style="line-height:1;">
-                                        <a class="text-white" href="{{ url('courses/mentor/'.$mentor->mentor_id) }}"> {{ $mentor->nombre }}</a>
-                                       </div>
-
-
+                                        <div class="row">
+                                            <div class="col-md-10">
+                                                <a class="text-white" href="{{ url('courses/mentor/'.$mentor->mentor_id) }}"> {{ $mentor->nombre }}</a>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <a href="javascript:;" onclick="showMentorCourses({{$mentor->mentor_id}});"><i class="fa fa-search" style="font-size: 18px;"></i></a>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                   
                                 </div>
                             </div>
                           </a>
+                        </div>
+                        <div class="card" style="display: none;" id="courses-mentor-{{$mentor->mentor_id}}">
+                            <a href="" style="color: white;">
+                                @if (!is_null($mentor->avatar))
+                                    <img src="{{ asset('uploads/avatar/'.$mentor->avatar) }}" class="card-img-top new-course-img" alt="..." style="opacity: 0.1 !important;">
+                                @else
+                                    <img src="{{ asset('uploads/images/courses/covers/default.jpg') }}" class="card-img-top new-course-img" alt="...">
+                                @endif
+                                <div class="card-img-overlay d-flex flex-column">
+                                    @foreach ($mentor->courses as $cursoMentor)
+                                        <a hreF="{{ route('courses.show', [$cursoMentor->slug, $cursoMentor->id]) }}" style="font-size: 19px;"><i class="fas fa-graduation-cap"></i> {{ $cursoMentor->title }}</a>
+                                    @endforeach
+                                    <div class="mt-auto">
+                                        <div class="text-sm text-white text-right" style="line-height:1;">
+                                            <a href="javascript:;" onclick="hideMentorCourses({{$mentor->mentor_id}});"><i class="fas fa-chevron-circle-left"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
                         </div>
                     </div>
                 @endforeach
             </div>
         </div>
-
-
-
+    
+    
+    
     {{-- FIN SECCIÓN MENTORES --}}
 
-    {{-- SECCIÓN REFERIDOS (USUARIOS LOGGUEADOS) --}}
+	{{-- SECCIÓN REFERIDOS (USUARIOS LOGGUEADOS) --}}
     @if (!Auth::guest())
         <div class="pt-4">
             <div class="row">
@@ -448,8 +484,9 @@
         </div><br><br>
     @endif
     {{-- FIN DE SECCIÓN REFERIDOS (USUARIOS LOGGUEADOS) --}}
-
-
+    
+    
+    
     {{-- mostrar pop up --}}
      @if($pop->activado == '1')
      <div class="modal fade" id="mostrarpopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

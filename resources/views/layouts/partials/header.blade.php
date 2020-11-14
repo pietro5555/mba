@@ -26,7 +26,8 @@
                 </div>
         </div>
 </nav>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark-gray border-left border-bottom" style="height: 70px;">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark-gray border-bottom" style="height: 70px;">
 
     <div class="collapse navbar-collapse" id="navbarItems" style="z-index: 1000;">
         <ul class="navbar-nav ml-auto mt-2 mt-lg-0 header-list">
@@ -34,20 +35,29 @@
                 <a class="nav-link items-header" href="{{route('index')}}">INICIO</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link items-header" href="https://www.mybusinessacademypro.com/nosotros/">NOSOTROS</a>
+                <!--<a class="nav-link items-header" href="https://www.mybusinessacademypro.com/nosotros/">NOSOTROS</a>-->
+                <a class="nav-link items-header" href="{{route('step1')}}">NOSOTROS</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link items-header" href="https://www.mybusinessacademypro.com/gratis/">GRATIS</a>
+                <!--<a class="nav-link items-header" href="https://www.mybusinessacademypro.com/gratis/">GRATIS</a>-->
+                <a class="nav-link items-header" href="{{route('step2')}}">GRATIS</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link items-header" href="https://www.mybusinessacademypro.com/blog/">BLOG</a>
+                <!--<a class="nav-link items-header" href="https://www.mybusinessacademypro.com/blog/">BLOG</a>-->
+                <a class="nav-link items-header" href="{{route('step3')}}">BLOG</a>
             </li>
             <li class="nav-item active">
                 <a class="nav-link items-header" href="#">AFILIADOS</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link items-header" href="{{ route('courses') }}">CURSOS</a>
-            </li>
+            @if (Auth::guest())
+                <li class="nav-item">
+                    <a class="nav-link items-header" href="{{ route('courses') }}">CURSOS</a>
+                </li>
+            @else
+                <li class="nav-item">
+                    <a class="nav-link items-header" href="{{ route('courses') }}">MIS CURSOS</a>
+                </li>
+            @endif
             <li class="nav-item">
                 <a class="nav-link items-header" href="{{route('transmisiones')}}">STREAMING</a>
             </li>

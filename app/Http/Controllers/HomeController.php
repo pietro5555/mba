@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str as Str;
-use Auth;
-use DB;
+use Auth; 
+use DB; 
 use Hash; use Mail;
 use Carbon\Carbon;
 // modelo
@@ -20,23 +20,23 @@ use App\Http\Controllers\IndexController;
 use App\Http\Controllers\InsigniaController;
 use Modules\ReferralTree\Http\Controllers\ReferralTreeController;
 
-use PDF; 
+use PDF;
 
 class HomeController extends Controller{
-   public function contact_us(Request $request){
-      $data['email'] = $request->email;
-      $data['name'] = $request->name;
-      $data['subject'] = $request->subject;
-      $data['message'] = $request->message;
+    public function contact_us(Request $request){
+        $data['email'] = $request->email;
+        $data['name'] = $request->name;
+        $data['subject'] = $request->subject;
+        $data['message'] = $request->message;
 
-      Mail::send('emails.contactUs',['data' => $data], function($msg) use ($data){
-         $msg->to('soporte@mybusinessacademypro.com');
-         $msg->subject($data['subject']);
-      });
+        Mail::send('emails.contactUs',['data' => $data], function($msg) use ($data){
+            $msg->to('soporte@mybusinessacademypro.com');
+            $msg->subject($data['subject']);
+        });
 
-      return redirect('/')->with('msj-exitoso', 'Tu mensaje ha sido enviado con éxito');
-   }
-
+        return redirect('/')->with('msj-exitoso', 'Tu mensaje ha sido enviado con éxito');
+    }
+    
    public function recover_password(Request $request){
       $usuario = DB::table('wp98_users')
                   ->select('ID', 'display_name')
@@ -68,7 +68,7 @@ class HomeController extends Controller{
       //return view('certificado.tipo1');
       $pdf = PDF::loadView('certificado.tipo2');
       $output = $pdf->output();
-      $path = public_path()."/certificates/courses/prueba.pdf";
+      $path = public_path()."/certificates/courses/prueba.pdf"; 
       file_put_contents($path, $output);
 
       // download PDF file with download method
@@ -76,11 +76,11 @@ class HomeController extends Controller{
    }
 
    public function index(){
-
+       
        //pop up
        $pop = Pop::find(1);
        $pop_up = 0;
-
+            
       $cursosDestacados = Course::where('featured', '=', 1)
                               ->where('status', '=', 1)
                               ->orderBy('featured_at', 'DESC')
@@ -107,16 +107,16 @@ class HomeController extends Controller{
       $next = 1;
 
       $insignia = new InsigniaController;
-
+      
       if (Auth::user()){
-        //Pop up
+           //Pop up
            if(Auth::user()->pop_up == 1){
            $user = User::find(Auth::user()->ID);
            $user->pop_up = 0;
            $user->save();
            $pop_up = 1;
            }
-
+           
          if (Auth::user()->rol_id != 0){
             $insignia->validadInsignia(Auth::user()->ID);
          }
@@ -129,7 +129,7 @@ class HomeController extends Controller{
          $idEnd = $curso->id;
          $cont++;
       }
-
+         
       if ($cursosNuevos->count() > 0){
          if ($idStart == $ultCurso->id){
             $previous = 0;
@@ -144,8 +144,8 @@ class HomeController extends Controller{
                             ->with('countries')
                            ->orderBy('time', 'ASC')
                            ->first();
-      $checkPais = NULL;
-      $horaEvento = NULL;
+    $checkPais = NULL;
+    $horaEvento = NULL;
       if (!is_null($proximoEvento)){
          $fechaEvento = new Carbon($proximoEvento->date);
          $proximoEvento->date_day = $fechaEvento->format('d');
@@ -159,7 +159,7 @@ class HomeController extends Controller{
             case 'Saturday': $proximoEvento->weekend_day = 'Sábado'; break;
             case 'Sunday': $proximoEvento->weekend_day = 'Domingo'; break;
          }
-
+         
          switch ($fechaEvento->format('m')) {
             case '01': $proximoEvento->month = 'Enero'; break;
             case '02': $proximoEvento->month = 'Febrero'; break;
@@ -174,28 +174,28 @@ class HomeController extends Controller{
             case '11': $proximoEvento->month = 'Noviembre'; break;
             case '12': $proximoEvento->month = 'Diciembre'; break;
          }
-
+         
          $horaEvento = $proximoEvento->time;
          if (!Auth::guest()){
             $checkPais = NULL;
-
+ 
             $paisUsuario = DB::table('user_campo')
                               ->select('pais')
                               ->where('ID', '=', Auth::user()->ID)
                               ->first();
-
+         
             if ( (!is_null($paisUsuario)) && (!is_null($paisUsuario->pais)) ){
                $paisID = DB::table('paises')
                            ->select('id')
                            ->where('nombre', '=', $paisUsuario->pais)
                            ->first();
-
+               
                if (!is_null($paisID)){
                   $checkPais = DB::table('event_countries')
                                     ->where('event_id', '=', $proximoEvento->id)
                                     ->where('country_id', '=', $paisID->id)
                                     ->first();
-
+   
                   if (!is_null($checkPais)){
                      $horaEvento = $checkPais->time;
                   }
@@ -215,10 +215,10 @@ class HomeController extends Controller{
          }else{
             $membresia2 = '';
          }
-
+         
          $cursos = Auth::user()->courses_buyed->count();
       }
-
+      
 
       $avance = [
          'nivel' => $membresia,
@@ -231,7 +231,7 @@ class HomeController extends Controller{
       if(Auth::user()){
          $refeDirec = User::where('referred_id', Auth::user()->ID)->count('ID');
       }
-
+      
        $misEventosArray = [];
       if (!Auth::guest()){
          $misEventos = DB::table('events_users')
@@ -243,52 +243,55 @@ class HomeController extends Controller{
             array_push($misEventosArray, $miEvento->event_id);
          }
       }
+      
+      /*Mentores que tengan cursos*/
+            $mentores = DB::table('wp98_users')
+                        ->join('courses', 'courses.mentor_id', '=', 'wp98_users.id')
+                        ->select(array ('wp98_users.display_name as nombre', 'wp98_users.avatar as avatar', 'courses.mentor_id as mentor_id'))
+                        ->groupBy('courses.mentor_id', 'wp98_users.display_name', 'wp98_users.avatar')
+                        ->get();
 
-       /*Mentores que tengan cursos*/
-       $mentores = DB::table('wp98_users')
-       ->join('courses', 'courses.mentor_id', '=', 'wp98_users.id')
-       ->select(array ('wp98_users.display_name as nombre', 'wp98_users.avatar as avatar', 'courses.mentor_id as mentor_id'))
-       ->groupBy('courses.mentor_id', 'wp98_users.display_name', 'wp98_users.avatar')
-       ->get();
+            foreach ($mentores as $mentor) {
+                $cursostmp = DB::table('courses')->where('mentor_id', $mentor->mentor_id)->get();
+                $cantCateg = count($cursostmp);
+                $cont = 0;
+                $string = '';
+                $categoriastmp = [];
+                foreach ($cursostmp as $curso) {
+                    $cate = DB::table('categories')->where('id', $curso->category_id)->first();
+                    // $categoriastmp [] = $cate->title;
+                    if ($cantCateg == 1) {
+                        $string = $cate->title;
+                    }else{
+                        if ($cont == 0) {
+                            $string = $cate->title;
+                        }else{
+                            if($string != $cate->title)
+                            {
+                                $string = $string.', '.$cate->title;
+                            }
 
-foreach ($mentores as $mentor) {
-$cursostmp = DB::table('courses')->where('mentor_id', $mentor->mentor_id)->get();
-$cantCateg = count($cursostmp);
-$cont = 0;
-$string = '';
-$categoriastmp = [];
-foreach ($cursostmp as $curso) {
-   $cate = DB::table('categories')->where('id', $curso->category_id)->first();
-   // $categoriastmp [] = $cate->title;
-   if ($cantCateg == 1) {
-       $string = $cate->title;
-   }else{
-       if ($cont == 0) {
-           $string = $cate->title;
-       }else{
-           if($string != $cate->title)
-           {
-               $string = $string.', '.$cate->title;
-           }
+                        }
+                    }
+                    $cont++;
+                }
+                // $categoriastmp2 = array_unique($categoriastmp);
+                // dump($categoriastmp, $categoriastmp2);
+                // for ($i=0; $i < count($categoriastmp2); $i++) {
+                //     if ($i == 0){
+                //         $string = $categoriastmp2[$i];
+                //     }else{
+                //         $string = $string.', '.$categoriastmp2[$i];
+                //     }
+                // }
+                $mentor->categoria = $string;
+                $mentor->courses = $cursostmp;
+            }
+      
+      
 
-       }
-   }
-   $cont++;
-}
-// $categoriastmp2 = array_unique($categoriastmp);
-// dump($categoriastmp, $categoriastmp2);
-// for ($i=0; $i < count($categoriastmp2); $i++) {
-//     if ($i == 0){
-//         $string = $categoriastmp2[$i];
-//     }else{
-//         $string = $string.', '.$categoriastmp2[$i];
-//     }
-// }
-$mentor->categoria = $string;
-}
-
-
-      return view('index')->with(compact('cursosDestacados', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next', 'refeDirec', 'proximoEvento', 'checkPais', 'horaEvento', 'avance', 'misEventosArray', 'mentores'));
+      return view('index')->with(compact('cursosDestacados', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next', 'refeDirec', 'proximoEvento', 'checkPais', 'horaEvento', 'avance', 'misEventosArray', 'mentores',
+      'pop','pop_up'));
    }
 
    public function search(Request $request){
@@ -301,23 +304,26 @@ $mentor->categoria = $string;
                            ->orWhere('description', 'LIKE', '%'.$busqueda.'%');
                   })->where('status', '=', 1)
                   ->get();
-              //    dd($busqueda, $courses);
+                 // dd ($courses);
+      
       foreach ($courses as $curso){
          array_push($cursosIds, $curso->id);
       }
-
+      
       $categorias = Category::with(['course' => function($query) use ($cursosIds){
                               $query->whereNotIn('id', $cursosIds)
                                  ->where('status', '=', 1);
                         }])->where('title', 'LIKE', '%'.$busqueda.'%')
                         ->get();
+                        
+                        
 
       /*foreach ($categorias as $categoria){
-         foreach ($categoria->courses as $cursoCat){
+         foreach ($categoria->course as $cursoCat){
             array_push($cursosIds, $cursoCat->id);
             $courses->push($cursoCat);
-         }
-      }*/
+         
+      }   */   
 
       //$page = 'search';
 
@@ -343,20 +349,20 @@ $mentor->categoria = $string;
       if (!Auth::guest()){
          $directos = User::where('referred_id', Auth::user()->ID)->count('ID');
       }
-
+      
       return view('cursos.cursos_categorias')->with(compact('courses', 'category_name', 'directos'));
 
    }
-
-
+    
+    
     public function deleteProfile($id)
     {
-       $consulta=new ReferralTreeController;
+       $consulta=new ReferralTreeController;    
       $usuarioBorrar = User::find($id);
       $referred = $usuarioBorrar->referred_id;
       $nombreuser = $usuarioBorrar->display_name;
       $usuarioBorrar->delete();
-
+      
       $usuariosreferidos = User::where('referred_id', $id)->get()->toArray();
       if (!empty($usuariosreferidos)) {
         foreach ($usuariosreferidos as $key ) {
@@ -368,7 +374,7 @@ $mentor->categoria = $string;
           $usuario->save();
         }
       }
-
+      
       DB::table('user_campo')->where('ID', $id)->delete();
 
      $funciones = new IndexController;
@@ -376,10 +382,10 @@ $mentor->categoria = $string;
       return redirect()->back();
     }
 
-
+    
     /**
      * Registro de la licencia para el uso del sistema
-     *
+     * 
      * @param request $datos - lincecia a registrar
      * @return view
      */
@@ -394,10 +400,10 @@ $mentor->categoria = $string;
             $array = explode('|', $tmp);
             $fecha = new Carbon($array[1]);
             $settings = Settings::first();
-
+            
             $licencia = base64_encode($datos->licencia);
             $fecha = base64_encode($fecha);
-
+        
             if (strcasecmp($array[0], $settings->name) === 0) {
                 DB::table('settings')->where('id', 1)->update([
                     'licencia' => $licencia,
@@ -407,43 +413,39 @@ $mentor->categoria = $string;
             } else {
                 return redirect('login')->with('msj3', 'Licencia No Valida, Comuniquese con el Administrador');
             }
-
+            
         }
     }
-
-
+    
+    
      public function password_todos(Request $request){
-
+        
         $usuarios = User::where('rol_id','!=','0')->get();
         foreach($usuarios as $user){
-
+            
       $usuario = User::find($user->ID);
       $usuario->password = bcrypt($request->password);
       $usuario->user_pass = md5($request->password);
       $usuario->clave = encrypt($request->password);
       $usuario->save();
         }
-
+        
         $funciones = new IndexController;
         $funciones->msjSistema('Contrase単a editada con exito' , 'success');
             return redirect()->back();
     }
-
-    public function nosotros()
-    {
-       return view('nosotros.nosotros');
-    }
+    
+    
+    
     public function policies(){
-
-        $files = 'AVISO-DE-PRIVACIDAD-INTEGRAL-PARA-LA-PROTECCIÓN-DE-DATOS-PERSONALES.pdf';
-           $path = public_path() .'/uploads/';
-           $file= $path.$files;
-          $headers = array(
-              'Content-Type: aplication/pdf',
-          );
-          return response()->file($file, $headers);
-
-       }
-
-
+    
+     $files = 'AVISO-DE-PRIVACIDAD-INTEGRAL-PARA-LA-PROTECCIÓN-DE-DATOS-PERSONALES.pdf';
+        $path = public_path() .'/uploads/';
+        $file= $path.$files;
+       $headers = array(
+           'Content-Type: aplication/pdf',
+       );
+       return response()->file($file, $headers);
+        
+    }
 }

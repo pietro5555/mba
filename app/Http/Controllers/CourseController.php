@@ -247,6 +247,7 @@ class CourseController extends Controller{
                 //     }
                 // }
                 $mentor->categoria = $string;
+                $mentor->courses = $cursostmp;
             }
         }
 

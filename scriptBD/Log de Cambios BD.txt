@@ -233,3 +233,7 @@ Dev Pietro
 
 04/11/2020
 * Actualizados precios de mebresias (correr script membresias)
+
+13/11/2020
+Dev: Crisleivys
+* Nuevos campos descripcion_completa y banner en la tabla de entradas (correr script entradas)

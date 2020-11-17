@@ -31,7 +31,18 @@
                 type:'POST',
                 data:  parametros,
                 success:function(ans){
-                    $("#notes_section").html(ans);
+                    if (ans == false){
+                        $("#msj-success-ajax").css('display', 'none');
+                        $("#msj-error-text").html("Ya posee una nota con el mismo nombre");
+                        $("#msj-error-ajax").css('display', 'block');
+                    }else{
+                        $("#msj-error-ajax").css('display', 'none');
+                        $("#msj-success-text").html("La nota ha sido agregada con éxito");
+                        $("#msj-success-ajax").css('display', 'block');
+                        $("#title").val("");
+                        $("#content").val("");
+                        $("#notes_section").html(ans);
+                    }
                 }
             });
         }
@@ -376,8 +387,6 @@
         {{-- Encabezado o titulo --}}
         @include('live.components.cabezera')
         @include('live.components.avisos')
-        {{-- Video --}}
-        @include('live.components.video')
       
         
     </div>

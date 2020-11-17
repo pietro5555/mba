@@ -14,9 +14,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Link del Video</label>
-                                    <input type="text" class="form-control"
-                                        placeholder="https://www.youtube.com/embed/X4VRKMZf4Uc" name="url_video"
-                                        required>
+                                    <input type="text" class="form-control" name="url_video" required>
                                 </div>
                             </div>
                         </div>

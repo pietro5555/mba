@@ -53,15 +53,12 @@
                                                         <input id="event_id" name="event_id" type="hidden"
                                                             value="{{ $event->id }}">
                                                         <div class="form-group notes-form-title">
-                                                            <input type="text" id="title" placeholder="Título"
-                                                                class="col-md-6 form-control{{ $errors->has('title') ? ' is-invalid' : '' }}"
-                                                                name="title" value="{{ old('title') }}" required
-                                                                autofocus>
+                                                            <input type="text" id="title" placeholder="Título" class="col-md-6 form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" name="title" required autofocus style="background-color: #363840;">
                                                         </div>
                                                         <div class="form-group notes-form-content">
                                                             <textarea class="form-control{{ $errors->has('content') ? ' is-invalid' : '' }}"
-                                                                id="content" name="content" value="{{ old('content') }}"
-                                                                required autofocus rows="3" placeholder="Escribe tu nota"></textarea>
+                                                                id="content" name="content" 
+                                                                required autofocus rows="3" placeholder="Escribe tu nota" style="background-color: #363840;"></textarea>
                                                         </div>
                                                         <a class="btn btn-success float-right" onclick="newNote();">Guardar nota</a>
                                                     </form>

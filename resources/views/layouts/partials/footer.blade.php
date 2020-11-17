@@ -10,7 +10,7 @@
                                 <a href="https://www.linkedin.com/in/my-business-academy-pro-1242481b2/" target="_blank" class="btn btn-footer-in btn-footer-redes "><i class="text-white fa fa-linkedin fa-2x"></i></a>
                                 <a href="https://m.facebook.com/MyBusinessAcademyPro/" target="_blank" class="btn btn-footer-fb btn-footer-redes "><i class="text-white fa fa-facebook-f fa-2x"></i></a>
                                 <a href="https://twitter.com/GlobalMBApro" class="btn btn-footer-tw btn-footer-redes " target="_blank"><i class="text-white fa fa-twitter fa-2x"></i></a>
-                                <a href="" class="btn whatsapp" target="_blank"> <i class="fa fa-whatsapp whatsapp-icon"></i></a>
+                                <!--<a href="" class="btn whatsapp" target="_blank"> <i class="fa fa-whatsapp whatsapp-icon"></i></a>-->
                             </div>
 
                             <div class="mb-2 text-center text-white" style="margin-top: 20px;">

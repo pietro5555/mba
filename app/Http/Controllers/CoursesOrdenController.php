@@ -15,6 +15,11 @@ use App\Models\Addresip;
 use App\Models\OffersLive;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+use App\Models\Purchase;
+use App\Models\PurchaseDetail;
+
+use App\Http\Controllers\WalletController;
 
 class CoursesOrdenController extends Controller
 {
@@ -235,6 +240,65 @@ class CoursesOrdenController extends Controller
         } catch (\Throwable $th) {
             dd($th);
         }
+    }
+
+
+
+    public function buy_wallet(Request $datos){
+        
+      $idmembresia = $this->getDataMembeship(Auth::user()->ID);
+            
+      $enlace = Addresip::where('ip', request()->ip())->first();
+
+      $membresia = DB::table('memberships')->where('id', $idmembresia)->first();
+      $total = ($enlace != null) ? $membresia->descuento : $membresia->price;
+      
+      if(Auth::user()->wallet_amount < $total){
+          
+          return redirect()->back()->with('msj-error', 'Tu compra no pudo ser procesada ya que no tiene fondos suficientes en su billetera.');
+      }
+      
+       $datosMembresia = [
+            'idmembresia' => $membresia->id,
+            'nombre' => $membresia->name,
+            'precio' => ($enlace != null) ? $membresia->descuento : $membresia->price,
+            'img' => asset('uploads/images/memberships/'.$membresia->image),
+            'links' => ($enlace != null) ? $enlace->padre : 0,
+        ];
+            
+        $orden = new CourseOrden();
+        $orden->user_id = Auth::user()->ID;
+        $orden->total = ($enlace != null) ? $membresia->descuento : $membresia->price;
+        $orden->detalles = json_encode($datosMembresia);
+        $orden->status = 1;
+        $orden->type_product = 'membresia';
+        $orden->save();
+        
+        $carrito = new ShoppingCartController();
+        $carrito->process_membership_buy($orden->id);
+                
+        /* eliminar la direccion ip y el id de la persona que me dio el link*/
+        Addresip::where('ip', request()->ip())->delete();
+        
+        $user = User::find(Auth::user()->ID);
+        $user->wallet_amount = ($user->wallet_amount - $datosMembresia['precio']);
+        $user->save();
+        
+        $datos = [
+            'iduser' => $user->ID,
+            'idcomision' => 0,
+            'usuario' => $user->display_name,
+            'descripcion' => 'Orden '.$orden->id.' Compra con billetera del usuario: '.$user->display_name,
+            'descuento' => 0,
+            'debito' => 0,
+            'credito' => $datosMembresia['precio'],
+            'balance' => $user->wallet_amount,
+            'tipotransacion' => 1,
+        ];
+        $wallet = new WalletController;
+        $wallet->saveWallet($datos);
+        
+        return redirect('/')->with('msj-exitoso', 'Tu compra de membresría ha sido completada con éxito.');
     }
 
     public function pay_membership_coinpayment(Request $request){

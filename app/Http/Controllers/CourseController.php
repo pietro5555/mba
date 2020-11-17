@@ -705,5 +705,46 @@ class CourseController extends Controller{
         }
 
 
+
+     public function estadistica(){
+        
+        view()->share('title', 'Estadisticas de Cursos');
+        
+        $estadisticas = DB::table('courses_users')->get();
+         foreach($estadisticas as $estadistica){
+             
+             $user = User::find($estadistica->user_id);
+             $curse = Course::find($estadistica->course_id);
+             $lesson = Lesson::where('course_id', '=', $curse->id)->count('id');
+             $valor = ($lesson / 100);
+             
+             $estadistica->usuario = ($user == null) ? 'N/A' : $user->display_name;
+             $estadistica->title = ($curse == null) ? 'N/A' : $curse->title;
+             $estadistica->progreso = ($estadistica->progress / $valor);
+             $estadistica->mentor = $curse->mentor->display_name;
+             
+         }
+        
+        return view('cursos.estadistica', compact('estadisticas'));
+    }
+    
+    
+    public function visto(){
+        
+        view()->share('title', 'Cursos mas vistos');
+        
+        $curse = Course::all();
+        foreach($curse as $curs){
+         $total = DB::table('courses_users')->where('course_id', $curs->id)->get()->count('id');
+         $favorite = DB::table('courses_users')->where('course_id', $curs->id)->where('favorite', 1)->get()->count('id');
+         
+         $curs->visto = $total;
+         $curs->favorito = $favorite;
+        }
+        
+        return view('cursos.vistos', compact('curse'));
+    }   
+
+
 }
 

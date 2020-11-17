@@ -24,11 +24,11 @@
          {{ Session::get('msj-erroneo') }}
       </div>
    @endif
-    
+
     <div class="container-fluid">
         <div class="row justify-content-end">
             <div class="col-md-6 mt-2"><h5 class="text-white">@if ($progresoCurso->language == 'es') {{$lesson->title}} @else {{$lesson->english_title}} @endif</h5></div>
-     
+
             <div class="col-xs-1 col-md-2 mt-2">
                 @if ($progresoCurso->language == 'es')
                     <a href="{{ route('course.change-language', [$lesson->course_id, 'en', $lesson->id]) }}">
@@ -48,7 +48,7 @@
                     </a>
                 @endif
             </div>
-      
+
             <div class="col-xs-1 col-md-2 mt-2">
                 @switch( $lesson->subcategory_id)
                     @case(1)
@@ -89,7 +89,7 @@
                 @endswitch
             </div>
 
-    
+
             <div class="col-xs-1 col-md-2 text-center mt-2 ">
                 <div class="icon-social-media">
                     <a href="https://m.facebook.com/MyBusinessAcademyPro/" target="_blank" class="btn btn-social-icon btn-facebook btn-rounded ml-2 mr-2"><img src="{{ asset('images/icons/facebook.svg') }}" height="20px" width="20px"></a>
@@ -106,7 +106,7 @@
       @php $ending = 0; $cont = 1; @endphp
       @foreach ($all_lessons as $leccion)
         <div class="carousel-item @if ($leccion->id == $lesson->id) active @endif">
-        
+
         @if ($progresoCurso != null)
           <div class="video-container">
             <iframe @if ($progresoCurso->language == 'es') src="{{ $leccion->url }}" @else src="{{ $leccion->english_url }}" @endif width="100%" height="590" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
@@ -124,11 +124,11 @@
         @endif
           @if ($leccion->id > $lesson->id)
             @if ($leccion->id == ($lesson->id + 1))
-              <a id="nextlesson" class="d-none" href="{{ route('lesson.show', [$leccion->slug, $leccion->id, $leccion->course_id]) }}">Siguiente</a>    
+              <a id="nextlesson" class="d-none" href="{{ route('lesson.show', [$leccion->slug, $leccion->id, $leccion->course_id]) }}">Siguiente</a>
             @endif
           @else
             @if ($leccion->id == $lesson->id && $ending == 1)
-              <a id="nextlesson" class="d-none" href="{{ route('client.courses.take-evaluation', [$lesson->course->slug, $lesson->course_id]) }}">Evaluacion</a>  
+              <a id="nextlesson" class="d-none" href="{{ route('client.courses.take-evaluation', [$lesson->course->slug, $lesson->course_id]) }}">Evaluacion</a>
             @endif
           @endif
       @endforeach
@@ -157,10 +157,10 @@
               @if ($lesson->course->materials->isNotEmpty())
                 <a class="nav-item nav-link m-2" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Materiales</a>
               @endif
-              
+
               @if ($certificar)
               <a class="nav-item nav-link m-2" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab" aria-controls="nav-about" aria-selected="false">Certificado</a>
-              @endif 
+              @endif
             </div>
           </nav>
           <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
@@ -207,7 +207,7 @@
                     <div class="custombox clearfix mt-4 pb-4 border-bottom">
                       <div class="row">
                         <div class="col-lg-12">
-    
+
                           <div class="comments-list">
                             <div class="media">
                               <a class="media-left" href="#">
@@ -215,7 +215,7 @@
                                   <img src="{{ asset('uploads/avatar/'.$comment->user->avatar) }}" alt="" class="circular--square" >
                                 </div>
                               </a>
-    
+
                               <div class="media-body">
                                 <h4 class="media-heading text-white">{{ $comment->user->display_name }}</h4>
                                 <small class="media-heading about-course-text">{{str_replace('-', '/', date('d-m-Y', strtotime($comment->date)))}}</small>
@@ -224,14 +224,14 @@
                                 </p>
                                 <!--<p class="about-course-text float-right mr-4">
                                   <i class="far fa-comment-alt about-course-text" aria-hidden="true"></i> <a href="" class="about-course-text"> Responder</a>
-    
+
                                 </p>-->
-    
+
                               </div>
-    
+
                             </div>
                           </div>
-    
+
                         </div><!-- end col -->
                       </div><!-- end row -->
                     </div>
@@ -240,9 +240,9 @@
               <!-- end custom-box -->
             </div>
             <div class="tab-pane fade pl-5 pr-5" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-               
+
               <div class="container">
-              
+
               <div class="row">
                @foreach ($lesson->course->materials as $material)
                   <div class="col-md-6 mt-2">
@@ -314,6 +314,7 @@
                     </div>
                   </div>
             @endif
+            <a href="{{route('courses.show.all')}}" class="btn btn-primary play-course-button btn-block" ><i class="fa fa-search" aria-hidden="true"></i> EXPLORAR MÁS CURSOS</a>
 
 
 
@@ -388,7 +389,7 @@
 
   @endsection
   @push('scripts')
-  <script>    
+  <script>
     $(document).on(function(){
     $(".vp-telecine.invisible video").on('ended', function(){
       $('#nextlesson').click();
@@ -403,7 +404,7 @@
         $("#upgradeModal").modal("show");
     }
   });
-  
+
     function newComment(){
         $("#store_comment_submit").css('display', 'none');
         $("#store_comment_loader").css('display', 'block');

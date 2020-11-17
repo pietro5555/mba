@@ -200,6 +200,9 @@ Route::group(['prefix' => 'installer'], function (){
     Route::post('pay-membership-stripe', 'CoursesOrdenController@pay_membership_stripe')->name('shopping-cart.pay-membership-stripe');
     Route::post('pay-membership-coinpayment', 'CoursesOrdenController@pay_membership_coinpayment')->name('shopping-cart.pay-membership-coinpayment');
     Route::get('process-cart/{orden}', 'ShoppingCartController@process_cart');
+
+    //procesar pago con billetera
+    Route::post('cash-billetera', 'CoursesOrdenController@buy_wallet')->name('shopping-cart-billetera');
   });
 
   //Rutas de timelive
@@ -336,6 +339,10 @@ Route::group(['prefix' => 'installer'], function (){
         Route::get('change-status/{id}/{status}', 'CourseController@change_status')->name('admin.courses.change-status');
         Route::post('add-featured', 'CourseController@add_featured')->name('admin.courses.add-featured');
         Route::get('quit-featured/{id}', 'CourseController@quit_featured')->name('admin.courses.quit-featured');
+
+        //estadisticas de cursos
+        Route::get('/estadistica', 'CourseController@estadistica')->name('admin.courses.estadistica');
+        Route::get('/visto', 'CourseController@visto')->name('admin.courses.vistos');
 
         Route::group(['prefix' => 'categories'], function(){
            Route::get('', 'CategoryController@index')->name('admin.courses.categories');

@@ -20,7 +20,7 @@
             $("#card-mentor-"+$mentor).css('display', 'none');
             $("#courses-mentor-"+$mentor).slideToggle();
         }
-        
+
         function hideMentorCourses($mentor){
             $("#courses-mentor-"+$mentor).css('display', 'none');
             $("#card-mentor-"+$mentor).slideToggle();
@@ -33,13 +33,13 @@
         #new-courses-section .card-img-overlay:hover{
             text-decoration: underline;
         }
-        
+
         .imagen:hover {-webkit-filter: none; filter: none; color: #6EC1E4 0.2em 0.2em 0.6em 0.1em;
         }
-        
+
         .imagen {filter: grayscale(80%);}
-        
-        
+
+
         .containerscale:hover img {
       	transform: scale(1.1, 1.1);
 	    z-index: 9;
@@ -100,7 +100,7 @@
                             <h4 class=" col-md-10 text-white text-uppercase  font-weight-bold" >
                                         {{$last_course->title}}
                             </h4>
-                            
+
                             <div class="col-md-2 float-right mb-2">
                                 <div class="row">
                                      <a href="{{ route('courses.show', [$last_course->slug, $last_course->course_id]) }}" class="btn btn-primary float-right text-uppercase mr-4"><i class="fa fa-play"></i> Continuar curso</a>
@@ -166,17 +166,17 @@
 
                                 <img class="card-img-top" src="{{ asset('uploads/images/courses/covers/'.$curso->thumbnail_cover) }}" alt="card-image-cap">
                                 <div class="card-body p-2">
-                                <div class="row align-items-start">
-                                    <h6 class="col-sm" style="font-size:14px;"><a href="{{ route('courses.show', [$curso->slug, $curso->id]) }}" class="text-secondary">{{$curso->title}}</a>
-                                    </h6>
+                                    <div class="row align-items-start" style="margin-top: 5px">
+                                        <h6 class="col-sm" style="font-size:12px;"><a href="{{ route('courses.show', [$curso->slug, $curso->id]) }}" class="text-secondary">{{$curso->title}}</a>
+                                        </h6>
 
-                                    <div class="col-3 m-2"><img src="{{ asset('images/icons/video-player-blue.svg') }}" alt="" height="20px" width="20px"></div>
-                                </div>
+                                        <div class="col-3 m-2"><img src="{{ asset('images/icons/video-player-blue.svg') }}" alt="" height="20px" width="20px"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         @endforeach
-                    
+
                         <div class="">
                                 <div class="row h-100">
                                         <div class="card-block w-50 text-primary align-self-center">
@@ -186,7 +186,7 @@
 
                                 </div>
                         </div>
-                    
+
                     </div>
 
                  </div>
@@ -252,7 +252,7 @@ $contador++;
             <i class="far fa-user-circle text-center">
                 <p style="font-size: 10px;">{{ $recommended->users->count() }}</p>
             </i>
-            
+
         </h6>
     </div>
 </div>
@@ -296,7 +296,7 @@ $segundo++;
             <i class="far fa-user-circle text-center">
                 <p style="font-size: 10px;">{{ $recommended->users->count() }}</p>
             </i>
-            
+
         </h6>
     </div>
 </div>
@@ -475,13 +475,13 @@ $tercero++;
                     </div>
                 </div>
             </div>
-        
+
             <div id="newers" class="row" style="padding: 10px 30px;">
                 @foreach ($mentores as $mentor)
                     <div class="col-xl-3 col-lg-3 col-12" style="padding-bottom: 10px;">
                         <div class="card" id="card-mentor-{{$mentor->mentor_id}}">
                             <a href="" style="color: white;">
-                            
+
                             @if (!is_null($mentor->avatar))
                                 <!-- <img src="{{ asset('uploads/avatar/'.$mentor->avatar) }}" class="card-img-top new-course-img" alt="..."> -->
                                 <img src="{{ asset('uploads/avatar/'.$mentor->avatar) }}" class="card-img-top new-course-img" alt="...">
@@ -498,10 +498,10 @@ $tercero++;
                                             <div class="col-md-2">
                                                 <a href="javascript:;" onclick="showMentorCourses({{$mentor->mentor_id}});"><i class="fa fa-search" style="font-size: 18px;"></i></a>
                                             </div>
-                                        </div>    
+                                        </div>
                                     </div>
-                                    
-                                   
+
+
                                 </div>
                             </div>
                           </a>
@@ -529,9 +529,9 @@ $tercero++;
                 @endforeach
             </div>
         </div>
-    
-    
-    
+
+
+
     {{-- FIN SECCIÓN MENTORES --}}
     @endif
     {{-- FIN SECCIÓN TUS MENTORES--}}

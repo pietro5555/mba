@@ -19,7 +19,8 @@
         <h5 class="">Selecione medio de pago</h5>
         <div class="form-group">
             <button class="btn text-white btn-color-green" onclick="pagarS()">Tarjeta</button>
-            <button class="btn text-white btn-color-green" onclick="pagarC()">Cripto</button><br><br>
+            <button class="btn text-white btn-color-green" onclick="pagarC()">Cripto</button>
+            <button class="btn text-white btn-color-green" onclick="pagarB()">Billetera</button><br><br>
         </div>
         @endif
     </div>
@@ -41,6 +42,12 @@
             {{ csrf_field() }}
             <input type="hidden" name="metodo" value="cripto">
         </form>
+        
+        <form action="{{route('shopping-cart-billetera')}}" method="post" id="form-billetera">
+            {{ csrf_field() }}
+            <input type="hidden" name="metodo" value="billetera">
+            <input type="hidden" name="total" value="{{$totalItems}}">
+        </form>
     </div>
     @endif
     
@@ -61,7 +68,8 @@
             <h5 class="">Selecione medio de pago</h5>
             <div class="form-group">
                 <button class="btn text-white btn-color-green" onclick="pagarS2()">Tarjeta</button>
-                <button class="btn text-white btn-color-green" onclick="pagarC2()">Cripto</button><br><br>
+                <button class="btn text-white btn-color-green" onclick="pagarC2()">Cripto</button>
+                <button class="btn text-white btn-color-green" onclick="pagarB2()">Billetera</button><br><br>
             </div>
         </div>
         <div id="stripe2" class="stripe2 d-none">
@@ -82,6 +90,12 @@
                 {{ csrf_field() }}
                 <input type="hidden" name="metodo" value="cripto">
             </form>
+            
+            <form action="{{route('shopping-cart-billetera')}}" method="post" id="form-billetera2">
+            {{ csrf_field() }}
+            <input type="hidden" name="metodo" value="billetera">
+            <input type="hidden" name="total" value="{{$totalItems}}">
+        </form>
         </div>
     @endif
     

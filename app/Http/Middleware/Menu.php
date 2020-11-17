@@ -767,6 +767,20 @@ class Menu
                         'black'=> '0',
                         'oculto'=> 'activo',
                     ],
+
+                    'Estadisticas de Cursos' => [
+                        'ruta' => 'admin.courses.estadistica',
+                        'complementoruta' => '',
+                        'black'=> '0',
+                        'oculto'=> 'activo',
+                    ],
+                    
+                    'Cursos mas vistos' => [
+                        'ruta' => 'admin.courses.vistos',
+                        'complementoruta' => '',
+                        'black'=> '0',
+                        'oculto'=> 'activo',
+                    ],
                 ]
             ],
             'Eventos' => [

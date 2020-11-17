@@ -61,6 +61,11 @@
 <div class="col-xs-12">
     <div class="box box-info">
         <div class="box-body">
+            
+            @if(Auth::user()->rol_id == 0)
+            <a href="#" class="btn btn-info btn-block" data-toggle="modal" data-target="#liquidacion"> Liquidacion</a>
+            @endif
+
             <table id="mytable" class="table">
                 <thead>
                     <tr>
@@ -354,6 +359,8 @@
     </div>
 </div>--}}
 
+
+@include('pagos.componentes.liquidacion')
 
 @endsection
 

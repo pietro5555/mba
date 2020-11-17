@@ -20,6 +20,14 @@
         </div>
     @endif
 
+@if (Session::has('msj-error'))
+        <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert">
+            <strong>{{ Session::get('msj-error') }}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
 
 <div class="title-page-one_course col-md border-bottom-2">
     <h6>Carrito</h6>
@@ -81,6 +89,28 @@
             return false;
         }else{
           $('#form-coin2').submit()
+        }
+    }
+
+        //pagar  con billetera
+    function pagarB() {
+      event.preventDefault();
+        if (!$("#check_deacuerdo").prop('checked')) {
+            alert("Debe estar de acuerdo con los términos y condiciones!");
+            return false;
+        }else{
+          $('#form-billetera').submit()
+        }
+    }
+
+    
+    function pagarB2() {
+      event.preventDefault();
+        if (!$("#check_deacuerdo2").prop('checked')) {
+            alert("¡Debe estar de acuerdo con los términos y condiciones para la compra de membresía!");
+            return false;
+        }else{
+          $('#form-billetera2').submit()
         }
     }
 

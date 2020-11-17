@@ -276,7 +276,10 @@ class ShoppingCartController extends Controller
         }else if (!is_null($datosOrden->idtransacion_coinpaymen)){
             $compra->payment_method = 'Coinpayment';
             $compra->payment_id = $datosOrden->idtransacion_coinpaymen;
+        }else if($datosOrden->idtransacion_stripe == null && $datosOrden->idtransacion_coinpaymen == null){
+            $compra->payment_method = 'Billetera';
         }
+        
         $compra->date = date('Y-m-d');
         $compra->status = 1;
 

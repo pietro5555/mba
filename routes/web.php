@@ -200,6 +200,9 @@ Route::group(['prefix' => 'installer'], function (){
     Route::post('pay-membership-stripe', 'CoursesOrdenController@pay_membership_stripe')->name('shopping-cart.pay-membership-stripe');
     Route::post('pay-membership-coinpayment', 'CoursesOrdenController@pay_membership_coinpayment')->name('shopping-cart.pay-membership-coinpayment');
     Route::get('process-cart/{orden}', 'ShoppingCartController@process_cart');
+
+    //procesar pago con billetera
+    Route::post('cash-billetera', 'CoursesOrdenController@buy_wallet')->name('shopping-cart-billetera');
   });
 
   //Rutas de timelive

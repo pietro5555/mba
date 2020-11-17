@@ -16,6 +16,15 @@
                 }
             });
         }
+        function showMentorCourses($mentor){
+            $("#card-mentor-"+$mentor).css('display', 'none');
+            $("#courses-mentor-"+$mentor).slideToggle();
+        }
+
+        function hideMentorCourses($mentor){
+            $("#courses-mentor-"+$mentor).css('display', 'none');
+            $("#card-mentor-"+$mentor).slideToggle();
+        }
     </script>
 @endpush
 
@@ -32,8 +41,8 @@
 
 
         .containerscale:hover img {
-        transform: scale(1.1, 1.1);
-        z-index: 9;
+      	transform: scale(1.1, 1.1);
+	    z-index: 9;
        }
 
     </style>
@@ -143,39 +152,41 @@
             <div class="row">
                 <div class="col-12">
                     <div class="section-title-courses ml-2">
-                        <h3 class="">Tus Cursos</h3>
+                        <h3 class="">Mis Cursos</h3>
                         <hr style="margin-top:0px; border: 1px solid #707070;opacity: 1;" />
-                        </div>
-
+                        <span>Estás tomando estos cursos actualmente...</span>
+                    </div>
                 </div>
                 <div class="container-fluid m-2">
                     <div class="wrapper">
-                        @foreach ($cursos as $curso)
-                        <div class="containerscale">
+                            @foreach ($cursos as $curso)
+                            <div class="containerscale">
 
                             <div class="card m-2 mb-4 card-courses">
 
                                 <img class="card-img-top" src="{{ asset('uploads/images/courses/covers/'.$curso->thumbnail_cover) }}" alt="card-image-cap">
                                 <div class="card-body p-2">
-                                <div class="row align-items-start">
-                                    <h6 class="col-sm"><a href="{{ route('courses.show', [$curso->slug, $curso->id]) }}" class="text-secondary text-sm">{{$curso->title}}</a>
-                                    </h6>
+                                    <div class="row align-items-start" style="margin-top: 5px">
+                                        <h6 class="col-sm" style="font-size:12px;"><a href="{{ route('courses.show', [$curso->slug, $curso->id]) }}" class="text-secondary">{{$curso->title}}</a>
+                                        </h6>
 
-                                    <div class="col-3 m-2"><img src="{{ asset('images/icons/video-player-blue.svg') }}" alt="" height="20px" width="20px"></div>
-                                </div>
-                                </div>
-                        </div>
-                        </div>
-                        @endforeach
-                        <div class="">
-                            <div class="row h-100">
-                                    <div class="card-block w-50 text-primary align-self-center">
-                                        <a href="{{ route('client.my-courses') }}" class="font-weight-bold">Ver todos mis cursos</a>
-                                        <i class="text-primary fa fa-arrow-right"></i>
+                                        <div class="col-3 m-2"><img src="{{ asset('images/icons/video-player-blue.svg') }}" alt="" height="20px" width="20px"></div>
                                     </div>
-
+                                </div>
                             </div>
                         </div>
+                        @endforeach
+
+                        <div class="">
+                                <div class="row h-100">
+                                        <div class="card-block w-50 text-primary align-self-center">
+                                            <a href="{{ route('client.my-courses') }}" class="font-weight-bold">Ver todos mis cursos</a>
+                                            <i class="text-primary fa fa-arrow-right"></i>
+                                        </div>
+
+                                </div>
+                        </div>
+
                     </div>
 
                  </div>
@@ -468,7 +479,7 @@ $tercero++;
             <div id="newers" class="row" style="padding: 10px 30px;">
                 @foreach ($mentores as $mentor)
                     <div class="col-xl-3 col-lg-3 col-12" style="padding-bottom: 10px;">
-                        <div class="card">
+                        <div class="card" id="card-mentor-{{$mentor->mentor_id}}">
                             <a href="" style="color: white;">
 
                             @if (!is_null($mentor->avatar))
@@ -480,13 +491,39 @@ $tercero++;
                             <div class="card-img-overlay d-flex flex-column">
                                 <div class="mt-auto">
                                     <div class="text-sm text-white" style="line-height:1;">
-                                        <a class="text-white" href="{{ url('courses/mentor/'.$mentor->mentor_id) }}"> {{ $mentor->nombre }}</a>
-                                       </div>
+                                        <div class="row">
+                                            <div class="col-md-10">
+                                                <a class="text-white" href="{{ url('courses/mentor/'.$mentor->mentor_id) }}"> {{ $mentor->nombre }}</a>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <a href="javascript:;" onclick="showMentorCourses({{$mentor->mentor_id}});"><i class="fa fa-search" style="font-size: 18px;"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
 
 
                                 </div>
                             </div>
                           </a>
+                        </div>
+                        <div class="card" style="display: none;" id="courses-mentor-{{$mentor->mentor_id}}">
+                            <a href="" style="color: white;">
+                                @if (!is_null($mentor->avatar))
+                                    <img src="{{ asset('uploads/avatar/'.$mentor->avatar) }}" class="card-img-top new-course-img" alt="..." style="opacity: 0.1 !important;">
+                                @else
+                                    <img src="{{ asset('uploads/images/courses/covers/default.jpg') }}" class="card-img-top new-course-img" alt="...">
+                                @endif
+                                <div class="card-img-overlay d-flex flex-column">
+                                    @foreach ($mentor->courses as $cursoMentor)
+                                        <a hreF="{{ route('courses.show', [$cursoMentor->slug, $cursoMentor->id]) }}" style="font-size: 19px;"><i class="fas fa-graduation-cap"></i> {{ $cursoMentor->title }}</a>
+                                    @endforeach
+                                    <div class="mt-auto">
+                                        <div class="text-sm text-white text-right" style="line-height:1;">
+                                            <a href="javascript:;" onclick="hideMentorCourses({{$mentor->mentor_id}});"><i class="fas fa-chevron-circle-left"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
                         </div>
                     </div>
                 @endforeach

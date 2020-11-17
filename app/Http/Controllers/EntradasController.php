@@ -6,16 +6,16 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Crypt;
-use Auth; 
+use Auth;
 use DB;
 use Carbon\Carbon;
 // modelo
-use App\Models\Rol; 
+use App\Models\Rol;
 use App\Models\User;
 use App\Models\Entradas;
 
 // llamado a los controlladores
-use App\Http\Controllers\IndexController; 
+use App\Http\Controllers\IndexController;
 
 class EntradasController extends Controller
 {
@@ -23,20 +23,22 @@ class EntradasController extends Controller
 	public function index(){
 
 		view()->share('title', 'Entradas');
-          
+
           $entradas = Entradas::all();
-		 return view('entradas.entrada', compact('entradas'));  
+		 return view('entradas.entrada', compact('entradas'));
 	}
 
 	public function saveentrada(Request $datos){
-      
-      $destacada = $this->imagenDestacada($datos);
 
+      $destacada = $this->imagenDestacada($datos);
+      $banner = $this->banner($datos);
       Entradas::create([
       	'titulo' => $datos->titulo,
       	'autor' => $datos->autor,
       	'descripcion' => $datos->contenido,
-      	'imagen_destacada' => $destacada,
+          'imagen_destacada' => $destacada,
+          'descripcion_completa' =>$datos->articulo,
+          'banner' => $banner,
       ]);
 
 
@@ -59,28 +61,44 @@ class EntradasController extends Controller
         }
 
         return $nombre_imagen;
+    }
+
+    public function banner($datos){
+
+        $nombre_imagen = null;
+		 if ($datos->file('banner')) {
+            $imagen = $datos->file('banner');
+            $nombre_imagen = 'banner_entrada_'.time().'.'.$imagen->getClientOriginalExtension();
+            $path = public_path() .'/uploads/entradas';
+            $imagen->move($path,$nombre_imagen);
+        }
+
+        return $nombre_imagen;
 	}
 
 
 	public function actualentrada($id){
 
          view()->share('title', 'Editar Entrada');
-          
+
           $entradas = Entradas::find($id);
-		 return view('entradas.actualizar', compact('entradas'));  
+		 return view('entradas.actualizar', compact('entradas'));
 	}
 
 	public function editentrada(Request $datos){
-        
+
         $destacada = $this->imagenDestacada($datos);
-         
+        $banner = $this->banner($datos);
+
         $entradas = Entradas::find($datos->id);
         $entradas->titulo = $datos->titulo;
         $entradas->autor = $datos->autor;
         $entradas->descripcion = $datos->contenido;
         $entradas->imagen_destacada = ($destacada == null) ? $entradas->imagen_destacada : $destacada;
+        $entradas->descripcion_completa = $datos->articulo;
+        $entradas->banner = ($banner == null) ? $entradas->banner : $banner;
         $entradas->save();
-        
+
 
         $funciones = new IndexController;
         $funciones->msjSistema('Actualizado con exito', 'success');
@@ -89,13 +107,13 @@ class EntradasController extends Controller
 
 
 	public function deletentrada($id){
-         
+
         $archivo = Entradas::find($id);
-        $archivo->delete(); 
+        $archivo->delete();
 
         $funciones = new IndexController;
         $funciones->msjSistema('Eliminado con exito', 'success');
         return redirect('/admin/entradas/entrada');
-	}
+    }
 
 }

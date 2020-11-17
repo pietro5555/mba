@@ -2,7 +2,7 @@
     $categoriasSidebar = \App\Models\Category::orderBy('id', 'ASC')->with('course')->get();
 
         $subcategoriasSidebar = \App\Models\Subcategory::orderBy('id', 'ASC')->get();
-        $cursos = \App\Models\Course::orderBy('id', 'ASC')->get();
+         $cursos = \App\Models\Course::orderBy('id', 'ASC')->get();
 @endphp
 
 <!-- Sidebar -->
@@ -22,8 +22,8 @@
                     <a href="{{ route('index') }}" class="list-group-item bg-dark-gray" style="color: white;"><i class="fa fa-home"></i> Home</a>
                     @if(Auth::user())
                         <a href="{{route('transmisiones')}}" class="list-group-item bg-dark-gray" style="color: white;"><i class="fas fa-video"></i> Streaming</a>
-                        <a href="{{ route('schedule.calendar') }}" class="list-group-item bg-dark-gray" style="color: white;"><i class="fas fa-calendar"></i></i> Mis Eventos</a>
-                        <a href="{{ route('courses') }}" class="list-group-item bg-dark-gray" style="color: white;"><i class="fas fa-user-circle"></i> Cursos</a>
+                        <a href="{{ route('schedule.calendar') }}" class="list-group-item bg-dark-gray" style="color: white;"><i class="fas fa-calendar"></i> Mis Eventos</a>
+                        <a href="{{ route('courses') }}" class="list-group-item bg-dark-gray" style="color: white;"><i class="fas fa-user-circle"></i> Mis Cursos</a>
                         <a href="{{url('/admin')}}" class="list-group-item bg-dark-gray" style="color: white;"><i class="fas fa-user"></i> Backoffice</a>
                     @endif
                     <a href="{{route('shopping-cart.membership')}}" class="list-group-item bg-dark-gray" style="color: white;"><i class="fa fa-shopping-bag"></i> Membresias</a>
@@ -39,34 +39,29 @@
                             </div>-->
                         </form>
                     </div>
-                    <a href="{{ route('courses.show.all') }}" class="list-group-item bg-dark-gray" style="color: white;"><i class="fas fa-border-all"></i> Ver todos los cursos</a>
-                    <a class="list-group-item bg-dark-gray" data-toggle="collapse" href="#categoriesDiv" style="color: white;"><i class="far fa-list-alt"></i> Contenidos <i class="fas fa-angle-down"></i></a>
+                    <a href="{{ route('courses.show.all') }}" class="list-group-item bg-dark-gray" style="color: white;"><i class="fas fa-graduation-cap"></i> Todos los cursos</a>
+                   <a class="list-group-item bg-dark-gray" data-toggle="collapse" href="#categoriesDiv" style="color: white;"><i class="far fa-list-alt"></i> Contenidos <i class="fas fa-angle-down"></i></a>
                     <div class="collapse" id="categoriesDiv" style="padding-left: 15px;">
-
                         @foreach ($categoriasSidebar as $categoria)
-
-                            @if (!is_null($categoria->course))
+                           @if (!is_null($categoria->course))
                             <a class="list-group-item bg-dark-gray" href="{{ url ('courses/show/'.$categoria->course->slug.'/'.$categoria->course->id)}}" style="color: white;"><i class="{{ $categoria->icon }}"></i> {{ $categoria->title }} </a>
                             @else
                             <a class="list-group-item bg-dark-gray" href="{{ url ('courses/category/'.$categoria->id)}}" style="color: white;"><i class="{{ $categoria->icon }}"></i> {{ $categoria->title }} </a>
                             @endif
-
-
                             <!--<div class="collapse" id="subcategories-{{$categoria->id}}" style="padding-left: 15px;">
                                 @foreach ($subcategoriasSidebar as $subcategoria)
                                     <a class="list-group-item bg-dark-gray" href="{{ route('search-by-category', [$categoria->slug, $categoria->id, $subcategoria->slug, $subcategoria->id]) }}" style="color: white;"><i class="far fa-circle"></i> {{ $subcategoria->title }} </a>
                                 @endforeach
                             </div>-->
                         @endforeach
-
-                        @foreach ($cursos as $curso)
+                        <!--@foreach ($cursos as $curso)
                             <a class="list-group-item bg-dark-gray" href="{{ url ('courses/show/'.$curso->slug.'/'.$curso->id)}}" style="color: white;"><i class="text-primary fas fa-arrow-circle-right"></i> {{ $curso->title }} </a>
-                            <div class="collapse" id="subcategories-{{$categoria->id}}" style="padding-left: 15px;">
+                            <!--<div class="collapse" id="subcategories-{{$categoria->id}}" style="padding-left: 15px;">
                                 @foreach ($subcategoriasSidebar as $subcategoria)
                                     <a class="list-group-item bg-dark-gray" href="{{ route('search-by-category', [$categoria->slug, $categoria->id, $subcategoria->slug, $subcategoria->id]) }}" style="color: white;"><i class="far fa-circle"></i> {{ $subcategoria->title }} </a>
                                 @endforeach
-                            </div>
-                        @endforeach
+                            </div>-->
+                        <!--@endforeach-->
                     </div>
 
                     @if(Auth::user())
@@ -80,15 +75,9 @@
                     @endguest
                     @if (!empty($settings->id_no_comision))
                     <div class="text-center p-2">
-                        <img src="{{asset($settings->id_no_comision)}}" alt="" height="200" width="200">
+                        <img src="{{asset($settings->id_no_comision)}}" alt=""  width="200" style="margin-top:80px">
                     </div>
                     @endif
-                    <!--<div class="text-center col pt-2">
-                        <a href="https://m.facebook.com/MyBusinessAcademyPro/"><img class="m-2" src="{{ asset('images/icons/FBA.png') }}"></a>
-                        <a href=""><img class="m-2" src="{{ asset('images/icons/TWA.png') }}"></a>
-                         <a href="https://instagram.com/mybusinessacademypro?igshid=tdj5prrv1gx1"><img class="m-2" src="{{ asset('images/icons/IGA.png') }}"></a>
-                        <a href=""><img class="m-2" src="{{ asset('images/icons/YTA.png') }}"></a>
-                    </div>-->
                 </div>
             </div>
             <!-- /#sidebar-wrapper -->

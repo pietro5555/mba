@@ -51,7 +51,7 @@
             @switch($membresia->id)
                 @case(1)
                     <!-- Free Tier -->
-
+                    <h1 class="text-white">HOLA 1</h1>
                     <div class="col-lg-4 mt-4 mb-5">
                             <div class="card mb-5 mb-lg-0">
                                 <div class="card-header-azul-price" style="position: absolute;">
@@ -238,28 +238,28 @@
                      <!-- Plus Tier -->
                     <div class="col-lg-4 mt-4 mb-5">
                             <div class="card mb-5 mb-lg-0">
-                                <h1 class="card-header-orange-price" style="position: absolute;">
-                                    <h1 class="card-title text-white text-uppercase text-center">{{$membresia->name}}</h1>
-                                </div>
-                            <div class="card-body" style="position: relative; top:55px; z-index: 1;">
-                                    <div class="row" style="padding:20px;">
-                                            <p class="card-price text-orange text-center" style="font-size:28px;"> <strike>${{$membresia->price}}<span class="period">/Mes &nbsp&nbsp</span> </strike> </p>
-                                            <h4 class="card-price text-orange text-center"> ${{$membresia->descuento}}<span class="period">/Mes</span></h4>
-                                            <h1 class="text-center text-white">. . . . . . . . . . . . . </h1><br><br>
+                                    <div class="card-header-orange-price" style="position: absolute;">
+                                            <h1 class="card-title text-white text-uppercase text-center">{{$membresia->name}}</h1>
                                     </div>
-                                    <h5 class="p-2 text-white text-center"> Nos alegra que tu primera impresión haya sido tan buena para crecer en tu formación</h5><br><br>
-                                    <h5 class="p-2 text-white text-center">En este paquete encontrarás:</h5>
-                                    <h5 class="p-2 text-white text-center">Todo el contenido de este nivel y del anterior</h5><br>
-                                    <h5 class="p-2 text-white text-center">+ de 25 videos con increíbles especialistas en los diversos temas Fintech</h5><br>
-                                    <h4 class="p-2 text-orange text-center">+ 10 Live Streaming <br> Al Mes</h4><br>
-                                    @if ($membresia->price == $price_low)
-                                    <a href="{{route('shopping-cart.store', $membresia->id)}}" class="btn btn-color-green text-white btn-block">Seleccionar Membresia</a>
-                                    @else
-                                        <button class="btn btn-color-green text-white btn-block" disabled>Seleccionar Membresia</button>
-                                    @endif
+                                <div class="card-body" style="position: relative; top:55px; z-index: 1;">
+                                        <div class="row" style="padding:20px;">
+                                                <p class="card-price text-orange text-center" style="font-size:28px;"> <strike>${{$membresia->price}}<span class="period">/Mes &nbsp&nbsp</span> </strike> </p>
+                                                <h4 class="card-price text-orange text-center"> ${{$membresia->descuento}}<span class="period">/Mes</span></h4>
+                                                <h1 class="text-center text-white">. . . . . . . . . . . . . </h1><br><br>
+                                        </div>
+                                        <h5 class="p-2 text-white text-center"> Nos alegra que tu primera impresión haya sido tan buena para crecer en tu formación</h5><br><br>
+                                        <h5 class="p-2 text-white text-center">En este paquete encontrarás:</h5>
+                                        <h5 class="p-2 text-white text-center">Todo el contenido de este nivel y del anterior</h5><br>
+                                        <h5 class="p-2 text-white text-center">+ de 25 videos con increíbles especialistas en los diversos temas Fintech</h5><br>
+                                        <h4 class="p-2 text-orange text-center">+ 10 Live Streaming <br> Al Mes</h4><br>
+                                        @if ($membresia->price == $price_low)
+                                        <a href="{{route('shopping-cart.store', $membresia->id)}}" class="btn btn-color-green text-white btn-block">Seleccionar Membresia</a>
+                                        @else
+                                            <button class="btn btn-color-green text-white btn-block" disabled>Seleccionar Membresia</button>
+                                        @endif
+                                </div>
                             </div>
-                            </div>
-                        </div>
+                    </div>
                     @break
                 @case(3)
                         <!-- Pro Tier -->

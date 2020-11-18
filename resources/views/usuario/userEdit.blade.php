@@ -29,6 +29,10 @@
                     <a class="nav-link" id="pagos-tab" data-toggle="tab" href="#pagos" role="tab" aria-controls="pagos"
                         aria-selected="false">Pagos</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="anotaciones-tab" data-toggle="tab" href="#anotaciones" role="tab" aria-controls="anotaciones"
+                        aria-selected="false">Anotaciones</a>
+                </li>
             </ul>
             <!-- Aquí es informacion personal -->
 
@@ -60,21 +64,29 @@
                 <div class="tab-pane fade" id="pagos" role="tabpanel" aria-labelledby="pagos-tab">
                     @include('usuario.formEdit.pago', ['controler' => $data['controler']])
                 </div>
+                <!-- Termina Pago -->
+
+                 <!-- Empieza Anotaciones -->
+                 <div class="tab-pane fade" id="anotaciones" role="tabpanel" aria-labelledby="anotaciones-tab">
+                    @include('usuario.formEdit.anotaciones')
+                </div>
+                <!-- Termina Anotaciones -->
+
             </div>
-            <!-- Termina Pago -->
+
         </div>
     </div>
 </div>
-                
+
 @endsection
 @push('script')
 <script>
-    
+
     function cancelarPersonal() {
         $('.personal').attr('disabled', true)
         $('#botom0').hide('slow')
     }
-    
+
 
     function cancelarContacto() {
         $('.contacto').attr('disabled', true)
@@ -102,7 +114,7 @@
         $('.personal').attr('disabled', false)
         $('#botom0').show('slow')
     }
-    
+
 
     function activarContacto() {
         $('.contacto').attr('disabled', false)
@@ -124,6 +136,9 @@
         $('.pago').attr('disabled', false)
         $('#botom4').show('slow')
     }
-    
+    $(document).ready( function () {
+        $('#anotacionestabla').DataTable( {
+            responsive: true,
+        });
 </script>
 @endpush

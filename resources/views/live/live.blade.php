@@ -22,7 +22,7 @@
         function refreshSurvey(){
             $("#badge-survey").css('display', 'none');
         }
-        
+
         function newNote(){
             var route = "https://mybusinessacademypro.com/academia/anotaciones/store";
             var parametros = $('#store_note_form').serialize();
@@ -46,7 +46,7 @@
                 }
             });
         }
-        
+
         function newPresentation(){
             $("#store_presentation_submit").css('display', 'none');
             $("#store_presentation_loader").css('display', 'block');
@@ -81,7 +81,7 @@
                 }
             });
         }
-        
+
         function newVideo(){
             $("#store_video_submit").css('display', 'none');
             $("#store_video_loader").css('display', 'block');
@@ -113,7 +113,7 @@
                 }
             });
         }
-        
+
         function newFile(){
             $("#store_file_submit").css('display', 'none');
             $("#store_file_loader").css('display', 'block');
@@ -144,11 +144,11 @@
                         refreshMenu();
                         refreshFileSection(false);
                     }
-                    
+
                 }
             });
         }
-        
+
         function newOffer(){
             $("#store_offer_submit").css('display', 'none');
             $("#store_offer_loader").css('display', 'block');
@@ -183,7 +183,7 @@
                 }
             });
         }
-        
+
         function newResponseSurvey(){
             $("#survey_response_submit").css('display', 'none');
             $("#survey_response_loader").css('display', 'block');
@@ -214,7 +214,7 @@
                 }
             });
         }
-        
+
         function deletePresentation($presentation){
             $("#delete_presentation_submit-"+$presentation).css('display', 'none');
             $("#delete_presentation_loader-"+$presentation).css('display', 'block');
@@ -238,7 +238,7 @@
                 }
             });
         }
-        
+
         function deleteFile($file){
             $("#delete_file_submit-"+$file).css('display', 'none');
             $("#delete_file_loader-"+$file).css('display', 'block');
@@ -262,7 +262,7 @@
                 }
             });
         }
-        
+
         function refreshMenu(){
             var route = "https://mybusinessacademypro.com/academia/refresh-menu/{{Auth::user()->ID}}/{{$event->id}}";
             $.ajax({
@@ -273,7 +273,7 @@
                 }
             });
         }
-        
+
         function refreshVideoSection($notification){
             var route = "https://mybusinessacademypro.com/academia/refresh-video-section/{{$event->id}}";
             $.ajax({
@@ -359,7 +359,7 @@
         channel.bind('notificacion-event', function(data) {
             if (data.user != $("#user_auth").val()){
                 refreshMenu();
-                if (data.type == 'video'){ 
+                if (data.type == 'video'){
                     refreshVideoSection(true);
                 }else if (data.type == 'presentation'){
                     refreshPresentationSection(true);
@@ -382,27 +382,27 @@
     <input type="hidden" id="user_auth" value="{{ Auth::user()->ID }}">
     <input type="hidden" id="event_id" value="{{ $event->id }}">
     <input type="hidden" id="type_user" value="{{ Auth::user()->rol_id }}">
-    
+
     <div class="bg-dark-gray">
         {{-- Encabezado o titulo --}}
         @include('live.components.cabezera')
         @include('live.components.avisos')
-      
-        
+
+
     </div>
-    
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12 pl-0">
                 <div class="row ml-0" style="padding-right: 10%; padding-left: 10%;">
                     {{-- Seccion del Informacion del Mentor --}}
                     @include('live.components.seccionMentor')
-    
+
                 </div>
             </div>
         </div>
     </div>
-    
+
     <form id="delete_resource_form">
         <input type="hidden" name="resource_id" id="resource_id">
         <input type="hidden" name="resource_type" id="resource_type">
@@ -415,7 +415,7 @@
     @include('live.components.optionsMenu.video')
     @include('live.components.optionsMenu.documents')
     @include('live.components.optionsMenu.offers')
-    
+
     <!-- MODALES PARA AGREGAR RECURSOS EN LA OPCIÓN CONFIGURACIÓN DEL MENU -->
     @include('live.components.modal.agregarRecursosVideo')
     @include('live.components.modal.agregarRecursosArchivo')

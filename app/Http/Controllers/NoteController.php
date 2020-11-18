@@ -27,23 +27,24 @@ class NoteController extends Controller
 
 	}
     public function store(Request $request){
+
         $check = Note::where('user_id', '=', Auth::user()->ID)
                     ->where('title', '=', $request->title)
                     ->first();
-        
+
         if (is_null($check)){
             $note_save = Note::create([
             	'title' => $request->title,
             	'content' => $request->content,
-            	'user_id' => Auth::user()->ID
+                'user_id' => Auth::user()->ID,
+                'streaming_id' => $request->event_id,
         	]);
-    
-            $notes = Note::where('user_id', '=', Auth::user()->ID)->orderBy('id', 'DESC')->get();
-    
+            $notes = Note::where('user_id', '=', Auth::user()->ID)->where('streaming_id',$request->event_id)->orderBy('id', 'DESC')->get();
+
             return view('live.components.sections.notesSection')->with(compact('notes'));
         }else{
-           return response()->json(false); 
+           return response()->json(false);
         }
-    
+
     }
 }

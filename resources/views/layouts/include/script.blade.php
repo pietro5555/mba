@@ -69,7 +69,7 @@
 <script type="text/javascript">
 $('.toggle').on('click',function(e){
  e.preventDefault();
-        
+
    Swal.fire({
   title: '¿Esta seguro(a) de realizar esta acción? Los cambios que realice pueden afectar la imagen y funcionamiento del sistema.',
   type:'warning',
@@ -89,7 +89,7 @@ $('.toggle').on('click',function(e){
 <script type="text/javascript">
 $('#modal').on('click',function(e){
  e.preventDefault();
-        
+
    Swal.fire({
   title: '¿Esta seguro(a) de realizar esta acción? Los cambios que realice pueden afectar la imagen y funcionamiento del sistema.',
   type:'warning',
@@ -109,7 +109,7 @@ $('#modal').on('click',function(e){
 <script type="text/javascript">
 $('#modal3').on('click',function(e){
  e.preventDefault();
-        
+
    Swal.fire({
   title: '¿Esta seguro(a) de realizar esta acción? Los cambios que realice pueden afectar la imagen y funcionamiento del sistema.',
   type:'warning',

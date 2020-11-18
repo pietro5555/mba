@@ -409,7 +409,7 @@ class EventsController extends Controller
 
             if (is_null($disponibilidad)) {
                 Auth::user()->events()->attach($evento, ['date' => $fechaEvento, 'time' => $horaEvento]);
-                
+
                 $this->correoAgenda($evento);
 
                 return redirect('/')->with('msj-exitoso', 'El evento ha sido reservado en su agenda con éxito.');
@@ -420,10 +420,10 @@ class EventsController extends Controller
             return redirect('/')->with('msj-erroneo', 'Ya este evento se encuentra registrado en su agenda.');
         }
     }
-     
+
 
      public function correoAgenda($evento){
-        
+
         $plantilla = SettingCorreo::find(8);
         $event = Events::find($evento);
         $p = $event->date."T".$event->time;
@@ -432,7 +432,7 @@ class EventsController extends Controller
         $horaLimite->addHours(5);
         $mentor = User::find($event->user_id);
         $user = User::find(Auth::user()->ID);
-        
+
         if($event->correos == 0){
              if (!empty($plantilla->contenido)) {
             $mensaje = str_replace('@titulo', ' '.$event->title.' ', $plantilla->contenido);

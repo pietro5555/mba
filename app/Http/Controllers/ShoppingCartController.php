@@ -10,16 +10,16 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Addresip;
 use App\Models\OffersLive;
-use App\Models\Paises;
+use App\Models\Paises; 
 use Carbon\Carbon;
-
+ 
 class ShoppingCartController extends Controller
 {
     /**
      * Carrito de Compras (Usuarios No Registrados y Usuarios Registrados)
      */
     public function index(Request $request){
-
+        
         /*Paises para el formulario*/
         $paises = Paises::all();
 
@@ -28,10 +28,10 @@ class ShoppingCartController extends Controller
             $items = DB::table('shopping_cart')->where('user_id', '=', request()->ip())
                         ->orderBy('date', 'DESC')
                         ->get();
-
+            
             $cantItems = 0;
 
-            foreach ($items as $item){
+            foreach ($items as $item){     
                 $cantItems++;
             }
 
@@ -53,30 +53,23 @@ class ShoppingCartController extends Controller
             }
             */
         }else{
+             
+            $this->cambioUsers();       
 
-            $this->cambioUsers();
-
-            $iteraciones = DB::table('shopping_cart')
-                            ->where('user_id', '=', Auth::user()->ID)
-                            ->orderBy('date', 'DESC')
-                            ->get();
-
+            $iteraciones = DB::table('shopping_cart')->where('user_id', '=', Auth::user()->ID)
+                        ->orderBy('date', 'DESC')
+                        ->get();
+            
             $cantItems = 0;
 
-            foreach ($iteraciones as $iterar){
-                $contador = DB::table('shopping_cart')
-                            ->where('user_id', '=', Auth::user()->ID)
-                            ->where('course_id', $iterar->course_id)
-                            ->count('id');
+            foreach ($iteraciones as $iterar){ 
+
+            $contador = DB::table('shopping_cart')->where('user_id', '=', Auth::user()->ID)->where('course_id', $iterar->course_id)->count('id');
 
                 if($contador == 1){
-                    $cantItems++;
+                $cantItems++;
                 }else{
-                    $contador = DB::table('shopping_cart')
-                                    ->where('user_id', '=', Auth::user()->ID)
-                                    ->where('course_id', $iterar->course_id)
-                                    ->where('id', $iterar->id)
-                                    ->delete();
+                 $contador = DB::table('shopping_cart')->where('user_id', '=', Auth::user()->ID)->where('course_id', $iterar->course_id)->where('id', $iterar->id)->delete();
                 }
             }
 
@@ -86,20 +79,29 @@ class ShoppingCartController extends Controller
         $membresia = null;
         $totalItems = 0;
         foreach ($items as $item) {
+
             if ($item->course_id != null) {
-                $curso = DB::table('memberships')->where('id', $item->course_id)->first();
+                if (is_null(Auth::user()->membership_id)){
+                    $membresia = DB::table('memberships')->where('id', 1)->first();
+                }else{
+                    if (Auth::user()->membership_id < 6){
+                        $membresia = DB::table('memberships')->where('id', Auth::user()->membership_id+1)->first();
+                    }else{
+                        $membresia = DB::table('memberships')->where('id', 6)->first();
+                    }
+                }
+                //$curso = DB::table('memberships')->where('id', $item->course_id)->first();
+                
                 $direcip = Addresip::where('ip', request()->ip())->first();
 
                 if($direcip == null){
-                    if($item->course_id == 6){
-                        $total = $curso->price; //before price
-                    }else
-                    {
-                        $total = $curso->descuento; //before price
-                    }
-
+                   if($membresia->id == 6){
+                        $total = $membresia->price; //before price
+                    }else{
+                        $total = $membresia->descuento; //before price
+                    }         
                 }else{
-                $total = $this->descuentogeneral($curso->id);
+                    $total = $this->descuentogeneral($membresia->id); 
                 }
                 // $categoria = null;
                 // $mentor = null;
@@ -108,36 +110,37 @@ class ShoppingCartController extends Controller
                 //     $mentor = User::find($curso->mentor_id);
                 // }
                 $item->curso = [
-                    'titulo' => (!empty($curso)) ? $curso->name : 'Membresia no disponible',
+                    'titulo' => (!empty($membresia)) ? $membresia->name : 'Membresia no disponible',
                     // 'categoria' => (!empty($categoria)) ? $categoria->title : 'Categoria no disponible',
                     // 'mentor' => (!empty($mentor)) ? $mentor->display_name : 'Mento no disponible',
-                    'precio' => (!empty($curso)) ? $total : 0,
-                    'img' => (!empty($curso)) ? asset('/uploads/images/courses/covers/'.$curso->image) : 'no disponible'
+                    'precio' => (!empty($membresia)) ? $total : 0,
+                    'img' => (!empty($membresia)) ? asset('/uploads/images/courses/covers/'.$membresia->image) : 'no disponible'
                 ];
-                $totalItems += (!empty($curso)) ? $total : 0;
+                $totalItems += (!empty($membresia)) ? $total : 0;
             }elseif($item->offer_id != null){
-
+                
                 $oferta = OffersLive::find($item->offer_id);
 
                 $item->curso = [
                     'titulo' => (!empty($oferta)) ? $oferta->title : 'Oferta no disponible',
-                    'precio' => (!empty($oferta)) ? $oferta->price : 0, //before price
+                    'precio' => (!empty($oferta)) ? $oferta->price : 0,
                     'img' => (!empty($oferta)) ? asset('/upload/events/'.$oferta->url_resource) : 'no disponible'
                 ];
-
                 $totalItems += (!empty($oferta)) ? $oferta->price : 0; //before price
+                
                 /*if($item->course_id == 6){
                     $totalItems += (!empty($oferta)) ? $oferta->price : 0; //before price
                     $membresia = 1;
-                }else{
+                }
+                else{
                     $totalItems += (!empty($oferta)) ? $oferta->descuento : 0; //before price
                     $membresia = 1;
                 }*/
             }
-
+          
         }
-
-
+          
+        
         //RETORNAR VISTA AQUÍ
         return view('carrito_user.index')->with(compact('items', 'totalItems', 'membresia','paises'));
     }
@@ -170,16 +173,18 @@ class ShoppingCartController extends Controller
             if ($request->type == null) {
                 $itemAgregado = DB::table('shopping_cart')
                                 ->where('user_id', '=', Auth::user()->ID)
-                                ->where('course_id', '=', $id)
-                                ->count();
-
-                if ($itemAgregado == 0){
+                                ->where('course_id', '<>', NULL)
+                                ->delete();
+                /*foreach ($itemsAgregados as $items){
+                    $itemAgregado->delete();
+                }
+                if ($itemAgregado == 0){-*/
                     $item = new ShoppingCart();
                     $item->user_id = Auth::user()->ID;
                     $item->course_id = $id;
                     $item->date = date('Y-m-d');
                     $item->save();
-                }
+                //}
             }else{
                 $itemAgregado = DB::table('shopping_cart')
                                 ->where('user_id', '=', Auth::user()->ID)
@@ -194,7 +199,7 @@ class ShoppingCartController extends Controller
                     $item->save();
                 }
             }
-
+            
             return redirect('shopping-cart');
         }
     }
@@ -239,7 +244,7 @@ class ShoppingCartController extends Controller
         $compra->status = 1;
 
         $items = json_decode($datosOrden->detalles);
-
+                    
         $fecha = date('Y-m-d H:i:s');
 
         foreach ($items as $item){
@@ -256,10 +261,10 @@ class ShoppingCartController extends Controller
                             'start_date' => date('Y-m-d'),
                             'created_at' => $fecha,
                             'updated_at' => $fecha]);
-
-            $compra->link = $item->links;
+                            
+            $compra->link = $item->links;                
         }
-
+        
         $compra->save();
     }
 
@@ -283,16 +288,15 @@ class ShoppingCartController extends Controller
         }else if($datosOrden->idtransacion_stripe == null && $datosOrden->idtransacion_coinpaymen == null){
             $compra->payment_method = 'Billetera';
         }
-        
         $compra->date = date('Y-m-d');
         $compra->status = 1;
 
         $detallesMembresia = json_decode($datosOrden->detalles);
-
+        
         if ($datosOrden->type_product == 'membresia') {
             $compra->link = $detallesMembresia->links;
         }else{
-
+            
         }
         $compra->save();
 
@@ -305,13 +309,13 @@ class ShoppingCartController extends Controller
         }
         $detalle->amount = $detallesMembresia->precio;
         $detalle->save();
-
+        
         if ($datosOrden->type_product == 'membresia') {
             $datosMembresia = DB::table('memberships')
                                 ->select('type')
                                 ->where('id', '=', $detallesMembresia->idmembresia)
                                 ->first();
-
+            
             $fechaCompra = Carbon::now();
             if ($datosMembresia->type == 'monthly'){
                 $fechaExpiracion = $fechaCompra->addMonth();
@@ -326,12 +330,13 @@ class ShoppingCartController extends Controller
                       'membership_status' => 1,
                       'membership_expiration' => $fechaExpiracion]);
         }
-
+                      
         DB::table('shopping_cart')
             ->where('user_id', '=', $datosOrden->user_id)
             ->delete();
     }
-
+    
+    
 
     /**
      * Lleva a la vista de las membresia para poder selecionar una
@@ -340,13 +345,13 @@ class ShoppingCartController extends Controller
      */
     public function memberships()
     {
-
+        
         /* almacenamos el ID de la persona que envio el link */
         if(!empty(request()->ref)){
            $this->almacenar_addres();
         }
-
-
+        
+        
         $dataDescripcion = [
             'Principiante' => 'Accesos a todos los cursos de nivel principiante',
             'Basico' => 'Accesos a todos los cursos de nivel Basico',
@@ -360,13 +365,14 @@ class ShoppingCartController extends Controller
         foreach ($membresias as $membresia) {
             $membresia->descripcion = $dataDescripcion[$membresia->name];
         }
-
+       
+      
         return view('carrito_user.membership', compact('membresias'));
     }
 
 
     public function almacenar_addres(){
-
+      
       $direcccion = Addresip::where('ip', request()->ip())->first();
 
       if($direcccion == null){
@@ -383,10 +389,10 @@ class ShoppingCartController extends Controller
 
 
     public function descuentogeneral($id){
-
-
+       
+       
        $descuento = DB::table('memberships')->where('id', $id)->first();
-
+       
        if($descuento != null){
            $total = $descuento->descuento;
        }else{
@@ -405,15 +411,15 @@ class ShoppingCartController extends Controller
                 $cambiando = ShoppingCart::find($camb->id);
                 $cambiando->user_id = Auth::user()->ID;
                 $cambiando->save();
-            }
+            }    
     }
 
     public function purchases_record(){
         // TITLE
         view()->share('title', 'Historial de Compras');
-
+        
         $compras = Purchase::with(['details'])->orderBy('id', 'DESC')->get();
-
+        
         foreach ($compras as $compra){
             foreach ($compra->details as $p){
                 $compra->membership = $p->membership;
@@ -428,9 +434,9 @@ class ShoppingCartController extends Controller
     public function purchases_filtre(Request $datos){
         // TITLE
         view()->share('title', 'Historial de Compras');
-
+        
         $compras = Purchase::with(['details'])->whereDate('date', '>=', $datos->fecha1)->whereDate('date', '<=', $datos->fecha2)->orderBy('id', 'DESC')->get();
-
+        
         foreach ($compras as $compra){
             foreach ($compra->details as $p){
                 $compra->membership = $p->membership;
@@ -439,14 +445,14 @@ class ShoppingCartController extends Controller
 
         return view('admin.purchasesRecord')->with(compact('compras'));
     }
-
+    
     /*filtro por tipo de pago*/
     public function purchases_forma(Request $datos){
         // TITLE
         view()->share('title', 'Historial de Compras');
-
+        
         $compras = Purchase::with(['details'])->where('payment_method', $datos->lista)->orderBy('id', 'DESC')->get();
-
+        
         foreach ($compras as $compra){
             foreach ($compra->details as $p){
                 $compra->membership = $p->membership;

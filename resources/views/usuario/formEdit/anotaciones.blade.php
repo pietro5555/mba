@@ -17,10 +17,10 @@
         <tbody>
             @foreach ($notes as $note)
             <tr>
-                    <td class="white" >{{$note->id}}</td>
-                    <td class="white">{{$note->title}}</td>
-                    <td class="white">{{$note->content}}</td>
-            <td class="white">{{$note->streaming->title}}</td>
+                    <td class="text-center white" >{{$note->id}}</td>
+                    <td class="text-center white">{{$note->title}}</td>
+                    <td class="text-center white">{{$note->content}}</td>
+                    <td class="text-center white">{{$note->streaming->title}}</td>
             </tr>
             @endforeach
         </tbody>

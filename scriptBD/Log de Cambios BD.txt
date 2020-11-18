@@ -237,3 +237,7 @@ Dev Pietro
 13/11/2020
 Dev: Crisleivys
 * Nuevos campos descripcion_completa y banner en la tabla de entradas (correr script entradas)
+
+18/11/2020
+*anexar columna correos para verificar si se a enviado un correo a las personas al iniciar el live y 
+cuando falte 1 hora (correr el script events)

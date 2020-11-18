@@ -912,13 +912,25 @@ class Menu
             
             
             'Envio de correos' => [
-                'submenu' => 0,
-                'ruta' => 'correo-vista',
-                'black'=> '0',
+                'submenu' => 1,
+                'ruta' => 'javascript:;',
                 'icono' => 'fas fa-envelope-open-text',
-                'complementoruta' => '',
                 'permisoAdmin' => (!empty($permiso)) ? $permiso->correos : 0,
-                'activo' => 0,
+                'activo' => (request()->is('admin/settings*')) ? 'active' : '',
+                'menus' => [
+                    'Correos a la Red' => [
+                        'ruta' => 'correo-vista',
+                        'complementoruta' => '',
+                        'black'=> '0',
+                        'oculto'=> 'activo',
+                    ],
+                    'Notificaciones de eventos' => [
+                        'ruta' => 'settings-correo-anexar',
+                        'complementoruta' => '',
+                        'black'=> '0',
+                        'oculto'=> 'activo',
+                    ],
+                ]
             ],
             
             'Pop up' => [

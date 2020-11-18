@@ -437,7 +437,6 @@ class EventsController extends Controller
              if (!empty($plantilla->contenido)) {
             $mensaje = str_replace('@titulo', ' '.$event->title.' ', $plantilla->contenido);
             $mensaje = str_replace('@mentor', ' '.$mentor->display_name.' ', $mensaje);
-            $mensaje = str_replace('@fecha', ' '.$horaLimite.' ', $mensaje);
             $mensaje = str_replace('@nombre', ' '.$user->display_name.' ', $mensaje);
             Mail::send('emails.plantilla',  ['data' => $mensaje], function($msj) use ($plantilla, $user){
                 $msj->subject($plantilla->titulo);

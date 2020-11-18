@@ -89,8 +89,14 @@
                                     <div id="collapse{{$note->id}}" class="collapse"
                                         aria-labelledby="heading{{$note->id}}"
                                         data-parent="#accordionNote{{$note->id}}">
-                                        <div class="card-body  mb-2">
+                                        <div class="card-body mb-2">
                                             {{$note->content}}
+                                            
+                                            <div class="text-right">
+                                                <a class="btn btn-success" onclick="editNote({{$note}});"><i class="fa fa-edit"></i> Editar</a>
+                                                <a class="btn btn-danger" onclick="deleteNote({{$note->id}});"><i class="fa fa-trash"></i> Eliminar</a>
+                                            </div>
+                                            
                                         </div>
                                     </div>
                                 </div>

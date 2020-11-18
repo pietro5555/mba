@@ -47,4 +47,31 @@ class NoteController extends Controller
         }
 
     }
+    
+    public function update(Request $request){
+        $check = Note::where('id', '<>', $request->note_id)
+                    ->where('user_id', '=', Auth::user()->ID)
+                    ->where('title', '=', $request->title)
+                    ->first();
+        
+        if (is_null($check)){
+            $nota = Note::find($request->note_id);
+            $nota->fill($request->all());
+            $nota->save();
+    
+            $notes = Note::where('user_id', '=', Auth::user()->ID)->orderBy('id', 'DESC')->get();
+    
+            return view('live.components.sections.notesSection')->with(compact('notes'));
+        }else{
+           return response()->json(false); 
+        }
+    }
+    
+    public function delete($id){
+        Note::destroy($id);
+        
+        $notes = Note::where('user_id', '=', Auth::user()->ID)->orderBy('id', 'DESC')->get();
+    
+        return view('live.components.sections.notesSection')->with(compact('notes'));
+    }
 }

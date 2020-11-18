@@ -47,6 +47,55 @@
             });
         }
 
+        
+        function editNote($nota){
+            $("#id-note").val($nota.id);
+            $("#title-note").val($nota.title);
+            $("#content-note").val($nota.content);
+            $("#modal-edit-note").modal("show");
+        }
+        
+        function updateNote(){
+            $("#update_note_submit").css('display', 'none');
+            $("#update_note_loader").css('display', 'block');
+            var route = "https://mybusinessacademypro.com/academia/anotaciones/update";
+            var parametros = $('#update_note_form').serialize();
+            $.ajax({
+                url:route,
+                type:'POST',
+                data:  parametros,
+                success:function(ans){
+                    $("#update_note_loader").css('display', 'none');
+                    $("#update_note_submit").css('display', 'block');
+                    if (ans == false){
+                        $("#msj-success-ajax").css('display', 'none');
+                        $("#msj-error-text").html("Ya posee una nota con el mismo nombre");
+                        $("#msj-error-ajax").css('display', 'block');
+                        $("#modal-edit-note").modal("hide");
+                    }else{
+                        $("#msj-error-ajax").css('display', 'none');
+                        $("#msj-success-text").html("La nota ha sido actualizada con éxito");
+                        $("#msj-success-ajax").css('display', 'block');
+                        $("#notes_section").html(ans);
+                        $("#modal-edit-note").modal("hide");
+                    }
+                }
+            });
+        }
+        function deleteNote($id){
+            var route = "https://mybusinessacademypro.com/academia/anotaciones/delete/"+$id;
+            $.ajax({
+                url:route,
+                type:'GET',
+                success:function(ans){
+                    $("#msj-error-ajax").css('display', 'none');
+                    $("#msj-success-text").html("La nota ha sido eliminada con éxito");
+                    $("#msj-success-ajax").css('display', 'block');
+                    $("#notes_section").html(ans);
+                }
+            });
+        }
+        
         function newPresentation(){
             $("#store_presentation_submit").css('display', 'none');
             $("#store_presentation_loader").css('display', 'block');
@@ -407,6 +456,7 @@
         <input type="hidden" name="resource_id" id="resource_id">
         <input type="hidden" name="resource_type" id="resource_type">
     </form>
+    
     <!-- MODALES PARA LAS OPCIONES DEL MENU -->
     @include('live.components.optionsMenu.chat')
     @include('live.components.optionsMenu.setting')
@@ -422,6 +472,7 @@
     @include('live.components.modal.agregarRecursosPresentacion')
     @include('live.components.modal.agregarRecursosEncuestas')
     @include('live.components.modal.agregarRecursosOfertas')
+    @include('live.components.modal.editNote')
 
     <!-- Scrips de la seccion de live -->
     @include('live.components.scritpsLive')

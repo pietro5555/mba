@@ -18,6 +18,7 @@ use App\Models\SetEvent;
 use App\Models\SurveyOptions;
 use App\Models\SurveyResponse;
 use App\Models\Streaming\Meeting;
+use App\Models\EventUser;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -142,6 +143,7 @@ class EventsController extends Controller
         $calendario->color = '#28a745';
         $calendario->lugar = 'Ninguno';
         $calendario->iduser = $evento->user_id;
+        $calendario->event_id = $evento->id;
         $calendario->save();
 
         if ($request->hasFile('banner')) {
@@ -196,7 +198,7 @@ class EventsController extends Controller
         $resources_survey = SetEvent::where('event_id', $event_id)->where('type', 'survey')->with('pregunta')->get();
         $resources_video = SetEvent::where('event_id', $event_id)->where('type', 'video')->get()->first();
         $resources_offer = OffersLive::all()->where('event_id', $event_id);
-        
+
         $surveysCount = $resources_survey->count();
         $surveysUser = 0;
         if (Auth::user()->rol_id == 3){
@@ -207,7 +209,7 @@ class EventsController extends Controller
                 }
             }
         }
-        
+
         /*Files*/
         $files = SetEvent::where('event_id', $event_id)
                     ->where('type', 'file')
@@ -216,7 +218,7 @@ class EventsController extends Controller
         $presentations = SetEvent::where('event_id', $event_id)
                             ->where('type', 'presentation')
                             ->get();
-        
+
         return view('live.live', compact('event','notes', 'menuResource', 'resources_survey', 'resources_video', 'files', 'presentations', 'resources_offer', 'surveysCount', 'surveysUser'));
     }
 
@@ -344,6 +346,23 @@ class EventsController extends Controller
         }
         $evento->save();
 
+        //Actualizar datos en el calendario
+        $update_calendar = Calendario::where('event_id', $evento->id)->get();
+        foreach ($update_calendar as $calendar) {
+            $calendar->inicio = $evento->date;
+            $calendar->time = $evento->time;
+            $calendar->titulo = $evento->title;
+            $calendar->contenido = $evento->description;
+            $calendar->save();
+        }
+
+        //Actualizar datos en el evento agendado por el usuario
+        $update_user_events =EventUser::where('event_id', $evento->id)->get();
+        foreach ($update_user_events as $events) {
+            $events->date = $evento->date;
+            $events->time = $evento->time;
+            $events->save();
+        }
         return redirect('admin/events')->with('msj-exitoso', 'El evento ' . $evento->title . ' ha sido modificado con éxito.');
     }
 

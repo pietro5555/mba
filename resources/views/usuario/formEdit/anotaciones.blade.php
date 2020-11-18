@@ -1,11 +1,11 @@
 <div class="col-md-12">
-    <div class="box box-info" style="border-radius: 10px;">
+    <div class="box" style="border-radius: 10px;">
         <div class="box-body">
 
 <h3 class="box-title white" style="margin-top: -5px; margin-bottom: 20px; padding: 15px 20px;border-radius: 20px; background-color: #005aff; color: white;">Anotaciones de los eventos
 </h3>
 @if(!$notes->isEmpty())
-<table class="table" id="anotacionestabla">
+<table  id="mytable" class="table" style="width: 100%!important;">
         <thead>
           <tr>
             <th>#</th>
@@ -31,3 +31,6 @@
 </div>
 
 @endif
+</div>
+</div>
+</div>

@@ -30,6 +30,7 @@ class Events extends Model
         'duration',
         'image',
         'status',
+        'correos',
         'type',
         'url_streaming',
         'url_video',

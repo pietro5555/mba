@@ -698,6 +698,11 @@ Route::group(['prefix' => 'installer'], function (){
            Route::post('/editdepart', 'Settings\CostoController@editdepart')->name('setting-edit-depart');
            Route::get('/eliminarcapital/{id}', 'Settings\CostoController@eliminarcapital')->name('setting-eliminar-capital');
            Route::get('/eliminardepart/{id}', 'Settings\CostoController@eliminardepart')->name('setting-eliminar-depart');
+
+           //configuracion correo admin para notificar
+         Route::get('/email', 'Notificaciones\CorreoController@correoanex')->name('settings-correo-anexar');
+         Route::post('/correosave', 'Notificaciones\CorreoController@savecorreo')->name('settings-save-correo');
+         Route::post('/saveplantillanueva', 'Notificaciones\CorreoController@saveplantilla')->name('settings-save-plantilla-nueva');
       });
 
 

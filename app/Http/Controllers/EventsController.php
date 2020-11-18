@@ -21,7 +21,9 @@ use App\Models\Streaming\Meeting;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\Models\SettingCorreo;
 use DateTime;
+use Mail;
 
 class EventsController extends Controller
 {
@@ -385,6 +387,8 @@ class EventsController extends Controller
 
             if (is_null($disponibilidad)) {
                 Auth::user()->events()->attach($evento, ['date' => $fechaEvento, 'time' => $horaEvento]);
+                
+                $this->correoAgenda($evento);
 
                 return redirect('/')->with('msj-exitoso', 'El evento ha sido reservado en su agenda con éxito.');
             } else {
@@ -394,7 +398,32 @@ class EventsController extends Controller
             return redirect('/')->with('msj-erroneo', 'Ya este evento se encuentra registrado en su agenda.');
         }
     }
+     
 
+     public function correoAgenda($evento){
+        
+        $plantilla = SettingCorreo::find(8);
+        $event = Events::find($evento);
+        $p = $event->date."T".$event->time;
+        $horaEvento = new Carbon($p);
+        $horaLimite = new Carbon($p);
+        $horaLimite->addHours(5);
+        $mentor = User::find($event->user_id);
+        $user = User::find(Auth::user()->ID);
+        
+        if($event->correos == 0){
+             if (!empty($plantilla->contenido)) {
+            $mensaje = str_replace('@titulo', ' '.$event->title.' ', $plantilla->contenido);
+            $mensaje = str_replace('@mentor', ' '.$mentor->display_name.' ', $mensaje);
+            $mensaje = str_replace('@fecha', ' '.$horaLimite.' ', $mensaje);
+            $mensaje = str_replace('@nombre', ' '.$user->display_name.' ', $mensaje);
+            Mail::send('emails.plantilla',  ['data' => $mensaje], function($msj) use ($plantilla, $user){
+                $msj->subject($plantilla->titulo);
+                $msj->to($user->user_email);
+             });
+           }
+        }
+    }
 
     /**
      * Admin / Cursos / Listado de Cursos / Eliminar Curso (Lógico)

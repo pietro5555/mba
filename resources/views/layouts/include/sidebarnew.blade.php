@@ -14,16 +14,16 @@
                 <i class="fa fa-circle text-danger"></i>
                     <strong>Inactivo</strong>
                     @else
-                <i class="fa fa-circle text-success"></i>    
+                <i class="fa fa-circle text-success"></i>
                     <strong>Activo</strong>
                     @endif</span></a>
             </div>
         </div>--}}
-        
+
         <ul class="sidebar-menu" data-widget="tree">
             {{-- INICIO --}}
             <li class="header">Menu</li>
-            
+
             {{-- el arreglo de menus esta en el middleware menu --}}
             @foreach ($menus as $index => $item)
             @if ($item['permisoAdmin'] == 1)
@@ -96,7 +96,7 @@
                                     @endif
                                 @endif
                             @endif
-                            
+
                         </li>
                         @endif
                         @endforeach

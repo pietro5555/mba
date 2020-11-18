@@ -268,6 +268,8 @@ Route::group(['prefix' => 'installer'], function (){
   //vista de anotaciones
   Route::get('/anotaciones', 'NoteController@index')->name('anotaciones');
   Route::post('/anotaciones/store', 'NoteController@store')->name('live.anotaciones');
+  Route::post('/anotaciones/update', 'NoteController@update')->name('live.update-note');
+  Route::get('/anotaciones/delete/{id}', 'NoteController@delete')->name('live.delete-note');
 
   //vista de timelive
       Route::group(['prefix' => 'time'], function(){

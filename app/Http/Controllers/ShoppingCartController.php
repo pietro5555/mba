@@ -56,20 +56,27 @@ class ShoppingCartController extends Controller
 
             $this->cambioUsers();
 
-            $iteraciones = DB::table('shopping_cart')->where('user_id', '=', Auth::user()->ID)
-                        ->orderBy('date', 'DESC')
-                        ->get();
+            $iteraciones = DB::table('shopping_cart')
+                            ->where('user_id', '=', Auth::user()->ID)
+                            ->orderBy('date', 'DESC')
+                            ->get();
 
             $cantItems = 0;
 
             foreach ($iteraciones as $iterar){
-
-            $contador = DB::table('shopping_cart')->where('user_id', '=', Auth::user()->ID)->where('course_id', $iterar->course_id)->count('id');
+                $contador = DB::table('shopping_cart')
+                            ->where('user_id', '=', Auth::user()->ID)
+                            ->where('course_id', $iterar->course_id)
+                            ->count('id');
 
                 if($contador == 1){
-                $cantItems++;
+                    $cantItems++;
                 }else{
-                 $contador = DB::table('shopping_cart')->where('user_id', '=', Auth::user()->ID)->where('course_id', $iterar->course_id)->where('id', $iterar->id)->delete();
+                    $contador = DB::table('shopping_cart')
+                                    ->where('user_id', '=', Auth::user()->ID)
+                                    ->where('course_id', $iterar->course_id)
+                                    ->where('id', $iterar->id)
+                                    ->delete();
                 }
             }
 
@@ -79,7 +86,6 @@ class ShoppingCartController extends Controller
         $membresia = null;
         $totalItems = 0;
         foreach ($items as $item) {
-
             if ($item->course_id != null) {
                 $curso = DB::table('memberships')->where('id', $item->course_id)->first();
                 $direcip = Addresip::where('ip', request()->ip())->first();
@@ -115,20 +121,18 @@ class ShoppingCartController extends Controller
 
                 $item->curso = [
                     'titulo' => (!empty($oferta)) ? $oferta->title : 'Oferta no disponible',
-                    'precio' => (!empty($oferta)) ? $oferta->descuento : 0, //before price
-                    'img' => 'no disponible'
+                    'precio' => (!empty($oferta)) ? $oferta->price : 0, //before price
+                    'img' => (!empty($oferta)) ? asset('/upload/events/'.$oferta->url_resource) : 'no disponible'
                 ];
-                if($item->course_id == 6){
+
+                $totalItems += (!empty($oferta)) ? $oferta->price : 0; //before price
+                /*if($item->course_id == 6){
                     $totalItems += (!empty($oferta)) ? $oferta->price : 0; //before price
                     $membresia = 1;
-                }
-                else{
+                }else{
                     $totalItems += (!empty($oferta)) ? $oferta->descuento : 0; //before price
                     $membresia = 1;
-                }
-
-
-
+                }*/
             }
 
         }

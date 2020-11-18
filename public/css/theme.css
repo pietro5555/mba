@@ -1855,7 +1855,7 @@ p.card-text.font-weight-bold.mr-2 {
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
     z-index: 9999;
-    margin: 5px;
+    margin: -25px;
 }
 
 .icon-bar a {
@@ -1999,3 +1999,4 @@ p.card-text.font-weight-bold.mr-2 {
     align-content: center;
     flex-direction: column;
 }
+

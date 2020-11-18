@@ -24,6 +24,9 @@ use Carbon\Carbon;
 use App\Models\SettingCorreo;
 use DateTime;
 use Mail;
+use App\Models\Notification;
+
+use App\Http\Controllers\Notificaciones\CorreoController;
 
 class EventsController extends Controller
 {
@@ -423,6 +426,11 @@ class EventsController extends Controller
              });
            }
         }
+
+
+        //agendar notificacion
+        $notifiacion = new CorreoController;
+        $notifiacion->notificar(Auth::user()->ID, 'Nuevo Evento Agendado', 'calendar', 'fas fa-calendar', 'Eventos agendados');
     }
 
     /**
@@ -649,6 +657,11 @@ class EventsController extends Controller
 
     /*MOSTRAR CALENDARIO DE EVENTOS DEL USUARIO*/
     public function calendar(){
+
+         //eliminarNotificaciones
+        $notifiacion = new CorreoController;
+        $notifiacion->eliminarNotificacion(Auth::user()->ID, 'Eventos agendados');
+
         /*DATOS PARA PINTAR EL CALENDARIO*/
         $user_calendar = Calendario::where('iduser', Auth::user()->ID)->get();
         $usuario = Auth::user()->ID;

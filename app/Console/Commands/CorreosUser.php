@@ -11,6 +11,7 @@ use App\Models\User;
 use DB;
 use Auth; 
 use Mail;
+use App\Models\Notification;
 
 class CorreosUser extends Command
 {

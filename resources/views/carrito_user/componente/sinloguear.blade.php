@@ -21,9 +21,6 @@
     
 </style>
 
-<h3 class="text-white">Registrate para disfrutar de tu compra</h3>
-<h6 class="text-white">Si ya estás registrado puedes <a href="#" onclick="toggle()">entrar</a></h6>
-
 {{-- notificaciones --}}
 
       @if($errors->any())
@@ -59,6 +56,8 @@
     @endif
 
 <div class="col-md-12 mostrar" style="margin-top: 30px;">
+    <h3 class="text-white">Inicia Sesión para disfrutar de tu compra</h3>
+    <h6 class="text-white">Si no estás registrado puedes hacerlo <a href="#" onclick="toggle()">aquí</a></h6>
 <form class="login-form" method="POST" action="{{ route('aut-shoping') }}" name="formulario">
                             {{ csrf_field() }}
                                                   
@@ -83,6 +82,8 @@
 
 
 <div class="col-xs-12 mostrar" style="display:none; margin-top: 30px;">
+    <h3 class="text-white">Regístrate para disfrutar de tu compra</h3>
+    <h6 class="text-white">Si ya estás registrado puedes <a href="#" onclick="toggle()">entrar</a></h6>
    <form class="login-form" method="POST" action="{{ route('autenticacion.save-register') }}" name="formulario">
                             {{ csrf_field() }}
                                                   

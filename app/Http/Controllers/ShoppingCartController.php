@@ -81,14 +81,18 @@ class ShoppingCartController extends Controller
         foreach ($items as $item) {
 
             if ($item->course_id != null) {
-                if (is_null(Auth::user()->membership_id)){
-                    $membresia = DB::table('memberships')->where('id', 1)->first();
-                }else{
-                    if (Auth::user()->membership_id < 6){
-                        $membresia = DB::table('memberships')->where('id', Auth::user()->membership_id+1)->first();
+                if (!Auth::guest()){
+                    if (is_null(Auth::user()->membership_id)){
+                        $membresia = DB::table('memberships')->where('id', 1)->first();
                     }else{
-                        $membresia = DB::table('memberships')->where('id', 6)->first();
+                        if (Auth::user()->membership_id < 6){
+                            $membresia = DB::table('memberships')->where('id', Auth::user()->membership_id+1)->first();
+                        }else{
+                            $membresia = DB::table('memberships')->where('id', 6)->first();
+                        }
                     }
+                }else{
+                    $membresia = DB::table('memberships')->where('id', $item->membership_id)->first();
                 }
                 //$curso = DB::table('memberships')->where('id', $item->course_id)->first();
                 
@@ -149,42 +153,33 @@ class ShoppingCartController extends Controller
     /**
      * Almacenar en el Carrito de Compras (Usuarios No Registrados y Usuarios Registrados)
      */
-    public function store(Request $request, $id){
+    public function store(Request $request, $id, $type = null){
 
         if (Auth::guest()){
-
-             $itemAgregado = DB::table('shopping_cart')
+            $itemAgregado = DB::table('shopping_cart')
                                 ->where('user_id', '=', request()->ip())
-                                ->where('course_id', '=', $id)
-                                ->count();
+                                ->delete();
 
-            if ($itemAgregado == 0){
-                $item = new ShoppingCart();
-                $item->user_id = request()->ip();
-                $item->course_id = $id;
-                $item->date = date('Y-m-d');
-                $item->save();
+            $item = new ShoppingCart();
+            $item->user_id = request()->ip();
+            $item->course_id = $id;
+            $item->membership_id = $id;
+            $item->date = date('Y-m-d');
+            $item->save();
 
-                return redirect('shopping-cart')->with('msj-exitoso', 'El item ha sido agregado a su carrito de compras con éxito.');
-            }else{
-                return redirect('shopping-cart')->with('msj-informativo', 'El item ya se encuentra en su carrito de compras.');
-            }
+            return redirect('shopping-cart')->with('msj-exitoso', 'El item ha sido agregado a su carrito de compras con éxito.');
         }else{
             if ($request->type == null) {
                 $itemAgregado = DB::table('shopping_cart')
                                 ->where('user_id', '=', Auth::user()->ID)
                                 ->where('course_id', '<>', NULL)
                                 ->delete();
-                /*foreach ($itemsAgregados as $items){
-                    $itemAgregado->delete();
-                }
-                if ($itemAgregado == 0){-*/
-                    $item = new ShoppingCart();
-                    $item->user_id = Auth::user()->ID;
-                    $item->course_id = $id;
-                    $item->date = date('Y-m-d');
-                    $item->save();
-                //}
+   
+                $item = new ShoppingCart();
+                $item->user_id = Auth::user()->ID;
+                $item->course_id = $id;
+                $item->date = date('Y-m-d');
+                $item->save();
             }else{
                 $itemAgregado = DB::table('shopping_cart')
                                 ->where('user_id', '=', Auth::user()->ID)

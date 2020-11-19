@@ -231,7 +231,13 @@ window.cookieconsent.initialise({
   }
 });
 </script>
+        
+        {{-- mensajes push --}}
+         <script src="{{ asset('assets/push/push-js-master/bin/push.js')}}"></script>  
 
         @stack('scripts')
     </body>
+
+      @include('layouts.push.push')
+      
 </html>

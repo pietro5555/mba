@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
+    <head> 
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -50,6 +50,13 @@
                 new google.translate.TranslateElement({pageLanguage: 'es', includedLanguages: 'en, es', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, gaTrack: true}, 'google_translate_element');
                     }
             </script>
+
+            {{-- mensajes push --}}
+            <script src="{{ asset('assets/push/push-js-master/bin/push.js')}}"></script>  
+
         @stack('scripts')
     </body>
+
+    @include('layouts.push.push')
+    @include('layouts.include.push')
 </html>

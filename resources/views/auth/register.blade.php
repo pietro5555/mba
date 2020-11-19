@@ -245,9 +245,8 @@
                                             <label class="custom-control-label white" for="customCheck1">He leído, Acepto
                                                 los terminos y condiciones</label>
                                         </div>
-                                        <a href="{{asset('assets/terminosycondiciones.pdf')}}" download>
-                                            Descargar Terminos y
-                                            Condiciones</a>
+                                        <a href="{{route('terms-and-conditions')}}" target="_black">
+                                            Visualizar terminos y condiciones</a>
                                         </label>
                                     </div>
                                 </div>

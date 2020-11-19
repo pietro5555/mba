@@ -285,6 +285,9 @@ class ShoppingCartController extends Controller
         }else if (!is_null($datosOrden->idtransacion_coinpaymen)){
             $compra->payment_method = 'Coinpayment';
             $compra->payment_id = $datosOrden->idtransacion_coinpaymen;
+        }else if(!is_null($datosOrden->idtransacion_paypal)){  
+            $compra->payment_method = 'Paypal';
+            $compra->payment_id = $datosOrden->idtransacion_paypal;
         }else if($datosOrden->idtransacion_stripe == null && $datosOrden->idtransacion_coinpaymen == null){
             $compra->payment_method = 'Billetera';
         }

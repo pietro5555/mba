@@ -192,9 +192,7 @@
                                             <label class="custom-control-label claro" for="customCheck1">He leído, Acepto
                                                 los terminos y condiciones</label>
                                         </div>
-                                        <a href="{{asset('assets/terminosycondiciones.pdf')}}" download>
-                                            Descargar Terminos y
-                                            Condiciones</a>
+                                        <a href="{{route('terms-and-conditions')}}" target="_black" style="color: white;" > Visualizar terminos y condiciones</a>
                                         </label>
                                     </div>
                                 </div>

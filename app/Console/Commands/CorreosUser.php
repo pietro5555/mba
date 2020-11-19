@@ -84,7 +84,6 @@ class CorreosUser extends Command
              if (!empty($plantilla->contenido)) {
             $mensaje = str_replace('@titulo', ' '.$event->title.' ', $plantilla->contenido);
             $mensaje = str_replace('@mentor', ' '.$mentor->display_name.' ', $mensaje);
-            $mensaje = str_replace('@fecha', ' '.$fecha.' ', $mensaje);
             $mensaje = str_replace('@nombre', ' '.$user->display_name.' ', $mensaje);
             Mail::send('emails.plantilla',  ['data' => $mensaje], function($msj) use ($plantilla, $user){
                 $msj->subject($plantilla->titulo);
@@ -115,7 +114,6 @@ class CorreosUser extends Command
              if (!empty($plantilla->contenido)) {
             $mensaje = str_replace('@titulo', ' '.$event->title.' ', $plantilla->contenido);
             $mensaje = str_replace('@mentor', ' '.$mentor->display_name.' ', $mensaje);
-            $mensaje = str_replace('@fecha', ' '.$fecha.' ', $mensaje);
             $mensaje = str_replace('@nombre', ' '.$user->display_name.' ', $mensaje);
             Mail::send('emails.plantilla',  ['data' => $mensaje], function($msj) use ($plantilla, $user){
                 $msj->subject($plantilla->titulo);

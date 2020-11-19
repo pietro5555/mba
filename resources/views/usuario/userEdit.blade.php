@@ -79,6 +79,8 @@
 </div>
 
 @endsection
+@include('usuario.componentes.scritpTable')
+
 @push('script')
 <script>
 

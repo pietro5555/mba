@@ -100,7 +100,6 @@
                                 <span class="var">@nombre</span>
                                 <span class="var">@titulo</span>
                                 <span class="var">@mentor</span>
-                                <span class="var">@fecha</span>
                                 </div>
                                 <div class="form-group col-sm-12 ji">
                                     <div class="form-group col-sm-6">
@@ -149,9 +148,8 @@
                                 <div class="form-group">
                                     <label class="white">Variables que pueden usar</label>
                                     <span class="var">@nombre</span>
-                                    <span class="var">@correo</span>
-                                    <span class="var">@fecha</span>
-                                    <span class="var">@total</span>
+                                <span class="var">@titulo</span>
+                                <span class="var">@mentor</span>
                                 </div>
                                 <div class="form-group col-sm-12 ji">
                                     <div class="form-group col-sm-6">
@@ -202,9 +200,8 @@
                                 <div class="form-group">
                                     <label class="white">Variables que pueden usar</label>
                                      <span class="var">@nombre</span>
-                                    <span class="var">@correo</span>
-                                    <span class="var">@fecha</span>
-                                    <span class="var">@total</span>
+                                <span class="var">@titulo</span>
+                                <span class="var">@mentor</span>
                                 </div>
                                 
                                 <div class="form-group col-sm-12 ji">

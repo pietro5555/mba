@@ -34,6 +34,7 @@ CREATE TABLE `courses_orden` (
   `detalles` text DEFAULT NULL,
   `idtransacion_stripe` varchar(100) DEFAULT NULL,
   `idtransacion_coinpaymen` varchar(100) DEFAULT NULL,
+  `idtransacion_paypal` text,
   `status` tinyint(4) NOT NULL DEFAULT 0 COMMENT '0 - procesando, 1 - completado, 2 - cancelado',
   `type_product` varchar(50) DEFAULT 'membresia',
   `created_at` timestamp NULL DEFAULT current_timestamp(),

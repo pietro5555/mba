@@ -18,6 +18,7 @@ use App\Models\SetEvent;
 use App\Models\SurveyOptions;
 use App\Models\SurveyResponse;
 use App\Models\Streaming\Meeting;
+use App\Models\EventUser;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -147,6 +148,7 @@ class EventsController extends Controller
         $calendario->color = '#28a745';
         $calendario->lugar = 'Ninguno';
         $calendario->iduser = $evento->user_id;
+        $calendario->event_id = $evento->id;
         $calendario->save();
 
         if ($request->hasFile('banner')) {
@@ -201,7 +203,7 @@ class EventsController extends Controller
         $resources_survey = SetEvent::where('event_id', $event_id)->where('type', 'survey')->with('pregunta')->get();
         $resources_video = SetEvent::where('event_id', $event_id)->where('type', 'video')->get()->first();
         $resources_offer = OffersLive::all()->where('event_id', $event_id);
-        
+
         $surveysCount = $resources_survey->count();
         $surveysUser = 0;
         if (Auth::user()->rol_id == 3){
@@ -212,7 +214,7 @@ class EventsController extends Controller
                 }
             }
         }
-        
+
         /*Files*/
         $files = SetEvent::where('event_id', $event_id)
                     ->where('type', 'file')
@@ -221,7 +223,7 @@ class EventsController extends Controller
         $presentations = SetEvent::where('event_id', $event_id)
                             ->where('type', 'presentation')
                             ->get();
-        
+
         return view('live.live', compact('event','notes', 'menuResource', 'resources_survey', 'resources_video', 'files', 'presentations', 'resources_offer', 'surveysCount', 'surveysUser'));
     }
 
@@ -349,6 +351,23 @@ class EventsController extends Controller
         }
         $evento->save();
 
+        //Actualizar datos en el calendario
+        $update_calendar = Calendario::where('event_id', $evento->id)->get();
+        foreach ($update_calendar as $calendar) {
+            $calendar->inicio = $evento->date;
+            $calendar->time = $evento->time;
+            $calendar->titulo = $evento->title;
+            $calendar->contenido = $evento->description;
+            $calendar->save();
+        }
+
+        //Actualizar datos en el evento agendado por el usuario
+        $update_user_events =EventUser::where('event_id', $evento->id)->get();
+        foreach ($update_user_events as $events) {
+            $events->date = $evento->date;
+            $events->time = $evento->time;
+            $events->save();
+        }
         return redirect('admin/events')->with('msj-exitoso', 'El evento ' . $evento->title . ' ha sido modificado con éxito.');
     }
 
@@ -390,7 +409,7 @@ class EventsController extends Controller
 
             if (is_null($disponibilidad)) {
                 Auth::user()->events()->attach($evento, ['date' => $fechaEvento, 'time' => $horaEvento]);
-                
+
                 $this->correoAgenda($evento);
 
                 return redirect('/')->with('msj-exitoso', 'El evento ha sido reservado en su agenda con éxito.');
@@ -401,10 +420,10 @@ class EventsController extends Controller
             return redirect('/')->with('msj-erroneo', 'Ya este evento se encuentra registrado en su agenda.');
         }
     }
-     
+
 
      public function correoAgenda($evento){
-        
+
         $plantilla = SettingCorreo::find(8);
         $event = Events::find($evento);
         $p = $event->date."T".$event->time;
@@ -413,12 +432,11 @@ class EventsController extends Controller
         $horaLimite->addHours(5);
         $mentor = User::find($event->user_id);
         $user = User::find(Auth::user()->ID);
-        
+
         if($event->correos == 0){
              if (!empty($plantilla->contenido)) {
             $mensaje = str_replace('@titulo', ' '.$event->title.' ', $plantilla->contenido);
             $mensaje = str_replace('@mentor', ' '.$mentor->display_name.' ', $mensaje);
-            $mensaje = str_replace('@fecha', ' '.$horaLimite.' ', $mensaje);
             $mensaje = str_replace('@nombre', ' '.$user->display_name.' ', $mensaje);
             Mail::send('emails.plantilla',  ['data' => $mensaje], function($msj) use ($plantilla, $user){
                 $msj->subject($plantilla->titulo);

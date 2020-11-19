@@ -11,7 +11,7 @@ protected $table = "calendarios";
 
 
     protected $fillable=[
-    	'iduser','titulo','contenido','color','inicio','vence','lugar','tipo','especifico'
+    	'iduser','titulo','contenido','color','inicio','vence','lugar','tipo','especifico', 'event_id'
     ];
 
 }

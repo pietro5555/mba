@@ -243,7 +243,7 @@ class CoursesOrdenController extends Controller
     }
 
 
-
+    //comprar con billetera
     public function buy_wallet(Request $datos){
         
       $idmembresia = $this->getDataMembeship(Auth::user()->ID);
@@ -300,6 +300,43 @@ class CoursesOrdenController extends Controller
         
         return redirect('/')->with('msj-exitoso', 'Tu compra de membresría ha sido completada con éxito.');
     }
+
+
+        //comprar con paypal
+    /*
+    public function buy_paypal(Request $datos){
+        
+        $idmembresia = $this->getDataMembeship(Auth::user()->ID);
+        $enlace = Addresip::where('ip', request()->ip())->first();
+
+        $membresia = DB::table('memberships')->where('id', $idmembresia)->first();
+        $total = ($enlace != null) ? $membresia->descuento : $membresia->price;
+        
+        $datosMembresia = [
+            'idmembresia' => $membresia->id,
+            'nombre' => $membresia->name,
+            'precio' => ($enlace != null) ? $membresia->descuento : $membresia->price,
+            'img' => asset('uploads/images/memberships/'.$membresia->image),
+            'links' => ($enlace != null) ? $enlace->padre : 0,
+        ];
+        
+        
+        $orden = new CourseOrden();
+        $orden->user_id = Auth::user()->ID;
+        $orden->total = $total;
+        $orden->detalles = json_encode($datosMembresia);
+        $orden->idtransacion_paypal = Carbon::now()->format('YmdHis');
+        $orden->status = 1;
+        $orden->type_product = 'membresia';
+        $orden->save();
+
+        
+         //eliminar la direccion ip y el id de la persona que me dio el link
+        Addresip::where('ip', request()->ip())->delete();
+        
+        return \Redirect::route('pago-pay',['pagina' => $membresia->name, 'total' => $total, 'descripcion' => $membresia->name, 'idcompra' => $orden->id]);
+    }
+    */
 
     public function pay_membership_coinpayment(Request $request){
         try {

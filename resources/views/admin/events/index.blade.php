@@ -9,7 +9,7 @@
 				responsive: true,
 			});
 		});
-		
+
 		function editar($id){
 			var route = $("#"+$id).attr('data-route');
  			$.ajax({
@@ -23,7 +23,7 @@
                  	CKEDITOR.instances["description"].setData(ans.description);
 	                $("#date").val(ans.date);
 	                $("#time").val(ans.time);
-	                $("#duration").val(ans.duration); 
+	                $("#duration").val(ans.duration);
 	                $("#modal-edit").modal("show");
 	            }
 	        });
@@ -50,7 +50,7 @@
 				<div style="text-align: right;">
 					<a data-toggle="modal" data-target="#modal-new" class="btn btn-info descargar"><i class="fa fa-plus-circle"></i> Nuevo Evento</a>
 				</div>
-				
+
 				<br class="col-xs-12">
 
 				<table id="mytable" class="table">
@@ -78,7 +78,7 @@
 									@if ($event->status == '0')
 									<a class="btn btn-success" href="{{ route('admin.events.change-status', [$event->id, 1]) }}" title="Habilitar"><i class="fa fa-check"></i></a>
 									@endif
-										
+
 								</td>
 							</tr>
 						@endforeach
@@ -168,17 +168,17 @@
 										<input class="form-control" type="file" name="banner" required>
 									</div>
 						        </div>
-						        
+
 						        <div class="col-md-12">
 									<div class="form-group">
 									<label class="control-label text-center">Miniatura</label>
 										<input class="form-control" type="file" name="miniatura" required>
 									</div>
 						        </div>
-						        
+
 						    </div>
 						</div>
-				        
+
 				    </div>
 	      			<div class="modal-footer">
 	        			<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -251,14 +251,14 @@
 									<input class="form-control" type="file" name="banner">
 								</div>
 							</div>
-							
+
 							<div class="col-md-12">
 									<div class="form-group">
 									<label class="control-label text-center">Miniatura</label>
-										<input class="form-control" type="file" name="miniatura" required>
+										<input class="form-control" type="file" name="miniatura">
 									</div>
 						  </div>
-	    					
+
 						</div>
 				    </div>
 	      			<div class="modal-footer">

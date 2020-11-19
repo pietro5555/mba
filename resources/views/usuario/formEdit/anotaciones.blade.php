@@ -1,11 +1,11 @@
 <div class="col-md-12">
-    <div class="box box-info" style="border-radius: 10px;">
+    <div class="box" style="border-radius: 10px;">
         <div class="box-body">
 
 <h3 class="box-title white" style="margin-top: -5px; margin-bottom: 20px; padding: 15px 20px;border-radius: 20px; background-color: #005aff; color: white;">Anotaciones de los eventos
 </h3>
 @if(!$notes->isEmpty())
-<table class="table" id="anotacionestabla">
+<table  id="mytable" class="table" style="width: 100%!important;">
         <thead>
           <tr>
             <th>#</th>
@@ -17,10 +17,10 @@
         <tbody>
             @foreach ($notes as $note)
             <tr>
-                    <td class="white" >{{$note->id}}</td>
-                    <td class="white">{{$note->title}}</td>
-                    <td class="white">{{$note->content}}</td>
-            <td class="white">{{$note->streaming->title}}</td>
+                    <td class="text-center white" >{{$note->id}}</td>
+                    <td class="text-center white">{{$note->title}}</td>
+                    <td class="text-center white">{{$note->content}}</td>
+                    <td class="text-center white">{{$note->streaming->title}}</td>
             </tr>
             @endforeach
         </tbody>
@@ -31,3 +31,6 @@
 </div>
 
 @endif
+</div>
+</div>
+</div>

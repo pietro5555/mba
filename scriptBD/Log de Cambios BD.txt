@@ -241,3 +241,9 @@ Dev: Crisleivys
 18/11/2020
 *anexar columna correos para verificar si se a enviado un correo a las personas al iniciar el live y 
 cuando falte 1 hora (correr el script events)
+
+18/11/2020
+Dev: Pietro
+*Agregado el campo event_id a la tabla calendarios (correr el script calendarios)
+*Agregar nuevo campo en courses_orden (ejecutar script courses_orden) 
+*nuevos datos en settingsplantilla envio de correos (correr script de settingplantilla)

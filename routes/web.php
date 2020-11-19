@@ -22,6 +22,10 @@ Route::get('mioficina', function(){
   return redirect('/');
 });
 
+Route::get('terms-and-conditions', function(){
+  return view('auth.termsAndConditions');
+})->name('terms-and-conditions');
+
 Route::get('certificado', 'HomeController@certificado');
 Route::get('/', 'HomeController@index')->name('index');
 Route::get('/certificado', "HomeController@certificado");

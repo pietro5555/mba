@@ -2,7 +2,7 @@
 <script type="text/javascript">
     Push.create("Completado",{
     body:"{{ Session::get('msj-exitoso') }}",
-    icon:"{{ asset('assets/img/logo-light.png') }}",
+    icon:"{{ asset('images/logo.png') }}",
     timeout: 4000,
     onClick: function(){
     this.close(); 
@@ -16,7 +16,7 @@
 <script type="text/javascript">
     Push.create("Error",{
     body:"{{ Session::get('msj-erroneo') }}",
-    icon:"{{ asset('assets/img/logo-light.png') }}",
+    icon:"{{ asset('images/logo.png') }}",
     timeout: 4000,
     onClick: function(){
     this.close(); 
@@ -32,7 +32,7 @@
 <script type="text/javascript">
     Push.create("Error",{
     body:"{{ Session::get('msj3') }}",
-    icon:"{{ asset('assets/img/logo-light.png') }}",
+    icon:"{{ asset('images/logo.png') }}",
     timeout: 4000,
     onClick: function(){
     this.close(); 

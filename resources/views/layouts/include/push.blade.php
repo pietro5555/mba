@@ -21,7 +21,7 @@ DB::table('pushs')
     @foreach($pushs as $push)
     Push.create("{{$push->titulo}}",{
     body:"{{$push->body}}",
-    icon:"{{ asset('assets/img/logo-light.png') }}",
+    icon:"{{ asset('images/logo.png') }}",
     timeout: 4000,
     onClick: function(){
     this.close(); 
@@ -35,7 +35,7 @@ DB::table('pushs')
 <script type="text/javascript">
     Push.create("Completado",{
     body:"{{session('msj')}}",
-    icon:"{{ asset('assets/img/logo-light.png') }}",
+    icon:"{{ asset('images/logo.png') }}",
     timeout: 4000,
     onClick: function(){
     this.close(); 
@@ -48,7 +48,7 @@ DB::table('pushs')
 <script type="text/javascript">
     Push.create("Error",{
     body:"@foreach($errors->all() as $error) {{$error}} @endforeach",
-    icon:"{{ asset('assets/img/logo-light.png') }}",
+    icon:"{{ asset('images/logo.png') }}",
     timeout: 4000,
     onClick: function(){
     this.close(); 

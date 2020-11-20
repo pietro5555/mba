@@ -336,7 +336,15 @@ Route::group(['prefix' => 'installer'], function (){
           Route::post('/editentrada', 'EntradasController@editentrada')->name('admin-edit-entrada');
           Route::post('/saventrada', 'EntradasController@saveentrada')->name('admin-save-entrada');
         });
-
+    
+        Route::group(['prefix' => 'banners'], function(){
+          Route::get('/', 'BannerController@index')->name('admin.banners.index');
+          Route::post('store', 'BannerController@store')->name('admin.banners.store');
+          Route::get('edit/{id}', 'BannerController@edit')->name('admin.banners.edit');
+          Route::post('update', 'BannerController@update')->name('admin.banners.update');
+          Route::get('change-status/{id}/{status}', 'BannerController@change_status')->name('admin.banners.change-status');
+          Route::get('disabled', 'BannerController@disabled')->name('admin.banners.disabled');
+        });
      Route::group(['prefix' => 'courses'], function(){
         Route::get('/', 'CourseController@record')->name('admin.courses.index');
         Route::post('store', 'CourseController@store')->name('admin.courses.store');

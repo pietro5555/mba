@@ -85,7 +85,7 @@
             @else
                 <li class="nav-item dropdown li-language" id="li-language-larger">
                     <div id="google_translate_element"></div>
-                    {{-- <div class="btn-group">
+                    <!-- <div class="btn-group">
                         <button type="button" class="btn btn-primary btn-language dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             IDIOMA
                         </button>
@@ -93,13 +93,13 @@
                             <a class="dropdown-item" href="#">Español</a>
                             <a class="dropdown-item" href="#">Inglés</a>
                         </div>
-                    </div> --}}
+                    </div> -->
                 </li>
                 <li class="nav-item" id="li-language-small" style="display: none;">
                     <a class="nav-link items-header" href="#">IDIOMA</a>
                 </li>
 
-                {{--<li class="nav-item" id="li-search-larger" style="padding-right: 5px;">
+                <!--<li class="nav-item" id="li-search-larger" style="padding-right: 5px;">
                     <a class="nav-link items-header" href="#"><i class="fa fa-search"></i></a>
                 </li>
                 <li class="nav-item" id="li-search-small" style="display: none;">
@@ -121,7 +121,7 @@
                 </li>
                 <li class="nav-item" id="li-notifications-small" style="display: none;">
                     <a class="nav-link items-header" href="#">NOTIFICACIONES</a>
-                </li>--}}
+                </li>-->
 
                 <li class="nav-item dropdown dropleft" id="li-user-larger" style="padding-right: 10px;">
                     <img class="dropdown-toggle items-header" id="navbarDropdown2" role="button" data-toggle="dropdown" src="{{asset('/uploads/avatar/'.Auth::user()->avatar)}}" alt="" style="width: 40px; height: 40px; border-radius: 50%;">

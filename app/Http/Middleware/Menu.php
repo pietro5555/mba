@@ -799,6 +799,27 @@ class Menu
                    
                 ]
             ],
+            'Banners' => [
+                'submenu' => 1,
+                'ruta' => 'javascript:;',
+                'icono' => 'fas fa-ad',
+                'permisoAdmin' => (!empty($permiso)) ? $permiso->banners : 0,
+                'activo' => request()->is('admin/banners') ? 'active' : 0,
+                'menus' => [
+                    'Banners Activos' => [
+                        'ruta' => 'admin.banners.index',
+                        'complementoruta' => '',
+                        'black'=> '0',
+                        'oculto'=> 'activo',
+                    ],
+                    'Banners Inactivos' => [
+                        'ruta' => 'admin.banners.disabled',
+                        'complementoruta' => '',
+                        'black'=> '0',
+                        'oculto'=> 'activo',
+                    ],
+                ]
+            ],
             'Historial de Compras' => [
                 'submenu' => 0,
                 'ruta' => 'admin.purchases-record',

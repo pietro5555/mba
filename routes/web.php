@@ -270,6 +270,9 @@ Route::group(['prefix' => 'installer'], function (){
   Route::post('/anotaciones/store', 'NoteController@store')->name('live.anotaciones');
   Route::post('/anotaciones/update', 'NoteController@update')->name('live.update-note');
   Route::get('/anotaciones/delete/{id}', 'NoteController@delete')->name('live.delete-note');
+  Route::get('/admin/user/note/get/{id}', 'NoteController@get_note_edit')->name('anotaciones.user.get');
+  Route::post('/admin/user/note/edit/{id}', 'NoteController@edit_user_note')->name('anotaciones.user.edit');
+  Route::get('/admin/user/note/delete/{id}', 'NoteController@delete_user_note')->name('anotaciones.user.delete');
 
   //vista de timelive
       Route::group(['prefix' => 'time'], function(){

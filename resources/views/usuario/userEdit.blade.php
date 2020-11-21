@@ -31,7 +31,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="anotaciones-tab" data-toggle="tab" href="#anotaciones" role="tab" aria-controls="anotaciones"
-                        aria-selected="false">Anotaciones</a>
+                        aria-selected="false">Mis notas</a>
                 </li>
             </ul>
             <!-- Aquí es informacion personal -->
@@ -142,5 +142,6 @@
         $('#anotacionestabla').DataTable( {
             responsive: true,
         });
+    });
 </script>
 @endpush

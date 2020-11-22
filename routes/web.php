@@ -207,6 +207,8 @@ Route::group(['prefix' => 'installer'], function (){
 
     //procesar pago con billetera
     Route::post('cash-billetera', 'CoursesOrdenController@buy_wallet')->name('shopping-cart-billetera');
+    //procesador de pago con paypal
+    Route::post('buy_paypal', 'CoursesOrdenController@buy_paypal')->name('shopping-cart-paypal');
   });
 
   //Rutas de timelive

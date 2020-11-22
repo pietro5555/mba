@@ -114,6 +114,29 @@
         }
     }
 
+
+        //pagar  con paypal
+    function pagarPaypal() {
+      event.preventDefault();
+        if (!$("#check_deacuerdo").prop('checked')) {
+            alert("Debe estar de acuerdo con los términos y condiciones!");
+            return false;
+        }else{
+          $('#form-paypal').submit()
+        }
+    }
+
+    
+    function pagarPaypal2() {
+      event.preventDefault();
+        if (!$("#check_deacuerdo2").prop('checked')) {
+            alert("¡Debe estar de acuerdo con los términos y condiciones para la compra de membresía!");
+            return false;
+        }else{
+          $('#form-paypal2').submit()
+        }
+    }
+
     function toggle() {
     $('.mostrar').toggle('slow')
     }

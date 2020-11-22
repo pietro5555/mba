@@ -20,6 +20,7 @@
         <div class="form-group">
             <button class="btn text-white btn-color-green" onclick="pagarS()">Tarjeta</button>
             <button class="btn text-white btn-color-green" onclick="pagarC()">Cripto</button>
+            {{--<button class="btn text-white btn-color-green" onclick="pagarPaypal()">Paypal</button>--}}
             <button class="btn text-white btn-color-green" onclick="pagarB()">Billetera</button><br><br>
         </div>
         @endif
@@ -48,6 +49,10 @@
             <input type="hidden" name="metodo" value="billetera">
             <input type="hidden" name="total" value="{{$totalItems}}">
         </form>
+         <form action="{{route('shopping-cart-paypal')}}" method="post" id="form-paypal">
+            {{ csrf_field() }}
+            <input type="hidden" name="metodo" value="paypal">
+        </form>
     </div>
     @endif
     
@@ -69,6 +74,7 @@
             <div class="form-group">
                 <button class="btn text-white btn-color-green" onclick="pagarS2()">Tarjeta</button>
                 <button class="btn text-white btn-color-green" onclick="pagarC2()">Cripto</button>
+                {{--<button class="btn text-white btn-color-green" onclick="pagarPaypal2()">Paypal</button>--}}
                 <button class="btn text-white btn-color-green" onclick="pagarB2()">Billetera</button><br><br>
             </div>
         </div>
@@ -95,6 +101,10 @@
             {{ csrf_field() }}
             <input type="hidden" name="metodo" value="billetera">
             <input type="hidden" name="total" value="{{$totalItems}}">
+        </form>
+        <form action="{{route('shopping-cart-paypal')}}" method="post" id="form-paypal2">
+            {{ csrf_field() }}
+            <input type="hidden" name="metodo" value="paypal">
         </form>
         </div>
     @endif

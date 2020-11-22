@@ -302,8 +302,8 @@ class CoursesOrdenController extends Controller
     }
 
 
-        //comprar con paypal
-    /*
+     
+//comprar con paypal
     public function buy_paypal(Request $datos){
         
         $idmembresia = $this->getDataMembeship(Auth::user()->ID);
@@ -329,14 +329,13 @@ class CoursesOrdenController extends Controller
         $orden->status = 1;
         $orden->type_product = 'membresia';
         $orden->save();
-
         
-         //eliminar la direccion ip y el id de la persona que me dio el link
+        // eliminar la direccion ip y el id de la persona que me dio el link
         Addresip::where('ip', request()->ip())->delete();
         
         return \Redirect::route('pago-pay',['pagina' => $membresia->name, 'total' => $total, 'descripcion' => $membresia->name, 'idcompra' => $orden->id]);
     }
-    */
+    
 
     public function pay_membership_coinpayment(Request $request){
         try {

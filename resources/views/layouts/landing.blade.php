@@ -61,7 +61,7 @@
                      $('document').ready(function () {
                     // RESTYLE THE DROPDOWN MENU
                     $('#google_translate_element').on("click", function () {
-                    
+
                     // Change font family and color
                     $("iframe").contents().find(".goog-te-menu2-item div, .goog-te-menu2-item:link div, .goog-te-menu2-item:visited div, .goog-te-menu2-item:active div, .goog-te-menu2 *")
                         .css({
@@ -71,23 +71,23 @@
                         });
                     // Change menu's padding
                     $("iframe").contents().find('.goog-te-menu2-item-selected').css ('display', 'none');
-                    
+
                             // Change menu's padding
                     $("iframe").contents().find('.goog-te-menu2').css ('padding', '0px');
                     // Change the width of the languages
                     $("iframe").contents().find('.goog-te-menu2-item').css('width', '100%');
                     $("iframe").contents().find('td').css('width', '100%');
-                    
+
                     // Change hover effects
                     $("iframe").contents().find(".goog-te-menu2-item div").hover(function () {
                         $(this).css('background-color', '#007bff').find('span.text').css('color', 'white');
                     }, function () {
                         $(this).css('background-color', 'white').find('span.text').css('color', '#544F4B');
                     });
-                    
+
                     // Change Google's default blue border
                     $("iframe").contents().find('.goog-te-menu2').css('border', 'none');
-                    
+
                     // Change the iframe's box shadow
                     $(".goog-te-menu-frame").css('box-shadow', '0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.3)');
                     // Change iframes's size
@@ -96,7 +96,7 @@
                         'width': '100%',
                         'padding-bottom':'5px',
                     });
-                    
+
                     });
                     });
 
@@ -174,10 +174,10 @@
                                     <a href="#" data-toggle="modal" data-target="#contactModal" class="text-white" style="padding: 2px;" target="_black"> Contacto</a>&nbsp&nbsp
                                     <a href="{{route('index')}}" class="text-white" style="padding: 2px;">Inicio</a>&nbsp&nbsp
                                 </div>
-                                
+
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
 
@@ -270,10 +270,10 @@
           }
         });
         </script>
-        
+
         {{-- mensajes push --}}
-         <script src="{{ asset('assets/push/push-js-master/bin/push.js')}}"></script>    
-         
+         <script src="{{ asset('assets/push/push-js-master/bin/push.js')}}"></script>
+
         @stack('scripts')
     </body>
     @include('layouts.push.push')

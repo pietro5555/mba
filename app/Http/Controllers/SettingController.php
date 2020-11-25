@@ -14,8 +14,8 @@ use App\Models\SettingActivacion; use App\Models\SettingCliente;
 use App\Models\Settings; use App\Models\Monedas;
 use App\Models\User; use App\Models\Rol; use App\Models\SettingCorreo;
 use Auth; use DB; use Carbon\Carbon; use Mail;
-use App\Models\Monedadicional; 
-use App\Models\Avatar; 
+use App\Models\Monedadicional;
+use App\Models\Avatar;
 use App\Models\Pop;
 use App\Models\ModuloComplementario;
 use App\Models\Component;
@@ -28,26 +28,26 @@ class SettingController extends Controller
 	function __construct()
 	{
         // TITLE
-		view()->share('title', 'Configuración'); 
+		view()->share('title', 'Configuración');
 	}
-	
+
 	// Confi Sistema
 	/**
 	 * Dirige a la vista del Configuraciones del Sistema
-	 * 
+	 *
 	 * @access public
 	 * @return view
 	 */
 	public function indexLogo(){
-		
+
 		$component = Component::all();
-		
+
 	    return view ('setting.logo')->with(compact('component'));
 	}
-	
+
 	/**
 	 * Actualiza el Logo del sistema
-	 * 
+	 *
 	 * @access public
 	 * @param request $datos - El nuevo logo
 	 * @return view
@@ -64,7 +64,7 @@ class SettingController extends Controller
                 unlink($rutaarchivo);
                 $movido = move_uploaded_file($archivo['tmp_name'], $rutaarchivo);
             }
-            
+
             if($movido){
                 return redirect('admin/settings/sistema')->with('msj', 'Logo Actualizado Con Exito');
             }
@@ -72,8 +72,8 @@ class SettingController extends Controller
 	        return redirect('admin/settings/sistema');
 	    }
 	}
-	
-	
+
+
 		public function saveBannerFormulario(Request $datos){
 	    if(!empty($datos->file('formulario'))){
 	        $archivo = $_FILES['formulario'];
@@ -86,7 +86,7 @@ class SettingController extends Controller
                 unlink($rutaarchivo);
                 $movido = move_uploaded_file($archivo['tmp_name'], $rutaarchivo);
             }
-            
+
             if($movido){
                 return redirect('admin/settings/sistema')->with('msj', 'Banner Actualizado Con Exito');
             }
@@ -94,9 +94,9 @@ class SettingController extends Controller
 	        return redirect('admin/settings/sistema');
 	    }
 	}
-	
-	
-	
+
+
+
 	public function saveBanner(Request $datos){
 	    if(!empty($datos->file('banner'))){
 	        $archivo = $_FILES['banner'];
@@ -109,7 +109,7 @@ class SettingController extends Controller
                 unlink($rutaarchivo);
                 $movido = move_uploaded_file($archivo['tmp_name'], $rutaarchivo);
             }
-            
+
             if($movido){
                 return redirect('admin/settings/sistema')->with('msj', 'Banner Actualizado Con Exito');
             }
@@ -117,8 +117,8 @@ class SettingController extends Controller
 	        return redirect('admin/settings/sistema');
 	    }
 	}
-	
-	
+
+
 	public function saveBannerInicio(Request $datos){
 	    if(!empty($datos->file('inicio'))){
 	        $archivo = $_FILES['inicio'];
@@ -131,7 +131,7 @@ class SettingController extends Controller
                 unlink($rutaarchivo);
                 $movido = move_uploaded_file($archivo['tmp_name'], $rutaarchivo);
             }
-            
+
             if($movido){
                 return redirect('admin/settings/sistema')->with('msj', 'Banner Actualizado Con Exito');
             }
@@ -142,7 +142,7 @@ class SettingController extends Controller
 
 	/**
 	 * Actualiza el Favicon del sistema
-	 * 
+	 *
 	 * @access public
 	 * @param request $datos - El nuevo Favicon
 	 * @return view
@@ -159,7 +159,7 @@ class SettingController extends Controller
                 unlink($rutaarchivo);
                 $movido = move_uploaded_file($archivo['tmp_name'], $rutaarchivo);
             }
-            
+
             if($movido){
                 return redirect('admin/settings/sistema')->with('msj', 'Favicon Actualizado Con Exito');
             }
@@ -170,7 +170,7 @@ class SettingController extends Controller
 
 	/**
 	 * Actualiza el Nombre del sistema
-	 * 
+	 *
 	 * @access public
 	 * @param request $datos - El nuevo nombre
 	 * @return view
@@ -187,13 +187,13 @@ class SettingController extends Controller
 	}
 
 	// Fin Confi Sistema
-	
-	
-	
+
+
+
 	// Confi Plantilla de Correo
 	/**
 	 * Vista de para la configuracion de la plantilla
-	 * 
+	 *
 	 * @access public
 	 * @return view
 	 */
@@ -205,24 +205,24 @@ class SettingController extends Controller
 		$plantillaPC = SettingCorreo::find(4);
 		$plantillaL = SettingCorreo::find(5);
 		$plantillaPros = SettingCorreo::find(6);
-		
+
 		$firma ='';
-	    
+
 	    $seting = Settings::find(1);
 	   if (!empty($seting->firma)) {
 	       $firma = $seting->firma;
 	   }
-	   
+
 	   $settings = Settings::first();
 		$Correos = json_decode($settings->activarCorreos);
-	   
+
 		return view('setting.plantilla')->with(compact('plantillaB', 'plantillaP','plantillaC','plantillaPC','plantillaL','firma','Correos','plantillaPros'));
 	}
-	
-	
+
+
 	//activamos o desactivamos los correos
 	public function activarCorreo(Request $request){
-	   
+
 	    if (!empty($request)) {
 			$settings = Settings::first();
 			$Correos = json_decode($settings->activarCorreos);
@@ -230,7 +230,7 @@ class SettingController extends Controller
 				'pago' => (!empty($request->pago)) ? $request->pago : $Correos->pago,
 				'compra' => (!empty($request->compra)) ? $request->compra : $Correos->compra,
 				'pc' => (!empty($request->pc)) ? $request->pc : $Correos->pc,
-				
+
 				'liquidacion' => (!empty($request->liquidacion)) ? $request->liquidacion : $Correos->liquidacion,
 			];
 			DB::table('settings')
@@ -245,7 +245,7 @@ class SettingController extends Controller
 
 	/**
 	 * Guarda la informacion de las plantillas
-	 * 
+	 *
 	 * @access public
 	 * @param request $datos - Datos de la plantilla
 	 * @return view
@@ -255,7 +255,7 @@ class SettingController extends Controller
 		$validate = $datos->validate([
 			'titulo' => 'required',
 		]);
-	   
+
 		if ($validate) {
 			if ($datos->plantilla == 'bienvenida') {
 				$this->plantillaBienvenida($datos);
@@ -275,10 +275,10 @@ class SettingController extends Controller
 			return redirect('admin/settings/plantilla');
 		}
 	}
-	
-	
+
+
 	public function plantillaPros($datos){
-	    
+
 	    if (!empty($datos->idplantilla)) {
 			SettingCorreo::where('id', $datos->idplantilla)->update([
 				'titulo' => $datos->titulo,
@@ -291,8 +291,8 @@ class SettingController extends Controller
 			]);
 		}
 	}
-	
-	
+
+
 	//plantilla de compra por el carrito
 	public function plantillaCompra($datos){
 	    if (!empty($datos->idplantilla)) {
@@ -307,8 +307,8 @@ class SettingController extends Controller
 			]);
 		}
 	}
-	
-	
+
+
 	public function plantillaPC($datos){
 	     if (!empty($datos->idplantilla)) {
 			SettingCorreo::where('id', $datos->idplantilla)->update([
@@ -322,7 +322,7 @@ class SettingController extends Controller
 			]);
 		}
 	}
-	
+
 	public function plantillaL($datos){
 	    if (!empty($datos->idplantilla)) {
 			SettingCorreo::where('id', $datos->idplantilla)->update([
@@ -339,7 +339,7 @@ class SettingController extends Controller
 
 	/**
 	 * Guarda la informacion de la plantilla de bienvenida
-	 * 
+	 *
 	 * @access private
 	 * @param array $datos - plantilla de bienvenida
 	 */
@@ -359,7 +359,7 @@ class SettingController extends Controller
 
 	/**
 	 * Guarda la informacion de la plantilla de pago
-	 * 
+	 *
 	 * @access private
 	 * @param array $datos - plantilla de pago
 	 */
@@ -380,7 +380,7 @@ class SettingController extends Controller
 
 	/**
 	 * Permite Probar las Plantillas Creadas
-	 * 
+	 *
 	 * @access public
 	 * @param request $datos para la prueba del correo
 	 * @return view
@@ -396,7 +396,7 @@ class SettingController extends Controller
 			$mensaje = str_replace('@correo', ' '.$datos->correo.' ', $mensaje);
 			Mail::send('emails.plantilla',  ['data' => $mensaje], function($msj) use ($plantilla, $datos){
 				$msj->subject($plantilla->titulo);
-				$msj->to($datos->correod); 
+				$msj->to($datos->correod);
 			});
 			return redirect('admin/settings/plantilla')->with('msj', 'Prueba Realizada');
 		} else {
@@ -404,11 +404,11 @@ class SettingController extends Controller
 		}
 	}
 	// Fin Confi Plantilla de Correo
-	
+
 	// Confi Permiso
 	/**
 	 * Lleva a la vista de configuración de permisos
-	 * 
+	 *
 	 * @access public
 	 * @return view
 	 */
@@ -481,12 +481,12 @@ class SettingController extends Controller
 			return redirect('admin/settings/permisos')->with('msj', 'Nuevo Administrador');
 		} else {
 			# code...
-		}	
+		}
 	}
 
 	/**
 	 * Obtiene los permiso de un usuario admin en especifico
-	 * 
+	 *
 	 * @access public
 	 * @param int $id - id del usuario a buscar
 	 * @return view
@@ -500,7 +500,7 @@ class SettingController extends Controller
 
 	/**
 	 * Guarda los permisos de los usuarios
-	 * 
+	 *
 	 * @access public
 	 * @param request $datos - los permiso del usuario
 	 * @return view
@@ -577,14 +577,14 @@ class SettingController extends Controller
 		} else {
 			return redirect()->back()->with('msj', 'Lo sentimos esta peticion no pudo ser procesada');
 		}
-		
+
 	}
 	// Fin Confi Permiso
 
 	// Confi Moneda
 	/**
 	 * Lleva a la vista de configuración de monedas
-	 * 
+	 *
 	 * @access public
 	 * @return view
 	 */
@@ -596,10 +596,10 @@ class SettingController extends Controller
 		if (!empty($monedaAdicional)) {
          $monedaAdicional->configuracion = json_decode($monedaAdicional->configuracion);
         }
-		
+
 		return view('setting.monedas')->with(compact('monedas', 'monedap','monedaAdicional'));
 	}
-	
+
 	public function indexActivacion(){
 	    $settingAct = SettingActivacion::find(1);
 	    return view('setting.activacion')->with(compact('settingAct'));
@@ -607,7 +607,7 @@ class SettingController extends Controller
 
 	/**
 	 * Guarda las monedas con las que trabajara el sistema
-	 * 
+	 *
 	 * @param request $datos - informacion de la moneda
 	 * @return view
 	 */
@@ -646,43 +646,43 @@ class SettingController extends Controller
 		$moneda = Monedas::find($id);
 		$nombre = $moneda->nombre;
 		$moneda->delete();
-		
+
 		return redirect('admin/settings/monedas')->with('msj', 'Moneda '.$nombre.' Borrada Exitosamente');
 	}
 	//fin confi monedas
-	
-	
-	
+
+
+
 	//vista para cambiar las imagenes del arbol
     public function imagenes(){
-        
+
         $avatares = Avatar::find(1);
         if (!empty($avatares)) {
          $avatares->avatar = json_decode($avatares->avatar);
         }
-        
-        
+
+
         return view('setting.imagenes',compact('avatares'));
     }
-    
+
     //agregar los nuevos avatares de forma multiple
     public function agregaravatar(Request $request){
-        
+
         $stringJson = [];
         $avatares = Avatar::find(1);
-        
-        
+
+
         if (!empty($avatares)) {
             $avatares->avatar = json_decode($avatares->avatar);
             foreach($avatares->avatar as $avatar){
-                
+
                 array_push($stringJson, [
                      'avatar' => $avatar->avatar
                      ]);
-                
+
             }
         }
-        
+
         //agregamos los nuevos avatares de forma multiple
         $files = $request['avatar'];
         $destinationPath = public_path() . '/arbol';
@@ -690,49 +690,49 @@ class SettingController extends Controller
         // recorremos cada archivo y lo subimos individualmente
         foreach($files as $file) {
             $cont++;
-       
+
         $filename = 'avatar_'. time().$cont. '.'.$file->getClientOriginalExtension();
             $upload_success = $file->move($destinationPath, $filename);
-        
+
          array_push($stringJson, [
                      'avatar' => $filename
                      ]);
-                     
+
         }
-        
-        $datos = json_encode($stringJson);             
-                     
-        
+
+        $datos = json_encode($stringJson);
+
+
          if (!empty($avatares)) {
-             
+
              Avatar::where('id', 1)->update([
                  'avatar' => $datos,
                  ]);
-                 
+
          }else{
-             
+
               Avatar::create([
                  'avatar' => $datos,
                  ]);
-                 
+
          }
-                     
-                    
+
+
             $funciones = new IndexController;
-             $funciones->msjSistema('Agregado con exito', 'success');        
-                    return redirect()->back(); 
-        
+             $funciones->msjSistema('Agregado con exito', 'success');
+                    return redirect()->back();
+
     }
-    
-    
+
+
     public function cambairavatar(Request $request){
-        
+
         $funciones = new IndexController;
         $avatares = Avatar::find(1);
-        
+
         if (empty($avatares)) {
         $funciones->msjSistema('Debe Agregar Avatares a su lista', 'warning');
-        return redirect()->back(); 
+        return redirect()->back();
         }else{
             $avatares->activo_mujer = $request->activo_mujer;
             $avatares->activo_hombre = $request->activo_hombre;
@@ -740,23 +740,23 @@ class SettingController extends Controller
             $avatares->inactivo_hombre = $request->inactivo_hombre;
             $avatares->save();
         }
-             $funciones->msjSistema('Modificado con exito', 'success');        
-                    return redirect()->back(); 
+             $funciones->msjSistema('Modificado con exito', 'success');
+                    return redirect()->back();
     }
-    
-    
-    
+
+
+
     //activamos o desactivamos los correos de cada usuario
-    
+
     public function vistacorreo(){
-        
+
         $Correos = json_decode(Auth::user()->correos);
         return view('archivo.vistacorreo',compact('Correos'));
     }
-    
-    
+
+
 	public function miscorreoactivos(Request $request){
-	   
+
 	    if (!empty($request)) {
 	        $user = User::find($request->id);
 			$settings = Settings::first();
@@ -765,10 +765,10 @@ class SettingController extends Controller
 				'pago' => (!empty($request->pago)) ? $request->pago : $Correos->pago,
 				'compra' => (!empty($request->compra)) ? $request->compra : $Correos->compra,
 				'pc' => (!empty($request->pc)) ? $request->pc : $Correos->pc,
-				
+
 				'liquidacion' => (!empty($request->liquidacion)) ? $request->liquidacion : $Correos->liquidacion,
 			];
-			
+
 			$user->correos = json_encode($data);
 			$user->save();
 
@@ -777,40 +777,40 @@ class SettingController extends Controller
 		}
 		return redirect()->back();
 	}
-	
-	
+
+
 	//modulo complementario
 	public function modulo(){
-	    
-	    view()->share('title', 'Modulo Complementario'); 
-	    
+
+	    view()->share('title', 'Modulo Complementario');
+
 	    $modulo = ModuloComplementario::find(1);
 	    return view('setting.moduloComplementario',compact('modulo'));
 	}
-	
-	
+
+
 	public function complemento(){
-	    
-	    view()->share('title', 'Modulo'); 
-	    
+
+	    view()->share('title', 'Modulo');
+
 	    $modulo = ModuloComplementario::find(1);
 	    return view('setting.complementario',compact('modulo'));
 	}
-	
+
 	public function guardarModulo(Request $request){
-	    
-	    
+
+
 	     $validatedData = $request->validate([
           'contenido' => 'required',
           ]);
-          
+
           	$funciones = new IndexController;
             $modulo = ModuloComplementario::find(1);
-            
+
 	    $tamano = str_replace('<iframe width=', '<iframe width="340"', $request->contenido);
-          
+
            $contenido = str_replace('height=', 'height="340"', $tamano);
-           
+
            if($modulo != null){
            ModuloComplementario::where('id', 1)->update([
 					'contenido' => $contenido,
@@ -822,16 +822,16 @@ class SettingController extends Controller
            }
            $funciones->msjSistema('Modulo Agregado con exito', 'success');
            return redirect()->back();
-	    
+
 	}
-	
-	
+
+
 	//configurar servidor externo
 	public function servidor(Request $datos){
-	    
+
 	    $funciones = new IndexController;
-	     $env = new DotenvEditor(); 
-	     
+	     $env = new DotenvEditor();
+
             // Cambiamos el .env
             $env->changeEnv([
                 'MAIL_HOST'   => $datos->host,
@@ -840,59 +840,59 @@ class SettingController extends Controller
                 'MAIL_USERNAME'   => $datos->username,
                 'MAIL_PASSWORD'   => '"'.$datos->password.'"',
                 'MAIL_FROM_NAME' => $datos->from_name
-            ]); 
-            
-            
+            ]);
+
+
              $funciones->msjSistema('Cambios agregados con exito', 'success');
            return redirect()->back();
 	}
-	
-	
+
+
 	//activar o desactivar traductor
 	public function traductor(){
-	    
+
 	    $funciones = new IndexController;
-	    $settings = Settings::first(); 
-	    
+	    $settings = Settings::first();
+
 	    if($settings->traductor == 1){
 	        $traductor = 0;
 	    }else{
 	        $traductor = 1;
 	    }
-	    
+
 	    DB::table('settings')
 	            ->where('id', 1)
 				->update(['traductor' => $traductor]);
-				
+
 		$funciones->msjSistema('Cambios realizados con exito', 'success');
-           return redirect()->back();		
+           return redirect()->back();
 	}
-	
-	
+
+
 		public function pop(){
-	 
-	 view()->share('title', 'POP up'); 
-	    
+
+	 view()->share('title', 'POP up');
+
 	    $pop = Pop::find(1);
-	    return view('setting.pop',compact('pop'));   
+	    return view('setting.pop',compact('pop'));
 	}
-	
+
 	public function desactivacion(){
-	    
+
 	    $pop = Pop::find(1);
-	    
+
 	    $pop->activado = ($pop->activado == 0) ? 1 : 0;
 	    $pop->save();
-	    
+
 	    $funciones = new IndexController;
 		$funciones->msjSistema('Cambios realizados con exito', 'success');
            return redirect()->back();
 	}
-	
+
 	public function up(Request $request){
-	    
+
 	     $pop = Pop::find(1);
-	     
+
 	    if (!empty($pop->contenido)) {
 			Pop::where('id', '1')->update([
 			    'titulo' => $request->titulo,
@@ -904,166 +904,166 @@ class SettingController extends Controller
 				'contenido' => $request->contenido
 			]);
 		}
-		
+
 		$funciones = new IndexController;
 		$funciones->msjSistema('Cambios realizados con exito', 'success');
            return redirect()->back();
 	}
-	
-	
+
+
 	public function recarga(){
-	 
+
 	 $funciones = new IndexController;
-	 $settings = Settings::first(); 
-	 
-	 
+	 $settings = Settings::first();
+
+
 	 DB::table('settings')
 	            ->where('id', 1)
 				->update(['recarga' => ($settings->recarga == 0) ? 1 : 0]);
-				
+
 		$funciones->msjSistema('Cambios realizados con exito', 'success');
-        return redirect()->back();		
+        return redirect()->back();
 	}
-	
-	
+
+
 	public function canje(){
-	 
+
 	 $funciones = new IndexController;
-	 $settings = Settings::first(); 
-	 
-	 
+	 $settings = Settings::first();
+
+
 	 DB::table('settings')
 	            ->where('id', 1)
 				->update(['canje' => ($settings->canje == 0) ? 1 : 0]);
-				
+
 		$funciones->msjSistema('Cambios realizados con exito', 'success');
-        return redirect()->back();		
+        return redirect()->back();
 	}
-	
-	
+
+
 	public function btc(){
-	 
+
 	 $funciones = new IndexController;
-	 $settings = Settings::first(); 
-	 
-	 
+	 $settings = Settings::first();
+
+
 	 DB::table('settings')
 	            ->where('id', 1)
 				->update(['btc' => ($settings->btc == 0) ? 1 : 0]);
-				
+
 		$funciones->msjSistema('Cambios realizados con exito', 'success');
-        return redirect()->back();		
+        return redirect()->back();
 	}
-	
-	
+
+
 	public function btcconfi(){
-	    
-	    view()->share('title', 'Configuración BTC'); 
-	    
+
+	    view()->share('title', 'Configuración BTC');
+
 	    return view('setting.btc');
 	}
-	
-	
+
+
 	public function savebtc(Request $datos){
-	    
+
 	    $env = new DotenvEditor();
-               
+
             $env->changeEnv([
-              'CRYPTO'  => $datos->crypto,    
+              'CRYPTO'  => $datos->crypto,
               'BILLETERA_BTC'  => $datos->billetera,
               'COIN_PAYMENT_PUBLIC_KEY'   => $datos->publickey,
               'COIN_PAYMENT_PRIVATE_KEY'   => $datos->privatekey,
                 ]);
-                
+
         $funciones = new IndexController;
 		$funciones->msjSistema('Cambios realizados con exito', 'success');
-           return redirect()->back();        
-                
+           return redirect()->back();
+
 	}
-	
-	
-	
+
+
+
 	public function modo_oscuro($iduser){
-	    
+
 	    $user = User::find($iduser);
-	    
+
 	    $user->modo_oscuro = ($user->modo_oscuro == 0) ? 1 : 0;
 	    $user->save();
-	    
+
 	    $funciones = new IndexController;
 	    $funciones->msjSistema(($user->modo_oscuro == 0) ? 'Modo Oscuro Desactivado' : 'Modo Oscuro Activado' , 'success');
         return redirect()->back();
-	} 
-	
-	
+	}
+
+
 	public function colores($tipo){
-	    
+
 	    DB::table('settings')
 	            ->where('id', 1)
 				->update(['estilo' => $tipo]);
-		
-		$funciones = new IndexController;		
+
+		$funciones = new IndexController;
 		$funciones->msjSistema('Cambios realizados con exito si no visualiza los cambios por favor borre la cache de su navegador', 'success');
-        return redirect()->back();		
+        return redirect()->back();
 	}
-	
-	
+
+
 	public function paypalboton(Request $datos){
-	    
+
 	    DB::table('settings')
 	            ->where('id', 1)
 				->update(['paypal' => $datos->paypal]);
-		
-		$funciones = new IndexController;		
+
+		$funciones = new IndexController;
 		$funciones->msjSistema('Cambios realizados con exito', 'success');
         return redirect()->back();
 	}
-	
+
 	public function scriptpaypal(Request $datos){
-	    
-	    
+
+
 	    DB::table('settings')
 	            ->where('id', 1)
 				->update(
 				    ['scriptpaypal' => $datos->scriptpaypal,
 				    'htmlpaypal' => $datos->htmlpaypal]
 				    );
-		
-		$funciones = new IndexController;		
+
+		$funciones = new IndexController;
 		$funciones->msjSistema('Cambios realizados con exito', 'success');
         return redirect()->back();
 	}
-	
+
 	public function paypalutil(){
-	    
+
 	    view()->share('title', 'Paypal');
-	    
-	    return view('setting.paypal');  
+
+	    return view('setting.paypal');
 	}
-	
-	
+
+
 	public function comple(){
-	    
-	    return view('setting.comple');  
+
+	    return view('setting.comple');
 	}
-	
-	
+
+
 	public function complelogin(Request $datos){
-	    
+
 	    DB::table('settings')
 	            ->where('id', 1)
 				->update(
 				    ['login' => $datos->login]
 				    );
-				    
-	    $funciones = new IndexController;		
+
+	    $funciones = new IndexController;
 		$funciones->msjSistema('Cambios realizados con exito', 'success');
         return redirect()->back();
 	}
-	
-	
+
+
 	public function compleregistro(Request $datos){
-	    
+
 	    DB::table('settings')
 	            ->where('id', 1)
 				->update(
@@ -1072,12 +1072,12 @@ class SettingController extends Controller
 				    'registro' => $datos->registro,
 				    ]
 				    );
-				    
-	    $funciones = new IndexController;		
+
+	    $funciones = new IndexController;
 		$funciones->msjSistema('Cambios realizados con exito', 'success');
         return redirect()->back();
 	}
-	
+
 }
 
 

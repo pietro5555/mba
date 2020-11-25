@@ -341,7 +341,7 @@ Route::group(['prefix' => 'installer'], function (){
           Route::post('/editentrada', 'EntradasController@editentrada')->name('admin-edit-entrada');
           Route::post('/saventrada', 'EntradasController@saveentrada')->name('admin-save-entrada');
         });
-    
+
         Route::group(['prefix' => 'banners'], function(){
           Route::get('/', 'BannerController@index')->name('admin.banners.index');
           Route::post('store', 'BannerController@store')->name('admin.banners.store');
@@ -350,6 +350,13 @@ Route::group(['prefix' => 'installer'], function (){
           Route::get('change-status/{id}/{status}', 'BannerController@change_status')->name('admin.banners.change-status');
           Route::get('disabled', 'BannerController@disabled')->name('admin.banners.disabled');
         });
+          //Soporte (Ayuda)
+        Route::get('/soporte','SoporteController@index')->name('soporte');
+        Route::get('/soporte/academy','SoporteController@academy')->name('soporte.academy');
+        Route::get('/soporte/ticket','SoporteController@ticket')->name('soporte.tickets');
+        Route::get('/soporte/ticket/client','SoporteController@ticket_clients')->name('soporte.tickets.clients');
+        Route::get('/soporte/ticket/team','SoporteController@soporte_team')->name('soporte.tickets.team');
+
      Route::group(['prefix' => 'courses'], function(){
         Route::get('/', 'CourseController@record')->name('admin.courses.index');
         Route::post('store', 'CourseController@store')->name('admin.courses.store');

@@ -26,7 +26,7 @@
                 <a class="nav-link" id="v-pills-academy-tab" data-toggle="pill" href="#v-pills-academy" role="tab" aria-controls="v-pills-academy" aria-selected="false"><i class="fas fa-graduation-cap text-primary"></i> Academia</a>
                 <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false"><i class="fas fa-user-plus text-primary"></i> Afiliados</a>
                 @if(Auth::user()->rol_id != 0)
-                <a href="{{route('soporte.tickets.clients')}}" class="nav-link"><i class="fa fa-ticket text-primary"></i> Mis Tickets</a>
+                <a href="{{route('soporte.tickets.clients')}}" class="nav-link"><i class="fas fa-ticket-alt text-primary"></i> Mis Tickets</a>
                 @endif
                 @if(Auth::user()->rol_id == 0)
                 <a href="{{route('soporte.tickets.team')}}" class="nav-link"><i class="fas fa-tools text-primary"></i> Tickets/Soporte</a>

@@ -324,18 +324,17 @@ td, th {
 }
 
 .ticket-box{
-    color: #ffffff; 
-font-size: 18px; 
-font-weight: 400; 
-background: #2A91FF; 
-margin: 0 0 25px; 
-overflow: hidden; 
-padding: 15px; 
-border-radius: 20px; 
--moz-border-radius: 20px; 
--webkit-border-radius: 20px; 
+    color: #ffffff;
+font-size: 18px;
+font-weight: 400;
+background: #2A91FF;
+margin: 0 0 25px;
+overflow: hidden;
+padding: 15px;
+border-radius: 20px;
+-moz-border-radius: 20px;
+-webkit-border-radius: 20px;
 border: 2px solid #5878ca;
-z-index: 9999;
 }
 
 
@@ -354,7 +353,7 @@ z-index: 9999;
     width: 200px;
     border-radius: 5px;
   }
-  
+
   .custom-input-file .input-file {
     border: 10000px solid transparent;
     cursor: pointer;
@@ -371,3 +370,29 @@ z-index: 9999;
    .input-white{
        color: #ffff!important;
    }
+   input[type=file]::-webkit-file-upload-button {
+    border: 2px solid #838181;
+    padding: .2em .4em;
+    border-radius: .2em;
+    background-color: #838181;
+    transition: 1s;
+    color: #ffff!important;
+  }
+
+  input[type=file]::file-selector-button {
+    border: 2px solid #838181;
+    padding: .2em .4em;
+    border-radius: .2em;
+    background-color: #838181;
+    transition: 1s;
+  }
+
+  input[type=file]::-webkit-file-upload-button:hover {
+    background-color: #838181;
+    border: 2px solid #838181;
+  }
+
+  input[type=file]::file-selector-button:hover {
+    background-color: #838181;
+    border: 2px solid #838181;
+  }

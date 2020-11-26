@@ -356,6 +356,15 @@ Route::group(['prefix' => 'installer'], function (){
         Route::get('/soporte/ticket','SoporteController@ticket')->name('soporte.tickets');
         Route::get('/soporte/ticket/client','SoporteController@ticket_clients')->name('soporte.tickets.clients');
         Route::get('/soporte/ticket/team','SoporteController@soporte_team')->name('soporte.tickets.team');
+        Route::get('/soporte/article','SoporteController@soporte_article')->name('admin.soporte.article');
+        Route::post('/soporte/article/save','SoporteController@create_article')->name('admin.soporte.create.article');
+        Route::get('/soporte/article/edit/{id}','SoporteController@edit_article')->name('admin.soporte.article.edit');
+        Route::post('/soporte/article/update','SoporteController@update_article')->name('admin.soporte.update.article');
+        Route::get('/soporte/article/delete/{id}','SoporteController@delete_article')->name('admin.soporte.delete.article');
+        Route::post('/soporte/ticket/save','SoporteController@create_ticket')->name('admin.soporte.create.ticket');
+        Route::get('/soporte/ticket/edit/{id}','SoporteController@edit_ticket')->name('admin.soporte.ticket.edit');
+        Route::post('/soporte/ticket/update','SoporteController@update_ticket')->name('admin.soporte.update.ticket');
+        Route::get('/soporte/ticket/delete/{id}','SoporteController@delete_ticket')->name('admin.soporte.delete.ticket');
 
      Route::group(['prefix' => 'courses'], function(){
         Route::get('/', 'CourseController@record')->name('admin.courses.index');

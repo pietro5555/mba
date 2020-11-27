@@ -127,7 +127,7 @@ class PermisosController extends Controller
             'billetera' => 1,
             'pago' => 1,
             'informes' => 1,
-            'tickets' => 1,
+            'tickets' => 0,
             'buzon' => 1,
             'ranking' => 1,
             'historial_actividades' => 1,

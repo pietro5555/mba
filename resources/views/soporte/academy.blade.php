@@ -39,7 +39,10 @@
         <!--PREGUNTAS FRECUENTES-->
             <div class="tab-pane fade" id="v-pills-questions" role="tabpanel" aria-labelledby="v-pills-questions-tab">
                 <h2 class="white font-weight-bold">Preguntas frecuentes</h2><hr>
-                <h4 class="white">En construcción...</h4>
+                
+                <!--ACCORDION-->
+                @include('soporte.components.accordion_questions')
+                <!--ACCORDION END-->
             </div>
         <!--PREGUNTAS FRECUENTES END-->
         <!--ACADEMIA-->

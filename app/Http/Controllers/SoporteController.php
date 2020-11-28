@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Article;
 use App\Models\Ticket;
+use App\Models\Support;
 class SoporteController extends Controller
 {
 
@@ -34,7 +35,8 @@ class SoporteController extends Controller
         // TITLE
         view()->share('title', ' ');
         $articles = Article::all();
-        return view('soporte.academy', compact('articles'));
+        $tickets = Ticket::with('support')->get();
+        return view('soporte.academy', compact('articles', 'tickets'));
     }
 
     public function ticket()
@@ -113,8 +115,39 @@ class SoporteController extends Controller
     {
         // TITLE
         view()->share('title', ' ');
-        return view('soporte.admin_soporte');
+
+        $tickets = Ticket::where('status', '=','Abierto')->with('support')->get();
+        return view('soporte.admin_soporte', compact('tickets'));
     }
+
+    public function ticket_solved()
+    {
+        view()->share('title', ' ');
+
+        $tickets = Ticket::where('status', '!=','Abierto')->get();
+        return view('soporte.admin_tickets_solved', compact('tickets'));
+    }
+
+    public function response_ticket(Request $request)
+    {   
+        $response = new Support($request->all());
+        $response->user_id = Auth::user()->ID;
+        $response->status = 1;
+        $response->save();
+        $ticket_id = $request->ticket_id;
+        $ticket = Ticket::find($ticket_id);
+        //dd ($request->all(), $ticket);
+         return redirect('admin/soporte/ticket/team')->with('msj-exitoso', 'El ticket '.$ticket->titulo.' ha sido respondido con éxito.');
+
+         
+    }
+    public function closed_ticket($ticket_id){
+        $ticket = Ticket::find($ticket_id);
+        $ticket->status = 'Cerrado';
+        $ticket->save();
+        return redirect('admin/soporte/ticket/team')->with('msj-exitoso', 'El ticket '.$ticket->titulo.' ha sido cerrado con éxito.');
+    }
+
     public function soporte_article()
     {
         // TITLE

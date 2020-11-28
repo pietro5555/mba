@@ -964,7 +964,7 @@ class Menu
                 'activo' => 0,
             ],
             'Soporte' => [
-                'submenu' => 1,
+                'submenu' => 3,
                 'ruta' => 'javascript:;',
                 'icono' => 'fas fa-tools',
                 'permisoAdmin' => (!empty($permiso)) ? $permiso->tickets : 0,
@@ -972,6 +972,18 @@ class Menu
                 'menus' => [
                     'Articulos' => [
                         'ruta' => 'admin.soporte.article',
+                        'complementoruta' => '',
+                        'black'=> '0',
+                        'oculto'=> 'activo',
+                    ],
+                    'Tickets/Soporte' => [
+                        'ruta' => 'soporte.tickets.team',
+                        'complementoruta' => '',
+                        'black'=> '0',
+                        'oculto'=> 'activo',
+                    ],
+                    'Tickets/Resueltos' => [
+                        'ruta' => 'soporte.tickets.solved',
                         'complementoruta' => '',
                         'black'=> '0',
                         'oculto'=> 'activo',

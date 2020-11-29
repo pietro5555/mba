@@ -192,6 +192,46 @@ class SoporteController extends Controller
         return redirect('admin/soporte/article')->with('msj-exitoso', 'El artículo '.$article->title.' ha sido eliminado con éxito.');
 
     }
+
+    public function search(Request $request){
+        view()->share('title', ' ');
+
+      $busqueda = $request->get('question-search');
+
+      $tickets = Ticket::where(function ($query) use ($busqueda){
+                     $query->where('titulo', 'LIKE', '%'.$busqueda.'%')
+                           ->orWhere('comentario', 'LIKE', '%'.$busqueda.'%');
+                  })->with('support')->get();
+       
+        //dd($busqueda, $tickets);
+        
+      return view('soporte.frequent_questions')->with(compact('tickets'));
+   }
+
+   public function search_two(Request $request){
+        view()->share('title', ' ');
+
+      $busqueda = $request->get('frecuent-question');
+
+      $tickets = Ticket::where(function ($query) use ($busqueda){
+                     $query->where('titulo', 'LIKE', '%'.$busqueda.'%')
+                           ->orWhere('comentario', 'LIKE', '%'.$busqueda.'%');
+                  })->with('support')->get();
+       
+        //dd($busqueda, $tickets);
+        
+      return view('soporte.frequent_questions')->with(compact('tickets'));
+   }
+
+   public function frequent_questions(){
+        view()->share('title', ' ');
+        $tickets = Ticket::with('support')->get();
+       
+        //dd($busqueda, $tickets);
+        
+      return view('soporte.frequent_questions')->with(compact('tickets'));
+   }
+
     /**
      * Store a newly created resource in storage.
      *

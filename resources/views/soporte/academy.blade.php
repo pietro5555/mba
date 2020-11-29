@@ -10,14 +10,16 @@
     <div class="col-md-4">
             <div class="sidenav">
                 <br><br><br><br><br><br>
+                <form action="{{route('admin.soporte.search.questions_two')}}" method="GET">
                 <div class="form-group col-md-12">
                         <div class="input-group">
-                      <div class="input-group-addon academy-question-search" style="background:#2A91FF!important; border:none; border-top-left-radius: 20px; border-bottom-left-radius: 20px; ">
-                        <i class="fa fa-search white"></i>
+                      <div class="input-group-addon academy-question-search" style="background:#2A91FF!important; border:none; border-top-left-radius: 20px; border-bottom-left-radius: 20px; padding: 0px!important;">
+                        <button class="btn btn-none border-0" type="submit" style="background:none!important;"><i class="fa fa-search white" aria-hidden="true"></i></button>
                       </div>
                       <input name="frecuent-question" id="frecuent-question" type="text" placeholder="Busca tu pregunta" class="form-control academy-question-search" value="">
                         </div>
                 </div>
+                 </form>
 
                 <br><br>
                 <a><h3 class="white">Categorías</h3></a>

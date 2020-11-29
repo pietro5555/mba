@@ -93,7 +93,7 @@
             <div class="col-xs-1 col-md-2 text-center mt-2 ">
                 <div class="icon-social-media">
                     <a href="https://m.facebook.com/MyBusinessAcademyPro/" target="_blank" class="btn btn-social-icon btn-facebook btn-rounded ml-2 mr-2"><img src="{{ asset('images/icons/facebook.svg') }}" height="20px" width="20px"></a>
-                    <a href="" class="btn btn-social-icon btn-twitter btn-rounded ml-2 mr-2" target="_blank"><img src="{{ asset('images/icons/twitter.svg') }}" height="20px" width="20px"></a>
+                    <a href="https://twitter.com/GlobalMBApro" class="btn btn-social-icon btn-twitter btn-rounded ml-2 mr-2" target="_blank"><img src="{{ asset('images/icons/twitter.svg') }}" height="20px" width="20px"></a>
                     <a href="https://instagram.com/mybusinessacademypro?igshid=tdj5prrv1gx1" target="_blank" class="btn btn-social-icon btn-instagram btn-rounded ml-2 mr-2"><img src="{{ asset('images/icons/instagram.svg') }}" height="20px" width="20px"></a>
                 </div>
             </div>

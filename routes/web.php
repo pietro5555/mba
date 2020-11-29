@@ -368,6 +368,9 @@ Route::group(['prefix' => 'installer'], function (){
         Route::get('/soporte/ticket/delete/{id}','SoporteController@delete_ticket')->name('admin.soporte.delete.ticket');
         Route::post('/soporte/ticket/response/save','SoporteController@response_ticket')->name('admin.soporte.response.ticket');
         Route::get('/soporte/ticket/close/{id}','SoporteController@closed_ticket')->name('admin.soporte.close.ticket');
+        Route::get('/soporte/ticket/questions','SoporteController@search')->name('admin.soporte.search.questions');
+        Route::get('/soporte/ticket/questions_two','SoporteController@search_two')->name('admin.soporte.search.questions_two');
+        Route::get('/soporte/ticket/frecuent_questions','SoporteController@frequent_questions')->name('admin.soporte.search.frecuent_questions');
 
      Route::group(['prefix' => 'courses'], function(){
         Route::get('/', 'CourseController@record')->name('admin.courses.index');

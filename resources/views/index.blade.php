@@ -500,8 +500,9 @@
       </div>
       <div class="modal-body">
           
+       <div class="embed-responsive embed-responsive-16by9">   
        {!! (!empty($pop->contenido)) ? $pop->contenido : '' !!}   
-               
+       </div>        
             
       </div>
     </div>

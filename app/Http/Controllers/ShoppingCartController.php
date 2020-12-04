@@ -80,7 +80,7 @@ class ShoppingCartController extends Controller
         $totalItems = 0;
         foreach ($items as $item) {
 
-            if ($item->course_id != null) {
+            if ( ($item->course_id != null) || ($item->membership_id != null) ) {
                 if (!Auth::guest()){
                     if (is_null(Auth::user()->membership_id)){
                         $membresia = DB::table('memberships')->where('id', 1)->first();
@@ -168,7 +168,20 @@ class ShoppingCartController extends Controller
             $item->save();
 
             return redirect('shopping-cart')->with('msj-exitoso', 'El item ha sido agregado a su carrito de compras con éxito.');
-        }else{
+        }else if ($request->type == 'membresia'){
+            $itemAgregado = DB::table('shopping_cart')
+                            ->where('user_id', '=', Auth::user()->ID)
+                            ->where('membership_id', '=', $id)
+                            ->count();
+
+            if ($itemAgregado == 0){
+                $item = new ShoppingCart();
+                $item->user_id = Auth::user()->ID;
+                $item->membership_id = $id;
+                $item->date = date('Y-m-d');
+                $item->save();
+            }
+        }else if ($request->type == 'oferta'){
             if ($request->type == null) {
                 $itemAgregado = DB::table('shopping_cart')
                                 ->where('user_id', '=', Auth::user()->ID)

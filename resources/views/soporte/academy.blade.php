@@ -10,14 +10,16 @@
     <div class="col-md-4">
             <div class="sidenav">
                 <br><br><br><br><br><br>
+                <form action="{{route('admin.soporte.search.questions_two')}}" method="GET">
                 <div class="form-group col-md-12">
                         <div class="input-group">
-                      <div class="input-group-addon academy-question-search" style="background:#2A91FF!important; border:none; border-top-left-radius: 20px; border-bottom-left-radius: 20px; ">
-                        <i class="fa fa-search white"></i>
+                      <div class="input-group-addon academy-question-search" style="background:#2A91FF!important; border:none; border-top-left-radius: 20px; border-bottom-left-radius: 20px; padding: 0px!important;">
+                        <button class="btn btn-none border-0" type="submit" style="background:none!important;"><i class="fa fa-search white" aria-hidden="true"></i></button>
                       </div>
                       <input name="frecuent-question" id="frecuent-question" type="text" placeholder="Busca tu pregunta" class="form-control academy-question-search" value="">
                         </div>
                 </div>
+                 </form>
 
                 <br><br>
                 <a><h3 class="white">Categorías</h3></a>
@@ -26,7 +28,7 @@
                 <a class="nav-link" id="v-pills-academy-tab" data-toggle="pill" href="#v-pills-academy" role="tab" aria-controls="v-pills-academy" aria-selected="false"><i class="fas fa-graduation-cap text-primary"></i> Academia</a>
                 <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false"><i class="fas fa-user-plus text-primary"></i> Afiliados</a>
                 @if(Auth::user()->rol_id != 0)
-                <a href="{{route('soporte.tickets.clients')}}" class="nav-link"><i class="fa fa-ticket text-primary"></i> Mis Tickets</a>
+                <a href="{{route('soporte.tickets.clients')}}" class="nav-link"><i class="fas fa-ticket-alt text-primary"></i> Mis Tickets</a>
                 @endif
                 @if(Auth::user()->rol_id == 0)
                 <a href="{{route('soporte.tickets.team')}}" class="nav-link"><i class="fas fa-tools text-primary"></i> Tickets/Soporte</a>
@@ -39,7 +41,10 @@
         <!--PREGUNTAS FRECUENTES-->
             <div class="tab-pane fade" id="v-pills-questions" role="tabpanel" aria-labelledby="v-pills-questions-tab">
                 <h2 class="white font-weight-bold">Preguntas frecuentes</h2><hr>
-                <h4 class="white">En construcción...</h4>
+                
+                <!--ACCORDION-->
+                @include('soporte.components.accordion_questions')
+                <!--ACCORDION END-->
             </div>
         <!--PREGUNTAS FRECUENTES END-->
         <!--ACADEMIA-->

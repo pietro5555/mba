@@ -251,7 +251,8 @@ class CoursesOrdenController extends Controller
       $enlace = Addresip::where('ip', request()->ip())->first();
 
       $membresia = DB::table('memberships')->where('id', $idmembresia)->first();
-      $total = ($enlace != null) ? $membresia->descuento : $membresia->price;
+        
+      $total = $membresia->descuento;
       
       if(Auth::user()->wallet_amount < $total){
           
@@ -261,14 +262,14 @@ class CoursesOrdenController extends Controller
        $datosMembresia = [
             'idmembresia' => $membresia->id,
             'nombre' => $membresia->name,
-            'precio' => ($enlace != null) ? $membresia->descuento : $membresia->price,
+            'precio' => $membresia->descuento,
             'img' => asset('uploads/images/memberships/'.$membresia->image),
             'links' => ($enlace != null) ? $enlace->padre : 0,
         ];
             
         $orden = new CourseOrden();
         $orden->user_id = Auth::user()->ID;
-        $orden->total = ($enlace != null) ? $membresia->descuento : $membresia->price;
+        $orden->total = $membresia->descuento;
         $orden->detalles = json_encode($datosMembresia);
         $orden->status = 1;
         $orden->type_product = 'membresia';
@@ -300,22 +301,22 @@ class CoursesOrdenController extends Controller
         
         return redirect('/')->with('msj-exitoso', 'Tu compra de membresría ha sido completada con éxito.');
     }
-
-
-     
-//comprar con paypal
+    
+   
+    //comprar con paypal
     public function buy_paypal(Request $datos){
         
-        $idmembresia = $this->getDataMembeship(Auth::user()->ID);
+        $idmembresia = ShoppingCart::where('user_id', '=', Auth::user()->ID)->first();
         $enlace = Addresip::where('ip', request()->ip())->first();
 
-        $membresia = DB::table('memberships')->where('id', $idmembresia)->first();
-        $total = ($enlace != null) ? $membresia->descuento : $membresia->price;
+        $membresia = DB::table('memberships')->where('id', $idmembresia->membership_id)->first();
+
+        $total = $membresia->descuento;
         
         $datosMembresia = [
             'idmembresia' => $membresia->id,
             'nombre' => $membresia->name,
-            'precio' => ($enlace != null) ? $membresia->descuento : $membresia->price,
+            'precio' => $membresia->descuento,
             'img' => asset('uploads/images/memberships/'.$membresia->image),
             'links' => ($enlace != null) ? $enlace->padre : 0,
         ];

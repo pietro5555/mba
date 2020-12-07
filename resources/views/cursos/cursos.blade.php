@@ -166,12 +166,12 @@
 
                                 <img class="card-img-top" src="{{ asset('uploads/images/courses/covers/'.$curso->thumbnail_cover) }}" alt="card-image-cap">
                                 <div class="card-body p-2">
-                                    <div class="row align-items-start" style="margin-top: 5px">
-                                        <h6 class="col-sm" style="font-size:12px;"><a href="{{ route('courses.show', [$curso->slug, $curso->id]) }}" class="text-secondary">{{$curso->title}}</a>
-                                        </h6>
+                                <div class="row d-flex align-items-center body-miscursos">
+                                    <h6 class="col-9 d-flex align-items-center" style="font-size:12px;"><a href="{{ route('courses.show', [$curso->slug, $curso->id]) }}" class="text-secondary">{{$curso->title}}</a>
+                                    </h6>
 
-                                        <div class="col-3 m-2"><img src="{{ asset('images/icons/video-player-blue.svg') }}" alt="" height="20px" width="20px"></div>
-                                    </div>
+                                    <div class="col-3 p-2 d-flex align-items-center d-none d-sm-none d-md-block icon-miscursos"><img src="{{ asset('images/icons/video-player-blue.svg') }}" alt=""></div>
+                                </div>
                                 </div>
                             </div>
                         </div>

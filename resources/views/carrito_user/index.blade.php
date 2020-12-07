@@ -31,11 +31,14 @@
 
 <div class="title-page-one_course col-md border-bottom-2">
     <h6>Carrito</h6>
-    <hr style="border: 1px solid #707070;opacity: 1;" />
+    <hr style="border: 1px solid #707070;opacity: 1;" />    
 </div>
 <div class="col-12 mb-2">
     <div class="row">
         <div class="col-12 col-md-6">
+             <div class="d-block d-sm-block d-md-none float-right">
+               <a class="btn btn-primary " href="{{route('shopping-cart.membership')}}"><i class="fas fa-chevron-circle-left"></i> Atrás</a> 
+            </div><br>
             @auth
             @include('carrito_user.componente.logueado')
             @include('carrito_user.componente.messages')

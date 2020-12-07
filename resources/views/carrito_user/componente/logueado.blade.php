@@ -74,7 +74,7 @@
             <div class="form-group">
                 <button class="btn text-white btn-color-green" onclick="pagarS2()">Tarjeta</button>
                 <button class="btn text-white btn-color-green" onclick="pagarC2()">Cripto</button>
-                {{--<button class="btn text-white btn-color-green" onclick="pagarPaypal2()">Paypal</button>--}}
+                <button class="btn text-white btn-color-green" onclick="pagarPaypal2()">Paypal</button>
                 <button class="btn text-white btn-color-green" onclick="pagarB2()">Billetera</button><br><br>
             </div>
         </div>

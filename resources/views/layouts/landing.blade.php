@@ -101,6 +101,20 @@
                     });
 
         </script>
+        <script>
+            $(document).ready(function(){ //Hacia arriba
+              irArriba();
+            });
+
+            function irArriba(){
+              $('.ir-arriba').click(function(){ $('body,html').animate({ scrollTop:'0px' },1000); });
+              $(window).scroll(function(){
+                if($(this).scrollTop() > 0){ $('.ir-arriba').slideDown(600); }else{ $('.ir-arriba').slideUp(600); }
+              });
+              $('.ir-abajo').click(function(){ $('body,html').animate({ scrollTop:'1000px' },1000); });
+            }
+                        
+        </script>
     </head>
     <body>
         <div class="d-flex" id="wrapper">
@@ -124,11 +138,9 @@
                         <div class="row">
                             <div class="col-md-12 py-5">
                                 <div class="mb-2 text-center">
-                                    <img src="{{ asset('images/50impact.png')}}" alt="" height="32px" class="mr-md-2 mr-3">
                                     <img src="{{ asset('images/icf.png')}}" alt="" height="32px" class="mr-md-2 mr-3">
                                     <img src="{{ asset('images/no_work_no_money.png')}}" alt="" height="32px" class="mr-md-2 mr-3">
                                     <img src="{{ asset('images/logo-fentix.png')}}" alt="" height="35px" class="mr-md-2 mr-3">
-                                    <img src="{{ asset('images/platinum.png')}}" alt="" height="32px" class="mr-md-2 mr-3">
                                     <img src="{{ asset('images/logo-fxtlive.png')}}" alt="" height="32px" class="mr-md-2 mr-3">
                                     <img src="{{ asset('images/mytradinglogo.png')}}" alt="" height="35px" class="mr-md-2 mr-3">
                                     <img src="{{ asset('images/logo-jose.png')}}" alt="" height="32px" class="mr-md-2 mr-3">
@@ -179,6 +191,13 @@
                         </div>
 
                     </div>
+                    <!-- Boton hacia arriba -->
+                    <a class="ir-arriba"  javascript:void(0) title="Volver arriba">
+                      <span class="fa-stack">
+                        <i class="fa fa-circle fa-stack-2x"></i>
+                        <i class="fa fa-arrow-up fa-stack-1x fa-inverse"></i>
+                      </span>
+                    </a>
                 </div>
 
                 @include('layouts.partials.footer')

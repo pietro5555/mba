@@ -564,6 +564,22 @@ h5.title-level {
         top: 55%;
         width: 95%;
     }
+    .clock-text
+    {
+        font-size: 40px!important;
+        font-weight:400!important;
+    }
+    .title-status-live{
+        font-size: 30px!important;
+
+        font-weight:400!important;
+    }
+    .title-remain{
+        font-size: 20px !important;
+        font-weight:600 !important;
+    }
+
+
 }
 
 @media (min-width: 1024px) {
@@ -573,12 +589,16 @@ h5.title-level {
     .mentor-index-seccion {
         display: grid !important;
     }
+    .boton-toggle{
+        display: none;
+    }
 }
 
 @media (max-width: 768px) {
     .mentor-index-seccion {
         display: block !important;
     }
+    .navbar-redes{display: none;}
 }
 
 @media (min-width: 1366px) {
@@ -602,6 +622,39 @@ h5.title-level {
     .course-banner-caption {
         display: none;
     }
+
+    .body-miscursos{
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .clock-text
+    {
+        font-size: 25px!important;
+        font-weight:400!important;
+    }
+    .title-status-live{
+        font-size: 20px!important;
+
+        font-weight:400!important;
+    }
+    .title-remain{
+        font-size: 16px !important;
+        font-weight:600 !important;
+    }
+    .ir-arriba{
+      font-size:15px!important;
+    }
+
+
+}
+
+@media (min-width: 768px) and (max-width: 768px){
+    .icon-miscursos img
+    {
+        display: none;
+    }
+
 }
 
 .title-page-course {
@@ -662,6 +715,10 @@ h6.card-title {
     max-height: 53px;
     text-overflow: ellipsis;
     overflow: hidden;
+}
+
+.card-body.border-bottom{
+     border-bottom: 2px solid #7070704d!important;
 }
 
 .banner-course {
@@ -2000,3 +2057,45 @@ p.card-text.font-weight-bold.mr-2 {
     flex-direction: column;
 }
 
+.icon-miscursos img
+{
+    max-height: 15px;
+    max-width: 15px;
+}
+
+.clock-text{
+    padding-left: 15%;
+    padding-right: 15%;
+    font-size: 80px;
+    font-weight:800;
+    justify-content: center;
+
+}
+
+
+.title-remain{
+    font-size: 25px;
+    font-weight:600;
+    justify-content: center;
+}
+
+.title-status-live{
+    justify-content: center;
+}
+
+/*Flecha para hacer la pagina hacia arriba*/
+.ir-arriba{
+  display:none;
+  background-repeat:no-repeat;
+  font-size:25px;
+  color:black;
+  cursor:pointer;
+  position:fixed;
+  bottom:10px;
+  right:10px;
+  z-index:9999;
+}
+
+.header-redes-sociales{
+    align-items: right;
+}

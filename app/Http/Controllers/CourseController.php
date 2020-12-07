@@ -383,13 +383,19 @@ class CourseController extends Controller{
     public function my_courses(){
         $cursos = Auth::user()->courses_buyed->take(12);
 
+        $last_course = DB::table('courses')
+                                    ->join('courses_users', 'courses_users.course_id', '=', 'courses.id')
+                                    ->where('courses_users.user_id', '=', Auth::user()->ID )
+                                    ->orderBy('courses_users.updated_at', 'DESC')
+                                    ->first();
+
         $refeDirec = 0;
 
         if(Auth::user()){
             $refeDirec = User::where('referred_id', Auth::user()->ID)->count('ID');
         }
 
-        return view('cursos.all_courses', compact('cursos', 'refeDirec'));
+        return view('cursos.all_courses', compact('cursos', 'refeDirec', 'last_course'));
 
     }
 

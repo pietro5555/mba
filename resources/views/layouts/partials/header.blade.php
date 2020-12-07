@@ -1,33 +1,19 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark-gray border-bottom" style="height: 70px;">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark-gray border-bottom" style="height: 70px;flex-wrap: nowrap!important;">
         <button class="btn btn-primary" id="menu-toggle" style="background-color: #1D94FF !important;"><!--<span class="navbar-toggler-icon"></span>--><i class="fas fa-bars"></i></button>
 
         <button class="navbar-toggler d-none" type="button" data-toggle="collapse" data-target="#navbarItems" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
-        <div class="collapse navbar-collapse" id="navbarItems" style="z-index: 1000;">
-
-        </div>
-        <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-12 mb-2 mt-3 mb-3">
-                        <div class="row">
-                            <div class="col-md-8 text-white pt-2">
-                            </div>
-                            <div class="col-md-4 text-center pt-2">
-                                 <a href="https://m.facebook.com/MyBusinessAcademyPro/" target="_blank" class="btn"><i class="text-white fa fa-facebook-f fa-1x"></i></a>
-                                 <a href="https://twitter.com/GlobalMBApro" class="btn" target="_blank"><i class="text-white fa fa-twitter fa-1x"></i></a>
-                                 <a href="https://instagram.com/mybusinessacademypro?igshid=tdj5prrv1gx1" target="_blank" class="btn"><i class="text-white fa fa-instagram fa-1x"></i></a>
-                                 <a href="https://www.youtube.com/channel/UCQaLkVtbR6RK8HfhajFnikg" target="_blank" class="btn"><i class="text-white fa fa-youtube fa-1x"></i></a>
-                                 <a href="https://www.linkedin.com/in/my-business-academy-pro-1242481b2/" target="_blank" class="btn"><i class="text-white fa fa-linkedin fa-1x"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="col-md-12 col-md-12 pt-2">
+             <a href="https://m.facebook.com/MyBusinessAcademyPro/" target="_blank" class="btn float-right"><i class="text-white fa fa-facebook-f fa-1x"></i></a>
+             <a href="https://twitter.com/GlobalMBApro" class="btn float-right" target="_blank"><i class="text-white fa fa-twitter fa-1x"></i></a>
+             <a href="https://instagram.com/mybusinessacademypro?igshid=tdj5prrv1gx1" target="_blank" class="btn float-right"><i class="text-white fa fa-instagram fa-1x"></i></a>
+             <a href="https://www.youtube.com/channel/UCQaLkVtbR6RK8HfhajFnikg" target="_blank" class="btn float-right"><i class="text-white fa fa-youtube fa-1x"></i></a>
+             <a href="https://www.linkedin.com/in/my-business-academy-pro-1242481b2/" target="_blank" class="btn float-right"><i class="text-white fa fa-linkedin fa-1x"></i></a>
         </div>
 </nav>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark-gray border-bottom" style="height: 70px;">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark-gray border-bottom navbar-redes" style="height: 70px;">
 
     <div class="collapse navbar-collapse" id="navbarItems" style="z-index: 1000;">
         <ul class="navbar-nav ml-auto mt-2 mt-lg-0 header-list">

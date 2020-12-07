@@ -33,13 +33,13 @@
          if (t.remainTime <= 1) {
             clearInterval(timerUpdate);
             if ($("#statusLive").val() == 'scheduled') {
-               $('#' + elem).append('<h1>El live está por iniciar</h1>');
+               $('#' + elem).append('<h1 class="title-status-live">El live está por iniciar</h1>');
             } else if ($("#statusLive").val() == 'live') {
-               $('#' + elem).append('<h1>El live ya ha iniciado</h1>');
+               $('#' + elem).append('<h1 class="title-status-live">El live ya ha iniciado</h1>');
             } else if ($("#statusLive").val() == 'ended') {
-               $('#' + elem).append('<h1>El live ya ha finalizado</h1>');
+               $('#' + elem).append('<h1 class="title-status-live">El live ya ha finalizado</h1>');
             } else if ($("#statusLive").val() == 'cancelled') {
-               $('#' + elem).append('<h1>El live ha sido cancelado</h1>');
+               $('#' + elem).append('<h1 class="title-status-live">El live ha sido cancelado</h1>');
             }
             $('.text-change').html('AGENDAR LIVE Y ENTRAR');
             $('.ocultar').addClass('d-none')
@@ -127,11 +127,12 @@
 
       <div class="card-img-overlay counter-caption">
 
-         <h6 class="card-title text-white text-center">TIEMPO PARA INICIAR EL LIVE</h6>
+          <div class="card-title text-white text-center title-remain" id="remain-time-text">
+                    TIEMPO PARA INICIAR EL LIVE
+         </div>
 
-         <div class="d-flex justify-content-center bd-highlight mb-1 text-white" id="clock">
-
-
+          <div class="d-flex justify-content-center bd-highlight mb-1 text-white clock-text" style="" id="clock">
+                    
          </div>
 
 

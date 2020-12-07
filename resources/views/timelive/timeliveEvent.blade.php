@@ -33,7 +33,7 @@
                         success:function(ans){
                             clearInterval(timerUpdate);
                             document.getElementById("clock").innerHTML = "0:0:0:0";
-                            $('#status-text').append('<h1>El live está por iniciar</h1>');
+                            $('#status-text').append('<h1 class="title-status-live">El live está por iniciar</h1>');
                             $("#close").css('display', 'none');
                             $("#open").css('display', 'block');
                         }
@@ -41,7 +41,7 @@
 
                     clearInterval(timerUpdate);
                     document.getElementById("clock").innerHTML = "0:0:0:0";
-                    $('#status-text').append('<h1>El live está por iniciar</h1>');
+                    $('#status-text').append('<h1 class="title-status-live">El live está por iniciar</h1>');
                     $("#close").css('display', 'none');
                     $("#open").css('display', 'block');
                 } else {
@@ -58,17 +58,17 @@
                 $("#open").css('display', 'none');
                 $("#close").css('display', 'block');
                 document.getElementById("clock").innerHTML = "0:0:0:0";
-                $('#status-text').append('<h1>El live ya ha finalizado</h1>');
+                $('#status-text').append('<h1 class="title-status-live">El live ya ha finalizado</h1>');
             }else if ($("#statusLive").val() == 'cancelled'){
                 $("#open").css('display', 'none');
                 $("#close").css('display', 'block');
                 document.getElementById("clock").innerHTML = "0:0:0:0";
-                $('#status-text').append('<h1>El live ha sido cancelado</h1>');
+                $('#status-text').append('<h1 class="title-status-live">El live ha sido cancelado</h1>');
             }else if ($("#statusLive").val() == 'live'){
                 $("#open").css('display', 'block');
                 $("#close").css('display', 'none');
                 document.getElementById("clock").innerHTML = "0:0:0:0";
-                $('#status-text').append('<h1>El live está en vivo</h1>');
+                $('#status-text').append('<h1 class="title-status-live">El live está en vivo</h1>');
             }
         }
 
@@ -109,11 +109,13 @@
             @endif
 
             <div class="card-img-overlay counter-caption">
-                <h6 class="card-title text-white text-center" id="remain-time-text" style="font-size: 25px !important; font-weight:600 !important;">TIEMPO PARA INICIAR EL LIVE</h6>
-                <div class="d-flex justify-content-center bd-highlight mb-1 text-white" style="padding-left: 15%; padding-right: 15%; font-size: 80px; font-weight:800;" id="clock">
+                <div class="card-title text-white text-center title-remain" id="remain-time-text">
+                    TIEMPO PARA INICIAR EL LIVE
+                </div>
+                <div class="d-flex bd-highlight mb-1 text-white clock-text" style="" id="clock">
                     
                 </div>
-                <div class="d-flex justify-content-center bd-highlight mb-1 text-white" style="padding-left: 15%; padding-right: 15%; font-size: 80px; font-weight:800;" id="status-text">
+                <div class="d-flex bd-highlight mb-1 text-white title-status-live" style="" id="status-text">
                     
                 </div>
             </div>

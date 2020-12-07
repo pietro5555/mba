@@ -73,6 +73,15 @@
                     </div>
                     
                 </div>
+                <div class="col-md-3 mt-1" style="display: flex;align-items: center;">
+                    <div style="text-align: center; padding-left: 10%;">
+                        <h6>
+                           <br><br>
+                            <a href="{{ route('courses.show', [$last_course->slug, $last_course->course_id]) }}" class="btn btn-primary float-right text-uppercase mr-4"><i class="fa fa-play"></i> Último curso visto</a>
+                        </h6>
+                    </div>
+                    
+                </div>
             @else
                 <div class="container-fluid">
                     <h3>

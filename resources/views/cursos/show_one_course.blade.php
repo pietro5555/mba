@@ -171,7 +171,7 @@
                         @endif
                      @else
                         @if (Auth::user()->membership_status == 1)
-                           <a href="{{ route('lesson.show', [$first_lesson->slug, $first_lesson->id, $curso->id]) }}" class="px-2 mr-auto btn btn-success play-course-button btn-block"> <i class="fa fa-play" aria-hidden="true"></i> CONTINUAR CURSO</a>
+                           <a href="{{ route('lesson.show', [$first_lesson->slug, $first_lesson->id, $curso->id]) }}" class="px-2 mr-auto btn btn-success play-course-button btn-block mb-2"> <i class="fa fa-play" aria-hidden="true"></i> CONTINUAR CURSO</a>
                         @else
                            <a href="{{route('shopping-cart.store', $curso->id)}}" class="btn btn-danger play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> RENOVAR MEMBRESIA</a>
                         @endif
@@ -250,7 +250,7 @@
          @endforeach
       </div>
       <hr style="border: 1px solid #707070;opacity: 1;" />
-
+    
       <div class="col-md-12">
          <div class="full margin_bottom_30">
             <div class="text-right mb-2">
@@ -270,13 +270,16 @@
                       @endif
                    @else
                       @if (Auth::user()->membership_status == 1)
-                         <a href="{{ route('lesson.show', [$first_lesson->slug, $first_lesson->id, $curso->id]) }}" class="px-2 mr-auto btn btn-success play-course-button"> <i class="fa fa-play" aria-hidden="true"></i> CONTINUAR CURSO</a>
+                      @if(!$curso->lessons->isEmpty())
+                         <a href="{{ route('lesson.show', [$first_lesson->slug, $first_lesson->id, $curso->id]) }}" class="px-2 mr-auto btn btn-success play-course-button mb-2"> <i class="fa fa-play" aria-hidden="true"></i> CONTINUAR CURSO</a>
+                      @endif
                       @else
                          <a href="{{route('shopping-cart.store', $curso->id)}}" class="btn btn-danger play-course-button" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> RENOVAR MEMBRESIA</a>
                       @endif
                    @endif
                 @endif
             </div>
+            @if(!$curso->lessons->isEmpty())
             <div class="accordion border_circle">
                <div class="bs-example">
                   <div class="panel-group" id="accordion">
@@ -331,12 +334,15 @@
                   </div>
                </div>
             </div>
+            @else
+            <h3 class="text-white mb-2 mt-2">Este curso no posee lecciones...</h3>
+            @endif
             <div class="row">
                 <div class="col-6 text-left">
                     @if (!Auth::guest())
-                        <a href="{{route('client.my-courses')}}" class="btn btn-success play-course-button" ><i class="fas fa-user-circle" aria-hidden="true"></i> IR A MIS CURSOS</a>
+                        <a href="{{route('client.my-courses')}}" class="btn btn-success play-course-button mt-2" ><i class="fas fa-user-circle" aria-hidden="true"></i> IR A MIS CURSOS</a>
                     @endif
-                    <a href="{{route('courses.show.all')}}" class="btn btn-primary play-course-button" ><i class="fa fa-search" aria-hidden="true"></i> EXPLORAR MÁS CURSOS</a>
+                    <a href="{{route('courses.show.all')}}" class="btn btn-primary play-course-button mt-2" ><i class="fa fa-search" aria-hidden="true"></i> EXPLORAR MÁS CURSOS</a>
                 </div>
             
                 <div class="col-6 text-right">
@@ -356,7 +362,7 @@
                           @endif
                        @else
                           @if (Auth::user()->membership_status == 1)
-                             <a href="{{ route('lesson.show', [$first_lesson->slug, $first_lesson->id, $curso->id]) }}" class="px-2 mr-auto btn btn-success play-course-button"> <i class="fa fa-play" aria-hidden="true"></i> CONTINUAR CURSO</a>
+                             <!--<a href="{{ route('lesson.show', [$first_lesson->slug, $first_lesson->id, $curso->id]) }}" class="px-2 mr-auto btn btn-success play-course-button mt-2"> <i class="fa fa-play" aria-hidden="true"></i> CONTINUAR CURSO</a>-->
                           @else
                              <a href="{{route('shopping-cart.store', $curso->id)}}" class="btn btn-danger play-course-button" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> RENOVAR MEMBRESIA</a>
                           @endif

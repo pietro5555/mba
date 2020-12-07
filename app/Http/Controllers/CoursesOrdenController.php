@@ -36,6 +36,7 @@ class CoursesOrdenController extends Controller
         try {
             $iduser = Auth::user()->ID;
             $detalles = $this->getDataillOrden($iduser);
+            
             $data = [
                 'user_id' => $iduser,
                 'total' => $detalles['total'],
@@ -131,7 +132,7 @@ class CoursesOrdenController extends Controller
             $productos = json_decode($data['productos']);
             foreach ($productos as $producto) {
                 $transacion['items'][] = [
-                    'itemDescription' => $producto->titulo,
+                    'itemDescription' => $producto->nombre,
                     'itemPrice' => $producto->precio, // USD
                     'itemQty' => (INT) 1,
                     'itemSubtotalAmount' => $producto->precio // USD
@@ -153,31 +154,23 @@ class CoursesOrdenController extends Controller
      */
     public function getDataillOrden($iduser): array
     {
-        $items = ShoppingCart::where('user_id', '=', $iduser)
-        ->orderBy('date', 'DESC')
-        ->get();
-           
-
+        $idmembresia = ShoppingCart::where('user_id', '=', $iduser)->first();
+        
         $arrayCursos = [];
 
         $totalItems = 0;
-        foreach ($items as $item) {
-            
-            
-            
-            $oferta = OffersLive::find($item->offer_id);
+        
+        $membresia = DB::table('memberships')->where('id', $idmembresia->membership_id)->first();
             
             $arrayCursos [] = [
-                'idmembresia' => $oferta->id,
-                'nombre' => $oferta->title,
-                'precio' => $oferta->price,
+                'idmembresia' => $membresia->id,
+                'nombre' => $membresia->name,
+                'precio' => $membresia->descuento,
                 'img' => 'no disponible',
                 'links' => 0,
             ];
-            $totalItems += (!empty($oferta)) ? $oferta->price : 0;
+            $totalItems += (!empty($membresia)) ? $membresia->descuento : 0;
 
-            // $item->delete();
-        }
         $data = [
             'total' => $totalItems,
             'detalles' => json_encode($arrayCursos)
@@ -241,16 +234,16 @@ class CoursesOrdenController extends Controller
             dd($th);
         }
     }
-
-
+    
+    
     //comprar con billetera
     public function buy_wallet(Request $datos){
-        
-      $idmembresia = $this->getDataMembeship(Auth::user()->ID);
+      
+      $idmembresia = ShoppingCart::where('user_id', '=', Auth::user()->ID)->first();
             
       $enlace = Addresip::where('ip', request()->ip())->first();
 
-      $membresia = DB::table('memberships')->where('id', $idmembresia)->first();
+      $membresia = DB::table('memberships')->where('id', $idmembresia->membership_id)->first();
         
       $total = $membresia->descuento;
       

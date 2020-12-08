@@ -12,6 +12,8 @@ use Carbon\Carbon;
 use App\Models\User; 
 use App\Models\Purchase;
 use App\Models\PurchaseDetail;
+use App\Models\CourseOrden;
+
 
 // llamada a los controladores
 use App\Http\Controllers\IndexController;
@@ -24,35 +26,39 @@ class ComisionController extends Controller
      
      $user = User::find($iduser);
      $comisiones = new ComisionesController;
-     $compras = Purchase::where('link', $iduser)->where('status', '1')->get();
-
-     foreach($compras as $compra){
+     
+     $directos = User::where('referred_id', $iduser)->get();
+      foreach($directos as $direct){
+         $this->ComprasDirectos($direct->ID, $iduser);
+      }
+   }
+   
+   public function ComprasDirectos($directo, $iduser){
        
-        $check = DB::table('commissions')
-            ->select('id')
-            ->where('user_id', '=', $iduser)
-            ->where('compra_id', '=', $compra->id)
-            ->first();
-
-       if($check == null){
-       $hijo = User::find($compra->user_id);
-       $detailPurchas = PurchaseDetail::where('purchase_id', $compra->id)->first();
-       if($detailPurchas != null){
-         $membresias = DB::table('memberships')->where('id', $detailPurchas->membership_id)->first();
-         if($membresias != null){
-           $ganancia = $membresias->ganancia;
-           if($ganancia > 0){
-            $concepto= 'Ganancia por la compra Directa del usuario '.$hijo->display_name.' por la Membresia '.$membresias->name;
-            $comisiones->guardarComision($iduser, $compra->id, $ganancia, $user->user_email, 1, $concepto, 'membresias');
-             }
-           }
-         }
-       }
-     }
+     $user = User::find($iduser);
+     $ref = User::find($directo);  
+     $comisiones = new ComisionesController;
+     
+     $compras = CourseOrden::where('user_id', $directo)->where('status', 1)->get();
+      foreach($compras as $compra){
+         $check = DB::table('commissions')->select('id')->where('user_id', '=', $iduser)->where('compra_id', '=', $compra->id)->where('tipo_comision', 'membresias')->first();
+          if($check == null){
+              
+              $comp = json_decode($compra->detalles);
+              $membrecia = DB::table('memberships')->where('id', $comp->idmembresia)->first();
+              if($membrecia != null){
+              $porcentaje = ($membrecia->ganancia / 100);
+              
+                $concepto= 'Ganancia por la compra del referido '.$ref->display_name.' por la Membresia '.$comp->nombre;
+                $comisiones->guardarComision($iduser, $compra->id, ($compra->total * $porcentaje), $ref->user_email, 1, $concepto, 'membresias');
+              }
+          }
+      }
    }
    
    
    /*Compras Afiliados directos*/
+   /*
    public function  verificarAfiliados($iduser){
        
      $user = User::find($iduser);
@@ -93,5 +99,6 @@ class ComisionController extends Controller
          }
       }
    }
+*/
 
 }

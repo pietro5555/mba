@@ -134,12 +134,12 @@ class CoursesOrdenController extends Controller
            // dd($productos);
             
             
-                $transacion['items'][] = [
-                    'itemDescription' => $productos->nombre,
-                    'itemPrice' => $productos->precio, // USD
-                    'itemQty' => (INT) 1,
-                    'itemSubtotalAmount' => $productos->precio // USD
-                ];
+            $transacion['items'][] = [
+                'itemDescription' => $productos[0]->nombre,
+                'itemPrice' => $productos[0]->precio, // USD
+                'itemQty' => (INT) 1,
+                'itemSubtotalAmount' => $productos[0]->precio // USD
+            ];
             
 
             $ruta = \CoinPayment::generatelink($transacion);

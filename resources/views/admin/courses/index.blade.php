@@ -34,7 +34,7 @@
 	                $("#course_id_edit").val(ans[0].id);
 	                $("#title").val(ans[0].title);
 	                $("#category_id option[value="+ans[0].category_id+"]").attr("selected", true);
-	                $("#subcategory_id option[value="+ans[0].subcategory_id+"]").attr("selected", true);
+	                $("#membership_id option[value="+ans[0].membership_id+"]").attr("selected", true);
 	                $("#mentor_id option[value="+ans[0].mentor_id+"]").attr("selected", true);
                  	CKEDITOR.instances["description"].setData(ans[0].description);
 					$("#duration").val(ans[0].duration);
@@ -79,6 +79,7 @@
 							<th class="text-center">#</th>
 							<th class="text-center">Título</th>
 							<th class="text-center">Categoría</th>
+							<th class="text-center">Membresía</th>
 							<th class="text-center">Lecciones</th>
 							<th class="text-center">Acción</th>
 						</tr>
@@ -89,6 +90,7 @@
 								<td class="text-center">{{ $curso->id }}</td>
 								<td class="text-center">{{ $curso->title }}</td>
 								<td class="text-center">{{ $curso->category->title }}</td>
+								<td class="text-center">{{ $curso->membership->name }}</td>
 								<td class="text-center">{{ $curso->lessons_count }}</td>
 								<td class="text-center">
 									<a class="btn btn-info" data-route="{{ route('admin.courses.edit', $curso->id) }}" id="{{$curso->id}}" onclick="editar(this.id);"><i class="fa fa-edit"></i></a>
@@ -144,17 +146,17 @@
 						                </select>
 						            </div>
 						        </div>
-						        <!--<div class="col-md-12">
+						        <div class="col-md-12">
 						            <div class="form-group">
-						                <label>Subcategoría</label>
-						            	<select class="form-control" name="subcategory_id" required>
-						                	<option value="" selected disabled>Seleccione una subcategoría..</option>
-						                	@foreach ($subcategorias as $subcategoria)
-						                		<option value="{{ $subcategoria->id }}">{{ $subcategoria->title }}</option>
+						                <label>Membresía</label>
+						            	<select class="form-control" name="membership_id" required>
+						                	<option value="" selected disabled>Seleccione una membresía..</option>
+						                	@foreach ($membresias as $membresia)
+						                		<option value="{{ $membresia->id }}">{{ $membresia->name }}</option>
 						                	@endforeach
 						                </select>
 						            </div>
-						        </div>-->
+						        </div>
 						        <div class="col-md-12">
 						            <div class="form-group">
 						                <label>Mentor</label>
@@ -252,16 +254,16 @@
 										</select>
 									</div>
 								</div>
-								<!--<div class="col-md-12">
+								<div class="col-md-12">
 									<div class="form-group">
-										<label>Subcategoría</label>
-										<select class="form-control" name="subcategory_id" id="subcategory_id" required>
-											@foreach ($subcategorias as $subcategoria)
-												<option value="{{ $subcategoria->id }}">{{ $subcategoria->title }}</option>
+										<label>Membresía</label>
+										<select class="form-control" name="membership_id" id="membership_id" required>
+											@foreach ($membresias as $membresia)
+												<option value="{{ $membresia->id }}">{{ $membresia->name }}</option>
 											@endforeach
 										</select>
 									</div>
-								</div>-->
+								</div>
 								<div class="col-md-12">
 									<div class="form-group">
 										<label>Mentor</label>

@@ -287,22 +287,22 @@ class CourseController extends Controller{
                     ->orderBy('display_name', 'ASC')
                     ->get();
 
-            $categorias = DB::table('categories')
-                            ->select('id', 'title')
+        $categorias = DB::table('categories')
+                        ->select('id', 'title')
+                        ->orderBy('id', 'ASC')
+                        ->get();
+
+        $membresias = DB::table('memberships')
+                            ->select('id', 'name')
                             ->orderBy('id', 'ASC')
                             ->get();
 
-            $subcategorias = DB::table('subcategories')
-                                ->select('id', 'title')
-                                ->orderBy('id', 'ASC')
-                                ->get();
+        $etiquetas = DB::table('tags')
+                        ->select('id', 'tag')
+                        ->orderBy('tag', 'ASC')
+                        ->get();
 
-            $etiquetas = DB::table('tags')
-                            ->select('id', 'tag')
-                            ->orderBy('tag', 'ASC')
-                            ->get();
-
-            return view('admin.courses.index')->with(compact('cursos', 'mentores', 'categorias', 'subcategorias', 'etiquetas'));
+        return view('admin.courses.index')->with(compact('cursos', 'mentores', 'categorias', 'membresias', 'etiquetas'));
     }
 
     /**

@@ -196,7 +196,7 @@ Route::group(['prefix' => 'installer'], function (){
   /*** RUTAS PARA EL CARRITO DE COMPRA***/
   Route::group(['prefix' => 'shopping-cart'], function(){
     Route::get('/', 'ShoppingCartController@index')->name('shopping-cart.index');
-    Route::get('store/{id}/{type?}', 'ShoppingCartController@store')->name('shopping-cart.store');
+    Route::get('store/{id}/{type?}/{period?}', 'ShoppingCartController@store')->name('shopping-cart.store');
     Route::get('delete/{id}', 'ShoppingCartController@delete')->name('shopping-cart.delete');
     Route::get('/memberships', 'ShoppingCartController@memberships')->name('shopping-cart.membership');
     // proceso de pago

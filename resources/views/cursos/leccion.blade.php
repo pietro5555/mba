@@ -27,8 +27,11 @@
 
     <div class="container-fluid">
         <div class="row justify-content-end">
-            <div class="col-md-6 mt-2"><h5 class="text-white">@if ($progresoCurso->language == 'es') {{$lesson->title}} @else {{$lesson->english_title}} @endif</h5></div>
-
+          @if($first_lesson->id == $lesson->id)
+            <div class="col-md-6 mt-2 d-flex align-items-center"><h5 class="text-success">@if ($progresoCurso->language == 'es') {{$lesson->title}} @else {{$lesson->english_title}} @endif</h5></div>
+          @else
+          <div class="col-md-6 mt-2"><h5 class="text-white">@if ($progresoCurso->language == 'es') {{$lesson->title}} @else {{$lesson->english_title}} @endif</h5></div>
+          @endif
             <div class="col-xs-1 col-md-2 mt-2">
                 @if ($progresoCurso->language == 'es')
                     <a href="{{ route('course.change-language', [$lesson->course_id, 'en', $lesson->id]) }}">
@@ -288,11 +291,19 @@
                 @foreach($all_lessons as $lesson)
                 <div class="card mt-2 card-accordion" id="card-lesson-content">
                         <div class="card-header collapsed border-0 collapsible-link" id="heading{{$lesson->id}}" data-toggle="collapse" data-target="#collapse{{$lesson->id}}" aria-expanded="false" aria-controls="collapse{{$lesson->id}}">
-                                <a href="{{ route('lesson.show', [$lesson->slug, $lesson->id, $lesson->course_id]) }}">
+                          @if($first_lesson->id == $lesson->id)
+                              <a href="{{ route('lesson.show', [$lesson->slug, $lesson->id, $lesson->course_id]) }}">
+                                        <h5 class="mb-0 font-weight-bold d-block position-relative py-2 text-success">
+                                         <i class="text-success fa fa-check-circle"></i>  @if ($progresoCurso->language == 'es') {{$lesson->title}} @else {{$lesson->english_title}} @endif
+                                        </h5>
+                                </a>
+                          @else
+                           <a href="{{ route('lesson.show', [$lesson->slug, $lesson->id, $lesson->course_id]) }}">
                                         <h5 class="mb-0 font-weight-bold d-block position-relative py-2">
                                          <i class="text-primary fa fa-play-circle"></i>  @if ($progresoCurso->language == 'es') {{$lesson->title}} @else {{$lesson->english_title}} @endif
                                         </h5>
                                 </a>
+                          @endif
                         </div>
                         <div id="collapse{{$lesson->id}}" class="collapse" aria-labelledby="heading{{$lesson->id}}" data-parent="#accordion">
                         <div class="card-body">

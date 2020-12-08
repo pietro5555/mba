@@ -322,7 +322,8 @@ class CourseController extends Controller{
         $miValoracion = NULL;
         $progresoCurso = NULL;
         if (!Auth::guest()){
-            $last_lesson = LessonUser::where('user_id', Auth::user()->ID)->latest('created_at')->first();
+            $last_lesson = LessonUser::where('user_id', Auth::user()->ID)->where('course_id', $id)->latest('updated_at')->first();
+            //dd($last_lesson);
             if (!is_null($last_lesson)){
                 $first_lesson = Lesson::where('id', $last_lesson->lesson_id)->first();
             }else{
@@ -339,9 +340,10 @@ class CourseController extends Controller{
                                 ->where('course_id', '=', $id)
                                 ->where('user_id', '=', Auth::user()->ID)
                                 ->first();
+            $lecciones_vistas = LessonUser::where('user_id', Auth::user()->ID)->where('course_id', $id)->get();
         }
 
-        return view('cursos.show_one_course')->with(compact('curso', 'progresoCurso', 'miValoracion', 'first_lesson'));
+        return view('cursos.show_one_course')->with(compact('curso', 'progresoCurso', 'miValoracion', 'first_lesson', 'lecciones_vistas'));
     }
 
      /**

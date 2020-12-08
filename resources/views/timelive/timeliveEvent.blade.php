@@ -190,7 +190,7 @@
                 <h5 style="color:#2A91FF; margin-top: -20px; padding-left: 10px;">{{$evento->mentor->display_name}}</h5>
                 <p style="color: white; padding-left: 10px;">{{$evento->mentor->profession}}</p>
                 <p style="color:#FFFFFF; font-size: 18px; margin-top: 0px;padding-left: 10px"> {{$evento->mentor->about}}</p>
-                <a href="#" class="btn btn-success btn-block">NIVEL: {{$evento->subcategory->title}}</a>
+                <a href="{{ url('courses/mentor/'.$evento->mentor->ID) }}" target="_blank" class="btn btn-success btn-block">NIVEL: {{$evento->subcategory->title}}</a>
             </div>
         </div>
     </div>

@@ -171,6 +171,7 @@
                         @endif
                      @else
                         @if (Auth::user()->membership_status == 1)
+
                            <a href="{{ route('lesson.show', [$first_lesson->slug, $first_lesson->id, $curso->id]) }}" class="px-2 mr-auto btn btn-success play-course-button btn-block mb-2"> <i class="fa fa-play" aria-hidden="true"></i> CONTINUAR CURSO</a>
                         @else
                            <a href="{{route('shopping-cart.store', $curso->id)}}" class="btn btn-danger play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> RENOVAR MEMBRESIA</a>
@@ -301,9 +302,22 @@
                                        <h5 class="panel-title about-course-text m-0">
                                           @if ( (!Auth::guest()) && (!is_null($progresoCurso)) )
                                              @if ( ($leccion->subcategory_id <= Auth::user()->membership_id) && (Auth::user()->membership_status == 1) )
+                                             @if($first_lesson->id == $leccion->id)
+                                             <a href="{{ route('lesson.show', [$leccion->slug, $leccion->id, $curso->id]) }}" class="about-course-text text-primary">
+                                                   {{ $leccion->title }}
+                                                </a>
+                                              @else
+
                                                 <a href="{{ route('lesson.show', [$leccion->slug, $leccion->id, $curso->id]) }}" class="about-course-text">
                                                    {{ $leccion->title }}
                                                 </a>
+                                                @endif
+
+                                                 @foreach($lecciones_vistas as $leccion_vista)
+                                                    @if($leccion_vista->lesson_id == $leccion->id)
+                                                   <label class="text-success">&nbsp;&nbsp;&nbsp;&nbsp;Vista <i class="far fa-check-circle"></i> </label>
+                                                   @endif
+                                                @endforeach
                                              @else
                                                 <a href="#newMembership" data-toggle="modal"  class="about-course-text">
                                                    {{ $leccion->title }}

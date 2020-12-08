@@ -157,6 +157,11 @@ class LessonController extends Controller{
                 $leccion_vista->status = 1;
                 $leccion_vista->save();
             }
+            else{
+                $fecha = date('Y-m-d H:i:s');
+                $leccion_guardada->updated_at = date('Y-m-d H:i:s');
+                $leccion_guardada->save();
+            }
             
             /* mostrar o no el boton de certificado solo se mostrara en la ultima leccion*/
             $certificar = false;
@@ -184,11 +189,19 @@ class LessonController extends Controller{
             $all_comments = Comment::where('lesson_id', $lesson_id)->get();
 
             $directos = User::where('referred_id', Auth::user()->ID)->get()->count('ID');
-            $last_lesson = LessonUser::where('user_id', Auth::user()->ID)->latest('created_at')->first();
 
             // return dd(last_lesson);
+            $last_lesson = LessonUser::where('user_id', Auth::user()->ID)->where('course_id', $course_id)->latest('updated_at')->first();
+            //dd($last_lesson);
+            if (!is_null($last_lesson)){
+                $first_lesson = Lesson::where('id', $last_lesson->lesson_id)->first();
+            }else{
+                $first_lesson = Lesson::where('course_id', '=', $id)->orderBy('id', 'ASC')->first();
+            }
 
-            return view('cursos.leccion', compact('lesson', 'all_lessons','all_comments', 'progresoCurso','directos', 'last_lesson', 'certificar'));
+            $lecciones_vistas = LessonUser::where('user_id', Auth::user()->ID)->where('course_id', $course_id)->get();
+
+            return view('cursos.leccion', compact('lesson', 'all_lessons','all_comments', 'progresoCurso','directos', 'last_lesson', 'certificar', 'first_lesson', 'lecciones_vistas'));
         }else{
             $datosCurso = DB::table('courses')
                             ->select('id', 'slug')

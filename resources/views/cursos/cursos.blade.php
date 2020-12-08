@@ -69,15 +69,15 @@
         <div class="container-fluid d-sm-none">
             <div class="row">
                 <div class="col-md-12">
-                    <h5 class="text-white text-uppercase ml-4" style="font-size: 12px;">
+                    <h5 class="text-white text-uppercase ml-4 text-center" style="font-size: 12px;">
                                 {{$last_course->title}}
                     </h5>
-                    <div class="btn btn-none ">
-                        <a href="{{ route('courses.show', [$last_course->slug, $last_course->course_id]) }}" class="btn btn-primary float-right text-uppercase mr-2" style="font-size: 12px;"><i class="fa fa-play"></i> Continuar curso</a>
+                    <div class="col-md-12">
+                        <a href="{{ route('courses.show', [$last_course->slug, $last_course->course_id]) }}" class="btn btn-primary float-right text-uppercase btn-block m-2" style="font-size: 12px;"><i class="fa fa-play"></i> Continuar curso</a>
                     </div>
 
-                    <div class="progress progress-course-bar pl-0">
-                                <div class="progress-bar" role="progressbar" aria-valuenow="{{$progress_bar}}" aria-valuemin="0" aria-valuemax="100" style="width:{{$progress_bar}}%">
+                    <div class="col-md-12 progress progress-course-bar" style="padding-right: 0px!important; padding-left: 0px!important;">
+                                <div class="progress-bar img-fluid" role="progressbar" aria-valuenow="{{$progress_bar}}" aria-valuemin="0" aria-valuemax="100" style="width:{{$progress_bar}}%">
                     </div>
                     </div>
                 </div>
@@ -163,8 +163,11 @@
                             <div class="containerscale">
 
                             <div class="card m-2 mb-4 card-courses">
-
-                                <img class="card-img-top" src="{{ asset('uploads/images/courses/covers/'.$curso->thumbnail_cover) }}" alt="card-image-cap">
+                                <p>
+                                   <a href="{{ route('courses.show', [$curso->slug, $curso->id]) }}">
+                                    <img class="card-img-top" src="{{ asset('uploads/images/courses/covers/'.$curso->thumbnail_cover) }}" alt="card-image-cap">
+                                    </a>
+                                </p>
                                 <div class="card-body p-2">
                                 <div class="row d-flex align-items-center body-miscursos">
                                     <h6 class="col-9 d-flex align-items-center" style="font-size:12px;"><a href="{{ route('courses.show', [$curso->slug, $curso->id]) }}" class="text-secondary">{{$curso->title}}</a>

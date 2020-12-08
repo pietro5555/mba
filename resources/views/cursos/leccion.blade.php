@@ -24,11 +24,11 @@
          {{ Session::get('msj-erroneo') }}
       </div>
    @endif
-
     <div class="container-fluid">
         <div class="row justify-content-end">
           @if($first_lesson->id == $lesson->id)
-            <div class="col-md-6 mt-2 d-flex align-items-center"><h5 class="text-success">@if ($progresoCurso->language == 'es') {{$lesson->title}} @else {{$lesson->english_title}} @endif</h5></div>
+            <div class="col-md-6 mt-2 d-flex align-items-center"><h5 class="ml-4 text-success">@if ($progresoCurso->language == 'es') {{$lesson->title}} @else {{$lesson->english_title}} @endif</h5></div>
+          
           @else
           <div class="col-md-6 mt-2"><h5 class="text-white">@if ($progresoCurso->language == 'es') {{$lesson->title}} @else {{$lesson->english_title}} @endif</h5></div>
           @endif
@@ -102,7 +102,6 @@
             </div>
         </div>
     </div>
-
   {{-- BANNER --}}
   <div id="lessonsCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
     <div class="carousel-inner">
@@ -145,8 +144,20 @@
     <!--<div class="btn-play-video">
       <i class="fa fa-play-circle text-primary"></i>
     </div>-->
-  </div>
+  </div>  
 {{-- FIN DEL BANNER --}}
+<div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+          <div class="progress ml-3 mr-3">
+            <div class="progress-bar progress-bar-striped progress-bar-animated font-weight-bold" role="progressbar" aria-valuenow="{{$progress_bar}}%" aria-valuemin="0" aria-valuemax="100" style="width: {{$progress_bar}}%">
+                {{round($progress_bar,1)}}% COMPLETADO 
+            </div>
+          </div>
+          </div><!--Progress bar end-->
+        </div><!--Row end-->
+  </div>
+  
 {{-- SECCIÓN Tabs Leccion--}}
 <div class="container-fluid">
   <div class="row">
@@ -294,7 +305,7 @@
                           @if($first_lesson->id == $lesson->id)
                               <a href="{{ route('lesson.show', [$lesson->slug, $lesson->id, $lesson->course_id]) }}">
                                         <h5 class="mb-0 font-weight-bold d-block position-relative py-2 text-success">
-                                         <i class="text-success fa fa-check-circle"></i>  @if ($progresoCurso->language == 'es') {{$lesson->title}} @else {{$lesson->english_title}} @endif
+                                         <i class="text-success fa fa-play-circle"></i>  @if ($progresoCurso->language == 'es') {{$lesson->title}} @else {{$lesson->english_title}} @endif
                                         </h5>
                                 </a>
                           @else
@@ -304,6 +315,15 @@
                                         </h5>
                                 </a>
                           @endif
+                          @foreach($lecciones_vistas as $leccion_vista)
+                            @if($leccion_vista->lesson_id == $lesson->id)
+                                @if($leccion_vista->lesson_id == $first_lesson->id)
+                                <label class="text-success float-right">&nbsp;&nbsp;&nbsp;&nbsp;En curso <i class="far fa-check-circle"></i> </label>
+                                @else
+                                <label class="text-success float-right">&nbsp;&nbsp;&nbsp;&nbsp;Vista <i class="far fa-check-circle"></i> </label>
+                                @endif
+                            @endif
+                        @endforeach
                         </div>
                         <div id="collapse{{$lesson->id}}" class="collapse" aria-labelledby="heading{{$lesson->id}}" data-parent="#accordion">
                         <div class="card-body">

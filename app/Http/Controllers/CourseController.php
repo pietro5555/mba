@@ -321,6 +321,7 @@ class CourseController extends Controller{
         $first_lesson = NULL;
         $miValoracion = NULL;
         $progresoCurso = NULL;
+        $lecciones_vistas = NULL;
         if (!Auth::guest()){
             $last_lesson = LessonUser::where('user_id', Auth::user()->ID)->where('course_id', $id)->latest('updated_at')->first();
             //dd($last_lesson);

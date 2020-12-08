@@ -130,14 +130,14 @@ class CoursesOrdenController extends Controller
                 'redirect_url' => route('courses')
             ];
             $productos = json_decode($data['productos']);
-            foreach ($productos as $producto) {
+            
                 $transacion['items'][] = [
-                    'itemDescription' => $producto->nombre,
-                    'itemPrice' => $producto->precio, // USD
+                    'itemDescription' => $productos->nombre,
+                    'itemPrice' => $productos->precio, // USD
                     'itemQty' => (INT) 1,
-                    'itemSubtotalAmount' => $producto->precio // USD
+                    'itemSubtotalAmount' => $productos->precio // USD
                 ];
-            }
+            
 
             $ruta = \CoinPayment::generatelink($transacion);
             return $ruta;
@@ -156,13 +156,12 @@ class CoursesOrdenController extends Controller
     {
         $idmembresia = ShoppingCart::where('user_id', '=', $iduser)->first();
         
-        $arrayCursos = [];
 
         $totalItems = 0;
         
         $membresia = DB::table('memberships')->where('id', $idmembresia->membership_id)->first();
             
-            $arrayCursos [] = [
+            $arrayCursos = [
                 'idmembresia' => $membresia->id,
                 'nombre' => $membresia->name,
                 'precio' => $membresia->descuento,

@@ -54,15 +54,15 @@
                                                 <h5 class="p-2 text-white text-center">+ de 15 videos con increíbles especialistas en los diversos temas Fintech</h5><br>
                                                 <h4 class="p-2 text-azul-claro text-center">+ 5 Live Streaming <br> Al Mes</h4><br><br>
                                                 @if (Auth::guest())
-                                                    <a href="{{route('shopping-cart.store', [$membresia->id, 'membresia'])}}" class="btn btn-color-green text-white btn-block">Comprar Ahora</a>
+                                                    <a href="{{route('shopping-cart.store', [$membresia->id, 'membresia'])}}" class="btn btn-color-green text-white btn-block">Seleccionar Membresia</a>
                                                 @else
                                                     @if (is_null(Auth::user()->membership_id))
-                                                        <a href="{{route('shopping-cart.store', [$membresia->id, 'membresia'])}}" class="btn btn-color-green text-white btn-block">Comprar Ahora</a>
+                                                        <a href="{{route('shopping-cart.store', [$membresia->id, 'membresia'])}}" class="btn btn-color-green text-white btn-block">Seleccionar Membresia</a>
                                                     @else
                                                         @if (Auth::user()->membership_id == 1)
-                                                            <a href="{{route('shopping-cart.store', [$membresia->id, 'membresia'])}}" class="btn btn-color-green text-white btn-block">Comprar Ahora</a>
+                                                            <a href="{{route('shopping-cart.store', [$membresia->id, 'membresia'])}}" class="btn btn-color-green text-white btn-block">Seleccionar Membresia</a>
                                                         @else
-                                                            <button class="btn btn-color-green text-white btn-block adquirida">Comprar Ahora</button>
+                                                            <button class="btn btn-color-green text-white btn-block" disabled>Seleccionar Membresia</button>
                                                         @endif
                                                     @endif
                                                 @endif
@@ -89,15 +89,15 @@
                                                 <h5 class="p-2 text-white text-center">+ de 25 videos con increíbles especialistas en los diversos temas Fintech</h5><br>
                                                 <h4 class="p-2 text-orange text-center">+ 10 Live Streaming <br> Al Mes</h4><br>
                                                 @if (Auth::guest())
-                                                    <a href="{{route('shopping-cart.store', [$membresia->id, 'membresia'])}}" class="btn btn-color-green text-white btn-block">Comprar Ahora</a>
+                                                    <a href="{{route('shopping-cart.store', [$membresia->id, 'membresia'])}}" class="btn btn-color-green text-white btn-block">Seleccionar Membresia</a>
                                                 @else
                                                     @if (is_null(Auth::user()->membership_id))
-                                                        <button class="btn btn-color-green text-white btn-block negativo">Comprar Ahora</button>
+                                                        <button class="btn btn-color-green text-white btn-block" disabled>Seleccionar Membresia</button>
                                                     @else
                                                         @if ( (Auth::user()->membership_id == 1) || (Auth::user()->membership_id == 2) )
-                                                            <a href="{{route('shopping-cart.store',  [$membresia->id, 'membresia'])}}" class="btn btn-color-green text-white btn-block">Comprar Ahora</a>
+                                                            <a href="{{route('shopping-cart.store',  [$membresia->id, 'membresia'])}}" class="btn btn-color-green text-white btn-block">Seleccionar Membresia</a>
                                                         @else
-                                                            <button class="btn btn-color-green text-white btn-block adquirida">Comprar Ahora</button>
+                                                            <button class="btn btn-color-green text-white btn-block" disabled>Seleccionar Membresia</button>
                                                         @endif
                                                     @endif
                                                 @endif
@@ -125,15 +125,15 @@
                                                 <h5 class="p-2 text-white text-center">+ de 35 videos con increíbles especialistas en los diversos temas Fintech</h5><br>
                                                 <h4 class="p-2 text-verde-claro text-center">+ 15 Live Streaming <br> Al Mes</h4>
                                                 @if (Auth::guest())
-                                                    <a href="{{route('shopping-cart.store',  [$membresia->id, 'membresia'])}}" class="btn btn-color-green text-white btn-block">Comprar Ahora</a>
+                                                    <a href="{{route('shopping-cart.store',  [$membresia->id, 'membresia'])}}" class="btn btn-color-green text-white btn-block">Seleccionar Membresia</a>
                                                 @else
                                                     @if (is_null(Auth::user()->membership_id))
-                                                        <button class="btn btn-color-green text-white btn-block negativo">Comprar Ahora</button>
+                                                        <button class="btn btn-color-green text-white btn-block" disabled>Seleccionar Membresia</button>
                                                     @else
                                                         @if ( (Auth::user()->membership_id == 2) || (Auth::user()->membership_id == 3) )
-                                                            <a href="{{route('shopping-cart.store',  [$membresia->id, 'membresia'])}}" class="btn btn-color-green text-white btn-block">Comprar Ahora</a>
+                                                            <a href="{{route('shopping-cart.store',  [$membresia->id, 'membresia'])}}" class="btn btn-color-green text-white btn-block">Seleccionar Membresia</a>
                                                         @else
-                                                            <button class="btn btn-color-green text-white btn-block adquirida">Comprar Ahora</button>
+                                                            <button class="btn btn-color-green text-white btn-block" disabled>Seleccionar Membresia</button>
                                                         @endif
                                                     @endif
                                                 @endif
@@ -158,15 +158,15 @@
                                                 <h5 class="p-2 text-white text-center">+ de 45 videos con increíbles especialistas en los diversos temas Fintech</h5><br>
                                                 <h4 class="p-2 text-purple text-center">+ 20 Live Streaming <br> Al Mes</h4><br>
                                                 @if (Auth::guest())
-                                                    <a href="{{route('shopping-cart.store',  [$membresia->id, 'membresia'])}}" class="btn btn-color-green text-white btn-block">Comprar Ahora</a>
+                                                    <a href="{{route('shopping-cart.store',  [$membresia->id, 'membresia'])}}" class="btn btn-color-green text-white btn-block">Seleccionar Membresia</a>
                                                 @else
                                                     @if (is_null(Auth::user()->membership_id))
-                                                        <button class="btn btn-color-green text-white btn-block negativo">Comprar Ahora</button>
+                                                        <button class="btn btn-color-green text-white btn-block" disabled>Seleccionar Membresia</button>
                                                     @else
                                                         @if ( (Auth::user()->membership_id == 3) || (Auth::user()->membership_id == 4) )
-                                                            <a href="{{route('shopping-cart.store',  [$membresia->id, 'membresia'])}}" class="btn btn-color-green text-white btn-block">Comprar Ahora</a>
+                                                            <a href="{{route('shopping-cart.store',  [$membresia->id, 'membresia'])}}" class="btn btn-color-green text-white btn-block">Seleccionar Membresia</a>
                                                         @else
-                                                            <button class="btn btn-color-green text-white btn-block adquirida">Comprar Ahora</button>
+                                                            <button class="btn btn-color-green text-white btn-block" disabled>Seleccionar Membresia</button>
                                                         @endif
                                                     @endif
                                                 @endif
@@ -190,15 +190,15 @@
                                                 <h5 class="p-2 text-white text-center">+ de 55 videos con increíbles especialistas en los diversos temas Fintech</h5><br><br><br><br>
                                                 <h4 class="p-2 text-rosado text-center">+ 25 Live Streaming <br> Al Mes</h4><br>
                                                 @if (Auth::guest())
-                                                    <a href="{{route('shopping-cart.store',  [$membresia->id, 'membresia'])}}" class="btn btn-color-green text-white btn-block">Comprar Ahora</a>
+                                                    <a href="{{route('shopping-cart.store',  [$membresia->id, 'membresia'])}}" class="btn btn-color-green text-white btn-block">Seleccionar Membresia</a>
                                                 @else
                                                     @if (is_null(Auth::user()->membership_id))
-                                                        <button class="btn btn-color-green text-white btn-block negativo">Comprar Ahora</button>
+                                                        <button class="btn btn-color-green text-white btn-block" disabled>Seleccionar Membresia</button>
                                                     @else
                                                         @if ( (Auth::user()->membership_id == 4) || (Auth::user()->membership_id == 5) )
-                                                            <a href="{{route('shopping-cart.store',  [$membresia->id, 'membresia'])}}" class="btn btn-color-green text-white btn-block">Comprar Ahora</a>
+                                                            <a href="{{route('shopping-cart.store',  [$membresia->id, 'membresia'])}}" class="btn btn-color-green text-white btn-block">Seleccionar Membresia</a>
                                                         @else
-                                                            <button class="btn btn-color-green text-white btn-block adquirida">Comprar Ahora</button>
+                                                            <button class="btn btn-color-green text-white btn-block" disabled>Seleccionar Membresia</button>
                                                         @endif
                                                     @endif
                                                 @endif
@@ -230,20 +230,4 @@
         </div>
     </div>
 
-
-<script type="text/javascript">
-    $('.adquirida').on('click',function(e){
-       Swal.fire({
-         title: 'Debe Adquirir una membresia mayor',
-         type:'error',
-        })
-    });
-    
-    $('.negativo').on('click',function(e){
-       Swal.fire({
-         title: 'Debe Adquirir una membresia menor',
-         type:'error',
-        })
-    });
-</script>
 @endsection

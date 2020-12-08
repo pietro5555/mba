@@ -11,7 +11,7 @@ class Course extends Model
 
     protected $table = 'courses';
     protected $dates = ['deleted_at'];
-    protected $fillable = ['mentor_id', 'title', 'slug', 'category_id', 'subcategory_id', 'description', 'cover', 'cover_name', 'thumbnail_cover', 'featured', 'featured_cover', 'featured_cover_name', 'featured_at', 'status', 'likes', 'shares', 'views', 'duration', 'price', 'deleted_at'];
+    protected $fillable = ['mentor_id', 'title', 'slug', 'category_id', 'subcategory_id', 'membership_id', 'description', 'cover', 'cover_name', 'thumbnail_cover', 'featured', 'featured_cover', 'featured_cover_name', 'featured_at', 'status', 'likes', 'shares', 'views', 'duration', 'price', 'deleted_at'];
 
 
     public function mentor(){
@@ -24,6 +24,10 @@ class Course extends Model
 
     public function subcategory(){
         return $this->belongsTo('App\Models\Subcategory');
+    }
+
+    public function membership(){
+        return $this->belongsTo('App\Models\Membership');
     }
 
     public function tags(){

@@ -25,7 +25,8 @@ class ShoppingCartController extends Controller
 
         if (Auth::guest()){
 
-            $items = DB::table('shopping_cart')->where('user_id', '=', request()->ip())
+            $items = DB::table('shopping_cart')
+                        ->where('user_id', '=', request()->ip())
                         ->orderBy('date', 'DESC')
                         ->get();
             
@@ -34,42 +35,25 @@ class ShoppingCartController extends Controller
             foreach ($items as $item){     
                 $cantItems++;
             }
-
-            /*
-            $cantItems = 0;
-
-            $itemsA = array();
-
-            if ($request->session()->has('cart')) {
-                $itemsA = $request->session()->get('cart');
-            }
-
-            $items = collect();
-            foreach ($itemsA as $itemA) {
-                $item = DB::table('memberships')->where('id', '=', $itemA)->first();
-                $cantItems++;
-
-                $items->push($item);
-            }
-            */
         }else{
              
             $this->cambioUsers();       
 
-            $iteraciones = DB::table('shopping_cart')->where('user_id', '=', Auth::user()->ID)
-                        ->orderBy('date', 'DESC')
-                        ->get();
+            $iteraciones = DB::table('shopping_cart')
+                            ->where('user_id', '=', Auth::user()->ID)
+                            ->orderBy('date', 'DESC')
+                            ->get();
             
             $cantItems = 0;
 
             foreach ($iteraciones as $iterar){ 
 
-            $contador = DB::table('shopping_cart')->where('user_id', '=', Auth::user()->ID)->where('course_id', $iterar->course_id)->count('id');
+                $contador = DB::table('shopping_cart')->where('user_id', '=', Auth::user()->ID)->where('course_id', $iterar->course_id)->count('id');
 
                 if($contador == 1){
-                $cantItems++;
+                    $cantItems++;
                 }else{
-                 $contador = DB::table('shopping_cart')->where('user_id', '=', Auth::user()->ID)->where('course_id', $iterar->course_id)->where('id', $iterar->id)->delete();
+                    $contador = DB::table('shopping_cart')->where('user_id', '=', Auth::user()->ID)->where('course_id', $iterar->course_id)->where('id', $iterar->id)->delete();
                 }
             }
 
@@ -80,43 +64,33 @@ class ShoppingCartController extends Controller
         $totalItems = 0;
         foreach ($items as $item) {
 
-            if ( ($item->course_id != null) || ($item->membership_id != null) ) {
-                if (!Auth::guest()){
-                    if (is_null(Auth::user()->membership_id)){
-                        $membresia = DB::table('memberships')->where('id', 1)->first();
-                    }else{
-                        if (Auth::user()->membership_id < 6){
-                            $membresia = DB::table('memberships')->where('id', Auth::user()->membership_id+1)->first();
-                        }else{
-                            $membresia = DB::table('memberships')->where('id', 6)->first();
-                        }
-                    }
-                }else{
-                    $membresia = DB::table('memberships')->where('id', $item->membership_id)->first();
-                }
-                //$curso = DB::table('memberships')->where('id', $item->course_id)->first();
-                
-                $direcip = Addresip::where('ip', request()->ip())->first();
+            if ($item->membership_id != null) {
+                $membresia = DB::table('memberships')->where('id', $item->membership_id)->first();
 
-                if($direcip == null){
-                   if($membresia->id == 6){
-                        $total = $membresia->price; //before price
+                if (Auth::guest()){
+                    if ($item->period == 'Mensual'){
+                        $total = $membresia->price;
                     }else{
-                        $total = $membresia->descuento; //before price
-                    }         
+                        $total = $membresia->price_annual;
+                    }  
                 }else{
-                    $total = $this->descuentogeneral($membresia->id); 
+                    if ( (Auth::user()->sponsor_id != 0) && (!is_null(Auth::user()->sponsor_id)) ){
+                        if ($item->period == 'Mensual'){
+                            $total = $membresia->descuento;
+                        }else{
+                            $total = $membresia->discount_annual;
+                        }
+                    }else{
+                        if ($item->period == 'Mensual'){
+                            $total = $membresia->price;
+                        }else{
+                            $total = $membresia->price_annual;
+                        }   
+                    }
                 }
-                // $categoria = null;
-                // $mentor = null;
-                // if (!empty($curso)) {
-                //     $categoria = Category::find($curso->category_id);
-                //     $mentor = User::find($curso->mentor_id);
-                // }
+
                 $item->curso = [
-                    'titulo' => (!empty($membresia)) ? $membresia->name : 'Membresia no disponible',
-                    // 'categoria' => (!empty($categoria)) ? $categoria->title : 'Categoria no disponible',
-                    // 'mentor' => (!empty($mentor)) ? $mentor->display_name : 'Mento no disponible',
+                    'titulo' => (!empty($membresia)) ? $membresia->name." (Plan ".$item->period.")" : 'Membresia no disponible',
                     'precio' => (!empty($membresia)) ? $total : 0,
                     'img' => (!empty($membresia)) ? asset('/uploads/images/courses/covers/'.$membresia->image) : 'no disponible'
                 ];
@@ -131,15 +105,6 @@ class ShoppingCartController extends Controller
                     'img' => (!empty($oferta)) ? asset('/upload/events/'.$oferta->url_resource) : 'no disponible'
                 ];
                 $totalItems += (!empty($oferta)) ? $oferta->price : 0; //before price
-                
-                /*if($item->course_id == 6){
-                    $totalItems += (!empty($oferta)) ? $oferta->price : 0; //before price
-                    $membresia = 1;
-                }
-                else{
-                    $totalItems += (!empty($oferta)) ? $oferta->descuento : 0; //before price
-                    $membresia = 1;
-                }*/
             }
           
         }
@@ -153,51 +118,44 @@ class ShoppingCartController extends Controller
     /**
      * Almacenar en el Carrito de Compras (Usuarios No Registrados y Usuarios Registrados)
      */
-    public function store(Request $request, $id, $type = null){
-
+    public function store(Request $request, $id, $type = null, $period = null){
         if (Auth::guest()){
             $itemAgregado = DB::table('shopping_cart')
                                 ->where('user_id', '=', request()->ip())
-                                ->delete();
-
-            $item = new ShoppingCart();
-            $item->user_id = request()->ip();
-            $item->course_id = $id;
-            $item->membership_id = $id;
-            $item->date = date('Y-m-d');
-            $item->save();
-
-            return redirect('shopping-cart')->with('msj-exitoso', 'El item ha sido agregado a su carrito de compras con éxito.');
-        }else if ($request->type == 'membresia'){
-            $itemAgregado = DB::table('shopping_cart')
-                            ->where('user_id', '=', Auth::user()->ID)
-                            ->where('membership_id', '=', $id)
-                            ->count();
+                                ->where('membership_id', '=', $id)
+                                ->count();
 
             if ($itemAgregado == 0){
                 $item = new ShoppingCart();
-                $item->user_id = Auth::user()->ID;
+                $item->user_id = request()->ip();
+                //$item->course_id = $id;
                 $item->membership_id = $id;
+                $item->period = $period;
                 $item->date = date('Y-m-d');
                 $item->save();
             }
-        }else if ($request->type == 'oferta'){
-            if ($request->type == null) {
+
+            return redirect('shopping-cart')->with('msj-exitoso', 'El item ha sido agregado a su carrito de compras con éxito.');
+        }else{
+            if ($request->type == 'membresia'){
                 $itemAgregado = DB::table('shopping_cart')
                                 ->where('user_id', '=', Auth::user()->ID)
-                                ->where('course_id', '<>', NULL)
-                                ->delete();
-   
-                $item = new ShoppingCart();
-                $item->user_id = Auth::user()->ID;
-                $item->course_id = $id;
-                $item->date = date('Y-m-d');
-                $item->save();
-            }else{
-                $itemAgregado = DB::table('shopping_cart')
-                                ->where('user_id', '=', Auth::user()->ID)
-                                ->where('offer_id', '=', $id)
+                                ->where('membership_id', '=', $id)
                                 ->count();
+
+                if ($itemAgregado == 0){
+                    $item = new ShoppingCart();
+                    $item->user_id = Auth::user()->ID;
+                    $item->membership_id = $id;
+                    $item->period = $period;
+                    $item->date = date('Y-m-d');
+                    $item->save();
+                }
+            }else if ($request->type == 'oferta'){
+                $itemAgregado = DB::table('shopping_cart')
+                                    ->where('user_id', '=', Auth::user()->ID)
+                                    ->where('offer_id', '=', $id)
+                                    ->count();
 
                 if ($itemAgregado == 0){
                     $item = new ShoppingCart();
@@ -205,11 +163,12 @@ class ShoppingCartController extends Controller
                     $item->offer_id = $id;
                     $item->date = date('Y-m-d');
                     $item->save();
+                    
                 }
             }
-            
-            return redirect('shopping-cart');
         }
+            
+        return redirect('shopping-cart');
     }
 
 
@@ -315,6 +274,7 @@ class ShoppingCartController extends Controller
         $detalle->purchase_id = $compra->id;
         if ($datosOrden->type_product == 'membresia') {
             $detalle->membership_id = $detallesMembresia->idmembresia;
+            $detalle->membership_type = $detallesMembresia->tipo;
         } else {
             $detalle->offer_id = $detallesMembresia->idmembresia;
         }
@@ -328,7 +288,7 @@ class ShoppingCartController extends Controller
                                 ->first();
             
             $fechaCompra = Carbon::now();
-            if ($datosMembresia->type == 'monthly'){
+            if ($detalle->membership_type == 'Mensual'){
                 $fechaExpiracion = $fechaCompra->addMonth();
             }else{
                 $fechaExpiracion = $fechaCompra->addYear();
@@ -354,8 +314,7 @@ class ShoppingCartController extends Controller
      *
      * @return void
      */
-    public function memberships()
-    {
+    public function memberships(){
         
         /* almacenamos el ID de la persona que envio el link */
         if(!empty(request()->ref)){
@@ -364,12 +323,10 @@ class ShoppingCartController extends Controller
         
         
         $dataDescripcion = [
-            'Principiante' => 'Accesos a todos los cursos de nivel principiante',
-            'Basico' => 'Accesos a todos los cursos de nivel Basico',
-            'Intermedio' => 'Accesos a todos los cursos de nivel Intermedio',
-            'Avanzado' => 'Accesos a todos los cursos de nivel Avanzado',
-            'Pro' => 'Accesos a todos los cursos de nivel Profesional',
-            'Pro Anual' => 'Accesos a todos los cursos de todos los niveles',
+            'Ser' => 'Accesos a todos los cursos de nivel Ser',
+            'Hacer' => 'Accesos a todos los cursos de nivel Hacer',
+            'Tener' => 'Accesos a todos los cursos de nivel Tener',
+            'Trascender' => 'Accesos a todos los cursos de nivel Trascender',
         ];
         $membresias = DB::table('memberships')->get();
 

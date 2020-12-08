@@ -293,6 +293,9 @@
         {{-- mensajes push --}}
          <script src="{{ asset('assets/push/push-js-master/bin/push.js')}}"></script>
 
+         {{-- Sweetalert 2 --}}
+         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+
         @stack('scripts')
     </body>
     @include('layouts.push.push')

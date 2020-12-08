@@ -36,11 +36,12 @@ class CoursesOrdenController extends Controller
         try {
             $iduser = Auth::user()->ID;
             $detalles = $this->getDataillOrden($iduser);
+            
             $data = [
                 'user_id' => $iduser,
                 'total' => $detalles['total'],
                 'detalles' => $detalles['detalles'],
-                'type_product' => 'oferta'
+                'type_product' => 'membresia'
             ];
             $idorden = $this->saveCourseOrden($data);
             if ($request->metodo == 'stripe') {
@@ -128,15 +129,18 @@ class CoursesOrdenController extends Controller
                 'buyer_email' => $data['email'],
                 'redirect_url' => route('courses')
             ];
+            
             $productos = json_decode($data['productos']);
-            foreach ($productos as $producto) {
-                $transacion['items'][] = [
-                    'itemDescription' => $producto->titulo,
-                    'itemPrice' => $producto->precio, // USD
-                    'itemQty' => (INT) 1,
-                    'itemSubtotalAmount' => $producto->precio // USD
-                ];
-            }
+           // dd($productos);
+            
+            
+            $transacion['items'][] = [
+                'itemDescription' => $productos[0]->nombre,
+                'itemPrice' => $productos[0]->precio, // USD
+                'itemQty' => (INT) 1,
+                'itemSubtotalAmount' => $productos[0]->precio // USD
+            ];
+            
 
             $ruta = \CoinPayment::generatelink($transacion);
             return $ruta;
@@ -151,33 +155,31 @@ class CoursesOrdenController extends Controller
      * @param integer $iduser
      * @return array
      */
-    public function getDataillOrden($iduser): array
-    {
-        $items = ShoppingCart::where('user_id', '=', $iduser)
-        ->orderBy('date', 'DESC')
-        ->get();
-           
-
-        $arrayCursos = [];
+    public function getDataillOrden($iduser): array{
+        $item = ShoppingCart::where('user_id', '=', $iduser)
+                    ->where('membership_id', '<>', NULL)
+                    ->first();
+        
 
         $totalItems = 0;
-        foreach ($items as $item) {
-            
-            
-            
-            $oferta = OffersLive::find($item->offer_id);
-            
-            $arrayCursos [] = [
-                'idmembresia' => $oferta->id,
-                'nombre' => $oferta->title,
-                'precio' => $oferta->price,
-                'img' => 'no disponible',
-                'links' => 0,
-            ];
-            $totalItems += (!empty($oferta)) ? $oferta->price : 0;
-
-            // $item->delete();
+        
+        $membresia = DB::table('memberships')->where('id', $item->membership_id)->first();
+        if ($item->period == 'Mensual'){
+            $total = $membresia->descuento;
+        }else{
+            $total = $membresia->discount_annual;
         }
+            
+        $arrayCursos = [
+            'idmembresia' => $membresia->id,
+            'nombre' => $membresia->name,
+            'precio' => $total,
+            'tipo' => $item->period,
+            'img' => 'no disponible',
+            'links' => 0,
+        ];
+        $totalItems += $total;
+
         $data = [
             'total' => $totalItems,
             'detalles' => json_encode($arrayCursos)
@@ -188,7 +190,7 @@ class CoursesOrdenController extends Controller
     public function getDataMembeship($iduser)
     {
         $items = ShoppingCart::where('user_id', '=', $iduser)->first();
-        return $items->course_id;
+        return $items->membership_id;
     }
 
     public function pay_membership_stripe(Request $request){
@@ -196,11 +198,14 @@ class CoursesOrdenController extends Controller
             $secret_key = $this->secret_key;
             Stripe::setApiKey($secret_key);
 
-            $idmembresia = $this->getDataMembeship(Auth::user()->ID);
+            //$idmembresia = $this->getDataMembeship(Auth::user()->ID);
+            $item = ShoppingCart::where('user_id', '=', Auth::user()->ID)
+                            ->where('membership_id', '<>', NULL)
+                            ->first();
             
-            $enlace = Addresip::where('ip', request()->ip())->first();
+            //$enlace = Addresip::where('ip', request()->ip())->first();
 
-            $membresia = DB::table('memberships')->where('id', $idmembresia)->first();
+            $membresia = DB::table('memberships')->where('id', $item->membership_id)->first();
 
             $customer = Customer::create(array(
                 'email' => $request->stripeEmail,
@@ -209,21 +214,22 @@ class CoursesOrdenController extends Controller
 
             $charge = Charge::create(array(
                 'customer' => $customer->id,
-                'amount'   => (($enlace != null) ? $membresia->descuento : $membresia->price * 100),
+                'amount'   => (($item->period == 'Mensual') ? $membresia->descuento : $membresia->discount_annual * 100),
                 'currency' => 'usd'
             ));
 
             $datosMembresia = [
                 'idmembresia' => $membresia->id,
                 'nombre' => $membresia->name,
-                'precio' => ($enlace != null) ? $membresia->descuento : $membresia->price,
+                'precio' => ($item->period == 'Mensual') ? $membresia->descuento : $membresia->discount_annual,
+                'tipo' => $item->period == 'Mensual',
                 'img' => asset('uploads/images/memberships/'.$membresia->image),
-                'links' => ($enlace != null) ? $enlace->padre : 0,
+                'links' => Auth::user()->sponsor_id,
             ];
             
             $orden = new CourseOrden();
             $orden->user_id = Auth::user()->ID;
-            $orden->total = ($enlace != null) ? $membresia->descuento : $membresia->price;
+            $orden->total = ($item->period == 'Mensual') ? $membresia->descuento : $membresia->discount_annual;
             $orden->detalles = json_encode($datosMembresia);
             $orden->idtransacion_stripe = $request->stripeToken;
             $orden->status = 1;
@@ -234,42 +240,45 @@ class CoursesOrdenController extends Controller
             $carrito->process_membership_buy($orden->id);
                 
             /* eliminar la direccion ip y el id de la persona que me dio el link*/
-             Addresip::where('ip', request()->ip())->delete();    
+             //Addresip::where('ip', request()->ip())->delete();    
 
             return redirect('/')->with('msj-exitoso', 'Tu compra de membresría ha sido completada con éxito.');
         } catch (\Throwable $th) {
             dd($th);
         }
     }
-
-
+    
+    
     //comprar con billetera
     public function buy_wallet(Request $datos){
-        
-      $idmembresia = $this->getDataMembeship(Auth::user()->ID);
+      
+        $item = ShoppingCart::where('user_id', '=', Auth::user()->ID)->first();
             
-      $enlace = Addresip::where('ip', request()->ip())->first();
+        // $enlace = Addresip::where('ip', request()->ip())->first();
 
-      $membresia = DB::table('memberships')->where('id', $idmembresia)->first();
-        
-      $total = $membresia->descuento;
+        $membresia = DB::table('memberships')->where('id', $item->membership_id)->first();
+        if ($item->period == 'Mensual'){
+            $total = $membresia->descuento;
+        }else{
+            $total = $membresia->discount_annual;
+        }
       
-      if(Auth::user()->wallet_amount < $total){
-          
-          return redirect()->back()->with('msj-error', 'Tu compra no pudo ser procesada ya que no tiene fondos suficientes en su billetera.');
-      }
+        if(Auth::user()->wallet_amount < $total){
+            return redirect()->back()->with('msj-error', 'Tu compra no pudo ser procesada ya que no tiene fondos suficientes en su billetera.');
+        }
       
-       $datosMembresia = [
+        $datosMembresia = [
             'idmembresia' => $membresia->id,
             'nombre' => $membresia->name,
-            'precio' => $membresia->descuento,
+            'precio' => $total,
+            'tipo' => $item->period,
             'img' => asset('uploads/images/memberships/'.$membresia->image),
-            'links' => ($enlace != null) ? $enlace->padre : 0,
+            'links' => Auth::user()->sponsor_id,
         ];
             
         $orden = new CourseOrden();
         $orden->user_id = Auth::user()->ID;
-        $orden->total = $membresia->descuento;
+        $orden->total = $total;
         $orden->detalles = json_encode($datosMembresia);
         $orden->status = 1;
         $orden->type_product = 'membresia';
@@ -279,7 +288,7 @@ class CoursesOrdenController extends Controller
         $carrito->process_membership_buy($orden->id);
                 
         /* eliminar la direccion ip y el id de la persona que me dio el link*/
-        Addresip::where('ip', request()->ip())->delete();
+       // Addresip::where('ip', request()->ip())->delete();
         
         $user = User::find(Auth::user()->ID);
         $user->wallet_amount = ($user->wallet_amount - $datosMembresia['precio']);
@@ -306,19 +315,23 @@ class CoursesOrdenController extends Controller
     //comprar con paypal
     public function buy_paypal(Request $datos){
         
-        $idmembresia = ShoppingCart::where('user_id', '=', Auth::user()->ID)->first();
-        $enlace = Addresip::where('ip', request()->ip())->first();
+        $item = ShoppingCart::where('user_id', '=', Auth::user()->ID)->first();
+        //$enlace = Addresip::where('ip', request()->ip())->first();
 
-        $membresia = DB::table('memberships')->where('id', $idmembresia->membership_id)->first();
+        $membresia = DB::table('memberships')->where('id', $item->membership_id)->first();
+        if ($item->period == 'Mensual'){
+            $total = $membresia->descuento;
+        }else{
+            $total = $membresia->discount_annual;
+        }
 
-        $total = $membresia->descuento;
-        
         $datosMembresia = [
             'idmembresia' => $membresia->id,
             'nombre' => $membresia->name,
-            'precio' => $membresia->descuento,
+            'precio' => $total,
+            'tipo' => $item->period,
             'img' => asset('uploads/images/memberships/'.$membresia->image),
-            'links' => ($enlace != null) ? $enlace->padre : 0,
+            'links' => Auth::user()->sponsor_id,
         ];
         
         
@@ -332,7 +345,7 @@ class CoursesOrdenController extends Controller
         $orden->save();
         
         // eliminar la direccion ip y el id de la persona que me dio el link
-        Addresip::where('ip', request()->ip())->delete();
+        //Addresip::where('ip', request()->ip())->delete();
         
         return \Redirect::route('pago-pay',['pagina' => $membresia->name, 'total' => $total, 'descripcion' => $membresia->name, 'idcompra' => $orden->id]);
     }
@@ -341,30 +354,37 @@ class CoursesOrdenController extends Controller
     public function pay_membership_coinpayment(Request $request){
         try {
 
-            $idmembresia = $this->getDataMembeship(Auth::user()->ID);
-            $enlace = Addresip::where('ip', request()->ip())->first();
+            $item = ShoppingCart::where('user_id', '=', Auth::user()->ID)->first();
+            
+            //$enlace = Addresip::where('ip', request()->ip())->first();
 
-            $membresia = DB::table('memberships')->where('id', $idmembresia)->first();
+            $membresia = DB::table('memberships')->where('id', $item->membership_id)->first();
+            if ($item->period == 'Mensual'){
+                $total = $membresia->descuento;
+            }else{
+                $total = $membresia->discount_annual;
+            }
            
             $datosMembresia = [
                 'idmembresia' => $membresia->id,
                 'nombre' => $membresia->name,
-                'precio' => ($enlace != null) ? $membresia->descuento : $membresia->price,
-                'links' => ($enlace != null) ? $enlace->padre : 0,
+                'precio' => $total,
+                'tipo' => $item->period,
+                'links' => Auth::user()->sponsor_id,
                 'img' => asset('uploads/images/memberships/'.$membresia->image)
             ];
             
             $orden = new CourseOrden();
             $orden->user_id = Auth::user()->ID;
-            $orden->total = ($enlace != null) ? $membresia->descuento : $membresia->price;
+            $orden->total = $total;
             $orden->detalles = json_encode($datosMembresia);
             $orden->status = 0;
             $orden->type_product = 'membresia';
             $orden->save();
 
             $transacion = [
-                'amountTotal' => ($enlace != null) ? $membresia->descuento : $membresia->price,
-                'note' => 'Compra membresía por '.number_format(($enlace != null) ? $membresia->descuento : $membresia->price, 2, ',', '.').' USD',
+                'amountTotal' => $total,
+                'note' => 'Compra membresía por '.number_format($total, 2, ',', '.').' USD',
                 'idorden' => $orden->id,
                 'buyer_email' => Auth::user()->user_email,
                 'redirect_url' => route('courses')
@@ -372,13 +392,13 @@ class CoursesOrdenController extends Controller
 
             $transacion['items'][] = [
                 'itemDescription' => $membresia->name,
-                'itemPrice' => ($enlace != null) ? $membresia->descuento : $membresia->price, // USD
+                'itemPrice' => $total, // USD
                 'itemQty' => (INT) 1,
-                'itemSubtotalAmount' => ($enlace != null) ? $membresia->descuento : $membresia->price // USD
+                'itemSubtotalAmount' => $total // USD
             ];
             
             /* eliminar la direccion ip y el id de la persona que me dio el link*/
-            Addresip::where('ip', request()->ip())->delete();
+            //Addresip::where('ip', request()->ip())->delete();
          
             $ruta = \CoinPayment::generatelink($transacion);
             return redirect($ruta);

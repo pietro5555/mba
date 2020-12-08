@@ -177,8 +177,8 @@ class LessonController extends Controller{
                         ->with('course')
                         ->first();
             $all_lessons = Lesson::where([
-                ['course_id', '=',  $course_id],
-                ['subcategory_id', '<=', Auth::user()->membership_id]
+                ['course_id', '=',  $course_id]
+               // ['subcategory_id', '<=', Auth::user()->membership_id]
             ])->get();
 
             $progresoCurso = DB::table('courses_users')

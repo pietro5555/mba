@@ -46,7 +46,7 @@ class MembershipsExpirations extends Command
                 ->where('membership_id', '<>', NULL)
                 ->where('membership_status', '=', 1)
                 ->where('membership_expiration', '<', $fechaActual)
-                ->update(['membership_statu' => 0]);
+                ->update(['membership_status' => 0]);
             
         } catch (\Throwable $th) {
             $this->info($th);

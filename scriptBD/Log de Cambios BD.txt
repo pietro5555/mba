@@ -247,3 +247,10 @@ Dev: Pietro
 *Agregado el campo event_id a la tabla calendarios (correr el script calendarios)
 *Agregar nuevo campo en courses_orden (ejecutar script courses_orden) 
 *nuevos datos en settingsplantilla envio de correos (correr script de settingplantilla)
+
+07/12/2020
+Dev:Luisana Marín
+*Nuevo campo period en tabla shopping_cart
+*Nuevo campo membership_type en tabla purchase_details
+*Nuevos campos price_annual y discount_annual en tabla memberships y nuevas membresías
+*Nuevo campo membership_id en la tabla courses

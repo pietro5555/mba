@@ -120,12 +120,18 @@ class CourseController extends Controller{
             $total = count($cursosRecomendados);
 
             //ULTIMO CURSO VISTO POR EL USUARIO
+            $ultima_leccion = LessonUser::where('user_id', Auth::user()->ID)
+            ->orderBy('updated_at', 'DESC')
+            ->first();
+            $leccion_info = Lesson::where('id', $ultima_leccion->lesson_id)->first();
             $last_course = DB::table('courses')
-                                    ->join('courses_users', 'courses_users.course_id', '=', 'courses.id')
-                                    ->where('courses_users.user_id', '=', Auth::user()->ID )
-                                    ->orderBy('courses_users.updated_at', 'DESC')
-                                    ->first();
+            ->join('courses_users', 'courses_users.course_id', '=', 'courses.id')
+            ->where('courses_users.user_id', '=', Auth::user()->ID )
+            ->where('courses_users.course_id', '=', $ultima_leccion->course_id )
+            ->orderBy('courses_users.updated_at', 'DESC')
+            ->first();
 
+       
             if (!is_null($last_course)){
                  $leccion_vista = LessonUser::where('user_id', Auth::user()->ID)->where('course_id', $last_course->course_id)->get();
                 $total_vista = $leccion_vista->count();
@@ -254,7 +260,7 @@ class CourseController extends Controller{
         /*Datos del progress bar*/
 
 
-        return view('cursos.cursos')->with(compact('username','cursosDestacados', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next', 'courses', 'mentores', 'cursos', 'cursosRecomendados', 'total', 'last_course', 'progress_bar'));
+        return view('cursos.cursos')->with(compact('username','cursosDestacados', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next', 'courses', 'mentores', 'cursos', 'cursosRecomendados', 'total', 'last_course', 'progress_bar', 'leccion_info'));
     }
 
     /*Ver todos los cursos */

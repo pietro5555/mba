@@ -103,7 +103,7 @@
 
                             <div class="col-md-2 float-right mb-2">
                                 <div class="row">
-                                     <a href="{{ route('courses.show', [$last_course->slug, $last_course->course_id]) }}" class="btn btn-primary float-right text-uppercase mr-4"><i class="fa fa-play"></i> Continuar curso</a>
+                                     <a href="{{ route('lesson.show', [$leccion_info->slug, $leccion_info->id, $last_course->course_id]) }}" class="btn btn-primary float-right text-uppercase mr-4"><i class="fa fa-play"></i> Continuar curso</a>
                                 </div>
 
                             </div>

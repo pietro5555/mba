@@ -254,3 +254,8 @@ Dev:Luisana Marín
 *Nuevo campo membership_type en tabla purchase_details
 *Nuevos campos price_annual y discount_annual en tabla memberships y nuevas membresías
 *Nuevo campo membership_id en la tabla courses
+
+08/12/2020
+Dev:Luisana Marín
+*Nuevo campo streamings en tabla memberships
+*Nuevo campo streamings en tabla wp98_users

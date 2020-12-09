@@ -81,6 +81,7 @@ class CourseController extends Controller{
         view()->share('title', 'Listado de Cursos');
 
         $username = NULL;
+        $leccion_info = NULL;
         if (!Auth::guest()){
             $username = auth()->user()->display_name;
 

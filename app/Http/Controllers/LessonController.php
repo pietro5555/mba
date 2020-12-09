@@ -162,16 +162,6 @@ class LessonController extends Controller{
                 $leccion_guardada->updated_at = date('Y-m-d H:i:s');
                 $leccion_guardada->save();
             }
-            
-            /* mostrar o no el boton de certificado solo se mostrara en la ultima leccion*/
-            $certificar = false;
-            $certificado = Lesson::where('course_id', $course_id)->orderBy('id', 'DESC')->first()->take(1);
-            if($certificado != null){
-                if($certificado == $lesson_id){
-                    $certificar = true;
-                }
-
-            }
 
             $lesson = Lesson::where('id', '=',$lesson_id)
                         ->with('course')
@@ -212,7 +202,7 @@ class LessonController extends Controller{
                 }
                 //dd($leccion_vista, $total_vista, $progress_bar);
 
-            return view('cursos.leccion', compact('lesson', 'all_lessons','all_comments', 'progresoCurso','directos', 'last_lesson', 'certificar', 'first_lesson', 'lecciones_vistas', 'progress_bar'));
+            return view('cursos.leccion', compact('lesson', 'all_lessons','all_comments', 'progresoCurso','directos', 'last_lesson', 'first_lesson', 'lecciones_vistas', 'progress_bar'));
                 
         
         }else{

@@ -370,20 +370,25 @@
                     <div class="next-streaming-reserve">
                         @if (is_null(Auth::user()->membership_id))
                             {{-- USUARIOS LOGUEADOS SIN MEMBRESÍA  --}}
-                            <a href="{{route('shopping-cart.membership')}}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> AGREGAR AL CARRITO</a>
+                            <a href="{{route('shopping-cart.membership')}}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Adquirir Membresía</a>
                         @else
-                            @if ($proximoEvento->subcategory_id > Auth::user()->membership_id)
-                                {{-- USUARIOS LOGUEADOS CON MEMBRESÍA MENOR A LA SUBCATEGORÍA DEL EVENTO--}}
-                                <a href="{{route('shopping-cart.membership')}}" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> MEJORAR MEMBRESÍA</a>
-                            @else
-                                @if (Auth::user()->membership_status == 1)
-                                    @if (!in_array($proximoEvento->id, $misEventosArray))
-                                        {{-- USUARIOS LOGUEADOS CON MEMBRESÍA MAYOR O IGUAL A LA SUBCATEGORÍA DEL EVENTO Y QUE NO TIENEN EL EVENTO AGENDADO AÚN--}}
+                            @if (Auth::user()->membership_status == 1)
+                                @if (!in_array($proximoEvento->id, $misEventosArray))
+                                    @if (Auth::user()->streamings < Auth::user()->membership->streamings)
+                                        {{-- USUARIOS LOGUEADOS CON STREAMINGS DISPONIBLES Y QUE NO TIENEN EL EVENTO AGENDADO AÚN--}}
                                         <a href="{{ route('schedule.event', [$proximoEvento->id]) }}">Reservar Plaza <i class="fas fa-chevron-right"></i></a>
                                     @else
-                                        <a href="{{ route('timeliveEvent', $proximoEvento->id) }}">Ir al Evento<i class="fas fa-chevron-right"></i></a>
+                                        @if (Auth::user()->membership_id < 4)
+                                            <a href="{{route('shopping-cart.store', [Auth::user()->membership_id+1, 'membresia', 'Mensual'])}}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Aumentar Membresía</a>
+                                        @else
+                                            <i class="fa fa-times" aria-hidden="true"></i> Límite de Eventos Superado
+                                        @endif
                                     @endif
+                                @else
+                                    <a href="{{ route('timeliveEvent', $proximoEvento->id) }}">Ir al Evento<i class="fas fa-chevron-right"></i></a>
                                 @endif
+                            @else
+                                <a href="{{route('shopping-cart.store', [Auth::user()->membership_id, 'membresia', 'Mensual'])}}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Renovar Membresía</a>
                             @endif
                         @endif
                     </div>

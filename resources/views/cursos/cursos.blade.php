@@ -20,7 +20,7 @@
             $("#card-mentor-"+$mentor).css('display', 'none');
             $("#courses-mentor-"+$mentor).slideToggle();
         }
-
+        
         function hideMentorCourses($mentor){
             $("#courses-mentor-"+$mentor).css('display', 'none');
             $("#card-mentor-"+$mentor).slideToggle();
@@ -33,16 +33,16 @@
         #new-courses-section .card-img-overlay:hover{
             text-decoration: underline;
         }
-
+        
         .imagen:hover {-webkit-filter: none; filter: none; color: #6EC1E4 0.2em 0.2em 0.6em 0.1em;
         }
-
+        
         .imagen {filter: grayscale(80%);}
-
-
+        
+        
         .containerscale:hover img {
-      	transform: scale(1.1, 1.1);
-	    z-index: 9;
+        transform: scale(1.1, 1.1);
+        z-index: 9;
        }
 
     </style>
@@ -72,12 +72,12 @@
                     <h5 class="text-white text-uppercase ml-4 text-center" style="font-size: 12px;">
                                 {{$last_course->title}}
                     </h5>
-                    <div class="col-md-12">
-                        <a href="{{ route('courses.show', [$last_course->slug, $last_course->course_id]) }}" class="btn btn-primary float-right text-uppercase btn-block m-2" style="font-size: 12px;"><i class="fa fa-play"></i> Continuar curso</a>
+                     <div class="col-md-12">
+                        <a href="{{ route('lesson.show', [$leccion_info->slug, $leccion_info->id, $last_course->course_id]) }}"  class="btn btn-primary float-right text-uppercase btn-block m-2" style="font-size: 12px;"><i class="fa fa-play"></i> Continuar curso</a>
                     </div>
 
-                    <div class="col-md-12 progress progress-course-bar" style="padding-right: 0px!important; padding-left: 0px!important;">
-                                <div class="progress-bar img-fluid" role="progressbar" aria-valuenow="{{$progress_bar}}" aria-valuemin="0" aria-valuemax="100" style="width:{{$progress_bar}}%">
+                    <div class="col-md-12 progress progress-course-bar pl-0">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="{{$progress_bar}}" aria-valuemin="0" aria-valuemax="100" style="width:{{$progress_bar}}%">
                     </div>
                     </div>
                 </div>
@@ -100,10 +100,10 @@
                             <h4 class=" col-md-10 text-white text-uppercase  font-weight-bold" >
                                         {{$last_course->title}}
                             </h4>
-
+                            
                             <div class="col-md-2 float-right mb-2">
                                 <div class="row">
-                                     <a href="{{ route('lesson.show', [$leccion_info->slug, $leccion_info->id, $last_course->course_id]) }}" class="btn btn-primary float-right text-uppercase mr-4"><i class="fa fa-play"></i> Continuar curso</a>
+                                     <a href="{{ route('lesson.show', [$leccion_info->slug, $leccion_info->id, $last_course->course_id]) }}"  class="btn btn-primary float-right text-uppercase mr-4"><i class="fa fa-play"></i> Continuar curso</a>
                                 </div>
 
                             </div>
@@ -163,6 +163,7 @@
                             <div class="containerscale">
 
                             <div class="card m-2 mb-4 card-courses">
+
                                 <p>
                                    <a href="{{ route('courses.show', [$curso->slug, $curso->id]) }}">
                                     <img class="card-img-top" src="{{ asset('uploads/images/courses/covers/'.$curso->thumbnail_cover) }}" alt="card-image-cap">
@@ -173,13 +174,13 @@
                                     <h6 class="col-9 d-flex align-items-center" style="font-size:12px;"><a href="{{ route('courses.show', [$curso->slug, $curso->id]) }}" class="text-secondary">{{$curso->title}}</a>
                                     </h6>
 
-                                    <div class="col-3 p-2 d-flex align-items-center d-none d-sm-none d-md-block icon-miscursos"><img src="{{ asset('images/icons/video-player-blue.svg') }}" alt=""></div>
+                                    <div class="col-3 p-2 d-flex align-items-center d-none d-sm-none d-md-block icon-miscursos"><img src="{{ asset('images/icons/video-player-blue.svg') }}" alt="" height="15px" width="15px"></div>
                                 </div>
                                 </div>
                             </div>
                         </div>
                         @endforeach
-
+                    
                         <div class="">
                                 <div class="row h-100">
                                         <div class="card-block w-50 text-primary align-self-center">
@@ -189,7 +190,7 @@
 
                                 </div>
                         </div>
-
+                    
                     </div>
 
                  </div>
@@ -228,16 +229,19 @@
 
 @php
 $contador=0;
+$mentor =0;
 @endphp
 @foreach($cursosRecomendados as $recommended)
 @php
 $contador++;
+$menor = ($contador -1);
 @endphp
 
+@if(!empty($recommended[$menor]))
 @if($contador <= 3)
 
 <div class="col-md-4" style="margin-top: 20px;">
-  @if (!is_null($recommended->thumbnail_cover))
+  @if (!empty($recommended->thumbnail_cover))
  <img src="{{ asset('uploads/images/courses/covers/'.$recommended->thumbnail_cover) }}" class="card-img-top" alt="...">
  @else
  <img src="{{ asset('uploads/images/courses/covers/default.jpg') }}" class="card-img-top" alt="...">
@@ -255,12 +259,13 @@ $contador++;
             <i class="far fa-user-circle text-center">
                 <p style="font-size: 10px;">{{ $recommended->users->count() }}</p>
             </i>
-
+            
         </h6>
     </div>
 </div>
 </div>
  </div>
+ @endif
 @endif
 @endforeach
 </div>
@@ -272,16 +277,19 @@ $contador++;
 
 @php
 $segundo =0;
+$menor = 0;
 @endphp
 @foreach($cursosRecomendados as $recommended)
 @php
 $segundo++;
+$menor = ($segundo -1);
 @endphp
 
+@if(!empty($recommended[$menor]))
 @if($segundo >= 4 && $segundo <= 6)
 
 <div class="col-md-4" style="margin-top: 20px;">
-  @if (!is_null($recommended->thumbnail_cover))
+  @if (!empty($recommended->thumbnail_cover))
  <img src="{{ asset('uploads/images/courses/covers/'.$recommended->thumbnail_cover) }}" class="card-img-top" alt="...">
  @else
  <img src="{{ asset('uploads/images/avatar/default.jpg') }}" class="card-img-top" alt="...">
@@ -299,12 +307,13 @@ $segundo++;
             <i class="far fa-user-circle text-center">
                 <p style="font-size: 10px;">{{ $recommended->users->count() }}</p>
             </i>
-
+            
         </h6>
     </div>
 </div>
 </div>
  </div>
+ @endif
 @endif
 @endforeach
 </div>
@@ -314,16 +323,19 @@ $segundo++;
 
 @php
 $tercero =0;
+$menor =0;
 @endphp
 @foreach($cursosRecomendados as $recommended)
 @php
 $tercero++;
+$menor = ($tercero -1);
 @endphp
 
+@if(!empty($recommended[$menor]))
 @if($tercero >= 7 && $tercero <= 9)
 
 <div class="col-md-4" style="margin-top: 20px;">
-  @if (!is_null($recommended->thumbnail_cover))
+  @if (!empty($recommended->thumbnail_cover))
  <img src="{{ asset('uploads/images/courses/covers/'.$recommended->thumbnail_cover) }}" class="card-img-top" alt="...">
  @else
  <img src="{{ asset('uploads/images/avatar/default.jpg') }}" class="card-img-top" alt="...">
@@ -346,6 +358,7 @@ $tercero++;
 </div>
 </div>
  </div>
+ @endif
 @endif
 @endforeach
 </div>
@@ -478,13 +491,13 @@ $tercero++;
                     </div>
                 </div>
             </div>
-
+        
             <div id="newers" class="row" style="padding: 10px 30px;">
                 @foreach ($mentores as $mentor)
                     <div class="col-xl-3 col-lg-3 col-12" style="padding-bottom: 10px;">
                         <div class="card" id="card-mentor-{{$mentor->mentor_id}}">
                             <a href="" style="color: white;">
-
+                            
                             @if (!is_null($mentor->avatar))
                                 <!-- <img src="{{ asset('uploads/avatar/'.$mentor->avatar) }}" class="card-img-top new-course-img" alt="..."> -->
                                 <img src="{{ asset('uploads/avatar/'.$mentor->avatar) }}" class="card-img-top new-course-img" alt="...">
@@ -501,10 +514,10 @@ $tercero++;
                                             <div class="col-md-2">
                                                 <a href="javascript:;" onclick="showMentorCourses({{$mentor->mentor_id}});"><i class="fa fa-search" style="font-size: 18px;"></i></a>
                                             </div>
-                                        </div>
+                                        </div>    
                                     </div>
-
-
+                                    
+                                   
                                 </div>
                             </div>
                           </a>
@@ -532,9 +545,9 @@ $tercero++;
                 @endforeach
             </div>
         </div>
-
-
-
+    
+    
+    
     {{-- FIN SECCIÓN MENTORES --}}
     @endif
     {{-- FIN SECCIÓN TUS MENTORES--}}

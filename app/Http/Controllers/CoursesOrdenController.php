@@ -294,7 +294,7 @@ class CoursesOrdenController extends Controller
         $user->wallet_amount = ($user->wallet_amount - $datosMembresia['precio']);
         $user->save();
         
-        $datos = [
+        $savewallet = [
             'iduser' => $user->ID,
             'idcomision' => 0,
             'usuario' => $user->display_name,
@@ -306,7 +306,7 @@ class CoursesOrdenController extends Controller
             'tipotransacion' => 1,
         ];
         $wallet = new WalletController;
-        $wallet->saveWallet($datos);
+        $wallet->saveWallet($savewallet);
         
         return redirect('/')->with('msj-exitoso', 'Tu compra de membresría ha sido completada con éxito.');
     }

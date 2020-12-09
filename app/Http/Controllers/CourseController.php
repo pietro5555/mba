@@ -81,6 +81,7 @@ class CourseController extends Controller{
         view()->share('title', 'Listado de Cursos');
 
         $username = NULL;
+        $leccion_info = NULL;
         if (!Auth::guest()){
             $username = auth()->user()->display_name;
 
@@ -120,12 +121,18 @@ class CourseController extends Controller{
             $total = count($cursosRecomendados);
 
             //ULTIMO CURSO VISTO POR EL USUARIO
+            $ultima_leccion = LessonUser::where('user_id', Auth::user()->ID)
+            ->orderBy('updated_at', 'DESC')
+            ->first();
+            $leccion_info = Lesson::where('id', $ultima_leccion->lesson_id)->first();
             $last_course = DB::table('courses')
-                                    ->join('courses_users', 'courses_users.course_id', '=', 'courses.id')
-                                    ->where('courses_users.user_id', '=', Auth::user()->ID )
-                                    ->orderBy('courses_users.updated_at', 'DESC')
-                                    ->first();
+            ->join('courses_users', 'courses_users.course_id', '=', 'courses.id')
+            ->where('courses_users.user_id', '=', Auth::user()->ID )
+            ->where('courses_users.course_id', '=', $ultima_leccion->course_id )
+            ->orderBy('courses_users.updated_at', 'DESC')
+            ->first();
 
+       
             if (!is_null($last_course)){
                  $leccion_vista = LessonUser::where('user_id', Auth::user()->ID)->where('course_id', $last_course->course_id)->get();
                 $total_vista = $leccion_vista->count();
@@ -254,7 +261,7 @@ class CourseController extends Controller{
         /*Datos del progress bar*/
 
 
-        return view('cursos.cursos')->with(compact('username','cursosDestacados', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next', 'courses', 'mentores', 'cursos', 'cursosRecomendados', 'total', 'last_course', 'progress_bar'));
+        return view('cursos.cursos')->with(compact('username','cursosDestacados', 'cursosNuevos', 'idStart', 'idEnd', 'previous', 'next', 'courses', 'mentores', 'cursos', 'cursosRecomendados', 'total', 'last_course', 'progress_bar', 'leccion_info'));
     }
 
     /*Ver todos los cursos */
@@ -321,8 +328,10 @@ class CourseController extends Controller{
         $first_lesson = NULL;
         $miValoracion = NULL;
         $progresoCurso = NULL;
+        $lecciones_vistas = NULL;
         if (!Auth::guest()){
-            $last_lesson = LessonUser::where('user_id', Auth::user()->ID)->latest('created_at')->first();
+            $last_lesson = LessonUser::where('user_id', Auth::user()->ID)->where('course_id', $id)->latest('updated_at')->first();
+            //dd($last_lesson);
             if (!is_null($last_lesson)){
                 $first_lesson = Lesson::where('id', $last_lesson->lesson_id)->first();
             }else{
@@ -339,9 +348,10 @@ class CourseController extends Controller{
                                 ->where('course_id', '=', $id)
                                 ->where('user_id', '=', Auth::user()->ID)
                                 ->first();
+            $lecciones_vistas = LessonUser::where('user_id', Auth::user()->ID)->where('course_id', $id)->get();
         }
 
-        return view('cursos.show_one_course')->with(compact('curso', 'progresoCurso', 'miValoracion', 'first_lesson'));
+        return view('cursos.show_one_course')->with(compact('curso', 'progresoCurso', 'miValoracion', 'first_lesson', 'lecciones_vistas'));
     }
 
      /**

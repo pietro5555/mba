@@ -27,9 +27,17 @@
              @foreach ($courses as $course)
              <div class="card col-md-3 mb-4 p-0">
               @if (!is_null($course->thumbnail_cover))
-                <img class="card-img-top img-fluid mentor_img" src="{{ asset('uploads/images/courses/covers/'.$course->thumbnail_cover) }}" alt="Card image cap" height="226px">
+                 <p>
+                   <a href="{{ route('courses.show', [$course->slug, $course->id]) }}">
+                    <img class="card-img-top img-fluid mentor_img" src="{{ asset('uploads/images/courses/covers/'.$course->thumbnail_cover) }}" alt="Card image cap" height="226px">
+                    </a>
+                </p>
               @else
-                <img class="card-img-top mentor_img" src="{{ asset('uploads/images/courses/covers/default.jpg') }}" alt="Card image cap" height="226px">
+               <p>
+                   <a href="{{ route('courses.show', [$course->slug, $course->id]) }}">
+                   <img class="card-img-top mentor_img" src="{{ asset('uploads/images/courses/covers/default.jpg') }}" alt="Card image cap" height="226px">
+                    </a>
+                </p>
               @endif
                 <div class="card-body p-2">
                 <div class="row align-items-start">

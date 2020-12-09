@@ -154,51 +154,54 @@
          <div class="row">
             <div class="col-md-6" style="margin-bottom: 10px;">
                @if (Auth::guest())
-               {{-- USUARIOS INVITADOS --}}
-               <a href="{{route('shopping-cart.membership')}}" class="btn btn-success  btn-block"><i class="fa fa-shopping-cart" aria-hidden="true"></i> AQUIRIR MEMBRESIA</a>
+                  {{-- USUARIOS INVITADOS --}}
+                  <a href="{{route('shopping-cart.membership')}}" class="btn btn-success  btn-block"><i class="fa fa-shopping-cart" aria-hidden="true"></i> AQUIRIR MEMBRESIA</a>
                @else
-               @if (is_null(Auth::user()->membership_id))
-               {{-- USUARIOS LOGUEADOS SIN MEMBRESÍA --}}
-               <a href="{{route('shopping-cart.membership')}}" class="btn btn-success btn-block"><i class="fa fa-shopping-cart" aria-hidden="true"></i> AQUIRIR MEMBRESIA</a>
-               @else
-               @if ($evento->subcategory_id > Auth::user()->membership_id)
-               {{-- USUARIOS LOGUEADOS CON MEMBRESÍA MENOR A LA SUBCATEGORÍA DEL EVENTO--}}
-               <a href="{{route('shopping-cart.membership')}}" class="btn btn-success"><i class="fa fa-shopping-cart" aria-hidden="true"></i> MEJORAR MEMBRESIA</a>
-               @else
-               @if (is_null($checkEvento))
-               {{-- USUARIOS LOGUEADOS CON MEMBRESÍA MAYOR O IGUAL A LA SUBCATEGORÍA DEL EVENTO Y QUE NO TIENEN EL EVENTO AGENDADO AÚN--}}
-               @if (Auth::user()->membership_status == 1)
-               <a href="{{ route('schedule.event',[$evento->id]) }}" class="btn btn-primary btn-block text-change">AGENDAR LIVE</a>
-               @else
-               <a href="{{route('shopping-cart.membership')}}" class="btn btn-danger"><i class="fa fa-shopping-cart" aria-hidden="true"></i> RENOVAR MEMBRESÍA</a>
-               @endif
-               @else
-               {{-- EL USUARIO YA TIENE EL EVENTO AGENDADO--}}
-               @if (Auth::user()->membership_status == 1)
-               @if ( ($statusLive == 'ended') || ($statusLive == 'cancelled') )
-               <a href="{{route('show.event', $evento->id)}}" class="btn btn-success btn-block">VER DETALLES DEL EVENTO</a>
-               @else
-               <form action="https://streaming.mybusinessacademypro.com/connect-mba/{{$evento->id}}/{{Auth::user()->ID}}" method="POST" class="mostrar d-none">
-                  @csrf
-                  <input type="hidden" name="email" value="{{ Auth::user()->user_email }}">
-                  <input type="hidden" name="password" value="{{ decrypt(Auth::user()->clave) }}">
-
-                  @if ($statusLive == 'scheduled')
-                  @if (Auth::user()->rol_id == 2)
-                  <button type="submit" class="btn btn-success btn-block">ENTRAR AL LIVE</button>
+                  @if (is_null(Auth::user()->membership_id))
+                     {{-- USUARIOS LOGUEADOS SIN MEMBRESÍA --}}
+                     <a href="{{route('shopping-cart.membership')}}" class="btn btn-success btn-block"><i class="fa fa-shopping-cart" aria-hidden="true"></i> AQUIRIR MEMBRESIA</a>
                   @else
-                  <button type="submit" class="btn btn-success btn-block" disabled>ENTRAR AL LIVE</button>
+                     @if (is_null($checkEvento))
+                        @if (Auth::user()->membership_status == 1)
+                           @if (Auth::user()->streamings < Auth::user()->membership->streamings)
+                              <a href="{{ route('schedule.event',[$evento->id]) }}" class="btn btn-primary btn-block text-change">AGENDAR LIVE</a>
+                           @else
+                              @if (Auth::user()->membership_id < 4)
+                                 <a href="{{route('shopping-cart.store', [Auth::user()->membership_id+1, 'membresia', 'Mensual'])}}" class="btn btn-warning"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Aumentar Membresía</a>
+                              @else
+                                 <i class="fa fa-times" aria-hidden="true"></i> Límite de Eventos Superado
+                              @endif
+                           @endif      
+                        @else
+                           <a href="{{route('shopping-cart.membership')}}" class="btn btn-danger"><i class="fa fa-shopping-cart" aria-hidden="true"></i> RENOVAR MEMBRESÍA</a>
+                        @endif
+                     @else
+                        {{-- EL USUARIO YA TIENE EL EVENTO AGENDADO--}}
+                        @if (Auth::user()->membership_status == 1)
+                           @if ( ($statusLive == 'ended') || ($statusLive == 'cancelled') )
+                              <a href="{{route('show.event', $evento->id)}}" class="btn btn-success btn-block">VER DETALLES DEL EVENTO</a>
+                           @else
+                              <form action="https://streaming.mybusinessacademypro.com/connect-mba/{{$evento->id}}/{{Auth::user()->ID}}" method="POST" class="mostrar d-none">
+                                 @csrf
+                                 <input type="hidden" name="email" value="{{ Auth::user()->user_email }}">
+                                 <input type="hidden" name="password" value="{{ decrypt(Auth::user()->clave) }}">
+
+                                 @if ($statusLive == 'scheduled')
+                                    @if (Auth::user()->rol_id == 2)
+                                       <button type="submit" class="btn btn-success btn-block">ENTRAR AL LIVE</button>
+                                    @else
+                                       <button type="submit" class="btn btn-success btn-block" disabled>ENTRAR AL LIVE</button>
+                                    @endif
+                                 @elseif ($statusLive == 'live')
+                                    <button type="submit" class="btn btn-success btn-block">ENTRAR AL LIVE</button>
+                                 @endif
+                              </form>
+                           @endif
+                        @else
+                           <a href="{{route('shopping-cart.store', [Auth::user()->membership_id, 'membresia', 'Mensual'])}}" class="btn btn-danger"><i class="fa fa-shopping-cart" aria-hidden="true"></i> RENOVAR MEMBRESÍA</a>
+                        @endif
+                     @endif
                   @endif
-                  @elseif ($statusLive == 'live')
-                  <button type="submit" class="btn btn-success btn-block">ENTRAR AL LIVE</button>
-                  @endif
-               </form>
-               @endif
-               @else
-               <a href="{{route('shopping-cart.membership')}}" class="btn btn-danger"><i class="fa fa-shopping-cart" aria-hidden="true"></i> RENOVAR MEMBRESÍA</a>
-               @endif
-               @endif
-               @endif
                @endif
 
                <!--<button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#AgendarLiveModal">
@@ -300,30 +303,32 @@
                            <i class="far fa-clock ml-2" style="font-size: 18px !important;padding: 5px;" aria-hidden="true"></i>{{\Carbon\Carbon::parse($prox->time)->format('g:i a')}}
                         </p>
                         @if (Auth::guest())
-                        {{-- USUARIOS INVITADOS --}}
-                        <a href="{{route('shopping-cart.membership')}}" class="btn btn-success"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar al Carrito</a>
+                           {{-- USUARIOS INVITADOS --}}
+                           <a href="{{route('shopping-cart.membership')}}" class="btn btn-success"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar al Carrito</a>
                         @else
-                        @if (is_null(Auth::user()->membership_id))
-                        {{-- USUARIOS LOGUEADOS SIN MEMBRESÍA --}}
-                        <a href="{{route('shopping-cart.membership')}}" class="btn btn-success"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar al Carrito</a>
-                        @else
-                        @if ($prox->subcategory_id > Auth::user()->membership_id)
-                        {{-- USUARIOS LOGUEADOS CON MEMBRESÍA MENOR A LA SUBCATEGORÍA DEL EVENTO--}}
-                        <a href="{{route('shopping-cart.membership')}}" class="btn btn-success"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Mejorar Membresía</a>
-                        @else
-                        @if (Auth::user()->membership_status == 1)
-                        @if (!in_array($prox->id, $misEventosArray))
-                        {{-- USUARIOS LOGUEADOS CON MEMBRESÍA MAYOR O IGUAL A LA SUBCATEGORÍA DEL EVENTO Y QUE NO TIENEN EL EVENTO AGENDADO AÚN--}}
-                        <a href="{{route('schedule.event', [$prox->id])}}" class="btn btn-success btn-block">Agendar</a>
-                        @else
-                        {{-- EL USUARIO YA TIENE EL EVENTO AGENDADO--}}
-                        <a href="{{route('timeliveEvent', $prox->id)}}" class="btn btn-success btn-block">Ir Al Evento</a>
-                        @endif
-                        @else
-                        <a href="{{route('shopping-cart.membership')}}" class="btn btn-danger"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Renovar Membresía</a>
-                        @endif
-                        @endif
-                        @endif
+                           @if (is_null(Auth::user()->membership_id))
+                              {{-- USUARIOS LOGUEADOS SIN MEMBRESÍA --}}
+                              <a href="{{route('shopping-cart.membership')}}" class="btn btn-success"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar al Carrito</a>
+                           @else
+                              @if (Auth::user()->membership_status == 1)
+                                 @if (!in_array($prox->id, $misEventosArray))
+                                    @if (Auth::user()->streamings < Auth::user()->membership->streamings)
+                                       <a href="{{ route('schedule.event',[$prox->id]) }}" class="btn btn-primary btn-block text-change">AGENDAR LIVE</a>
+                                    @else
+                                       @if (Auth::user()->membership_id < 4)
+                                          <a href="{{route('shopping-cart.store', [Auth::user()->membership_id+1, 'membresia', 'Mensual'])}}" class="btn btn-warning"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Aumentar Membresía</a>
+                                       @else
+                                          <i class="fa fa-times" aria-hidden="true"></i> Límite de Eventos Superado
+                                       @endif
+                                    @endif
+                                 @else
+                                    {{-- EL USUARIO YA TIENE EL EVENTO AGENDADO--}}
+                                    <a href="{{route('timeliveEvent', $prox->id)}}" class="btn btn-success btn-block">Ir Al Evento</a>
+                                 @endif
+                              @else
+                                 <a href="{{route('shopping-cart.store', [Auth::user()->membership_id, 'membresia', 'Mensual'])}}" class="btn btn-danger"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Renovar Membresía</a>
+                              @endif
+                           @endif
                         @endif
                      </div>
                   </div>
@@ -367,31 +372,33 @@
                         <i class="far fa-clock ml-2" style="font-size: 18px !important;padding: 5px;" aria-hidden="true"></i>{{\Carbon\Carbon::parse($prox->time)->format('g:i a')}}
                      </p>
                      @if (Auth::guest())
-                     {{-- USUARIOS INVITADOS --}}
-                     <a href="{{route('shopping-cart.membership')}}" class="btn btn-success"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar al Carrito</a>
-                     @else
-                     @if (is_null(Auth::user()->membership_id))
-                     {{-- USUARIOS LOGUEADOS SIN MEMBRESÍA --}}
-                     <a href="{{route('shopping-cart.membership')}}" class="btn btn-success"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar al Carrito</a>
-                     @else
-                     @if ($prox->subcategory_id > Auth::user()->membership_id)
-                     {{-- USUARIOS LOGUEADOS CON MEMBRESÍA MENOR A LA SUBCATEGORÍA DEL EVENTO--}}
-                     <a href="{{route('shopping-cart.membership')}}" class="btn btn-success"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar al Carrito</a>
-                     @else
-                     @if (Auth::user()->membership_status == 1)
-                     @if (!in_array($prox->id, $misEventosArray))
-                     {{-- USUARIOS LOGUEADOS CON MEMBRESÍA MAYOR O IGUAL A LA SUBCATEGORÍA DEL EVENTO Y QUE NO TIENEN EL EVENTO AGENDADO AÚN--}}
-                     <a href="{{route('schedule.event', [$prox->id])}}" class="btn btn-success btn-block">Agendar</a>
-                     @else
-                     {{-- EL USUARIO YA TIENE EL EVENTO AGENDADO--}}
-                     <a href="{{route('show.event', $prox->id)}}" class="btn btn-success btn-block">Ir Al Evento</a>
-                     @endif
-                     @else
-                     <a href="{{route('shopping-cart.membership')}}" class="btn btn-success"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Renovar Membresía</a>
-                     @endif
-                     @endif
-                     @endif
-                     @endif
+                           {{-- USUARIOS INVITADOS --}}
+                           <a href="{{route('shopping-cart.membership')}}" class="btn btn-success"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar al Carrito</a>
+                        @else
+                           @if (is_null(Auth::user()->membership_id))
+                              {{-- USUARIOS LOGUEADOS SIN MEMBRESÍA --}}
+                              <a href="{{route('shopping-cart.membership')}}" class="btn btn-success"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Agregar al Carrito</a>
+                           @else
+                              @if (Auth::user()->membership_status == 1)
+                                 @if (!in_array($prox->id, $misEventosArray))
+                                    @if (Auth::user()->streamings < Auth::user()->membership->streamings)
+                                       <a href="{{ route('schedule.event',[$prox->id]) }}" class="btn btn-primary btn-block text-change">AGENDAR LIVE</a>
+                                    @else
+                                       @if (Auth::user()->membership_id < 4)
+                                          <a href="{{route('shopping-cart.store', [Auth::user()->membership_id+1, 'membresia', 'Mensual'])}}" class="btn btn-warning"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Aumentar Membresía</a>
+                                       @else
+                                          <i class="fa fa-times" aria-hidden="true"></i> Límite de Eventos Superado
+                                       @endif
+                                    @endif
+                                 @else
+                                    {{-- EL USUARIO YA TIENE EL EVENTO AGENDADO--}}
+                                    <a href="{{route('timeliveEvent', $prox->id)}}" class="btn btn-success btn-block">Ir Al Evento</a>
+                                 @endif
+                              @else
+                                 <a href="{{route('shopping-cart.store', [Auth::user()->membership_id, 'membresia', 'Mensual'])}}" class="btn btn-danger"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Renovar Membresía</a>
+                              @endif
+                           @endif
+                        @endif
                   </div>
                </div>
             </div>

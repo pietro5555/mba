@@ -166,8 +166,10 @@
                               <a href="{{route('shopping-cart.store', [$curso->membership_id, 'membresia', 'Mensual'])}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> AUMENTAR MEMBRESÍA</a>
                            @else
                               @if (Auth::user()->membership_status == 1)
-                                 <a href="{{route('client.courses.add', [$curso->id, 'es'])}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-language" aria-hidden="true"></i> INICIAR CURSO EN ESPAÑOL</a>
-                                 <a href="{{route('client.courses.add', [$curso->id, 'en'])}}" class="btn btn-primary play-course-button btn-block" ><i class="fa fa-language" aria-hidden="true"></i> INICIAR CURSO EN INGLÉS</a>
+                                 @if(!$curso->lessons->isEmpty())
+                                    <a href="{{route('client.courses.add', [$curso->id, 'es'])}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-language" aria-hidden="true"></i> INICIAR CURSO EN ESPAÑOL</a>
+                                    <a href="{{route('client.courses.add', [$curso->id, 'en'])}}" class="btn btn-primary play-course-button btn-block" ><i class="fa fa-language" aria-hidden="true"></i> INICIAR CURSO EN INGLÉS</a>
+                                 @endif
                               @else
                                  <a href="{{route('shopping-cart.store', [Auth::user()->membership_id, 'membresia', 'Mensual'])}}" class="btn btn-danger play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> RENOVAR MEMBRESIA</a>
                               @endif
@@ -175,7 +177,10 @@
                         @endif
                      @else
                         @if (Auth::user()->membership_status == 1)
+                       
+                        @if(!is_null($first_lesson))
                            <a href="{{ route('lesson.show', [$first_lesson->slug, $first_lesson->id, $curso->id]) }}" class="px-2 mr-auto btn btn-success play-course-button btn-block mb-2"> <i class="fa fa-play" aria-hidden="true"></i> CONTINUAR CURSO</a>
+                        @endif
                         @else
                            <a href="{{route('shopping-cart.store', [Auth::user()->membership_id, 'membresia', 'Mensual'])}}" class="btn btn-danger play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> RENOVAR MEMBRESIA</a>
                         @endif
@@ -269,8 +274,10 @@
                            <a href="{{route('shopping-cart.store', [$curso->membership_id, 'membresia', 'Mensual'])}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> AUMENTAR MEMBRESÍA</a>
                         @else
                            @if (Auth::user()->membership_status == 1)
-                              <a href="{{route('client.courses.add', [$curso->id, 'es'])}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-language" aria-hidden="true"></i> INICIAR CURSO EN ESPAÑOL</a>
-                              <a href="{{route('client.courses.add', [$curso->id, 'en'])}}" class="btn btn-primary play-course-button btn-block" ><i class="fa fa-language" aria-hidden="true"></i> INICIAR CURSO EN INGLÉS</a>
+                              @if(!$curso->lessons->isEmpty())
+                                 <a href="{{route('client.courses.add', [$curso->id, 'es'])}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-language" aria-hidden="true"></i> INICIAR CURSO EN ESPAÑOL</a>
+                                 <a href="{{route('client.courses.add', [$curso->id, 'en'])}}" class="btn btn-primary play-course-button btn-block" ><i class="fa fa-language" aria-hidden="true"></i> INICIAR CURSO EN INGLÉS</a>
+                              @endif
                            @else
                               <a href="{{route('shopping-cart.store', [Auth::user()->membership_id, 'membresia', 'Mensual'])}}" class="btn btn-danger play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> RENOVAR MEMBRESIA</a>
                            @endif
@@ -278,7 +285,9 @@
                      @endif
                   @else
                      @if (Auth::user()->membership_status == 1)
-                        <a href="{{ route('lesson.show', [$first_lesson->slug, $first_lesson->id, $curso->id]) }}" class="px-2 mr-auto btn btn-success play-course-button btn-block mb-2"> <i class="fa fa-play" aria-hidden="true"></i> CONTINUAR CURSO</a>
+                        @if(!is_null($first_lesson))
+                           <a href="{{ route('lesson.show', [$first_lesson->slug, $first_lesson->id, $curso->id]) }}" class="px-2 mr-auto btn btn-success play-course-button btn-block mb-2"> <i class="fa fa-play" aria-hidden="true"></i> CONTINUAR CURSO</a>
+                        @endif
                      @else
                         <a href="{{route('shopping-cart.store', [Auth::user()->membership_id, 'membresia', 'Mensual'])}}" class="btn btn-danger play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> RENOVAR MEMBRESIA</a>
                      @endif
@@ -307,9 +316,21 @@
                                        <h5 class="panel-title about-course-text m-0">
                                           @if ( (!Auth::guest()) && (!is_null($progresoCurso)) )
                                              @if (Auth::user()->membership_status == 1)
+                                            @if($first_lesson->id == $leccion->id)
+                                             <a href="{{ route('lesson.show', [$leccion->slug, $leccion->id, $curso->id]) }}" class="about-course-text text-primary">
+                                                   {{ $leccion->title }}
+                                                </a>
+                                              @else
+
                                                 <a href="{{ route('lesson.show', [$leccion->slug, $leccion->id, $curso->id]) }}" class="about-course-text">
                                                    {{ $leccion->title }}
                                                 </a>
+                                                @endif
+                                                 @foreach($lecciones_vistas as $leccion_vista)
+                                                    @if($leccion_vista->lesson_id == $leccion->id)
+                                                   <label class="text-success">&nbsp;&nbsp;&nbsp;&nbsp;Vista <i class="far fa-check-circle"></i> </label>
+                                                   @endif
+                                                @endforeach
                                              @else
                                                 <a href="#newMembership" data-toggle="modal"  class="about-course-text">
                                                    {{ $leccion->title }}
@@ -363,8 +384,10 @@
                               <a href="{{route('shopping-cart.store', [$curso->membership_id, 'membresia', 'Mensual'])}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> AUMENTAR MEMBRESÍA</a>
                            @else
                               @if (Auth::user()->membership_status == 1)
-                                 <a href="{{route('client.courses.add', [$curso->id, 'es'])}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-language" aria-hidden="true"></i> INICIAR CURSO EN ESPAÑOL</a>
-                                 <a href="{{route('client.courses.add', [$curso->id, 'en'])}}" class="btn btn-primary play-course-button btn-block" ><i class="fa fa-language" aria-hidden="true"></i> INICIAR CURSO EN INGLÉS</a>
+                                 @if(!$curso->lessons->isEmpty())
+                                    <a href="{{route('client.courses.add', [$curso->id, 'es'])}}" class="btn btn-success play-course-button btn-block" ><i class="fa fa-language" aria-hidden="true"></i> INICIAR CURSO EN ESPAÑOL</a>
+                                    <a href="{{route('client.courses.add', [$curso->id, 'en'])}}" class="btn btn-primary play-course-button btn-block" ><i class="fa fa-language" aria-hidden="true"></i> INICIAR CURSO EN INGLÉS</a>
+                                 @endif
                               @else
                                  <a href="{{route('shopping-cart.store', [Auth::user()->membership_id, 'membresia', 'Mensual'])}}" class="btn btn-danger play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> RENOVAR MEMBRESIA</a>
                               @endif
@@ -372,7 +395,9 @@
                         @endif
                      @else
                         @if (Auth::user()->membership_status == 1)
+                        @if(!is_null($first_lesson))
                            <a href="{{ route('lesson.show', [$first_lesson->slug, $first_lesson->id, $curso->id]) }}" class="px-2 mr-auto btn btn-success play-course-button btn-block mb-2"> <i class="fa fa-play" aria-hidden="true"></i> CONTINUAR CURSO</a>
+                        @endif
                         @else
                            <a href="{{route('shopping-cart.store', [Auth::user()->membership_id, 'membresia', 'Mensual'])}}" class="btn btn-danger play-course-button btn-block" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> RENOVAR MEMBRESIA</a>
                         @endif

@@ -157,15 +157,10 @@ class LessonController extends Controller{
                 $leccion_vista->status = 1;
                 $leccion_vista->save();
             }
-            
-            /* mostrar o no el boton de certificado solo se mostrara en la ultima leccion*/
-            $certificar = false;
-            $certificado = Lesson::where('course_id', $course_id)->orderBy('id', 'DESC')->first()->take(1);
-            if($certificado != null){
-                if($certificado == $lesson_id){
-                    $certificar = true;
-                }
-
+            else{
+                $fecha = date('Y-m-d H:i:s');
+                $leccion_guardada->updated_at = date('Y-m-d H:i:s');
+                $leccion_guardada->save();
             }
 
             $lesson = Lesson::where('id', '=',$lesson_id)
@@ -184,11 +179,32 @@ class LessonController extends Controller{
             $all_comments = Comment::where('lesson_id', $lesson_id)->get();
 
             $directos = User::where('referred_id', Auth::user()->ID)->get()->count('ID');
-            $last_lesson = LessonUser::where('user_id', Auth::user()->ID)->latest('created_at')->first();
 
-            // return dd(last_lesson);
+            $last_lesson = LessonUser::where('user_id', Auth::user()->ID)->where('course_id', $course_id)->latest('updated_at')->first();
+          
+            if (!is_null($last_lesson)){
+                $first_lesson = Lesson::where('id', $last_lesson->lesson_id)->first();
+            }else{
+                $first_lesson = Lesson::where('course_id', '=', $id)->orderBy('id', 'ASC')->first();
+            }
 
-            return view('cursos.leccion', compact('lesson', 'all_lessons','all_comments', 'progresoCurso','directos', 'last_lesson', 'certificar'));
+            $lecciones_vistas = LessonUser::where('user_id', Auth::user()->ID)->where('course_id', $course_id)->get();
+
+         
+                $leccion_vista = LessonUser::where('user_id', Auth::user()->ID)->where('course_id', $course_id)->get();
+                $total_vista = $leccion_vista->count();
+                $total_lesson = Lesson::where('course_id',$course_id )->count();
+                if(Empty($total_lesson)){
+                    $progress_bar =0;
+                }
+                else{
+                    $progress_bar = (($total_vista*100)/$total_lesson);
+                }
+                //dd($leccion_vista, $total_vista, $progress_bar);
+
+            return view('cursos.leccion', compact('lesson', 'all_lessons','all_comments', 'progresoCurso','directos', 'last_lesson', 'first_lesson', 'lecciones_vistas', 'progress_bar'));
+                
+        
         }else{
             $datosCurso = DB::table('courses')
                             ->select('id', 'slug')

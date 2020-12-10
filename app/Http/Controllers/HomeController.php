@@ -209,8 +209,8 @@ class HomeController extends Controller{
       $cursos = 0;
       if (!empty(Auth::user()->membership)) {
          $membresia = Auth::user()->membership->name;
-         $idmembresia = (Auth::user()->membership_id == 5) ? 5 : (Auth::user()->membership_id+1);
-         if (Auth::user()->membership_id < 5) {
+         $idmembresia = (Auth::user()->membership_id == 4) ? 4 : (Auth::user()->membership_id+1);
+         if (Auth::user()->membership_id < 4) {
             $membresia2 = Auth::user()->membership->where('id', ($idmembresia))->first()->name;
          }else{
             $membresia2 = '';

@@ -33,7 +33,7 @@
                 <a class="nav-link items-header" href="{{route('step3')}}">BLOG</a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link items-header" href="#">AFILIADOS</a>
+                <a class="nav-link items-header" href="{{ route('blog.afiliados')}}">AFILIADOS</a>
             </li>
             @if (Auth::guest())
                 <li class="nav-item">

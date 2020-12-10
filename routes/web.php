@@ -184,6 +184,7 @@ Route::group(['prefix' => 'installer'], function (){
   Route::get('/gratis', 'NosotrosController@step2')->name('step2');
   Route::get('/blog', 'NosotrosController@step3')->name('step3');
   Route::get('/blog/{id}', 'NosotrosController@articulo')->name('blog.articulo');
+  Route::get('/afiliados', 'NosotrosController@afiliados')->name('blog.afiliados');
 
   /* Rutas de la Landing */
   Route::get('load-more-courses-new/{ultimoId}/{accion}', 'CourseController@load_more_courses_new')->name('landing.load-more-courses-new');
@@ -371,6 +372,7 @@ Route::group(['prefix' => 'installer'], function (){
         Route::get('/soporte/ticket/questions','SoporteController@search')->name('admin.soporte.search.questions');
         Route::get('/soporte/ticket/questions_two','SoporteController@search_two')->name('admin.soporte.search.questions_two');
         Route::get('/soporte/ticket/frecuent_questions','SoporteController@frequent_questions')->name('admin.soporte.search.frecuent_questions');
+        Route::get('/soporte/afiliados','SoporteController@affiliates')->name('admin.soporte.affiliates');
 
      Route::group(['prefix' => 'courses'], function(){
         Route::get('/', 'CourseController@record')->name('admin.courses.index');

@@ -10,7 +10,7 @@
               <div class="overlay"></div>
                   <img src="{{ asset('nosotros/gratis-Blog/homegratis.png') }}" class="d-block w-100" alt="...">
                    <div class="carousel-caption row align-items-center">
-                  <div class="blog-title font-weight-bold">隆COMIENZA AHORA!
+                  <div class="blog-title font-weight-bold">¡COMIENZA AHORA!
                           <p style="font-size: 22px;">En este mundo tan acelerado, es la preparaci贸n lo que conduce el futuro de la vida.</p>
                         </div>
               </div>

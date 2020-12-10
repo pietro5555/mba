@@ -49,5 +49,12 @@ class NosotrosController extends Controller
         $articulo = Entradas::find($entrada_id);
 
         return view('nosotros.articulo', compact('articulo'));
+	}
+	
+
+	public function afiliados(){
+    
+
+        return view('nosotros.afiliados');
     }
 }

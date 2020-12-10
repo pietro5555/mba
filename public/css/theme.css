@@ -646,6 +646,10 @@ h5.title-level {
       font-size:15px!important;
     }
 
+    .text-link-mba{
+        font-size:15px!important;
+    }
+
 
 }
 
@@ -2099,3 +2103,6 @@ p.card-text.font-weight-bold.mr-2 {
 .header-redes-sociales{
     align-items: right;
 }
+
+
+  

@@ -308,7 +308,7 @@ class CoursesOrdenController extends Controller
         $wallet = new WalletController;
         $wallet->saveWallet($savewallet);
         
-        return redirect('/')->with('msj-exitoso', 'Tu compra de membresría ha sido completada con éxito.');
+        return redirect('/')->with('msj-exitoso', 'Tu compra de membresía ha sido completada con éxito.');
     }
     
    

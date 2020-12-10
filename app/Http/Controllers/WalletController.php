@@ -717,29 +717,30 @@ class WalletController extends Controller
 		public function reporcomision(){
 	    
 	    if(Auth::user()->rol_id == 0){
-	        $wallets = Wallet::all();
+	        $wallets = Wallet::where('idcomision', '!=', 0)->get();
 	         foreach($wallets as $wallet){
 	            $comi = Commission::find($wallet->idcomision);
 	            $user = User::where('user_email', $comi->referred_email)->first();
-	            $purchase  = PurchaseDetail::where('purchase_id', $comi->compra_id)->first();
-	            $membresia = DB::table('memberships')->where('id', $purchase->membership_id)->first();
-	            $wallet->producto = $membresia->name; 
-	            $wallet->precio = $purchase->amount;
+	            $purchase  = DB::table('courses_orden')->where('id', $comi->compra_id)->first();
+	            $push = json_decode($purchase->detalles);
+	            $wallet->producto = $push->nombre; 
+	            $wallet->precio = $push->precio;
  	            $wallet->correo = $comi->referred_email;
 	            $wallet->comprador = ($user == null) ? 'N/A' : $user->display_name;
 	         }
 	    }else{
 	        
-	      $wallets = Wallet::where('iduser', Auth::user()->ID)->get();
+	      $wallets = Wallet::where('iduser', Auth::user()->ID)->where('idcomision', '!=', 0)->get();
 	        foreach($wallets as $wallet){
 	            $comi = Commission::find($wallet->idcomision);
 	            $user = User::where('user_email', $comi->referred_email)->first();
-	            $purchase  = PurchaseDetail::where('purchase_id', $comi->compra_id)->first();
-	            $membresia = DB::table('memberships')->where('id', $purchase->membership_id)->first();
-	            $wallet->producto = $membresia->name; 
-	            $wallet->precio = $purchase->amount;
+	            $purchase  = DB::table('courses_orden')->where('id', $comi->compra_id)->first();
+	            $push = json_decode($purchase->detalles);
+	            $wallet->producto = $push->nombre;
+	            $wallet->precio = $push->precio;
 	            $wallet->correo = $comi->referred_email;
 	            $wallet->comprador = ($user == null) ? 'N/A' : $user->display_name;
+	            
 	         }
 	    }
 	    

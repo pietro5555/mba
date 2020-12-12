@@ -579,6 +579,10 @@ h5.title-level {
         font-weight:600 !important;
     }
 
+    .seccion-razones{
+        padding-top: 0px!important;
+    }
+
 
 }
 
@@ -649,7 +653,20 @@ h5.title-level {
     .text-link-mba{
         font-size:15px!important;
     }
+    .seccion-razones{
+        padding-top: 0px!important;
+    }
 
+    .mybussiness-title-afiliados{
+        font-size: 20px!important;
+        margin-top: 0px!important;
+        text-align: center;
+        
+    }
+    .logo-academia-afiliados{
+        height: 50px!important;
+        width: 50px!important;
+    }
 
 }
 
@@ -1719,6 +1736,20 @@ p.card-text.font-weight-bold.mr-2 {
     margin-top: 50px;
 }
 
+.afiliados-title-one {
+    color: white;
+    text-align: left;
+    font-size: 35px;
+    letter-spacing: 5px;
+}
+
+.afiliados-title-two {
+    color: white;
+    text-align: left;
+    font-size: 30px;
+    letter-spacing: 1px;
+}
+
 @media (max-width: 450px) {
     .blog-title {
         font-size: 25px;
@@ -2105,4 +2136,52 @@ p.card-text.font-weight-bold.mr-2 {
 }
 
 
+/*AFILIADOS*/
+
+    .afiliados-box .box{
+    background: #FFF;
+    border-radius: 10px; 
+    padding: 40px 10px;
+    cursor: pointer;
+    transition: all 0.5s ease-out;
+}
+
+.afiliados-box .box:hover{
+   box-shadow: 0 0 6px #2A91FF;
+}
+
+.afiliados-box .box .box-text{
+    margin:20px 0px;
+    font-size: 15px;
+    line-height: 30px;
+}
+
+.afiliados-box .box .box-btn a{
+    text-decoration: none;
+    color: #2A91FF;
+    font-size: 16px;
+}
+
+.card-comisiones{
+    border-radius: 15px!important;
+    transition: transform .2s;
+    box-shadow: 0 0 6px #1C1D211D;
+}
+
+  .card-comisiones:hover {
+    -ms-transform: scale(1.1); /* IE 9 */
+    -webkit-transform: scale(1.1); /* Safari 3-8 */
+    transform: scale(1.1); 
+  }
+
+  .seccion-razones{
+    padding-top: 100px;
+
+  }
+  .mybussiness-title-afiliados{
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+
+  }
   

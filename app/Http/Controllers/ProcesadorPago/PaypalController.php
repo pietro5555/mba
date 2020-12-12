@@ -130,9 +130,9 @@ class PaypalController extends Controller
     
     
     //cancelacion o aceptacion de paypal
-    public function getPaymentStatus($idcompra)
+    public function getPaymentStatus(Request $request, $idcompra)
     {
-        
+       
          // setup PayPal api context
         $paypal_conf = \Config::get('paypal');
         $this->_api_context = new ApiContext(new OAuthTokenCredential($paypal_conf['client_id'], $paypal_conf['secret']));
@@ -146,8 +146,8 @@ class PaypalController extends Controller
         // clear the session payment ID
         \Session::forget('paypal_payment_id');
  
-        $payerId = \Input::get('PayerID');
-        $token = \Input::get('token');
+        $payerId = $request->get('PayerID');
+        $token = $request->get('token');
  
  
         if (empty($payerId) || empty($token)) {
@@ -158,7 +158,7 @@ class PaypalController extends Controller
         $payment = Payment::get($payment_id, $this->_api_context);
  
         $execution = new PaymentExecution();
-        $execution->setPayerId(\Input::get('PayerID'));
+        $execution->setPayerId($request->get('PayerID'));
  
         $result = $payment->execute($execution, $this->_api_context);
  

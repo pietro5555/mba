@@ -133,6 +133,10 @@ class ShoppingCartController extends Controller
                 $item->period = $period;
                 $item->date = date('Y-m-d');
                 $item->save();
+            }elseif($itemAgregado == 1){
+                
+                //eliminamos la membresia y agregamos la otra
+                $this->actualizarMembresias($id, $period, (Auth::user()) ? Auth::user()->ID : request()->ip());
             }
 
             return redirect('shopping-cart')->with('msj-exitoso', 'El item ha sido agregado a su carrito de compras con éxito.');
@@ -150,7 +154,12 @@ class ShoppingCartController extends Controller
                     $item->period = $period;
                     $item->date = date('Y-m-d');
                     $item->save();
-                }
+                }elseif($itemAgregado == 1){
+                
+                //eliminamos la membresia y agregamos la otra
+                $this->actualizarMembresias($id, $period, (Auth::user()) ? Auth::user()->ID : request()->ip());
+               }
+
             }else if ($request->type == 'oferta'){
                 $itemAgregado = DB::table('shopping_cart')
                                     ->where('user_id', '=', Auth::user()->ID)
@@ -164,11 +173,29 @@ class ShoppingCartController extends Controller
                     $item->date = date('Y-m-d');
                     $item->save();
                     
+                }elseif($itemAgregado == 1){
+                
+                //eliminamos la membresia y agregamos la otra
+                $this->actualizarMembresias($id, $period, (Auth::user()) ? Auth::user()->ID : request()->ip());
                 }
             }
         }
             
         return redirect('shopping-cart');
+    }
+
+    /*actualizar el carrito al presionar una membresia*/
+    public function actualizarMembresias($id, $period, $iduser){
+    
+       $deletemembreship = DB::table('shopping_cart')->where('user_id', '=', $iduser)->delete();
+                
+        $item = new ShoppingCart();
+        $item->user_id = $iduser;
+        //$item->course_id = $id;
+        $item->membership_id = $id;
+        $item->period = $period;
+        $item->date = date('Y-m-d');
+        $item->save();
     }
 
 

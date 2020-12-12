@@ -236,6 +236,7 @@ return [
         'DotenvEditor' => Brotzka\DotenvEditor\DotenvEditorFacade::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'Google2FA' => PragmaRX\Google2FALaravel\Facade::class,
+        'Input' => Illuminate\Support\Facades\Input::class,
     ],
 
 ];

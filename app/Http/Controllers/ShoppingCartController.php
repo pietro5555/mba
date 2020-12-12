@@ -269,6 +269,11 @@ class ShoppingCartController extends Controller
         $datosOrden = DB::table('courses_orden')
                         ->where('id', '=', $order)
                         ->first();
+        
+        //cambiamos el status a aprobado en courses orden
+        $curse_orden = DB::table('courses_orden')->where('id', $order)->update([
+         'status' => 1,
+        ]);
 
         $compra = new Purchase();
         $compra->user_id = $datosOrden->user_id;

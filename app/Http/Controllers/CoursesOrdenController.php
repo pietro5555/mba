@@ -340,7 +340,7 @@ class CoursesOrdenController extends Controller
         $orden->total = $total;
         $orden->detalles = json_encode($datosMembresia);
         $orden->idtransacion_paypal = Carbon::now()->format('YmdHis');
-        $orden->status = 1;
+        $orden->status = 0;
         $orden->type_product = 'membresia';
         $orden->save();
         

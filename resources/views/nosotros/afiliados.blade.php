@@ -211,7 +211,7 @@
 				<div class="col-md-2 pl-0 pr-0">
             <div class="card card-comisiones" style="background-color: #1C1D21!important;">
                   <div class="card-body text-center">
-                    <h5 class="card-title text-white" style="height:182px;">Nivel</h5>
+                    <h5 class="card-title text-white comisiones-card-title nivel-body">Nivel</h5>
                   </div>
             </div>
 				</div>
@@ -220,8 +220,8 @@
 						<div class="col-md-3 pl-0 pr-0">
                 <div class="card card-comisiones" style="background-color: #FFF!important;">
                   <div class="card-body text-center">
-                    <h5 class="card-title text-primary">Membresía <br> del Ser</h5>
-                    <hr width="80" style="height: 2px;margin-left: 25%;margin-right: 25%;background-color: #2A91FF;">
+                    <h5 class="card-title text-primary comisiones-card-title">Membresía <br> del Ser</h5>
+                    <hr class="com-line-blue">
                     <p class="card-text">30% DE COMISIÓN POR CADA AFILIACIÓN</p>
                     <p class="card-text">Aplica sobre el costo preferencial</p>
                   </div>
@@ -230,8 +230,8 @@
 						<div class="col-md-3 pl-0 pr-0">
               <div class="card card-comisiones" style="background-color: #2A91FF!important;">
                 <div class="card-body text-center">
-                  <h5 class="card-title text-white">Membresía <br> del Hacer</h5>
-                  <hr width="80" style="height: 2px;margin-left: 25%;margin-right: 25%;background-color: #FFF;">
+                  <h5 class="card-title text-white comisiones-card-title">Membresía <br> del Hacer</h5>
+                  <hr class="com-line-white">
                   <p class="card-text text-white">30% DE COMISIÓN POR CADA AFILIACIÓN</p>
                     <p class="card-text text-white">Aplica sobre el costo preferencial</p>
                 </div>
@@ -241,8 +241,8 @@
 						<div class="col-md-3 pl-0 pr-0">
                 <div class="card card-comisiones" style="background-color: #FFF!important;">
                   <div class="card-body text-center">
-                    <h5 class="card-title text-primary">Membresía <br>  del Tener</h5>
-                    <hr width="80" style="height: 2px;margin-left: 25%;margin-right: 25%;background-color: #2A91FF;">
+                    <h5 class="card-title text-primary comisiones-card-title">Membresía <br>  del Tener</h5>
+                    <hr class="com-line-blue">
                     <p class="card-text">30% DE COMISIÓN POR CADA AFILIACIÓN</p>
                     <p class="card-text">Aplica sobre el costo preferencial</p>
 
@@ -253,8 +253,8 @@
 						<div class="col-md-3 pl-0 pr-0">
                 <div class="card card-comisiones" style="background-color: #2A91FF!important;">
                   <div class="card-body text-center">
-                    <h5 class="card-title text-white">Membresía <br> del Trascender</h5>
-                    <hr width="80" style="height: 2px;margin-left: 25%;margin-right: 25%;background-color: #FFF;">
+                    <h5 class="card-title text-white comisiones-card-title">Membresía <br> del Trascender</h5>
+                    <hr class="com-line-white">
                     <p class="card-text text-white">30% DE COMISIÓN POR CADA AFILIACIÓN</p>
                     <p class="card-text text-white">Aplica sobre el costo preferencial</p>
 

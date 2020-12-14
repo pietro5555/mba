@@ -553,6 +553,16 @@ h5.title-level {
         top: 70%;
         width: 96%;
     }
+    .comisiones-card-title
+    {
+        font-size: 10px!important;
+    }
+    .com-line-white{
+        width: 50!important;
+    }
+    .com-line-blue{
+        width: 50!important;
+    }
 }
 
 @media (min-width: 576px) and (max-width: 768px) {
@@ -633,6 +643,9 @@ h5.title-level {
     .afiliados-title-two{
         font-size: 20px!important;
     }
+    .nivel-body{
+        height: 230px!important;
+    }
 }
 
 @media (max-width: 768px) {
@@ -657,6 +670,14 @@ h5.title-level {
         bottom: 0 !important;
         top: 65%;
     }
+
+    .icon-bar{
+        margin: 10px!important;
+    }
+    .nivel-body{
+        height: 182px!important;
+    }
+
 }
 
 @media (min-width: 320px) and (max-width: 320px) {
@@ -722,6 +743,9 @@ h5.title-level {
     .icon-miscursos img
     {
         display: none;
+    }
+    .card-comisiones{
+        height: 450px!important;
     }
 
 }
@@ -1995,7 +2019,7 @@ p.card-text.font-weight-bold.mr-2 {
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
     z-index: 9999;
-    margin: -25px;
+    margin: 2px;
 }
 
 .icon-bar a {
@@ -2246,3 +2270,18 @@ p.card-text.font-weight-bold.mr-2 {
     padding-bottom: 250px;
     z-index: 9999;
   }
+.com-line-white{
+    height: 2px;
+    margin-left: 25%;
+    margin-right: 25%;
+    background-color: #FFF;
+    width: 80;
+}
+
+.com-line-blue{
+    height: 2px;
+    margin-left: 25%;
+    margin-right: 25%;
+    background-color: #2A91FF;
+    width: 80;
+}

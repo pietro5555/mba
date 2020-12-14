@@ -229,15 +229,12 @@
 
 @php
 $contador=0;
-$mentor =0;
 @endphp
 @foreach($cursosRecomendados as $recommended)
 @php
 $contador++;
-$menor = ($contador -1);
 @endphp
 
-@if(!empty($recommended[$menor]))
 @if($contador <= 3)
 
 <div class="col-md-4" style="margin-top: 20px;">
@@ -265,7 +262,6 @@ $menor = ($contador -1);
 </div>
 </div>
  </div>
- @endif
 @endif
 @endforeach
 </div>
@@ -277,15 +273,12 @@ $menor = ($contador -1);
 
 @php
 $segundo =0;
-$menor = 0;
 @endphp
 @foreach($cursosRecomendados as $recommended)
 @php
 $segundo++;
-$menor = ($segundo -1);
 @endphp
 
-@if(!empty($recommended[$menor]))
 @if($segundo >= 4 && $segundo <= 6)
 
 <div class="col-md-4" style="margin-top: 20px;">
@@ -313,7 +306,6 @@ $menor = ($segundo -1);
 </div>
 </div>
  </div>
- @endif
 @endif
 @endforeach
 </div>
@@ -323,15 +315,12 @@ $menor = ($segundo -1);
 
 @php
 $tercero =0;
-$menor =0;
 @endphp
 @foreach($cursosRecomendados as $recommended)
 @php
 $tercero++;
-$menor = ($tercero -1);
 @endphp
 
-@if(!empty($recommended[$menor]))
 @if($tercero >= 7 && $tercero <= 9)
 
 <div class="col-md-4" style="margin-top: 20px;">
@@ -358,7 +347,6 @@ $menor = ($tercero -1);
 </div>
 </div>
  </div>
- @endif
 @endif
 @endforeach
 </div>

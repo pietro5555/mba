@@ -124,7 +124,8 @@ class CourseController extends Controller{
             $ultima_leccion = LessonUser::where('user_id', Auth::user()->ID)
             ->orderBy('updated_at', 'DESC')
             ->first();
-            $leccion_info = Lesson::where('id', $ultima_leccion->lesson_id)->first();
+            if(!Empty($ultima_leccion)){
+                $leccion_info = Lesson::where('id', $ultima_leccion->lesson_id)->first();
             $last_course = DB::table('courses')
             ->join('courses_users', 'courses_users.course_id', '=', 'courses.id')
             ->where('courses_users.user_id', '=', Auth::user()->ID )
@@ -133,20 +134,27 @@ class CourseController extends Controller{
             ->first();
 
        
-            if (!is_null($last_course)){
-                 $leccion_vista = LessonUser::where('user_id', Auth::user()->ID)->where('course_id', $last_course->course_id)->get();
-                $total_vista = $leccion_vista->count();
-                $total_lesson = Lesson::where('course_id',$last_course->course_id )->count();
-                if(Empty($total_lesson)){
-                    $progress_bar =0;
+                if (!is_null($last_course)){
+                    $leccion_vista = LessonUser::where('user_id', Auth::user()->ID)->where('course_id', $last_course->course_id)->get();
+                    $total_vista = $leccion_vista->count();
+                    $total_lesson = Lesson::where('course_id',$last_course->course_id )->count();
+                    if(Empty($total_lesson)){
+                        $progress_bar =0;
+                    }
+                    else{
+                        $progress_bar = (($total_vista*100)/$total_lesson);
+                    }
+                }else{
+                    $progress_bar = NULL;
+                    $last_course = NULL;
                 }
-                else{
-                    $progress_bar = (($total_vista*100)/$total_lesson);
-                }
-            }else{
+
+            }
+            else{
                 $progress_bar = NULL;
                 $last_course = NULL;
             }
+            
 
             //dd($progress_bar);
 

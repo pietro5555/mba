@@ -553,6 +553,16 @@ h5.title-level {
         top: 70%;
         width: 96%;
     }
+    .comisiones-card-title
+    {
+        font-size: 10px!important;
+    }
+    .com-line-white{
+        width: 50!important;
+    }
+    .com-line-blue{
+        width: 50!important;
+    }
 }
 
 @media (min-width: 576px) and (max-width: 768px) {
@@ -583,7 +593,35 @@ h5.title-level {
         padding-top: 0px!important;
     }
 
+    .subtitle-laptop-one{
+        display: none!important;
+    }
+    .subtitle-laptop-two{
+        margin-top: 180px!important;
+    }
 
+    .caption-hidden{
+        display: none;
+    }
+    .mybussiness-title-afiliados{
+        font-size: 20px!important;
+        padding-left: 45px;
+        margin-top: 4em!important;
+    }
+    .academia-title-afiliados{
+        padding-left: 45px;
+        font-size: 16px!important;
+    }
+    .afiliados-title-two{
+        display: none;
+    }
+    .logo-academia-afiliados{
+        margin-top: 3em!important;
+    }
+
+    .icon-bar{
+        display: none;
+    }
 }
 
 @media (min-width: 1024px) {
@@ -595,6 +633,22 @@ h5.title-level {
     }
     .boton-toggle{
         display: none;
+    }
+    .subtitle-laptop-two
+    {
+        display: none;
+    }
+    .caption-hidden{
+        display: none;
+    }
+}
+
+@media (min-width: 1024px) and (max-width: 1024px) {
+    .afiliados-title-two{
+        font-size: 20px!important;
+    }
+    .nivel-body{
+        height: 230px!important;
     }
 }
 
@@ -620,6 +674,14 @@ h5.title-level {
         bottom: 0 !important;
         top: 65%;
     }
+
+    .icon-bar{
+        margin: 10px!important;
+    }
+    .nivel-body{
+        height: 182px!important;
+    }
+
 }
 
 @media (min-width: 320px) and (max-width: 320px) {
@@ -668,6 +730,21 @@ h5.title-level {
         width: 50px!important;
     }
 
+    .subtitle-laptop-two{
+        display: none;
+    }
+    .img-laptop{
+        padding-top: 50px!important;
+        
+    }
+    .caption-show{
+        display: none;
+    }
+
+    .icon-bar{
+        display: none;
+    }
+
 }
 
 @media (min-width: 768px) and (max-width: 768px){
@@ -675,6 +752,18 @@ h5.title-level {
     {
         display: none;
     }
+    .card-comisiones{
+        height: 450px!important;
+    }
+
+}
+
+@media (min-width: 1366px) and (max-width: 1366px) {
+
+    .nivel-body{
+        height: 182px!important;
+    }
+
 
 }
 
@@ -1947,7 +2036,7 @@ p.card-text.font-weight-bold.mr-2 {
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
     z-index: 9999;
-    margin: -25px;
+    margin: 2px;
 }
 
 .icon-bar a {
@@ -2185,3 +2274,35 @@ p.card-text.font-weight-bold.mr-2 {
 
   }
   
+  .img-laptop{
+
+    position: absolute;
+    left: 50%;
+    padding-top:250px;
+	height: auto;
+	width: 100%;
+	-webkit-transform: translate(-50%,-50%);
+	-ms-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    padding-bottom: 250px;
+    z-index: 9999;
+  }
+.com-line-white{
+    height: 2px;
+    margin-left: 25%;
+    margin-right: 25%;
+    background-color: #FFF;
+    width: 80;
+}
+
+.com-line-blue{
+    height: 2px;
+    margin-left: 25%;
+    margin-right: 25%;
+    background-color: #2A91FF;
+    width: 80;
+}
+
+.img-background-razones{
+    background-image: url('../nosotros/afiliados/fondo.png');
+}

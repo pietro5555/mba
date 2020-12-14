@@ -73,7 +73,8 @@
                             <button type="submit" class="btn btn-primary btn-block" style="font-size: 16px; margin-top:20px; margin-bottom:20px;">Aeptar</button>
                         </div>
                         <div class="col-md-6">
-                                <button type="button" class="btn btn-danger btn-block" data-dismiss="modal" style="font-size: 16px;margin-top:20px; margin-bottom:20px;">Cancelar</button>
+                            <a href="{{route('soporte.tickets.clients')}}" type="button" class="btn btn-danger btn-block" data-dismiss="modal" style="font-size: 16px;margin-top:20px; margin-bottom:20px;">Cancelar</a>
+                                
                         </div>
 
 

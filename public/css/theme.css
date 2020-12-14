@@ -583,7 +583,31 @@ h5.title-level {
         padding-top: 0px!important;
     }
 
+    .subtitle-laptop-one{
+        display: none!important;
+    }
+    .subtitle-laptop-two{
+        margin-top: 180px!important;
+    }
 
+    .caption-hidden{
+        display: none;
+    }
+    .mybussiness-title-afiliados{
+        font-size: 20px!important;
+        padding-left: 45px;
+        margin-top: 4em!important;
+    }
+    .academia-title-afiliados{
+        padding-left: 45px;
+        font-size: 16px!important;
+    }
+    .afiliados-title-two{
+        display: none;
+    }
+    .logo-academia-afiliados{
+        margin-top: 3em!important;
+    }
 }
 
 @media (min-width: 1024px) {
@@ -595,6 +619,19 @@ h5.title-level {
     }
     .boton-toggle{
         display: none;
+    }
+    .subtitle-laptop-two
+    {
+        display: none;
+    }
+    .caption-hidden{
+        display: none;
+    }
+}
+
+@media (min-width: 1024px) and (max-width: 1024px) {
+    .afiliados-title-two{
+        font-size: 20px!important;
     }
 }
 
@@ -666,6 +703,17 @@ h5.title-level {
     .logo-academia-afiliados{
         height: 50px!important;
         width: 50px!important;
+    }
+
+    .subtitle-laptop-two{
+        display: none;
+    }
+    .img-laptop{
+        padding-top: 50px!important;
+        
+    }
+    .caption-show{
+        display: none;
     }
 
 }
@@ -2185,3 +2233,16 @@ p.card-text.font-weight-bold.mr-2 {
 
   }
   
+  .img-laptop{
+
+    position: absolute;
+    left: 50%;
+    padding-top:250px;
+	height: auto;
+	width: 100%;
+	-webkit-transform: translate(-50%,-50%);
+	-ms-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    padding-bottom: 250px;
+    z-index: 9999;
+  }

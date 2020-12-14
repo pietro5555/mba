@@ -9,42 +9,60 @@
             <div class="carousel-item  active ">
               <div class="overlay"></div>
                   <img src="{{ asset('nosotros/afiliados/header4.png') }}" class="d-block w-100" alt="...">
-                  <div class="carousel-caption">
+                  <div class="carousel-caption caption-show">
                   <div class="row">
-                      <div class="col-md-2 mt-4">
+                      <div class="col-2 mt-4 pl-0 pr-0">
                       <img src="{{ asset ('nosotros/afiliados/beyond-academy-150x150.png')}}" class="mx-auto d-block logo-academia-afiliados" alt="" height="100px" width="100px">
                       </div>
-                      <div class="col-9 ml-0">
+                      <div class="col-9">
                           <div class="d-flex align-items-center mybussiness-title-afiliados mt-4">My Business</div>
                           <div class="academia-title-afiliados" style="color: white; font-size: 20px; ">A c a d e m y p r o</div>
                       </div>
                       </div>
-                  <div>
-                    	<h2 class="ml-4 col-md-7 afiliados-title-two pt-4">Te damos la bienvenida a <b class="text-white font-weight-bold">uno de los <br> mejores y más geniales </b>programas de marketing de Afiliados del mundo</h2>
+                    <div>
+                    	<h2 class="col-md-8 afiliados-title-two pt-4">Te damos la bienvenida a <b class="text-white font-weight-bold">uno de los <br> mejores y más geniales </b>programas de marketing de Afiliados del mundo</h2>
                     </div>
                     
                   </div>
+
+                  <div class="carousel-caption caption-hidden mt-4">
+                    <div class="row">
+                    <div class="col-2 float-left">
+                        <img src="{{ asset ('nosotros/afiliados/beyond-academy-150x150.png')}}" class="d-block logo-academia-afiliados" alt="" height="100px" width="100px">
+                      </div>
+                      <div class="col-9">
+                          <div class="text-left">My Business</div>
+                          <div class="text-left" style="color: white;">A c a d e m y p r o</div>
+                      </div>
+                    </div>
+                  
+                  </div>
+
           </div>
         </div>
     </div>
 </div>
 
-<div class="col-md-12" style="background-color: #FFFFFF;">
+<div class="col-md-12 py-5" style="background-color: #FFFFFF;">
    <div class="col-md-8 offset-md-2" style="padding: 50px 50px; text-align: center;">
   <h3>El programa de <b class="text-primary">My Business Academy Pro</b> te ayuda a que ganes dinero por aprender.</h3>
    </div>
 </div>
-<div class="col-md-12" style="background-color: #2A91FF;">
+<div class="col-md-12 py-5" style="background-color: #FFFFFF;">
+</div>
+<div class="col-md-12 py-5" style="background-color: #2A91FF;">
 <div class="row">
     <div class="col-md-8">
-    <img src="{{ asset('nosotros/afiliados/laptop.png') }}" class="img-fluid" alt="...">
+    <img src="{{ asset('nosotros/afiliados/laptop.png') }}" class="img-fluid img-laptop" alt="...">
    </div>
-   <div class="col-md-4  d-flex align-items-center">
+   <div class="col-md-4  d-flex align-items-center subtitle-laptop-one">
       <h5 class="text-white">Contamos con cientos de cursos disponibles en 10 idiomas diferentes, listos para que los compartas con un solo click y puedas así ganar dinero a través de cada compra que recomiendes.</h5>
    </div>
 
 </div>
-  
+<div class="col-md-12 subtitle-laptop-two">
+      <h5 class="text-white">Contamos con cientos de cursos disponibles en 10 idiomas diferentes, listos para que los compartas con un solo click y puedas así ganar dinero a través de cada compra que recomiendes.</h5>
+</div>
 </div>
 
 

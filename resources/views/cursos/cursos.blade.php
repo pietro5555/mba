@@ -206,7 +206,8 @@
     {{-- FIN SECCIÓN TUS CURSOS--}}
 
     {{-- SECCIÓN RECOMENDACIONES--}}
-@if(!empty($cursosRecomendados))
+
+@if(!Empty($cursosRecomendados))
 <div class="section-landing mt-3" style="background-color: #121317;">
 
     <div class="col">

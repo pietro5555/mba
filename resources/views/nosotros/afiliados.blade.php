@@ -121,19 +121,14 @@
 </div>
 
 
-
-<div class="col-md-12" style="background-color: #1C1D21;">
-   <div class="col-md-8 offset-md-2 py-5" style="text-align: center;">
+<div class="container-fluid img-background-razones">
+<div class="col-md-8 offset-md-2 py-5" style="text-align: center;">
       <h3 class="text-white">¿Por qué miles de personas ya eligieron el Programa de <b class="text-white">Afiliados de MBA PRO?</b></h3>
    </div>
 
    <div class="col-md-6 offset-md-4">
       <h2 class="text-primary font-weight-bold d-flex align-items-center"><b class="text-primary" style="font-size: 80px;">5</b> Poderosas Razones</h2>
    </div>
-
-</div>
-
-<div class="container-fluid">
   <div class="row">
     <div class="col-lg-4 offset-md-2">
 						<div class="box-title mt-2">

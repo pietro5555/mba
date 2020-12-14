@@ -618,6 +618,10 @@ h5.title-level {
     .logo-academia-afiliados{
         margin-top: 3em!important;
     }
+
+    .icon-bar{
+        display: none;
+    }
 }
 
 @media (min-width: 1024px) {
@@ -737,6 +741,10 @@ h5.title-level {
         display: none;
     }
 
+    .icon-bar{
+        display: none;
+    }
+
 }
 
 @media (min-width: 768px) and (max-width: 768px){
@@ -747,6 +755,15 @@ h5.title-level {
     .card-comisiones{
         height: 450px!important;
     }
+
+}
+
+@media (min-width: 1366px) and (max-width: 1366px) {
+
+    .nivel-body{
+        height: 182px!important;
+    }
+
 
 }
 
@@ -2284,4 +2301,8 @@ p.card-text.font-weight-bold.mr-2 {
     margin-right: 25%;
     background-color: #2A91FF;
     width: 80;
+}
+
+.img-background-razones{
+    background-image: url('../nosotros/afiliados/fondo.png');
 }

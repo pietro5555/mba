@@ -105,7 +105,9 @@ class CourseController extends Controller{
                 $curso = Course::where('id', '=', $cursoComprado->course_id)->first();
                 $filtro = $misCursos->where('course_id', $cursoComprado->course_id);
                 if ($filtro->count() == 0) {
-                    $cursosRecomendados->push($curso);
+                    if($curso != null){
+                      $cursosRecomendados->push($curso);
+                    }
                 }
             }
 

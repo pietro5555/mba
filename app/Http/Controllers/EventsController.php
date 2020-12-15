@@ -27,7 +27,7 @@ use DateTime;
 use Mail;
 use App\Models\Notification;
 
-use App\Http\Controllers\Notificaciones\CorreoController;
+use App\Http\Controllers\Notificacion\CorreoController;
 
 class EventsController extends Controller
 {

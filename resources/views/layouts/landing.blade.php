@@ -32,9 +32,11 @@
                 user-select: none;
                 font-size: 1rem !important;
                 line-height: 1.5;
+                transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
                 background-color: #007bff !important;
                 border-color: #007bff !important;
                 font-weight: bold;
+                border-radius: 25px;
             }
             .goog-te-gadget-simple .goog-te-menu-value span{
                 color: #fff !important;
@@ -166,6 +168,7 @@
                                 <div class="mb-2 text-center text-white" style="margin-top: 10px;">
                                     Medios de Pago
                                     <img src="{{ asset('images/stripe.png') }}" height="15px" class="mr-md-2 mr-3" style="margin-left: 1rem! important;">
+                                    <img src="{{ asset('images/logopaypalwhite.png') }}" height="15px" class="mr-md-2 mr-3" style="margin-left: 1rem! important;">
                                 </div>
                                 <div class="mb-2 text-center text-white" style="margin-top: 10px;">
                                     Aceptamos

@@ -206,7 +206,8 @@
     {{-- FIN SECCIÓN TUS CURSOS--}}
 
     {{-- SECCIÓN RECOMENDACIONES--}}
-
+@if (!Auth::guest())
+@if($cursos->isNotEmpty())
 @if(!Empty($cursosRecomendados))
 <div class="section-landing mt-3" style="background-color: #121317;">
 
@@ -369,21 +370,17 @@ $tercero++;
 
 </div>
 
-@else
-<div class="row">
-  Hola
-</div>
-
 @endif
 <!--Carrusel-->
 </div>
+<hr style="margin-top: 40px;border: 1px solid #707070;opacity: 1;margin-bottom: 45px;">
 
-
+@endif
+@endif
 @endif
 
     {{--FIN SECCIÓN RECOMENDACIONES--}}
-
-<hr style="margin-top: 40px;border: 1px solid #707070;opacity: 1;margin-bottom: 45px;">
+    
    {{-- SECCIÓN CURSOS MAS NUEVOS --}}
     @if ($cursosNuevos->count() > 0)
         <div class="section-landing new-courses-section" id="new-courses-section">

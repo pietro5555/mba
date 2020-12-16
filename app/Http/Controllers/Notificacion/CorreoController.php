@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Notificaciones;
+namespace App\Http\Controllers\Notificacion;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;

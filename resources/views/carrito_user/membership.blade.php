@@ -61,7 +61,7 @@
                                                 <br>
                                                 <div class="card">
                                                     <div class="card-body">
-                                                    <h5 class="p-2 text-white text-center" style="font-size: 12px!important;">SI ADQUIERES TU MEMBRESIA EN FORMATO ANUAL TENDRÁS ACCESO A LOS  <b class="text-purple">4 STREAMING + CONTENIDO VIP
+                                                    <h5 class="p-2 text-white text-center" style="font-size: 12px!important;">SI ADQUIERES TU MEMBRESIA EN FORMATO ANUAL TENDRÁS ACCESO A LOS  <b class="text-azul-claro">4 STREAMING + CONTENIDO VIP
                                                     +</b> <b class="text-danger"> 2 GRATIS </b> DE NUESTRO PARTNER <b class="text-danger">FTX LIVE </b></h5>
                                                     </div>
                                                 </div>
@@ -94,7 +94,7 @@
                                                 <br>
                                                 <div class="card">
                                                     <div class="card-body">
-                                                    <h5 class="p-2 text-white text-center" style="font-size: 12px!important;">SI ADQUIERES TU MEMBRESIA EN FORMATO ANUAL TENDRÁS ACCESO A LOS  <b class="text-purple">6 STREAMING + CONTENIDO VIP
+                                                    <h5 class="p-2 text-white text-center" style="font-size: 12px!important;">SI ADQUIERES TU MEMBRESIA EN FORMATO ANUAL TENDRÁS ACCESO A LOS  <b class="text-orange">6 STREAMING + CONTENIDO VIP
                                                     +</b> <b class="text-danger"> 4 GRATIS </b> DE NUESTRO PARTNER <b class="text-danger">FTX LIVE </b></h5>
                                                     </div>
                                                 </div>
@@ -129,7 +129,7 @@
                                                 <br>
                                                 <div class="card">
                                                     <div class="card-body">
-                                                    <h5 class="p-2 text-white text-center" style="font-size: 12px!important;">SI ADQUIERES TU MEMBRESIA EN FORMATO ANUAL TENDRÁS ACCESO A LOS  <b class="text-purple">8 STREAMING + CONTENIDO VIP
+                                                    <h5 class="p-2 text-white text-center" style="font-size: 12px!important;">SI ADQUIERES TU MEMBRESIA EN FORMATO ANUAL TENDRÁS ACCESO A LOS  <b class="text-verde-claro">8 STREAMING + CONTENIDO VIP
                                                     +</b> <b class="text-danger"> 6 GRATIS </b> DE NUESTRO PARTNER <b class="text-danger">FTX LIVE </b></h5>
                                                     </div>
                                                 </div>

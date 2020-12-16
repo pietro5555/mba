@@ -250,8 +250,8 @@ $contador++;
     <h6 class="card-title" style="font-size: 12px">{{$recommended->mentor->display_name}}</h6>
 </div>
 <div class="row ml-0 d-flex h-100">
-    <div class="col-md-9 my-auto" style="margin-bottom: 7px !important">
-       <p class="col-sm w-100 pl-0" style="font-size: 16px;"> <a href="{{ route('courses.show', [$recommended->slug, $recommended->id]) }}" class="text-white"> {{$recommended->title}}</a></p>
+    <div class="col-md-9 my-auto  recomendados-title" style="margin-bottom: 7px !important">
+       <p class="col-sm w-100 pl-0" style="font-size: 20px;"> <a href="{{ route('courses.show', [$recommended->slug, $recommended->id]) }}" class="text-white"> {{$recommended->title}}</a></p>
     </div>
     <div class="col-md-3 my-auto" style="margin-bottom: 7px !important">
         <h6 class="text-white w-100">
@@ -294,8 +294,8 @@ $segundo++;
     <h6 class="card-title" style="font-size: 14px">{{$recommended->mentor->display_name}}</h6>
 </div>
 <div class="row ml-0 d-flex h-100">
-<div class="col-md-9 my-auto" style="margin-bottom: 7px !important">
-        <p class="col-sm w-100 pl-0" style="font-size: 16px;"> <a href="{{ route('courses.show', [$recommended->slug, $recommended->id]) }}" class="text-white"> {{$recommended->title}}</a></p>
+<div class="col-md-9 my-auto recomendados-title" style="margin-bottom: 7px !important">
+        <p class="col-sm w-100 pl-0" style="font-size: 20px;"> <a href="{{ route('courses.show', [$recommended->slug, $recommended->id]) }}" class="text-white"> {{$recommended->title}}</a></p>
     </div>
     <div class="col-md-3 my-auto" style="margin-bottom: 7px !important">
         <h6 class="text-white w-100">
@@ -336,8 +336,8 @@ $tercero++;
     <h6 class="card-title" style="font-size: 14px">{{$recommended->mentor->display_name}}</h6>
 </div>
 <div class="row ml-0 d-flex h-100">
-    <div class="col-md-9 my-auto" style="margin-bottom: 7px !important">
-        <h6 class="col-sm w-100 pl-0" style="font-size: 14px"><img src="{{ asset('images/icons/video-player-green.svg') }}" alt="" height="20px" width="20px"> <a href="{{ route('courses.show', [$recommended->slug, $recommended->id]) }}" class="text-white"> {{$recommended->title}}</a></h6>
+    <div class="col-md-9 my-auto recomendados-title" style="margin-bottom: 7px !important">
+        <h6 class="col-sm w-100 pl-0" style="font-size: 20px"><img src="{{ asset('images/icons/video-player-green.svg') }}" alt="" height="20px" width="20px"> <a href="{{ route('courses.show', [$recommended->slug, $recommended->id]) }}" class="text-white"> {{$recommended->title}}</a></h6>
     </div>
     <div class="col-md-3 my-auto" style="margin-bottom: 7px !important">
         <h6 class="text-white w-100">
@@ -495,7 +495,7 @@ $tercero++;
                                     <div class="text-sm text-white" style="line-height:1;">
                                         <div class="row">
                                             <div class="col-md-10">
-                                                <a class="text-white" href="{{ url('courses/mentor/'.$mentor->mentor_id) }}"> {{ $mentor->nombre }}</a>
+                                                <a class="text-primary" href="{{ url('courses/mentor/'.$mentor->mentor_id) }}"> {{ $mentor->nombre }}</a>
                                             </div>
                                             <div class="col-md-2">
                                                 <a href="javascript:;" onclick="showMentorCourses({{$mentor->mentor_id}});"><i class="fa fa-search" style="font-size: 18px;"></i></a>

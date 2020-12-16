@@ -154,7 +154,7 @@ i.fa.fa-user.referrers-icon {
 }
 
 .course-autor {
-    color: #727272;
+    color: #fff;
     font-weight: bold;
     font-size: 35px;
 }
@@ -303,8 +303,8 @@ h5.title-level {
 }
 
 .next-streaming-date {
-    font-size: 18px;
-    color: #CECECE;
+    font-size: 25px;
+    color: #fff;
     font-weight: 300;
     padding-top: 10px;
 }
@@ -744,6 +744,9 @@ h5.title-level {
     .icon-bar{
         display: none;
     }
+    .next-streaming-date{
+        font-size: 20px!important;
+    }
 
 }
 
@@ -754,6 +757,12 @@ h5.title-level {
     }
     .card-comisiones{
         height: 450px!important;
+    }
+    .recomendados-title p{
+        font-size: 10px!important;
+    }
+    .recomendados-title {
+        margin-top: 5px!important;
     }
 
 }
@@ -1120,7 +1129,7 @@ button.btn.btn-outline-success.mt-2 {
 .btn.btn-social-icon {
     width: 30px;
     height: 30px;
-    padding: 0;
+    padding: 0!important;
 }
 
 .icon-social-media>.btn {

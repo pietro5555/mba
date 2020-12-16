@@ -318,8 +318,10 @@ class CourseController extends Controller{
                         ->select('id', 'tag')
                         ->orderBy('tag', 'ASC')
                         ->get();
+        
+        $membresias = DB::table('memberships')->get();
 
-        return view('admin.courses.index')->with(compact('cursos', 'mentores', 'categorias', 'membresias', 'etiquetas'));
+        return view('admin.courses.index')->with(compact('cursos', 'mentores', 'categorias', 'membresias', 'etiquetas', 'membresias'));
     }
 
     /**

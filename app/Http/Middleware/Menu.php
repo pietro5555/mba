@@ -999,7 +999,7 @@ class Menu
                 'black'=> '0',
                 'icono' => 'fas fa-sliders-h',
                 'complementoruta' => '',
-                'permisoAdmin' => (!empty($permiso)) ? $permiso->tickets : 0,
+                'permisoAdmin' => 1,
                 'activo' => 0,
             ],
             

@@ -22,28 +22,74 @@
         <!-- css para cookies -->
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
         <style>
-            .goog-te-gadget-simple{
-                display: inline-block;
+            .ct-topbar {
+            text-align: right;
+            background: #007bff;
+            border-radius: 25px;
+            }
+            .ct-topbar__list {
+            margin-bottom: 0px;
+            }
+            .ct-language__dropdown{
+                padding-top: 8px;
+                max-height: 0;
+                overflow: hidden;
+                position: absolute;
+                top: 110%;
+                left: -3px;
+                -webkit-transition: all 0.25s ease-in-out;
+                transition: all 0.25s ease-in-out;
+                width: 150px;
                 text-align: center;
-                vertical-align: middle;
-                -webkit-user-select: none;
-                -moz-user-select: none;
-                -ms-user-select: none;
-                user-select: none;
-                font-size: 1rem !important;
-                line-height: 1.5;
-                transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-                background-color: #007bff !important;
-                border-color: #007bff !important;
-                font-weight: bold;
+                padding-top: 0;
+                z-index:9999;
+            }
+            .ct-language__dropdown li{
+                background: #222;
+                padding: 5px;
+            }
+            .ct-language__dropdown li a{
+                display: block;
+                color:#fff;
+                font-size:12px;
+                text-align:left;
+            }
+            .ct-language__dropdown li:first-child{
+                padding-top: 10px;
+                border-radius: 3px 3px 0 0;
+            }
+            .ct-language__dropdown li:last-child{
+                padding-bottom: 10px;
+                border-radius: 0 0 3px 3px;
+            }
+            .ct-language__dropdown li:hover{
+                background: #444;
+            }
+            .ct-language__dropdown:before{
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                margin: auto;
+                width: 8px;
+                height: 0;
+            }
+            .ct-language{
+                position: relative;
+                background: #007bff;
+                color: #fff;
+                padding: 7px;
                 border-radius: 25px;
+                font-weight: bold;
             }
-            .goog-te-gadget-simple .goog-te-menu-value span{
-                color: #fff !important;
+            .ct-language:hover .ct-language__dropdown{
+                max-height: 500px;
+                padding-top: 8px;
             }
-
-            .goog-te-gadget-icon{
-                display: none;
+            .list-unstyled {
+                padding-left: 0;
+                list-style: none;
             }
         </style>
 
@@ -58,50 +104,6 @@
 
             var base_url = '{{ url('/') }}';
             var assetsPath = base_url + '/assets';
-        </script>
-        <script>
-                     $('document').ready(function () {
-                    // RESTYLE THE DROPDOWN MENU
-                    $('#google_translate_element').on("click", function () {
-
-                    // Change font family and color
-                    $("iframe").contents().find(".goog-te-menu2-item div, .goog-te-menu2-item:link div, .goog-te-menu2-item:visited div, .goog-te-menu2-item:active div, .goog-te-menu2 *")
-                        .css({
-                            'color': '#544F4B',
-                            'font-family': 'Roboto',
-                                            'width':'100%',
-                        });
-                    // Change menu's padding
-                    $("iframe").contents().find('.goog-te-menu2-item-selected').css ('display', 'none');
-
-                            // Change menu's padding
-                    $("iframe").contents().find('.goog-te-menu2').css ('padding', '0px');
-                    // Change the width of the languages
-                    $("iframe").contents().find('.goog-te-menu2-item').css('width', '100%');
-                    $("iframe").contents().find('td').css('width', '100%');
-
-                    // Change hover effects
-                    $("iframe").contents().find(".goog-te-menu2-item div").hover(function () {
-                        $(this).css('background-color', '#007bff').find('span.text').css('color', 'white');
-                    }, function () {
-                        $(this).css('background-color', 'white').find('span.text').css('color', '#544F4B');
-                    });
-
-                    // Change Google's default blue border
-                    $("iframe").contents().find('.goog-te-menu2').css('border', 'none');
-
-                    // Change the iframe's box shadow
-                    $(".goog-te-menu-frame").css('box-shadow', '0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.3)');
-                    // Change iframes's size
-                    $("iframe").contents().find('.goog-te-menu2').css({
-                        'height': '100%',
-                        'width': '100%',
-                        'padding-bottom':'5px',
-                    });
-
-                    });
-                    });
-
         </script>
         <script>
             $(document).ready(function(){ //Hacia arriba
@@ -247,16 +249,35 @@
             </div>
         </div>
 
-        <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
         <script type="text/javascript">
-            function googleTranslateElementInit() {
-                new google.translate.TranslateElement({pageLanguage: 'es', includedLanguages: 'en,fr,it,pt,de,ar,zh,hi,ja,ru,vi,es', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, gaTrack: true}, 'google_translate_element');
-                setTimeout(() => {
-                    $('.goog-te-menu-value > span:first').html('Idioma')
-                }, 1000);
-                }
-            </script>
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({pageLanguage: 'es', layout: google.translate.TranslateElement.FloatPosition.TOP_LEFT}, 'google_translate_element');
+    }
+
+	function triggerHtmlEvent(element, eventName) {
+	  var event;
+	  if (document.createEvent) {
+		event = document.createEvent('HTMLEvents');
+		event.initEvent(eventName, true, true);
+		element.dispatchEvent(event);
+	  } else {
+		event = document.createEventObject();
+		event.eventType = eventName;
+		element.fireEvent('on' + event.eventType, event);
+	  }
+	}
+
+	jQuery('.lang-select').click(function() {
+	  var theLang = jQuery(this).attr('data-lang');
+	  jQuery('.goog-te-combo').val(theLang);
+
+	  //alert(jQuery(this).attr('href'));
+	  window.location = jQuery(this).attr('href');
+	  location.reload();
+
+	});
+  </script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
         <!-- Bootstrap core JavaScript -->
         <script src="https://kit.fontawesome.com/d6f2727f64.js" crossorigin="anonymous"></script>

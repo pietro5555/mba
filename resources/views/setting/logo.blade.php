@@ -5,7 +5,7 @@
 
 {{-- formulario de traductor--}}
 
-<div class="col-xs-12">
+{{--<div class="col-xs-12">
   <div class="box box-info">
     <div class="box-header with-border">
       <div class="box-title">
@@ -25,19 +25,19 @@
       
     </div>
   </div>
-</div>
+</div>--}}
 {{-- fin de traductor --}}
 
 {{-- información --}}
 <div class="col-xs-12">
   <div class="box box-info mostrar">
     <div class="box-header with-border">
-      <div class="box-title">
+      <div class="box-title white">
         <h3>Información del Sistema</h3>
       </div>
     </div>
     {{-- inicio body --}}
-    <div class="box-body">
+    {{--<div class="box-body">
       <div class="col-sm-12 col-xs-12">
         <h3 class="text-center">Nombre del Sistema</h3>
         <input class="form-control" disabled placeholder="{{$settings->name}}">
@@ -97,10 +97,10 @@
           </h5>
         </div>
       </div>
-    </div>
+    </div>--}}
     {{-- fin body --}}
     
-    <div class="box-title">
+    <div class="box-title white">
         <h3 style="text-align: center;">Slider Home</h3>
       </div>
     
@@ -131,7 +131,7 @@
   <div class="box box-info mostrar" style="display:none;">
     <div class="box-body">
       {{-- formulario 1 --}}
-      <div class="col-xs-12">
+      {{--<div class="col-xs-12">
         <div class="box">
           <div class="box-header with-border">
             <div class="box-title">
@@ -157,10 +157,10 @@
             </form>
           </div>
         </div>
-      </div>
+      </div>--}}
       {{-- fin formulario 1 --}}
       {{-- formulario 2 --}}
-      <div class="col-xs-12">
+      {{--<div class="col-xs-12">
         <div class="box">
           <div class="box-header with-border">
             <div class="box-title">
@@ -187,10 +187,10 @@
             </form>
           </div>
         </div>
-      </div>
+      </div>--}}
       {{-- fin formulario 2 --}}
       {{-- formulario 3 --}}
-      <div class="col-xs-12">
+      {{--<div class="col-xs-12">
           <div class="box">
             <div class="box-header with-border">
               <div class="box-title">
@@ -216,11 +216,11 @@
                 </form>
             </div>
           </div>
-        </div>
+        </div>--}}
       {{-- fin formulario 3 --}}
       
        {{-- formulario 4 --}}
-      <div class="col-xs-12">
+      {{--<div class="col-xs-12">
           <div class="box">
             <div class="box-header with-border">
               <div class="box-title">
@@ -246,13 +246,13 @@
                 </form>
             </div>
           </div>
-        </div>
+        </div>--}}
       {{-- fin formulario 4 --}}
       
       
       
       {{-- formulario 5 --}}
-      <div class="col-xs-12">
+      {{--<div class="col-xs-12">
           <div class="box">
             <div class="box-header with-border">
               <div class="box-title">
@@ -278,12 +278,12 @@
                 </form>
             </div>
           </div>
-        </div>
+        </div>--}}
       {{-- fin formulario 5 --}}
       
       
       {{-- formulario 6 --}}
-      <div class="col-xs-12">
+      {{--<div class="col-xs-12">
           <div class="box">
             <div class="box-header with-border">
               <div class="box-title">
@@ -309,7 +309,7 @@
                 </form>
             </div>
           </div>
-        </div>
+        </div>--}}
       {{-- fin formulario 6 --}}
       
       
@@ -317,7 +317,7 @@
       <div class="col-xs-12">
           <div class="box">
             <div class="box-header with-border">
-              <div class="box-title">
+              <div class="box-title white">
                 Slider del Home
               </div>
             </div>

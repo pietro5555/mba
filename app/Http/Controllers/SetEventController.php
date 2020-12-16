@@ -259,6 +259,7 @@ class SetEventController extends Controller
      public function refresh_video_section($event_id){
         $resources_video = SetEvent::where('event_id', $event_id)
                                 ->where('type', 'video')
+                                ->orderBy('id', 'DESC')
                                 ->first();
 
         return view('live.components.sections.videosSection')->with(compact('resources_video'));

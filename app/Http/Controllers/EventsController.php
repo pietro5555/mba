@@ -201,7 +201,7 @@ class EventsController extends Controller
         $event = Events::find($event_id);
         $menuResource = $event->getResource();
         $resources_survey = SetEvent::where('event_id', $event_id)->where('type', 'survey')->with('pregunta')->get();
-        $resources_video = SetEvent::where('event_id', $event_id)->where('type', 'video')->get()->first();
+        $resources_video = SetEvent::where('event_id', $event_id)->where('type', 'video')->orderBy('id', 'DESC')->first();
         $resources_offer = OffersLive::all()->where('event_id', $event_id);
 
         $surveysCount = $resources_survey->count();

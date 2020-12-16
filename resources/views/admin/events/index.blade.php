@@ -28,6 +28,17 @@
 	            }
 	        });
 		}
+		$("#selectall").on("click", function() {
+			$(".countries").prop("checked", this.checked);
+		});
+		// if all checkbox are selected, check the selectall checkbox and viceversa
+		$(".countries").on("click", function() {
+			if ($(".countries").length == $(".countries:checked").length) {
+				$("#selectall").prop("checked", true);
+			}else{
+				$("#selectall").prop("checked", false);
+			}
+		});
 	</script>
 @endpush
 
@@ -149,9 +160,13 @@
 						            <div class="form-group">
 						                <label>Países Disponibles</label>
 						                <div class="row">
+											<div class="col-sm-6 col-md-12 text-center">
+												<input type="checkbox" class="form-check-input" id="selectall">
+											    <label class="form-check-label">Seleccionar todos</label>
+											</div>
 						                	@foreach ($paises as $pais)
 							            		<div class="col-sm-6 col-md-3">
-												    <input type="checkbox" class="form-check-input" value="{{ $pais->id }}" name="countries[]">
+												    <input type="checkbox" class="form-check-input countries" value="{{ $pais->id }}" name="countries[]">
 												    <label class="form-check-label">{{ $pais->nombre }}</label>
 												</div>
 							            	@endforeach

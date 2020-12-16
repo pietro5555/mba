@@ -13,6 +13,7 @@
 
 @section('content')
     <input type="hidden" id="membership_id" value="{{Auth::user()->membership_id}}" />
+    <input type="hidden" id="modal_upgrade" value="{{ $modalUpgrade }}" />
   @if (Session::has('msj-exitoso'))
       <div class="alert alert-success" style="margin: 5px 15px;">
          {{ Session::get('msj-exitoso') }}
@@ -429,7 +430,7 @@
     $(".vp-telecine.invisible video").on('ended', function(){
       $('#nextlesson').click();
     });
-    if ($("#membership_id").val() < 4){
+    if ($("#modal_upgrade").val() == 1){
         $("#upgradeModal").modal("show");
     }
   });

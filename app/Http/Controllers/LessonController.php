@@ -201,8 +201,63 @@ class LessonController extends Controller{
                     $progress_bar = (($total_vista*100)/$total_lesson);
                 }
                 //dd($leccion_vista, $total_vista, $progress_bar);
+                
+            $cursosMembresia = DB::table('courses')
+                                    ->select('id')
+                                    ->where('membership_id', '=', Auth::user()->membership_id)
+                                    ->get();
+            
+            $cantCursosMembresia = $cursosMembresia->count();
+            $cantCursosMembresiaUsuario = 0;
+            $cantCursosMembresiaFinalizados = 0;
+            $cursosMembresiaArray = array();
+            foreach ($cursosMembresia as $cursoMembresia){
+                array_push($cursosMembresiaArray, $cursoMembresia->id);
+                $cursoUsuario = DB::table('courses_users')
+                                    ->where('course_id', '=', $cursoMembresia->id)
+                                    ->where('user_id', '=', Auth::user()->ID)
+                                    ->first();
+                
+                if (!is_null($cursoUsuario)){
+                    $cantCursosMembresiaUsuario++;
 
-            return view('cursos.leccion', compact('lesson', 'all_lessons','all_comments', 'progresoCurso','directos', 'last_lesson', 'first_lesson', 'lecciones_vistas', 'progress_bar'));
+                    if ($cursoUsuario->progress == 100){
+                        $cantCursosMembresiaFinalizados++;
+                    }
+                }
+            }
+            
+            $modalUpgrade = 0;
+            if ($cantCursosMembresia == $cantCursosMembresiaUsuario){
+                if ($cantCursosMembresia == $cantCursosMembresiaFinalizados){
+                    $modalUpgrade = 1;
+                }else if (($cantCursosMembresia-1) == $cantCursosMembresiaFinalizados){
+                    $cursoRestante = DB::table('courses_users')
+                                        ->where('user_id', '=', Auth::user()->ID)
+                                        ->where('progress', '<>', 100)
+                                        ->whereIn('course_id', $cursosMembresiaArray)
+                                        ->first();
+                    
+                    $cantLeccionesCurso = DB::table('lessons')
+                                            ->where('course_id', '=', $cursoRestante->course_id)
+                                            ->count();
+                    
+                    
+                    $cantLeccionesCursoUsuario = DB::table('lessons_users')
+                                                    ->where('user_id', '=', Auth::user()->ID)
+                                                    ->where('course_id', '=', $cursoRestante->course_id)
+                                                    ->count();
+                   
+                    
+                    if ($cantLeccionesCurso == $cantLeccionesCursoUsuario){
+                        $modalUpgrade = 1;
+                    }else if (($cantLeccionesCurso-1) == $cantLeccionesCursoUsuario){
+                        $modalUpgrade = 1;
+                    }  
+                }
+            }
+        
+            return view('cursos.leccion', compact('lesson', 'all_lessons','all_comments', 'progresoCurso','directos', 'last_lesson', 'first_lesson', 'lecciones_vistas', 'progress_bar', 'modalUpgrade'));
                 
         
         }else{
